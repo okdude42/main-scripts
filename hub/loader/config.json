@@ -1,0 +1,16 @@
+{
+    "Id": "script-hub",
+    "Name": "Script Hub",
+    "Subtitle": "all scripts",
+    "Folder": "oklo scripts/scripthub",
+    "Footer": "oklo",
+    "Theme": "Default",
+    "ScriptUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/hub/hub-core.lua",
+    "UiUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/oklo-uilib/OkloUI.luau",
+    "Discord": "https://discord.gg/oklo",
+    "Registry": "__ScriptHubStop",
+    "Width": 700,
+    "Height": 460,
+    "Hub": true,
+    "RegistryUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/hub/registry.json"
+}

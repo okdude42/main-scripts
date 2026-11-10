@@ -1,0 +1,439 @@
+{
+    "Schema": 1,
+    "Updated": "2026-11-09",
+    "Scripts": [
+        {
+            "Id": "tower-battles",
+            "Name": "Tower Battles",
+            "Category": "Games",
+            "Description": "Auto Vote Map, Macros, Auto Upgrade and more for Tower Battles",
+            "Registry": "__TowerBattlesStop",
+            "HomePlace": 45146873,
+            "Places": [
+                45146873,
+                46955756,
+                49707852,
+                2470348319,
+                2776257214,
+                1241893197,
+                45200529,
+                5645832762,
+                8652280014
+            ],
+            "Status": "live",
+            "Config": {
+                "Id": "tower-battles",
+                "Name": "Tower Battles",
+                "Folder": "oklo scripts/towerbattles",
+                "ScriptUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/tower-battles/tb-core.lua",
+                "Registry": "__TowerBattlesStop",
+                "Width": 640,
+                "Height": 420,
+                "GameName": "Tower Battles",
+                "HomePlace": 45146873,
+                "Places": "45146873,46955756,49707852,2470348319,2776257214,1241893197,45200529,5645832762,8652280014"
+            },
+            "Info": {
+                "Tagline": "Keyless, Auto Vote Map, Macros, Auto Upgrade and more",
+                "Groups": [
+                    {
+                        "Title": "Lobby",
+                        "Items": [
+                            "Auto Queue",
+                            "Queue Again"
+                        ]
+                    },
+                    {
+                        "Title": "Match",
+                        "Items": [
+                            "Auto Vote Map with veto and fallback",
+                            "Auto Ready",
+                            "Place Best Spot",
+                            "Upgrade All and Sell All",
+                            "Auto Upgrade with Delay",
+                            "Sell Everything At Wave"
+                        ]
+                    },
+                    {
+                        "Title": "Macros",
+                        "Items": [
+                            "Record",
+                            "save and play back with a speed slider",
+                            "Auto Play Macro"
+                        ]
+                    },
+                    {
+                        "Title": "Versus",
+                        "Items": [
+                            "Auto Send"
+                        ]
+                    },
+                    {
+                        "Title": "Player",
+                        "Items": [
+                            "Unlimited Zoom",
+                            "Fullbright"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "Id": "classic-tower-battles",
+            "Name": "Classic Tower Battles",
+            "Category": "Games",
+            "Description": "Autofarm, Macros, Auto Place and more for Classic Tower Battles",
+            "Registry": "__ClassicTowerBattlesStop",
+            "HomePlace": 14289388505,
+            "Places": [
+                14289388505,
+                14289717382
+            ],
+            "Status": "live",
+            "Config": {
+                "Id": "classic-tower-battles",
+                "Name": "Classic Tower Battles",
+                "Folder": "oklo scripts/classictowerbattles",
+                "ScriptUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/classic-tb/ctb-core.lua",
+                "Registry": "__ClassicTowerBattlesStop",
+                "Width": 700,
+                "Height": 460,
+                "GameName": "Classic Tower Battles",
+                "HomePlace": 14289388505,
+                "Places": "14289388505,14289717382"
+            },
+            "Info": {
+                "Tagline": "Keyless, Autofarm, Macros, Auto Place and more",
+                "Groups": [
+                    {
+                        "Title": "Autofarm",
+                        "Items": [
+                            "Auto Queue",
+                            "vote and start",
+                            "Auto Place your build on the best spots",
+                            "Auto Upgrade",
+                            "Auto Rejoin after teleport"
+                        ]
+                    },
+                    {
+                        "Title": "Macros",
+                        "Items": [
+                            "Record and play back per wave"
+                        ]
+                    },
+                    {
+                        "Title": "Tools",
+                        "Items": [
+                            "Place Tower Anywhere",
+                            "Tower Manager",
+                            "Abilities and Target Cycling",
+                            "Versus Auto Send",
+                            "Auto Redeem Codes",
+                            "Tower Equip",
+                            "Anti AFK"
+                        ]
+                    },
+                    {
+                        "Title": "Visuals",
+                        "Items": [
+                            "Range Circles",
+                            "Tower Labels",
+                            "Enemy Health",
+                            "Path Line",
+                            "HUD"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "Id": "practical-basketball",
+            "Name": "Practical Basketball",
+            "Category": "Games",
+            "Description": "Auto Green, Auto Dunk, Auto Guard and more for Practical Basketball",
+            "Registry": "__PracticalBasketballStop",
+            "HomePlace": 80681221431821,
+            "GameId": 7529591378,
+            "Places": [
+                78438427735992,
+                79672855812610,
+                80681221431821,
+                85576197307056,
+                104645279125178,
+                106120159518740,
+                113883239895081,
+                115491614485922,
+                115776365257536,
+                118669925076970,
+                119587547774646,
+                133311125103681,
+                137269396533485,
+                137939444694121,
+                138505112166361
+            ],
+            "Status": "live",
+            "Config": {
+                "Id": "practical-basketball",
+                "Name": "Practical Basketball",
+                "Folder": "oklo scripts/practicalbasketball",
+                "ScriptUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/practical-basketball/pb-core.lua",
+                "Registry": "__PracticalBasketballStop",
+                "Width": 560,
+                "Height": 420,
+                "GameName": "Practical Basketball",
+                "HomePlace": 80681221431821,
+                "Places": "78438427735992,79672855812610,80681221431821,85576197307056,104645279125178,106120159518740,113883239895081,115491614485922,115776365257536,118669925076970,119587547774646,133311125103681,137269396533485,137939444694121,138505112166361",
+                "GameId": 7529591378
+            },
+            "Info": {
+                "Tagline": "Keyless, Auto Green, Auto Dunk, Auto Guard and more",
+                "Groups": [
+                    {
+                        "Title": "Offense",
+                        "Items": [
+                            "Auto Green with dunk support",
+                            "Auto Shoot",
+                            "Auto Dunk with Auto Move and Dunk Type",
+                            "Auto Pass To Teammates",
+                            "Auto Dribble when Guarded",
+                            "Dribble Combo",
+                            "Shot Glide"
+                        ]
+                    },
+                    {
+                        "Title": "Defense",
+                        "Items": [
+                            "Auto Steal",
+                            "Auto Guard with Move Towards",
+                            "Auto Block",
+                            "Auto Rebound",
+                            "Ball Magnet"
+                        ]
+                    },
+                    {
+                        "Title": "Player",
+                        "Items": [
+                            "Always Full Speed",
+                            "Always Sprint",
+                            "Custom Walkspeed",
+                            "No Stun",
+                            "No Debounce",
+                            "No Cold Zone"
+                        ]
+                    },
+                    {
+                        "Title": "Visuals",
+                        "Items": [
+                            "Visuals for features",
+                            "players and court parts"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "Id": "booga-utilities",
+            "Name": "Booga Utilities",
+            "Category": "Games",
+            "Description": "Gold Farm, Auto Plant, Auto Harvest and more for Booga Booga",
+            "Registry": "__BoogaUtilitiesStop",
+            "HomePlace": 11729688377,
+            "Places": [
+                11729688377,
+                11879754496
+            ],
+            "Status": "live",
+            "Config": {
+                "Id": "booga-utilities",
+                "Name": "Booga Utilities",
+                "Folder": "oklo scripts/boogautilities",
+                "ScriptUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/boogautilities/boogautils-core.lua",
+                "Registry": "__BoogaUtilitiesStop",
+                "Width": 740,
+                "Height": 450,
+                "GameName": "Booga Booga",
+                "HomePlace": 11729688377,
+                "Places": "11729688377,11879754496"
+            },
+            "Info": {
+                "Tagline": "Keyless, Gold Farm, Auto Plant, Auto Harvest and more",
+                "Groups": [
+                    {
+                        "Title": "Gold Farm",
+                        "Items": [
+                            "Start Path with Show Path",
+                            "Mine By Detection",
+                            "Gold Hit Aura",
+                            "Coin Press",
+                            "Move Gold To Chest",
+                            "Path Editor",
+                            "Halloween Gold"
+                        ]
+                    },
+                    {
+                        "Title": "Plant Farm",
+                        "Items": [
+                            "Auto Plant",
+                            "Auto Harvest",
+                            "Tween To Plant Box and Bush",
+                            "Custom Move Speed"
+                        ]
+                    },
+                    {
+                        "Title": "Materials",
+                        "Items": [
+                            "Farm Sunfruit",
+                            "Drop Materials"
+                        ]
+                    },
+                    {
+                        "Title": "Utility",
+                        "Items": [
+                            "Auto Open Chest",
+                            "Anti Stuck",
+                            "CPU Mode",
+                            "Lock Camera",
+                            "Auto Start Path",
+                            "Discord Webhook report"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "Id": "saktk51",
+            "Name": "SAKTK51",
+            "Category": "Games",
+            "Description": "Get Guns, Kill All, Killer Picker and more for Area 51",
+            "Registry": "__Area51SuiteStop",
+            "HomePlace": 155382109,
+            "GameId": 73754455,
+            "Places": [
+                155382109,
+                1076129670,
+                2092166489,
+                2092167559,
+                2675280735,
+                3182083477,
+                3508248007,
+                4631179692,
+                4678052190,
+                5740483929,
+                6054929905,
+                10886353373,
+                11798285011
+            ],
+            "Status": "live",
+            "Config": {
+                "Id": "saktk51",
+                "Name": "SAKTK51",
+                "Folder": "oklo scripts/saktk51",
+                "ScriptUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/saktk51/saktk51-core.lua",
+                "Registry": "__Area51SuiteStop",
+                "Width": 720,
+                "Height": 470,
+                "GameName": "SAKTK51",
+                "HomePlace": 155382109,
+                "Places": "155382109,1076129670,2092166489,2092167559,2675280735,3182083477,3508248007,4631179692,4678052190,5740483929,6054929905,10886353373,11798285011",
+                "GameId": 73754455
+            },
+            "Info": {
+                "Tagline": "Keyless, Get Guns, Kill All, Killer Picker and more",
+                "Groups": [
+                    {
+                        "Title": "Combat",
+                        "Items": [
+                            "Get Guns for each gamemode",
+                            "Killer Hitbox",
+                            "Killer Reroll with Killer Picker",
+                            "Kill All",
+                            "Kill Specified"
+                        ]
+                    },
+                    {
+                        "Title": "Gamemodes",
+                        "Items": [
+                            "Endless",
+                            "Classic",
+                            "Juggernaut"
+                        ]
+                    },
+                    {
+                        "Title": "Visuals",
+                        "Items": [
+                            "ESP for entities",
+                            "World and Camera settings"
+                        ]
+                    },
+                    {
+                        "Title": "Player",
+                        "Items": [
+                            "Movement options",
+                            "Protections"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "Id": "hitbox-expander",
+            "Name": "Hitbox Expander",
+            "Category": "Universal",
+            "Description": "Bigger Hitboxes for players and NPCs, works in any game",
+            "Registry": "__HitboxExpanderStop",
+            "Universal": true,
+            "Places": [],
+            "Status": "live",
+            "Config": {
+                "Id": "hitbox-expander",
+                "Name": "Hitbox Expander",
+                "Folder": "oklo scripts/hitboxexpander",
+                "ScriptUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/hbe/hbe-core.lua",
+                "Registry": "__HitboxExpanderStop",
+                "Width": 700,
+                "Height": 460
+            },
+            "Info": {
+                "Tagline": "Keyless, Universal, Hitbox Expander, Filters and more",
+                "Groups": [
+                    {
+                        "Title": "Hitbox",
+                        "Items": [
+                            "Bigger hitboxes for players and NPCs",
+                            "Part Picker"
+                        ]
+                    },
+                    {
+                        "Title": "Filters",
+                        "Items": [
+                            "Team",
+                            "Friends",
+                            "Blacklist keywords",
+                            "Detected models"
+                        ]
+                    },
+                    {
+                        "Title": "Visuals",
+                        "Items": [
+                            "Hitbox Visualizer",
+                            "Dex Style Explorer popup"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "Id": "player-utilities",
+            "Name": "Player Utilities",
+            "Category": "Universal",
+            "Description": "Player tracker, maybe remade from scratch later.",
+            "Loader": "https://raw.githubusercontent.com/okdude42/main-scripts/main/playerutils/playerutils.lua",
+            "Registry": "__BoogaPlayerTrackerStop",
+            "Universal": true,
+            "Places": [],
+            "Status": "hidden",
+            "Config": {}
+        }
+    ],
+    "LoaderUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/loader/loader.lua"
+}
