@@ -921,7 +921,7 @@ end
 
 return Registry
 end
-local UI_URL = "https://gitlab.com/okdude42/main-scripts/-/raw/main/oklo-uilib/OkloUI.luau?ref_type=heads"
+local UI_URL = "https://raw.githubusercontent.com/okdude42/main-scripts/main/oklo-uilib/OkloUI.luau"
 local Loader = (...) or { teleport = function() end }
 
 local function fetch(url)
@@ -941,7 +941,7 @@ end
 local function loadUi()
     local source = globals().__OkloUiPrefetch or fetch(UI_URL)
     if not source then
-        error("could not download the ui lib from gitlab", 0)
+        error("could not download the ui lib from github", 0)
     end
     local chunk, problem = loadstring(source, "OkloUI")
     if not chunk then
