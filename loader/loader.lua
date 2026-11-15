@@ -2157,7 +2157,7 @@ end
 
 if CONFIG.Hub and CONFIG.RegistryUrl then
     pcall(function()
-        local body = fetch(CONFIG.RegistryUrl) or SAVED_REGISTRY
+        local body = SAVED_REGISTRY or fetch(CONFIG.RegistryUrl)
         local data = body and game:GetService("HttpService"):JSONDecode(body)
         if type(data) ~= "table" or type(data.Scripts) ~= "table" then
             return
@@ -2252,7 +2252,15 @@ local function launch()
     local chunk
 
     local function load()
-        local source = if CONFIG.Hub and HUB_SOURCE then HUB_SOURCE else fetch(CONFIG.ScriptUrl)
+        local lib, libDone = nil, false
+        task.spawn(function()
+            lib = fetchCached(CONFIG.UiUrl, "OkloUI.luau")
+            libDone = true
+        end)
+        local source = if CONFIG.Hub and HUB_SOURCE then HUB_SOURCE else fetchCached(CONFIG.ScriptUrl, tostring(CONFIG.Id) .. "-core.lua")
+        while not libDone do
+            task.wait()
+        end
         if not source then
             return style({
                 Lines = { "Could not download the script.", "GitHub has ratelimited you, please try again later or use a VPN." },
@@ -2264,7 +2272,6 @@ local function launch()
         if not chunk then
             return unsupported("could not compile: " .. tostring(compileError), true)
         end
-        local lib = fetchCached(CONFIG.UiUrl, "OkloUI.luau")
         if lib then
             getgenv().__OkloUiPrefetch = lib
         end
