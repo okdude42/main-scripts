@@ -8,8 +8,8 @@ if type(CONFIG) ~= "table" then
         UiUrl = "https://raw.githubusercontent.com/okdude42/main-scripts/main/oklo-uilib/OkloUI.luau",
         Discord = "https://discord.gg/oklo",
         Registry = "__ScriptHubStop",
-        Width = 700,
-        Height = 460,
+        Width = 400,
+        Height = 432,
         Hub = true,
         RegistryUrl = "https://raw.githubusercontent.com/okdude42/main-scripts/main/hub/registry.json",
     }
@@ -595,12 +595,23 @@ function Loader.play(opts)
         local list = c.List
         if not index then
             list[c.Sheet].Visible = false
+            if c.Prev then
+                list[c.Prev].Visible = false
+                c.Prev = nil
+            end
             return
         end
         local nextSheet = math.floor(index / PER_SHEET) + 1
         if nextSheet ~= c.Sheet then
-            list[c.Sheet].Visible = false
-            c.Sheet = nextSheet
+            if c.Prev and c.Prev ~= nextSheet then
+                list[c.Prev].Visible = false
+            end
+            list[c.Sheet].ZIndex = 1
+            c.Prev, c.Sheet, c.SwapAt = c.Sheet, nextSheet, os.clock()
+            list[nextSheet].ZIndex = 2
+        elseif c.Prev and list[c.Sheet].IsLoaded ~= false and os.clock() > c.SwapAt then
+            list[c.Prev].Visible = false
+            c.Prev = nil
         end
         local slot = index % PER_SHEET
         local sheet = list[c.Sheet]
@@ -1512,6 +1523,7 @@ end)()
 
 local Counter = (function()
 return function(...)
+-- this is for me just to know how much people actually execute this because i wanna know if people do use it, in which case if it is i will continue development, you can easily delete this from the source or/and see what info it sends (completely harmless and anonymous, it only sends the script name, your executor, which game, your input device, which executor functions exist, how long the script stayed open (a number of seconds, sent about every 5 minutes), a random anonymous id that is saved in your workspace folder (oklo scripts/anonymous id.txt, delete it to reset it) so people can be told apart, never your username, user id or ip)
 local SCRIPT, STOP = ...
 task.spawn(pcall, function()
     local function clean(value, limit)
@@ -1625,6 +1637,7 @@ task.spawn(pcall, function()
             end,
         }
         for _, attempt in attempts do
+            -- the first way the executor has is used once, an error answer is never sent again through the next way
             if pcall(attempt) then
                 break
             end
@@ -1638,6 +1651,7 @@ task.spawn(pcall, function()
         while true do
             task.wait(pause)
             pause = 300
+            -- the loop belongs to the run that registered this stop entry, running the loader again replaces the entry and ends the old loop
             if mine == nil then
                 mine = getgenv()[STOP]
             end
@@ -1654,155 +1668,19 @@ end)()
 
 local HUB_SOURCE = nil
 
+local SIZES = {
+    ["booga-utilities"] = { Width = 879, Height = 605 },
+    ["hitbox-expander"] = { Width = 700, Height = 460 },
+    ["practical-basketball"] = { Width = 820, Height = 540 },
+    ["saktk51"] = { Width = 760, Height = 500 },
+    ["script-hub"] = { Width = 400, Height = 432 },
+}
+
 local SAVED_REGISTRY = [=====[
 {
     "Schema": 1,
     "Updated": "2026-11-09",
     "Scripts": [
-        {
-            "Id": "tower-battles",
-            "Name": "Tower Battles",
-            "Category": "Games",
-            "Description": "Auto Vote Map, Macros, Auto Upgrade and more for Tower Battles",
-            "Registry": "__TowerBattlesStop",
-            "HomePlace": 45146873,
-            "Places": [
-                45146873,
-                46955756,
-                49707852,
-                2470348319,
-                2776257214,
-                1241893197,
-                45200529,
-                5645832762,
-                8652280014
-            ],
-            "Status": "live",
-            "Config": {
-                "Id": "tower-battles",
-                "Name": "Tower Battles",
-                "Folder": "oklo scripts/towerbattles",
-                "ScriptUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/tower-battles/tb-core.lua",
-                "Registry": "__TowerBattlesStop",
-                "Width": 640,
-                "Height": 420,
-                "GameName": "Tower Battles",
-                "HomePlace": 45146873,
-                "Places": "45146873,46955756,49707852,2470348319,2776257214,1241893197,45200529,5645832762,8652280014"
-            },
-            "Info": {
-                "Tagline": "Keyless, Auto Vote Map, Macros, Auto Upgrade and more",
-                "Groups": [
-                    {
-                        "Title": "Lobby",
-                        "Items": [
-                            "Auto Queue",
-                            "Queue Again"
-                        ]
-                    },
-                    {
-                        "Title": "Match",
-                        "Items": [
-                            "Auto Vote Map with veto and fallback",
-                            "Auto Ready",
-                            "Place Best Spot",
-                            "Upgrade All and Sell All",
-                            "Auto Upgrade with Delay",
-                            "Sell Everything At Wave"
-                        ]
-                    },
-                    {
-                        "Title": "Macros",
-                        "Items": [
-                            "Record",
-                            "save and play back with a speed slider",
-                            "Auto Play Macro"
-                        ]
-                    },
-                    {
-                        "Title": "Versus",
-                        "Items": [
-                            "Auto Send"
-                        ]
-                    },
-                    {
-                        "Title": "Player",
-                        "Items": [
-                            "Unlimited Zoom",
-                            "Fullbright"
-                        ]
-                    }
-                ]
-            }
-        },
-        {
-            "Id": "classic-tower-battles",
-            "Name": "Classic Tower Battles",
-            "Category": "Games",
-            "Description": "Autofarm, Macros, Auto Place and more for Classic Tower Battles",
-            "Registry": "__ClassicTowerBattlesStop",
-            "HomePlace": 14289388505,
-            "Places": [
-                14289388505,
-                14289717382
-            ],
-            "Status": "live",
-            "Config": {
-                "Id": "classic-tower-battles",
-                "Name": "Classic Tower Battles",
-                "Folder": "oklo scripts/classictowerbattles",
-                "ScriptUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/classic-tb/ctb-core.lua",
-                "Registry": "__ClassicTowerBattlesStop",
-                "Width": 700,
-                "Height": 460,
-                "GameName": "Classic Tower Battles",
-                "HomePlace": 14289388505,
-                "Places": "14289388505,14289717382"
-            },
-            "Info": {
-                "Tagline": "Keyless, Autofarm, Macros, Auto Place and more",
-                "Groups": [
-                    {
-                        "Title": "Autofarm",
-                        "Items": [
-                            "Auto Queue",
-                            "vote and start",
-                            "Auto Place your build on the best spots",
-                            "Auto Upgrade",
-                            "Auto Rejoin after teleport"
-                        ]
-                    },
-                    {
-                        "Title": "Macros",
-                        "Items": [
-                            "Record and play back per wave"
-                        ]
-                    },
-                    {
-                        "Title": "Tools",
-                        "Items": [
-                            "Place Tower Anywhere",
-                            "Tower Manager",
-                            "Abilities and Target Cycling",
-                            "Versus Auto Send",
-                            "Auto Redeem Codes",
-                            "Tower Equip",
-                            "Anti AFK"
-                        ]
-                    },
-                    {
-                        "Title": "Visuals",
-                        "Items": [
-                            "Range Circles",
-                            "Tower Labels",
-                            "Enemy Health",
-                            "Path Line",
-                            "HUD"
-                        ]
-                    }
-                ]
-            }
-        },
         {
             "Id": "practical-basketball",
             "Name": "Practical Basketball",
@@ -1835,8 +1713,8 @@ local SAVED_REGISTRY = [=====[
                 "Folder": "oklo scripts/practicalbasketball",
                 "ScriptUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/practical-basketball/pb-core.lua",
                 "Registry": "__PracticalBasketballStop",
-                "Width": 560,
-                "Height": 420,
+                "Width": 820,
+                "Height": 540,
                 "GameName": "Practical Basketball",
                 "HomePlace": 80681221431821,
                 "Places": "78438427735992,79672855812610,80681221431821,85576197307056,104645279125178,106120159518740,113883239895081,115491614485922,115776365257536,118669925076970,119587547774646,133311125103681,137269396533485,137939444694121,138505112166361",
@@ -1906,8 +1784,8 @@ local SAVED_REGISTRY = [=====[
                 "Folder": "oklo scripts/boogautilities",
                 "ScriptUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/boogautilities/boogautils-core.lua",
                 "Registry": "__BoogaUtilitiesStop",
-                "Width": 740,
-                "Height": 450,
+                "Width": 879,
+                "Height": 605,
                 "GameName": "Booga Booga",
                 "HomePlace": 11729688377,
                 "Places": "11729688377,11879754496"
@@ -1987,8 +1865,8 @@ local SAVED_REGISTRY = [=====[
                 "Folder": "oklo scripts/saktk51",
                 "ScriptUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/saktk51/saktk51-core.lua",
                 "Registry": "__Area51SuiteStop",
-                "Width": 720,
-                "Height": 470,
+                "Width": 760,
+                "Height": 500,
                 "GameName": "SAKTK51",
                 "HomePlace": 155382109,
                 "Places": "155382109,1076129670,2092166489,2092167559,2675280735,3182083477,3508248007,4631179692,4678052190,5740483929,6054929905,10886353373,11798285011",
@@ -2181,7 +2059,14 @@ if CONFIG.Hub and CONFIG.RegistryUrl then
     end)
 end
 
+local size = type(SIZES) == "table" and CONFIG.Id and SIZES[CONFIG.Id]
+if size then
+    CONFIG.Width, CONFIG.Height = size.Width, size.Height
+end
+
 local NAME = CONFIG.Name
+
+local SCALE = math.max(0.1, tonumber(getgenv().OkloUIScale) or 0.86)
 
 local colors = {}
 pcall(function()
@@ -2202,7 +2087,7 @@ end)
 
 local function style(card)
     card.Theme, card.Main, card.Accent = "standard", colors.Main, colors.Accent
-    card.Size, card.Title = Vector2.new(CONFIG.Width, CONFIG.Height), NAME
+    card.Size, card.Scale, card.Title = Vector2.new(CONFIG.Width, CONFIG.Height), SCALE, NAME
     if CONFIG.FromWidth and CONFIG.FromHeight then
         card.From = Vector2.new(CONFIG.FromWidth, CONFIG.FromHeight)
         card.FromCenter = if CONFIG.FromX then Vector2.new(CONFIG.FromX, CONFIG.FromY) else nil

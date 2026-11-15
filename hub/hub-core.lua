@@ -47,150 +47,6 @@ return [==[
     "Updated": "2026-11-09",
     "Scripts": [
         {
-            "Id": "tower-battles",
-            "Name": "Tower Battles",
-            "Category": "Games",
-            "Description": "Auto Vote Map, Macros, Auto Upgrade and more for Tower Battles",
-            "Registry": "__TowerBattlesStop",
-            "HomePlace": 45146873,
-            "Places": [
-                45146873,
-                46955756,
-                49707852,
-                2470348319,
-                2776257214,
-                1241893197,
-                45200529,
-                5645832762,
-                8652280014
-            ],
-            "Status": "live",
-            "Config": {
-                "Id": "tower-battles",
-                "Name": "Tower Battles",
-                "Folder": "oklo scripts/towerbattles",
-                "ScriptUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/tower-battles/tb-core.lua",
-                "Registry": "__TowerBattlesStop",
-                "Width": 640,
-                "Height": 420,
-                "GameName": "Tower Battles",
-                "HomePlace": 45146873,
-                "Places": "45146873,46955756,49707852,2470348319,2776257214,1241893197,45200529,5645832762,8652280014"
-            },
-            "Info": {
-                "Tagline": "Keyless, Auto Vote Map, Macros, Auto Upgrade and more",
-                "Groups": [
-                    {
-                        "Title": "Lobby",
-                        "Items": [
-                            "Auto Queue",
-                            "Queue Again"
-                        ]
-                    },
-                    {
-                        "Title": "Match",
-                        "Items": [
-                            "Auto Vote Map with veto and fallback",
-                            "Auto Ready",
-                            "Place Best Spot",
-                            "Upgrade All and Sell All",
-                            "Auto Upgrade with Delay",
-                            "Sell Everything At Wave"
-                        ]
-                    },
-                    {
-                        "Title": "Macros",
-                        "Items": [
-                            "Record",
-                            "save and play back with a speed slider",
-                            "Auto Play Macro"
-                        ]
-                    },
-                    {
-                        "Title": "Versus",
-                        "Items": [
-                            "Auto Send"
-                        ]
-                    },
-                    {
-                        "Title": "Player",
-                        "Items": [
-                            "Unlimited Zoom",
-                            "Fullbright"
-                        ]
-                    }
-                ]
-            }
-        },
-        {
-            "Id": "classic-tower-battles",
-            "Name": "Classic Tower Battles",
-            "Category": "Games",
-            "Description": "Autofarm, Macros, Auto Place and more for Classic Tower Battles",
-            "Registry": "__ClassicTowerBattlesStop",
-            "HomePlace": 14289388505,
-            "Places": [
-                14289388505,
-                14289717382
-            ],
-            "Status": "live",
-            "Config": {
-                "Id": "classic-tower-battles",
-                "Name": "Classic Tower Battles",
-                "Folder": "oklo scripts/classictowerbattles",
-                "ScriptUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/classic-tb/ctb-core.lua",
-                "Registry": "__ClassicTowerBattlesStop",
-                "Width": 700,
-                "Height": 460,
-                "GameName": "Classic Tower Battles",
-                "HomePlace": 14289388505,
-                "Places": "14289388505,14289717382"
-            },
-            "Info": {
-                "Tagline": "Keyless, Autofarm, Macros, Auto Place and more",
-                "Groups": [
-                    {
-                        "Title": "Autofarm",
-                        "Items": [
-                            "Auto Queue",
-                            "vote and start",
-                            "Auto Place your build on the best spots",
-                            "Auto Upgrade",
-                            "Auto Rejoin after teleport"
-                        ]
-                    },
-                    {
-                        "Title": "Macros",
-                        "Items": [
-                            "Record and play back per wave"
-                        ]
-                    },
-                    {
-                        "Title": "Tools",
-                        "Items": [
-                            "Place Tower Anywhere",
-                            "Tower Manager",
-                            "Abilities and Target Cycling",
-                            "Versus Auto Send",
-                            "Auto Redeem Codes",
-                            "Tower Equip",
-                            "Anti AFK"
-                        ]
-                    },
-                    {
-                        "Title": "Visuals",
-                        "Items": [
-                            "Range Circles",
-                            "Tower Labels",
-                            "Enemy Health",
-                            "Path Line",
-                            "HUD"
-                        ]
-                    }
-                ]
-            }
-        },
-        {
             "Id": "practical-basketball",
             "Name": "Practical Basketball",
             "Category": "Games",
@@ -222,8 +78,8 @@ return [==[
                 "Folder": "oklo scripts/practicalbasketball",
                 "ScriptUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/practical-basketball/pb-core.lua",
                 "Registry": "__PracticalBasketballStop",
-                "Width": 560,
-                "Height": 420,
+                "Width": 820,
+                "Height": 540,
                 "GameName": "Practical Basketball",
                 "HomePlace": 80681221431821,
                 "Places": "78438427735992,79672855812610,80681221431821,85576197307056,104645279125178,106120159518740,113883239895081,115491614485922,115776365257536,118669925076970,119587547774646,133311125103681,137269396533485,137939444694121,138505112166361",
@@ -293,8 +149,8 @@ return [==[
                 "Folder": "oklo scripts/boogautilities",
                 "ScriptUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/boogautilities/boogautils-core.lua",
                 "Registry": "__BoogaUtilitiesStop",
-                "Width": 740,
-                "Height": 450,
+                "Width": 879,
+                "Height": 605,
                 "GameName": "Booga Booga",
                 "HomePlace": 11729688377,
                 "Places": "11729688377,11879754496"
@@ -374,8 +230,8 @@ return [==[
                 "Folder": "oklo scripts/saktk51",
                 "ScriptUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/saktk51/saktk51-core.lua",
                 "Registry": "__Area51SuiteStop",
-                "Width": 720,
-                "Height": 470,
+                "Width": 760,
+                "Height": 500,
                 "GameName": "SAKTK51",
                 "HomePlace": 155382109,
                 "Places": "155382109,1076129670,2092166489,2092167559,2675280735,3182083477,3508248007,4631179692,4678052190,5740483929,6054929905,10886353373,11798285011",
@@ -523,6 +379,7 @@ local function save(entry: Registry.Entry, url: string)
     end
 end
 
+-- the pictures are the game icons of roblox, saved in the folder so they only download once
 function Icons.start(entries: { Registry.Entry }, icons: string)
     folder = icons
     pcall(function()
@@ -589,6 +446,7 @@ function Launcher.starting(entry: Registry.Entry): boolean
     return since ~= nil
 end
 
+-- runs the one shared loader with this script's settings, then closes the hub so it never sits over the script window
 function Launcher.run(entry: Registry.Entry, base: { [string]: any }?, ui: any?, announce: (string) -> ())
     if Launcher.starting(entry) then
         return
@@ -619,6 +477,7 @@ function Launcher.run(entry: Registry.Entry, base: { [string]: any }?, ui: any?,
             if at then
                 config.FromX, config.FromY = at.X + config.FromWidth / 2, at.Y + config.FromHeight / 2
             end
+            -- the frame exactly as it is drawn, its corners and colour, so the card that covers it matches it pixel for pixel
             local pos, size = window.WindowPos, window.WindowSize
             if pos and size and size.X > 0 then
                 config.FromWidth, config.FromHeight = size.X, size.Y
@@ -631,6 +490,7 @@ function Launcher.run(entry: Registry.Entry, base: { [string]: any }?, ui: any?,
         for key, value in entry.Config do
             config[key] = value
         end
+        -- the loader plays its card until the script is up, so it runs on its own while the hub hands over to the card
         local failed = false
         getgenv().__OkloCardUp = nil
         task.spawn(function()
@@ -644,6 +504,7 @@ function Launcher.run(entry: Registry.Entry, base: { [string]: any }?, ui: any?,
         while getgenv().__OkloCardUp ~= true and not failed and os.clock() - waited < 4 do
             task.wait()
         end
+        -- the card covers the hub window now, the hub goes right away and only then is the signal taken, the card starts to glide once it is gone
         if ui and not failed then
             pcall(function()
                 ui:destroy()
@@ -665,7 +526,7 @@ local Registry: typeof(require("./registry")) = import("registry")
 
 local REGISTRY = "__ScriptHubStop"
 local FOLDER = "oklo scripts/scripthub"
-local ROW, OPEN, SMALL, LARGE, GAP = 54, 108, 40, 76, 6
+local ROW, SMALL, GAP = 56, 38, 6
 
 local INVITE = "https://discord.gg/oklo"
 
@@ -733,7 +594,7 @@ local function build(OkloUI: any, reload: () -> (), entries: { Registry.Entry },
     end
 
     ui = OkloUI.new({
-        Title = "Script Hub",
+        Title = "oklo: Hub",
         Subtitle = "all scripts",
         Version = Changelog.VERSION,
         Changelog = Changelog,
@@ -744,13 +605,10 @@ local function build(OkloUI: any, reload: () -> (), entries: { Registry.Entry },
         Discord = "https://discord.gg/oklo",
         FirstRunInvite = true,
         Thanks = true,
-        Width = 700,
-        Height = 460,
+        Dock = true,
+        Width = 400,
+        Height = 432,
         Theme = "Default",
-        NoSettings = true,
-        NoSidebar = true,
-        TopNav = true,
-        HeaderLogo = true,
         Status = function(): string?
             if detected then
                 return detected.Name .. " detected"
@@ -777,6 +635,7 @@ local function build(OkloUI: any, reload: () -> (), entries: { Registry.Entry },
         return nil
     end
 
+    -- one line per game like a file list: a click opens the line, the icon grows and the description and the Execute button ease in
     local function icon(kit: any, window: any, entry: Registry.Entry, x: number, y: number, size: number, alpha: number)
         local pal = window.Pal
         local asset = Icons.get(entry)
@@ -792,6 +651,7 @@ local function build(OkloUI: any, reload: () -> (), entries: { Registry.Entry },
         end
     end
 
+    -- the description breaks into at most two lines so a long one never runs under the button
     local function wrap(kit: any, text: string, size: number, width: number): { string }
         local lines: { string } = {}
         local current = ""
@@ -813,71 +673,48 @@ local function build(OkloUI: any, reload: () -> (), entries: { Registry.Entry },
         return lines
     end
 
-    local function line(kit: any, window: any, id: string, entry: Registry.Entry, y: number, open: number): number
+    -- one slim row per script: the icon and the name. a click picks it and the Execute pill eases in, a dot marks the one running or made for this game
+    local function line(kit: any, window: any, id: string, entry: Registry.Entry, y: number): number
         local pal = window.Pal
         local key = id .. ":" .. entry.Id
         local width = listWidth
         local hover = kit:ease(key .. ":hover", if kit:hovered(key) then 1 else 0, 16)
-        local height = ROW + (OPEN - ROW) * open
-        local body = height - GAP
-        y += 3
-        local t = math.clamp((open - 0.4) / 0.6, 0, 1)
-        local shown = t * t * (3 - 2 * t)
-        local size = SMALL + (LARGE - SMALL) * open
-        local textX = 12 + size + 14
-        local dot: Color3? = nil
-        if Registry.running(entry) then
-            dot = Color3.fromRGB(255, 255, 255)
-        elseif Registry.matches(entry) then
-            dot = Color3.fromRGB(255, 255, 255)
-        end
-        kit:hit(key, 2, y, width - 4, body, function()
+        local open = kit:ease(key .. ":open", if selected == entry.Id then 1 else 0, 12)
+        local body = ROW - GAP
+        kit:hit(key, 0, y, width, body, function()
             selected = if selected == entry.Id then nil else entry.Id
         end)
         kit:nest("hub:" .. key, function()
-            kit:solid(2, y, width - 4, body, pal.Off, 10, math.clamp(0.3 + hover * 0.2 + open * 0.25, 0, 1))
-            kit:border(2, y, width - 4, body, 10, pal.Accent, open * 0.6, 1.5)
-            icon(kit, window, entry, 12, y + 4 + 9 * open, size, 1)
-            kit:text(cut(kit, entry.Name, 13, width - textX - 90), textX, y + 17 + 5 * open, 13, pal.Text, false, true)
-            kit:text(if entry.HomePlace then "ID " .. tostring(entry.HomePlace) else "Universal", textX, y + 33 + 7 * open, 10, pal.Sub, false, true)
-            local steady = kit.Alpha
+            kit:solid(0, y, width, body, pal.Panel:Lerp(pal.Text, 0.025 + hover * 0.035 + open * 0.035), 12, 1)
+            kit:border(0, y, width, body, 12, pal.Accent, open * 0.5, 1.2)
+            icon(kit, window, entry, 9, y + (body - SMALL) / 2, SMALL, 1)
             local running = Registry.running(entry)
-            local word = if running then "Running" elseif dot then "This game" else " "
-            local tagWidth = kit:measure(word, 10) + 16
-            local tagX, tagY = width - 16 - tagWidth, y + 9
-            kit.Alpha = steady * (if dot then 0.2 else 0)
-            kit:solid(tagX, tagY, tagWidth, 20, dot or pal.Off, 10, 1)
-            kit.Alpha = steady * (if dot then 1 else 0)
-            kit:text(word, tagX + tagWidth / 2, tagY + 10, 10, dot or pal.Sub, true, true)
-            kit.Alpha = steady
-            local lines = wrap(kit, entry.Description, 11, width - (12 + LARGE + 14) - 150)
-            for index, text in lines do
-                local at = y + 62 + (index - 1) * 16
-                kit.Alpha = steady * shown * math.clamp((y + body - 8 - at) / 12, 0, 1)
-                kit:text(text, textX, at, 11, pal.Sub, false, true)
-            end
-            kit.Alpha = steady
-            if shown > 0.01 then
-                kit.Alpha = steady * shown
+            local dot = running or Registry.matches(entry)
+            local textX = 9 + SMALL + 12
+            local steady = kit.Alpha
+            kit:text(cut(kit, entry.Name, 15, width - textX - 22 - 80 * open), textX, y + body / 2, 15, pal.Text, false, true)
+            kit.Alpha = steady * (1 - open) * (if dot then 1 else 0)
+            kit:solid(width - 20, y + body / 2 - 3.5, 7, 7, if running then pal.Accent else pal.Sub, 3.5, 1)
+            kit.Alpha = steady * open
+            if open > 0.01 then
                 local starting = Launcher.starting(entry)
-                local label = if starting then "Starting..." elseif running then "Reload" else "Execute"
-                local options: any = { label = label, align = "center", size = 12, disabled = starting, rounding = 16 }
-                local edge = if running or starting then 0.18 else 0.55
+                local label = if starting then "Starting.." elseif running then "Reload" else "Execute"
+                local options: any = { label = label, align = "center", size = 12, disabled = starting, rounding = 14 }
                 if running or starting then
                     options.base, options.textColor, options.hoverColor, options.hoverText = pal.Off, pal.Sub, pal.Panel, pal.Text
                 else
-                    options.base, options.textColor, options.hoverColor, options.hoverText = pal.Panel:Lerp(pal.Accent, 0.1), pal.Text, pal.Accent:Lerp(pal.Panel, 0.2), Color3.fromRGB(16, 16, 20)
+                    options.base, options.textColor, options.hoverColor, options.hoverText = pal.Panel:Lerp(pal.Accent, 0.12), pal.Text, pal.Accent:Lerp(pal.Panel, 0.2), Color3.fromRGB(16, 16, 20)
                 end
-                kit:border(width - 136, y + body - 42, 120, 32, 16, pal.Accent, steady * shown * edge, 1.2)
-                kit:button(key .. ":run", width - 136, y + body - 42, 120, 32, function()
+                kit:button(key .. ":run", width - 84, y + (body - 28) / 2, 74, 28, function()
                     Launcher.run(entry, base, ui, announce)
                 end, options)
-                kit.Alpha = steady
             end
+            kit.Alpha = steady
         end)
-        return height
+        return ROW
     end
 
+    -- the toolbar search of this page keeps only the games that hold the text, nothing from the other pages is mixed in
     local function holds(entry: Registry.Entry, query: string): boolean
         for _, text in { entry.Name, entry.Description, entry.Category, tostring(entry.HomePlace or "") } do
             if string.find(string.lower(text), query, 1, true) then
@@ -915,79 +752,6 @@ local function build(OkloUI: any, reload: () -> (), entries: { Registry.Entry },
         return lines
     end
 
-    local function panel(kit: any, window: any, x: number, y: number, width: number, height: number)
-        local pal = window.Pal
-        local pad = 12
-        local inner = width - pad * 2
-        local entry = find(selected) or detected
-        kit:solid(x, y, width, height, pal.Off, 12, 0.35)
-        kit:border(x, y, width, height, 12, pal.Off, 0.6, 1)
-        local logo = 36
-        local logoX, logoY = x + pad, y + pad
-        if entry then
-            icon(kit, window, entry, logoX, logoY, logo, 1)
-        elseif window.LogoAsset then
-            kit:image(window.LogoAsset, logoX, logoY, logo, logo, 0, 1, pal.Accent)
-        end
-        local textX = logoX + logo + 10
-        local textWidth = x + width - pad - textX
-        local info = if entry then entry.Info else nil
-        local title = if entry then entry.Name else "Script Hub"
-        local short = if entry then (if entry.HomePlace then "ID " .. tostring(entry.HomePlace) else "Universal") else "Pick a script"
-        local titleSize = if kit:measure(title, 13) > textWidth then 11.5 else 13
-        kit:text(cut(kit, title, titleSize, textWidth), textX, logoY + 11, titleSize, pal.Text, false, true)
-        kit:text(cut(kit, short, 10, textWidth), textX, logoY + 27, 10, pal.Sub, false, true)
-        local footer = y + height - 30
-        kit:solid(x + pad, footer, inner, 1, pal.Off, 0, 0.9)
-        kit:text("oklo", x + pad, footer + 15, 12, pal.Text, false, true)
-        local inviteHover = kit:ease("hub:invite:hover", if kit:hovered("hub:invite") then 1 else 0, 14)
-        local inviteWidth = kit:measure("discord.gg/oklo", 11)
-        kit:hit("hub:invite", x + width - pad - inviteWidth - 4, footer + 5, inviteWidth + 8, 20, function()
-            joinDiscord()
-            announce("Invite copied")
-        end)
-        kit:text("discord.gg/oklo", x + width - pad - inviteWidth, footer + 15, 11, pal.Sub:Lerp(pal.Accent, 0.4 + inviteHover * 0.6), false, true)
-        local top = logoY + logo + 10
-        kit:solid(x + pad, top, inner, 1, pal.Off, 0, 0.9)
-        local lines: { { Text: string, Size: number, Color: Color3, Gap: number, Bold: boolean? } } = {}
-        if entry then
-            for _, text in flow(kit, if info and info.Tagline then info.Tagline else entry.Description, 10, inner) do
-                table.insert(lines, { Text = text, Size = 10, Color = pal.Sub, Gap = 14 })
-            end
-            for _, group in (if info and info.Groups then info.Groups else {}) do
-                table.insert(lines, { Text = string.upper(group.Title), Size = 9, Color = pal.Accent, Gap = 20, Bold = true })
-                for _, text in flow(kit, table.concat(group.Items, ", "), 10, inner) do
-                    table.insert(lines, { Text = text, Size = 10, Color = pal.Text, Gap = 13 })
-                end
-            end
-        else
-            for _, text in flow(kit, "Pick a script on the left to see what it does, then press Execute.", 10, inner) do
-                table.insert(lines, { Text = text, Size = 10, Color = pal.Sub, Gap = 14 })
-            end
-        end
-        local cursor = top + 6
-        local limit = footer - 8
-        for index, line in lines do
-            local at = cursor + (if index == 1 then 7 else line.Gap)
-            if at + 6 > limit then
-                break
-            end
-            local nextLine = lines[index + 1]
-            local text = line.Text
-            if nextLine and at + nextLine.Gap + 6 > limit then
-                if line.Size < 10 then
-                    break
-                end
-                while #text > 1 and kit:measure(text .. "..", line.Size) > inner do
-                    text = string.sub(text, 1, #text - 1)
-                end
-                text ..= ".."
-            end
-            kit:text(text, x + pad, at, line.Size, line.Color, false, true, if line.Bold then kit:boldFace() else nil)
-            cursor = at
-        end
-    end
-
     local pages: { { Name: string, List: { Registry.Entry }, Empty: string } } = {
         { Name = "All Scripts", List = entries, Empty = "No scripts yet" },
         { Name = "This Game", List = pick(Registry.here), Empty = "Nothing for this game yet" },
@@ -1008,60 +772,59 @@ local function build(OkloUI: any, reload: () -> (), entries: { Registry.Entry },
     }
     local current = 1
 
-    local PANEL, PAD = 188, 8
-    local tab = ui:tab("Script Hub", { Group = "Script Hub", Label = "Script Hub", OwnSearch = true, Noun = "games" })
-
     local function render(kit: any, window: any, index: number, height: { Value: number })
-        if index ~= current then
-            current = index
-            selected = nil
-        end
         local pal = window.Pal
-        listWidth = kit.Width - PANEL - 10
+        listWidth = kit.Width
         local list = pages[index].List
         local query: string = window.SearchText or ""
+        local y = 0
         local count = 0
         for _, entry in list do
             if query == "" or holds(entry, query) then
                 count += 1
+                y += line(kit, window, "hub", entry, y)
             end
         end
-        window.OwnCount = count
-        local listEnd = 170
         if count == 0 then
-            local note = kit:ease("hub:none:" .. index, 1, 10)
-            kit:text(if query == "" then pages[index].Empty else "No Results", listWidth / 2, 60 + (1 - note) * 6, 14, pal.Sub:Lerp(pal.Off, 1 - note), true, true)
-            if query ~= "" then
-                kit:text('Nothing here matches "' .. query .. '"', listWidth / 2, 82, 11, pal.Sub:Lerp(pal.Off, 1 - note * 0.8), true, true)
-            end
-        else
-            local y = 0
-            for _, entry in list do
-                if query == "" or holds(entry, query) then
-                    local open = kit:ease("hub:" .. entry.Id .. ":open", if selected == entry.Id then 1 else 0, 9)
-                    y += line(kit, window, "hub", entry, y, open)
-                end
-            end
-            listEnd = y
+            kit:text(if query == "" then pages[index].Empty else "No Results", kit.Width / 2, 60, 13, pal.Sub, true, true)
+            y = 120
         end
-        local factor = kit.ScreenSize.X / kit.Width
-        local top, bottom = 3, math.max(listEnd, 300)
-        local box = window.ContentBox
-        if box then
-            top = math.max(3, (box[2] - kit.Position.Y) / factor + PAD + 3)
-            bottom = (box[4] - kit.Position.Y) / factor - PAD - 3
+        height.Value = y + 2
+    end
+
+    local quick: { any } = {}
+    local ordered: { Registry.Entry } = {}
+    if detected then
+        table.insert(ordered, detected)
+    end
+    for _, entry in entries do
+        if entry ~= detected then
+            table.insert(ordered, entry)
         end
-        panel(kit, window, kit.Width - PANEL, top, PANEL, math.max(160, bottom - top))
-        height.Value = listEnd + 4
+    end
+    for index = 1, math.min(4, #ordered) do
+        local entry = ordered[index]
+        table.insert(quick, {
+            Title = entry.Name,
+            Text = entry.Description,
+            Icon = "rocket",
+            Callback = function()
+                Launcher.run(entry, base, ui, announce)
+            end,
+            Active = function(): boolean
+                return Registry.running(entry)
+            end,
+        })
     end
 
     for index, page in pages do
         local height = { Value = 200 }
+        local tab = ui:tab(page.Name, { Label = page.Name })
         tab:section(page.Name):add({
             Type = "Custom",
+            Bare = true,
             Name = "hub:" .. page.Name,
             Height = height,
-            OwnSearch = true,
             Render = function(kit: any, window: any)
                 render(kit, window, index, height)
             end,
@@ -1136,6 +899,7 @@ local function decode(text: string): { Entry }?
     return if #list > 0 then list else nil
 end
 
+-- the saved list inside the hub is used when the public list cannot be downloaded
 function Registry.load(): ({ Entry }, boolean)
     local body = Registry.fetch(URL .. "?t=" .. tostring(math.floor(os.time() / 300)))
     local live = if body then decode(body) else nil
@@ -1160,6 +924,7 @@ function Registry.running(entry: Entry): boolean
     return entry.Registry ~= "" and type(getgenv()[entry.Registry]) == "function"
 end
 
+-- only the public github files can be started from the list
 function Registry.safe(entry: Entry): boolean
     local url = entry.Config.ScriptUrl
     return type(url) == "string" and string.sub(url, 1, #PREFIX) == PREFIX and string.sub(Registry.LoaderUrl, 1, #PREFIX) == PREFIX
@@ -1179,13 +944,22 @@ local function fetch(url)
     return if got and type(body) == "string" and body ~= "" then body else nil
 end
 
+-- an executor without getgenv keeps the shared values in _G
+local function globals()
+    local ok, env = pcall(getgenv)
+    return if ok and type(env) == "table" then env else _G
+end
+
 local function loadUi()
-    local source = getgenv().__OkloUiPrefetch or fetch(UI_URL)
-    local chunk = source and loadstring(source, "OkloUI")
-    if chunk then
-        return chunk()
+    local source = globals().__OkloUiPrefetch or fetch(UI_URL)
+    if not source then
+        error("could not download the ui lib from gitlab", 0)
     end
-    error("could not download the ui lib from gitlab", 0)
+    local chunk, problem = loadstring(source, "OkloUI")
+    if not chunk then
+        error("could not compile the ui lib: " .. tostring(problem), 0)
+    end
+    return chunk()
 end
 
 local OkloUI = loadUi()

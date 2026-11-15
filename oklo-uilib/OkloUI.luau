@@ -187,15 +187,39 @@ return Storage
 end
 modules["core/theme"] = function(...)
 
+-- one look in two modes: Dark (graphite with a warm glow) is the default, Light is the same window in warm paper colors.
+-- the switch between them is the LightMode setting, there are no other themes
+local function rgb(r: number, g: number, b: number): Color3
+    return Color3.fromRGB(r, g, b)
+end
+
+local DARK = {
+    Main = rgb(23, 23, 26),
+    Panel = rgb(31, 31, 35),
+    Off = rgb(54, 54, 60),
+    Text = rgb(240, 239, 236),
+    Sub = rgb(146, 145, 150),
+    Accent = rgb(244, 244, 247),
+    Disabled = rgb(88, 88, 96),
+}
+
+local LIGHT = {
+    Main = rgb(242, 240, 237),
+    Panel = rgb(251, 250, 248),
+    Off = rgb(222, 219, 214),
+    Text = rgb(26, 25, 23),
+    Sub = rgb(126, 122, 117),
+}
+
 local Theme = {
-    BgBase = Color3.fromRGB(29, 32, 33),
-    PanelBg = Color3.fromRGB(50, 48, 47),
-    Accent = Color3.fromRGB(215, 153, 33),
-    AccentBright = Color3.fromRGB(250, 189, 47),
-    AccentOff = Color3.fromRGB(80, 73, 69),
-    TextMain = Color3.fromRGB(235, 219, 178),
-    TextSub = Color3.fromRGB(168, 153, 132),
-    Disabled = Color3.fromRGB(102, 92, 84),
+    BgBase = DARK.Main,
+    PanelBg = DARK.Panel,
+    Accent = DARK.Accent,
+    AccentBright = DARK.Accent,
+    AccentOff = DARK.Off,
+    TextMain = DARK.Text,
+    TextSub = DARK.Sub,
+    Disabled = DARK.Disabled,
 }
 
 export type Preset = {
@@ -218,18 +242,35 @@ export type Preset = {
     Accent: Color3,
 }
 
-local function rgb(r: number, g: number, b: number): Color3
-    return Color3.fromRGB(r, g, b)
-end
+local default: Preset = {
+    Name = "Default",
+    Main = DARK.Main,
+    Panel = DARK.Panel,
+    Off = DARK.Off,
+    Text = DARK.Text,
+    Sub = DARK.Sub,
+    Accent = DARK.Accent,
+    Disabled = DARK.Disabled,
+    Light = LIGHT,
+    Rim = { rgb(244, 244, 247), rgb(150, 150, 160) },
+}
+;(default :: any).Pure = true
 
-Theme.Presets = {} :: { [string]: Preset }
-
-
-
+Theme.Presets = { Default = default } :: { [string]: Preset }
+-- Light is a theme like the others: choosing it turns the paper colours on, any other theme turns them off
+local paper: Preset = table.clone(default)
+paper.Name = "Light"
+Theme.Presets.Light = paper
 local function mix(a: Color3, b: Color3, amount: number): Color3
     return Color3.new(a.R + (b.R - a.R) * amount, a.G + (b.G - a.G) * amount, a.B + (b.B - a.B) * amount)
 end
 
+-- Pace in a theme speeds its motion up or slows it down, Spread below 1 shows less of the ring at once so a ring of very different colors stays soft
+-- how the sky of a theme moves:the ring of colors turns by Rate per second (negative turns the other way) while a slow swing pushes it forward and back,
+-- Bend and Freq shape the waves that travel through it, Glow is a soft light that rolls over the height, Scale says how much of the ring one window height shows
+-- Beat lets the whole sky breathe brighter and darker
+-- every flowing sky picks its shape and direction at random each time it comes on screen,
+-- Fx names the particles over it
 local MOTIONS: { [string]: { [string]: any } } = {
     Drift = { Rate = 0.012, Swing = 0.06, SwingSpeed = 0.05, Bend = 0.045, BendSpeed = 0.16, Freq = 0.8, Glow = 0.05, Scale = 0.6 },
     Tide = { Rate = -0.011, Swing = 0.07, SwingSpeed = 0.042, Bend = 0.055, BendSpeed = 0.13, Freq = 0.6, Glow = 0.04, Scale = 0.65 },
@@ -251,6 +292,7 @@ local MOTIONS: { [string]: { [string]: any } } = {
 
 local ORDER_ANIMATED: { string } = {}
 
+-- a theme made from its main color, its accent and the six colors the sky passes through, the panel, the off color and the texts are mixed from them
 local function sky(spec: { [string]: any })
     local main: Color3 = spec.Main
     local accent: Color3 = spec.Accent
@@ -390,67 +432,22 @@ sky({
     Buttons = 0.78,
 })
 
-local ORDER_BRANDS: { string } = {}
-local function brand(name: string, main: Color3, panel: Color3, off: Color3, text: Color3, sub: Color3, accent: Color3, disabled: Color3, rim: { Color3 })
-    Theme.Presets[name] = {
-        Name = name,
-        Main = main,
-        Panel = panel,
-        Off = off,
-        Text = text,
-        Sub = sub,
-        Accent = accent,
-        Disabled = disabled,
-        Rim = rim,
-    }
-    table.insert(ORDER_BRANDS, name)
-end
 
-brand("Default", rgb(16, 16, 18), rgb(26, 26, 29), rgb(44, 44, 49), rgb(244, 244, 247), rgb(150, 150, 160), rgb(244, 244, 247), rgb(96, 96, 104), { rgb(244, 244, 247), rgb(150, 150, 160) })
-table.insert(ORDER_BRANDS, 1, table.remove(ORDER_BRANDS) :: string)
-;(Theme.Presets.Default :: any).Pure = true
-brand("Google Dark", rgb(32, 33, 36), rgb(48, 49, 52), rgb(60, 64, 67), rgb(232, 234, 237), rgb(154, 160, 166), rgb(138, 180, 248), rgb(95, 99, 104), { rgb(138, 180, 248), rgb(129, 201, 149) })
-brand("GitHub Dark", rgb(13, 17, 23), rgb(22, 27, 34), rgb(48, 54, 61), rgb(230, 237, 243), rgb(125, 133, 144), rgb(88, 166, 255), rgb(72, 79, 88), { rgb(88, 166, 255), rgb(63, 185, 80) })
-brand("Catppuccin Mocha", rgb(30, 30, 46), rgb(49, 50, 68), rgb(69, 71, 90), rgb(205, 214, 244), rgb(166, 173, 200), rgb(203, 166, 247), rgb(88, 91, 112), { rgb(245, 194, 231), rgb(137, 180, 250) })
-
-Theme.CustomMain = Color3.fromRGB(18, 18, 18)
-Theme.CustomAccent = Color3.fromRGB(255, 255, 255)
-
-local season: string? = nil
-Theme.Season = season
-Theme.Default = Theme.Presets[season or "Default"]
-
-Theme.PresetOrder = {}
-for _, name in ORDER_BRANDS do
-    if name == "Default" then
-        table.insert(Theme.PresetOrder, name)
-    end
-end
+Theme.PresetOrder = { "Default", "Light" }
 for _, name in ORDER_ANIMATED do
     table.insert(Theme.PresetOrder, name)
 end
-for _, name in ORDER_BRANDS do
-    if name ~= "Default" then
-        table.insert(Theme.PresetOrder, name)
-    end
-end
+Theme.Default = default
+Theme.Season = nil :: string?
+Theme.CustomMain = DARK.Main
+Theme.CustomAccent = DARK.Accent
 
-local MAIN_TOLERANCE = 0.3
-local ACCENT_TOLERANCE = 0.5
+function Theme.presetFor(_main: Color3, _accent: Color3?): string?
+    return "Default"
+end
 
 local function away(first: Color3, second: Color3): number
     return math.abs(first.R - second.R) + math.abs(first.G - second.G) + math.abs(first.B - second.B)
-end
-
-function Theme.presetFor(main: Color3, accent: Color3?): string?
-    for _, name in Theme.PresetOrder do
-        local preset = Theme.Presets[name]
-        local accentAway = if accent then away(accent, preset.Accent) else 0
-        if away(main, preset.Main) < MAIN_TOLERANCE and accentAway < ACCENT_TOLERANCE then
-            return name
-        end
-    end
-    return nil
 end
 
 function Theme.isPreset(preset: Preset, main: Color3, accent: Color3): boolean
@@ -681,6 +678,7 @@ local ALIASES: { [string]: string } = {
     Nine = "9",
 }
 
+-- the same few key names come in every frame, so each one is cleaned up once and remembered
 local normalized: { [string]: string } = {}
 local normalizedCount = 0
 
@@ -912,6 +910,32 @@ function Library.tab(self: Map, name: string, options: Map?): Map
     return Builder.newTab(self.Window, name, options)
 end
 
+-- the Home page: Greeting (optional text after the greeting), QuickStart = up to four { Title, Text, Icon, Flag } or
+-- { Title, Text, Icon, Callback(window), Active(window) -> bool } cards. without it Home shows the first four switches
+function Library.home(self: Map, spec: Map?)
+    self.Window.HomeSpec = spec or {}
+end
+
+-- Home is the first page of every window with a sidebar, a page the script named Home becomes it
+local function installHome(window: Map)
+    if window.M.NoSidebar then
+        return
+    end
+    local spec = window.TabByName.Home
+    if not spec then
+        spec = Builder.newTab(window, "Home", { Group = "Main" }).Spec
+    end
+    spec.home = true
+    spec.sections = {}
+    spec.group = "Main"
+    local at = table.find(window.Tabs, spec)
+    if at then
+        table.remove(window.Tabs, at)
+    end
+    table.insert(window.Tabs, 1, spec)
+    window.HomeTab = spec
+end
+
 function Library.updates(self: Map, spec: Map): Map
     return UpdatesPage.build(self.Window, spec)
 end
@@ -1056,6 +1080,7 @@ function Library.start(self: Map)
     end
     self.Started = true
     local window = self.Window
+    installHome(window)
     if not self.User.NoSettings then
         Pages.install(window)
     end
@@ -1115,6 +1140,22 @@ local function newScope(): Scope
 end
 
 local fallback: Scope = newScope()
+
+-- an executor without a working Drawing library gets objects that take every write and draw nothing, so a frame that
+-- draws never errors and the window keeps working
+local blank = { __index = function(): any
+    return function() end
+end }
+
+local function make(kind: string): any
+    local ok, object = pcall(function(): any
+        return Drawing.new(kind)
+    end)
+    if ok and object ~= nil then
+        return object
+    end
+    return setmetatable({}, blank)
+end
 local scopes: { [string]: Scope } = {}
 local current: Scope = fallback
 local touched: { Scope } = { fallback }
@@ -1123,6 +1164,7 @@ local frameStamp = 0
 
 local camera: any = nil
 local order = 0
+local fixedZ: number? = nil
 
 local FONT = 0
 local BLACK = Color3.new(0, 0, 0)
@@ -1131,13 +1173,19 @@ function Canvas.setCamera(value: any)
     camera = value
 end
 
+-- everything drawn after this sits on one fixed layer instead of each object over the one before, so a shape that takes
+-- a different number of pieces each frame does not change the layer of every object after it. nil stacks again
+function Canvas.layer(z: number?)
+    fixedZ = z
+end
+
 local function acquire(kind: string): (any, Map)
     local pool = current.pools[kind]
     local index = pool.used + 1
     pool.used = index
     local item = pool.items[index]
     if not item then
-        local object = Drawing.new(kind)
+        local object = make(kind)
         item = { object = object, shadow = {} }
         pool.items[index] = item
     end
@@ -1145,17 +1193,22 @@ local function acquire(kind: string): (any, Map)
     return item.object, item.shadow
 end
 
+local function write(object: any, key: string, value: any)
+    object[key] = value
+end
+
+-- a property a partial Drawing library does not know is skipped instead of failing the whole frame
 local function set(object: any, shadow: Map, key: string, value: any)
     if shadow[key] ~= value then
         shadow[key] = value
-        object[key] = value
+        pcall(write, object, key, value)
     end
 end
 
 local function style(object: any, shadow: Map, color: Color3, alpha: number)
     set(object, shadow, "Color", color)
     set(object, shadow, "Transparency", math.clamp(alpha, 0, 1))
-    set(object, shadow, "ZIndex", order)
+    set(object, shadow, "ZIndex", fixedZ or order)
     set(object, shadow, "Visible", true)
 end
 
@@ -1179,6 +1232,7 @@ end
 
 function Canvas.begin()
     order = 0
+    fixedZ = nil
     frameStamp += 1
     lastTouched, touched = touched, { fallback }
     fallback.stamp = frameStamp
@@ -1226,6 +1280,7 @@ function Canvas.finish()
         end
     end
     current = fallback
+    fixedZ = nil
 end
 
 function Canvas.clear()
@@ -1311,6 +1366,7 @@ local probe: any = nil
 local measured: { [string]: Vector2 } = {}
 local measuredCount = 0
 
+-- reading the bounds goes through the engine three writes and a read, so a text seen before is answered from memory
 function Canvas.measure(text: string, size: number): Vector2
     local key = size .. "|" .. text
     local known = measured[key]
@@ -1370,14 +1426,14 @@ function Canvas.glowLabel(center: Vector2, size: number, text: string, fill: Col
     Canvas.text(Vector2.new(center.X, center.Y - bounds.Y * 0.5), size, Color3.new(1, 1, 1), 1, text, true, nil)
 end
 
-function Canvas.text(position: Vector2, size: number, color: Color3, alpha: number, text: string, center: boolean, font: any)
+function Canvas.text(position: Vector2, size: number, color: Color3, alpha: number, text: string, center: boolean, font: any, outline: boolean?)
     local object, shadow = acquire("Text")
     local used = if type(font) == "number" and font >= 0 and font <= 3 then font else FONT
     set(object, shadow, "Text", text)
     set(object, shadow, "Size", size)
     set(object, shadow, "Font", used)
     set(object, shadow, "Center", center)
-    set(object, shadow, "Outline", true)
+    set(object, shadow, "Outline", outline ~= false)
     set(object, shadow, "OutlineColor", BLACK)
     set(object, shadow, "Position", position)
     style(object, shadow, color, alpha)
@@ -1527,6 +1583,7 @@ local nodes: { Node } = {}
 local sink: any = nil
 local widths: { [string]: number } = {}
 local widthCount = 0
+local nextSample = 0
 
 local MAX_CACHED_WIDTHS = 512
 local ROOT_NAME = "OkloUI"
@@ -1541,6 +1598,24 @@ local function container(): any
     return game:GetService("CoreGui")
 end
 
+-- some executors cannot put a gui in CoreGui, the player gui is the last place left so the window still opens
+local function place(gui: any)
+    if pcall(function()
+        gui.Parent = container()
+    end) and gui.Parent then
+        return
+    end
+    pcall(function()
+        local player = game:GetService("Players").LocalPlayer
+        gui.Parent = player:FindFirstChildOfClass("PlayerGui") or player:WaitForChild("PlayerGui", 5)
+    end)
+end
+
+local function globals(): any
+    local ok, env = pcall(getgenv)
+    return if ok and type(env) == "table" then env else _G
+end
+
 local function ensureRoot(): any
     if root and root.Parent then
         return root
@@ -1550,11 +1625,11 @@ local function ensureRoot(): any
     gui.ResetOnSpawn = false
     gui.IgnoreGuiInset = true
     gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
-    local env = getgenv()
+    local env = globals()
     local order = math.min((tonumber(env.__OkloUIOrder) or 2147483000) + 1, 2147483640)
     env.__OkloUIOrder = order
     gui.DisplayOrder = order
-    gui.Parent = container()
+    place(gui)
     root = gui
     return gui
 end
@@ -1593,6 +1668,7 @@ local fine = false
 
 local function rounded(object: any, shadow: Map, rawRadius: number, half: number?)
     local radius = math.floor(rawRadius + 0.5)
+    -- a full circle in fine mode is rounded by scale, a corner of whole pixels would change in steps while the circle grows or shrinks slowly
     if fine and half and rawRadius > 0 and rawRadius >= half - 0.01 then
         radius = -1
     end
@@ -1612,6 +1688,7 @@ local function rounded(object: any, shadow: Map, rawRadius: number, half: number
     corner.CornerRadius = if radius < 0 then UDim.new(0.5, 0) else UDim.new(0, radius)
 end
 
+-- while on, boxes keep their fractional position and size, so slow motion glides instead of stepping from pixel to pixel
 function Draw.fine(state: boolean)
     fine = state
 end
@@ -1624,6 +1701,7 @@ local clipFrame: any = nil
 local clipX, clipY = 0, 0
 local clipW, clipH = 0, 0
 
+-- everything drawn while a clip is set is cut off at its edges instead of spilling over
 function Draw.setClip(x: number, y: number, width: number, height: number)
     local left, top = math.floor(x + 0.5), math.floor(y + 0.5)
     local wide, tall = math.max(0, math.floor(width + 0.5)), math.max(0, math.floor(height + 0.5))
@@ -1648,6 +1726,7 @@ function Draw.setClip(x: number, y: number, width: number, height: number)
     clipFrame, clipX, clipY, clipW, clipH = frame, left, top, wide, tall
 end
 
+-- the box that cuts off what is drawn now, nil while nothing does
 function Draw.clipBox(): (number?, number?, number?, number?)
     if not clipFrame then
         return nil, nil, nil, nil
@@ -1676,7 +1755,7 @@ function Draw.endFrame()
     clipFrame = nil
 end
 
-local function place(object: any, shadow: Map, rawX: number, rawY: number, rawWidth: number, rawHeight: number)
+local function place(object: any, shadow: Map, rawX: number, rawY: number, rawWidth: number, rawHeight: number, whole: boolean?)
     local target = clipFrame
     if shadow.holder ~= target then
         shadow.holder = target
@@ -1688,7 +1767,8 @@ local function place(object: any, shadow: Map, rawX: number, rawY: number, rawWi
         rawY -= clipY
     end
     local x, y, width, height
-    if fine then
+    -- text always sits on whole pixels, a label between pixels lets every letter round to a different pixel and the spacing goes uneven
+    if fine and not whole then
         x, y, width, height = math.floor(rawX * 8 + 0.5) / 8, math.floor(rawY * 8 + 0.5) / 8, rawWidth, rawHeight
     else
         x, y = math.floor(rawX + 0.5), math.floor(rawY + 0.5)
@@ -1738,6 +1818,7 @@ function Draw.rect(): Node
         layer(object, shadow, z)
         rounded(object, shadow, radius, math.min(width, height) * 0.5)
     end
+    -- a color gradient over the whole box, the colors are spread evenly, rotation is in degrees
     function node.paint(self: Node, colors: { Color3 }, rotation: number)
         local shadow = self.shadow
         local gradient = shadow.gradient
@@ -1756,6 +1837,7 @@ function Draw.rect(): Node
         if not changed and previous then
             for index, color in colors do
                 local old = previous[index]
+                -- any change at all, a skipped small step lets a slow sky build up and then jump, on a soft gradient that moves its bands by many pixels at once
                 if old.R ~= color.R or old.G ~= color.G or old.B ~= color.B then
                     changed = true
                     break
@@ -1779,6 +1861,7 @@ function Draw.rect(): Node
             gradient.Enabled = true
         end
     end
+    -- the color of the box fades from the strength "from" to the strength "to" over its size, 0 is clear and 1 is solid, rotation is in degrees
     function node.fade(self: Node, from: number, to: number, rotation: number)
         local shadow = self.shadow
         local gradient = shadow.gradient
@@ -1816,6 +1899,7 @@ end
 
 local sequences: { [string]: any } = {}
 
+-- weight is how much of the trail shows, 1 is the trail and 0 the flat line, in between the line eases from one to the other
 local function trailSequences(color: Color3, light: Color3, weight: number): (any, any)
     local key = (if weight >= 1 then "t" elseif weight <= 0 then "f" else "w" .. weight) .. tostring(color) .. tostring(light)
     local cached = sequences[key]
@@ -1932,8 +2016,19 @@ function Draw.text(): Node
     object.Parent = ensureRoot()
     local node: any = { kind = "text", object = object, shown = false, shadow = {} }
     node.show, node.remove = show, remove
-    function node.update(self: Node, text: string, x: number, y: number, width: number, height: number, size: number, color: Color3, alpha: number, z: number, font: number)
+    function node.drawnWidth(_self: Node): number?
+        local ok, width = pcall(function(): any
+            return object.TextBounds.X
+        end)
+        return if ok and type(width) == "number" and width > 0 then width else nil
+    end
+    function node.update(self: Node, text: string, x: number, y: number, width: number, height: number, size: number, color: Color3, alpha: number, z: number, font: number, centered: boolean?)
         local shadow = self.shadow
+        local align = if centered then 1 else 0
+        if shadow.align ~= align then
+            shadow.align = align
+            object.TextXAlignment = if centered then Enum.TextXAlignment.Center else Enum.TextXAlignment.Left
+        end
         if shadow.text ~= text then
             shadow.text = text
             object.Text = text
@@ -1942,9 +2037,15 @@ function Draw.text(): Node
             shadow.size = size
             object.TextSize = size
         end
-        if shadow.font ~= font then
-            shadow.font = font
-            object.Font = Fonts.enum(font)
+        local face = Fonts.face(font)
+        local faced = if face ~= nil then 1 else 0
+        if shadow.font ~= font or shadow.faced ~= faced then
+            shadow.font, shadow.faced = font, faced
+            if face ~= nil then
+                object.FontFace = face
+            else
+                object.Font = Fonts.enum(font)
+            end
         end
         if shadow.color ~= color then
             shadow.color = color
@@ -1955,8 +2056,15 @@ function Draw.text(): Node
             shadow.alpha = transparency
             object.TextTransparency = transparency
         end
-        place(object, shadow, x, y, width, height)
+        place(object, shadow, x, y, width, height, true)
         layer(object, shadow, z)
+        if face ~= nil and #text >= 6 and os.clock() >= nextSample and Fonts.wantsSample(font) and string.find(text, "^%S.*%S$") then
+            nextSample = os.clock() + 0.25
+            local drawn = node:drawnWidth()
+            if drawn then
+                Fonts.learn(font, text, size, drawn)
+            end
+        end
     end
     return track(node)
 end
@@ -1999,6 +2107,10 @@ function Draw.image(): Node
 end
 
 function Draw.measure(text: string, size: number, font: number): number
+    local own = Fonts.measure(font, text, size)
+    if own then
+        return own
+    end
     local key = tostring(font) .. ":" .. tostring(size) .. ":" .. text
     local cached = widths[key]
     if cached then
@@ -2190,15 +2302,59 @@ function Config.save(self: Self, name: string, state: Map, flags: Map, definitio
     return Storage.writeJson(self:path(name), collect(state, flags, definitions))
 end
 
+-- base64 done here instead of asking the executor for it, not every executor has the functions and a code must open anywhere
+local B64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+local B64_INDEX: { [number]: number } = {}
+for index = 1, 64 do
+    B64_INDEX[string.byte(B64, index)] = index - 1
+end
+B64_INDEX[string.byte("-")] = 62
+B64_INDEX[string.byte("_")] = 63
+
+local function toBase64(text: string): string
+    local out: { string } = {}
+    for at = 1, #text, 3 do
+        local a, b, c = string.byte(text, at, at + 2)
+        local n = a * 65536 + (b or 0) * 256 + (c or 0)
+        local c1, c2, c3, c4 = bit32.rshift(n, 18) % 64, bit32.rshift(n, 12) % 64, bit32.rshift(n, 6) % 64, n % 64
+        out[#out + 1] = string.sub(B64, c1 + 1, c1 + 1) .. string.sub(B64, c2 + 1, c2 + 1)
+            .. (if b then string.sub(B64, c3 + 1, c3 + 1) else "=") .. (if c then string.sub(B64, c4 + 1, c4 + 1) else "=")
+    end
+    return table.concat(out)
+end
+
+local function fromBase64(text: string): string?
+    local clean = string.gsub(text, "[^%w%+/%-_]", "")
+    local out: { string } = {}
+    local bits, count = 0, 0
+    for at = 1, #clean do
+        local value = B64_INDEX[string.byte(clean, at)]
+        if not value then
+            return nil
+        end
+        bits = bits * 64 + value
+        count += 1
+        if count == 4 then
+            out[#out + 1] = string.char(bit32.rshift(bits, 16) % 256, bit32.rshift(bits, 8) % 256, bits % 256)
+            bits, count = 0, 0
+        end
+    end
+    if count == 2 then
+        out[#out + 1] = string.char(bit32.rshift(bits, 4) % 256)
+    elseif count == 3 then
+        out[#out + 1] = string.char(bit32.rshift(bits, 10) % 256, bit32.rshift(bits, 2) % 256)
+    elseif count == 1 then
+        return nil
+    end
+    return table.concat(out)
+end
+
 function Config.share(self: Self, state: Map, flags: Map, definitions: { [string]: Map }): string
     local json = Storage.encode(collect(state, flags, definitions))
-    local ok, encoded = pcall(function()
-        return base64encode(json)
-    end)
-    if json == "" or not ok or type(encoded) ~= "string" then
+    if json == "" then
         return ""
     end
-    return self.ShareId .. encoded
+    return self.ShareId .. toBase64(json)
 end
 
 local function decodeValue(value: any, current: any): any
@@ -2249,18 +2405,24 @@ function Config.load(self: Self, name: string, state: Map, flags: Map, definitio
 end
 
 function Config.loadCode(self: Self, text: string, state: Map, flags: Map, definitions: { [string]: Map }): Loaded?
-    local code = string.match(text, "^%s*(.-)%s*$") or ""
+    -- a pasted code often carries line breaks, spaces or quotes around it, and may come from a version with another prefix
+    local code = string.gsub(text, "[%s\"']", "")
     local prefix = self.ShareId
-    if string.sub(code, 1, #prefix) ~= prefix then
+    if string.sub(code, 1, #prefix) == prefix then
+        code = string.sub(code, #prefix + 1)
+    else
+        code = string.gsub(code, "^[%w_%-]+:", "")
+    end
+    local json = fromBase64(code)
+    local data = if json then Storage.decode(json) else nil
+    if type(data) ~= "table" then
+        -- the plain settings text is taken too
+        data = Storage.decode(text)
+    end
+    if type(data) ~= "table" or (data.Flags == nil and next(data) == nil) then
         return nil
     end
-    local ok, json = pcall(function()
-        return base64decode(string.sub(code, #prefix + 1))
-    end)
-    if not ok or type(json) ~= "string" then
-        return nil
-    end
-    return apply(Storage.decode(json), state, flags, definitions)
+    return apply(data, state, flags, definitions)
 end
 
 function Config.delete(self: Self, name: string, defaultName: string): boolean
@@ -2336,11 +2498,12 @@ Settings.PERSISTED_KEYS = {
     "Keybind", "OptionKeybinds",    "UITrans", "ButtonTrans", "Transparent", "LightMode", "AccentCol", "MainCol",
     "BackgroundEffect", "SnowCol", "SnowSize", "SnowSpeed", "SnowAmount", "SnowTrans",
     "UIScale", "UILayoutVersion", "HighPerformanceMode", "UIFont", "AnimationsEnabled",
-    "PremiumEffects", "AnimationIntensity", "NavSide", "Roundness", "ToggleRoundness",
+    "PremiumEffects", "AnimationIntensity", "ReduceMotion", "NavSide", "Roundness", "ToggleRoundness",
 } :: { string }
 
+-- window behavior settings, saved in their own file so they apply before the first frame and do not depend on a config
 Settings.UI_KEYS = {
-    "WatermarkEnabled", "RememberTab", "LastTab", "LockPosition", "ClickSound", "ToggleNotifications", "StartHidden", "FasterLoader",
+    "WatermarkEnabled", "RememberTab", "LastTab", "LockPosition", "ClickSound", "ToggleNotifications", "StartHidden", "FasterLoader", "CompactSidebar",
 } :: { string }
 
 Settings.COLOR_KEYS = {
@@ -2350,7 +2513,7 @@ Settings.COLOR_KEYS = {
 } :: { [string]: boolean }
 
 Settings.APPEARANCE_KEYS = {
-    "NavSide", "Roundness", "ToggleRoundness", "UITrans", "ButtonTrans", "Transparent", "LightMode",
+    "NavSide", "CompactSidebar", "Roundness", "ToggleRoundness", "UITrans", "ButtonTrans", "Transparent", "LightMode",
     "BackgroundEffect", "SnowSize", "SnowSpeed", "SnowAmount", "SnowTrans", "UIFont",
     "PremiumEffects", "AnimationsEnabled", "AnimationIntensity", "UIScale",
 } :: { string }
@@ -2365,6 +2528,7 @@ function Settings.create(): State
     return {
         Keybind = "RightShift",
         OptionKeybinds = {},
+        ReduceMotion = false,
 
         UITrans = 1,
         ButtonTrans = 1,
@@ -2382,14 +2546,15 @@ function Settings.create(): State
         SnowAmount = 40,
         SnowTrans = 0.4,
 
-        UIFont = "1",
+        UIFont = "54",
         HighPerformanceMode = false,
         AnimationsEnabled = true,
         PremiumEffects = true,
         AnimationIntensity = 1.0,
         NavSide = "Left",
+        CompactSidebar = true,
         Roundness = Settings.DEFAULT_ROUNDNESS,
-        ToggleRoundness = 0.55,
+        ToggleRoundness = 0.4,
 
         WatermarkEnabled = true,
         RememberTab = false,
@@ -2416,6 +2581,8 @@ local import: (string) -> any = ...
 local Painter: typeof(require("./painter")) = import("ui/painter")
 local Storage: typeof(require("../core/storage")) = import("core/storage")
 
+-- the bird that draws itself in on the loader, played from the same sheets the loader keeps. They are 16 frames to a sheet in a 4 by 4 grid.
+-- the loader has usually saved them already, anything missing is downloaded into the same folder
 local BirdSheet = {}
 
 local COLS, ROWS = 4, 4
@@ -2450,6 +2617,7 @@ local function fetch(url: string): string?
     return nil
 end
 
+-- starts getting the sheets in the background once, drawing waits until all of them are there
 function BirdSheet.start()
     if started or type(getcustomasset) ~= "function" or type(request) ~= "function" then
         return
@@ -2495,6 +2663,7 @@ function BirdSheet.ready(): boolean
     return not failed and #urls >= NEEDED
 end
 
+-- draws one frame of the animation inside a square of the given size, each sheet keeps its own nodes so a frame never swaps the picture of a node that is showing
 function BirdSheet.draw(frame: number, position: Vector2, side: number, alpha: number, zIndex: number, tint: Color3?)
     local index = math.clamp(math.floor(frame), 0, DRAW_FRAMES - 1)
     local sheet = index // PER_SHEET + 1
@@ -2510,6 +2679,7 @@ function BirdSheet.draw(frame: number, position: Vector2, side: number, alpha: n
     end
     local inner = Painter.active()
     Painter.scope("bird:sheet:" .. sheet)
+    -- the square is cut out of the outer clip so the bird never shows outside the page either
     local left, top = position.X, position.Y
     local right, bottom = left + side, top + side
     if outerAt and outerSize then
@@ -2534,6 +2704,11 @@ modules["ui/builder"] = function(...)
 
 local import: (string) -> any = ...
 local Controls: typeof(require("./controls")) = import("ui/controls")
+local Effects: typeof(require("./effects")) = import("ui/effects")
+local Hits: typeof(require("./hits")) = import("ui/hits")
+local Motion: typeof(require("./motion")) = import("ui/motion")
+local Painter: typeof(require("./painter")) = import("ui/painter")
+local Skyfx: typeof(require("./skyfx")) = import("ui/skyfx")
 
 local Builder = {}
 
@@ -2582,6 +2757,1267 @@ for _, kind in CONTROL_TYPES do
     end
 end
 
+local function mix(from: Color3, to: Color3, share: number): Color3
+    return Color3.new(from.R + (to.R - from.R) * share, from.G + (to.G - from.G) * share, from.B + (to.B - from.B) * share)
+end
+
+-- the controls added on top of the classic ones. each is built from the classic pieces, so search, configs and keybinds
+-- keep working for them, and a script that never calls them looks and works as before
+
+-- a card header: a bold title and one plain line under it saying what the card is for
+-- the title sits low in its row and the line sits high in its own, so the two read as one heading with room above it and a 10 gap under it
+function Section.card(self: Map, options: Map): Map
+    if options.Text then
+        self:add({ Type = "Label", Text = tostring(options.Title or ""), Size = 14.5, Bold = true, Height = 30, Offset = 4 })
+        self:add({ Type = "Label", Text = tostring(options.Text), Size = 12, Height = 26, Offset = -4 })
+    else
+        self:add({ Type = "Label", Text = tostring(options.Title or ""), Size = 14.5, Bold = true, Height = 36, Offset = 2 })
+    end
+    return self
+end
+
+-- a status line whose text comes from a function every frame, for things like "Auto Green: ready"
+function Section.status(self: Map, options: Map): Map
+    local read = options.Label
+    return self:add({
+        Type = "Label",
+        Text = "",
+        Label = read,
+        Size = options.Size or 12,
+        Accent = options.Accent,
+        Height = options.Height or 22,
+        Show = options.Show,
+    })
+end
+
+-- a choice of two to four short values as an iOS segmented control
+function Section.segment(self: Map, options: Map): Map
+    local descriptor = describe("Dropdown", options)
+    descriptor.Segment = true
+    return self:add(descriptor)
+end
+
+local Advanced = {}
+Advanced.__index = Advanced
+
+function Advanced.add(self: Map, descriptor: Map): Map
+    local group = self.Group
+    local base = descriptor.Show
+    local copy = table.clone(descriptor)
+    copy.Show = function(window: any): boolean
+        return group.open == true and (base == nil or base(window) == true)
+    end
+    local spec = Controls.compile(self.Window, copy, self.TabSpec)
+    spec.advanced = group
+    spec.baseShow = if base then base else function(): boolean
+        return true
+    end
+    table.insert(self.Spec.rows, spec)
+    return self
+end
+
+for _, kind in CONTROL_TYPES do
+    Advanced[string.lower(kind)] = function(self: Map, options: Map): Map
+        return self:add(describe(kind, options))
+    end
+end
+
+-- two controls side by side inside the group, both come and go with it
+function Advanced.pair(self: Map, left: Map, right: Map): Map
+    local group = self.Group
+    local function inside(descriptor: Map): Map
+        local base = descriptor.Show
+        local copy = table.clone(descriptor)
+        copy.Show = function(window: any): boolean
+            return group.open == true and (base == nil or base(window) == true)
+        end
+        local spec = Controls.compile(self.Window, copy, self.TabSpec)
+        spec.advanced = group
+        spec.baseShow = if base then base else function(): boolean
+            return true
+        end
+        return spec
+    end
+    table.insert(self.Spec.rows, { kind = "pair", left = inside(left), right = inside(right), noStack = left.NoStack == true or right.NoStack == true })
+    return self
+end
+
+function Advanced.label(self: Map, text: any): Map
+    return self:add(if type(text) == "table" then describe("Label", text) else { Type = "Label", Text = text })
+end
+
+function Advanced.segment(self: Map, options: Map): Map
+    local descriptor = describe("Dropdown", options)
+    descriptor.Segment = true
+    return self:add(descriptor)
+end
+-- a closed group of the less used options under one "Advanced" row. the row opens and closes it with a spring, the search
+-- still finds what is inside and opens it. returns a section to add the advanced controls to
+function Section.advanced(self: Map, title: string?): Map
+    local group = { open = false, title = title or "Advanced" }
+    self:add({
+        Type = "Custom",
+        Height = 34,
+        Render = function(kit: any, app: any)
+            local pal = app.Pal
+            local turn = kit:ease("turn", if group.open then 1 else 0, 14)
+            local hovered = kit:hovered("advanced")
+            kit:text(group.title, 14, kit.Height / 2, 13, if hovered then pal.Text else pal.Sub, false, true)
+            -- a chevron that turns down as the group opens
+            kit:chevron(kit:measure(group.title, 13) + 26, kit.Height / 2, turn, if hovered then pal.Text else pal.Sub)
+            kit:region("advanced", 0, 0, kit.Width, kit.Height, function()
+                group.open = not group.open
+            end)
+        end,
+    })
+    return setmetatable({ Window = self.Window, TabSpec = self.TabSpec, Spec = self.Spec, Group = group }, Advanced) :: any
+end
+
+-- the blocks of a home or feature page share one look: the same 12 corner, the same 14 padding inside, the same 10 gap under every block
+-- and the same lifted well behind small controls, so a hero, a preset row, tiles and cards line up on both edges
+local BLOCK_PAD, BLOCK_GAP, BLOCK_ROUND = 16, 12, 18
+
+-- cuts a text down until it fits, at the end of a word when one is close, with two dots at the end
+local function clip(kit: any, text: string, size: number, room: number, face: number?): string
+    if room <= 0 then
+        return ""
+    end
+    if kit:measure(text, size, face) <= room then
+        return text
+    end
+    local cut = #text
+    while cut > 1 and kit:measure(string.sub(text, 1, cut) .. "..", size, face) > room do
+        cut -= 1
+    end
+    local head = string.sub(text, 1, cut)
+    local word = string.match(head, "^(.*%S)%s+%S*$")
+    if word and #word >= cut - 12 then
+        head = word
+    end
+    return head .. ".."
+end
+
+-- fits a name into its room: a little smaller first, then cut
+local function fitName(kit: any, text: string, size: number, room: number, face: number?): (string, number)
+    local wide = kit:measure(text, size, face)
+    if wide <= room then
+        return text, size
+    end
+    local smaller = math.max(size * 0.8, size * room / math.max(1, wide))
+    if kit:measure(text, smaller, face) <= room then
+        return text, smaller
+    end
+    return clip(kit, text, smaller, room, face), smaller
+end
+
+-- breaks a text into at most `most` lines that fit the room, the last line is cut when words are left over
+local function wrapLines(kit: any, text: string, size: number, room: number, most: number): { string }
+    local words: { string } = {}
+    for word in string.gmatch(text, "%S+") do
+        table.insert(words, word)
+    end
+    local lines: { string } = {}
+    local index = 1
+    while index <= #words and #lines < most do
+        local line = words[index]
+        index += 1
+        while index <= #words and kit:measure(line .. " " .. words[index], size) <= room do
+            line ..= " " .. words[index]
+            index += 1
+        end
+        if #lines == most - 1 and index <= #words then
+            line = clip(kit, line .. " " .. table.concat(words, " ", index), size, room)
+            index = #words + 1
+        else
+            line = clip(kit, line, size, room)
+        end
+        table.insert(lines, line)
+    end
+    -- a last line with one short word looks left behind, a word from the line above keeps it company when it fits
+    local count = #lines
+    if count >= 2 and not string.find(lines[count], "%.%.$") and kit:measure(lines[count], size) < room * 0.3 then
+        local above, moved = string.match(lines[count - 1], "^(.*%S)%s+(%S+)$")
+        if above and moved and kit:measure(moved .. " " .. lines[count], size) <= room then
+            lines[count - 1] = above
+            lines[count] = moved .. " " .. lines[count]
+        end
+    end
+    return lines
+end
+
+-- the lifted well behind a small control on a card: a pill a touch lighter than the card with a hairline
+local function well(kit: any, pal: any, bg: Color3, x: number, y: number, w: number, h: number, hot: number)
+    kit:box(x, y, w, h, mix(bg, pal.Text, 0.075 + 0.05 * hot), 1, h / 2)
+    kit:border(x, y, w, h, h / 2, pal.Text, 0.06 + 0.06 * hot, 1)
+end
+
+-- the cursor is over this box of the block and over the part of the view it shows in, no popup or menu is open
+local function under(kit: any, x: number, y: number, w: number, h: number): boolean
+    local app = kit.App
+    if app.Modal or Hits.busy() and not Hits.isDragging(app.HoverKey) then
+        return false
+    end
+    local mouse: Vector2 = app.Mouse
+    local at, size = kit:p(x, y), kit:s(w, h)
+    if mouse.X < at.X or mouse.Y < at.Y or mouse.X > at.X + size.X or mouse.Y > at.Y + size.Y then
+        return false
+    end
+    local cx, cy, cw, ch = Painter.clipBox()
+    return not (cx and cy and cw and ch) or (mouse.X >= cx and mouse.Y >= cy and mouse.X <= cx + cw and mouse.Y <= cy + ch)
+end
+
+local SHADOW = Color3.new(0, 0, 0)
+local WHITE = Color3.new(1, 1, 1)
+local KNOB_WHITE = Color3.fromRGB(250, 250, 252)
+
+-- one surface for every block: a soft two step shadow under it, the fill, a faint light along the top edge and a hairline rim that
+-- brightens with hover and with lit (an on switch). returns the fill so the controls on it can be mixed from it
+local function surface(kit: any, pal: any, x: number, y: number, w: number, h: number, radius: number, hover: number, lit: number, seen: number): Color3
+    local light: number = pal.Light or 0
+    radius *= Painter.curve()
+    kit:box(x - 2, y + 4, w + 4, h + 2, SHADOW, (0.07 + 0.05 * hover) * (1 - 0.4 * light), radius + 2)
+    kit:box(x, y + 1.5, w, h, SHADOW, (0.16 + 0.04 * hover) * (1 - 0.6 * light), radius)
+    local bg = mix(mix(pal.Panel, pal.Text, 0.025 * hover + 0.015 * lit), pal.Accent, 0.025 * lit * (1 - light))
+    kit:box(x, y, w, h, bg, 1 - 0.5 * seen, radius)
+    kit:fade(x, y, w, math.min(h, 90), mix(pal.Text, WHITE, light), 0.045 + 0.02 * hover, 0, 90, radius)
+    kit:border(x, y, w, h, radius, pal.Text, 0.07 + 0.06 * hover + 0.07 * lit, 1)
+    return bg
+end
+
+-- a grid of tiles, each with a name, a small line and its own keycap. a tile runs its Callback when it is clicked or its key
+-- is pressed, the keycap sets the key. the keys are ordinary option keybinds, so they save and show on the Keybinds page
+-- options: Items = { { Name, Sub, Bind, Callback } }, Columns, Gate = flag that must be on for the tiles to act
+function Section.grid(self: Map, options: Map): Map
+    local window = self.Window
+    local items: { Map } = options.Items or {}
+    local columns = math.max(1, options.Columns or 3)
+    local tileHeight = options.TileHeight or 64
+    local gap = BLOCK_GAP
+    local rows = math.ceil(#items / columns)
+    local specs: { Map } = {}
+    for index, item in items do
+        local spec = {
+            kind = "button",
+            id = "grid:" .. tostring(item.Bind or index),
+            text = tostring(item.Name),
+            flag = "bind:" .. tostring(item.Bind or item.Name),
+            bindable = true,
+            onClick = function()
+                if type(item.Callback) == "function" then
+                    pcall(item.Callback)
+                end
+            end,
+        }
+        specs[index] = spec
+        window:defineBindable(spec, item.Key)
+    end
+    return self:add({
+        Type = "Custom",
+        Height = rows * tileHeight + (rows - 1) * gap + BLOCK_GAP,
+        Bare = true,
+        Count = #items,
+        Render = function(kit: any, app: any)
+            local pal = app.Pal
+            local width = (kit.Width - gap * (columns - 1)) / columns
+            for index, item in items do
+                local spec = specs[index]
+                local column = (index - 1) % columns
+                local row = math.floor((index - 1) / columns)
+                local x = column * (width + gap)
+                local y = row * (tileHeight + gap)
+                local tile = "tile:" .. index
+                local hover = kit:ease(tile, if kit:hovered(tile) then 1 else 0, 16)
+                local bg = surface(kit, pal, x, y, width, tileHeight, BLOCK_ROUND, hover, 0, 0)
+                -- the keycap sits on the name line at the right edge, the name keeps to the room left of it and the small line under
+                -- it has the whole width
+                local capW, capH = 42, 22
+                local nameY = y + BLOCK_PAD + capH / 2
+                local cx, cy = x + width - BLOCK_PAD - capW, nameY - capH / 2
+                local room = width - BLOCK_PAD * 2 - capW - 8
+                local name, nameSize = fitName(kit, tostring(item.Name), 13.5, room, kit:boldFace())
+                kit:text(name, x + BLOCK_PAD, if item.Sub then nameY else y + tileHeight / 2, nameSize, pal.Text, false, true, kit:boldFace())
+                if item.Sub then
+                    -- a line break in the small text gives more lines, the last one sits at the bottom
+                    local lines = string.split(tostring(item.Sub), "\n")
+                    for number, line in lines do
+                        local up = (#lines - number) * 14
+                        kit:text(clip(kit, line, 11, width - BLOCK_PAD * 2), x + BLOCK_PAD, y + tileHeight - BLOCK_PAD - 6 - up, 11, pal.Sub, false, true)
+                    end
+                end
+                kit:region(tile, x, y, width - capW - BLOCK_PAD - 4, tileHeight, function()
+                    spec.onClick()
+                end)
+                local cap = "cap:" .. index
+                local capture = app.Focus == app.CAPTURE_PREFIX .. spec.flag
+                local bound = app:shortKey(app.State.OptionKeybinds[spec.flag])
+                local empty = bound == "" or bound == "none" or bound == "None"
+                local lit = kit:ease(cap, if kit:hovered(cap) or capture then 1 else 0, 16)
+                well(kit, pal, bg, cx, cy, capW, capH, lit)
+                if capture then
+                    kit:border(cx, cy, capW, capH, 5, pal.Accent, 0.5 + 0.4 * math.sin(os.clock() * math.pi * 2), 1.5)
+                end
+                local label = if capture then "..." elseif empty then "Bind" else bound
+                kit:text(clip(kit, label, 12, capW - 8), cx + capW / 2, cy + capH / 2, 12, if empty and not capture then pal.Sub else pal.Text, true, true)
+                kit:region(cap, cx, cy, capW, capH, function()
+                    app:beginBindCapture(spec.flag)
+                end)
+            end
+        end,
+    })
+end
+
+-- a hero card for the top of a home page: a large card with a title, a status line read every frame and one plain line
+-- options: Title, Label()->string, Text, Height
+function Section.hero(self: Map, options: Map): Map
+    return self:add({
+        Type = "Custom",
+        Height = options.Height or 100,
+        Bare = true,
+        OwnSearch = false,
+        Render = function(kit: any, app: any)
+            local pal = app.Pal
+            local w, h = kit.Width, kit.Height - BLOCK_GAP
+            local room = w - BLOCK_PAD * 2
+            surface(kit, pal, 0, 0, w, h, BLOCK_ROUND, 0, 1, 0)
+            -- a wash of the accent from the top left corner, the hero is the one block that carries the theme color
+            kit:fade(0, 0, w, h, pal.Accent, 0.07 * (1 - (pal.Light or 0)), 0, 35, BLOCK_ROUND)
+            local title, titleSize = fitName(kit, tostring(options.Title or ""), 20, room, kit:boldFace())
+            kit:text(title, BLOCK_PAD, BLOCK_PAD + 12, titleSize, pal.Text, false, true, kit:boldFace())
+            local status = ""
+            if type(options.Label) == "function" then
+                local ok, text = pcall(options.Label)
+                status = if ok and type(text) == "string" then text else ""
+            end
+            kit:text(clip(kit, status, 12.5, room), BLOCK_PAD, BLOCK_PAD + 35, 12.5, mix(pal.Text, pal.Sub, 0.15), false, true)
+            if options.Text then
+                local text, textSize = fitName(kit, tostring(options.Text), 11.5, room)
+                kit:text(text, BLOCK_PAD, h - BLOCK_PAD - 2, textSize, pal.Sub, false, true)
+            end
+        end,
+    })
+end
+
+-- quick switch tiles: a grid of tiles, one per option, a tap turns the option on or off and the tile lights up
+-- options: Items = { { Name, Flag, Text } }, Columns
+function Section.tiles(self: Map, options: Map): Map
+    local window = self.Window
+    local items: { Map } = options.Items or {}
+    local columns = math.max(1, options.Columns or 3)
+    local tileHeight = 74
+    local gap = BLOCK_GAP
+    local rows = math.ceil(#items / columns)
+    return self:add({
+        Type = "Custom",
+        Height = rows * tileHeight + (rows - 1) * gap + BLOCK_GAP,
+        Bare = true,
+        Count = #items,
+        Render = function(kit: any, app: any)
+            local pal = app.Pal
+            local width = (kit.Width - gap * (columns - 1)) / columns
+            local switchW, switchH = kit.SWITCH_W or 34, kit.SWITCH_H or 20
+            for index, item in items do
+                local column = (index - 1) % columns
+                local row = math.floor((index - 1) / columns)
+                local x = column * (width + gap)
+                local y = row * (tileHeight + gap)
+                local key = "quick:" .. index
+                local on = window:get(item.Flag) == true
+                local lit = kit:ease(key .. ":on", if on then 1 else 0, 12)
+                local hover = kit:ease(key, if kit:hovered(key) or kit:hovered(key .. ":sw") then 1 else 0, 16)
+                surface(kit, pal, x, y, width, tileHeight, BLOCK_ROUND, hover, lit, 0)
+                -- the name has the whole top line, the state and the switch share the bottom line, so a long name never runs under the
+                -- switch. a name that is still too long gets a little smaller before it is cut
+                local inner = width - BLOCK_PAD * 2
+                local name, nameSize = fitName(kit, tostring(item.Name), 13.5, inner, kit:boldFace())
+                kit:text(name, x + BLOCK_PAD, y + BLOCK_PAD + 7, nameSize, pal.Text, false, true, kit:boldFace())
+                local switchY = y + tileHeight - BLOCK_PAD - switchH
+                local state = if on then "On" else tostring(item.Text or "Off")
+                kit:text(clip(kit, state, 11, inner - switchW - 8), x + BLOCK_PAD, switchY + switchH / 2, 11, mix(pal.Sub, pal.Text, lit), false, true)
+                kit:miniSwitch(key .. ":sw", x + width - BLOCK_PAD - switchW, switchY, on, function()
+                    window:set(item.Flag, not on)
+                end)
+                kit:region(key, x, y, width, tileHeight, function()
+                    window:set(item.Flag, not (window:get(item.Flag) == true))
+                end)
+            end
+        end,
+    })
+end
+
+local blockSerial = 0
+
+-- a search result that points into a block lights its spot up and tells the page where it is, so the page scrolls to it
+local function markSpot(kit: any, app: any, finds: { Map }, key: string, x: number, y: number, w: number, h: number, radius: number)
+    local mark = app.Highlight
+    if not (mark and mark.Spec and mark.Spec.finds == finds and mark.Key == key) then
+        return
+    end
+    mark.Offset = y
+    local level: number = app.HighlightLevel or 0
+    if level > 0.004 then
+        Effects.highlight(app.State, os.clock(), kit:p(x, y), kit:s(w, h), app.Unit, level * kit.Alpha, radius * kit.ScreenSize.X / kit.Width, app.Pal.Accent, kit.ZText + 1)
+    end
+end
+
+-- a cell or a chip that needs another flag on first: Requires is one flag or a list, any of them on is enough
+local function blockedBy(window: any, requires: any): boolean
+    if requires == nil then
+        return false
+    end
+    for _, flag in (if type(requires) == "table" then requires else { requires }) do
+        if window:get(flag) == true then
+            return false
+        end
+    end
+    return true
+end
+
+-- a table of switches: one row per thing, one column per way of showing it, like an ESP for players, killers and NPCs.
+-- every cell is a real toggle (flag, keybind, config, notification), the table only draws it. a cell with Requires stays dark
+-- until that flag is on, a click on the name of a row flips its first cell. a missing cell shows a faint dash
+-- options: Columns = { string }, Corner = small text over the names, Rows = { { Name, Cells = { [column] = { Flag, Name, Default, Requires, Keywords } } } }
+local MATRIX_HEAD, MATRIX_ROW, MATRIX_PAD = 30, 38, 4
+function Section.matrix(self: Map, options: Map): Map
+    local window = self.Window
+    local columns: { string } = options.Columns or {}
+    local rows: { Map } = {}
+    local finds: { Map } = {}
+    blockSerial += 1
+    local prefix = "matrix" .. blockSerial .. "_"
+    local total = 0
+    for index, source in options.Rows or {} do
+        local row: Map = { Name = tostring(source.Name), Cells = {}, Key = prefix .. index }
+        for column = 1, #columns do
+            local cell = source.Cells and source.Cells[column]
+            if cell then
+                local spec = Controls.compile(window, {
+                    Type = "Toggle",
+                    Name = cell.Name or (row.Name .. " " .. columns[column]),
+                    Flag = cell.Flag,
+                    Default = cell.Default,
+                    Keywords = cell.Keywords,
+                }, self.TabSpec)
+                row.Cells[column] = { Spec = spec, Requires = cell.Requires }
+                total += 1
+                table.insert(finds, { Text = tostring(spec.text), Words = row.Name .. " " .. columns[column], Key = row.Key, Control = spec })
+            end
+        end
+        table.insert(rows, row)
+    end
+    local height = MATRIX_PAD * 2 + MATRIX_HEAD + #rows * MATRIX_ROW
+    return self:add({
+        Type = "Custom",
+        Height = height + BLOCK_GAP,
+        Bare = true,
+        Finds = finds,
+        Count = total,
+        Render = function(kit: any, app: any)
+            local pal = app.Pal
+            local w = kit.Width
+            surface(kit, pal, 0, 0, w, height, BLOCK_ROUND, 0, 0, 0)
+            -- the names keep a third of the width, the columns share the rest evenly
+            local nameW = math.clamp(w * 0.32, 110, 220)
+            local colW = (w - nameW - 6) / math.max(1, #columns)
+            local boxW, boxH = kit.SWITCH_W or 34, kit.SWITCH_H or 20
+            local headY = MATRIX_PAD + MATRIX_HEAD / 2 + 1
+            if options.Corner then
+                kit:text(tostring(options.Corner), BLOCK_PAD, headY, 11, pal.Sub, false, true)
+            end
+            for column, label in columns do
+                kit:text(clip(kit, label, 11, colW - 6), nameW + (column - 0.5) * colW, headY, 11, pal.Sub, true, true)
+            end
+            for index, row in rows do
+                local ry = MATRIX_PAD + MATRIX_HEAD + (index - 1) * MATRIX_ROW
+                kit:box(BLOCK_PAD, ry, w - BLOCK_PAD * 2, 1, pal.Text, 0.06, 0)
+                local nameKey = row.Key .. ":name"
+                local first: Map? = nil
+                for column = 1, #columns do
+                    first = first or row.Cells[column]
+                end
+                local lit = kit:ease(row.Key .. ":lit", if first and first.Spec.get() == true then 1 else 0, 12)
+                local hot = kit:ease(row.Key .. ":hot", if kit:hovered(nameKey) then 1 else 0, 16)
+                kit:box(6, ry + 3, w - 12, MATRIX_ROW - 6, pal.Text, 0.035 * hot, 11)
+                local name, size = fitName(kit, row.Name, 13.5, nameW - BLOCK_PAD - 6, kit:boldFace())
+                kit:text(name, BLOCK_PAD, ry + MATRIX_ROW / 2, size, mix(pal.Sub, pal.Text, 0.55 + 0.45 * math.max(lit, hot)), false, true, kit:boldFace())
+                if first then
+                    local spec = first.Spec
+                    kit:region(nameKey, 0, ry, nameW, MATRIX_ROW, function()
+                        app:toggle(spec)
+                    end)
+                end
+                for column = 1, #columns do
+                    local cx = nameW + (column - 0.5) * colW
+                    local cell = row.Cells[column]
+                    if cell then
+                        local spec = cell.Spec
+                        local blocked = blockedBy(window, cell.Requires)
+                        local key = row.Key .. ":" .. column
+                        local dim = kit:ease(key .. ":dim", if blocked then 1 else 0, 12)
+                        kit:miniSwitch(key, cx + boxH / 2 - boxW, ry + (MATRIX_ROW - boxH) / 2, spec.get() == true, function()
+                            if not blockedBy(window, cell.Requires) then
+                                app:toggle(spec)
+                            end
+                        end, dim)
+                    else
+                        kit:box(cx - 4, ry + MATRIX_ROW / 2 - 0.75, 8, 1.5, pal.Sub, 0.35, 1)
+                    end
+                end
+                markSpot(kit, app, finds, row.Key, 6, ry + 3, w - 12, MATRIX_ROW - 6, 11)
+            end
+        end,
+    })
+end
+
+-- a wrap of chips, one per small on or off option, a lit chip is on. for many short options that need no settings of their own,
+-- every chip is a real toggle so search, keybinds and configs keep working. a chip with Requires stays dark until that flag is on
+-- options: Items = { { Name, Flag, Default, Requires, Keywords } }
+local CHIP_H, CHIP_GAP, CHIP_TEXT, CHIP_PAD = 30, 8, 12.5, 12
+function Section.chips(self: Map, options: Map): Map
+    local window = self.Window
+    local items: { Map } = {}
+    local finds: { Map } = {}
+    blockSerial += 1
+    local prefix = "chips" .. blockSerial .. "_"
+    for index, source in options.Items or {} do
+        local spec = Controls.compile(window, { Type = "Toggle", Name = source.Name, Flag = source.Flag, Default = source.Default, Keywords = source.Keywords }, self.TabSpec)
+        local item = { Spec = spec, Name = tostring(source.Short or source.Name), Requires = source.Requires, Key = prefix .. index }
+        table.insert(items, item)
+        table.insert(finds, { Text = tostring(spec.text), Words = tostring(source.Short or ""), Key = item.Key, Control = spec })
+    end
+    local holder = { Value = CHIP_H + CHIP_PAD * 2 + BLOCK_GAP }
+    return self:add({
+        Type = "Custom",
+        Height = holder,
+        Bare = true,
+        Finds = finds,
+        Count = #items,
+        Render = function(kit: any, app: any)
+            local pal = app.Pal
+            local w = kit.Width
+            local inner = w - CHIP_PAD * 2
+            -- the chips flow left to right and wrap, the block grows to hold every line
+            local places: { { number } } = {}
+            local x, line = 0, 0
+            for index, item in items do
+                local cw = math.min(inner, kit:measure(item.Name, CHIP_TEXT) + 44)
+                if x > 0 and x + cw > inner then
+                    x, line = 0, line + 1
+                end
+                places[index] = { x, line, cw }
+                x += cw + CHIP_GAP
+            end
+            local h = CHIP_PAD * 2 + (line + 1) * CHIP_H + line * CHIP_GAP
+            holder.Value = h + BLOCK_GAP
+            local bg = surface(kit, pal, 0, 0, w, h, BLOCK_ROUND, 0, 0, 0)
+            for index, item in items do
+                local spec = item.Spec
+                local place = places[index]
+                local cx, cy, cw = CHIP_PAD + place[1], CHIP_PAD + place[2] * (CHIP_H + CHIP_GAP), place[3]
+                local blocked = blockedBy(window, item.Requires)
+                local lit = kit:ease(item.Key .. ":lit", if spec.get() == true then 1 else 0, 14)
+                local hot = kit:ease(item.Key .. ":hot", if kit:hovered(item.Key) and not blocked then 1 else 0, 16)
+                local dim = kit:ease(item.Key .. ":dim", if blocked then 1 else 0, 12)
+                local shown = 1 - 0.55 * dim
+                local fill = mix(mix(bg, pal.Text, 0.06 + 0.05 * hot), pal.Accent, 0.32 * lit)
+                kit:box(cx, cy, cw, CHIP_H, fill, shown, CHIP_H / 2)
+                kit:border(cx, cy, cw, CHIP_H, CHIP_H / 2, mix(pal.Text, pal.Accent, lit), (0.08 + 0.06 * hot + 0.3 * lit) * shown, 1)
+                -- a ring while off, a check while on, both on the same spot so the label never moves
+                local mx, my = cx + 16, cy + CHIP_H / 2
+                if lit < 0.99 then
+                    kit:border(mx - 5, my - 5, 10, 10, 5, pal.Sub, 0.7 * (1 - lit) * shown, 1.3)
+                end
+                if lit > 0.01 then
+                    local ink = pal.Text
+                    kit:line(mx - 4, my + 0.2, mx - 1.2, my + 3, ink, 1.7, lit * shown)
+                    kit:line(mx - 1.2, my + 3, mx + 4.2, my - 3.2, ink, 1.7, lit * shown)
+                end
+                kit:text(clip(kit, item.Name, CHIP_TEXT, cw - 38), cx + 28, my, CHIP_TEXT, mix(mix(pal.Sub, pal.Text, 0.35 + 0.65 * math.max(lit, hot)), pal.Sub, dim), false, true)
+                kit:region(item.Key, cx, cy, cw, CHIP_H, function()
+                    if not blockedBy(window, item.Requires) then
+                        app:toggle(spec)
+                    end
+                end)
+                markSpot(kit, app, finds, item.Key, cx, cy, cw, CHIP_H, CHIP_H / 2)
+            end
+        end,
+    })
+end
+
+-- feature cards: a grid of cards, two to a row. each card has a title, a short text, a master switch, the one or two controls that
+-- matter shown on it and a closed Advanced row for the rest. the controls are real ones (flags, keybinds, configs, notifications),
+-- they are only drawn inside the card. a card opens and closes with a spring, its siblings in the row keep their size
+-- options: Columns, Items = { { Title, Text, Flag, Default, Callback, Key, Controls = { descriptor }, Advanced = { descriptor } } }
+local CARD_GAP, CARD_PAD = BLOCK_GAP, BLOCK_PAD
+-- the title line, the text under it (up to two lines) and the Advanced row at the bottom of a card
+local CARD_TITLE_Y, CARD_TEXT_Y, CARD_LINE, CARD_ADV, CARD_BOTTOM = 28, 49, 16, 36, 8
+local CARD_ROUND = 18
+local cardSerial = 0
+
+local function cardControl(window: any, tabSpec: Map, descriptor: Map, master: Map?): Map
+    local kind = descriptor.Type
+    if kind == nil then
+        kind = if descriptor.Min ~= nil then "Slider" elseif descriptor.Values ~= nil then "Dropdown" else "Toggle"
+    end
+    local copy = table.clone(descriptor)
+    -- a Note is plain explaining text between the options of a card
+    copy.Type = if kind == "Note" then "Label" else kind
+    local spec = Controls.compile(window, copy, tabSpec)
+    spec.cardKind = string.lower(kind)
+    spec.cardName = descriptor.Name
+    spec.cardInfo = descriptor.Info
+    -- an option of a card does nothing, and is shown dimmed, until the master switch of its card is on
+    spec.cardMaster = master
+    return spec
+end
+
+-- the header of a card ends this far down: under the title, or under the last line of its text
+local function cardHead(lines: number): number
+    return if lines == 0 then CARD_TITLE_Y + 22 else CARD_TEXT_Y + (lines - 1) * CARD_LINE + 16
+end
+
+local function cardLabels(spec: Map): { string }
+    local labels: { string } = {}
+    local values = spec.values
+    if type(values) == "table" then
+        for _, value in values do
+            table.insert(labels, tostring(value))
+        end
+    end
+    return labels
+end
+
+local function isCardSegment(spec: Map): boolean
+    return spec.cardKind == "dropdown" and spec.segment == true and type(spec.values) == "table" and #spec.values <= 3
+end
+
+local function clamp01(t: number): number
+    return math.clamp(t, 0, 1)
+end
+
+
+function Section.cards(self: Map, options: Map): Map
+    local window = self.Window
+    local columns = math.max(1, options.Columns or 2)
+    local items: { Map } = {}
+    local words: { string } = {}
+    cardSerial += 1
+    local prefix = "card" .. cardSerial .. "_"
+    local total = 0
+    for index, source in options.Items or {} do
+        local key = prefix .. index
+        local card: Map = { Title = tostring(source.Title), Text = source.Text, Inline = {}, Extra = {}, Open = false, Key = key, InlineKeys = {}, ExtraKeys = {}, ExtraFades = {}, HoverKey = key .. ":hover" }
+        table.insert(words, string.lower(tostring(source.Title) .. " " .. tostring(source.Text or "") .. " " .. tostring(source.Keywords or "")))
+        if source.Flag then
+            local master = table.clone(source)
+            master.Type = "Toggle"
+            master.Name = source.Name or source.Title
+            master.Controls, master.Advanced, master.Text, master.Title = nil, nil, nil, nil
+            card.Master = Controls.compile(window, master, self.TabSpec)
+            total += 1
+        end
+        for position, descriptor in source.Controls or {} do
+            table.insert(card.Inline, cardControl(window, self.TabSpec, descriptor, card.Master))
+            card.InlineKeys[position] = key .. ":i" .. position
+            table.insert(words, string.lower(tostring(descriptor.Name or "")))
+            total += 1
+        end
+        for position, descriptor in source.Advanced or {} do
+            table.insert(card.Extra, cardControl(window, self.TabSpec, descriptor, card.Master))
+            card.ExtraKeys[position] = key .. ":x" .. position
+            card.ExtraFades[position] = key .. ":x" .. position .. ":fade"
+            table.insert(words, string.lower(tostring(descriptor.Name or "")))
+            total += 1
+        end
+        items[index] = card
+    end
+    -- what the search can find here: every card and every option on it, Key names the card or the row to light up
+    local finds: { Map } = {}
+    for _, card in items do
+        table.insert(finds, { Text = card.Title, Words = tostring(card.Text or ""), Key = card.Key, Control = card.Master })
+        for position, spec in card.Inline do
+            table.insert(finds, { Text = tostring(spec.cardName or ""), Words = card.Title .. " " .. (spec.keywords or ""), Key = card.InlineKeys[position], Control = spec })
+        end
+        for position, spec in card.Extra do
+            table.insert(finds, { Text = tostring(spec.cardName or ""), Words = card.Title .. " " .. (spec.keywords or ""), Key = card.ExtraKeys[position], Control = spec, Open = function()
+                card.Open = true
+            end })
+        end
+    end
+    -- lets a test open every card at once
+    local openers = window.CardOpeners or {}
+    window.CardOpeners = openers
+    table.insert(openers, function(open: boolean)
+        for _, card in items do
+            card.Open = open
+        end
+    end)
+    local holder = { Value = 100 }
+    local startedAt = 0
+    local drawn = false
+    return self:add({
+        Type = "Custom",
+        Height = holder,
+        Bare = true,
+        Finds = finds,
+        Count = total,
+        Keywords = table.concat(words, " "),
+        Render = function(kit: any, app: any)
+            local pal = app.Pal
+            local state = app.State
+            local sky = app.SkyFrame
+            local seen = if sky and (sky.Sky ~= nil or sky.Cycle ~= nil) then math.max(sky.Flow, sky.Clear) else 0
+            local now = os.clock()
+            -- the cards rise in again each time their page is shown, the time comes from the page swap so a slow frame never replays it
+            local shownAt: number = app.PageShownAt or 0
+            if not drawn then
+                drawn = true
+                startedAt = now
+            elseif shownAt > startedAt then
+                startedAt = shownAt
+            end
+            local animated = state.AnimationsEnabled ~= false
+            local width = (kit.Width - CARD_GAP * (columns - 1)) / columns
+            local inner = width - CARD_PAD * 2
+            local switchW, switchH = kit.SWITCH_W or 34, kit.SWITCH_H or 20
+            local mark = app.Highlight
+            local markKey: string? = if mark and mark.Spec and mark.Spec.finds == finds then mark.Key else nil
+            local markLevel: number = if markKey then app.HighlightLevel or 0 else 0
+
+            -- a segment goes under its name when both do not fit on one line
+            local function stacked(spec: Map): boolean
+                if spec.cardStackAt ~= inner then
+                    local name = tostring(spec.cardName or spec.text or "")
+                    local need = kit:segmentWidth(cardLabels(spec))
+                    spec.cardStack = name ~= "" and kit:measure(name, 12.5) + 16 + need > inner
+                    spec.cardStackAt = inner
+                end
+                return spec.cardStack == true
+            end
+            local function noteLines(spec: Map): { string }
+                if spec.noteAt ~= inner then
+                    spec.noteAt = inner
+                    local all: { string } = {}
+                    -- each line of the text starts a new line, a long one wraps
+                    for paragraph in string.gmatch(tostring(spec.text or "") .. "\n", "([^\n]*)\n") do
+                        for _, line in wrapLines(kit, paragraph, 11.5, inner - 4, 4) do
+                            table.insert(all, line)
+                        end
+                    end
+                    spec.noteWrapped = all
+                end
+                return spec.noteWrapped
+            end
+            local function rowHeight(spec: Map): number
+                if spec.cardKind == "note" then
+                    return 10 + #noteLines(spec) * CARD_LINE
+                elseif spec.cardKind == "slider" then
+                    return 58
+                elseif isCardSegment(spec) and stacked(spec) then
+                    return 70
+                end
+                return 46
+            end
+
+            -- first pass: the text lines and the closed height of every card. the cards of a row share one closed height, with the
+            -- Advanced row on the bottom edge of each, so the closed cards of a row end and open on the same line
+            local heights: { number } = {}
+            local heads: { number } = {}
+            local bases: { number } = {}
+            local opens: { number } = {}
+            local owns: { number } = {}
+            for first = 1, #items, columns do
+                local last = math.min(first + columns - 1, #items)
+                local tallest = 0
+                for index = first, last do
+                    local card = items[index]
+                    if card.WrapAt ~= inner then
+                        card.WrapAt = inner
+                        local lines = if card.Text then wrapLines(kit, tostring(card.Text), 11.5, inner - 4, 2) else {}
+                        local changed = card.Lines == nil or #lines ~= #card.Lines
+                        if not changed then
+                            for line, text in lines do
+                                if card.Lines[line] ~= text then
+                                    changed = true
+                                    break
+                                end
+                            end
+                        end
+                        if changed then
+                            -- new line breaks cross fade with the old ones instead of jumping
+                            if card.Lines and animated then
+                                card.OldLines = card.Lines
+                                card.LineSwap = 0
+                            end
+                            card.Lines = lines
+                        end
+                    end
+                    card.LineSwap = if animated then Motion.ease(state, card.LineSwap or 1, 1, app.Dt, 16) else 1
+                    if card.LineSwap > 0.995 then
+                        card.LineSwap, card.OldLines = 1, nil
+                    end
+                    local goal = cardHead(#card.Lines)
+                    card.HeadShown = if animated and card.HeadShown then Motion.ease(state, card.HeadShown, goal, app.Dt, 14) else goal
+                    if math.abs(card.HeadShown - goal) < 0.05 then
+                        card.HeadShown = goal
+                    end
+                    local head = card.HeadShown
+                    local inline, extra = 0, 0
+                    for _, spec in card.Inline do
+                        inline += rowHeight(spec)
+                    end
+                    for _, spec in card.Extra do
+                        extra += rowHeight(spec)
+                    end
+                    card.ExtraHeight = extra
+                    local base = head + inline + (if #card.Extra > 0 then CARD_ADV else 0) + (if #card.Inline + #card.Extra > 0 then CARD_BOTTOM else 8)
+                    tallest = math.max(tallest, base)
+                    owns[index] = base
+                    heads[index] = head
+                end
+                for index = first, last do
+                    local open = clamp01(Motion.spring(state, kit.App.Springs, prefix .. index .. ":open", if items[index].Open then 1 else 0, app.Dt, 0.36, 1))
+                    opens[index] = open
+                    bases[index] = tallest
+                    heights[index] = tallest + items[index].ExtraHeight * open
+                end
+            end
+            local rowTop: { number } = {}
+            local cursor = 6
+            for first = 1, #items, columns do
+                local tallest = 0
+                for index = first, math.min(first + columns - 1, #items) do
+                    tallest = math.max(tallest, heights[index])
+                end
+                rowTop[(first - 1) // columns + 1] = cursor
+                cursor += tallest + CARD_GAP
+            end
+            holder.Value = math.max(60, cursor + 6)
+
+            local baseAlpha = kit.Alpha
+            for index, card in items do
+                local key = card.Key
+                local rowIndex = (index - 1) // columns + 1
+                local column = (index - 1) % columns
+                local x = column * (width + CARD_GAP)
+                local top = rowTop[rowIndex]
+                local h = heights[index]
+                local head = heads[index]
+                -- entrance: a short rise with a stagger down the page, no overshoot so nothing blinks past full strength
+                local t = if animated then clamp01((now - startedAt - 0.035 * (index - 1)) / 0.42) else 1
+                local entering = 1 - (1 - t) * (1 - t) * (1 - t)
+                if entering <= 0.001 then
+                    continue
+                end
+                Painter.scope(key)
+                kit.Alpha = baseAlpha * entering
+                local hover = kit:ease(card.HoverKey, if under(kit, x, top, width, h) then 1 else 0, 14)
+                local master = card.Master
+                local on = if master then master.get() == true else true
+                local lit = kit:ease(key .. ":on", if on and master then 1 else 0, 12)
+                -- how much the rows of a card are muted while its master switch is off
+                local muted = if master then 1 - lit else 0
+                local y = top + (1 - entering) * 10
+                local bg = surface(kit, pal, x, y, width, h, CARD_ROUND, hover, lit, seen)
+                local function tone(color: Color3): Color3
+                    return mix(color, bg, 0.62 * muted)
+                end
+
+                kit:region(key, x, y, width, head - 4, if master then function()
+                    master.set(not on)
+                end else nil)
+                local titleRoom = inner - (if master then switchW + 10 else 0)
+                local title, titleSize = fitName(kit, card.Title, 14.5, titleRoom, kit:boldFace())
+                kit:text(title, x + CARD_PAD, y + CARD_TITLE_Y, titleSize, pal.Text, false, true, kit:boldFace())
+                local swap = card.LineSwap or 1
+                local sub = mix(pal.Sub, pal.Text, 0.08)
+                if card.OldLines and swap < 1 then
+                    kit.Alpha = baseAlpha * entering * (1 - swap)
+                    for line, text in card.OldLines do
+                        kit:text(text, x + CARD_PAD, y + CARD_TEXT_Y + (line - 1) * CARD_LINE, 11.5, sub, false, true)
+                    end
+                end
+                kit.Alpha = baseAlpha * entering * swap
+                for line, text in card.Lines do
+                    kit:text(text, x + CARD_PAD, y + CARD_TEXT_Y + (line - 1) * CARD_LINE, 11.5, sub, false, true)
+                end
+                kit.Alpha = baseAlpha * entering
+                if master then
+                    kit:miniSwitch(key .. ":master", x + width - CARD_PAD - switchW, y + CARD_TITLE_Y - switchH / 2, on, function()
+                        master.set(not on)
+                    end)
+                end
+                if #card.Inline + #card.Extra > 0 then
+                    kit:box(x + CARD_PAD, y + head - 1, inner, 1, pal.Text, 0.06, 0)
+                end
+
+                local function drawRow(spec: Map, rowKey: string, ry: number, rh: number, fade: number)
+                    Painter.scope(rowKey)
+                    -- a Disabled option of a card is dimmed and does nothing, same as in a plain section
+                    local off = false
+                    if type(spec.disabled) == "function" then
+                        local ok, result = pcall(spec.disabled, window)
+                        off = ok and result == true
+                    elseif spec.disabled == true then
+                        off = true
+                    end
+                    kit.Alpha = baseAlpha * entering * fade * (1 - 0.3 * muted) * (if off then 0.45 else 1)
+                    local locked = (master ~= nil and not on) or off
+                    local function setRow(value: any)
+                        if not locked then
+                            spec.set(value)
+                        end
+                    end
+                    ry += (1 - fade) * (1 - fade) * 8
+                    local left, right = x + CARD_PAD, x + width - CARD_PAD
+                    if spec.cardKind == "note" then
+                        local quiet = tone(mix(pal.Sub, pal.Text, 0.08))
+                        for line, text in noteLines(spec) do
+                            kit:text(text, left, ry + 8 + (line - 1) * CARD_LINE, 11.5, quiet, false, true)
+                        end
+                        kit.Alpha = baseAlpha * entering
+                        Painter.scope(rowKey)
+                        return
+                    end
+                    local name = tostring(spec.cardName or spec.text or "")
+                    local hot = kit:ease(rowKey .. ":hot", if kit:hovered(rowKey) or kit:hovered(rowKey .. ":1") or kit:hovered(rowKey .. ":2") or kit:hovered(rowKey .. ":3") then 1 else 0, 16)
+                    local nameColor = tone(mix(pal.Sub, pal.Text, 0.55 + 0.45 * hot))
+                    if markKey == rowKey then
+                        mark.Offset = top + (ry - y)
+                    end
+                    kit:box(x + 6, ry + 1, width - 12, rh - 2, pal.Text, 0.03 * hot * (1 - muted), 11)
+                    if markKey == rowKey and markLevel > 0.004 then
+                        Effects.highlight(state, now, kit:p(x + 6, ry + 1), kit:s(width - 12, rh - 2), app.Unit, markLevel * kit.Alpha, 10 * kit.ScreenSize.X / kit.Width, pal.Accent, kit.ZText + 1)
+                    end
+                    local holeAt: number? = nil
+                    if spec.cardKind == "slider" then
+                        local minimum, maximum = spec.min, spec.max
+                        local value = tonumber(spec.get()) or minimum
+                        local fraction = math.clamp((value - minimum) / math.max(1e-6, maximum - minimum), 0, 1)
+                        local held = Hits.isDragging(rowKey)
+                        local smooth = clamp01(Motion.spring(state, app.Springs, rowKey .. ":f", fraction, app.Dt, if held then 0.1 else 0.24, 1))
+                        local shownValue: any = value
+                        if type(spec.format) == "function" then
+                            local ok, text = pcall(spec.format, value)
+                            if ok then
+                                shownValue = text
+                            end
+                        elseif spec.float then
+                            shownValue = math.floor(value * 100 + 0.5) / 100
+                        else
+                            shownValue = math.floor(value + 0.5)
+                        end
+                        -- the name and the value pill share one line, the track runs under them from the same left edge to the same right edge
+                        local lineY = ry + 16
+                        local valueText = tostring(shownValue)
+                        local pill = kit:measure(valueText, 11.5) + 18
+                        kit:text(clip(kit, name, 12.5, inner - pill - 10), left, lineY, 12.5, nameColor, false, true)
+                        well(kit, pal, bg, right - pill, lineY - 10, pill, 20, hot)
+                        kit:text(valueText, right - pill / 2, lineY, 11.5, tone(pal.Text), true, true)
+                        local barY = ry + 40
+                        local grab = kit:ease(rowKey .. ":grab", if held then 1 else 0, 18)
+                        local knob = 14 + 2 * grab
+                        local travel = right - left
+                        local kx = left + travel * smooth
+                        kit:box(left, barY - 2.5, right - left, 5, mix(bg, pal.Text, 0.11), 1, 2.5)
+                        kit:box(left, barY - 2.5, math.max(5, kx - left), 5, tone(kit.switchFill(pal)), 1, 2.5)
+                        kit:box(kx - knob / 2, barY - knob / 2 + 1.5, knob, knob, Color3.new(0, 0, 0), 0.28, knob / 2)
+                        kit:box(kx - knob / 2, barY - knob / 2, knob, knob, tone(KNOB_WHITE), 1, knob / 2)
+                        kit:dragBar(rowKey, left - 6, ry + 26, right - left + 12, rh - 26, left, travel, function(f: number)
+                            local raw = minimum + f * (maximum - minimum)
+                            if spec.step then
+                                raw = minimum + math.floor((raw - minimum) / spec.step + 0.5) * spec.step
+                            elseif not spec.float then
+                                raw = math.floor(raw + 0.5)
+                            end
+                            setRow(math.clamp(raw, minimum, maximum))
+                        end)
+                    elseif spec.cardKind == "dropdown" then
+                        local values: { any } = if type(spec.values) == "table" then spec.values else {}
+                        local current = spec.get()
+                        local selected = 1
+                        local labels = cardLabels(spec)
+                        for position, value in values do
+                            if value == current then
+                                selected = position
+                            end
+                        end
+                        if isCardSegment(spec) then
+                            local function choose(choice: number)
+                                setRow(values[choice])
+                            end
+                            if stacked(spec) then
+                                kit:text(clip(kit, name, 12.5, inner), left, ry + 14, 12.5, nameColor, false, true)
+                                kit:segment(rowKey, left, ry + 28, inner, 26, labels, selected, choose, muted)
+                            else
+                                local segWidth = math.min(inner, kit:segmentWidth(labels))
+                                if name ~= "" then
+                                    kit:text(clip(kit, name, 12.5, inner - segWidth - 10), left, ry + rh / 2, 12.5, nameColor, false, true)
+                                end
+                                kit:segment(rowKey, right - segWidth, ry + (rh - 26) / 2, segWidth, 26, labels, selected, choose, muted)
+                            end
+                        else
+                            local label = clip(kit, tostring(current), 11.5, inner * 0.6)
+                            local labelWidth = kit:measure(label, 11.5) + 34
+                            kit:text(clip(kit, name, 12.5, inner - labelWidth - 10 - (if spec.bindable then 60 else 0)), left, ry + rh / 2, 12.5, nameColor, false, true)
+                            well(kit, pal, bg, right - labelWidth, ry + (rh - 24) / 2, labelWidth, 24, hot)
+                            kit:text(label, right - labelWidth / 2 - 6, ry + rh / 2, 11.5, tone(pal.Text), true, true)
+                            -- a small up and down chevron at the right end of the pill, it cycles through the values
+                            local cx, cy = right - 12, ry + rh / 2
+                            local arrow = tone(mix(pal.Sub, pal.Text, hot))
+                            kit:chevron(cx, cy - 3.2, -1, arrow, 3, 1.6)
+                            kit:chevron(cx, cy + 3.2, 1, arrow, 3, 1.6)
+                            kit:region(rowKey, right - labelWidth, ry + (rh - 24) / 2, labelWidth, 24, function()
+                                if #values > 0 then
+                                    setRow(values[selected % #values + 1])
+                                end
+                            end)
+                        end
+                    elseif spec.cardKind == "button" or spec.cardKind == "color" then
+                        local swatch = spec.swatch
+                        local color = if swatch then swatch() else nil
+                        if typeof(color) == "Color3" then
+                            kit:text(clip(kit, name, 12.5, inner - 40), left, ry + rh / 2, 12.5, nameColor, false, true)
+                            local sw, sh = 30 + 2 * hot, 18 + 2 * hot
+                            kit:box(right - sw, ry + (rh - sh) / 2 + 1, sw, sh, Color3.new(0, 0, 0), 0.22, sh / 2)
+                            kit:box(right - sw, ry + (rh - sh) / 2, sw, sh, color, 1, sh / 2)
+                            kit:border(right - sw, ry + (rh - sh) / 2, sw, sh, sh / 2, pal.Text, 0.18 + 0.12 * hot, 1)
+                        else
+                            local shown: any = spec.label
+                            if type(shown) == "function" then
+                                local ok, text = pcall(shown, window)
+                                shown = if ok then text else nil
+                            end
+                            local label = tostring(shown or (if spec.cardKind == "color" then "Pick" else "Run"))
+                            local labelWidth = kit:measure(label, 11.5) + 24
+                            kit:text(clip(kit, name, 12.5, inner - labelWidth - 10), left, ry + rh / 2, 12.5, nameColor, false, true)
+                            well(kit, pal, bg, right - labelWidth, ry + (rh - 24) / 2, labelWidth, 24, hot)
+                            kit:text(label, right - labelWidth / 2, ry + rh / 2, 11.5, tone(pal.Text), true, true)
+                            -- a button with a keybind shows its key box next to the button
+                            if spec.bindable then
+                                local capKey = rowKey .. ":cap"
+                                local capture = app.Focus == app.CAPTURE_PREFIX .. spec.flag
+                                local bound = app:shortKey(app.State.OptionKeybinds[spec.flag])
+                                local empty = bound == "" or bound == "none" or bound == "None"
+                                local capW = 52
+                                local cx = right - labelWidth - 8 - capW
+                                -- the key box and the button each take their own clicks, the row only the name
+                                holeAt = cx - 4
+                                kit:region(rowKey .. ":run", right - labelWidth, ry + 2, labelWidth, rh - 4, function()
+                                    app:rememberClick(kit:p(right - labelWidth, ry + 2), kit:s(labelWidth, rh - 4), rowKey)
+                                    if not locked then spec.onClick(window) end
+                                end)
+                                local lit = kit:ease(capKey .. ":hot", if kit:hovered(capKey) or capture then 1 else 0, 16)
+                                well(kit, pal, bg, cx, ry + (rh - 24) / 2, capW, 24, lit)
+                                if capture then
+                                    kit:border(cx, ry + (rh - 24) / 2, capW, 24, 12, pal.Accent, 0.5 + 0.4 * math.sin(os.clock() * math.pi * 2), 1.5)
+                                end
+                                local keyLabel = if capture then "..." elseif empty then "Bind" else bound
+                                kit:text(clip(kit, keyLabel, 11.5, capW - 8), cx + capW / 2, ry + rh / 2, 11.5, if empty and not capture then pal.Sub else tone(pal.Text), true, true)
+                                kit:region(capKey, cx, ry + 2, capW, rh - 4, function()
+                                    if not locked then app:beginBindCapture(spec.flag) end
+                                end)
+                            end
+                        end
+                        kit:region(rowKey, left, ry + 2, (holeAt or right) - left, rh - 4, function()
+                            app:rememberClick(kit:p(left, ry + 2), kit:s(right - left, rh - 4), rowKey)
+                            if not locked then spec.onClick(window) end
+                        end)
+                    else
+                        local value = spec.get() == true
+                        local info = spec.cardInfo
+                        local infoW = if info then kit:measure("Info", 11.5) + 24 else 0
+                        local reserve = if info then infoW + 8 else 0
+                        kit:text(clip(kit, name, 12.5, inner - switchW - 10 - reserve), left, ry + rh / 2, 12.5, nameColor, false, true)
+                        kit:miniSwitch(rowKey, right - switchW, ry + (rh - switchH) / 2, value, function()
+                            setRow(not value)
+                        end, muted)
+                        if info then
+                            -- a small question mark that opens the explanation of the option
+                            local infoKey = rowKey .. ":info"
+                            local hotInfo = kit:ease(infoKey .. ":hot", if kit:hovered(infoKey) then 1 else 0, 16)
+                            local ix = right - switchW - 10 - infoW
+                            well(kit, pal, bg, ix, ry + (rh - 24) / 2, infoW, 24, hotInfo)
+                            kit:text("Info", ix + infoW / 2, ry + rh / 2, 11.5, tone(pal.Text), true, true)
+                            kit:region(infoKey, ix, ry + 2, infoW, rh - 4, function()
+                                window:openPopup("info", info)
+                            end)
+                        end
+                    end
+                    kit.Alpha = baseAlpha * entering
+                    Painter.scope(key)
+                end
+
+                -- a card shorter than its neighbour shares the spare height between its rows, so no gap opens above the Advanced row
+                local cursorY = y + head
+                local pad = if #card.Inline > 0 then math.max(0, bases[index] - owns[index]) / #card.Inline else 0
+                for position, spec in card.Inline do
+                    local rh = rowHeight(spec)
+                    drawRow(spec, card.InlineKeys[position], cursorY + pad / 2, rh, 1)
+                    cursorY += rh + pad
+                end
+
+                if #card.Extra > 0 then
+                    -- the Advanced row sits on the bottom edge of the closed card, so it lines up with the one of the card next to it
+                    local ay = y + bases[index] - CARD_BOTTOM - CARD_ADV
+                    local turn = opens[index]
+                    local advKey = key .. ":adv"
+                    local hotAdv = kit:ease(advKey .. ":hot", if kit:hovered(advKey) then 1 else 0, 16)
+                    local midY = ay + CARD_ADV / 2
+                    -- a soft pill behind the row while it is hovered or open
+                    kit:box(x + 8, ay + 3, width - 16, CARD_ADV - 6, tone(pal.Text), 0.035 * math.max(hotAdv, 0.6 * turn), (CARD_ADV - 6) / 2)
+                    local advColor = tone(mix(pal.Sub, pal.Text, math.max(hotAdv, turn)))
+                    kit:text("Advanced", x + CARD_PAD, midY, 12, advColor, false, true)
+                    local count = #card.Extra .. (if #card.Extra == 1 then " option" else " options")
+                    local countW = kit:measure(count, 10.5) + 14
+                    local countX = x + width - CARD_PAD - 16 - countW
+                    local keepAlpha = kit.Alpha
+                    kit.Alpha = keepAlpha * (1 - turn)
+                    -- the count bubble mutes with the rest of the row while the master switch is off
+                    kit:box(countX, midY - 9, countW, 18, tone(pal.Text), 0.06, 9)
+                    kit:text(count, countX + countW / 2, midY, 10.5, tone(pal.Sub), true, true)
+                    kit.Alpha = keepAlpha
+                    -- a chevron on the right edge that turns down as the group opens
+                    kit:chevron(x + width - CARD_PAD - 5, midY, turn, advColor, 4.5, 1.9)
+                    kit:region(advKey, x, ay, width, CARD_ADV, function()
+                        card.Open = not card.Open
+                    end)
+                    if turn > 0.01 or card.Open then
+                        local ey = ay + CARD_ADV
+                        for position, spec in card.Extra do
+                            local rh = rowHeight(spec)
+                            -- a row fades in over a short time once the card has grown past it, and out quickly as the card closes over it,
+                            -- timed and not tied to the growth so a fast spring never pops it in
+                            local room = math.clamp((y + h - ey - 8) / rh, 0, 1)
+                            local fade = kit:ease(card.ExtraFades[position], if card.Open and room > 0.45 then 1 else 0, if card.Open then 13 else 26)
+                            local shown = fade * math.clamp(room * 3, 0, 1)
+                            if shown > 0.004 then
+                                drawRow(spec, card.ExtraKeys[position], ey, rh, shown * shown * (3 - 2 * shown))
+                            end
+                            ey += rh
+                        end
+                    end
+                end
+                -- the card a search result points at: the light runs around the whole card
+                if markKey == key then
+                    mark.Offset = top
+                    if markLevel > 0.004 then
+                        Effects.highlight(state, now, kit:p(x, y), kit:s(width, h), app.Unit, markLevel * kit.Alpha, CARD_ROUND * Painter.curve() * kit.ScreenSize.X / kit.Width, pal.Accent, kit.ZText + 1)
+                    end
+                end
+                kit:scope(nil)
+            end
+            kit.Alpha = baseAlpha
+        end,
+    })
+end
+
+-- a full width card that holds colors in two columns, always open. options: Title, Text, Items = { color descriptor }
+function Section.palette(self: Map, options: Map): Map
+    local window = self.Window
+    local specs: { Map } = {}
+    local finds: { Map } = { { Text = tostring(options.Title), Words = tostring(options.Text or "") } }
+    for _, descriptor in options.Items or {} do
+        local spec = cardControl(window, self.TabSpec, descriptor)
+        table.insert(specs, spec)
+        table.insert(finds, { Text = tostring(descriptor.Name), Words = tostring(options.Title) })
+    end
+    local ROW, HEAD = 38, 62
+    cardSerial += 1
+    local prefix = "palette" .. cardSerial .. "_"
+    local rows = math.ceil(#specs / 2)
+    return self:add({
+        Type = "Custom",
+        Height = HEAD + rows * ROW + 8,
+        Bare = true,
+        Finds = finds,
+        Render = function(kit: any, app: any)
+            local pal = app.Pal
+            local sky = app.SkyFrame
+            local seen = if sky and (sky.Sky ~= nil or sky.Cycle ~= nil) then math.max(sky.Flow, sky.Clear) else 0
+            local w, h = kit.Width, HEAD + rows * ROW + 8
+            surface(kit, pal, 0, 0, w, h, BLOCK_ROUND, 0, 0, seen)
+            kit:text(tostring(options.Title), BLOCK_PAD, CARD_TITLE_Y, 14, pal.Text, false, true, kit:boldFace())
+            if options.Text then
+                kit:text(tostring(options.Text), BLOCK_PAD, CARD_TEXT_Y, 11, pal.Sub, false, true)
+            end
+            kit:box(BLOCK_PAD, HEAD - 1, w - BLOCK_PAD * 2, 1, pal.Text, 0.07, 0)
+            local colW = (w - BLOCK_PAD * 2 - 24) / 2
+            for index, spec in specs do
+                local column = (index - 1) % 2
+                local row = (index - 1) // 2
+                local left = BLOCK_PAD + column * (colW + 24)
+                local right = left + colW
+                local ry = HEAD + 4 + row * ROW
+                local key = prefix .. index
+                local hot = kit:ease(key .. ":hot", if kit:hovered(key) then 1 else 0, 16)
+                local name = clip(kit, tostring(spec.cardName or ""), 12, colW - 44)
+                kit:text(name, left, ry + ROW / 2, 12, mix(pal.Sub, pal.Text, 0.45 + 0.55 * hot), false, true)
+                local color = if spec.swatch then spec.swatch() else nil
+                local sw, sh = 26 + 2 * hot, 16 + 2 * hot
+                if typeof(color) == "Color3" then
+                    kit:box(right - sw, ry + (ROW - sh) / 2, sw, sh, color, 1, 5)
+                    kit:border(right - sw, ry + (ROW - sh) / 2, sw, sh, 5, pal.Text, 0.25, 1)
+                end
+                kit:region(key, left - 6, ry + 2, colW + 12, ROW - 4, function()
+                    app:rememberClick(kit:p(left, ry + 2), kit:s(colW, ROW - 4), key)
+                    spec.onClick(window)
+                end)
+            end
+        end,
+    })
+end
+
+-- presets: one tap sets a group of options. the control shows which preset the options match, Custom once any differs
+-- options: Name, Presets = { { Name, Values = { [flag] = value } } }
+function Section.presets(self: Map, options: Map): Map
+    local window = self.Window
+    local presets: { Map } = options.Presets or {}
+    local labels: { string } = {}
+    for _, preset in presets do
+        table.insert(labels, tostring(preset.Name))
+    end
+    table.insert(labels, "Custom")
+    return self:add({
+        Type = "Custom",
+        Height = 44 + BLOCK_GAP,
+        Bare = true,
+        Count = 1,
+        Render = function(kit: any, app: any)
+            local pal = app.Pal
+            local selected = #labels
+            for index, preset in presets do
+                local same = true
+                for flag, value in preset.Values do
+                    if window:get(flag) ~= value then
+                        same = false
+                        break
+                    end
+                end
+                if same then
+                    selected = index
+                    break
+                end
+            end
+            local w, h = kit.Width, kit.Height - BLOCK_GAP
+            surface(kit, pal, 0, 0, w, h, BLOCK_ROUND, 0, 0, 0)
+            -- the track keeps the same gap to the top, the bottom and the right edge of the row
+            local trackH = 28
+            local inset = (h - trackH) / 2
+            local boxWidth = math.min(w * 0.72, kit:segmentWidth(labels) + 16)
+            local name = tostring(options.Name or "Preset")
+            kit:text(clip(kit, name, 13.5, w - boxWidth - inset - BLOCK_PAD - 10, kit:boldFace()), BLOCK_PAD, h / 2, 13.5, pal.Text, false, true, kit:boldFace())
+            kit:segment("presets", w - boxWidth - inset, inset, boxWidth, trackH, labels, selected, function(index: number)
+                local preset = presets[index]
+                if preset then
+                    for flag, value in preset.Values do
+                        window:set(flag, value)
+                    end
+                end
+            end)
+        end,
+    })
+end
+
 function Tab.section(self: Map, title: string): Map
     local spec = { title = title, rows = {} }
     table.insert(self.Spec.sections, spec)
@@ -2617,6 +4053,13 @@ for _, kind in CONTROL_TYPES do
     end
 end
 
+for _, name in { "card", "status", "segment", "advanced", "grid", "presets", "hero", "tiles", "matrix", "chips" } do
+    Tab[name] = function(self: Map, ...: any): Map
+        local section = self:main()
+        return section[name](section, ...)
+    end
+end
+
 function Builder.newTab(window: Map, name: string, options: Map?): Map
     local settings: Map = options or {}
     local label = tostring(settings.Label or name)
@@ -2625,6 +4068,7 @@ function Builder.newTab(window: Map, name: string, options: Map?): Map
     spec.gate = settings.Gate
     spec.meteors = settings.Meteors == true
     spec.late = settings.Late == true
+    -- a page that filters its own content: the toolbar search is handed to its custom block and the global option results stay away
     spec.ownSearch = settings.OwnSearch == true
     spec.noun = settings.Noun
     return setmetatable({ Window = window, Spec = spec }, Tab) :: any
@@ -2662,10 +4106,14 @@ local BADGE_COMPACT = 46
 local WINDOW_ROUNDING, CARD_ROUNDING, PANEL_ROUNDING = 36, 36, 34
 local CHIP_HEIGHT = 24
 local FOOTER_HEIGHT = 34
+-- the content panel keeps the same 8 around its rows on every side, the section chips sit between the header and the panel
 local PANEL_PAD = 8
 local CHIPS_Y = 52
 local PANEL_GLIDE = 11
 
+-- the plain default theme is drawn like a Finder window: a flush frosted sidebar with small grey headers over rows of an icon and a label,
+-- a white content side with a toolbar of back and forward chevrons, the bold title and a search field, and a thin path bar at the bottom.
+-- every gap in it comes from one scale of 4, 8, 12 and 16, and every move in it is a spring or an exponential ease so it runs the same at any frame rate
 local SPACE_XS, SPACE_S, SPACE_M, SPACE_L = 4, 8, 12, 16
 local ROW_HEIGHT = 28
 local ROW_GAP = 2
@@ -2679,6 +4127,7 @@ local SEARCH_KEY = "head:search"
 local SEARCH_WIDTH = 176
 local SEARCH_GLYPH = 4.6
 local FROST_GLOWS = 3
+-- how much of the content well and the sidebar glass an animated or sky theme lets through
 local WELL_SEEN = 0.85
 local SIDE_SEEN = 0.5
 
@@ -2697,7 +4146,8 @@ function Chrome.metrics(options: { [string]: any }?): Metrics
     local width = pick(given.Width, 760, 360, 1400)
     local height = pick(given.Height, 460, 300, 900)
     local none = given.NoSidebar == true
-    local sidebar = if none then 0 else pick(given.SidebarWidth, 176, 110, math.min(300, width / 2.5))
+    -- the sidebar of the app window carries the player, it never gets narrower than it needs
+    local sidebar = if none then 0 else math.max(168, pick(given.SidebarWidth, 188, 110, math.min(300, width / 2.5)))
     return { Width = width, Height = height, SidebarWidth = sidebar, NoSidebar = none }
 end
 
@@ -2707,20 +4157,21 @@ local function ease(app: App, key: string, goal: number, speed: number): number
     return value
 end
 
-local function fitBrand(text: string, size: number, limit: number): (string, number)
+local function fitBrand(text: string, size: number, limit: number, face: number?): (string, number)
     if #text * size * 0.6 <= limit then
         return text, size
     end
-    local width = Painter.textWidth(text, size)
+    local width = Painter.textWidth(text, size, face)
     if width <= limit then
         return text, size
     end
+    -- whole sizes only, text at a size with a fraction gets its letters on uneven gaps
     local smaller = math.max(math.ceil(size * 0.6), math.floor(size * limit / width))
-    if Painter.textWidth(text, smaller) <= limit then
+    if Painter.textWidth(text, smaller, face) <= limit then
         return text, smaller
     end
     local cut = #text
-    while cut > 1 and Painter.textWidth(string.sub(text, 1, cut) .. "..", smaller) > limit do
+    while cut > 1 and Painter.textWidth(string.sub(text, 1, cut) .. "..", smaller, face) > limit do
         cut -= 1
     end
     return string.sub(text, 1, cut) .. "..", smaller
@@ -2756,6 +4207,7 @@ local function drawShadows(app: App, position: Vector2, size: Vector2)
         return
     end
     local rounding = math.max(12, math.round(WINDOW_ROUNDING * app.Scale))
+    -- the Finder look throws a wider and lower shadow, softer at every step so the window floats instead of sitting on a dark edge
     local pick = app.Pal.Pick
     for layer = 1, SHADOW_LAYERS do
         local spread = layer * (1.5 + 1.5 * pick)
@@ -2769,6 +4221,7 @@ local function drawShadows(app: App, position: Vector2, size: Vector2)
             rounding + spread * 2
         )
     end
+    -- the Finder look floats on one soft picture of light instead of stacked rings, so no ring edge shows at the corners
 end
 
 local function spring(app: App, key: string, goal: number, response: number, ratio: number): number
@@ -2780,6 +4233,7 @@ local function slidingPill(app: App, name: string, x: number, y: number, w: numb
         return
     end
     local pal = app.Pal
+    -- the caller keeps the pill on its row, lead is how far it still has to travel
     local py, speed = y, math.abs(lead) * 13
     local stretch = 1 + math.min(speed / 3200, 0.22)
     local ph = h * stretch
@@ -2787,14 +4241,17 @@ local function slidingPill(app: App, name: string, x: number, y: number, w: numb
     local size = app:size(w, ph)
     local outer = Painter.active()
     Painter.scope("pill:" .. name)
+    -- no glow under the selected row
     Painter.rect(pos, size, Color.lerp(pal.Panel, pal.Accent, math.max(0.20, pal.Pick)), app.Alpha.Btn * alpha, Z_NAV, 18 - 5 * pal.Pick)
     Painter.scope(outer)
 end
 
+-- the bold face for the Finder titles and headers, only while the window uses its own font so a picked font is never replaced
 local function boldFace(): number?
-    return if Painter.font() == Fonts.DEFAULT then Fonts.find("Gotham Bold") else nil
+    return Fonts.boldOf(Painter.font())
 end
 
+-- the side of the window the Finder sidebar covers, flush with the window edges, eased with the side setting
 local function strip(app: App): (number, number)
     local right = app.NavAnim["navside"]
     if type(right) ~= "number" then
@@ -2803,6 +4260,8 @@ local function strip(app: App): (number, number)
     return (app.M.Width - app.M.SidebarWidth) * right, app.M.SidebarWidth
 end
 
+-- the light of the search field for every small control of the chrome: a glow that rises with the level under it and a ring that pulses out once
+-- when the control was clicked, drawn in the scope of the control so the pieces keep their place from frame to frame
 local function halo(app: App, key: string, position: Vector2, size: Vector2, rounding: number, level: number)
     local pal = app.Pal
     local pulse = ease(app, key .. ":halo", 0, 3.2 * Motion.speed(app.State))
@@ -2817,6 +4276,7 @@ local function haloKick(app: App, key: string)
     app.NavAnim[key .. ":halo"] = 1
 end
 
+-- an arrow head drawn as a trail of small circles along both arms, the circles are smooth where a thin turned bar is jagged
 local function arrowHead(tip: Vector2, upper: Vector2, lower: Vector2, color: Color3, alpha: number, thickness: number)
     local half = Vector2.new(thickness / 2, thickness / 2)
     local size = Vector2.new(thickness, thickness)
@@ -2829,6 +4289,7 @@ local function arrowHead(tip: Vector2, upper: Vector2, lower: Vector2, color: Co
     end
 end
 
+-- the same arrow as a smooth picture, turned by degrees around its middle, false while the picture is not ready yet
 local function arrowIcon(app: App, middle: Vector2, pixels: number, degrees: number, color: Color3, alpha: number): boolean
     local asset, size = Logo.icon(app, "chevron", pixels)
     if not asset then
@@ -2839,6 +4300,7 @@ local function arrowIcon(app: App, middle: Vector2, pixels: number, degrees: num
     return true
 end
 
+-- a small folder made of a box and its tab, the icon of every row in the Finder sidebar
 local function folderGlyph(app: App, left: number, middle: number, color: Color3, alpha: number)
     local unit = app.Unit
     local width, height = math.floor(15 * unit + 0.5), math.floor(11 * unit + 0.5)
@@ -2848,6 +4310,7 @@ local function folderGlyph(app: App, left: number, middle: number, color: Color3
     Painter.rect(Vector2.new(x, y - math.floor(2 * unit + 0.5)), Vector2.new(math.floor(6 * unit + 0.5), math.floor(3 * unit + 0.5)), color, alpha, Z_NAV_TEXT, 1.5 * unit, true)
 end
 
+-- the Settings folder wears sliders instead of a folder so it reads as the place for the script itself
 local function slidersGlyph(app: App, left: number, middle: number, color: Color3, alpha: number)
     local unit = app.Unit
     local width = math.floor(15 * unit + 0.5)
@@ -2862,6 +4325,7 @@ local function slidersGlyph(app: App, left: number, middle: number, color: Color
     end
 end
 
+-- one row of the Finder sidebar: the folder icon, the label and a faint frosted tint while hovered, the selected row sits on the sliding pill
 local function fileGlyph(app: App, left: number, middle: number, color: Color3, alpha: number)
     local unit = app.Unit
     local width, height = math.floor(11 * unit + 0.5), math.floor(14 * unit + 0.5)
@@ -2873,6 +4337,7 @@ local function fileGlyph(app: App, left: number, middle: number, color: Color3, 
     end
 end
 
+-- style "folder" is a group with its tabs below it: a chevron that turns down while it is open, "file" is one of those tabs
 local function finderRow(app: App, key: string, x: number, y: number, w: number, label: string, active: boolean, alpha: number, onClick: (() -> ())?, style: string?, open: number?)
     local pal = app.Pal
     local outer = Painter.active()
@@ -2882,14 +4347,16 @@ local function finderRow(app: App, key: string, x: number, y: number, w: number,
     local lit = ease(app, key .. ":lit", if active then 1 else 0, 12 * Motion.speed(app.State))
     local pillAt = app.NavAnim.pillScreenY
     if style ~= "folder" and pillAt then
+        -- the text takes its selected colour exactly as far as the sliding pill has reached the row
         lit = math.clamp(1 - math.abs(y - pillAt) / (ROW_HEIGHT * 0.85), 0, 1) * (app.NavAnim.pillAlpha or 1)
     end
-    local scale = Press.scale(app, app.Springs, key .. ":press", key, hovered)
+    -- a long row does not shrink while it is held, that would slide its icon and name, it only darkens a little
+    local held = (1 - Press.scale(app, app.Springs, key .. ":press", key, hovered)) / Press.SHRINK
+    local scale = 1
     local full = app:size(w, ROW_HEIGHT)
-    local boxSize = full * scale
-    local position = app:pos(x, y) + (full - boxSize) / 2
+    local position, boxSize = app:pos(x, y), full
     halo(app, key, position, boxSize, ROW_ROUND * app.Unit, alpha * (0.14 * hover * (1 - lit)))
-    Painter.rect(position, boxSize, pal.Text, app.Alpha.Btn * alpha * hover * (1 - lit) * 0.07, Z_NAV, ROW_ROUND * app.Unit, true)
+    Painter.rect(position, boxSize, pal.Text, app.Alpha.Btn * alpha * (hover + 0.6 * held) * (1 - lit) * 0.07, Z_NAV, ROW_ROUND * app.Unit, true)
     local iconColor = Color.lerp(Color.lerp(pal.Sub, pal.Text, hover), pal.AccentText, lit)
     local unfold = math.clamp(open or 0, 0, 1)
     if style == "folder" then
@@ -2901,6 +4368,7 @@ local function finderRow(app: App, key: string, x: number, y: number, w: number,
         lead = 14
     end
     if style == "folder" then
+        -- the same arrow as the back and forward buttons, it turns from pointing right to pointing down while the folder opens
         local turn = math.rad(90 * math.clamp(open or 0, 0, 1))
         local dir = Vector2.new(math.cos(turn), math.sin(turn))
         local side = Vector2.new(-dir.Y, dir.X)
@@ -2934,6 +4402,8 @@ local function finderRow(app: App, key: string, x: number, y: number, w: number,
     end
 end
 
+-- the small grey header over a group of rows, when the sidebar is too short to hold every group the others fold under their header
+-- and a click on one opens its first page
 local function finderHeader(app: App, key: string, x: number, y: number, w: number, label: string, alpha: number, onClick: (() -> ())?)
     local pal = app.Pal
     local outer = Painter.active()
@@ -2956,15 +4426,32 @@ local function finderNav(app: App, _sx: number, _sw: number, reveal: number, sid
     local left, width = strip(app)
     local x, w = left + SPACE_M, width - SPACE_M * 2
     local bottom = m.Height - MARGIN - 48 - (if Farm.available(app) then 32 else 0)
-    local needed = NAV_TOP
+    -- the old layout has no Home page
+    local groups: { { [string]: any } } = {}
     for _, group in app.NavGroups do
+        local only = if #group.Tabs == 1 then app.TabByName[group.Tabs[1]] else nil
+        if not (only and only.home) then
+            table.insert(groups, group)
+        end
+    end
+    local needed = NAV_TOP
+    for _, group in groups do
         if #group.Tabs > 1 then
             needed += ROW_HEIGHT + ROW_GAP + (if group.Name == activeGroup or group.Name == "Settings" then #group.Tabs * (ROW_HEIGHT + ROW_GAP) else 0) + SPACE_XS
         else
             needed += ROW_HEIGHT + ROW_GAP
         end
     end
+    -- a window made too short for its tabs grows once to fit them (up to the largest size), the list only scrolls after that
+    if not app.NavGrown and needed > bottom then
+        app.NavGrown = true
+        m.Height = math.min(900, m.Height + (needed - bottom + SPACE_XS))
+        state.MenuSizeY = m.Height * state.UIScale
+        bottom = m.Height - MARGIN - 48 - (if Farm.available(app) then 32 else 0)
+    end
+    -- when the window is too short for every tab the list scrolls with the wheel and the rows fade out at both edges
     local reach = math.max(0, needed - bottom + SPACE_XS)
+    -- the list length follows the folders opening and closing smoothly, so a folding group never snaps the scroll position or lets rows through the bottom edge
     local overflow = ease(app, "nav:overflow", reach, 9 * Motion.speed(state))
     local nav = app.NavScroll
     if not nav then
@@ -2990,7 +4477,7 @@ local function finderNav(app: App, _sx: number, _sw: number, reveal: number, sid
     local y = NAV_TOP - nav.Pos
     local pillY: number? = nil
     local pillIndent = 0
-    for index, group in app.NavGroups do
+    for index, group in groups do
         local entry = math.clamp(reveal * 1.5 - (index - 1) * 0.12, 0, 1)
         local shift = (1 - entry) * 14 * side
         if #group.Tabs > 1 then
@@ -3009,8 +4496,10 @@ local function finderNav(app: App, _sx: number, _sw: number, reveal: number, sid
                 fade = fade * fade * fade
                 local tree = 14
                 local span = #group.Tabs * (ROW_HEIGHT + ROW_GAP) * open
+                -- the tree lines are always a whole pixel thick, a line thinner than one pixel is dropped at small interface scales
                 local hair = math.max(1, math.floor(app.Unit + 0.5))
                 local spine = app:pos(x + shift + SPACE_S + 2, y - ROW_GAP - 2)
+                -- the spine is cut into one piece per row, each fading with its own row, so it fades out at the list edges like the rows do
                 local spineX = math.floor(spine.X + 0.5)
                 local spineFrom = math.floor(spine.Y + 0.5)
                 for number, name in group.Tabs do
@@ -3033,6 +4522,7 @@ local function finderNav(app: App, _sx: number, _sw: number, reveal: number, sid
                 y += span
             end
             if group.Name == "Settings" then
+                -- the settings group sits on its own soft panel so it stands apart from the pages above it
                 local shown = entry * math.min(edge(groupTop, ROW_HEIGHT), edge(y - ROW_HEIGHT, ROW_HEIGHT))
                 Painter.scope("nav:settings:panel")
                 Painter.rect(app:pos(x + shift - 3, groupTop - 3), app:size(w + 6, math.max(0, y - groupTop - ROW_GAP + 6)), pal.Text, app.Alpha.Btn * shown * 0.06, Z_CARD + 1, ROW_ROUND * app.Unit + 3, true)
@@ -3056,6 +4546,7 @@ local function finderNav(app: App, _sx: number, _sw: number, reveal: number, sid
     if pillY then
         local target = pillY + nav.Pos
         if app.NavAnim.pillTab ~= current2 and app.NavAnim.pillLast then
+            -- a new row was picked: the pill starts where it was drawn and glides the rest of the way, it never trails a moving row
             app.NavAnim.pillOff = app.NavAnim.pillLast - target
         end
         app.NavAnim.pillTab = current2
@@ -3074,6 +4565,7 @@ local function finderNav(app: App, _sx: number, _sw: number, reveal: number, sid
         app.NavAnim.finderIndent = if pillY then pillIndent else app.NavAnim.finderIndent
         slidingPill(app, "finder", x + indent, app.NavAnim.pillLast, w - indent, ROW_HEIGHT, math.clamp(pillShown, 0, 1) * reveal, nav.Pos, off)
     end
+    -- a slim scrollbar on the edge of the list, it shows while the list moves and fades out again
     local moving = if overflow > 0.5 and math.abs(nav.Target - nav.Pos) > 0.5 then 1 else 0
     local bar = ease(app, "nav:bar", moving, if moving == 1 then 20 else 3)
     if overflow > 0.5 then
@@ -3081,12 +4573,15 @@ local function finderNav(app: App, _sx: number, _sw: number, reveal: number, sid
         local thumb = math.max(24, track * track / (track + overflow))
         local at = NAV_TOP + (track - thumb) * math.clamp(nav.Pos / overflow, 0, 1)
         Painter.scope("nav:bar")
-        Painter.rect(app:pos(x + w + SPACE_M - 5, at), app:size(3, thumb), pal.Sub, app.Alpha.Btn * reveal * (0.22 + 0.4 * bar), Z_NAV + 3, 2, true)
+        Painter.rect(app:pos(x + w + SPACE_M - 5, at), app:size(3, thumb), pal.Sub, app.Alpha.Btn * reveal * (0.42 + 0.4 * bar), Z_NAV + 3, 2, true)
         Painter.scope(nil)
     end
     return y
 end
 
+-- the frosted glass of the Finder look: the content side is laid white over the window and the sidebar gets a soft light from the top,
+-- a few wide glows that drift very slowly like light through blurred glass and a hairline where it meets the content.
+-- the same pieces are drawn every frame, only their place and strength move
 local function drawFrost(app: App, now: number, size: Vector2, rounding: number)
     local pal = app.Pal
     local alpha = app.Alpha.UI * pal.Pick
@@ -3102,6 +4597,7 @@ local function drawFrost(app: App, now: number, size: Vector2, rounding: number)
     Painter.scope("finder:frost")
     local white = Color.lerp(pal.Main, Color3.new(1, 1, 1), if pal.Main.R < 0.5 then 0.1 else 1)
     local glow = Skyfx.glow()
+    -- both sides are cut at the divider so their see through fills never overlap into a darker band
     Painter.clip(app:pos(left, 0), app:size(width, m.Height))
     Painter.gradient(app:pos(left - SPACE_L * right, 0), app:size(width + SPACE_L, m.Height), { Color.lerp(pal.Main, white, 0.9), Color.lerp(pal.Main, white, 0.4) }, 90, alpha * 0.72 * (1 - SIDE_SEEN * seen) * (if m.NoSidebar then 0 else 1), Z_CARD, radius)
     Painter.fine(true)
@@ -3117,6 +4613,7 @@ local function drawFrost(app: App, now: number, size: Vector2, rounding: number)
     Painter.fine(app.State.UIScaleAnim < 0.999)
     Painter.unclip()
     Painter.rect(app:pos(left + width * (1 - right) - right * 1, 0), Vector2.new(math.max(1, app.Scale * 0.8), size.Y), Color.lerp(pal.Off, pal.Sub, 0.18), alpha * 0.9 * (if m.NoSidebar then 0 else 1), Z_CARD + 1, 0)
+    -- an animated or sky theme shows through the content side, the well stays dark enough that the cards and text keep their depth
     local fill = alpha * (1 - WELL_SEEN * seen)
     local reach = if m.NoSidebar then 0 else SPACE_L * 2
     Painter.clip(app:pos(contentX, 0), app:size(contentW, m.Height))
@@ -3158,10 +4655,10 @@ local function drawSidebar(app: App, now: number)
         end
     end
     local limit = (sw - textX - 8) * app.Unit
-    local title, titleSize = fitBrand(options.Title, 18 * app.TextScale, limit)
+    local boldTitle: number? = if options.BoldTitles then Painter.bold() else nil
+    local title, titleSize = fitBrand(options.Title, 18 * app.TextScale, limit, boldTitle)
     app.BrandTitleSize = titleSize
     local subtitle, subtitleSize = fitBrand(options.Subtitle, 11 * app.TextScale, limit)
-    local boldTitle: number? = if options.BoldTitles then Fonts.find("Gotham Bold") else nil
     Painter.text(title, app:pos(sx + textX, 28 + drop) + drift, titleSize, pal.Text, text * brand, 4, false, true, boldTitle)
     Painter.text(subtitle, app:pos(sx + textX, 45 + drop) + drift, subtitleSize, pal.Sub, text * brand, 4, false, true)
     Painter.rect(app:pos(sx + 14, 62 + drop), app:size((sw - 28) * brand, 1), pal.Off, app.Alpha.UI * 0.8 * (1 - pal.Pick), Z_NAV, 0)
@@ -3388,7 +4885,7 @@ local function drawHeaderButtons(app: App, right: number, alpha: number)
         local shrunk = boxSize
         local moved = position
         Painter.scope(button.Key)
-        Painter.rect(moved, shrunk, Color.lerp(pal.Panel, pal.Accent, math.max(0.12 + 0.22 * hover, pal.Pick * hover)), app.Alpha.Btn * alpha, Z_NAV, 12)
+        Painter.rect(moved, shrunk, Color.lerp(pal.Panel, pal.Accent, math.max(0.12 + 0.22 * hover, pal.Pick * hover)), app.Alpha.Btn * alpha, Z_NAV, 14)
         local asset, pixels = nil, 0
         local cornerX, cornerY = math.floor(position.X + 0.5), math.floor(position.Y + 0.5)
         local boxPixels = math.floor(boxSize.X + 0.5)
@@ -3420,6 +4917,7 @@ local function drawHeaderButtons(app: App, right: number, alpha: number)
     end
 end
 
+-- back and forward walk the pages opened before, like the arrows of a Finder window, a page opened another way cuts off what was ahead
 local function trackHistory(app: App)
     local current = app.State.NextTab or app.State.CurrentTab
     local history: { string } = app.NavHistory
@@ -3450,21 +4948,20 @@ local function stepHistory(app: App, step: number)
     end
 end
 
+-- a toolbar chevron, it brightens while hovered and dims while there is nowhere to go
 local function chevron(app: App, key: string, x: number, direction: number, enabled: boolean, alpha: number, onClick: () -> ())
     local pal = app.Pal
     local hovered = app.HoverKey == key and not app.Modal and enabled
     local hover = ease(app, key, if hovered then 1 else 0, 14 * Motion.speed(app.State))
     local ready = ease(app, key .. ":ready", if enabled then 1 else 0, 10 * Motion.speed(app.State))
-    local lean = spring(app, key .. ":lean", if hovered then 1 else 0, 0.34, 0.5)
     local scale = Press.scale(app, app.Springs, key .. ":press", key, hovered)
     local full = app:size(CHEVRON_WIDTH, TOOLBAR_BUTTON)
-    local boxSize = full * scale
-    local position = app:pos(x, TOOLBAR_Y) + (full - boxSize) / 2
+    local position, boxSize = Press.box(app:pos(x, TOOLBAR_Y), full, scale)
     Painter.scope(key)
     halo(app, key, position, boxSize, ROW_ROUND * app.Unit, alpha * 0.14 * hover)
     Painter.rect(position, boxSize, pal.Text, app.Alpha.Btn * alpha * hover * 0.07, Z_NAV, ROW_ROUND * app.Unit, true)
     local unit = app.Unit * scale
-    local tip = position + boxSize / 2 + Vector2.new(direction * 1.5 * lean * unit, 0)
+    local tip = position + boxSize / 2
     local color = Color.lerp(pal.Sub, pal.Text, hover)
     local shown = app.Alpha.Text * alpha * (0.3 + 0.7 * ready)
     local thickness = math.max(2, 2.4 * unit)
@@ -3490,6 +4987,7 @@ local function searchQuery(app: App): string
     return app.SearchQuery or ""
 end
 
+-- what the search holds right now, lower case, for the page of results that stands in for the open page while something is typed
 function Chrome.query(app: App): string
     if app.Pal.Pick <= 0.5 then
         return ""
@@ -3514,6 +5012,11 @@ local function focusSearch(app: App, text: string)
     })
 end
 
+-- the search of the Finder toolbar. closed it is a button with a magnifier, a click springs it open to the left into a field
+-- while the magnifier rolls along with its left edge one full turn, a soft glow lifts the field like frosted glass,
+-- a ring pulses out once when it takes focus and a focus ring stays while typing, every typed letter gives the magnifier a small kick,
+-- the hint slides in behind the opening edge, the caret breathes instead of blinking and a clear button spins in once there is text.
+-- it filters the rows of the open page by their names
 local function drawSearch(app: App, right: number, alpha: number)
     local pal = app.Pal
     local state = app.State
@@ -3539,7 +5042,6 @@ local function drawSearch(app: App, right: number, alpha: number)
     local key = SEARCH_KEY
     local hovered = app.HoverKey == key and not app.Modal
     local hover = ease(app, key, if hovered then 1 else 0, 14 * speed)
-    local wobble = spring(app, "search:wobble", if hovered and not focused and query == "" then 1 else 0, 0.36, 0.42)
     local open = spring(app, "search:open", if focused or query ~= "" then 1 else 0, 0.5, 0.66)
     local ring = math.clamp(spring(app, "search:ring", if focused then 1 else 0, 0.3, 0.8), 0, 1)
     local grown = math.clamp(open, 0, 1)
@@ -3547,8 +5049,7 @@ local function drawSearch(app: App, right: number, alpha: number)
     local press = Press.scale(app, app.Springs, key .. ":press", key, hovered and not focused)
     local unit = app.Unit
     local full = app:size(width, TOOLBAR_BUTTON)
-    local boxSize = full * press
-    local position = app:pos(right - width, TOOLBAR_Y) + (full - boxSize) / 2
+    local position, boxSize = Press.box(app:pos(right - width, TOOLBAR_Y), full, press)
     local corner = 12 * Painter.corner()
     Painter.scope(key)
     local glow = Skyfx.glow()
@@ -3558,20 +5059,20 @@ local function drawSearch(app: App, right: number, alpha: number)
     Painter.border(position - Vector2.new(reach, reach), boxSize + Vector2.new(reach * 2, reach * 2), corner + reach, pal.Accent, app.Alpha.Btn * alpha * 0.4 * pulse * pulse, Z_NAV, 1.5)
     local pad = 1.5 * unit
     Painter.border(position - Vector2.new(pad, pad), boxSize + Vector2.new(pad * 2, pad * 2), corner + pad, pal.Accent, app.Alpha.Btn * alpha * 0.2 * ring, Z_NAV + 1, 2.5)
-    Painter.rect(position, boxSize, Color.lerp(pal.Panel, pal.Accent, 0.12 + 0.22 * hover * (1 - grown) - 0.06 * grown), app.Alpha.Btn * alpha, Z_NAV, 12)
-    Painter.fade(position, Vector2.new(boxSize.X, boxSize.Y * 0.6), Color3.new(1, 1, 1), 0.55, 0, 90, app.Alpha.Btn * alpha * grown * (1 - pal.Pick), Z_NAV, 12)
+    Painter.rect(position, boxSize, Color.lerp(pal.Panel, pal.Accent, 0.12 + 0.22 * hover * (1 - grown) - 0.06 * grown), app.Alpha.Btn * alpha, Z_NAV, 14)
+    Painter.fade(position, Vector2.new(boxSize.X, boxSize.Y * 0.6), Color3.new(1, 1, 1), 0.55, 0, 90, app.Alpha.Btn * alpha * grown * (1 - pal.Pick), Z_NAV, 14)
 
     local roll = -(width - TOOLBAR_BUTTON) / (SEARCH_WIDTH - TOOLBAR_BUTTON) * math.pi * 2
-    local tilt = math.rad(45 - 18 * wobble) + roll
+    local tilt = math.rad(45) + roll
     local direction = Vector2.new(math.cos(tilt), math.sin(tilt))
-    local middle = position + Vector2.new(TOOLBAR_BUTTON / 2 * unit * press, boxSize.Y / 2)
-    local radius = SEARCH_GLYPH * unit * (1 + 0.08 * hover * (1 - grown) + 0.16 * tick)
+    local middle = position + Vector2.new(TOOLBAR_BUTTON / 2 * unit - (full.X - boxSize.X) / 2, boxSize.Y / 2)
+    local radius = SEARCH_GLYPH * unit * (1 + 0.16 * tick)
     local center = middle - direction * 1.6 * unit
     local thickness = math.max(1.5, 1.6 * unit)
     local glyphColor = Color.lerp(pal.Sub, pal.Text, math.max(hover, ring))
     Painter.border(center - Vector2.new(radius, radius), Vector2.new(radius * 2, radius * 2), radius, glyphColor, app.Alpha.Text * alpha, Z_NAV_TEXT, thickness)
     local from = center + direction * (radius + thickness * 0.6)
-    Painter.line(from, from + direction * (3.8 + 1.2 * wobble + tick) * unit, glyphColor, app.Alpha.Text * alpha, Z_NAV_TEXT, thickness * 1.15)
+    Painter.line(from, from + direction * (3.8 + tick) * unit, glyphColor, app.Alpha.Text * alpha, Z_NAV_TEXT, thickness * 1.15)
 
     local size = 12 * app.TextScale
     local textLeft = position.X + (TOOLBAR_BUTTON - 2) * unit
@@ -3589,7 +5090,7 @@ local function drawSearch(app: App, right: number, alpha: number)
     Painter.text("Search", Vector2.new(textLeft + (1 - reveal) * SPACE_S * unit + 4 * unit * ring, textY), size, pal.Sub, app.Alpha.Text * alpha * reveal * hint, Z_NAV_TEXT, false, true)
     Painter.text(shownQuery, Vector2.new(textLeft, textY), size, pal.Text, app.Alpha.Text * alpha * reveal, Z_NAV_TEXT, false, true)
     local breathe = math.clamp(0.5 + 0.9 * math.cos(os.clock() * math.pi * 2 / 1.1), 0, 1)
-    local caretX = textLeft + (if shownQuery == "" then 0 else Painter.textWidth(shownQuery, size) + unit)
+    local caretX = textLeft + (if shownQuery == "" then 0 else Painter.drawnWidth(shownQuery, size) - unit)
     Painter.rect(Vector2.new(caretX, textY - 6 * unit), Vector2.new(math.max(1, 1.5 * unit), 12 * unit), pal.Text, app.Alpha.Text * alpha * ring * reveal * breathe, Z_NAV_TEXT, unit, true)
     local clearKey = key .. ":clear"
     local clearHover = ease(app, clearKey, if app.HoverKey == clearKey then 1 else 0, 16 * speed)
@@ -3629,6 +5130,27 @@ local function drawSearch(app: App, right: number, alpha: number)
             })
         end
     end
+end
+
+-- a short label whose words change: the old words fade out, then the new ones fade in on the same spot
+local function swapLabel(app: App, key: string, text: string): (string, number)
+    local store: { [string]: string } = app.SwapLabels
+    if not store then
+        store = {}
+        app.SwapLabels = store
+    end
+    local shown = store[key]
+    if shown == nil then
+        store[key] = text
+        app.NavAnim[key] = 1
+        return text, 1
+    end
+    local fade = ease(app, key, if shown == text then 1 else 0, 20 * Motion.speed(app.State))
+    if shown ~= text and fade < 0.03 then
+        store[key] = text
+        shown = text
+    end
+    return shown, fade
 end
 
 local function headerSteady(app: App, key: string, text: string, upcoming: string?): boolean
@@ -3680,6 +5202,7 @@ local function drawContent(app: App, tab: { [string]: any }, section: { [string]
     local steadyTitle = headerSteady(app, "title", title, upcomingTitle)
     local steadyDescription = headerSteady(app, "description", description, upcomingDescription)
     local still = Vector2.new(0, 0)
+    -- a script can ask for its logo at the left of the toolbar, the chevrons and the title then move over to make room
     local lead = 0
     if app.Options.HeaderLogo == true and app.LogoAsset then
         lead = (TOOLBAR_BUTTON + SPACE_S) * pick
@@ -3702,13 +5225,13 @@ local function drawContent(app: App, tab: { [string]: any }, section: { [string]
         4,
         false,
         true,
-        if app.Options.BoldTitles then Fonts.find("Gotham Bold") elseif pick > 0.5 then boldFace() else nil
+        if app.Options.BoldTitles then Painter.bold() elseif pick > 0.5 then boldFace() else nil
     )
     Painter.text(description, app:pos(cx + 4, 35.5) + (if steadyDescription then still else offset * 0.82), 11 * app.TextScale, pal.Sub, text * (if steadyDescription then 1 else alpha) * (1 - pick), 4, false, true)
     Painter.scope(nil)
 
     local chipAlpha = if state.TabFading then state.TabAlpha elseif state.SectionSwap then 1 else math.min(1, reveal * 1.4)
-    local chipsY = drawChips(app, tab, state.NextSection or index, cx + 4, cw - 8, chipAlpha)
+    local chipsY = drawChips(app, tab, Layout.shownIndex(app, tab), cx + 4, cw - 8, chipAlpha)
     local rowsY = if state.AnimationsEnabled then ease(app, "panel:top", chipsY, PANEL_GLIDE) else chipsY
     if math.abs(rowsY - chipsY) < 0.25 then
         rowsY = chipsY
@@ -3734,6 +5257,7 @@ local function drawContent(app: App, tab: { [string]: any }, section: { [string]
     Painter.rect(panelPos, panelSize, card, ui * cover * (1 - pick), 3, PANEL_ROUNDING)
     Painter.scope(nil)
 
+    -- when the search leaves the page without a row a quiet note takes the middle of the panel
     local query = app.SearchText or ""
     local empty = ease(app, "search:empty", if query ~= "" and not tab.ownSearch and Layout.sectionHeight(app, section) <= 0 then 1 else 0, 10 * Motion.speed(state))
     if query ~= "" then
@@ -3745,6 +5269,7 @@ local function drawContent(app: App, tab: { [string]: any }, section: { [string]
     Painter.text('Nothing here matches "' .. tostring(app.SearchShownQuery or "") .. '"', middle + Vector2.new(0, 10 * app.Unit), 11.5 * app.TextScale, pal.Sub, text * empty * pick * 0.8, 6, true, true)
     Painter.scope(nil)
 
+    -- the Finder path bar: a hairline over the full width of the content side and a small folder icon before the footer text
     local footerY = m.Height - FOOTER_HEIGHT / 2 - MARGIN + 6 + SPACE_XS * pick
     local footerX = cx + 4 + 21 * pick
     Painter.scope("content:pathbar")
@@ -3762,6 +5287,7 @@ local function drawContent(app: App, tab: { [string]: any }, section: { [string]
     end
     local statusShown = ease(app, "footer:status", if status then 1 else 0, 7 * Motion.speed(app.State))
     app.FooterStatus = status or app.FooterStatus
+    -- when the status changes the old text rises and fades out while the new one rises in from below
     if app.FooterStatus ~= app.FooterTarget then
         app.FooterOld = if app.FooterTarget ~= nil and app.FooterStatus ~= nil then app.FooterTarget else nil
         app.FooterTarget = app.FooterStatus
@@ -3794,7 +5320,7 @@ local function drawContent(app: App, tab: { [string]: any }, section: { [string]
         drawSearch(app, searchRight, text * pick)
         local history: { string } = app.NavHistory
         Painter.scope("head:navbg")
-        Painter.rect(app:pos(cx + 4 + lead, TOOLBAR_Y), app:size(CHEVRON_WIDTH * 2 + SPACE_XS, TOOLBAR_BUTTON), Color.lerp(pal.Panel, pal.Accent, 0.12), app.Alpha.Btn * text * pick, Z_NAV, 12)
+        Painter.rect(app:pos(cx + 4 + lead, TOOLBAR_Y), app:size(CHEVRON_WIDTH * 2 + SPACE_XS, TOOLBAR_BUTTON), Color.lerp(pal.Panel, pal.Accent, 0.12), app.Alpha.Btn * text * pick, Z_NAV, 14)
         Painter.scope(nil)
         chevron(app, "head:back", cx + 4 + lead, -1, app.NavIndex > 1, text * pick, function()
             stepHistory(app, -1)
@@ -3803,7 +5329,2152 @@ local function drawContent(app: App, tab: { [string]: any }, section: { [string]
             stepHistory(app, 1)
         end)
     end
+    -- the rows start at the edge of the page chips and end in line with the header buttons
     return cx + 1, rowsY, cw - 7, m.Height - FOOTER_HEIGHT - PANEL_PAD
+end
+
+-- ============================================================================================================================
+-- the app window: a flush sidebar (Home, Search and Customize, the settings pages, the options changed last and the player at the
+-- bottom), the main sections of the script as a segmented pill at the top, a soft warm glow over the main side and the Home page
+-- with the greeting, the search box and four quick start cards. every move is a time based spring or ease, so it runs the same
+-- at any frame rate and follows Reduce Motion
+-- ============================================================================================================================
+
+local SHELL_WINDOW = 20
+local SB_ROW = 30
+local SB_PAD = 10
+local FLOAT_INSET = 6
+local SB_TOP = 66
+local TOP_PILL_Y, TOP_PILL_H = 0, 20
+local PAGE_TITLE_Y = 28
+local STRIP_H = 22
+local CHIP_H = 24
+local HEAD_GAP = 12
+local BOX_H = 86
+local CARD_H = 66
+local CARD_GAP = 12
+local MIN_TEXT = 10
+local Z_TIP = 14
+
+-- a plain line icon for a page, from the small set of pictures the lib carries
+local SHELL_ICON_SET = {
+    ["home"] = "house",
+    ["shoot"] = "crosshair",
+    ["defend"] = "shield",
+    ["handle"] = "hand",
+    ["player"] = "user",
+    ["visuals"] = "eye",
+    ["customization"] = "sliders-horizontal",
+    ["settings"] = "settings",
+    ["general"] = "settings",
+    ["esp"] = "scan-eye",
+    ["aimbot"] = "crosshair",
+    ["movement"] = "footprints",
+    ["world"] = "globe",
+    ["camera"] = "camera",
+    ["combat"] = "swords",
+    ["misc"] = "box",
+    ["farming"] = "wheat",
+    ["teleport"] = "map-pin",
+    ["updates"] = "bell",
+    ["info"] = "info",
+    ["about"] = "info",
+    ["killers"] = "skull",
+    ["aim"] = "locate-fixed",
+    ["guns"] = "crosshair",
+    ["protection"] = "shield-check",
+    ["entities"] = "users",
+    ["configs"] = "file-cog",
+    ["config"] = "file-cog",
+    ["keybinds"] = "keyboard",
+    ["webhooks"] = "webhook",
+    ["other"] = "ellipsis",
+    ["hitbox"] = "box",
+    ["sizes"] = "sliders-horizontal",
+    ["features"] = "zap",
+    ["games"] = "gamepad-2",
+    ["tools"] = "wrench",
+    ["modes"] = "layout-grid",
+    ["dimensions"] = "layout-grid",
+    ["dynamic"] = "zap",
+    ["fov"] = "scan-eye",
+    ["npc"] = "users",
+    ["npcvisuals"] = "eye",
+    ["parts"] = "sliders-horizontal",
+    ["targeting"] = "crosshair",
+    ["visualizer"] = "eye",
+    ["boss rush"] = "skull",
+    ["esp style"] = "palette",
+    ["endless"] = "flame",
+    ["get guns"] = "crosshair",
+    ["huds"] = "layout-grid",
+    ["hitbox expander"] = "box",
+    ["hbe"] = "box",
+    ["killer mode"] = "skull",
+    ["infection mode"] = "biohazard",
+    ["classic"] = "shield-check",
+    ["lobby"] = "house",
+    ["killhouse"] = "skull",
+    ["area 51 storming"] = "swords",
+    ["detecting..."] = "scan-eye",
+    ["juggernaut"] = "skull",
+    ["armory"] = "box",
+    ["kill aura"] = "swords",
+    ["plant farm"] = "wheat",
+    ["main gold farm"] = "pickaxe",
+    ["gold fruit farm"] = "apple",
+    ["halloween gold"] = "ghost",
+    ["path editor"] = "route",
+    ["script hub"] = "rocket",
+    ["visual"] = "eye",
+    ["farm"] = "wheat",
+    ["auto"] = "zap",
+    ["main"] = "house",
+    ["all scripts"] = "layout-grid",
+    ["this game"] = "map-pin",
+    ["universal"] = "globe",
+}
+
+local ACRONYMS: { [string]: boolean } = { NPC = true, NPCS = true, FOV = true, ESP = true, HBE = true, HUD = true, HUDS = true, UI = true, FPS = true, AI = true, ID = true, PB = true, VIP = true, XP = true, API = true, GUI = true, PVP = true, PVE = true, HP = true, FX = true }
+
+-- a title with every word capitalised and the known acronyms kept in capitals, words holding a digit (R15) stay as they are
+local function titleCase(text: string): string
+    local result = string.gsub(text, "%S+", function(word: string): string
+        local upper = string.upper(word)
+        if ACRONYMS[upper] or string.find(word, "%d") then
+            return upper
+        end
+        return (string.gsub(string.lower(word), "^%l", string.upper))
+    end)
+    return result
+end
+
+local function whole(v: Vector2): Vector2
+    return Vector2.new(math.floor(v.X + 0.5), math.floor(v.Y + 0.5))
+end
+
+local function rad(app: App, pixels: number): number
+    return pixels * app.Unit * Painter.curve()
+end
+
+-- a label cut with two dots at its own size when it is too long, a smaller font would look out of place next to its neighbors
+local function clipped(text: string, size: number, limit: number, face: number?): string
+    if limit <= 0 or Painter.textWidth(text, size, face) <= limit then
+        return text
+    end
+    local cut = #text
+    while cut > 1 and Painter.textWidth(string.sub(text, 1, cut) .. "..", size, face) > limit do
+        cut -= 1
+    end
+    return (string.gsub(string.sub(text, 1, cut), "%s+$", "")) .. ".."
+end
+
+local function isHome(tab: { [string]: any }?): boolean
+    return tab ~= nil and tab.home == true
+end
+
+-- a picture from the icon set, centered, tinted, on whole pixels. false when the set has no such picture
+local function lucide(app: App, name: string, center: Vector2, size: number, color: Color3, alpha: number, z: number): boolean
+    local asset, pixels = Logo.icon(app, name, math.floor(size * app.Scale + 0.5))
+    if not asset then
+        return false
+    end
+    local shown = pixels / app.Scale * app.Unit
+    Painter.image(asset, whole(center - Vector2.new(shown / 2, shown / 2)), Vector2.new(shown, shown), alpha, z, 0, color)
+    return true
+end
+
+-- small glyphs drawn from lines and circles, for the ones the icon set has no picture of. bg is what the glyph sits on (the moon cuts into it)
+local function glyph(app: App, name: string, center: Vector2, size: number, color: Color3, alpha: number, z: number, bg: Color3?)
+    local u = app.Unit
+    local s = size * u
+    local thick = math.max(1.3, 1.5 * u)
+    local function line(x1: number, y1: number, x2: number, y2: number)
+        Painter.line(center + Vector2.new(x1 * s, y1 * s), center + Vector2.new(x2 * s, y2 * s), color, alpha, z, thick)
+    end
+    local function ring(cx: number, cy: number, r: number)
+        local radius = r * s
+        Painter.border(center + Vector2.new(cx * s - radius, cy * s - radius), Vector2.new(radius * 2, radius * 2), radius, color, alpha, z, thick)
+    end
+    local function disc(cx: number, cy: number, r: number, tint: Color3, zz: number)
+        local radius = r * s
+        Painter.rect(center + Vector2.new(cx * s - radius, cy * s - radius), Vector2.new(radius * 2, radius * 2), tint, alpha, zz, radius, true)
+    end
+    if name == "search" then
+        ring(-0.08, -0.08, 0.3)
+        line(0.15, 0.15, 0.38, 0.38)
+    elseif name == "plus" then
+        line(-0.36, 0, 0.36, 0)
+        line(0, -0.36, 0, 0.36)
+    elseif name == "minus" then
+        line(-0.36, 0, 0.36, 0)
+    elseif name == "x" then
+        line(-0.3, -0.3, 0.3, 0.3)
+        line(-0.3, 0.3, 0.3, -0.3)
+    elseif name == "chevron-down" then
+        line(-0.28, -0.12, 0, 0.16)
+        line(0, 0.16, 0.28, -0.12)
+    elseif name == "chevron-up" then
+        line(-0.28, 0.12, 0, -0.16)
+        line(0, -0.16, 0.28, 0.12)
+    elseif name == "arrow-up" then
+        line(0, -0.34, 0, 0.34)
+        line(-0.28, -0.08, 0, -0.36)
+        line(0, -0.36, 0.28, -0.08)
+    elseif name == "sun" then
+        ring(0, 0, 0.18)
+        for step = 0, 7 do
+            local angle = step * math.pi / 4
+            local cx, cy = math.cos(angle), math.sin(angle)
+            line(cx * 0.32, cy * 0.32, cx * 0.42, cy * 0.42)
+        end
+    elseif name == "moon" then
+        disc(0, 0, 0.34, color, z)
+        disc(0.16, -0.14, 0.27, bg or Color3.new(0, 0, 0), z + 1)
+    elseif name == "copy" then
+        local r = 0.08 * s
+        Painter.border(center + Vector2.new(-0.36 * s, -0.2 * s), Vector2.new(0.52 * s, 0.56 * s), r, color, alpha, z, thick)
+        Painter.border(center + Vector2.new(-0.16 * s, -0.4 * s), Vector2.new(0.52 * s, 0.56 * s), r, color, alpha * 0.7, z, thick)
+    elseif name == "clock" then
+        ring(0, 0, 0.36)
+        line(0, 0, 0, -0.2)
+        line(0, 0, 0.16, 0.08)
+    else
+        ring(0, 0, 0.3)
+    end
+end
+
+local function pageIcon(app: App, name: string, center: Vector2, size: number, color: Color3, alpha: number, z: number)
+    local key = string.lower(name)
+    local picture = SHELL_ICON_SET[key] or (if Logo.icon(app, key, 16) ~= nil then key else "circle-dot")
+    if picture and lucide(app, picture, center, size, color, alpha, z) then
+        return
+    end
+    local box = size * 0.86 * app.Unit
+    Painter.border(center - Vector2.new(box / 2, box / 2), Vector2.new(box, box), 4 * app.Unit, color, alpha, z, 1.3)
+    Painter.text(string.upper(string.sub(name, 1, 1)), whole(center), math.floor(9.5 * app.TextScale + 0.5), color, alpha, z, true, true, Painter.bold())
+end
+
+-- the mark of the script: the logo picture, or the first letter of the title on an accent square. kept on its own so a new logo
+-- only needs this one function changed
+local function brandMark(app: App, at: Vector2, size: Vector2, alpha: number, z: number)
+    local options = app.Options
+    local radius = size.X * 0.28
+    if app.LogoAsset then
+        local emblem = options.Logo ~= nil and options.Logo.Emblem == true
+        if emblem then
+            Painter.image(app.LogoAsset, at, size, alpha, z, 0, app.Pal.Accent)
+        else
+            Painter.image(app.LogoAsset, at, size, alpha, z, radius)
+        end
+    else
+        Painter.rect(at, size, app.Pal.Accent, alpha, z, radius, true)
+        Painter.text(string.upper(string.sub(options.Title, 1, 1)), whole(at + size / 2), math.floor(size.Y * 0.62 + 0.5), app.Pal.AccentText, alpha, z + 1, true, true, Painter.bold())
+    end
+end
+
+-- a soft fill that lifts on hover, for every small button of the window
+local function hoverFill(app: App, key: string, position: Vector2, size: Vector2, radius: number, alpha: number, lit: number?): number
+    local pal = app.Pal
+    local hovered = app.HoverKey == key and not app.Modal
+    local hover = ease(app, key, if hovered then 1 else 0, 16 * Motion.speed(app.State))
+    local level = math.max(0.06 * hover, 0.085 * (lit or 0))
+    Painter.rect(position, size, pal.Text, app.Alpha.Btn * alpha * level, Z_NAV, radius, true)
+    return hover
+end
+
+local function tip(app: App, key: string, text: string, anchor: Vector2, side: string?)
+    if app.HoverKey == key and not app.Modal then
+        app.ShellTip = { Text = text, At = anchor, Key = key, Side = side }
+    end
+end
+
+local function drawTip(app: App)
+    local pal = app.Pal
+    local current = app.ShellTip
+    app.ShellTip = nil
+    local shown = ease(app, "shell:tip", if current then 1 else 0, 14 * Motion.speed(app.State))
+    if current then
+        app.ShellTipLast = current
+    end
+    local last = app.ShellTipLast
+    if not last or shown < 0.01 then
+        return
+    end
+    local unit = app.Unit
+    local size = math.floor(12 * app.TextScale + 0.5)
+    -- the text splits on new lines and long lines wrap on words, every line is centred in the card with the same room on both sides and above and below
+    local room = 280 * unit
+    local lines: { string } = {}
+    for _, raw in string.split(last.Text, "\n") do
+        local line = ""
+        for word in string.gmatch(raw, "%S+") do
+            local joined = if line == "" then word else line .. " " .. word
+            if line ~= "" and Painter.textWidth(joined, size) > room then
+                table.insert(lines, line)
+                line = word
+            else
+                line = joined
+            end
+        end
+        table.insert(lines, line)
+    end
+    local widest = 0
+    for _, line in lines do
+        widest = math.max(widest, Painter.textWidth(line, size))
+    end
+    local padX = math.floor(12 * unit + 0.5)
+    local padY = math.floor(7 * unit + 0.5)
+    local lineHeight = math.floor(size * 1.2 + 0.5)
+    -- whole even sizes keep the middle of the card on a whole pixel, so the centred text cannot round half a pixel to one side
+    local width = 2 * math.ceil(widest / 2 + padX)
+    local height = 2 * math.ceil((#lines * lineHeight) / 2 + padY)
+    local round = math.min(9 * unit, height / 2)
+    local slide = (1 - shown) * 5 * unit
+    local at: Vector2
+    if last.Side == "right" then
+        at = whole(last.At + Vector2.new(10 * unit - slide, -height / 2))
+    else
+        at = whole(last.At - Vector2.new(width / 2, height + 8 * unit + slide))
+    end
+    local size2 = Vector2.new(width, height)
+    -- a card in the colours of the window: its panel, a hairline of the accent, a soft shadow below and a small accent dot before the name
+    Painter.scope("shell:tip")
+    Painter.rect(at + Vector2.new(0, 3 * unit), size2, Color3.new(0, 0, 0), shown * 0.28, Z_TIP, round + 1, true)
+    Painter.rect(at, size2, Color.lerp(pal.Panel, pal.Text, 0.07), shown, Z_TIP, round, true)
+    Painter.border(at, size2, round, pal.Accent, shown * 0.4, Z_TIP + 1, 1)
+    local top = at.Y + (height - #lines * lineHeight) / 2
+    for index, line in lines do
+        Painter.text(line, Vector2.new(at.X + width / 2, math.floor(top + (index - 0.5) * lineHeight + 0.5) - math.floor(size / 6 + 0.5) + 1), size, pal.Text, shown, Z_TIP + 1, true, true)
+    end
+    Painter.scope(nil)
+end
+
+-- a menu of the lib's own dropdown, anchored to a box of the window. values are labels, pick runs the chosen one
+local function openMenu(app: App, key: string, values: { string }, current: () -> string, pick: (string) -> ())
+    local menus: { [string]: any } = app.ShellMenus
+    if not menus then
+        menus = {}
+        app.ShellMenus = menus
+    end
+    local spec = menus[key]
+    if not spec then
+        spec = { key = key }
+        menus[key] = spec
+    end
+    spec.values = values
+    spec.get = current
+    spec.set = pick
+    app:toggleDropdown(spec)
+end
+
+local function anchorMenu(app: App, key: string, position: Vector2, size: Vector2, above: boolean?)
+    local spec = app.ShellMenus and app.ShellMenus[key]
+    if spec and app.OpenDropdown == spec then
+        spec.above = above == true
+        app.DropdownBox = { Position = position, Size = size }
+    end
+end
+
+local function goHome(app: App)
+    local home = app.HomeTab
+    if home then
+        app:switchTab(home.name)
+    end
+end
+
+-- the main sections of the script for the top pill: every page of the plain group on its own, a named group as one entry
+local function mainItems(app: App): { { [string]: any } }
+    local cached = app.ShellItems
+    if cached and app.ShellItemsCount == #app.Tabs then
+        return cached
+    end
+    local items: { { [string]: any } } = {}
+    local byGroup: { [string]: { [string]: any } } = {}
+    for _, tab in app.Tabs do
+        local group: string = tab.group
+        if group ~= "Settings" then
+            if group == "Main" or tab.home then
+                table.insert(items, { Label = tab.label, Tabs = { tab.name } })
+            else
+                local item = byGroup[group]
+                if not item then
+                    item = { Label = group, Tabs = {} }
+                    byGroup[group] = item
+                    table.insert(items, item)
+                end
+                table.insert(item.Tabs, tab.name)
+            end
+        end
+    end
+    app.ShellItems, app.ShellItemsCount = items, #app.Tabs
+    return items
+end
+
+local function itemOf(app: App, name: string): ({ [string]: any }?, number)
+    for index, item in mainItems(app) do
+        if table.find(item.Tabs, name) then
+            return item, index
+        end
+    end
+    return nil, 0
+end
+
+-- a segmented control: a soft track, a raised thumb that springs to the pick and labels that brighten when picked.
+-- fill = true spreads the cells over the whole width, otherwise the control is as wide as its labels and centered on x
+local function segmented(app: App, key: string, x: number, y: number, width: number, height: number, labels: { string }, index: number, alpha: number, centered: boolean, onPick: (number) -> ())
+    local pal = app.Pal
+    local count = #labels
+    if count == 0 or alpha <= 0.004 then
+        return
+    end
+    local unit = math.max(0.01, app.Unit)
+    local inset = 3
+    local room = width - inset * 2
+    -- a crowded control first takes less padding, then one smaller size for every label, so the labels always match
+    local textSize = math.floor(12.5 * app.TextScale + 0.5)
+    local pad = 28
+    local widths: { number } = {}
+    local natural = 0
+    for _ = 1, 8 do
+        natural = 0
+        for number, label in labels do
+            widths[number] = Painter.textWidth(label, textSize) / unit + pad
+            natural += widths[number]
+        end
+        if natural <= room then
+            break
+        elseif pad > 16 then
+            pad = math.max(16, pad - 6)
+        elseif textSize > MIN_TEXT then
+            textSize -= 1
+        else
+            break
+        end
+    end
+    -- every cell as wide as the widest label, so the control reads even and each label sits in the middle of its own cell
+    local widest = 0
+    for number in labels do
+        widest = math.max(widest, widths[number])
+    end
+    if widest * count <= room or natural > room then
+        if widest * count <= room then
+            for number in labels do
+                widths[number] = widest
+            end
+            natural = widest * count
+        end
+    end
+    local squeeze = if natural > room then room / natural else 1
+    local total = natural * squeeze
+    local spare = if centered then 0 else math.max(0, room - natural) / count
+    local left = if centered then x + (width - total) / 2 - inset else x
+    local trackW = if centered then total + inset * 2 else width
+    local starts: { number } = {}
+    local cells: { number } = {}
+    local cursor = left + inset
+    for number in labels do
+        starts[number] = cursor
+        cells[number] = widths[number] * squeeze + spare
+        cursor += cells[number]
+    end
+    local light = pal.Light
+    local trackPos, trackSize = whole(app:pos(left, y)), app:size(trackW, height)
+    local trackR = trackSize.Y / 2
+    Painter.scope(key .. ":track")
+    Painter.rect(trackPos, trackSize, Color.lerp(pal.Panel, pal.Text, 0.06 - 0.02 * light), app.Alpha.Btn * alpha * (0.85 + 0.15 * light), Z_NAV - 1, trackR, true)
+    Painter.border(trackPos, trackSize, trackR, pal.Text, app.Alpha.Btn * alpha * 0.06, Z_NAV - 1, 1)
+    Painter.scope(nil)
+    local slot = math.clamp(spring(app, key .. ":slot", index, 0.32, 0.88), 1, count)
+    local low = math.floor(slot)
+    local high = math.min(count, low + 1)
+    local share = slot - low
+    local thumbX = starts[low] + (starts[high] - starts[low]) * share
+    local thumbW = cells[low] + (cells[high] - cells[low]) * share
+    Painter.scope(key .. ":thumb")
+    local thumbPos = app:pos(thumbX, y + inset)
+    local thumbSize = app:size(thumbW, height - inset * 2)
+    local thumbR = thumbSize.Y / 2
+    local thumbColor = Color.lerp(Color.lerp(pal.Panel, pal.Text, 0.12), Color3.new(1, 1, 1), light)
+    Painter.rect(thumbPos + Vector2.new(0, app.Unit), thumbSize, Color3.new(0, 0, 0), app.Alpha.Btn * alpha * (0.22 - 0.12 * light), Z_NAV, thumbR, true)
+    Painter.rect(thumbPos, thumbSize, thumbColor, app.Alpha.Btn * alpha, Z_NAV, thumbR, true)
+    Painter.border(thumbPos, thumbSize, thumbR, pal.Text, app.Alpha.Btn * alpha * 0.06, Z_NAV, 1)
+    Painter.scope(nil)
+    for number in labels do
+        local cellKey = key .. ":" .. number
+        local hovered = app.HoverKey == cellKey and not app.Modal
+        local lit = ease(app, cellKey .. ":lit", if number == index then 1 else 0, 14 * Motion.speed(app.State))
+        local hover = ease(app, cellKey, if hovered then 1 else 0, 16 * Motion.speed(app.State))
+        local cell = cells[number]
+        local labelSize = textSize
+        local label = clipped(labels[number], labelSize, (cell - 8) * app.Unit)
+        Painter.scope(cellKey)
+        Painter.text(label, whole(app:pos(starts[number] + cell / 2, y + height / 2)), labelSize, Color.lerp(Color.lerp(pal.Sub, pal.Text, 0.55 * hover), pal.Text, lit), app.Alpha.Text * alpha, Z_NAV_TEXT, true, true)
+        Painter.scope(nil)
+        if not app.Modal and alpha > 0.5 then
+            Hits.add({ key = cellKey, position = app:pos(starts[number], y), size = app:size(cell, height), click = function()
+                onPick(number)
+            end })
+        end
+    end
+end
+
+-- widths for a row of labels that must fit a room: every label keeps its own width while they fit, else the long ones share
+-- what the short ones leave, so a long label is cut before a short one
+local function fitShares(natural: { number }, room: number): { number }
+    local count = #natural
+    local total = 0
+    for _, width in natural do
+        total += width
+    end
+    if total <= room or count == 0 then
+        return table.clone(natural)
+    end
+    local limit = room / count
+    for _ = 1, 4 do
+        local short, long = 0, 0
+        for _, width in natural do
+            if width <= limit then
+                short += width
+            else
+                long += 1
+            end
+        end
+        if long == 0 then
+            break
+        end
+        limit = math.max(0, (room - short) / long)
+    end
+    local out: { number } = {}
+    for number, width in natural do
+        out[number] = math.min(width, limit)
+    end
+    return out
+end
+
+-- the pages of a group as words on a hairline, the level above the section chips. every word has the same weight so nothing
+-- moves when the pick changes, the picked one is bright with an accent bar that springs under it and hover lifts a faint bar.
+-- the first word starts on x so it lines up with the page title and the rows below
+local function pageStrip(app: App, key: string, x: number, y: number, width: number, labels: { string }, index: number, alpha: number, onPick: (number) -> (), beside: boolean?)
+    local pal = app.Pal
+    local count = #labels
+    if count == 0 or alpha <= 0.004 then
+        return
+    end
+    local unit = math.max(0.01, app.Unit)
+    -- beside: the section chips share this line, so the words center on them and the hairline sits an even gap under both
+    local rowH = if beside then CHIP_H + 4 else STRIP_H
+    -- the window font for every word, a bolder face would only change the widths when the font is switched
+    local face = Painter.font()
+    local textSize = math.floor(14 * app.TextScale + 0.5)
+    local gap = 24
+    local natural: { number } = {}
+    local words = 0
+    for _ = 1, 4 do
+        words = 0
+        for number, label in labels do
+            natural[number] = Painter.textWidth(label, textSize, face) / unit
+            words += natural[number]
+        end
+        if words + gap * (count - 1) <= width then
+            break
+        elseif gap > 14 then
+            gap = math.max(14, (width - words) / math.max(1, count - 1))
+        elseif textSize > 12 then
+            textSize -= 1
+        else
+            break
+        end
+    end
+    local widths = fitShares(natural, width - gap * (count - 1))
+    local starts: { number } = {}
+    local cursor = x
+    for number in labels do
+        starts[number] = cursor
+        cursor += widths[number] + gap
+    end
+    local light = pal.Light
+    local top = whole(app:pos(x, y))
+    local lineY = top.Y + math.floor((rowH - 1) * unit + 0.5)
+    local textMid = top.Y + math.floor((if beside then CHIP_H / 2 else 8) * unit + 0.5)
+    local thick = math.max(2, math.floor(2 * unit + 0.5))
+    local function px(at: number): number
+        return math.floor(app:pos(at, 0).X + 0.5)
+    end
+    Painter.scope(key .. ":line")
+    Painter.rect(Vector2.new(top.X, lineY), Vector2.new(px(x + width) - top.X, 1), pal.Text, app.Alpha.Btn * alpha * (0.11 + 0.03 * light), Z_NAV - 1, 0, true)
+    Painter.scope(nil)
+    local slot = math.clamp(spring(app, key .. ":slot", index, 0.34, 0.86), 1, count)
+    local low = math.floor(slot)
+    local high = math.min(count, low + 1)
+    local share = slot - low
+    local barX = starts[low] + (starts[high] - starts[low]) * share
+    local barW = widths[low] + (widths[high] - widths[low]) * share
+    Painter.scope(key .. ":bar")
+    local barLeft = px(barX)
+    Painter.rect(Vector2.new(barLeft, lineY + 1 - thick), Vector2.new(math.max(thick, px(barX + barW) - barLeft), thick), pal.Accent, app.Alpha.Btn * alpha, Z_NAV, thick / 2, true)
+    Painter.scope(nil)
+    for number in labels do
+        local cellKey = key .. ":" .. number
+        local picked = number == index
+        local hovered = app.HoverKey == cellKey and not app.Modal
+        local lit = ease(app, cellKey .. ":lit", if picked then 1 else 0, 14 * Motion.speed(app.State))
+        local hover = ease(app, cellKey, if hovered then 1 else 0, 16 * Motion.speed(app.State))
+        local held = math.clamp(spring(app, cellKey .. ":held", if hovered and Hits.isPressed(cellKey) then 1 else 0, 0.14, 1), 0, 1)
+        local left = px(starts[number])
+        Painter.scope(cellKey)
+        -- a faint bar where the accent would go, so the word reads as something to press
+        local ghost = hover * (1 - lit)
+        Painter.rect(Vector2.new(left, lineY + 1 - thick), Vector2.new(math.max(thick, px(starts[number] + widths[number]) - left), thick), pal.Text, app.Alpha.Btn * alpha * ghost * (0.22 + 0.06 * light), Z_NAV - 1, thick / 2, true)
+        local rest = Color.lerp(pal.Sub, pal.Text, 0.12 + 0.5 * hover)
+        local label = clipped(labels[number], textSize, widths[number] * unit + 1, face)
+        Painter.text(label, Vector2.new(left, textMid), textSize, Color.lerp(rest, pal.Text, lit), app.Alpha.Text * alpha * (1 - 0.25 * held), Z_NAV_TEXT, false, true, face)
+        Painter.scope(nil)
+        if not app.Modal and alpha > 0.5 then
+            local from = if number == 1 then x else starts[number] - gap / 2
+            local to = if number == count then math.max(starts[number] + widths[number], x) else starts[number] + widths[number] + gap / 2
+            Hits.add({ key = cellKey, position = app:pos(from, y), size = app:size(to - from, rowH), click = function()
+                onPick(number)
+            end })
+        end
+    end
+end
+
+-- the sections of a page as small separate chips, the level under the page strip. a tinted accent pill springs to the picked one,
+-- the others rest on a soft fill that warms on hover and deepens on press. the chips are only as wide as their words, start on x and
+-- never pass the right edge: a crowded row first takes less padding and gap, then a smaller size, then cuts the longest words
+local function chipRow(app: App, key: string, x: number, y: number, width: number, labels: { string }, index: number, alpha: number, onPick: (number) -> ())
+    local pal = app.Pal
+    local count = #labels
+    if count == 0 or alpha <= 0.004 then
+        return
+    end
+    local unit = math.max(0.01, app.Unit)
+    local textSize = math.floor(12 * app.TextScale + 0.5)
+    local pad, gap = 12, 8
+    local natural: { number } = {}
+    for _ = 1, 10 do
+        local total = gap * (count - 1)
+        for number, label in labels do
+            natural[number] = Painter.textWidth(label, textSize) / unit + pad * 2
+            total += natural[number]
+        end
+        if total <= width then
+            break
+        elseif pad > 8 then
+            pad -= 2
+        elseif gap > 4 then
+            gap -= 1
+        elseif textSize > MIN_TEXT then
+            textSize -= 1
+        else
+            break
+        end
+    end
+    local widths = fitShares(natural, width - gap * (count - 1))
+    local starts: { number } = {}
+    local cursor = x
+    for number in labels do
+        starts[number] = cursor
+        cursor += widths[number] + gap
+    end
+    local light = pal.Light
+    local top = whole(app:pos(x, y)).Y
+    local height = math.floor(CHIP_H * unit + 0.5)
+    local function px(at: number): number
+        return math.floor(app:pos(at, 0).X + 0.5)
+    end
+    -- the accent pill under the picked chip, it travels between chips on a spring
+    local slot = math.clamp(spring(app, key .. ":slot", index, 0.34, 0.86), 1, count)
+    local low = math.floor(slot)
+    local high = math.min(count, low + 1)
+    local share = slot - low
+    local pillX = starts[low] + (starts[high] - starts[low]) * share
+    local pillW = widths[low] + (widths[high] - widths[low]) * share
+    local pillLeft = px(pillX)
+    local pillPos, pillSize = Vector2.new(pillLeft, top), Vector2.new(math.max(height, px(pillX + pillW) - pillLeft), height)
+    Painter.scope(key .. ":pill")
+    Painter.rect(pillPos, pillSize, Color.lerp(pal.Panel, pal.Accent, 0.26 - 0.06 * light), app.Alpha.Btn * alpha, Z_NAV, height / 2, true)
+    Painter.border(pillPos, pillSize, height / 2, pal.Accent, app.Alpha.Btn * alpha * (0.55 + 0.1 * light), Z_NAV, 1)
+    Painter.scope(nil)
+    for number, label in labels do
+        local cellKey = key .. ":" .. number
+        local hovered = app.HoverKey == cellKey and not app.Modal
+        local lit = ease(app, cellKey .. ":lit", if number == index then 1 else 0, 14 * Motion.speed(app.State))
+        local hover = ease(app, cellKey, if hovered then 1 else 0, 16 * Motion.speed(app.State))
+        local held = math.clamp(spring(app, cellKey .. ":held", if hovered and Hits.isPressed(cellKey) then 1 else 0, 0.14, 1), 0, 1)
+        local left = px(starts[number])
+        local pos, size = Vector2.new(left, top), Vector2.new(px(starts[number] + widths[number]) - left, height)
+        local rest = Color.lerp(pal.Panel, pal.Text, 0.06 + 0.04 * hover + 0.05 * held - 0.01 * light)
+        Painter.scope(cellKey)
+        Painter.rect(pos, size, rest, app.Alpha.Btn * alpha * (1 - lit), Z_NAV - 1, height / 2, true)
+        Painter.border(pos, size, height / 2, pal.Text, app.Alpha.Btn * alpha * (1 - lit) * (0.04 + 0.04 * light), Z_NAV - 1, 1)
+        local ink = Color.lerp(Color.lerp(pal.Sub, pal.Text, 0.18 + 0.55 * hover), pal.Text, lit)
+        local shown = clipped(label, textSize, (widths[number] - pad * 2) * unit + 1)
+        Painter.text(shown, Vector2.new(left + size.X / 2, top + height / 2), textSize, ink, app.Alpha.Text * alpha * (1 - 0.2 * held), Z_NAV_TEXT, true, true)
+        Painter.scope(nil)
+        if not app.Modal and alpha > 0.5 then
+            local from = if number == 1 then starts[number] else starts[number] - gap / 2
+            local to = if number == count then starts[number] + widths[number] else starts[number] + widths[number] + gap / 2
+            Hits.add({ key = cellKey, position = app:pos(from, y), size = app:size(to - from, CHIP_H), click = function()
+                onPick(number)
+            end })
+        end
+    end
+end
+
+-- ---------------------------------------------------------------------------------------------------------------- sidebar
+
+-- a round window control: a quiet disc with one thin glyph. close turns a soft red with a white cross on hover, minimize gets a
+-- light fill, a press only deepens the fill. the disc is sized so its middle is a whole pixel and every stroke is a whole number of
+-- pixels around it, so the glyph sits exactly in the center and hovering or pressing never moves anything
+local CONTROL_RED, CONTROL_RED_DOWN = Color3.fromRGB(226, 80, 72), Color3.fromRGB(196, 58, 52)
+
+local function controlButton(app: App, key: string, topLeft: Vector2, units: number, kind: string, hovered: boolean, alpha: number, z: number, inkZ: number): (Vector2, Vector2)
+    local pal = app.Pal
+    local u = app.Unit
+    local hover = ease(app, key, if hovered then 1 else 0, 16 * Motion.speed(app.State))
+    local held = math.clamp(spring(app, key .. ":held", if hovered and Hits.isPressed(key) then 1 else 0, 0.14, 1), 0, 1)
+    local stroke = math.max(1, math.floor(1.75 * u + 0.5))
+    local d = math.floor(units * u + 0.5)
+    if d % 2 ~= stroke % 2 then
+        d += 1
+    end
+    local at = whole(topLeft)
+    local box = Vector2.new(d, d)
+    local center = at + box / 2
+    local close = kind == "close"
+    local rest = Color.lerp(pal.Panel, pal.Text, 0.11 - 0.03 * pal.Light)
+    local fill
+    if close then
+        fill = Color.lerp(Color.lerp(rest, CONTROL_RED, hover), CONTROL_RED_DOWN, held)
+    else
+        fill = Color.lerp(rest, pal.Text, (0.1 - 0.02 * pal.Light) * hover + 0.07 * held)
+    end
+    Painter.rect(at, box, fill, app.Alpha.Btn * alpha, z, math.min(d / 2, d / 2 * Painter.curve()), true)
+    local ink = Color.lerp(Color.lerp(pal.Sub, pal.Text, 0.45), if close then Color3.new(1, 1, 1) else pal.Text, hover)
+    local inkAlpha = app.Alpha.Text * alpha * (0.9 + 0.1 * hover) * (1 - 0.12 * held)
+    if close then
+        -- each bar is a whole number of pixels long with the same evenness as the disc, so the turned bar starts on a whole pixel
+        -- and its middle is the middle of the disc
+        local long = math.max(3, math.floor(d * 0.5 + 0.5))
+        if long % 2 ~= d % 2 then
+            long -= 1
+        end
+        local arm = long / 2 / math.sqrt(2)
+        Painter.line(center + Vector2.new(-arm, -arm), center + Vector2.new(arm, arm), ink, inkAlpha, inkZ, stroke)
+        Painter.line(center + Vector2.new(-arm, arm), center + Vector2.new(arm, -arm), ink, inkAlpha, inkZ, stroke)
+    else
+        local long = math.max(3, math.floor(d * 0.4 + 0.5))
+        if long % 2 ~= d % 2 then
+            long -= 1
+        end
+        Painter.rect(Vector2.new(center.X - long / 2, center.Y - stroke / 2), Vector2.new(long, stroke), ink, inkAlpha, inkZ, stroke / 2, true)
+    end
+    return at, box
+end
+
+local function windowControls(app: App, alpha: number)
+    local size = 22
+    local width = app.M.Width
+    for number, entry in { { "shell:minimize", "minus", "Minimize" }, { "shell:close", "x", "Quit" } } do
+        local key, symbol, label = entry[1], entry[2], entry[3]
+        local x = width - 14 - size - (if number == 1 then size + 6 else 0)
+        local hovered = app.HoverKey == key and not app.Modal
+        Painter.scope(key)
+        local position, box = controlButton(app, key, app:pos(x, 12), size, if symbol == "x" then "close" else "minimize", hovered, alpha, Z_NAV, Z_NAV_TEXT)
+        Painter.scope(nil)
+        tip(app, key, label, position + Vector2.new(box.X / 2, 0))
+        if not app.Modal and alpha > 0.5 then
+            local pad = app:size(4, 4)
+            Hits.add({ key = key, position = position - pad, size = box + pad * 2, click = function()
+                if symbol == "minus" then
+                    app.State.Visible = false
+                else
+                    app:rememberClick(position, box, key)
+                    app:openPopup("confirmUnload")
+                end
+            end })
+        end
+    end
+end
+
+-- one row of the sidebar: an icon, a label and a hover fill. the selection is drawn once for the whole list
+local RAIL_BOX = 40
+
+local function sidebarRow(app: App, key: string, x: number, y: number, w: number, label: string, icon: (Vector2, Color3, number) -> (), active: boolean, alpha: number, onClick: () -> ())
+    local pal = app.Pal
+    local hovered = app.HoverKey == key and not app.Modal
+    local speed = Motion.speed(app.State)
+    local hover = ease(app, key, if hovered then 1 else 0, 16 * speed)
+    local lit = ease(app, key .. ":lit", if active then 1 else 0, 14 * speed)
+    local press = Press.scale(app, app.Springs, key .. ":press", key, hovered)
+    Painter.scope(key)
+    local lean: number = app.CompactT or 0
+    local boxW = w + (RAIL_BOX - w) * lean
+    local rowPos, rowSize = Press.box(app:pos(x + (w - boxW) / 2, y), app:size(boxW, SB_ROW), press)
+    Painter.rect(rowPos, rowSize, pal.Text, app.Alpha.Btn * alpha * 0.045 * hover * (1 - lit), Z_NAV, rad(app, 9), true)
+    local color = Color.lerp(Color.lerp(pal.Sub, pal.Text, 0.55 + 0.45 * hover), pal.Text, lit)
+    -- in the narrow rail the icons move to the middle of the rail and the names fade out
+    local narrow: number = app.CompactT or 0
+    icon(app:pos(x + 18 + (w / 2 - 18) * narrow, y + SB_ROW / 2), Color.lerp(pal.Sub, pal.Text, 0.4 + 0.6 * math.max(hover, lit)), app.Alpha.Text * alpha)
+    if narrow < 0.95 then
+        local size = math.floor(13 * app.TextScale + 0.5)
+        local shown = clipped(label, size, (w - 46) * app.Unit)
+        Painter.text(shown, whole(app:pos(x + 36, y + SB_ROW / 2)), size, color, app.Alpha.Text * alpha * (1 - narrow) * (1 - narrow), Z_NAV_TEXT, false, true)
+    end
+    Painter.scope(nil)
+    if narrow > 0.6 then
+        tip(app, key, label, app:pos(x + w, y + SB_ROW / 2), "right")
+    end
+    if not app.Modal and alpha > 0.6 then
+        Hits.add({ key = key, position = app:pos(x, y), size = app:size(w, SB_ROW), click = function()
+            app:rememberClick(app:pos(x, y), app:size(w, SB_ROW), key)
+            onClick()
+        end })
+    end
+end
+
+local function divider(app: App, key: string, x: number, y: number, w: number, alpha: number)
+    Painter.scope(key)
+    Painter.rect(whole(app:pos(x, y)), Vector2.new(math.floor(app:size(w, 0).X + 0.5), 1), app.Pal.Text, app.Alpha.UI * alpha * 0.08, Z_NAV, 0)
+    Painter.scope(nil)
+end
+
+local function avatarUrl(app: App): string?
+    if app.AvatarTried == nil then
+        app.AvatarTried = true
+        pcall(function()
+            task.spawn(function()
+                local ok, url = pcall(function(): any
+                    local players: any = game:GetService("Players")
+                    local me = players.LocalPlayer
+                    return players:GetUserThumbnailAsync(me.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size48x48)
+                end)
+                if ok and type(url) == "string" and url ~= "" then
+                    app.AvatarUrl = url
+                end
+            end)
+        end)
+    end
+    return app.AvatarUrl
+end
+
+local function playerNames(app: App): (string, string)
+    local cached = app.PlayerNames
+    if cached then
+        return cached[1], cached[2]
+    end
+    local display, user = "Player", ""
+    pcall(function()
+        local me: any = game:GetService("Players").LocalPlayer
+        user = tostring(me.Name)
+        local shown = me.DisplayName
+        display = if type(shown) == "string" and shown ~= "" then shown else user
+    end)
+    app.PlayerNames = { display, user }
+    return display, user
+end
+
+local function profile(app: App, sx: number, sw: number, alpha: number)
+    local pal = app.Pal
+    local m: Metrics = app.M
+    local options = app.Options
+    local top = m.Height - 58
+    divider(app, "shell:foot:line", sx + 12, top, sw - 24, alpha)
+    local display, user = playerNames(app)
+    local rail: number = app.CompactT or 0
+    local avatarAt, avatarSize = whole(app:pos(sx + 12 + ((sw - 30) / 2 - 12) * rail, top + 14)), whole(app:size(30, 30))
+    Painter.scope("shell:avatar")
+    local url = avatarUrl(app)
+    local initial = Color.lerp(Color3.fromRGB(26, 26, 32), Color3.fromRGB(38, 38, 48), 1 - pal.Light)
+    Painter.rect(avatarAt, avatarSize, initial, app.Alpha.Btn * alpha, Z_NAV, avatarSize.X / 2, true)
+    Painter.text(string.upper(string.sub(display, 1, 1)), whole(avatarAt + avatarSize / 2), math.floor(12 * app.TextScale + 0.5), Color3.new(1, 1, 1), app.Alpha.Text * alpha, Z_NAV_TEXT, true, true, Painter.bold())
+    if url then
+        Painter.image(url, avatarAt, avatarSize, app.Alpha.Text * alpha, Z_NAV_TEXT + 1, avatarSize.X / 2)
+    end
+    Painter.border(avatarAt, avatarSize, avatarSize.X / 2, pal.Text, app.Alpha.Btn * alpha * 0.08, Z_NAV_TEXT + 1, 1)
+    local narrow: number = app.CompactT or 0
+    alpha = alpha * (1 - narrow) * (1 - narrow)
+    local buttons = if options.Discord then 2 else 1
+    local limit = (sw - 10 - buttons * 26 - 6 - 50) * app.Unit
+    local nameSize = math.floor(12.5 * app.TextScale + 0.5)
+    local name = clipped(display, nameSize, limit, Painter.bold())
+    Painter.text(name, whole(app:pos(sx + 50, top + 22)), nameSize, pal.Text, app.Alpha.Text * alpha, Z_NAV_TEXT, false, true, Painter.bold())
+    local handleSize = math.floor(11 * app.TextScale + 0.5)
+    local handle = clipped("@" .. user, handleSize, limit)
+    Painter.text(handle, whole(app:pos(sx + 50, top + 37)), handleSize, pal.Sub, app.Alpha.Text * alpha, Z_NAV_TEXT, false, true)
+    Painter.scope(nil)
+
+    local bx = sx + sw - 10 - 24
+    local by = top + 17
+    -- the settings button opens the settings window
+    do
+        local key = "shell:menu"
+        local position, size = whole(app:pos(bx, by)), app:size(24, 24)
+        Painter.scope(key)
+        local hover = hoverFill(app, key, position, size, rad(app, 8), alpha, if app.SettingsOpen then 1 else 0)
+        pageIcon(app, "settings", position + size / 2, 16, Color.lerp(pal.Sub, pal.Text, math.max(hover, if app.SettingsOpen then 1 else 0)), app.Alpha.Text * alpha, Z_NAV_TEXT)
+        Painter.scope(nil)
+        tip(app, key, "Settings", position + Vector2.new(size.X / 2, 0))
+        if not app.Modal and alpha > 0.5 and #app:settingsTabs() > 0 then
+            Hits.add({ key = key, position = position, size = size, click = function()
+                app:rememberClick(position, size, key)
+                if app.SettingsOpen then
+                    app:closeSettings()
+                else
+                    app:openSettings()
+                end
+            end })
+        end
+    end
+    local invite = options.Discord
+    if invite then
+        local key = "shell:discord"
+        local position, size = whole(app:pos(bx - 26, by)), app:size(24, 24)
+        Painter.scope(key)
+        local hover = hoverFill(app, key, position, size, rad(app, 8), alpha)
+        local color = Color.lerp(pal.Sub, pal.Text, hover)
+        if not lucide(app, "discord", position + size / 2, 15, color, app.Alpha.Text * alpha, Z_NAV_TEXT) then
+            Painter.text("D", whole(position + size / 2), math.floor(12 * app.TextScale + 0.5), color, app.Alpha.Text * alpha, Z_NAV_TEXT, true, true, Painter.bold())
+        end
+        Painter.scope(nil)
+        tip(app, key, "Join the Discord", position + Vector2.new(size.X / 2, 0))
+        if not app.Modal and alpha > 0.5 then
+            Hits.add({ key = key, position = position, size = size, click = function()
+                app:rememberClick(position, size, key)
+                Discord.join(invite)
+                app:openPopup("discord")
+            end })
+        end
+    end
+end
+
+
+local function focusHomeSearch(app: App)
+    goHome(app)
+    if app.Focus ~= SEARCH_KEY then
+        focusSearch(app, app.SearchQuery or "")
+    end
+end
+
+-- how much of the animated sky of a theme shows through the window, 0 for the plain themes
+local function skyShows(app: App): number
+    local sky = app.SkyFrame
+    if sky and (sky.Sky ~= nil or sky.Cycle ~= nil) then
+        return math.clamp(math.max(sky.Flow, sky.Clear), 0, 1)
+    end
+    return 0
+end
+
+local function shellSidebar(app: App, now: number)
+    local m: Metrics = app.M
+    local state = app.State
+    local pal = app.Pal
+    local reveal = Motion.glide(if state.AnimationsEnabled then math.clamp(state.NavReveal, 0, 1) else 1)
+    local sw = m.SidebarWidth
+    local sx = 0
+    -- the sidebar floats: its own rounded panel with a gap to the window edge and to the page, everything in it is drawn
+    -- from the panel corner, shellDraw moved the origin and shrank the metrics for this call
+    Painter.scope("shell:side")
+    local panelPos, panelSize = app.WindowPos, app:size(sw, m.Height)
+    Painter.rect(panelPos, panelSize, pal.Panel, app.Alpha.UI * (1 - 0.5 * skyShows(app)), Z_CARD, rad(app, 16))
+    Painter.border(panelPos, panelSize, rad(app, 16), pal.Text, app.Alpha.UI * 0.07, Z_CARD, 1)
+    Painter.scope(nil)
+
+    local saved = (app :: any).FloatSaved
+    if saved then
+        app.WindowPos, m.Height = saved.Pos, saved.Height
+    end
+    windowControls(app, reveal)
+    if saved then
+        app.WindowPos, m.Height = saved.Shifted, saved.Height - 2 * saved.Inset
+    end
+    -- the brand: the mark and the title of the script at the top left, swapped for the new logo later through brandMark
+    do
+        local mark = 34
+        local emblem = app.LogoAsset ~= nil and app.Options.Logo ~= nil and app.Options.Logo.Emblem == true
+        -- an emblem has air around it in its picture, so it is drawn larger than its box to read as big as a square logo
+        local grow = if emblem then 1.3 else 1
+        local drawn = mark * grow
+        local top = 14
+        local rail: number = app.CompactT or 0
+        local at = whole(app:pos(SB_PAD + 4 + ((sw - mark) / 2 - SB_PAD - 4) * rail - (drawn - mark) / 2, top - (drawn - mark) / 2))
+        brandMark(app, at, app:size(drawn, drawn), app.Alpha.UI * reveal, Z_NAV_TEXT)
+        local textX = SB_PAD + 4 + mark + 9
+        local room = (sw - textX - 10) * app.Unit
+        local title, size = fitBrand(app.Options.Title, math.floor(14 * app.TextScale + 0.5), room, Painter.bold())
+        local line = tostring(app.Options.Discord or "")
+        line = if line ~= "" then (string.gsub(string.gsub(line, "^https?://", ""), "^www%.", "")) else tostring(app.Options.Subtitle or "")
+        Painter.scope("shell:brand")
+        local words = reveal * (1 - rail) * (1 - rail)
+        if rail < 0.95 then
+        Painter.text(title, whole(app:pos(textX, top + mark / 2 - 8)), size, pal.Text, app.Alpha.Text * words, Z_NAV_TEXT, false, true, Painter.bold())
+        end
+        if line ~= "" and rail < 0.95 then
+            local small = math.max(MIN_TEXT, math.floor(10.5 * app.TextScale + 0.5))
+            Painter.text(clipped(line, small, room), whole(app:pos(textX, top + mark / 2 + 8)), small, Color.lerp(pal.Sub, pal.Accent, 0.35), app.Alpha.Text * words, Z_NAV_TEXT, false, true)
+        end
+        Painter.scope(nil)
+    end
+
+    local current = state.NextTab or state.CurrentTab
+    if app.Options.Dock then
+        -- a dock: only the pages, big icon tiles floating in the middle of the rail, no Home, Search, Settings, collapse or profile
+        local tiles: { { [string]: any } } = {}
+        for _, tab in app.Tabs do
+            if tab.group ~= "Settings" and not tab.home then
+                table.insert(tiles, tab)
+            end
+        end
+        local tile, gap = 44, 10
+        local total = #tiles * tile + math.max(0, #tiles - 1) * gap
+        local top = 56 + math.max(0, (m.Height - 64 - 56 - total) / 2)
+        local left = (sw - tile) / 2
+        for number, tab in tiles do
+            local at = top + (number - 1) * (tile + gap)
+            local key = "shell:dock:" .. tab.name
+            local active = current == tab.name
+            local hovered = app.HoverKey == key and not app.Modal
+            local speed = Motion.speed(state)
+            local hover = ease(app, key, if hovered then 1 else 0, 16 * speed)
+            local lit = ease(app, key .. ":lit", if active then 1 else 0, 14 * speed)
+            local press = Press.scale(app, app.Springs, key .. ":press", key, hovered)
+            local fade = math.clamp(reveal * 1.5 - (number - 1) * 0.05, 0, 1)
+            Painter.scope(key)
+            local boxPos, boxSize = Press.box(app:pos(left, at), app:size(tile, tile), press)
+            Painter.rect(boxPos, boxSize, pal.Text, app.Alpha.Btn * fade * (0.04 * hover * (1 - lit) + lit * (0.1 - 0.03 * pal.Light)), Z_NAV, rad(app, 13), true)
+            pageIcon(app, tab.name, app:pos(left + tile / 2, at + tile / 2), 22, Color.lerp(pal.Sub, pal.Text, 0.4 + 0.6 * math.max(hover, lit)), app.Alpha.Text * fade, Z_NAV_TEXT)
+            Painter.scope(nil)
+            tip(app, key, tab.label, app:pos(left + tile + 6, at + tile / 2), "right")
+            if not app.Modal and fade > 0.6 then
+                Hits.add({ key = key, position = app:pos(left, at), size = app:size(tile, tile), click = function()
+                    app:rememberClick(app:pos(left, at), app:size(tile, tile), key)
+                    app:switchTab(tab.name)
+                end })
+            end
+        end
+        profile(app, sx, sw, reveal)
+        return
+    end
+    local x, w = sx + SB_PAD, sw - SB_PAD * 2
+    -- the icon only rail starts closer to the logo
+    local y = SB_TOP - 10 * (app.CompactT or 0)
+    local pillY: number? = nil
+    -- the icon only rail spreads its rows when the window is tall enough, a short window keeps them tight
+    local railGap = math.clamp((m.Height - 480) / 14, 0, 6)
+    local function row(key: string, label: string, icon: (Vector2, Color3, number) -> (), tabName: string?, onClick: () -> (), index: number, edge: number?)
+        local active = tabName ~= nil and current == tabName
+        local fade = math.clamp(reveal * 1.5 - (index - 1) * 0.05, 0, 1) * (edge or 1)
+        sidebarRow(app, key, x, y, w, label, icon, active, fade, onClick)
+        if active then
+            pillY = y
+        end
+        y += SB_ROW + 2 + railGap
+    end
+    local function lucideIcon(name: string): (Vector2, Color3, number) -> ()
+        return function(center: Vector2, color: Color3, alpha: number)
+            pageIcon(app, name, center, 16, color, alpha, Z_NAV_TEXT)
+        end
+    end
+    local home = app.HomeTab
+    local index = 1
+    if home then
+        row("shell:nav:home", "Home", lucideIcon("home"), home.name, function()
+            goHome(app)
+        end, index)
+        index += 1
+    end
+    row("shell:nav:search", "Search", function(center: Vector2, color: Color3, alpha: number)
+        glyph(app, "search", center, 16, color, alpha, Z_NAV_TEXT)
+    end, nil, function()
+        focusHomeSearch(app)
+    end, index)
+    index += 1
+    local mains = 0
+    local toolCount = 1 + (if #app:settingsTabs() > 0 then 1 else 0) + (if Farm.available(app) then 1 else 0)
+    local rail: number = app.CompactT or 0
+    do
+        -- in the rail the pages float in the middle between the search and the tools, so both gaps are equal
+        local mainCount = 0
+        for _, tab in app.Tabs do
+            if tab.group ~= "Settings" and not tab.home then
+                mainCount += 1
+            end
+        end
+        local pitch = SB_ROW + 2 + railGap
+        local free = (m.Height - 62 - toolCount * pitch) - y - (mainCount * pitch + 32)
+        y += math.max(0, free) / 2
+    end
+    -- the pages scroll with the wheel when the window is too short for all of them, they never reach the tools below
+    local pageTotal = 0
+    for _, tab in app.Tabs do
+        if tab.group ~= "Settings" and not tab.home then
+            pageTotal += 1
+        end
+    end
+    local pitch = SB_ROW + 2 + railGap
+    local listTop = 0
+    local listBottom = m.Height - 62 - toolCount * pitch - 16 - 4
+    local reach = 0
+    local scroll = app.RailScroll
+    if not scroll then
+        scroll = { Pos = 0, Target = 0 }
+        app.RailScroll = scroll
+    end
+    if pageTotal > 0 then
+        y += 6
+        divider(app, "shell:div:0", x + 6, y, w - 12, reveal)
+        y += 10
+        listTop = y
+        reach = math.max(0, pageTotal * pitch - (listBottom - listTop))
+        if reach < 14 then
+            reach = 0
+        end
+        scroll.Target = math.clamp(scroll.Target, 0, reach)
+        scroll.Pos = math.clamp(Motion.ease(app.State, scroll.Pos, scroll.Target, app.Dt, 14), 0, reach)
+        if reach > 0 and not app.Modal then
+            Hits.add({
+                key = "shell:scroll",
+                position = app:pos(x, listTop),
+                size = app:size(w, listBottom - listTop),
+                wheel = function(delta: number)
+                    scroll.Target = math.clamp(scroll.Target - delta * 36, 0, reach)
+                end,
+            })
+        end
+        y -= scroll.Pos
+    end
+    for _, tab in app.Tabs do
+        if tab.group ~= "Settings" and not tab.home then
+            mains += 1
+            local name = tab.name
+            local edge = 1
+            if reach > 0 then
+                edge = math.clamp(math.min(y + SB_ROW - listTop, listBottom - y) / (SB_ROW * 0.7), 0, 1)
+            end
+            if edge > 0.08 then
+                row("shell:nav:" .. name, tab.label, lucideIcon(name), name, function()
+                    app:switchTab(name)
+                end, index, edge)
+            else
+                y += pitch
+            end
+            index += 1
+        end
+    end
+    if pageTotal > 0 then
+        y = listTop + math.min(pageTotal * pitch, listBottom - listTop)
+        if reach > 0 then
+            local track = listBottom - listTop
+            local thumb = math.max(20, track * track / (track + reach))
+            local at = listTop + (track - thumb) * math.clamp(scroll.Pos / reach, 0, 1)
+            Painter.scope("shell:scrollbar")
+            Painter.rect(app:pos(x + w - 3, at), app:size(2, thumb), pal.Sub, app.Alpha.Btn * reveal * 0.5, Z_NAV + 3, 2, true)
+            Painter.scope(nil)
+        end
+    end
+    do
+        -- in the wide sidebar the divider and the tools sit at the bottom next to the avatar too
+        local wideFloor = m.Height - 62 - toolCount * (SB_ROW + 2 + railGap) - 16
+        y += math.max(0, wideFloor - y)
+    end
+    y += 6
+    divider(app, "shell:div:1", x + 6, y, w - 12, reveal)
+    y += 10
+    do
+        -- in the narrow rail the tools sink to the bottom next to the avatar, so the rail has no hole in the middle
+        local floorY = m.Height - 62 - toolCount * (SB_ROW + 2 + railGap)
+        y += math.max(0, floorY - y) * (app.CompactT or 0)
+    end
+    if #app:settingsTabs() > 0 then
+        row("shell:nav:settings", "Settings", lucideIcon("settings"), nil, function()
+            app:openSettings()
+        end, index)
+        index += 1
+    end
+    if Farm.available(app) then
+        row("shell:nav:farm", "Farm Mode", lucideIcon("farming"), nil, function()
+            Farm.enter(app)
+        end, index)
+        index += 1
+    end
+    do
+        local folded = app.State.CompactSidebar == true
+        row("shell:nav:compact", if folded then "Expand" else "Collapse", function(center: Vector2, color: Color3, alpha: number)
+            -- a little window with its sidebar: the left strip is filled while the sidebar is folded
+            local unit = app.Unit
+            local box = Vector2.new(15, 12) * unit
+            local top = center - box / 2
+            Painter.border(top, box, 3 * unit, color, alpha, Z_NAV_TEXT, math.max(1, 1.3 * unit))
+            local strip = if folded then 4 else 2
+            Painter.rect(top + Vector2.new(1.5 * unit, 1.5 * unit), Vector2.new(strip * unit, box.Y - 3 * unit), color, alpha * (if folded then 0.9 else 0.45), Z_NAV_TEXT, unit)
+            Painter.line(top + Vector2.new(6 * unit, 0), top + Vector2.new(6 * unit, box.Y), color, alpha * 0.8, Z_NAV_TEXT, math.max(1, 1.2 * unit))
+        end, nil, function()
+            app.State.CompactSidebar = not folded
+        end, index)
+        index += 1
+    end
+    -- the selection: a soft fill that springs to the picked row
+    if pillY then
+        local at = spring(app, "shell:pill", pillY, 0.34, 0.86)
+        local speed = math.abs(Motion.velocity(app.Springs, "shell:pill"))
+        local stretch = math.min(speed / 900, 0.2)
+        local lean: number = app.CompactT or 0
+        local boxW = w + (RAIL_BOX - w) * lean
+        local pillPos, pillSize = app:pos(x + (w - boxW) / 2, at - SB_ROW * stretch / 2), app:size(boxW, SB_ROW * (1 + stretch))
+        Painter.scope("shell:pill")
+        Painter.rect(pillPos, pillSize, pal.Text, app.Alpha.Btn * reveal * (0.075 - 0.025 * pal.Light), Z_NAV, rad(app, 9), true)
+        Painter.scope(nil)
+    end
+    y += 6
+    divider(app, "shell:div:2", x + 6, y, w - 12, reveal * (1 - (app.CompactT or 0)))
+    profile(app, sx, sw, reveal)
+end
+
+-- ---------------------------------------------------------------------------------------------------------------- top pill
+
+local function topPill(app: App, x0: number, mw: number, alpha: number)
+    local items = mainItems(app)
+    if #items <= 1 then
+        return
+    end
+    local labels: { string } = {}
+    for number, item in items do
+        labels[number] = item.Label
+    end
+    local current = app.State.NextTab or app.State.CurrentTab
+    local _, index = itemOf(app, current)
+    local picked = index
+    if picked == 0 then
+        -- a settings page: the thumb rests where it was
+        picked = app.ShellPillLast or 1
+    else
+        app.ShellPillLast = picked
+    end
+    local shown = ease(app, "shell:pill:on", if index > 0 then 1 else 0.55, 10 * Motion.speed(app.State))
+    segmented(app, "shell:top", x0 + 20, TOP_PILL_Y, mw - 40, TOP_PILL_H, labels, picked, alpha * shown, true, function(number: number)
+        local item = items[number]
+        local remembered: { [string]: string } = app.ShellGroupTab or {}
+        app.ShellGroupTab = remembered
+        local name = remembered[item.Label] or item.Tabs[1]
+        app:switchTab(name)
+    end)
+end
+
+-- ---------------------------------------------------------------------------------------------------------------- home
+
+local function greeting(): string
+    local hour = tonumber(os.date("%H")) or 12
+    return if hour < 5 then "Good night" elseif hour < 12 then "Good morning" elseif hour < 18 then "Good afternoon" else "Good evening"
+end
+
+local function wrapText(text: string, size: number, room: number, most: number): { string }
+    local lines: { string } = {}
+    local current = ""
+    for word in string.gmatch(text, "%S+") do
+        local candidate = if current == "" then word else current .. " " .. word
+        if Painter.textWidth(candidate, size) <= room or current == "" then
+            current = candidate
+        else
+            table.insert(lines, current)
+            current = word
+            if #lines >= most then
+                break
+            end
+        end
+    end
+    if current ~= "" and #lines < most then
+        table.insert(lines, current)
+    elseif #lines >= most then
+        local last = lines[most]
+        while #last > 1 and Painter.textWidth(last .. "..", size) > room do
+            last = string.sub(last, 1, #last - 1)
+        end
+        lines[most] = last .. ".."
+    end
+    return lines
+end
+
+-- the four cards under the search: what the script gave, or its first four switches
+local function quickStart(app: App): { { [string]: any } }
+    local cached = app.QuickCards
+    if cached then
+        return cached
+    end
+    local cards: { { [string]: any } } = {}
+    local given = app.HomeSpec and app.HomeSpec.QuickStart
+    if type(given) == "table" then
+        for _, card in given do
+            if #cards < 4 and type(card) == "table" then
+                table.insert(cards, card)
+            end
+        end
+    end
+    if #cards == 0 then
+        local icons = { "zap", "target", "eye", "shield" }
+        for _, spec in app.BindOrder do
+            if #cards >= 4 then
+                break
+            end
+            if spec.kind == "toggle" and type(spec.flag) == "string" and string.sub(spec.flag, 1, 5) ~= "bind:" then
+                table.insert(cards, { Title = spec.text, Flag = spec.flag, Icon = icons[#cards + 1] })
+            end
+        end
+    end
+    app.QuickCards = cards
+    return cards
+end
+
+local function cardOn(app: App, card: { [string]: any }): boolean?
+    if type(card.Flag) == "string" then
+        return app:get(card.Flag) == true
+    end
+    if type(card.Active) == "function" then
+        local ok, value = pcall(card.Active, app)
+        return ok and value == true
+    end
+    return nil
+end
+
+local function runCard(app: App, card: { [string]: any })
+    if type(card.Flag) == "string" then
+        local flag = card.Flag
+        if app.BindSpecs[flag] then
+            app:triggerBind(flag)
+        else
+            app:set(flag, not (app:get(flag) == true))
+        end
+    elseif type(card.Callback) == "function" then
+        pcall(card.Callback, app)
+    end
+end
+
+local function cardText(app: App, card: { [string]: any }, on: boolean?): string
+    local text = card.Text
+    if text == false then
+        return ""
+    end
+    if type(text) == "function" then
+        local ok, value = pcall(text, app)
+        text = if ok then value else nil
+    end
+    if type(text) == "string" and text ~= "" then
+        return text
+    end
+    -- no default line, a card with nothing to say keeps just its title
+    return ""
+end
+
+local function miniSwitch(app: App, key: string, position: Vector2, on: boolean, alpha: number)
+    local pal = app.Pal
+    local value = math.clamp(spring(app, key .. ":on", if on then 1 else 0, 0.2, 1), 0, 1)
+    local side = whole(app:size(17, 17)).X
+    Kit.checkbox(pal, position + Vector2.new(whole(app:size(26, 0)).X - side, (whole(app:size(0, 15)).Y - side) / 2), side, value, 0, 0, 0, alpha, Z_NAV_TEXT, app.Unit)
+    do return end
+    local size = whole(app:size(26, 15))
+    local radius = size.Y / 2
+    local track = Color.lerp(Color.lerp(pal.Panel, pal.Text, 0.16), pal.Accent, value)
+    Painter.rect(position, size, track, alpha, Z_NAV_TEXT, radius, true)
+    local knob = size.Y - math.max(2, math.floor(3 * app.Unit + 0.5))
+    local pad = (size.Y - knob) / 2
+    local at = position + Vector2.new(pad + (size.X - knob - pad * 2) * value, pad)
+    Painter.rect(at + Vector2.new(0, 0.5 * app.Unit), Vector2.new(knob, knob), Color3.new(0, 0, 0), alpha * 0.18, Z_NAV_TEXT + 1, knob / 2, true)
+    local brightTrack = (pal.Accent.R * 0.299 + pal.Accent.G * 0.587 + pal.Accent.B * 0.114) > 0.62
+    Painter.rect(at, Vector2.new(knob, knob), Color.lerp(Color3.new(1, 1, 1), if brightTrack then Color3.fromRGB(20, 20, 24) else Color3.new(1, 1, 1), value), alpha, Z_NAV_TEXT + 1, knob / 2, true)
+end
+
+local function quickCard(app: App, number: number, card: { [string]: any }, x: number, y: number, w: number, alpha: number)
+    local pal = app.Pal
+    local key = "home:card:" .. number
+    local hovered = app.HoverKey == key and not app.Modal
+    local hover = ease(app, key, if hovered then 1 else 0, 14 * Motion.speed(app.State))
+    local press = Press.scale(app, app.Springs, key .. ":press", key, hovered)
+    local on = cardOn(app, card)
+    local lit = ease(app, key .. ":lit", if on then 1 else 0, 10 * Motion.speed(app.State))
+    local light = pal.Light
+    local position, size = Press.box(whole(app:pos(x, y)), app:size(w, CARD_H), press)
+    local radius = rad(app, 14)
+    Painter.scope(key)
+    Painter.rect(position + Vector2.new(0, 2 * app.Unit), size, Color3.new(0, 0, 0), app.Alpha.Btn * alpha * (0.1 + 0.06 * hover) * (1 - 0.55 * light), Z_NAV - 1, radius, true)
+    local fill = Color.lerp(Color.lerp(pal.Panel, pal.Text, 0.025 + 0.03 * hover), Color3.new(1, 1, 1), light * (0.55 + 0.25 * hover))
+    Painter.rect(position, size, fill, app.Alpha.Btn * alpha * (0.78 + 0.12 * hover + 0.1 * light), Z_NAV, radius, true)
+    Painter.border(position, size, radius, Color.lerp(pal.Text, pal.Accent, 0.5 * lit), app.Alpha.Btn * alpha * (0.07 + 0.03 * hover + 0.1 * lit), Z_NAV, 1)
+    local unit = app.Unit
+    local tileAt, tileSize = whole(position + Vector2.new(13 * unit, (CARD_H - 28) / 2 * unit)), whole(app:size(28, 28))
+    Painter.rect(tileAt, tileSize, pal.Accent, app.Alpha.Btn * alpha * (0.14 + 0.06 * lit), Z_NAV, rad(app, 8), true)
+    Painter.border(tileAt, tileSize, rad(app, 8), pal.Accent, app.Alpha.Btn * alpha * 0.12, Z_NAV, 1)
+    local icon = tostring(card.Icon or "zap")
+    if not lucide(app, icon, tileAt + tileSize / 2, 15, pal.Accent, app.Alpha.Text * alpha, Z_NAV_TEXT) then
+        glyph(app, icon, tileAt + tileSize / 2, 15, pal.Accent, app.Alpha.Text * alpha, Z_NAV_TEXT, fill)
+    end
+    local textX = 52
+    local right = if on ~= nil then 44 else 14
+    local titleSize = math.floor(13 * app.TextScale + 0.5)
+    local title = clipped(tostring(card.Title or ""), titleSize, (w - textX - right) * unit, Painter.bold())
+    local bodySize = math.max(MIN_TEXT, math.floor(11.5 * app.TextScale + 0.5))
+    local body = cardText(app, card, on)
+    local lines = if body == "" then {} else wrapText(body, bodySize, (w - textX - 14) * unit, 2)
+    -- a card without a description keeps its title in line with the middle of the icon tile
+    -- the title and its lines sit as one block in the middle of the card, level with the icon
+    local titleY = if #lines == 0 then CARD_H / 2 elseif #lines == 1 then CARD_H / 2 - 7 else CARD_H / 2 - 14
+    Painter.text(title, whole(position + Vector2.new(textX * unit, titleY * unit)), titleSize, pal.Text, app.Alpha.Text * alpha, Z_NAV_TEXT, false, true, Painter.bold())
+    for line, text in lines do
+        Painter.text(text, whole(position + Vector2.new(textX * unit, (titleY + 15 + (line - 1) * 14) * unit)), bodySize, pal.Sub, app.Alpha.Text * alpha, Z_NAV_TEXT, false, true)
+    end
+    if on ~= nil then
+        miniSwitch(app, key, whole(position + Vector2.new(size.X - 40 * unit, (CARD_H / 2 - 7) * unit)), on, app.Alpha.Text * alpha)
+    end
+    Painter.scope(nil)
+    if not app.Modal and alpha > 0.6 then
+        Hits.add({ key = key, position = app:pos(x, y), size = app:size(w, CARD_H), click = function()
+            runCard(app, card)
+        end })
+    end
+end
+
+local function scopeLabel(app: App): string
+    local scope = app.SearchScope
+    if scope then
+        for _, item in mainItems(app) do
+            if item.Label == scope then
+                return scope
+            end
+        end
+        app.SearchScope = nil
+    end
+    return "All pages"
+end
+
+local function firstResult(app: App)
+    local page = app.ResultPage
+    if page and page.rows and page.rows[1] and type(page.rows[1].onClick) == "function" then
+        page.rows[1].onClick()
+    end
+end
+
+local function quickSave(app: App)
+    local state = app.State
+    local name = tostring(state.SelectedConfig or "")
+    if name == "" or name == "None" then
+        name = tostring(state.ConfigName or "")
+    end
+    if name == "" or name == "Config Name..." then
+        name = "Quick Save"
+    end
+    app:saveConfig(name)
+    app:announce("Saved config " .. name)
+end
+
+local function boxButton(app: App, key: string, label: string, center: Vector2, alpha: number, draw: (Vector2, Color3) -> (), onClick: () -> ())
+    local pal = app.Pal
+    local size = app:size(28, 28)
+    local position = whole(center - size / 2)
+    Painter.scope(key)
+    local hover = hoverFill(app, key, position, size, size.X / 2, alpha)
+    draw(position + size / 2, Color.lerp(pal.Sub, pal.Text, 0.25 + 0.75 * hover))
+    Painter.scope(nil)
+    tip(app, key, label, position + Vector2.new(size.X / 2, 0))
+    if not app.Modal and alpha > 0.5 then
+        Hits.add({ key = key, position = position, size = size, click = onClick })
+    end
+end
+
+-- the search box of Home: the field, a row of quick tools under it, which pages to look in and a button that opens the first find
+local function searchBox(app: App, x: number, y: number, w: number, alpha: number)
+    local pal = app.Pal
+    local state = app.State
+    local focused = app.Focus == SEARCH_KEY
+    local query = searchQuery(app)
+    if focused then
+        app.SearchQuery = query
+    end
+    local speed = Motion.speed(state)
+    local key = SEARCH_KEY
+    local hovered = app.HoverKey == key and not app.Modal
+    local hover = ease(app, key, if hovered then 1 else 0, 14 * speed)
+    local ring = math.clamp(spring(app, "search:ring", if focused then 1 else 0, 0.3, 0.9), 0, 1)
+    local light = pal.Light
+    local position, size = whole(app:pos(x, y)), whole(app:size(w, BOX_H))
+    local radius = rad(app, 18)
+    local fill = Color.lerp(Color.lerp(pal.Panel, pal.Text, 0.03 + 0.015 * hover), Color3.new(1, 1, 1), light * 0.8)
+    Painter.scope(key)
+    Painter.rect(position + app:size(-4, 8), size + app:size(8, 6), Color3.new(0, 0, 0), app.Alpha.Btn * alpha * (0.08 + 0.04 * ring) * (1 - 0.4 * light), Z_NAV - 1, radius + 4 * app.Unit, true)
+    Painter.rect(position + app:size(0, 2), size, Color3.new(0, 0, 0), app.Alpha.Btn * alpha * (0.14 - 0.08 * light), Z_NAV - 1, radius, true)
+    Painter.rect(position, size, fill, app.Alpha.Btn * alpha, Z_NAV, radius, true)
+    Painter.border(position, size, radius, Color.lerp(pal.Text, pal.Accent, ring), app.Alpha.Btn * alpha * (0.08 + 0.03 * hover + 0.32 * ring), Z_NAV, 1)
+    local unit = app.Unit
+    local textSize = math.floor(14 * app.TextScale + 0.5)
+    local textAt = whole(app:pos(x + 18, y + 24))
+    local hint = ease(app, "search:hint", if query == "" then 1 else 0, 18 * speed)
+    local limit = (w - 40) * unit
+    local shownQuery = query
+    while #shownQuery > 0 and Painter.textWidth(shownQuery, textSize) > limit do
+        shownQuery = string.sub(shownQuery, 2)
+    end
+    Painter.clip(position, size)
+    Painter.text("Search features, settings and pages", textAt + Vector2.new(math.floor(4 * (1 - hint) * unit + 0.5), 0), textSize, pal.Sub, app.Alpha.Text * alpha * hint * 0.9, Z_NAV_TEXT, false, true)
+    Painter.text(shownQuery, textAt, textSize, pal.Text, app.Alpha.Text * alpha, Z_NAV_TEXT, false, true)
+    if focused then
+        local breathe = math.clamp(0.5 + 0.9 * math.cos(os.clock() * math.pi * 2 / 1.1), 0, 1)
+        local caretX = textAt.X + (if shownQuery == "" then 0 else Painter.drawnWidth(shownQuery, textSize) - unit)
+        Painter.rect(Vector2.new(math.floor(caretX + 0.5), textAt.Y - math.floor(8 * unit + 0.5)), Vector2.new(math.max(1, math.floor(1.6 * unit + 0.5)), math.floor(16 * unit + 0.5)), pal.Accent, app.Alpha.Text * alpha * breathe, Z_NAV_TEXT, unit, true)
+    end
+    Painter.unclip()
+    Painter.scope(nil)
+    if not app.Modal and alpha > 0.5 then
+        Hits.add({ key = key, position = position, size = size, click = function()
+            if app.Focus ~= SEARCH_KEY then
+                focusSearch(app, app.SearchQuery or "")
+            end
+        end })
+    end
+
+    -- the tools under the field
+    local rowY = y + BOX_H - 22
+    local tools = {
+        { "search:tool:keys", "Keybinds", function(center: Vector2, color: Color3)
+            if not lucide(app, "keyboard", center, 16, color, app.Alpha.Text * alpha, Z_NAV_TEXT) then
+                glyph(app, "plus", center, 14, color, app.Alpha.Text * alpha, Z_NAV_TEXT)
+            end
+        end, function()
+            if not Layout.reveal(app, "UI Keybind", Chrome.clearSearch) and app.TabByName.General then
+                app:switchTab("General")
+            end
+        end },
+        { "search:tool:save", "Save config", function(center: Vector2, color: Color3)
+            if not lucide(app, "save", center, 15, color, app.Alpha.Text * alpha, Z_NAV_TEXT) then
+                glyph(app, "plus", center, 14, color, app.Alpha.Text * alpha, Z_NAV_TEXT)
+            end
+        end, function()
+            quickSave(app)
+        end },
+        { "search:tool:share", "Share config code", function(center: Vector2, color: Color3)
+            glyph(app, "copy", center, 15, color, app.Alpha.Text * alpha, Z_NAV_TEXT)
+        end, function()
+            app:rememberClick(app:pos(x, y), app:size(w, BOX_H), "search:tool:share")
+            app:copyConfigCode()
+        end },
+    }
+    for number, tool in tools do
+        boxButton(app, tool[1], tool[2], app:pos(x + 26 + (number - 1) * 32, rowY), alpha, tool[3], tool[4])
+    end
+
+    -- the send button: opens the first find, or puts the cursor in the field while it is empty
+    local sendKey = "search:send"
+    local ready = ease(app, sendKey .. ":ready", if query ~= "" then 1 else 0, 14 * speed)
+    local sendSize = app:size(30, 30)
+    local sendAt = whole(app:pos(x + w - 14 - 30, rowY - 15))
+    local sendHover = ease(app, sendKey, if app.HoverKey == sendKey and not app.Modal then 1 else 0, 16 * speed)
+    Painter.scope(sendKey)
+    local idle = Color.lerp(pal.Panel, pal.Text, 0.08 + 0.04 * sendHover)
+    Painter.rect(sendAt, sendSize, Color.lerp(idle, Color.lighten(pal.Accent, 0.08 * sendHover), ready), app.Alpha.Btn * alpha, Z_NAV, sendSize.X / 2, true)
+    local onAccent = if (pal.Accent.R * 0.299 + pal.Accent.G * 0.587 + pal.Accent.B * 0.114) > 0.62 then Color3.fromRGB(20, 20, 24) else Color3.new(1, 1, 1)
+    glyph(app, "search", sendAt + sendSize / 2, 16, Color.lerp(pal.Sub, onAccent, ready), app.Alpha.Text * alpha, Z_NAV_TEXT)
+    Painter.scope(nil)
+    tip(app, sendKey, if query ~= "" then "Open the first result" else "Search", sendAt + Vector2.new(sendSize.X / 2, 0))
+    if not app.Modal and alpha > 0.5 then
+        Hits.add({ key = sendKey, position = sendAt, size = sendSize, click = function()
+            if searchQuery(app) ~= "" then
+                firstResult(app)
+            else
+                focusSearch(app, "")
+            end
+        end })
+    end
+
+    -- where to look: every page, or one main section
+    local scopeKey = "search:scope"
+    local label = scopeLabel(app)
+    local labelSize = math.floor(12 * app.TextScale + 0.5)
+    local labelW = Painter.textWidth(label, labelSize) / math.max(0.01, unit)
+    local scopeW = labelW + 34
+    local scopeX = x + w - 14 - 30 - 8 - scopeW
+    local scopeAt, scopeSize = whole(app:pos(scopeX, rowY - 14)), app:size(scopeW, 28)
+    Painter.scope(scopeKey)
+    local scopeHover = hoverFill(app, scopeKey, scopeAt, scopeSize, rad(app, 9), alpha, if app.OpenDropdown and app.OpenDropdown.key == scopeKey then 1 else 0)
+    local scopeColor = Color.lerp(Color.lerp(pal.Sub, pal.Text, 0.55), pal.Text, scopeHover)
+    Painter.text(label, whole(scopeAt + Vector2.new(10 * unit, scopeSize.Y / 2)), labelSize, scopeColor, app.Alpha.Text * alpha, Z_NAV_TEXT, false, true)
+    glyph(app, "chevron-down", scopeAt + Vector2.new(scopeSize.X - 13 * unit, scopeSize.Y / 2), 11, scopeColor, app.Alpha.Text * alpha, Z_NAV_TEXT)
+    Painter.scope(nil)
+    local menuW = 160
+    anchorMenu(app, scopeKey, app:pos(scopeX + scopeW - menuW, rowY - 14), app:size(menuW, 28))
+    tip(app, scopeKey, "Where to search", scopeAt + Vector2.new(scopeSize.X / 2, 0))
+    if not app.Modal and alpha > 0.5 then
+        Hits.add({ key = scopeKey, position = scopeAt, size = scopeSize, click = function()
+            local values = { "All pages" }
+            for _, item in mainItems(app) do
+                if not (#item.Tabs == 1 and app.TabByName[item.Tabs[1]] and app.TabByName[item.Tabs[1]].home) then
+                    table.insert(values, item.Label)
+                end
+            end
+            openMenu(app, scopeKey, values, function(): string
+                return scopeLabel(app)
+            end, function(value: string)
+                app.SearchScope = if value == "All pages" then nil else value
+                app.ResultPage = nil
+            end)
+        end })
+    end
+end
+
+-- the version as a slim pill above the greeting: what is new, the version and a way into the Updates page
+local function homeChip(app: App, centerX: number, y: number, alpha: number)
+    local pal = app.Pal
+    local options = app.Options
+    local key = "home:chip"
+    local size = math.floor(11.5 * app.TextScale + 0.5)
+    local unit = math.max(0.01, app.Unit)
+    local head = "What's new"
+    local version = "v" .. tostring(options.Version)
+    local headW = Painter.textWidth(head, size) / unit
+    local versionW = Painter.textWidth(version, size) / unit
+    local badgeW = versionW + 14
+    local width = 14 + headW + 8 + badgeW + 5
+    local x = centerX - width / 2
+    local position, box = whole(app:pos(x, y)), whole(app:size(width, 26))
+    local hovered = app.HoverKey == key and not app.Modal
+    local hover = ease(app, key, if hovered then 1 else 0, 16 * Motion.speed(app.State))
+    Painter.scope(key)
+    local fill = Color.lerp(Color.lerp(pal.Panel, pal.Text, 0.04 + 0.03 * hover), Color3.new(1, 1, 1), pal.Light * 0.75)
+    Painter.rect(position, box, fill, app.Alpha.Btn * alpha * 0.9, Z_NAV, box.Y / 2, true)
+    Painter.border(position, box, box.Y / 2, pal.Text, app.Alpha.Btn * alpha * (0.07 + 0.04 * hover), Z_NAV, 1)
+    local middle = y + 13
+    Painter.text(head, whole(app:pos(x + 14, middle)), size, Color.lerp(pal.Sub, pal.Text, 0.5 + 0.4 * hover), app.Alpha.Text * alpha, Z_NAV_TEXT, false, true)
+    local badgeAt, badgeBox = whole(app:pos(x + 14 + headW + 8, y + 5)), whole(app:size(badgeW, 16))
+    Painter.rect(badgeAt, badgeBox, pal.Accent, app.Alpha.Btn * alpha * 0.18, Z_NAV, badgeBox.Y / 2, true)
+    Painter.text(version, whole(badgeAt + badgeBox / 2), size - 1, pal.Accent, app.Alpha.Text * alpha, Z_NAV_TEXT, true, true)
+    Painter.scope(nil)
+    tip(app, key, "What's new", position + Vector2.new(box.X / 2, 0))
+    if not app.Modal and alpha > 0.5 then
+        Hits.add({ key = key, position = position, size = box, click = function()
+            if app.TabByName.Updates then
+                app:switchTab("Updates")
+            elseif app.PopupDefs.updateNotice and app.Options.UpdateNotice then
+                app:openPopup("updateNotice")
+            end
+        end })
+    end
+end
+
+local function homeContent(app: App, x0: number, mw: number, alpha: number, boxAlpha: number): (number, number, number, number)
+    local m: Metrics = app.M
+    local state = app.State
+    local pal = app.Pal
+    local searching = app.ShowingResults == true or (searchQuery(app) ~= "" and not state.NextTab)
+    -- the move is one soft spring: the box glides up and settles with the faintest give, the greeting lifts away first and the cards
+    -- sink away one after another, going back they return in the reverse order
+    local swing = spring(app, "home:morph", if searching then 1 else 0, 0.46, 0.86)
+    if not state.AnimationsEnabled then
+        swing = if searching then 1 else 0
+    end
+    local morph = math.clamp(swing, 0, 1)
+    local glide = swing
+    local headFade = Motion.glide(math.clamp(1 - morph * 2.2, 0, 1))
+    local cw = math.min(mw - 72, 540)
+    local x = x0 + (mw - cw) / 2
+    local cards = quickStart(app)
+    local cardRows = math.ceil(#cards / 2)
+    local chipH = 44
+    local blockH = chipH + 40 + 24 + BOX_H + (if cardRows > 0 then 26 + 14 + cardRows * (CARD_H + CARD_GAP) - CARD_GAP else 0)
+    -- a short window leaves the chip out so the cards keep their room
+    local roomy = m.Height - 44 - blockH >= 56
+    if not roomy then
+        blockH -= chipH
+        chipH = 0
+    end
+    local top = math.max(50, 44 + (m.Height - 44 - blockH) / 2 - 8)
+    local boxRest = top + chipH + 40 + 24
+    local boxY = boxRest + (56 - boxRest) * glide
+    local rest = alpha * headFade
+    local lift = (1 - headFade) * 16
+    -- greeting
+    if rest > 0.004 then
+        if roomy then
+            homeChip(app, x0 + mw / 2, top - lift * 0.6, rest)
+        end
+        local display = playerNames(app)
+        local text = greeting() .. ", " .. display
+        local words, size = fitBrand(text, 34 * app.TextScale, cw * app.Unit)
+        Painter.scope("home:greeting")
+        Painter.text(words, whole(app:pos(x0 + mw / 2, top + chipH + 20 - lift)), size, pal.Text, app.Alpha.Text * rest, Z_NAV_TEXT, true, true)
+        Painter.scope(nil)
+    end
+    searchBox(app, x, boxY, cw, boxAlpha)
+    if alpha * (1 - morph) > 0.004 and cardRows > 0 then
+        local labelY = boxRest + BOX_H + 26
+        local labelFade = Motion.glide(math.clamp(1 - morph * 2.4, 0, 1))
+        local rest = alpha * labelFade
+        Painter.scope("home:quick")
+        Painter.text((app.HomeSpec and app.HomeSpec.QuickLabel) or "Quick Presets", whole(app:pos(x + 2, labelY + (1 - labelFade) * 10)), math.floor(10 * app.TextScale + 0.5), pal.Sub, app.Alpha.Text * rest * 0.9, Z_NAV_TEXT, false, true, boldFace())
+        Painter.scope(nil)
+        local cardW = (cw - CARD_GAP) / 2
+        for number, card in cards do
+            local column = (number - 1) % 2
+            local line = math.floor((number - 1) / 2)
+            local gone = Motion.glide(math.clamp(morph * 1.8 - 0.14 * (number - 1), 0, 1))
+            quickCard(app, number, card, x + column * (cardW + CARD_GAP), labelY + 14 + line * (CARD_H + CARD_GAP) + 18 * gone, cardW, alpha * (1 - gone))
+        end
+    end
+    local rowsY = boxY + BOX_H + 16
+    local query = searchQuery(app)
+    local page = app.ResultPage
+    local none = ease(app, "home:none", if app.ShowingResults and query ~= "" and page and #page.rows == 0 then 1 else 0, 10 * Motion.speed(state))
+    if query ~= "" then
+        app.SearchShownQuery = query
+    end
+    if none > 0.004 then
+        Painter.scope("home:none")
+        local middle = app:pos(x0 + mw / 2, rowsY + 60 + (1 - none) * 6)
+        Painter.text("No Results", whole(middle - Vector2.new(0, 10 * app.Unit)), math.floor(15 * app.TextScale + 0.5), pal.Text, app.Alpha.Text * none, Z_NAV_TEXT, true, true, boldFace())
+        Painter.text(clipped('Nothing matches "' .. tostring(app.SearchShownQuery or "") .. '"', math.floor(12 * app.TextScale + 0.5), cw * app.Unit), whole(middle + Vector2.new(0, 10 * app.Unit)), math.floor(12 * app.TextScale + 0.5), pal.Sub, app.Alpha.Text * none, Z_NAV_TEXT, true, true)
+        Painter.scope(nil)
+    end
+    return x, rowsY, cw - 10, m.Height - 16
+end
+
+-- ---------------------------------------------------------------------------------------------------------------- background
+
+local function shellBody(app: App)
+    local pal = app.Pal
+    local light = pal.Light
+    local alpha = app.Alpha.UI * (1 - skyShows(app))
+    Painter.scope("shell:body")
+    Painter.rect(app.WindowPos, app.WindowSize, pal.Main, alpha, Z_FRAME, SHELL_WINDOW)
+    -- a soft warm glow: faint in the top left, stronger toward the bottom right, like light falling on the window
+    local warm = pal.Accent
+    local colors = {
+        Color.lerp(pal.Main, warm, 0.05 + 0.06 * light),
+        pal.Main,
+        Color.lerp(pal.Main, warm, 0.03 + 0.04 * light),
+        Color.lerp(pal.Main, warm, 0.13 + 0.15 * light),
+    }
+    Painter.gradient(app.WindowPos, app.WindowSize, colors, 38, alpha, Z_FRAME, SHELL_WINDOW)
+    Painter.scope(nil)
+    local glow = Skyfx.glow()
+    if glow then
+        local m: Metrics = app.M
+        Painter.scope("shell:glow")
+        Painter.clip(app:pos(m.SidebarWidth, 0), app:size(m.Width - m.SidebarWidth, m.Height))
+        -- the light fades out before the window edge, so nothing is cut off by the edge or the round corners
+        local spread = app:size(m.Width * 0.8, m.Height * 0.95)
+        Painter.image(glow, app:pos(m.Width * 0.97 - m.Width * 0.8, m.Height * 0.97 - m.Height * 0.95), spread, alpha * (0.15 + 0.10 * light), Z_FRAME, 0, warm)
+        Painter.image(glow, app:pos(m.SidebarWidth + 10, -m.Height * 0.25), app:size(m.Width * 0.6, m.Height * 0.6), alpha * (0.05 + 0.05 * light), Z_FRAME, 0, warm)
+        Painter.unclip()
+        Painter.scope(nil)
+    end
+end
+
+-- ---------------------------------------------------------------------------------------------------------------- pages
+
+local function shellContent(app: App, tab: { [string]: any }, section: { [string]: any }, index: number): (number, number, number, number)
+    local m: Metrics = app.M
+    local state = app.State
+    local pal = app.Pal
+    local text = app.Alpha.Text
+    local x0 = m.SidebarWidth
+    local mw = m.Width - x0
+    local reveal = Motion.glide(if state.AnimationsEnabled then math.clamp(state.TabReveal, 0, 1) else 1)
+    local alpha = state.TabAlpha * math.min(1, reveal * 1.4)
+    local direction = state.TabSlideDirection or 1
+    app.SearchText = string.lower(searchQuery(app))
+    trackHistory(app)
+
+
+    -- the line at the bottom: what was just switched, or the script's own status
+    local status: string? = nil
+    local notice = app.Notice
+    local noticed = notice and os.clock() < notice.Expires
+    if noticed then
+        status = notice.Text
+    elseif app.Options.Status then
+        local ok, value = pcall(app.Options.Status)
+        status = if ok and type(value) == "string" and value ~= "" then value else nil
+    end
+    local statusShown = ease(app, "footer:status", if status then 1 else 0, 7 * Motion.speed(state))
+    app.FooterStatus = status or app.FooterStatus
+    if app.FooterStatus and statusShown > 0.004 then
+        local size = math.floor(11 * app.TextScale + 0.5)
+        local shown = cutFooter(app.FooterStatus, size, (mw - 80) * app.Unit)
+        Painter.scope("shell:status")
+        Painter.text(shown, whole(app:pos(x0 + 18, m.Height - 13)), size, if noticed then pal.Accent else pal.Sub, text * statusShown * 0.9, Z_NAV_TEXT, false, true)
+        Painter.scope(nil)
+    end
+
+    local upcoming = if state.NextTab then app.TabByName[state.NextTab] else nil
+    local homeNow = isHome(tab)
+    -- the content panel for the hit tests of the scripts
+    local panelPos, panelSize = app:pos(x0, TOP_PILL_Y + TOP_PILL_H), app:size(mw, m.Height - TOP_PILL_Y - TOP_PILL_H)
+    app.ContentBox = { panelPos.X, panelPos.Y, panelPos.X + panelSize.X, panelPos.Y + panelSize.Y }
+    if homeNow then
+        -- the results come and go with a fade of the same page, the search box stays put through it so typing never flickers
+        if state.NextTab == tab.name then
+            app.HomeSteady = true
+        elseif not state.NextTab and (state.TabReveal or 1) >= 1 then
+            app.HomeSteady = nil
+        end
+        local boxAlpha = if app.HomeSteady then text else alpha
+        return homeContent(app, x0, mw, alpha, boxAlpha)
+    end
+    local searching = app.ShowingResults == true and not tab.ownSearch
+
+    -- the page title, it slides and fades with the page
+    local item = itemOf(app, tab.name)
+    local title: string = if searching then "Search" elseif item and #item.Tabs > 1 then item.Label else tab.label
+    local nextItem = if upcoming then itemOf(app, upcoming.name) else nil
+    local nextTitle: string? = if upcoming then (if nextItem and #nextItem.Tabs > 1 then nextItem.Label else upcoming.label) else nil
+    local steady = headerSteady(app, "title", title, nextTitle)
+    local offset = if steady then Vector2.new(0, 0) else Vector2.new((1 - reveal) * 14 * direction * app.Scale, 0)
+    local cx = x0 + 12
+    local cw = mw - 24
+    Painter.scope("shell:title")
+    Painter.text(title, whole(app:pos(cx, PAGE_TITLE_Y) + offset), math.floor(22 * app.TextScale + 0.5), pal.Text, text * (if steady then 1 else alpha), Z_NAV_TEXT, false, true, Painter.bold())
+    Painter.scope(nil)
+    local y = PAGE_TITLE_Y + 20
+    local segAlpha = if state.TabFading then state.TabAlpha elseif state.NextSection or state.SectionSwap then 1 else math.min(1, reveal * 1.4)
+    -- the pages of a group, then the sections of the page, each level one even gap under the one above. search results span
+    -- every page, so neither row shows while they are up
+    local sideX, sideW = cx, cw - 6
+    local stripShown = item and #item.Tabs > 1 and not searching
+    if stripShown then
+        local labels: { string } = {}
+        local picked = 1
+        for number, name in item.Tabs do
+            labels[number] = app.TabByName[name].label
+            if name == tab.name then
+                picked = number
+            end
+        end
+        local remembered: { [string]: string } = app.ShellGroupTab or {}
+        app.ShellGroupTab = remembered
+        remembered[item.Label] = tab.name
+        pageStrip(app, "shell:grp:" .. item.Label, cx, y, cw - 6, labels, picked, segAlpha, function(number: number)
+            app:switchTab(item.Tabs[number])
+        end, #tab.sections > 1)
+        -- the sections sit on the same line, after the pages
+        local used = 0
+        for _, label in labels do
+            used += Painter.textWidth(label, math.floor(14 * app.TextScale + 0.5), Painter.font()) / math.max(0.01, app.Unit) + 24
+        end
+        if #tab.sections > 1 then
+            sideX, sideW = cx + used, cw - 6 - used
+        else
+            y += STRIP_H + HEAD_GAP
+        end
+    end
+    if #tab.sections > 1 and not searching then
+        local labels: { string } = tab.SegLabels
+        if not labels or #labels ~= #tab.sections then
+            labels = {}
+            for number, entry in tab.sections do
+                labels[number] = titleCase(entry.title)
+            end
+            tab.SegLabels = labels
+        end
+        chipRow(app, "shell:seg:" .. tab.name, sideX, y, sideW, labels, Layout.shownIndex(app, tab), segAlpha, function(number: number)
+            app.State.TabSlideDirection = if number >= index then 1 else -1
+            Layout.setSection(app, tab, number)
+        end)
+        y += CHIP_H + (if stripShown then 5 else 0) + HEAD_GAP
+    end
+    local rowsTarget = y + 3
+    local rowsY = if state.AnimationsEnabled then ease(app, "panel:top", rowsTarget, PANEL_GLIDE) else rowsTarget
+    if math.abs(rowsY - rowsTarget) < 0.25 then
+        rowsY = rowsTarget
+        app.NavAnim["panel:top"] = rowsTarget
+    end
+    local bottom = m.Height - 10
+
+    -- nothing found: a quiet note in the middle
+    local query = app.SearchText or ""
+    local empty = ease(app, "search:empty", if query ~= "" and not tab.ownSearch and Layout.sectionHeight(app, section) <= 0 then 1 else 0, 10 * Motion.speed(state))
+    if query ~= "" then
+        app.SearchShownQuery = query
+    end
+    if empty > 0.004 then
+        Painter.scope("search:empty")
+        local middle = app:pos(cx + cw / 2, (rowsY + bottom) / 2 + (1 - empty) * 6)
+        Painter.text("No Results", whole(middle - Vector2.new(0, 10 * app.Unit)), math.floor(15 * app.TextScale + 0.5), pal.Text, text * empty, 6, true, true, boldFace())
+        Painter.text('Nothing matches "' .. tostring(app.SearchShownQuery or "") .. '"', whole(middle + Vector2.new(0, 10 * app.Unit)), math.floor(12 * app.TextScale + 0.5), pal.Sub, text * empty, 6, true, true)
+        Painter.scope(nil)
+    end
+    return cx, rowsY, cw - 6, bottom
+end
+
+local RAIL_WIDTH = 64
+
+local function shellDraw(app: App, now: number, tab: { [string]: any }, section: { [string]: any }, index: number): (number, number, number, number)
+    -- the sidebar slides between its full width and a narrow rail of icons, everything beside it follows the width
+    local m: Metrics = app.M
+    local full: number = (m :: any).FullSidebar or m.SidebarWidth
+    ;(m :: any).FullSidebar = full
+    local rail = ease(app, "shell:compact", if app.State.CompactSidebar == true or app.Options.Dock then 1 else 0, 12 * Motion.speed(app.State))
+    app.CompactT = if rail < 0.004 then 0 elseif rail > 0.996 then 1 else rail
+    m.SidebarWidth = full + (RAIL_WIDTH - full) * app.CompactT
+    shellBody(app)
+    local inset = FLOAT_INSET
+    local savedPos, savedHeight, savedWidth = app.WindowPos, m.Height, m.SidebarWidth
+    local shifted = savedPos + Vector2.new(inset, inset) * app.Unit
+    ;(app :: any).FloatSaved = { Pos = savedPos, Shifted = shifted, Height = savedHeight, Inset = inset }
+    app.WindowPos, m.Height, m.SidebarWidth = shifted, savedHeight - inset * 2, savedWidth - inset - 2
+    shellSidebar(app, now)
+    app.WindowPos, m.Height, m.SidebarWidth = savedPos, savedHeight, savedWidth
+    ;(app :: any).FloatSaved = nil
+    local result = table.pack(shellContent(app, tab, section, index))
+    drawTip(app)
+    return result[1], result[2], result[3], result[4]
+end
+
+-- ---------------------------------------------------------------------------------------------------------------- settings window
+
+local SET_NAV = 176
+local SET_LIFT = 16
+
+-- the Settings pages in a window of their own over the page: a dim, a rounded panel with the pages down its left side and the page
+-- itself on the right. everything is lifted over the rest of the window and the page behind stops reacting while it is open
+function Chrome.drawSettings(app: App, now: number)
+    local state = app.State
+    local live = app.SettingsOpen == true
+    local open = spring(app, "set:open", if live then 1 else 0, 0.4, 0.9)
+    local shown = math.clamp(open, 0, 1)
+    if shown < 0.004 and not live then
+        app.SettingsVisible = false
+        return
+    end
+    local names = app:settingsTabs()
+    local set = app.Set
+    if #names == 0 or not set then
+        app.SettingsVisible = false
+        return
+    end
+    app.SettingsVisible = true
+    local m: Metrics = app.M
+    local pal = app.Pal
+    local overlay = app.Popup.Name ~= "None" or app.OpenDropdown ~= nil
+    local priorModal = app.Modal
+    app.Modal = overlay or not live
+
+    -- the page fades out, the next one fades in, the same as the pages of the window
+    local speed = 14 * Motion.speed(state)
+    if state.AnimationsEnabled then
+        if set.Next or set.NextSection then
+            set.Alpha = Motion.ease(state, set.Alpha, 0, app.Dt, speed * 2.2)
+            if set.Alpha < 0.03 then
+                -- only the section changed: the chips stay up while the rows swap
+                set.SectionSwap = set.Next == nil and set.NextSection ~= nil
+                if set.Next then
+                    set.Page, set.Next = set.Next, nil
+                end
+                if set.NextSection then
+                    state.SectionByTab[set.Page] = set.NextSection
+                    set.NextSection = nil
+                end
+                set.Alpha, set.Reveal = 0, 0
+            end
+        else
+            if set.Alpha < 1 then
+                set.Alpha = Motion.ease(state, set.Alpha, 1, app.Dt, speed * 2.2)
+                if set.Alpha > 0.997 then
+                    set.Alpha = 1
+                end
+            end
+            set.Reveal = math.min(1, set.Reveal + app.Dt * Motion.intensity(state) / 0.62)
+            if set.Reveal >= 1 then
+                set.SectionSwap = nil
+            end
+        end
+    else
+        if set.Next then
+            set.Page, set.Next = set.Next, nil
+        end
+        if set.NextSection then
+            state.SectionByTab[set.Page] = set.NextSection
+            set.NextSection = nil
+        end
+        set.Alpha, set.Reveal = 1, 1
+    end
+
+    local tab = app.TabByName[set.Page] or app.TabByName[names[1]]
+    local index = Layout.activeIndex(app, tab)
+    local section = tab.sections[index]
+
+    local pw = math.min(m.Width - 44, 680)
+    local ph = math.min(m.Height - 40, 470)
+    local px = (m.Width - pw) / 2
+    local py = (m.Height - ph) / 2 + (1 - open) * 16
+    local position, size = app:pos(px, py), app:size(pw, ph)
+    local radius = rad(app, 22)
+    local baseAlpha = { app.Alpha.UI, app.Alpha.Text, app.Alpha.Btn, app.Alpha.Frame }
+    app.Alpha.UI, app.Alpha.Text, app.Alpha.Btn, app.Alpha.Frame = baseAlpha[1] * shown, baseAlpha[2] * shown, baseAlpha[3] * shown, baseAlpha[4] * shown
+    local text = app.Alpha.Text
+
+    Painter.lift(SET_LIFT)
+    Painter.scope("set:dim")
+    Painter.rect(app.WindowPos, app.WindowSize, Color.lerp(Color3.new(0, 0, 0), pal.Main, 0.12), 0.5 * shown, 0, SHELL_WINDOW)
+    Painter.scope("set:panel")
+    Painter.rect(position + app:size(-8, 14), size + app:size(16, 10), Color3.new(0, 0, 0), 0.10 * shown, 1, radius + rad(app, 8), true)
+    Painter.rect(position + app:size(-2, 5), size + app:size(4, 2), Color3.new(0, 0, 0), 0.18 * shown, 1, radius + rad(app, 2), true)
+    local body = Color.lerp(pal.Main, Color3.new(1, 1, 1), 0.035 + 0.45 * pal.Light)
+    Painter.rect(position, size, body, shown, 1, radius, true)
+    Painter.fade(position, Vector2.new(size.X, math.min(size.Y, 120 * app.Unit)), Color.lerp(pal.Text, Color3.new(1, 1, 1), pal.Light), 0.04, 0, 90, shown, 1, radius, true)
+    Painter.border(position, size, radius, pal.Text, shown * 0.1, 1, 1)
+    Painter.scope(nil)
+
+    -- the backdrop closes the window, the panel keeps its own clicks and wheel
+    if live then
+        Hits.add({ key = "set:backdrop", position = app.WindowPos, size = app.WindowSize, wheel = function() end, click = function()
+            app:closeSettings()
+        end })
+    else
+        Hits.add({ key = "set:backdrop", position = app.WindowPos, size = app.WindowSize, wheel = function() end })
+    end
+    Hits.add({ key = "set:panel", position = position, size = size, wheel = function() end })
+
+    -- the pages down the left side
+    local navX, navY, navW, navH = px + 8, py + 8, SET_NAV, ph - 16
+    Painter.scope("set:nav")
+    Painter.rect(app:pos(navX, navY), app:size(navW, navH), pal.Text, shown * (0.05 - 0.02 * pal.Light), 2, rad(app, 16), true)
+    Painter.text("Settings", whole(app:pos(navX + 18, navY + 26)), math.floor(15 * app.TextScale + 0.5), pal.Text, text, 6, false, true, Painter.bold())
+    Painter.scope(nil)
+    local target = set.Next or set.Page
+    local rowY = navY + 52
+    local pillY: number? = nil
+    for number, name in names do
+        local entry = app.TabByName[name]
+        local active = name == target
+        if active then
+            pillY = rowY
+        end
+        local keep = app.CompactT
+        app.CompactT = 0
+        sidebarRow(app, "set:nav:" .. name, navX + 8, rowY, navW - 16, entry.label, function(center: Vector2, color: Color3, alpha: number)
+            pageIcon(app, name, center, 16, color, alpha, Z_NAV_TEXT)
+        end, active, 1, function()
+            app:openSettings(name)
+        end)
+        app.CompactT = keep
+        rowY += SB_ROW + 2
+    end
+    if pillY then
+        local at = spring(app, "set:pill", pillY, 0.34, 0.86)
+        local fast = math.abs(Motion.velocity(app.Springs, "set:pill"))
+        local stretch = math.min(fast / 900, 0.2)
+        Painter.scope("set:pill")
+        Painter.rect(app:pos(navX + 8, at - SB_ROW * stretch / 2), app:size(navW - 16, SB_ROW * (1 + stretch)), pal.Text, app.Alpha.Btn * (0.085 - 0.03 * pal.Light), Z_NAV, rad(app, 9), true)
+        Painter.scope(nil)
+    end
+    -- the foot of the list: the Discord button with the version under it
+    do
+        local options = app.Options
+        local invite = tostring(options.Discord or "")
+        local address = if invite ~= "" then (string.gsub(string.gsub(invite, "^https?://", ""), "^www%.", "")) else tostring(options.Title or "")
+        -- it sits on the grid of the page rows above it: the same inset and width as a row, the logo in the icon column, the address
+        -- in the name column, and the version under it starts at the left edge of the logo, level with the Settings title
+        local labelSize = math.max(MIN_TEXT, math.floor(11.5 * app.TextScale + 0.5))
+        local tagSize = math.max(MIN_TEXT, math.floor(10 * app.TextScale + 0.5))
+        local buttonH = 32
+        local versionY = navY + navH - 17
+        local inviteY = navY + navH - 31 - buttonH
+        local edgeX = navX + 18
+
+        local hasInvite = invite ~= ""
+        do
+            local key = "set:discord"
+            local hovered = hasInvite and live and not overlay and app.HoverKey == key
+            local hover = ease(app, key, if hovered then 1 else 0, 16 * Motion.speed(state))
+            local held = math.clamp(spring(app, key .. ":held", if hovered and Hits.isPressed(key) then 1 else 0, 0.14, 1), 0, 1)
+            local position = whole(app:pos(navX + 8, inviteY))
+            local size = whole(app:size(navW - 16, buttonH))
+            local middleY = position.Y + size.Y / 2
+            local radius = rad(app, 9)
+            Painter.scope(key)
+            Painter.rect(position, size, pal.Text, app.Alpha.Btn * shown * (0.045 - 0.015 * pal.Light + 0.035 * hover + 0.03 * held), 3, radius, true)
+            Painter.border(position, size, radius, pal.Text, app.Alpha.Btn * shown * (0.07 + 0.05 * hover), 3, 1)
+            local color = Color.lerp(Color.lerp(pal.Sub, pal.Text, 0.4), pal.Text, hover)
+            local labelX = if hasInvite then navX + 44 else edgeX
+            local label = clipped(address, labelSize, (navX + navW - 16 - labelX) * app.Unit)
+            if hasInvite then
+                local at = Vector2.new(math.floor(app:pos(navX + 26, 0).X + 0.5), math.floor(middleY + 0.5))
+                if not lucide(app, "discord", at, 16, color, text, 6) then
+                    Painter.text("D", at, labelSize, color, text, 6, true, true, Painter.bold())
+                end
+            end
+            Painter.text(label, Vector2.new(math.floor(app:pos(labelX, 0).X + 0.5), math.floor(middleY + 0.5)), labelSize, color, text, 6, false, true)
+            Painter.scope(nil)
+            if hasInvite and live and not overlay then
+                Hits.add({ key = key, position = position, size = size, click = function()
+                    app:rememberClick(position, size, key)
+                    Discord.join(invite)
+                    app:openPopup("discord")
+                end })
+                tip(app, key, "Join the Discord", position + Vector2.new(size.X / 2, 0))
+            end
+        end
+
+        local version = tostring(options.Version or "")
+        if version ~= "" then
+            Painter.scope("set:version")
+            Painter.text((if string.sub(version, 1, 1) == "v" then "" else "v") .. version, whole(app:pos(edgeX, versionY)), tagSize, pal.Sub, text * 0.6, 6, false, true)
+            Painter.scope(nil)
+        end
+    end
+
+    -- the page: its title, the way out, the sections and the rows
+    local cx = px + SET_NAV + 28
+    local cw = pw - SET_NAV - 28 - 22
+    local reveal = Motion.glide(if state.AnimationsEnabled then math.clamp(set.Reveal, 0, 1) else 1)
+    local fade = set.Alpha * math.min(1, reveal * 1.4)
+    Painter.scope("set:title")
+    Painter.text(tab.label, whole(app:pos(cx, py + 34) + Vector2.new((1 - reveal) * 14 * (set.Dir or 1) * app.Scale, 0)), math.floor(21 * app.TextScale + 0.5), pal.Text, text * fade, 6, false, true, Painter.bold())
+    Painter.scope(nil)
+    do
+        local key = "set:close"
+        local box = 24
+        Painter.scope(key)
+        local at, boxSize = controlButton(app, key, app:pos(px + pw - 16 - box, py + 16), box, "close", app.HoverKey == key and live and not overlay, 1, 2, 6)
+        Painter.scope(nil)
+        if live and not overlay then
+            local pad = app:size(4, 4)
+            Hits.add({ key = key, position = at - pad, size = boxSize + pad * 2, click = function()
+                app:closeSettings()
+            end })
+        end
+    end
+    local y = py + 34 + 20
+    if #tab.sections > 1 then
+        local labels: { string } = tab.SegLabels
+        if not labels or #labels ~= #tab.sections then
+            labels = {}
+            for number, entry in tab.sections do
+                labels[number] = titleCase(entry.title)
+            end
+            tab.SegLabels = labels
+        end
+        local picked = set.NextSection or index
+        chipRow(app, "set:seg:" .. tab.name, cx, y, cw - 10, labels, picked, if set.NextSection or set.SectionSwap then 1 else math.min(1, reveal * 1.4), function(number: number)
+            if number == picked then
+                return
+            end
+            set.Dir = if number >= index then 1 else -1
+            if state.AnimationsEnabled then
+                set.NextSection = number
+            else
+                state.SectionByTab[tab.name] = number
+            end
+        end)
+        y += CHIP_H + HEAD_GAP
+    end
+    local bottom = py + ph - 18
+
+    local saved = { state.TabAlpha, state.TabReveal, state.TabSlideDirection, app.SearchText }
+    state.TabAlpha, state.TabReveal, state.TabSlideDirection, app.SearchText = set.Alpha, set.Reveal, set.Dir or 1, ""
+    Layout.draw(app, section, cx, y + 4, cw - 10, bottom)
+    state.TabAlpha, state.TabReveal, state.TabSlideDirection, app.SearchText = saved[1], saved[2], saved[3], saved[4]
+    Painter.unclip()
+    Hits.setClip(nil, nil)
+
+    app.Alpha.UI, app.Alpha.Text, app.Alpha.Btn, app.Alpha.Frame = baseAlpha[1], baseAlpha[2], baseAlpha[3], baseAlpha[4]
+    app.Modal = priorModal
 end
 
 function Chrome.draw(app: App, now: number, tab: { [string]: any }, section: { [string]: any }, sectionIndex: number): (number, number, number, number)
@@ -3811,6 +7482,7 @@ function Chrome.draw(app: App, now: number, tab: { [string]: any }, section: { [
     local position, size = app.WindowPos, app.WindowSize
     local rounding = math.max(12, math.round(WINDOW_ROUNDING * app.Scale))
     local frame = app.Alpha.Frame
+    -- right after the loader card is replaced the frame starts with the card's corners and strength and eases into its own
     local card = app.HandoffCard
     if card then
         local settle: number = card.Settle or 0
@@ -3822,14 +7494,21 @@ function Chrome.draw(app: App, now: number, tab: { [string]: any }, section: { [
         frame = frame + (1 - frame) * (1 - settle)
     end
 
+    local shell = not app.M.NoSidebar
+    if shell then
+        rounding = SHELL_WINDOW
+    end
     Painter.scope("frame:shadows")
     drawShadows(app, position, size)
     Sky.surface(app, position, size, rounding, frame)
+    -- the Finder look keeps only its hairline rim, the animated outline shows on it while the outline animation is turned on
     local quiet = if app.State.PremiumEffects == true then 0 else app.Pal.Pick * (if card then card.Settle or 0 else 1)
     Painter.scope("frame:body")
     Effects.outline(app.State, now, position, size, app.Scale, frame * (1 - quiet), "main", rounding * Painter.corner(), nil, card)
     Painter.scope(nil)
-    drawFrost(app, now, size, rounding)
+    if not shell then
+        drawFrost(app, now, size, rounding)
+    end
 
     local soft = Effects.ambient(app.State)
     if soft and app.Popup.Name == "None" and not app.Boot then
@@ -3845,6 +7524,9 @@ function Chrome.draw(app: App, now: number, tab: { [string]: any }, section: { [
         )
     end
 
+    if shell then
+        return shellDraw(app, now, tab, section, sectionIndex)
+    end
     if not app.M.NoSidebar then
         drawSidebar(app, now)
     end
@@ -3869,6 +7551,19 @@ end
 local function accessors(window: Window, descriptor: Map): (() -> any, (any) -> (), string)
     local callback = descriptor.Callback
     local key = descriptor.StateKey
+    if type(descriptor.Get) == "function" and type(descriptor.Set) == "function" then
+        local read, write = descriptor.Get, descriptor.Set
+        return function()
+            return read(window)
+        end, function(value: any)
+            if read(window) ~= value then
+                write(window, value)
+                if callback then
+                    callback(value)
+                end
+            end
+        end, tostring(key or descriptor.Name)
+    end
     if key then
         local state = window.State
         local function set(value: any)
@@ -3903,11 +7598,15 @@ local function accessors(window: Window, descriptor: Map): (() -> any, (any) -> 
     end, set, flag
 end
 
+-- a change made on the interface or by a keybind tells the notification, loading a config goes through the plain setter and stays silent
 local function announced(window: Window, descriptor: Map, get: () -> any, set: (any) -> (), describe: (any) -> string): (any) -> ()
     return function(value: any)
         local before = get()
         set(value)
-        if before ~= get() and window.State.ToggleNotifications and type(descriptor.Name) == "string" then
+        if before == get() or type(descriptor.Name) ~= "string" then
+            return
+        end
+        if window.State.ToggleNotifications then
             window:announce(describe(value))
         end
     end
@@ -3918,6 +7617,22 @@ local function common(descriptor: Map, spec: Map): Map
     spec.disabled = descriptor.Disabled
     spec.exempt = descriptor.Exempt
     spec.bottom = descriptor.Bottom
+    -- an option that belongs to the switch above it, drawn indented on a guide line like a tree
+    spec.tree = descriptor.Tree == true
+    -- the search also finds an option by the words of its info and by Keywords, "stamina" finds Always Full Speed
+    local words: { string } = {}
+    if type(descriptor.Keywords) == "string" then
+        table.insert(words, descriptor.Keywords)
+    end
+    local info = descriptor.Info
+    if type(info) == "table" and type(info.Lines) == "table" then
+        for _, line in info.Lines do
+            table.insert(words, tostring(line))
+        end
+    end
+    if #words > 0 then
+        spec.keywords = string.lower(table.concat(words, " "))
+    end
     return spec
 end
 
@@ -3941,7 +7656,7 @@ local function sideOf(window: Window, descriptor: Map): Map?
     return nil
 end
 
-BUILDERS.Toggle = function(window: Window, descriptor: Map, _tab: Map): Map
+BUILDERS.Toggle = function(window: Window, descriptor: Map, tab: Map): Map
     local get, set, key = accessors(window, descriptor)
     local bindable = descriptor.Bindable
     if bindable == nil then
@@ -3964,7 +7679,7 @@ BUILDERS.Toggle = function(window: Window, descriptor: Map, _tab: Map): Map
     return spec
 end
 
-BUILDERS.Slider = function(window: Window, descriptor: Map, _tab: Map): Map
+BUILDERS.Slider = function(window: Window, descriptor: Map, tab: Map): Map
     local get, set = accessors(window, descriptor)
     local minimum, maximum = descriptor.Min, descriptor.Max
     if type(minimum) ~= "number" or type(maximum) ~= "number" or maximum <= minimum then
@@ -3984,7 +7699,7 @@ BUILDERS.Slider = function(window: Window, descriptor: Map, _tab: Map): Map
         kind = "slider",
         text = descriptor.Name,
         get = get,
-        set = if descriptor.StateKey then set else announced(window, descriptor, get, set, shown),
+        set = if descriptor.StateKey or descriptor.Get then set else announced(window, descriptor, get, set, shown),
         min = minimum,
         max = maximum,
         float = descriptor.Float == true,
@@ -4019,7 +7734,24 @@ BUILDERS.Button = function(window: Window, descriptor: Map, _tab: Map): Map
     return spec
 end
 
-BUILDERS.Dropdown = function(window: Window, descriptor: Map, _tab: Map): Map
+-- two or three short choices read better as a segmented control, a longer list stays a dropdown. Segment = false keeps the dropdown
+local function segmented(descriptor: Map): boolean
+    if descriptor.Segment ~= nil then
+        return descriptor.Segment == true
+    end
+    local values = descriptor.Values
+    if type(values) ~= "table" or #values < 2 or #values > 3 then
+        return false
+    end
+    for _, value in values do
+        if #tostring(value) > 14 then
+            return false
+        end
+    end
+    return true
+end
+
+BUILDERS.Dropdown = function(window: Window, descriptor: Map, tab: Map): Map
     local get, set = accessors(window, descriptor)
     if descriptor.Values == nil then
         fail("a dropdown needs Values: " .. tostring(descriptor.Name))
@@ -4028,11 +7760,12 @@ BUILDERS.Dropdown = function(window: Window, descriptor: Map, _tab: Map): Map
         kind = "dropdown",
         text = descriptor.Name,
         get = get,
-        set = if descriptor.StateKey then set else announced(window, descriptor, get, set, function(value: any): string
+        set = if descriptor.StateKey or descriptor.Get then set else announced(window, descriptor, get, set, function(value: any): string
             return descriptor.Name .. ": " .. tostring(value)
         end),
         values = descriptor.Values,
         side = sideOf(window, descriptor),
+        segment = segmented(descriptor),
     })
 end
 
@@ -4059,6 +7792,7 @@ BUILDERS.Color = function(window: Window, descriptor: Map, _tab: Map): Map
     return common(descriptor, {
         kind = "button",
         text = descriptor.Name,
+        swatch = get,
         onClick = function()
             window:openColor(target)
         end,
@@ -4108,6 +7842,7 @@ BUILDERS.Label = function(_window: Window, descriptor: Map, _tab: Map): Map
         color = descriptor.Color,
         center = descriptor.Center,
         height = descriptor.Height,
+        offset = descriptor.Offset,
         bold = descriptor.Bold == true,
         boxed = descriptor.Boxed == true,
     })
@@ -4119,6 +7854,8 @@ BUILDERS.Custom = function(_window: Window, descriptor: Map, _tab: Map): Map
         height = descriptor.Height or 100,
         bare = descriptor.Bare == true,
         ownSearch = descriptor.OwnSearch == true,
+        finds = descriptor.Finds,
+        count = descriptor.Count,
         render = descriptor.Render,
     })
 end
@@ -4193,6 +7930,7 @@ type State = { [string]: any }
 local SPIN_SPEED = 34
 local MAX_PHASE_STEP = 0.10
 
+-- both edges are rounded, not the position and the size on their own, so a moving or growing window never makes a side jump by a pixel
 local function snapBox(position: Vector2, size: Vector2): (Vector2, Vector2)
     local left, top = math.floor(position.X + 0.5), math.floor(position.Y + 0.5)
     local right, bottom = math.floor(position.X + size.X + 0.5), math.floor(position.Y + size.Y + 0.5)
@@ -4215,6 +7953,8 @@ local function advancePhase(state: State, name: string, now: number, perimeter: 
     return phase.Phase * perimeter
 end
 
+-- right after the loader card is replaced the outline starts as the card's: its color, its spin where the card left it and its trail,
+-- then eases into the window's own over card.Settle
 local function cardPhase(state: State, name: string, now: number, card: { [string]: any }): number
     advancePhase(state, name, now, 360, SPIN_SPEED, 0)
     local phase = state.OutlinePhases[name]
@@ -4223,6 +7963,7 @@ local function cardPhase(state: State, name: string, now: number, card: { [strin
     if settle <= 0 then
         phase.Phase = ((os.clock() * cardRate) % 360) / 360
     else
+        -- advancePhase already moved it at the window's speed, the rest of the card's speed is added and fades out
         local step = math.clamp(now - (card.Last or now), 0, MAX_PHASE_STEP)
         phase.Phase = (phase.Phase + step * (cardRate - SPIN_SPEED * Motion.intensity(state)) * (1 - settle) / 360) % 1
     end
@@ -4247,6 +7988,7 @@ function Effects.outline(state: State, now: number, position: Vector2, size: Vec
             trail = 1 - settle
         end
     else
+        -- with the outline animation off the light stops where it is and the outline stays still, turning it on again moves it on from there
         rotation = advancePhase(state, name, now, 360, if state.PremiumEffects == true then SPIN_SPEED else 0, 0)
     end
     local radius = windowRadius or 6 * scale
@@ -4254,7 +7996,7 @@ function Effects.outline(state: State, now: number, position: Vector2, size: Vec
     Painter.outline(snapPos, snapSize, radius, accent, Color.lighten(accent, 0.9), alpha, zIndex or 1, math.max(1.5, 1.7 * scale), rotation, trail)
 end
 
-function Effects.badge(state: State, now: number, position: Vector2, size: Vector2, scale: number, alpha: number)
+function Effects.badge(state: State, now: number, position: Vector2, size: Vector2, scale: number, alpha: number, radius: number?)
     if alpha <= 0.001 or size.X <= 4 or size.Y <= 4 then
         return
     end
@@ -4263,7 +8005,21 @@ function Effects.badge(state: State, now: number, position: Vector2, size: Vecto
     local trail = not state.HighPerformanceMode
     local rotation = advancePhase(state, "badge", now, 360, SPIN_SPEED * 1.6, 0.17)
     local snapPos, snapSize = snapBox(position + Vector2.new(inset, inset), size - Vector2.new(inset * 2, inset * 2))
-    Painter.outline(snapPos, snapSize, math.max(3, 5 * scale), accent, Color.lighten(accent, 0.9), alpha, 7, math.max(1, 1.2 * scale), rotation, trail)
+    Painter.outline(snapPos, snapSize, if radius then math.max(2, radius - inset) else math.max(3, 5 * scale), accent, Color.lighten(accent, 0.9), alpha, 7, math.max(1, 1.2 * scale), rotation, trail)
+end
+
+-- the light that runs around something the search found: a soft ring in the accent with the moving outline over it,
+-- alpha is its strength (0 to 1), the caller fades it in and out
+function Effects.highlight(state: State, now: number, position: Vector2, size: Vector2, scale: number, alpha: number, radius: number, color: Color3, zIndex: number?)
+    if alpha <= 0.004 or size.X <= 4 or size.Y <= 4 then
+        return
+    end
+    local z = zIndex or 9
+    local rotation = advancePhase(state, "highlight", now, 360, SPIN_SPEED * 3.2, 0.5)
+    local pad = math.max(1, math.round(2 * scale))
+    local snapPos, snapSize = snapBox(position - Vector2.new(pad, pad), size + Vector2.new(pad * 2, pad * 2))
+    Painter.border(snapPos, snapSize, radius + pad, color, alpha * 0.32, z, math.max(1, 1.2 * scale))
+    Painter.outline(snapPos, snapSize, radius + pad, color, Color.lighten(color, 0.9), alpha, z, math.max(2, 2.2 * scale), rotation, not state.HighPerformanceMode)
 end
 
 local function clippedLine(from: Vector2, to: Vector2, color: Color3, alpha: number, thickness: number, area: { number }, scale: number)
@@ -4418,6 +8174,7 @@ end
 
 local RANDOM_EFFECTS = { "Bokeh", "Dust", "Silk" }
 
+-- the effect the window shows: Random is one of the soft looks picked once when the window is made, the sky themes bring their own and show none of these
 local function chosen(state: State): string?
     local preset = state.ThemePreset
     if state.ThemeName ~= "Custom" and type(preset) == "table" and type(preset.Cycle) == "table" and #preset.Cycle >= 2 then
@@ -4436,6 +8193,7 @@ local function chosen(state: State): string?
     return effect
 end
 
+-- the soft pictures looks (Bokeh, Dust, Silk) are drawn by the sky effects, nil for the others
 function Effects.ambient(state: State): string?
     local effect = chosen(state)
     if effect == "Bokeh" or effect == "Dust" or effect == "Silk" then
@@ -4446,6 +8204,7 @@ end
 
 function Effects.background(state: State, particles: { Particle }, now: number, dt: number, windowPos: Vector2, windowSize: Vector2, scale: number, panelAlpha: number, lightMix: number, intro: number, radius: number)
     local preset = state.ThemePreset
+    -- the dropdown shows None on a sky theme and Random on Default, both greyed out, and what the player picked comes back on any other theme
     local forced: string? = if state.ThemeName == "Default" then "Random" else nil
     if state.ThemeName ~= "Custom" and type(preset) == "table" and type(preset.Cycle) == "table" and #preset.Cycle >= 2 then
         forced = "None"
@@ -4652,6 +8411,7 @@ function Farm.leave(app: App)
     app.FarmOn = false
 end
 
+-- true while the dashboard is on screen or still fading, the normal window is not drawn then
 function Farm.shown(app: App): boolean
     return app.FarmOn == true or (app.NavAnim["farm"] or 0) > 0.02
 end
@@ -4709,6 +8469,7 @@ local function cardHeight(card: any): number
     return CARD_HEAD + #card.Rows * ROW_HEIGHT + 12
 end
 
+-- cards are stacked in two columns, each new card goes under the shorter one
 local function arrange(cards: { any }, width: number): ({ { card: any, x: number, y: number, w: number, h: number } }, number)
     local columnWidth = (width - CARD_GAP) / 2
     local heights = { 0, 0 }
@@ -4766,6 +8527,7 @@ function Farm.draw(app: App, now: number)
     end
     height += PAD + 14
 
+    -- widgets are as wide as their text needs and wrap into rows, each is placed at a design size position
     local listed = {}
     for _, widget in info.Widgets or {} do
         if #listed < WIDGET_LIMIT and (widget.Fade or 1) > 0.004 then
@@ -4805,6 +8567,7 @@ function Farm.draw(app: App, now: number)
         end
         return items, widest, math.max(0, top - WIDGET_GAP)
     end
+    -- the text has a smallest size, so a smaller screen needs wider boxes, which shrink the screen fit again: settle it
     local widgets, widgetsWidth, rawHeight = layout(1)
     local guess = 1
     for _ = 1, 4 do
@@ -4935,6 +8698,7 @@ function Farm.draw(app: App, now: number)
     for index, item in widgets do
         local widget = item.Data
         local fade = entry(6 + index) * (widget.Fade or 1)
+        -- two widgets can share a title, the count keeps their slide keys apart
         local title = tostring(widget.Title)
         seen[title] = (seen[title] or 0) + 1
         local key = "farm:w:" .. title .. ":" .. seen[title]
@@ -4987,6 +8751,9 @@ return Farm
 end
 modules["ui/fonts"] = function(...)
 
+local import: (string) -> any = ...
+local Storage: typeof(require("../core/storage")) = import("core/storage")
+
 local Fonts = {}
 
 Fonts.NAMES = {
@@ -4997,6 +8764,7 @@ Fonts.NAMES = {
     "Legacy", "Arial Bold", "Source Sans Semibold", "Source Sans Italic", "Gotham Semibold", "Antique", "Amatic SC", "Bangers",
     "Creepster", "Denk One", "Fondamento", "Grenze Gotisch", "Inconsolata", "Kalam", "Luckiest Guy", "Permanent Marker",
     "Builder Sans", "Builder Sans Medium", "Builder Sans Bold", "Builder Sans ExtraBold", "Builder Mono",
+    "Inter", "Inter Bold",
 } :: { [number]: string }
 
 local ENUMS: { [number]: string } = {
@@ -5007,10 +8775,26 @@ local ENUMS: { [number]: string } = {
     "Legacy", "ArialBold", "SourceSansSemibold", "SourceSansItalic", "GothamSemibold", "Antique", "AmaticSC", "Bangers",
     "Creepster", "DenkOne", "Fondamento", "GrenzeGotisch", "Inconsolata", "Kalam", "LuckiestGuy", "PermanentMarker",
     "BuilderSans", "BuilderSansMedium", "BuilderSansBold", "BuilderSansExtraBold", "BuilderMono",
+    "GothamMedium", "GothamBold",
 }
 
-Fonts.COUNT = 53
-Fonts.DEFAULT = 1
+Fonts.COUNT = 55
+Fonts.DEFAULT = 54
+Fonts.BOLD = 54
+
+-- the bold face of the same family, so a heading never mixes two families
+local BOLDS: { [number]: number } = {
+    [0] = 2, [1] = 2, [2] = 2, [36] = 2,
+    [4] = 5, [5] = 5, [6] = 5, [34] = 5, [35] = 5,
+    [7] = 33, [33] = 33,
+    [48] = 50, [49] = 50, [50] = 50, [51] = 51,
+    [53] = 54, [54] = 54,
+}
+
+-- an older client without the Builder Sans faces gets the closest Gotham face instead of a different look
+local FALLBACKS: { [number]: string } = {
+    [49] = "GothamMedium", [48] = "Gotham", [50] = "GothamBold", [51] = "GothamBlack", [52] = "RobotoMono",
+}
 
 local SCALES: { [number]: number } = {
     [0] = 1, 1, 0.98, 0.95, 1.1, 1.08, 1.12, 1,
@@ -5020,7 +8804,132 @@ local SCALES: { [number]: number } = {
     1, 1, 1.1, 1.1, 0.98, 1, 1.1, 0.9,
     0.9, 0.9, 0.98, 0.94, 1.04, 1.08, 0.88, 0.92,
     1, 1, 1, 1, 0.96,
+    0.97, 1.03,
 }
+
+-- Inter, the open face closest to the Apple system font. it is fetched once, kept in a folder and made a font family at run time,
+-- until it is there the Gotham face stands in. the advance widths below let the text be measured in it without asking Roblox
+local CUSTOM: { [number]: { Url: string, File: string, Name: string, Weight: number, Advances: { number } } } = {
+    [53] = { Url = "https://raw.githubusercontent.com/rsms/inter/v3.19/docs/font-files/Inter-Medium.otf", File = "Inter-Medium.otf", Name = "Inter Medium", Weight = 500, Advances = { 746,827,1126,1794,1812,2332,1833,612,1064,1064,1469,1875,810,1304,797,1035,1819,1331,1727,1814,1842,1746,1790,1630,1778,1790,797,810,1875,1875,1875,1480,2725,1971,1842,2071,2032,1698,1650,2109,2090,759,1554,1871,1589,2528,2103,2163,1800,2164,1816,1812,1833,2077,1971,2754,1876,1928,1799,1064,1035,1064,1338,1295,1400,1603,1762,1599,1762,1654,1039,1738,1695,701,701,1567,701,2488,1682,1696,1738,1738,1082,1509,1047,1674,1595,2323,1552,1595,1553,1064,964,1064,1875 } },
+    [54] = { Url = "https://raw.githubusercontent.com/rsms/inter/v3.19/docs/font-files/Inter-SemiBold.otf", File = "Inter-SemiBold.otf", Name = "Inter SemiBold", Weight = 600, Advances = { 699,870,1115,1811,1828,2376,1866,600,1108,1108,1530,1894,831,1312,818,1066,1878,1354,1750,1835,1875,1781,1825,1653,1819,1825,818,831,1894,1894,1894,1532,2814,2038,1851,2094,2040,1711,1649,2126,2095,774,1579,1906,1594,2552,2086,2182,1812,2184,1832,1828,1858,2066,2038,2835,1944,1984,1838,1108,1066,1108,1355,1318,1400,1618,1775,1626,1775,1669,1062,1761,1726,734,734,1602,734,2528,1717,1712,1759,1759,1117,1546,1070,1713,1622,2358,1584,1622,1582,1108,1008,1108,1894 } },
+}
+local UNITS = 2816
+local FONT_FOLDER = "OkloUI Fonts"
+
+local faces: { [number]: any } = {}
+local started: { [number]: boolean } = {}
+Fonts.version = 0
+
+local function fetchBytes(url: string): string?
+    local ok, response = pcall(function()
+        return request({ Url = url, Method = "GET" })
+    end)
+    if not ok or type(response) ~= "table" then
+        return nil
+    end
+    local status = tonumber(response.StatusCode) or 0
+    if status ~= 0 and (status < 200 or status >= 400) then
+        return nil
+    end
+    local body = response.Body
+    return if type(body) == "string" and #body > 10000 then body else nil
+end
+
+local function build(index: number)
+    local entry = CUSTOM[index]
+    if type(getcustomasset) ~= "function" or type(request) ~= "function" or not Storage.ensureFolder(FONT_FOLDER) then
+        return
+    end
+    local path = FONT_FOLDER .. "/" .. entry.File
+    if not Storage.isFile(path) then
+        local body = fetchBytes(entry.Url)
+        if not body or not Storage.write(path, body) then
+            return
+        end
+    end
+    local ok, asset = pcall(getcustomasset, path)
+    if not ok or type(asset) ~= "string" or asset == "" then
+        return
+    end
+    local family = FONT_FOLDER .. "/" .. entry.Name:gsub("%s", "") .. ".json"
+    local json = game:GetService("HttpService"):JSONEncode({
+        name = entry.Name,
+        faces = { { name = "Regular", weight = 400, style = "normal", assetId = asset } },
+    })
+    if not Storage.write(family, json) then
+        return
+    end
+    local made, font = pcall(function()
+        return Font.new((getcustomasset :: any)(family))
+    end)
+    if made and font ~= nil then
+        faces[index] = font
+        Fonts.version += 1
+    end
+end
+
+-- the font family of a custom face once it is ready, asking for it the first time starts the download
+function Fonts.face(index: number): any
+    local face = faces[index]
+    if face ~= nil then
+        return face
+    end
+    if CUSTOM[index] and not started[index] and type(task) == "table" then
+        started[index] = true
+        task.spawn(function()
+            pcall(build, index)
+        end)
+    end
+    return nil
+end
+
+-- Roblox fits a custom face's whole line height into TextSize, not its em, so the drawn text is narrower than the advances
+-- say. the real ratio is learned from the drawn labels themselves
+local ratios: { [number]: number } = {}
+
+local function advanceWidth(index: number, text: string, size: number): number?
+    local entry = CUSTOM[index]
+    if not entry or faces[index] == nil then
+        return nil
+    end
+    local advances = entry.Advances
+    local ok, total = pcall(function(): number
+        local sum = 0
+        for _, code in utf8.codes(text) do
+            sum += if code >= 32 and code <= 126 then advances[code - 31] else 1800
+        end
+        return sum
+    end)
+    if not ok then
+        return nil
+    end
+    return total * size / UNITS
+end
+
+-- the width of a text in a custom face that is ready, nil for the others
+function Fonts.measure(index: number, text: string, size: number): number?
+    local width = advanceWidth(index, text, size)
+    return if width then width * (ratios[index] or 1) else nil
+end
+
+function Fonts.wantsSample(index: number): boolean
+    return CUSTOM[index] ~= nil and faces[index] ~= nil
+end
+
+function Fonts.learn(index: number, text: string, size: number, drawn: number)
+    local width = advanceWidth(index, text, size)
+    if not width or width < 40 or type(drawn) ~= "number" or drawn <= 0 then
+        return
+    end
+    local ratio = drawn / width
+    if ratio < 0.6 or ratio > 1.3 then
+        return
+    end
+    local old = ratios[index]
+    if not old or math.abs(ratio - old) > 0.012 then
+        ratios[index] = if old then old + (ratio - old) * 0.5 else ratio
+    end
+end
 
 local resolved: { [number]: any } = {}
 
@@ -5031,6 +8940,10 @@ function Fonts.find(name: string): number
         end
     end
     return Fonts.DEFAULT
+end
+
+function Fonts.boldOf(index: number): number?
+    return BOLDS[index]
 end
 
 function Fonts.scale(index: number): number
@@ -5044,12 +8957,16 @@ function Fonts.enum(index: number): any
     end
     local name = ENUMS[index] or ENUMS[Fonts.DEFAULT]
     local font = Enum.Font.Ubuntu
-    pcall(function()
-        local found = (Enum.Font :: any)[name]
-        if found ~= nil then
+    local fallback = if ENUMS[index] then FALLBACKS[index] else FALLBACKS[Fonts.DEFAULT]
+    for _, candidate in { name, fallback } do
+        local ok, found = pcall(function()
+            return (Enum.Font :: any)[candidate]
+        end)
+        if ok and found ~= nil then
             font = found
+            break
         end
-    end)
+    end
     resolved[index] = font
     return font
 end
@@ -5206,6 +9123,9 @@ export type Region = {
 
     shield: boolean?,
 
+    start: Vector2?,
+    moved: boolean?,
+
     wheel: ((delta: number) -> ())?,
 
     rightClick: (() -> ())?,
@@ -5233,6 +9153,7 @@ function Hits.begin()
     table.clear(regions)
 end
 
+-- regions added while a clip is set only react inside it
 function Hits.setClip(position: Vector2?, size: Vector2?)
     clipPosition, clipSize = position, size
 end
@@ -5322,10 +9243,13 @@ function Hits.press(point: Vector2): boolean
     end
     if region.drag then
         dragging = region
+        region.start, region.moved = point, region.click == nil
         if region.press then
             pcall(region.press, point)
         end
-        pcall(region.drag, point)
+        if region.click == nil then
+            pcall(region.drag, point)
+        end
     elseif region.click then
         pending = region
     end
@@ -5334,14 +9258,24 @@ end
 
 function Hits.hold(point: Vector2)
     if dragging and dragging.drag then
-        pcall(dragging.drag, point)
+        -- a region that also clicks only starts to drag once the mouse has moved a little, a still press is a click
+        if not dragging.moved and dragging.start and (point - dragging.start).Magnitude >= 5 then
+            dragging.moved = true
+        end
+        if dragging.moved then
+            pcall(dragging.drag, point)
+        end
     end
 end
 
 function Hits.release(point: Vector2)
     local region = pending
+    local dragged = dragging
     pending = nil
     dragging = nil
+    if dragged and dragged.click and not dragged.moved then
+        region = dragged
+    end
     if region and region.click then
         local position, size = region.position, region.size
         if point.X >= position.X - CLICK_SLACK and point.X <= position.X + size.X + CLICK_SLACK
@@ -5473,6 +9407,262 @@ Icons.SETS = {
         [31] = "iVBORw0KGgoAAAANSUhEUgAAAB8AAAAfCAYAAAAfrhY5AAAEiUlEQVR4AcyWWYiNYRjHvzODsa/DZFcuyBJS1nKHG0qWyF4uZMkal2Qpay5sN5YIUcqSkFwpubLlBilElslg9olZjt/vc85pvjPfjLkYMT3/ed5nf973vO9zTk7wD//+/+LJZDIHtAKNNostAfTLlTfnQGOTEWwii3Vk3ZNEA8BE0Ae5NTyOWqHsByaAAfjlA+PNk0DXgCLFcbZoHl7dwQiwAhwHd8BZsBrYQAG+vYFreQH6vmANOA/0N8744cjd8c0DkSYixXGy8Cj4AXAVbAczwGDQHywDR8BFcB3cAvJL8MNgCXD3+s9kbfw1+H4wEpgf9psyxekqF1U+MGAO3GLd4G2BNo/VHU5HngzGAE9Hrqy+Fzr99DfOePPMRb8N9EjVYRkEmeJI7YFO4+GdgAlgEVLXBo1IF5F7D9RpxxwhdR3RTALmtw7LVHG6MUFvNMtBZ5AALUlu0rzm945YL7Nzu5lNtYEgNMBbmsw7iKR+pNYLfJcqvd3zMHQALb1rUoZkXvNbvBunnetxtMM0BfiWbYTlXyPze7rWa29xL9c0ynkUdscyQnVIP0AVqAZJEEfqteunv3HZfua3zlQMnSzeg8U4EHmDyFIN/76Bu+AMeATKQHZiZfWPsel3G/4V2AwsQtbxReVbfCymLsAnAcuQOylB2gNWAd+pQ8ShUYlcn9ztTRTa9VvLejcoBTYGy5B1uiKNtvhoFnYDi5BdP0NzGXxKJBJF8HfgKDCpzbEM5MpOuHcpv88YroCHwNODRch6oyw+BLVDAhahWqSXoJKErlkGNvSJRSGwKCwsbmMfEH6CIOXvabxCjituvaEWb+yWa/M+tOZZeFHIE84Fx6YDI62TO8F8NR5pkPL3ZvuEzWNsfWjrr8F5HAbVt7LWwa9H53cXEnpLbWYWNrlFWQZyZ7hDytmtn80Nw+jMd5csI2S9Aov71OQRK4IOfpcfYu23mc9xA+uNwGEBy5A7X4e0CfgFsxRunF9E5kGMkPU6+M8vBLuPWFOCF8M7sQP5JPAWe1LZu/GUbNRXcQK/XcCdG88ylvIs7mVKX544L5vzKXrUnpKF4vzUa9dPf+Pi/NK6aosXI9kALELe7C9oHBYOEOWmmsQ1vPn66W+c8XG3XV2xxX2PPhVHYv3kNuRA2ULWc8Dp9RGurw1bIA1l9dr1038rvjeAhWAhmd86+l63uJ/nZkxPgUnsXCePcT66leA+cO2N9tLtQ3bYeA+OsVZeD/cbS78HrI3zx4N5zGde8z/B5sXcZXEHhr/DFqI8CF6A78Cd+3b9afUW2eHirjypdMGd6PcCZX/zOfv10984481jvuf4+dtwEdwTKcxxGoEKFOnRabcmdbfqLmCzoWr8akAVKAMloBjIldV7xO7QQv7IfE/sPeDpmtcmHcEVxNW6c2xBgGBiZ/TrIAhOgcVgATDA5B4dYtNEHv3M469c450Rp4l6g60U2CBiEI7LcJH+pxGUI/tx+PkUIWcC0P+RUv7edOMLkctBgxyZnWdnxDkJ6kS2rTmycaAWeBKxIY0Wj/VuYeUvAAAA//+F+glKAAAABklEQVQDAFV9WE71ntQ2AAAAAElFTkSuQmCC",
         [32] = "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAEyUlEQVR4AdSWV4hUVxjH72x0E82uSTYaJRuSaEIgggV9UOwVG1geFMSKDyqKYAHFgoqobyIqir6oWEBQUAQ7ouKD5UHEgg82EKyrLtjWPv5+d+8M987suAuyiMP3n+87Xz/nnnvOLQq+8u/baSCdTqcyKLRoGbu8kE+uvuAKmAQUgybgNwL/BC1BMShE32NoBf4yBhhrjhS6GimvAYIagBK8W4DuYA7YCo6BdaAcexloCppFUC7TBjaAo2ALmAW6ghb4lYDvkBOUaACHBlibg0lgJ9gOZoI+wJmZbAnycrAGbIywFr4CaOsE17cv3AbMI8zZPKqBqZqyDWBwmZqgngYWgC7AVVDn0tq9KzMK/XgwAgyOMBw+DowE+uhrzE+MzWEuc05lXBrVQgyCbAOMDGgPHwuaAscpeJxM/AOKH0EjoCyU1SnrgylL5jDXr2hs3BqOGQbVDdCRjThTO7R4bpLQ+Qv/fLzNyDEFuDmtWd0ACjvqDHfTOQvEeiFz9yCz+8SaQRGzT6HwuY2GuwphZ8j1QeZ2X1jLtyKlwvf6X6p1A3YIq1eyhrX+oUqxDTj7AQxKgWNYvZI1XOmBVCnJDHozcCfDEpRm9BY8BfdBBXgFPoJcUqdNn3sYjTHWHAwTZC33QqkN/I3J5WgIz6V3KG4CT0Ob9Aw4xPgliCdWVucJqI8HlwfYdfxsApYga/2HpqUNdETwubgZEbNk0ueMVoK9wEbOwheBa8DmYCG9599iC+H63IDvB8uAOcyFmCVrWbO9DbRB7UaEJcigB2hOg+epVOo9eI38EJwA8Zkpn0T3QB/wAdnCZ+B3gI8HliBrtrWBQstvAy8IcXbKiCGZTH2uzoLaQif+tNuI+4JhHvkYWtnA75g8pWAJ0vYHmnJgtwFnhrrGjF01EyCGpKyuMT6ZU1SdF5t7zLjQMfanX7kGz2h5zBaKPqefkWYD73ePaC+WIYx7gbApuKTsKeql5NWrr98P3obmMJd+cdhAmYWdUU0OOvu6eON5nXoFr0fptfsL3FhYSMoWWsrI7wF9dyAPA+aH5ZE1GxloJw7yPFBo96Bqh+xNNgju7FxexASpczU91PTtgLW2w62hBdzBbhj8E6TODehGco+4Gl4gxiQcYwNt+uhrjLHmMFfMLRTVVRnga2UToTb2Z7Dv/kV0j8AzoJ+BiDWSNn30NeYCXreBuWAJ8hypsIFVqC3kqxV/jVAHnm5+D7oRN6HwTPC99nx4zPhJBGUnok0ffd2A27CbF5Yla6jz4FptA26WCZj3AJNUwXXS1hp5PvBb0G/AMcj9gHwGfG4EZb+k+jPWpm9PZGP/h7vPzGlua+xGNxHstEglwiVgssnwg0AnDxDtPsvz6Co54dTfQnaW++C7IiifQr4Z+ZjzHGNjzeFKumoH0FljHvwyqCwiIA18bi7ncZR+lLqLXforjL18DsPfgADfj+AdeA1eRVBW5yx109eJHGFwFWwGrvJ0uDWeEPcWpO0OXZBJ7BJ5nTrDxUEQ+B57wTj7mjYSLvlEYn1dBb+Eh+Lh+WDOCmxVINNo9psQn2rC6Iq8gZvgLtr7yK4QYt0pivG74C6yEzCnb0kiSXYFEtpoQKDN5AVF5lpZXeI/20CtFergUJvLJwAAAP//snv1DQAAAAZJREFUAwDL1mVQ7cuF/QAAAABJRU5ErkJggg==",
     },
+    ["bell"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABkElEQVR4AXSSOy+DURyH27oTcRlEIvEFJEwIEsIiEiQuYSGxSgzY2E3MLBYW38BXcPsATAaXQUcq1bRVz1Mn0veVNufJ73/5nX9Oz3lTidivVCrVQxcMwUZgGLVWH7MnIgMw1WHohh04ge3AcdDu4CH9XX8DaBi3U96DSTiFdVgD4ynUXnvwkiYiJ/B4o1RH4Agu4B4ewPgQtTeG6kWiAxqoDMMjXMF7MpksiDFcg71BVC8SHVBLpQPeIMfGb7S8QvxFYq8T1YtEB9RQaYVPKEJ8OTBDUY9ewjAgXEozlV54hTzElzV7eprDnkSKIImzBcbB6TdoDuLL2i1FPRNoi3t9ukaSPtgEL+oJraPZVAk1b96eHr3uaXSAN7qEwW/AI04Tmy+jlSyS29PTRmyvPKBAcgcfsApbsFsFe3q8TP9O3hNkMV/CHMzAPCzACmgWY2v29MzSc082xRsXIQNv8ALPNNPgV9ePDoBx2h7o0eueoieg/2/5Mj1U98Hv39gaaXRVG+Cbn2M9CJyh1pDo+gEAAP//rORBRQAAAAZJREFUAwBcXI72o8HuTAAAAABJRU5ErkJggg==",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAB2klEQVR4AYSTOy8tYRSGZ/a57OZccpyTE81xklOc0i+gISIqKj8BFVH5AYLKpVEKKpdIdCiQUIqCXo3GPYjreJ7xbTJ7tpD17LXmXe+3fPPNTCEq+0uSJIYi/IZaaA1Yq9mLy5ZFuUEYPkMN9MEUDAamyWr29HD5GplB/OdPtDQOk5thE4YCG2Q1ezXBi/QcmUFIX6AT/kE/DMBiwFrNXheaXtJzvAziP1j/RG6EVViHoziOL8Ua1NbIDfArrKGMMmf0AeUveP/bZAc8ktNgmPUlF1ugR69ruMwP+o6awDE8QHmonSDq+UZ+c9APmsYpPy4iZULtLChV5IqDijT+wy3sg4tImVCzp0eva1KDBxxxaN5zNUo97MAFZ+L2KV8jaOcou1AH1WFtVKD4iOA2e8lfYQY8VFLFsKfHM+rBUeUMd+T2WhB87CvkQ/BT+IMhhz04gGVoAl/SooOoozt+7qEd5mEJNFbCnh69rvG1SN+jm7DIT2GCeg4W3kGPXr9DB98UOECn+rhnWTwGI4Fx8iT44Yq1Wqk/Ss+Bp85Ib43iAa7hvAQmt6zZb6+Da+uk1Cf7ZF3jK5HeGp6KoWGPTiu0gbW7p8xHuqO8nCpX/LqLbrKP2VqNy3w8AQAA//+reugmAAAABklEQVQDAHgDvNo02Yc6AAAAAElFTkSuQmCC",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACM0lEQVR4AYyUu08UURSHZ1ZEkQRDjGirRkksjFbGxkKNMdHE+AdYGK211GijhTwSEgoCDQkJFBQUNPAfEKCAjhICBSEkQHgVvGH5vtnLwjDDK+fjnDnnd87euffuFqKcv2KxGMM1qIN6eBkwvk1sLc5pjTIDESusQvwQfkEvdAaMfxI/gqqgJTy2zEBK1+EZdMBHWIJBGIBF+ATt8BTU4o4tNZBPvEKpDv7CHWiBr/AfGuAbmLuL/wduiT2EJUsNJOUnvsffgx7og/k4jpfFGMx149V8wNuDK1newBeUtqEf1hi0j08sxGs8WNvBP4dzB1Yg8JXdN4ft8ZwyhppbJbkAbos9hCU7vUKfPeENyuWVEZ+2AxKbcAPswZWs/MCBeF0qSdfCCpw30Jqam+gqQy9hlLqHDvN+uSfTVN0jXK7tkp0Btd5Xe3kMA/kEV1pDxhMu4kfBg8Hl2hbZEdA86ZowIyoQxGSr4RU4cAI/Dq4Cl2vW1Ki1x95qZ7kyT+kBbX/A1XXhzdUiuJUHdfdZjVp7fpO7DxUOFC+pG+y+faHQCK0XoEatPfY6o+AwT2yM5iG4Ck/AC3sZ1Npjr1uwXwgX1Uv6nUHuxWv8m8Bb/DvQy1F8VFdrzw80C85yhRHBDvh9ncPPCoI58BvhqxAmZmyurENrbK+vnrqHSceJf57+Y56boS1gbM4aqawlK8ymk4ynN0k0DPUB4ylia7isnTmQV/H7uk5LE3wOGPujYY1U1g4BAAD//xG1V6EAAAAGSURBVAMAhA3Bv1W+kUMAAAAASUVORK5CYII=",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAACrElEQVR4AaSVS28NYRiAZ1xatGlVunNPsLGxxdpCLFzCmhCJsGQr/gF2IkEiwkZcVm4bQvAHSFxW4lLVVENSdWtPn6fznjOZnDMzbdq8T9933ut833wzZ0FS8ddoNFLohkFYAxuCtWh9xtKKFknpABospLAXNsNJuAr3A219xnojl1C7dBxAgf4+0vfDNTgIm2BJsBGtz9gB7D5qvCHMotio4CHRJffg3ANnYAU8gROwIziO1jeAPg17oSdqMXNpG0BoMXiHp9BdcAG0H6LfB4/Q+ox1Y7td1ljLZS6dBiwl7NZ4d4+xL8FwmqYTMBlM6IPLYI651liLK5dOA9znbaQ04CaM2RRdkPCN4TTH3K3Y1qJy6TRgEeFVMAVv4A+UiTFzzF1JkrWoXAoD4iG57/KPtHHu1GLMdonYOBFzfRZd0QNXJoUBuLz27HuSLJzEVyfm/CLJGmvtwWUmhQtcLtGlYibD/LMYVSnmfI0Ma+0Rl0nbm+wytxB18Fv0X6gTc96RZI219uAyE50zFnvnZI/bThzu+0v0b6gTc16QZI21A9ELV6wAh4P68fj6+0n4gP0UvDtUpZhjrjXW2qM/era2yBdkF20Og0fvPHqUU+L+YpZL5IySYY2rOYJtL3u2BvjtOUZgOdwB99TP8WrupBbyB8Gau2h3wl72bA3An/g2ulWHuHgAz+D5LDHXGmvtYS9K4xlgeeZd4ivsn/Af5irWWPuawnNgz9YK/Hjdw+knejt6Puym3h8me2YDeFBT4GfhG/oTfGxC8hD8AO/oO1q09Q0180Jbaw97eWyzARRViS/OURJuQ/MH5xa2PmOY5eIDKY9mkRS1DNbBxWA9Wp8xzHKZzQDP9hVaXIfP8AVugD5jmOVSO4C99XSM0MKTsQ/t7+9Z9EjEMMtlGgAA//8OAbJRAAAABklEQVQDAJET+JMYnVnNAAAAAElFTkSuQmCC",
+    },
+    ["box"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABz0lEQVR4AWSSuy9lURSHz7kzZsadiUzITDLFMNUk8yASpf8BEZVC7RESRCIShMojovaoiYZWp5F4tCSoaQgKj+t9j+87OYfg5nx3rfXba629zj47E7z6RVGUgS9QBg0Jv7Bqb/KfBBJC+EC/YqiGcehPGMOqFZsDIXH8xA0Q3hMVQTkMwgg8QF+CvtoAsTlFSU3guAWIJdAM0/AXJqATVhL01VwzpwW9hCYFTpAlaIQ2OAfHXsYeh2GYE31Qc+0CvxWsydqgkOAP3EEZdEMVfGWHj6IPaj3YUrgFawptIMTBBn8muJi+byWauLPaDbE5m1ifTFqcJ3L8dWz6vv/wZ2AW/sMkuLaGNdeaIG2AFkT8XcERLEE7HMA+dMAiuHaNNRcTvGgQCxxaHi4JTLZYDtEuIN6VtafHCRTlE2qWQ/NO4MYTqUu8Y7LmoZurnreBY+9SUQFNUEriZ+w7SB/vi9pPBHPMtebKBjnEBZiDGpiCevgG7iTf8evAtVrsPFiTy/Befv8TBE/cG7aD3wXe/99YGcX6+fawXiJv44m1ThDg3LNwBtswDL3gaf/AipuoDRFvwVlS8/wVECLwEp2SsApOYZH4/dVOzYH4UMkJHgEAAP//JW+c5wAAAAZJREFUAwAel7EPk5ln3wAAAABJRU5ErkJggg==",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACL0lEQVR4AWyTS0uVQRjH5z0d04oCKRdFtulCtSyoFi3TFlHUVyiqRRRdCYJaRjdCxSteNvoVFPUbiEsFxZ13EERQFPWor7/f65wDR5T5neeZ/3NxZt6ZXDjiL03THJyEi1AH9VALakfWlIkkJlBB72q4C7+hERrgF9yDanMgwS+NUiMCedTTcAO+QRNcgV7oA301Y+aciTWEQnALrqKS2Xl4CV1QD/3wHNqhDfQHsMa6seZeoFklJK7IldQSMPkDdhbewR+YSpJkRfTB7Rkz5z1zay5h8zaqwnkIt+E4TMECbMMuFIe+2iLCJJh7C1sHVTbycM8yMXEU+xSa4THUsOwTog9PwNgzrLnWnMOvsFGCo13Hfo/sYX/Af7gf0TdusTF9a6zNzoi8bBT4XQYP1IPswL8GHrZcxVcz5ocw1xrkEOyWOfFnj4PdwJ+HHngDSxF9tfmY46oJHYzDjTKVRJe/xmQabCoz+Gsxhls+bJQi2V0/z8FqAwXqYkzSqIWY47UxN4vpuE/3e4yGfkq/VHbJmJcNGhQvbw2BB2CNtQUbbSIMwgR8hH/gO/O9eTWYZkNf7Q6zv/AJrBnCbtpoB2cO3kInXIcW+Aq+r1NYuYxVa8X61nxK1njLd3LuG7YIeptt5JsaZv4ILLqJFZ+DmrEXaOYuWgupK0ILHm7xS3n9f4YQ/G9j2CQyjlUz5pZWaeBukEP5PSLgl/HwV4iOwBd4Da/gM6j5iAvmMi+NfQAAAP//eI+JzgAAAAZJREFUAwCemNLsAk8dfwAAAABJRU5ErkJggg==",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACnElEQVR4AXyUuWvUQRSAZzaJkgtSiRG8omiloBZGRdBWrFQEFVREES+8UNRaG+/WC1RQ0H9BW0Ebz0bBpEiKJE0SkpA7+8v37U42u+RY5tv35s17b2bezPxyYYFflmURamEFbIdWUNcWFwgL8yYksIaAJtgCd+ENvIZ7sBWakg9qZatIiFMVNOKyDm7AS9gNP+AnqL9A3oT1+kIVeqkVEmIsbA9rM5yAt3AY2uFa4mqS2hxz1SexNRNfKkOOjvWoY2AnuKLryDw8gLPwGXoSn5DaHNPHyV5h2wV15nKFLnklhkewA9zaZeRH6I4xjkA+MaINPsAV+AWt8BBWQbUJl6BshmVg8m3IQ+D2nVUb3RBYgbq7WY7hIOirzdhN9GtMKEvpjIMz/0UeAE/VelqjepLVY3OS40jrp4++7sRYc+RMZg3xCRq/oZyHmRp5EJ7qPmz7Qd26TaHfh3PwFYxFhGhCFbHIoyjd8A5c3XvkangCj2ENaHNMH32NMZahMOdiZ1inYoyDyDYwyQXkQEJdWzs+Q9hcqTGoxVa+wqIl/RMwidoP/8Br42qsWX8awzy3mXBmhsiwfSVqCAQ65nZKJFtIP33LYzI7Oo/hoO4pNnKi1fQXbcnHZ2qMsebIq3hCv4l2e6eQF6GFgAbwjtGdbdrARC1YL4Exfcg/MGFCC9tJ5zZ4EEeR3rNjSC9wLdKtibo2x/Q5wphv+w6yAyZzqSbDdL7AGfCKuDK/Ns/o74GGxF7kc3DMsjxFPw3GDpvLFRaKT8d32sWgM/safAFuy2/gRuwbwG/jWqRj+viauowFD7DyHmIsv4O+Fmf3C9NLEuvkl8dd+Er+4z8IlozhYiussKjO/uM0Qc9D8sNqba2V3ML+HbyL+qBWtmkAAAD//xbx7w0AAAAGSURBVAMA8+XyyUmqOUcAAAAASUVORK5CYII=",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAADRElEQVR4AYSV24tNURjA95kxTDTDDDNNzbyIXOJF3vDOg8KLQggl91sUhQfKLSKXB4Xk9iqkKLkU4h9wiyeXphkaRoZhZo7fb5+1t9nNdmZav/m+9a3vcva31tq7Ihrkr1gsFmAYNMDYgLq2wiDhUdkCJBtCghqYCDvhBtyEXTAJaoMPav7ILUBQBYwgpAXWwFVYDA0wBhbBNXCtRV/IzZUx4mQ7qgk00XzkJdgCo+AhLAvcR9bCZrgMC6CR+GrItC0twEIVTnUwA07DYRgPr2E7WOgxUrYit8ErGAeH4AzMhLqQCzUq7UEwNGGxz+eRs+ALHIXlcAvaC4XCT0H/DLfBtSNI5yY31hxNIWepAA7DYSOsgEawBauRF+AjSbugDz0e6tDF5BNcBH3vIW3tSuQmMGemwByMI6ESpgTcjyp+TYF5ZgSbbdVH/6k4GOvezEbPFHDB5H9YeAk+xT5k0td6EsaFkB4EE9eznuzXfnRjXiDNYS5zpk/gL5TvOKyFpK8mOMd8L3juPU0ymbk2e27v3QNj1mE3h7kkLYA9Hr/53wr2fgnS82/vFwbdBOuDrs01ffQ1xlhz4FIa6TEtTeP/vWxgJ9obOABu2iPkaPBoekRtjzYPhT76+st78cmMvAKxA0XsZQeTZ+CF2oP0sWU3urbnyA59oYg+YPy3gJ4GQTd6OzwAj6Z4q70X3aznJsY3HmULxB78I4m97kFVSk+wYSo/kgL+CvHxKzmKib18dL9VYuJYTEpzSXqK3JxvLA6F6RC/T0IQ0/IDv+ReTMNT3VzmTAvY17ssavT94/t+AvMaguMLgz5guAbeXH2NOY6TLbyDNGemwEmMV8DhufZ8r2LSTBKvff+2+b3Q1sy6Pn4bjLEtxp3C/q8AG+aR9JL42jXgCQ5+WHYgfZnNRXoPfHxR1+aaPs6NMfYgvq0hZ/oEUTB47p/isAF87b5F+oo4hrS4n09R1+baO9b0NcbY+F5gi0f/x7ZIkUK/WGmD6+D7/gTyK7j5/npRdyNdW8qavm3Ggm3CVBqZAiVTZKE+HH9EUfQezoL9tR2+EkTdb7RrH/QFNxfX7MgtkLgQ5OXyveRn07bMY03UtXUGH8z54y8AAAD//xEAx+wAAAAGSURBVAMAHVUmpoINjY4AAAAASUVORK5CYII=",
+    },
+    ["camera"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABf0lEQVR4AaSSu0oDURRFM5GEIAabFLEwhZ9gGWwVLBRBRH/ASsEHYqeFICg+8CMsxAe+S0vjL9grJGIaG40BGdfCKyExaGG4K/fcffbZk8xMMvHPz4+AOI47IAt56A1Yq3W0Xq8pALPnLKZJuGpBzRA9tL5WkqE0dEMPUgEGYQZuYS9grTbEuaAXnEmblkNcggs4h1W4gy04DGyzq62w6xFncgYUEcfAgF32NdiEN/DvyCv1BtjTc0ntTNGAPIcYDuAIrqEG03AcsH6ntqdHrzN5AyIaH1CLosgrUSaG+fKm3bCLtVoieLyAM5EBeJpWmlM/3MN+wFrNHlJjtQswuYzFJ9LHLtZq9pAaq12AP+8EyxP4JMRazR5yYxngzfANy/BsO2ml4BmWYT1grZYKngy6M7EBFQ7eyCn2CRiHERiAroC1mj09ep2pGFDCdAqjMA+LsABzMBuwVrOnR+8ZvZIBVYodUPQq7r/x7fHtrCZ5rnV4gTI8wsMf6NHrTP0TAAD//2tQ7mkAAAAGSURBVAMApuKYIYH1OTUAAAAASUVORK5CYII=",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAABu0lEQVR4AayTPS+DURiG+5YgCAMRFmxsYvUDmBgFm9VHCIsQkw2DiIT4BSL+hEXiY2XxkfiYCBGpkCZa19Wc0tJKB825+jznfu7ned8258Rj//QpOCidTpdBDTRAU8BcrazQs38NokmtDvMgbPxArS54KH2vOGIE5VANDmik3Auz0AJRwFzNWqNesMfeyKdXYWyDUZiGGZiHa5jIYZJczZoevfbYW+WgZgwrMAVD0A8PsAhX8BS4JKrdE/XotWeVfbODukg6YRsGoA+GwSH1xJ6AudoIez167elg3+WgWpI0XMBdFEV3xBdohy3YDJirvQSPPnvsrXUQvpibFImREKvhy9f29/tUMVezRjm/JzvIQi6VbLphH/YC5mrWkPJXsUG+3TPWVvBIiLmaNeT8VWzQK7Yd8I/0vxFzNWuU8lfuIA9etvpGsgtLcB4wV7OGlFlfPQ5KInl/GoiZe0U0ryAewHLAXM0714Qm+uxNOugM8RHGYA2y92ud3IPqm4i5WraudxyPvacOumHjsT8hfkCpS+8x5gW4dVCC5AjmwCfk3q+/cr32HNKXiHNKU/AOz/AA9yWi1x57U58AAAD//8D4zmsAAAAGSURBVAMAaCqwJdLrDUsAAAAASUVORK5CYII=",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACKUlEQVR4AayTS0tVYRSG9z7kIdEcdYNCiqImDapRBfUDahQ0CRrUpKAgqkGXQReCoCap6EAFQRR0IOjEG15mKg5FB87EH+DxrqjoOT6PfAfd6gEF5Xtc61vrfdf+9uWkohP+Kzgwl8ul4DScgbKAubWCvkMbmK2Xcfgn8AE+BcyteQE1lJPrQJFhMZJSeAx/4CU8D7wiWnNoadBS2l3elhTTPAeXaJXDI/gGy/AF3sBr+Awr8BUeQrke0OuMlCf0NDabEAxCP1SDvV/EPhiGETD/SfQuaohq9TSTO6NE0wU2P+A6jMMoDIDGIeI6pAPm1ryQGrV6rtF3xkUHXmVzHrrA2/tI9NZ6iZ7kNtHbFXNr9tSo1dOJxhlXHFjEJgfzMBvHcYZorvEpeQO8C5hbszcftLP0FsAZaQfaZL+zLJpYv0zyHlbhd8Dcmj01lKO8xzzOF93s5RSbW1ACbdATMLdmTw3l5Co00Kt6GtVn+VccMCeN7KkxT1Bo4CaqMZiCZ+AbFHNr9tTQSq5DB/Kws8h8Od+JE+A3JubWMkFDK7kcqNkX4zNJ89UXCTLrk8S38CJgbi2rRqj7jep1RtaBnkTzHZr34EHgPvEu3AB/TWJuzV5ep0evMzIOnMbQDTehEur3Uce+NmC+v69HrzOmHTiH+B/40BuJLdB6RNTq8bn+xTOX4uFukMxAO1RBBfw/Imr1dKD3RW14woihW7AGS7B4TPTo3WJotA0AAP//kTW8bwAAAAZJREFUAwDIwtwp+I/91gAAAABJRU5ErkJggg==",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAACmElEQVR4AcSVS0tVURiG1zleCOtoOCgV9SdEUARRUIPoMmxUk2ZBk4Ka1SyaNIqCImhYDRw6ExQHgreJA/EPCN4vIF5QxKMen+e4Nihu3XhElPXwfef9Lmvvtdda5sM5/13sBKVSqQquQBO0QltEX81Y1UmLcOwb0MhYgeKX0AtDMBjRV3vB70LMxT06bHJEpSCHWAcP4CM0QTUkQ1/tE4I5dbGGn4dHeQKC1dAAzdBKSjvcgS/gRH+xNrqHFf1/+MbMMbfdWrCHvWqIhzxCLU7yNN34LsMAtgOaoQ++w3gul5sUffgGxswx1xpr7eGb+Y1qfYN6Et/BK7gOfrQSdgMs+IxdoPE2tjyiv8gPY+aYa4219rDXW+L1TuCHfMYP1/U99j64DNrX+BPgmzbyti2RRjUwZo65SY097GXPghO4Vg0kF2EYJnhCl2Iafwl8qlvYH+DOEX01Y0vkT8MkcSe0h73sWeME6MFds4uzQ6IWtzz8PjfxfsJjuBrRVzNmDnIIsXYnhGAPe4ZkArTUcRn1DbSAH/Q5VvTVjJmDnD6yJrhE2W3widxJY/iir2bMHOT0kTVBetUp1KwJNuk1AuZ9wN6I6KsZMwc5fZiUHtlX1zF/YAYeQmdEX82YOcjpI2uCLcpGwYPYg12O6KsZMwc5fSQTeArdVl7Piea2U/eUuhQeoEe0EX21DbamOcghcAit9Wxoy7qOh8Incz/fJdNLK7n32/jt5XcN63a0WPTV/L9wMNdL0h4e3hVqik6whtMF3jWe0H5875dK8MKzh73sueYEqzT8Df9hDtzfmIqGp3ieSnv9wq7mWUM/ko2/IjwFL62z8IQe9pqzt2/gxyzyYwVmYQq87CrBWnvYy2XKvIt4mLONPQAAAP//Dryo+wAAAAZJREFUAwDMyxBAKx0QsAAAAABJRU5ErkJggg==",
+    },
+    ["circle-dot"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABpUlEQVR4AZyTP0gCYRjG76wIRIfEcHIQCceWoLZoaAmaorHWao+GCCKIhmivucZoamyItoKWRolwcJLERQmkP9fvp58hjom/u/ee93le7/vuTEVDnyRJxmEKyrACWwFrNXvjQ5HobwDGSRoF2IALOIGdgLWavULw0or6A4JQQjmDTXiGPVgPWKvZ01MKmShF4S3lMR6Cd6BZ0wPXbwFrNXt69ObNuoQspjWYgWN4glYcx134CXTVwJ4evWayDsjRWIU7eIEPQgxPYg5uqiDFiT3Qo9dMzgEVxGm4hw5OcklMnYGFQAaRVm9IB02vmYoDigh+axw+we8Yh1lw58VaDSnSo9e66ACLf+OAekj7GCdC/c3ZtW5zFms1LiM9eq3rDqhSvcMSjK71EU1G90avmaoDWphuYRlca3qwYezaVwCpt7Hp4NFrpuWANuINvMIBzEOOxCT4oomvuY/bnh69Ztopf4FAE46gAaewC4tQDlir2dOjt2nWO4gofNN8NJouCc2B5mvOYq1mT08tZPp/JkyDIU6/4tqd3+d8HrBWs9cYhOlFvwAAAP//9URmmAAAAAZJREFUAwDfK8HV2BWr9AAAAABJRU5ErkJggg==",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACBUlEQVR4AaSTOy8tURiGZ7bj5LgFzYkjJKc/pxaFloZOoieISiESiYJQSCSiUAlCL9HR8AdEzS8giAZxjdt4nvENobWznr3WvN/7frNm9tql5Msny7JyqIe/0AY9gWs1a+VfYsl7I8wpVGJohn5YhkWYCFyrWWvWCym1fOSNQqhCaYUl6IVzWIWpwLWaNT16qyL7vqMKzC0wCz9hHIbBHWwyi2s1a3r0mjGblOjo8zZg1nDHPAo7cJam6RXcBVdqYE2PXjMN9vDRqil2QyPMwwHcEn5h/jRCu0XUo9eM2Wob1VLogH3YBXeQMSfcqQx+BWVqNLPmbvSaMVtroyYMf8DCDcZ8J4QN1qH3BHWhJeG5QTdjtslGbg8tOeTrCYrhu+vkYjJwrcZlPvSa8aLRRi6+jY2Oo4sH8UesnR752oLiHLlWQ8qHXjNeHNvoiNUJFAdMzffwjHYB68EF70bNH0FPcYDNHilcYtyG/2CzCl5qfvQNwn1QNLHmIdRrxuylja5psAE+4gjzP6ikmTWWHyM0/4969Joxe13ibj73KfYZ8E5zzO3wm2ANuEOpUQNrevSaObVHcVcP2B6mMXgADQvMA9AVuFazpkevGbNvf1o6elqLAzZIcA3qoQ+Kc+RazZoeD6MH2OxbI8z+ShkN/R95yFbQ3MEQ83TgWs3aoV7Im1BPXgEAAP//gjXs/QAAAAZJREFUAwDMo+GXeMkdowAAAABJRU5ErkJggg==",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACfUlEQVR4AayUOWhUURSG7xsdCZlMksGkEIxBGwsRW1tBsLAQEcRCENxAtHMpLCwsLFw6RXADwUIEEQsLq7TpQ4o0CSGBFEnIMpkQyDL5vjcnk8lSJtwv995z/v9/89ZC2vVXr9czOAIVOAHn4GLg2po9Ndkue9oRiMl9CdEpuA+f4Cd8CFxbs6emFB7ajWFAvqJxiEU3XIXvcA96YBB+B66t2VOjtju8SFLjF1IwuIvKHXgB7t8xX4en8Dpwbc2eGrV6uiIjFVhkiNvhMngqY8wP4AeMZ1k2A/PBjDWwp0atHr3tZnmUIoLj8Ajm4TkMwxIh68w7RtSWKKpRq0evGUUDvQlXEByFbzACKxjrzPuO6K3QVKtHrxklA8s0LoBH+s+8HAaWKXEaRSgHnk1eD80yGz16zSgbWKHYD0OwiLB5moQY0Ef9SdAXNbYphXYxpaTXjIqBvRScp5jXoHW0sbkFdwPX1tg2hx69ZvT6r9k5iIWB0wRtwDE4DK3DC+8D/IWiuLbGtjn06DVj2sA5WuNwFjq5Rr4xLJPXaDWlNAFvgwmumzW2+Q1T28lGrxlzBlYpDICv3SXm/AFlzocBUA1aw7ZeCD16zagaWMP5F2bhNpyGNn6pBpZ7R/S8OWr16DWjZqBHncT2HjzSK+Yz0IHRU2K5PaLWQUWNWj16zVgtcCq+ET6g/xD5aTrJ/BFuQj8BPeAXRfzS+LzZU6NWj978hfAXevG9QwsEfIWX4P4x8y94A88C19bsqVGrZ4Ef5r7x+UJsqG+Ir9Af9j7An5n9upxnvha4tmZPjVq/RHqRpO1Ad3EUb9Ioe0/FT9MN1g8D19bsqamFh3ZjbAIAAP//JQu0PQAAAAZJREFUAwAVIwNmZFKj1AAAAABJRU5ErkJggg==",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAADKElEQVR4AbSVT4hNURzH3x0zZua9yUjNqFFTsxhJSLEgSYpsZMXGhoVkQyE2lBQbQrGRLNjYsJKNKEliQQlJLKamTBmlRvPezJjH9fm898s4b2ZiFqbfZ87v/v58z73nnnNfU2GWvzzPM2iBhdADfdAf6BszZ002i0xhxgkQaaahE5bCHrgAt+F+oG/MnDWd0UM6tWQCirzrNkp64QjcgeOwERZDS6BvzJw11vbS3wbJ0/yeIBLtCKyGa7APOuApnIZdsCnQN2bOGmvtsbc9tCgtJEvUSmQVXIYV8AEOwEG4BS9hINA3Zs4aa+2xVw21KI0JmNE17yFyBlwe78zGR1x/ybKsDJOQB/plc2CNtfbYq4YbQM1CE+IZRT7mXsbl8B5OwABiFfiJP6OZgwpJn8wee9VQq0Nt34EzLaHIdf3BeB4GaZxg/CeL2kGK7VVDLTWbnaBEYgssgGfwAsZhrmaPvWqopWbJCYoorYMcHsAod5QsC4/qUpYYuwN9eymvW/SMcqWGWmoWLfKN95Mw+IbxOzSa23c7wbuBvjEuE7NXDbXUbHUC38GiKBtmrEKjuYyHCboFRd8YocTsVcOgmrV34MV/wydw1q8xQzejT8SQmHv+EpHXgb4xLhOzVw2DaladwO34kYjnYSXjfGi0MQL3YEegb4zLxOxVQy01J5zAg/KcMoNbGT0gxnHr5g4BT/Mwo+hP22lUe2DVUEvNikI+6kOS32A9rAW/qAxzMnvsVUMtNctO4Dv4hJTf+HmMx8BPr9sX9+/G2bDW75C9aqilZrWJR3bPekBuIPUOlsFZ8FerSLM3weV0Mwce1D6y9tirhloe2LzWzCQ+xRBFJ8FvygbGq7AZuhDx5NZ+GvH9UdL3HHSRt8Zae+xVYyg0k98Dd5Pb8BBNb8GfQhuv4O+GNeCdir4xc9ZYa4+9aqhFeWFqAmZ0qdx6r8jsh+vg0nlnp/Bd18eMom/MnDXW2mPvWGhR+scEXpkAv4o+6kViO+EcPIHPMBnoGzNnjbV+4sfp90Ypq1vtHdTdqf8U+U5GiPhTeJPxKPiN38Yo+sbMWTMSPaRT+wUAAP//pmHEkwAAAAZJREFUAwDTSD8Iqg8DbwAAAABJRU5ErkJggg==",
+    },
+    ["crosshair"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABrElEQVR4AZSTv0uCURRAP63oBxQUgdQgSIRjUEFLYzUETS0tNfsHREMEFURD9Ac019LS1FaNLUEFjdIgOBSCOCRoUmLn6DO0rfDw7nfvudf3Pl/xqOOv0Wj0wihMwSpkAsbmrPV2tES/AxD7KSRgE87gBHYCxuasJYJLKWoNCIkUmVPYgkc4gOeAsTlrOqnQE8UJ3NI44j64A79V6Z7nt4CxOWs6uuP2eoRhpHWYhiN4gBJ8wF3A2Jw1HV17hh0whrQGt/AClVgs1mCtwU2gFnIVnnV07RlzQJrkBDxBHwyytR4a6vAZqJuzBjq69qQdkCQ5BBuwC0ugxNL1MWdNR9eepAO6rP8+OCBPk2e7ZD0GX9wX69+POWs6uvbkHZDFfIc5UKpy7uaZOfdAoPlOqFdBR9eerAP8ea4pLMMMDNEUY/VmrrBKf8h5bh1de0oOKCNdwSvswQL4046w+tLE2Jw1HV17ynG2+41YhEMogPd+m3URJgPG5qzp6BbtdQcRgZcmh6x0zjoP3v9ZVjE2Z00nF3pa/0xI7SFOv+A5A957v1GMzVkrtJtxoh8AAAD//+kSuIMAAAAGSURBVAMAmhev10zeOAoAAAAASUVORK5CYII=",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACEUlEQVR4AaSUu0oDQRSGZwPeRbEREUV7rcXCVhtLQbARBLW08Ao+gOC1sFRBsLGytNEXEGt9AFFEbMSQi1HI+n3JJGBaw36Zs+f8/9nZmUkyoeGTpmkT9MAwTMBsxNictaYGW6g3QpxAO4JBWIRTOIO9iLE5a4NqIaFWuSqNYqKDzDicwAJ8wCW8R4zNWVOjtiN66zNqQzwGu9AM27ACF/ASMTZnTY1aPXpDho6+bx9iBUXGdbgFZ+IM3ojF2Jw1NWr19NnDV+tEOAP9cASPUEiSpMyoeJ9RijFX4F6NWj16O23UTWEKHuAONKSMXt98PUWMA82s+QC1evR222gAoTvlU3zfLqbaAniSlK9yhFTqzrag7wK1evQO2MjptVKYhkPYAXP1reW+dpmzpkatHr39NqqJ/jXa6JUOX3ANa+BOmHMtuP1zmbOmRq0eva828pw8Ix8BFzHLmpSgtiYeESFVWbMSuiyo1aP3xUafJG9gFDytbXRwLbgNHrwhAjEOseZCq9Wj99NGOYRX4JRXGX1KOwZrGjbIiQ8w5+9RjVo9enMZ5vuD0JPrTmg84H4SeqEHPPVibM6aGrV63uzhE9AG3/eeYAs8eAqOiefBcybG5qypUatHb/VHS0d3I4/J07rMeA7OYI7RWYixOWtq1Oajt9oIceXok/R35C7437NE3v+eTUYxNmftWS04Acoh/AIAAP//hio0HQAAAAZJREFUAwAMA92XpA/XOgAAAABJRU5ErkJggg==",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACdklEQVR4AZyUPSxdYRjHz7mlFdfXjcbUtGmXDh2MXduh6dCh6VCThBCC2GwGg8FmE4QQEhODGAwmVqPBYCESkxCfV4iP6/d7vZeQO5Hz8zzv8/z/zzn3nPecTPLir1AopPAWcvARGuFXxNyaPTXpC3vybCAm11lEX6ATJmABpiLm1uypyUYP7YfDASGj8YakDv7BLHTAe9iA4mFuzZ4atXXRGzRhIAVjLZV2GADXw8QmcL1LFHNr9tS41lMbZyQZEu9DJYY/4E/ZIXbDHDjkkHgWMbdmT41aPXorneVZyhF/gF44hn7YhPM0TW+Jl7AWuYy1c9Zq1OrR64xyB/oQ/iKoh2nYAo0FoscF/0Yj5glD7XkitXr0OiPrwGrEP8EzrRAvooE00XzD2quVmyT+UXOoJ9Cj1xnVDsyhcQt4P96R13MvaqCMvORhD2poemV69Doj58AGGhXwHdxjM8QusEYoedhTo1aPXmsNDizpeG3RgfuYvcHrRLdAK3EcrBFKHvbUqNWj19q+A4+wbMNnuIJDbvgpPD4Aas8Oe3BK0X2pR68zjhzopl2l6Wv3mxg2KDEc3PwyqIo8PijWxRdCj15nnDkwj3MJPFsb8StURANp4lvUQyLmSez5ENTq0euMvAOvEe/BCHimIeI38Kr8YGj8wVo8kbUq1mrU6tHrjOsM96K4QZcRuQW8H2PkzfAJ3GtufjG3Zk+NWj16wwvhFfo23GE8Ab97g0TXfcR5cO0QMbdmT41rPSdcmOunDywFPwS+QosMaYFJOIBGKB7m1uypUXscvUETrjBk/KPhWXxIbgF/invsPy2/eWJuzZ6afPQgeTjuAQAA//95H0ImAAAABklEQVQDAPm5+1lifCb6AAAAAElFTkSuQmCC",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAADTUlEQVR4AaSVT0sVURiHZ27+vVqWoISC4MKIiGjRooiCoOgL1KZNUREtqkVRm4IIalPUolpEVNSmTX2BKAiKqEWLiIiohSAooWBYev3T1fF57hwdB7wXQTmP58z7vr/fmXNm5txCVOUvSZIY6mE9dEEv9AUcGzNnTVzFJlp2AkzqELTBJjgKt+EFvAo4NmbOmragIZ1vuQko8q6bKOmB8/ASLsEeMNZFL46NmbPG2h70TZBbzeIEIdGMwXZ4CCehFT7ANTgB/wKOjZmzxlo1apuDF6VRbosaiWyDu7AVfsJpOAvP4RtMBRwbM2eNtWrU6qEXpWECZnTPXfp1oi7fO1P4luuROI4n6Gfgf2AmxEa4tsZaNWr18AXQMypgHlPkMo/Rb4EfcBn6MSnBHGPbJP8+BhxH5qBErB/UqNVDr1a9fQbO1E3BYZiFWzCAcJp+aRvn4kzAMcO0hdoBrtTqoZeedU7QQmI/rAPv8DO9e02XNUzclj/04nZlyXSkRq0eeunZ4gRF8jshgdcwjsnCtnC5shY0rkwPvfQsOoFPvA+bBvgNnexdN7SDMULVmzVgrVvSSaUe6vRsdAKfQTsJl/WE/h28h3vg9tHVbNZYq0atHnrpWXkGNdWrTbqCMiaj8BeOw17wGPAj8v3nsmazxlo1avXQS8+yE/g6/sLCN2Mj/TAPbBBGwRih6s0asHaQqmHQQ52e007gh/KJhB/cAXo/EOMMV9540Gr8YPXQS8+SQZf4BiuXtYt+B3ii0mUNgwbYEPAtyZLpSI1aPfTSc8IJfAYuzzN+DbUXwaPX15fhYvPu7nMljhmmjUmt9RxSq4deepYL7J8fhR/IU8q/w2a4Af5qFRF7E1xGHuXenTiOzIEfai8FatTqoZcfbFIRM4mrGKLoCnim7KZ/APugAxPfdbelnmtxu4x1cG2NtWrU6jEUPHO/B75NXxGcA897fwoV+hEdIeZ57z6LY2PmrLFWjVo99EISZRMwo1vlMfyFzCl4BG6dd3aV8WNYG3BszJw11qpROxm8KF0ygVcmwFPRpd4hdghugseAMbdRHBszZ421HvFT6L1RJGmrPIN0mP2nyGcyRsSfwmf0F8Az/iC9ODZmzpqxoCGdb/MAAAD//2HWN9AAAAAGSURBVAMAvJRHCKo/25AAAAAASUVORK5CYII=",
+    },
+    ["ellipsis"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAx0lEQVR4AeyQOw7CMBBE7fCTIGWuQE3LCbgIDS0noaXhIpyAlporpAxI/GLeOOuIOnQoUZ52d3Z2ZTtzP379AufiG4QQPAxgBN/akFp4vTV5BvLIG7VopjmBOaygwDQm5rA0ctMKannk1UxzAsQZ7Iw1cQoL2BvKpamXfJppF+Dr9qcrXBnfGgfiDc6wMZRLUy/5NNOe4I7xAkcovfcPYgUnozKtpJZHXs00C2gGeMMTakyOKO1FFMG0mloeeaOWrqB+J/5gwQcAAP//uISNgAAAAAZJREFUAwD92lIhhpQ6egAAAABJRU5ErkJggg==",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAA60lEQVR4AeyQOw6CQBRFwU+U0LABOndiae8CrG1N7Iydia21C7C3dCd2bICGIJGP58JDSwuojIQD7925785kBk5Pzz/o+0X2f0dVVY3AgwnUG/AfwtQY6lzUA5BH3pE00Q6MaUJYwRx8zDIF1EsjMM2nl0feEE2zTh3Eggdr2MIRZjCBBewM1dK0Jo+8mtHsOwhvt7c9UUrMCQ6wgTtkcIW9oVqa1uSRVzOabU7kuu4TcwRnuEGClvOP4WLEpiX08sgboWm2CWLBQcghhQxK0wrqh1GYVtLLI682k/wJqrsOn/aOOkQ0oz8c9AIAAP//mMWuogAAAAZJREFUAwCzrlwlN0k8bwAAAABJRU5ErkJggg==",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAA+ElEQVR4AeyQP85BQRxF33wfIkKltgBbsQkKjUQlWpVWVBKNgk3YigWoVUTEn4xzGDbgNRLiZGbu3Hvfe7+/LOffr/DzgX7RDGOMBahCDUoQHABrEdSkmLSApkfNTEFdHp/M5T+HOvRgBE0wYEGD/TDRwKtW4qxHr5k6uh3Zo5BLDS3WPnRgABUoQxu6Cfdq3unRa8asHe9C/Pn8X294pm4NM1jCFI5wghUsEu7VvNOj14xZO55vGEK4EdjBHMawgTP6hXULk8Q2aYb16DWzQ7fjWYg5Q7jCAfZgWUz6hbOa+AC9EU2PmpmrXnl9svtc+BV+PsbcZ3gHAAD//9qD7twAAAAGSURBVAMABPZoKWffipgAAAAASUVORK5CYII=",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAqklEQVR4AeySwQmDQBBFZ70F7ykjlYT0kkrSS7ASy/Au3lz/kwHXk6woHlzhMf/P4Ax+rOzkpxzYDLhEdKeIYoyVqMXTQc8/gfyuGfnNCxDiId7i76DpyRoVnzuz9ECtTV/xctD0ZI2Kz52tDrDocNIv6LX9J1oHTU/WqPjc2eoLBm1qxMdB05M1Kj53thwIIYyiF52DHtkuv2vGu2lE+MMpBzYjLRFdH9EEAAD///qhY/IAAAAGSURBVAMAo09sMQrsM+kAAAAASUVORK5CYII=",
+    },
+    ["eye"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABm0lEQVR4AaSSOyxEQRSG713EajQSBaFRUImEgoJaQ5QaGtEIWvGqvKJFNB4FjVJUehIKCVFRaIhGotFYbKzvuzu7ycoWEjfzzfxzzpl/JjM3Ff3zK2uQy+ViqIJ0QB2X26vEgOJKqKWwEbphEAagBxrMQSW62BIDgu5YQ7QJJuAANmEW5mADDsFcM/U1kJwoFYSLOyjYgiE4g3kYD6jP0eY0tjYx8QRpEq2wAh8wDXuQheGAehdtzppVtGvSGtQxmYRPWIB7aIElaAuojZnzNJpMkavToB3RBfvwCLZ+uheYCaiNMY2e6KztZGzXgDFp30n/t65Yq8Eta65gDHwFhuiUrh7WA2pjTKNmOmtdc6vBKwFv38tcRns5D4yLcBdQGzNnTTVx17xqkGHi5fjemvjm7lBB/CigNmbOxYXLzqTiOM5R9A434M0eM/aCz7rDKD5bH9qcNdfod9d6gkgBmvgK2yRHwTdfYxT1CNrco7XgxlFiQCJpBLPwxuQZLuEkcMH4bA78qZjmW4lBPhQVTvRFcSagTnaMfn0/AAAA//+Ue3r5AAAABklEQVQDABAdjiEb7KlJAAAAAElFTkSuQmCC",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAB1UlEQVR4AbSTSyilYRjHv+9MDWNWI4upqdmYZhZzWcxiRrFTLJSyd1koSoQlRS6FHUlkYeGyV8qCsqNkQblsxIaUIlauxfH7fb2R7FxO3+88//f/PO/T+3zvOanolT5v1yidTqcgEz7BZ/gSUOuZe3KAe4PiGDKYNAeKoQsmYSYwReyEIsixFmJ08iSNgpGF8xv6oRf+wT7MB/aI/6EPBuAPZIW9kWPY1SZ5JIbgB4xCFfTARECtZ+473iC4J2nmiRznG6ajXBIbwTHU1ejxgFrPXBPeNXSDezNslM2iDj5CB6zBDdRCGawH1HrmVvHawUncm22jXIx8mIVNuIBMKIRFcCRR65mzZouce9ybayPWL39stEubJSiBn/ABfBcLxAJoDaj1zFnzC989nnTXRicYw3AOvvC/xHfg7UwTvWZR65mzxvd5Rn4ETmx0hdiBNngP/kbKib6LMaJXLmq9Cjxr1L5w916l4jhOk/A0y8QG2AZvx2t3rErWotarYW1NPdE95/bwRJEC02YbxGZogRX4Cv4lRK1nzt+RtUkTaqKkkcJm4JhHrOfAYztiKVrUeuaOrQWnIR09NEpWfJG8hUs4hUM4CKj1zN1S+ui5P9Ej9xmLOwAAAP//kR8NCAAAAAZJREFUAwAwnaYlANt3RAAAAABJRU5ErkJggg==",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACNUlEQVR4AbyTy0sVYRiHZ44omIUWFdUuhaBVi7YVBFF/QEVBEESXVRAFFREVRREqioIuvCEIitc/QBAE3erClSCoOxUVL3gDRcfnOXweOajgQjzMM+/ve2/nnfm+SUUn/Du9hkmS5EA+FML5gFpfzlEPdmBCCnOhiIISeAxf4H9A/QRdYg7korOuTEOCKThD1EYWdqJ/wVO4H1D/RBv7jC22BjJ90iI4Cki4Bw3wDGagFt6Ck8o7dA0Ye45thLtQEHpEThXjyAcDZdgLUAEWt2MtvoGVaWwHGKvEmmuNg/huYyfMI1AMP8DrK7c2WILb0AylAbU+Y634zLWHtddZ57lwA96wuAzVMAircBG+QyG0BNT6jJljbhWxS+CrKbLhVRYPYBR6YQX038Ka6GM3oUWtz5g55lpjrT2u6ST35C4b+qL7aHkTHsI52IERmAN38zVW1PqMmWPuI2LW2mPKhr5gj8osgY9wB87CPPyDZXgZUOszZo4n4wMx/8QeSzbcxDEJf8F/dUdfoN2sYewrcDdFPcTamDnmsoz+cLPHZiqO44TFBgyAX4gTf0LXgQf8CnYs4Ab62MbMWcBvjbu9YS8njBBOtncMfFfupo3eU+Cj9GClHqvPxh5wj4qDrIUeUbohSTZNcK6jJ6AcnM5H6UL3B9S/0X7TfiHj1oAD4Y72G6ZX3AhugY89zrIbLPyGFbWTTpgDW/izrsyEWV4WJG+D72UZuxhQ69sm5dDryIaHZh/DuQsAAP//MXrD1gAAAAZJREFUAwDve8Ep8InD0gAAAABJRU5ErkJggg==",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAC8klEQVR4AdyUS4iNYRjHv+9whnHmNAyRS8qSBRYsbFxjQ7nkkoVbKSKKXMOKkksp5FIK2bjlEjbkurKwwIKlkks0zZjOHIODb36/872naTrNajqbmb7feZ73ufyfOe/7ficT1fivDw9IkiSGLORhGIyEMQF9Y+asiXva6aotQkDhOhqGwCTYBGfhPryA56B/DrsZrGmirw6qBnUbQIHrHE0T4BBcg60wDYZDFhyub2wLa2ustScXNAinj4Jlj0Q/nEaYD5dgCfgfPcYegGUwO6BvzJw1i4nbswDbGLRwo6g8gIA2T2QpHIYR4Haswe6Au/ABfgb07+CbW4112+yxdzlrz0bNKIN4TKAeZsFeGAAXYBu8AkXHY4/Bo4C+MXPWbCduj9u3C1+terWd4r6OJrgHHHQFewq+wX/wEF3Pwx8c0DdmLiFmrWt7B7HeDWpmHeDWrCQwFl6DN6YljuO/+B74BuwoeAbutegbM5cLtS3k7VVDLTXzDmgg4eG4VRfxm0MDbjSQjyngNzmBfRvQN2bOmij0NJNXQ101G3SI1e5xQDvy98D/aB3WN7Q/1ucXHx6idR76RNaib8ycNREHas9Q8mqopWa7RQWCV+EjTIaN4JtpQxH/PHyBmXA7oG/MXDGIN5HzrVdDLTULDiiR+AxHwGvnvfYN9V57Lm+Iu36I/RHQN2bOGmtdryLfAWqpWcpwOF4zg09JHIU/sB48yKlYr9177E6YG9A3Zs4aa+35Td6XTa0Otf0G3gD3zK26ToEvm/d6Ov5lOA6LYBx4bRXVX8janDXW2mPvTeIFxNVMfyoIOOQftg38pVyLvQV+uznYg3AD/O15gtU3Zs4az8aeB+TaEFcLN+oa4IqEUz3Yd6z3wwo4DS/hO3hebqG+sZPErNmHtacYNFimT3mLUjf9pCABRVqJeIgO8I31xXErZhDX97adwbem1R7w2xDqeqoGVFIWQwncT9/ur/ifAvrGzFlTJVzR6XFApaC3tuYDOgEAAP//gEREMQAAAAZJREFUAwAYSQpA0LcLSwAAAABJRU5ErkJggg==",
+    },
+    ["flame"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABoUlEQVR4AXSSSytFURiG13G/pSgpl5SEjJS5iZSRFBNlpjAgA0pyHxgZufwElP9gxgyZGCED/gGdHKHjec7ZtnT22a1nf2t9l3ev9a1dEoo82Wy2DGqhBkqLpIVEgaignqIJGIEqSByJAmTWwDiswyzUI5qYW+Ak0e02UzQNL9AJA5C4iwIBEhXow9bCAdzBDLQgXoH9N5IEsmS8wTc4Dnk1wQa0I1KJjUcsQKAU3GYZ0Qd4hmF4hB3ogl1oJa8cmxs5ARwpVjZuFGvXMeGSVz98gfM1bAfMQV1UE1+jQq0EVmEReqANLPYoaea3cAxD0A7WxAJu28Y1EPAGPPcg8xNIp1Ip+6LIBWub3I21JhZgHTzGO5MV2Aa3eobVhwmKuKPfuTYWcJtPeD6gEc7hBl75ujGmoZqX/4NC5ub8uXMQcGHXr5hPguf3ukpolrdTh88fagp7DeZak98BX1HVuz8iqOgedgxsZi/WuT5j5rxFNXkBEhyfvO5hGfzCEvYUbKQ+f2utOeYSCn8CkWIGrwlb2AXYj5jHboKxTJTLMoQfAAAA//+fFUe4AAAABklEQVQDAC7DfYViJetuAAAAAElFTkSuQmCC",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAB7klEQVR4AXyTOUsdURSAZyLRxCxgExISSLoUWSBNEtKkShMUFBRsVBQtrCysXApF/QEKWokWFqJgYWNloY24FfoDtLNQBHFFVBy/7zk+ZnhvfNzvnXPPNueeufMkeOQXRVEJlMU8GpvpJFnfS57zF/7AM8hcBhc4KRJiLIf/MAJd8Dq2oxauooUIK4GP0Al29Rn5Bcqg6MoqZMI/Ml7BABxDA1TQlQ9BTa+sQga/JfQM1mAafkM9FC2WVeiGhB14Dp9gBlahDZqgoFi+EC2HUAovCHQt83cCVXABfbACrdACDj+fn1dwPAWH2o/8AKewCd/Bt7iHtJgPaET/BaWQW8lCdtKOtRbq4B28gWuIwjBU7qMPg7MzxivCNgiShbxwP7Fa0FlMoH+DefBoQVzsgP06pK5DspC6rS4QNAmLMATjkCuEdN3ydw7GmoOa7sg3ZesGTOH1/swhj+hEX8CLCNnrf488hJwdmTraJQZb/op02FfIS4rYwUMRj+8L+YFvA8xBBKlCtj+L1UH2In1b3pdyOnGoFdicmT6P5t0yB3O6kG16CZ2LSaNE+K3VIKtBfQypbxC5C+YgEoU4QoTFJ3hPOtC3oRL88ruR6tr0LbG/iHNQE4Xc4XAeHm2LvUdoRvaAurdZqe88jsV1v+4AAAD//7/x6IIAAAAGSURBVAMAlmaPUyxq5k4AAAAASUVORK5CYII=",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACQklEQVR4AYSTOUxVQRSG5ypuLBJcooWNxiUaE5eYGBNjrC3UyqVRS412FkZjYmFh1ELj1giBBloKlkAHgYJQ0JEQahLWhj0Q4PJ9vPvgXXjvQubjnJkz53/nnpnZE3b5i+M4grKEaJftIVMQEeMViFyGS3AAMocJRTcgZjWHCN6FevgK1ck6bvFRUpDtZXAGPsFpsMoL2H1QcmQJWt1TMo9DC8TwEKqyqswSPEjydRiFX9AP9+AmlJcSzRIkL9hHK5tm8huW4SNchaKiWYJLJA2An3wFOwQezBHsD7gNFdsrTQkS9L5VYivZbDXN2BW4D2vQBp/B/n7B3gBbg8mNTUFE9KtZfguvwTs3gh0GT9hTn8FvBU++HPsOapJc3JC62PtZuQUv4Dmch2NQA6sQR1FklbP43WD1Z7F3wB/H7BS0L1VETsB/qIVT0AGLEApE252DN8FicNOCftJRVu1dHXYSFqAB/sE85Id99TpZsV+wNx+wb3nf4BwTK+nEPoNH8BMmqEwR3I2hgD8eMbMF5uKGVA+tbJBV7901rBVNIjQDm2IcQETMA7F3FmSOuSyHlKD3rovVKfDJXcSmLm+BmLEnxN1rjrlMCwSpwpMcY/UvHIZvYBUnEfJq2CsPy7XvxNzzBzue5OIWCG7MQvAQvLz2zRfic/NAPhAXfdfsn6/FkzaHcG7Yg5zHf37J5vpuG5l6uXux5+AB+Fr0e/DfQBNMJzm4uZESdIkNfrovoo/5e3gML+EV6FupMQ/LvSxvjXUAAAD//8bqluAAAAAGSURBVAMAMYypLrXJHCEAAAAASUVORK5CYII=",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAC30lEQVR4AbSVW4hOURSAzxlmBuM2E5FLUSIvFI9K7ilPJCGvLiVvLuFFKVLKnSjeyAMveFNeXKKIvElEzSQPGkYy4/b7vv/sf2bOOf+c87/MtL5Za++99lp7r733+ZuiYf5rKEGlUomhFTqgHVoaXVdDCQjWCvPgGlyACSSJ0aVSmoBAzUSZCadgBSyF+WA/qlgKExDcVY4jxB5YAPqPRq+EMVAqTihyGsHgbFgHP+Es/IL1MI0FlO6iLIEBFhHMQ32IvgnPYDLsgIkkcRGY9aUsgeOjmGqpvqG/wGn4DhsDHviQSQyA35Dyh5H38A9qO3mNfR4qsB+2gld3JDonZQl+M+MVmMSbtAbbpDfQV8CgB9C7oG65cgmoaQu4onYmGcDSXMe2TB62b+Ir7UtwAv7CTtgEbczVDzORVAIGDTiVoctwDsZDHzwFyzQX3RzHsbvoxnYnJ9HG2Y2eA8ZAJeJAYiX/PVBXsoymj2ohehKY1IO0ZNY+Iokrd3e3GH8A7tjr6zuhmUg2gY9nNUM+LldvCQ7TPg5u3avai12VTBITL2GgMIH3fhZOru4tegpsAPULtLfnB3qw+PDe0GEJZ6ALS8R4ZCkMspeGqz+DPgge5Du0ZUL1iyuvNbIVibIdrvwz3h6it+UOtl9P6/yJkvTB4IAMR7VdG8u5xrC/ip1VI/yzvpbCenvI1d0QtBdSE/Xn1uk3FnsVaL9EGwOVSDaBH7R7DFlXb8Ri7Nzdpi8Kwduw9dHXOXdpGwOVSDaB9XUHlsYbdQw3b4a/ZP6iNRFYLF9HGNNHX+c8p88YqERSCSiDN6GHIX9cnqCnw0XwsJejfWjiOzlE2zF9HmM7pyfEoJlIKoFdOLiCLmxvkYfrOWymfRXuB7S3YDumzz7srjAXc0ByCRzC0Xp2Yh+B7XAbPoKfDfmAbZ+/Cfp0hjl0p6VuAl2Y4E783rj9o/T5WV6Llm1o+x6hu4MvZl7+AwAA//9+ZNy2AAAABklEQVQDAM5W09/0uPnAAAAAAElFTkSuQmCC",
+    },
+    ["footprints"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAB1klEQVR4AYTSuUtdQRSA8ftekhdN1BCyEAgSshCykCYhoBaKYCvaKIiVndiIjYqijVpoIQiK/4DYWNhaiI2FIGghuC+FIAqCuC/P5fl91/tKF+7Pc2bu3Jk5My8e8JdKpeLIxg9UowK5eM7rB59wAkY48C9xAM1oRyOymCRGvPdx5ae8fY8W7KIOfSjETzxjkgRy8AoZSC8cmGQyqBhv0YtZTCKFXLzAHzShFSVwoifEcIIMEldaJW4iiWz4nPDvDTqRj+/oQBXC8tyBXtLh4GtiAq54SdzAL3xEFxowihp8RcKP/WiPxjt4HpaUR76AA2ThBu5uiziMcxQh0wlsLNL4jG/4gv+YxjG24eMujIf8W8cnhDtwgnkarjxEHEEOZmBZlnFE/g9eNyHwakPuwBL26b3CRMR8h9xzcBfeTAHt17AkV7ecZDwWi3ldTnLBy2WswPwyendGewq/UQlv4ANxDufugBhYxhJJGUphbh9p4LVaogdcT0ct/A2sEZPpCdym9ztOp2WY20cz8Aa8DXfVT4fML9jhdXoCV3HrPQzohrl9AYMs0bM4pd/DlWV5TuEvMRzEwCSOIuZ+yDfh48djZOURc/vuJqDzsccVBxnUFjG3L7gFAAD//5BzfRMAAAAGSURBVAMAXd2h85n8NHwAAAAASUVORK5CYII=",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACJklEQVR4AYSUuUscYRiHZ9bdmJDTkIMkkAtCkjLRMiFN2kBsFSy0UBE7wX9AsLC1tNbGA0StBSuxELRSC+8DRRS83cX1eT5mRFF0mWfe75rf+/7eGTYTJb9isZiDl1AO/6ECnkNJcuTWEISSw884WQ9d0A7Gf8QHcOcVhDj1EKoTJogdsASN8IJEGYihBLJgjNm7uDyQZfYKqkCRNuIg9MNj+Aw5cPyV+Ae+wFMEfZZhFFlRKaMKeAR9sAWHcARF8LAVVzLuhk7ogWYoQyz0UCGzvWfxDGbgFHz4E1GhdWIZNMAiaNvKdWA7TBIqitlUkBApZrzP7Scsww58gCcwANrWfir2mqqyCuTZXAUFrUKRN8y/wTgcgxVanWNta7+XddtRTixV6ITBFHj95vYR/sI9GIMDMJFC7imq/VnWdWBbcgoVWDDDJrEOhqAF9sDDJtpmrM0fRCsmXLRBjTgTx7GZFNtlV7ERosIbxDz7ZvUNavM7a9pWzDbYjhXW8qoRo1TMj9BX7NuxH4q4r5A2tattLdoG96a5naRCNtzy37L4C96Bc9cZRsY5Bvug7WGibdCB1RdSIbP7kRlrOeSbSecR9qzYBq+x54MKKWI7Cu6nQjbU76KGg01gdO4603Bp07m2tW8b7K1JwgcZMqJqFfM8MgoLziEcYu6lPe3eaD+tyIMKnvGwpZo9rF26aTu1e83+FaFLD900tEeTbPif1ZpE565H5wAAAP//Bz3/MgAAAAZJREFUAwCI+sbXo8s0AwAAAABJRU5ErkJggg==",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACnUlEQVR4AZSUSWtUQRCA+43jlhjXSETFoIiiIIiiB0XUuzcRvCiIB/GkeBE9iR5cELzpwYMHf4DgelHBFRRxObigJiRkIyEhCdmTyUy+r+e9uWYy9PequqtedVX168mF9FcqlRKogXWwFw5CI9RCkrrNKmLA9IXFeO+AO/AQ7sM92A4LoKoRA+I5HzbBbdgNn+E1bIULUAdVjSxgLd6nYS2Y4UXkTfgAO6GeKnKQhzpYDa4tQc7DXhk6ubCSlcPwBx5BN/RDO7jpcqRlNyDPwQOwHaeQDQS1QtQQdHaymVkNfIThJEmmkdqWIR1DPLSfRRrESrahn4drYLYmFgOqmGEJQw8U2DFBLgR72IscAPt4BPkPTsJxeAuH4Ch4qDFgkckEOFw0szyTRtgA30C75Wr/zrwD/sIt6INjsJREcr5cYNICji08bMEipDubqVmMM7cNiKA90JZJJvb6DXIN+JXks4BdLHTCHlgPZmbAYfQvMAa2Q7kR3QNCBIM2q4B9zefYyd5Z0i8WdX6GfAG74DcM4WN2BtPHvq6iPHuPOdgypdXEHjrxBXuh0U9H3KgV4xQ4DPgexez2IT00e201TINVFizZiS8bdITJXfAbs1wzdxOWgvo7FDfwm/WQ6pl7s/T1HCoBfcnGYw9+xCtC+WdW2py5oX1sYrIfbsB18P7/RI7SmmKWoc39xKIBLiMvgbpr2jxVq1D/j82regBpYE+9Dd2vpdJDy/jK4lX4kXIF6Zo21DjMdhDNEr2C3hTbpI+2ckBSdXednuJ8JuU50muoDTUOXzITy1caKNOjX1ayJRUJbB/6kKJugBgpfRgg++6816LJvmorZ+hKlfjSS3yfgFdTHqO/Am1zC0jmlucfhSd8giDi/+ZAagszAAAA///bXEuhAAAABklEQVQDAIaP5b0C4BasAAAAAElFTkSuQmCC",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAADP0lEQVR4AZyUy29NQRjA59yiWtUm0iKNZ4SwwAbxChviscAWia2/gIgdGxuxEpYWXrGwsRALr7AkwsozISFUJaKp1qPl+v3mnjP3XCS9bTO/M9988833mG96K6H0V61WM2iFblgAi2AOdEJLybRpMQXAQcapqbAQDsEVuAHnYCd0YJPsWTc1ygemcGIJnIUDMA+mwUo4BmtBG6bmRwyQZ9bFsSOwDJ7BQdgOF6AT9kM7jGvEAJwwsw3M8on5MNyC53AJfoGVtDIHE4J26IFemA1dMNn9MkWANpRbYRJchZcwDCPwGarQARWceGY68i64DHfhGhwFH0UbNvaTZQgaK5jZcoTfcA+GsyzTqfszWDu+8lFnteuQj8MKMPBcZvtm/xYja8NUD+ATnIVGB++YR8GhoT3JWLwGK7IP9sMqLqLbBvbLvmlrH70uk0sVYJNkq3AtPts1CAZ4zPwDimrtiwFeoLsJ9s3+bUReDyaXnGrsJvrQy6eFezQDs7Tx7t9H/x0KvdXaH6v6ht6+2T/7aFX2NQXQ6ClGZlq8FjNYjW4meD3ua6fjIXQO+1PJ++WjMAlvwH5aaQpgZg85YYBNzDZtPvMWMGMPDuWODPIGvbZLmU2EKdi3twgm0MNsX1OAnyi8Y6bgP9dthDuwD3RkcO+fZXB+hKDe12SfWMZh9grRuYLZORv9A4LR/WdRr5HZecj7NXNMgtX6lO2L/fGHsLC3f9r083G/VkFeukF0NsDmjhxldYPYxAPoDeST9Jq6Wa8CE/HO/b+wMn8BtKsFwMBh9uJ1fUEhGhlAUIVAIG1sslWYub8A9su+bQ4hGOBBCLHShgBmqFOz8R2L12UV7nEmDfugE53tRevPhX2zfyzDEz4m2hDAZ3adDa/qFLMoq3MPVRpW9oqVlZmQlYgJWeF79jz7T4AzbJwHDWy68mnWXglTbXBNVjTIygBW+HfPRrExUD0ACrPq49AJsFT/G5X72IvZoC8PnYtX4dWKPnQs0dayouAHRyMwADoV5f8519wqdOoV2S/xiqzIPW3qFcTV+D72xf6YgP0SZXXuRW8NFURN8x+djNmzCQfgGr3vj+RzEvbAblDuZ89KWIbwBwAA//9jCCYLAAAABklEQVQDAGzaFKJR+oaiAAAAAElFTkSuQmCC",
+    },
+    ["gamepad-2"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABxElEQVR4AaTSO0gcURSA4ZkFk01QSIxGSJEqbYokJIQQQkibByEkRFC0URs7CxvFB4qNhaCCjYVopYiKWGghqIWohaKlhQ9EBfEFgoWrjv8/rCLIVi7z7T1z7rnP3URwz8/NBFEUhchCEo8ysM+a8HrdeAKKs0g8w0f8wd8M7LMmNz0mSKSDAgY0oBPVqMrAvg76GlHgWHeQw0sxPqAVhfgPV/tFe5s5a96TL0KOE2QTfMIkpvEYv3GCnTAMt0S8i33MYgafke0ESYLn2MFLuJty2p+Iz8pWrXGnpeT+YRv5SDrBE4KHOMA3ONBcJfErPMBXfMEUxuFuHPPUCVydXGCym6AFm/CMK7SX8EnxtYZVWEsT5DtBnhH24BknaOvgwFxaF3DQIvEFnMjdEgZ5TuD5bM/JuF0v0Zvv530UIxhADV7AemsdE9/BOkmfH3y9RRNeowdtab2079CMN/gOnw1nWSYaRgm64J/K1fqIB9OMa4nts8ZfY4j3JSfwPO28eOuevYx4Acf8/qcyxhwqUA9r/UceJijwUo5IzmMMm+QcGBHHD+8RTnnZgDXWHpFLuYOAwIIU7Rm8aeruPvbBGmvjBa4AAAD//15WFM0AAAAGSURBVAMAYMSdIZNkRvgAAAAASUVORK5CYII=",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACA0lEQVR4AayTuUsdURSHZ574YtSQaGIWE7OQJksdsv0DIYEQAukCScpAUiloo6KFK4oiFoIgWAtiIVraaaGNKKggFqKCTwV3FHX8PhlRBLHQx3zvd86955y599w7ieCKfldbKIqiEJKQA/nwCArOwbkHzBlrTuimEgxoZOC8hirogX7oOwfnjKlm/hVkWMOtpeM8hQZ4B4PQdQFDzL8Fc8xNt1AWA9/hHpRCDbTHtKCNZ2jCd+Vl6H0wN8tCmThuaxodhQP4H5OGboVhuCbY67APD2EKZsDcTAu5tTwGFsHV/UI/xfxBc+lBGtjHG/gvoQIegzl30eRxoVycZbgN3yA/RttAX/aGsX8wB7ZgArVQDnrUI41rOClwuT/RgRhttxzh+6gbGLZgFTXH3JuuyFUwFizxZ9A82gadsAvZcAvsRwe6S7/s0x72CvjkWch9e5cs4htlltkP4PG2op5ePfoXvIyuwjhzzM220CaTOk/QO/AMKuErJOH4uY7xA2rhORhbgJq7aaFxHHvjaRVj+3ZPpg7b5p7GVb1gvBlK4DeYO2YhO1/OwAh8BPfv8foZzNOPRWHc3nWjrta79h57GLyYKQtt43iUhehn8KT8zryEJjAUBBTTXguCoBeM+YIWwSRsJwiIYAdWYAFS4G02kZiTh/EDcM4YY80xN3JFJ5GXsA4BAAD//+iypjAAAAAGSURBVAMAhNW/JXdC2+kAAAAASUVORK5CYII=",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACdUlEQVR4AbSTOWhUURSG3xuTcWIyhiSIjaIQtRAXEEFBFMQFRS20EBSXTlARF3BFC0EUd8WlUtTCRlBEUUHSJaRLitSpErKQlex7Jt83vEkCYQiEZHjf/Oeee8555977biyY59/CFUylUiHEIQnFUDILxhhrTphZaLpDEtUCnJvgKjyFF/AyC849Ye4abIaCqEYQw7B6Ps7D8BHOwE7YDtuy4Nwu5oz9gB6BfGvZWS6DNXATRuAeHIIDsB/2ZuEg/rswCjegFOIWXIKxB1zyG/QftMAqMLgpDMP66eBviChD34K5+9A8Cy7GsPoYWg0+G/lz/06jbr6rwJx8zNnBaAvUgLnWSFjQ4OU4+2AIjoFLWI0eh+tQxP643wk0ydiOjqLuXT/aC8sgJ1OwhEE7jMMGsMNF6ArYCm6L47XYj8GXecqPsG3EXGvkWjAHZxHodPIh9kVoAk/wLNoMKcg8wxjON6ID0AHFkO5wKYZ7otMlq1X4vsJ/cElx1E/Lwvexa2GUg/Il7l8nY2sk7bCQgU83fy7ZIDv9xng92K0f8BXs8+C+uTxfwjAwp0sDCi2IBn7cLt0DSuBYCS7dQqewT8BJ8NRvoa+hlANyb80x1xqhBeuZdP92o94AD8Gr55X6ic+uzqFyAf0BXtFnqLHmmGuNOgu2MvEe7OwV+hnWwRcwqQKtjChHn4Mx3q5P2Obkoe+gzYI9GL/gMnyHP3AH0gFs/CCMRAzitxMbuI1trDmXsH9DT4xAT8mivv0BTu+ygZ3MefVwTT2Rz1P9i9dYc1xFN3NjdhhgjMMQ6OxCB8DTI2fm4xwYY6w55vp1BOmCM1Pm7pkAAAD//8XwKdoAAAAGSURBVAMATrLdKX1XTSAAAAAASUVORK5CYII=",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAC5UlEQVR4AdyVOWtUURSA75uMiVvQuAWNIY24gKKNIliooCiCpf4Jdxux0B9g5db4AyzEpVO0EFTQSgsVRIVYGBei2Ukme16+7+ZNyIRkMhDSJNxv7nnnnuXec897yYUF/ltkCdI0zUMt1EMDNFaItvrom59a9ckSEaiGhQY4Bw/gDbytkNfY6XOW2WTGQgwhJiD4Ep6a4Dacga1QDZUOA+pjgjs4NWUxQw4hQVELF2AftMBFOAwHKkTbS9j+hL2gbLkST1CFwtIcYx6EK/AMfkFvRmuSJC2zgc0PeApXwRhHmTdBlQksxXYePOYn5m/QB8vhbsZK5hkHFdB/FYvOJvqIbCxjVhcTbETp8IgpQh00wqEMu2lNFgxVyVjB080M79IS8xg8QUxgW9WrgVZYCl6UZVqLLMrqDBZMBHXCujtnimOEX2MwBWPmPYEJNqiBfzAKcw0TuetbmaFNYZN081xMsB55MsE6Hhz/+dHId+EEcnuGsjrvBlXJGOLyOwXtABiDKZQksAzWvo2VAYw7mK3lK2axgzrQD/HsMFFx18rqxNO7KWO56XgC29RL1aCTH42Ygi16GeEa2NObqbmX7eVb0mXo40Dvu6SsrzGUV/MT29R7sKYauRvsU2X1nszefo7xOyh+OpRf8nwDtkANTvq4c2MoGzNnELP2Y+RJrJtd5O589b3Ek6y5G50Q41BW55qfF3teH32NYSxjjpqggMt7ULYke5D3g12yi/kLnILpn43T6L7CTtBWn93IxjCWMQsKPSjvwW84CI/hPuwA32wv8wOyFx1RBgPYmp+Rt4E+T5iN8YfZmD0msLV8vW3DFyzYQb4PD5HPw3ews6wvYgh0k7J+flb0exRC0McL9r78qhqzP4fxGIuWyV36FfRDdRzddWhmvSQ4ujjQp2CSZhR2mj5HkC2RsQqsp54g7oiHQbDX/zJLF/MwDmWHNqCtPmIMY3nKiX84ZSPMczGeYJ4xyrqPAwAA//863p6XAAAABklEQVQDAJzwIUAOcxLRAAAAAElFTkSuQmCC",
+    },
+    ["locate-fixed"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAk0lEQVR42q2Tuw3AIAxE6ZggHR1TZAkmzARZgo4pMkEmSPeSSFdEiPyNdI05P8vGOMBdKEqnHncDGKVPgABkKbwBBFWtz9gCtZJnYAIS4KWk2FxDWj3vxg7oN/Mg9YpN9Uzq6qjanrAARVoUS/KEIyCKmnXpVbUc4EUxL09WTjQB/G7BbIgmz/h7kUxW2ewzPfrOK6/uPsp+RhJgAAAAAElFTkSuQmCC",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAApUlEQVR42rWUyw3EIAxEuaUC2qIQGkkFuaWXvdEBTewtFcwK6XkjIZSgXQdpLmb8MOYTJIUbRXTpCxOgF/obVNFPoEVSllR0jkJsmQVFKrDkFRm0jno2qqQZ35LSYJHEXO0r642ZVRPGTdKBNmIJT74CFRRIbGNHItb7vqDI8VpfViYPAGbeiQU81q+WG11Bblt7pNlux+92IV2fiOujfeQbmfrYPlZpHAUu8oUFAAAAAElFTkSuQmCC",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAvElEQVR42rWVwQ3DIAxFufXGjSlYghu75MaNfTJBl+gGLJFbJvhVpYdED02pipG+lFj2kx07xklyE/Loq6+bBD7QMmBDfwOjpCrpRBXbz8Agadfns+MzBQyU9zp3SUnSDSVswifMAHtm29DhjHqntyHTS2AcMnNAjqHUA5sbMo1XwIpTIpsDFdTfPT4i5g3ombFGJ8X3yjyXIaBgy/iImAbDmwCXl2zalOVjYzLYy389k+Vgtr7MFuz0FfAEDx8SHCiPg0QAAAAASUVORK5CYII=",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAzUlEQVR42t2VzQnEIBCFc9sKrCBHb7mlUG9pwlsqsIpUYAW5vWXhPRiCyUYWhawwIOPoN3/qAGBoKbUbEqUZQONZAA8gANgMYKPO/wJ4AVjwfSy0rQJ8Nqw8YKe3s1mfqdtps55BzgDyPAOYLqKcaKNIbgG88VyHjwAidTvno4EoEn8HEGgczOG5kPtsIMc9lwB1i3IeTZ4dRfWJpibqriIgFTzUmsJ3RudMGo93RCN1BTRPUdciN2/T5hety1PR/LHr8lz/z4/W9dOvljdNmk1aBG80JAAAAABJRU5ErkJggg==",
+    },
+    ["biohazard"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA8ElEQVR42qWTIRLCMBBF43BxuDpkHSeoq6vDcYKeAFlXxwl6AhyOE/QUuLq6urpPAy9DyNDSGXbmz6Q/u5v9u1sjyfyDmNhIKhYCCnxmE+R62ZbvFBg44TOboJzQc270tgaux2c2QUGAnYISSXuQwCmWGOvPoxdD+IoOYR/8pSM7fVoraQRtdDdIOvoEWfBq+qWSJmqea+YZLjNoK4IpWM6uogvo4GyQ6Okb63SlVYFDD3xQhc/sFE5o9rO/Ar8TIz6Lm1hL2qF1ABau/rWJHm7uN7T3nO2afyGc952yM5IMdP9ngjxeFl4v4c0aCavxAOPTPXwrEjlFAAAAAElFTkSuQmCC",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAABBUlEQVR42q1UKw6DQBDF4epwOCSuDscJeoI6XB0OiavD4XA9Aa6uJ6jE9QQ4XN0rk7xJJtuFQtJJXnYznzc/2ABA8A/4lAcA0UpQRJ+fRHdiichr9zm+54wN7xWAJ1FR19BnF1ELoCfavUQPAMNKawN9FolkgBf2D1NBTmiFIFkJIHaJzrNhwrdMnrucL96lxUKJEiql3JTEIasTuRKgTpPHjBFJNKjgKcYjHTXBjQB1AX1iG+sOsmXpodmQSmOqncwMvVvLnSDdkt2ikue/1i+Oo5N9NPbRSbRIZFGb1sq9P6222Jlh96bldCtRZr6R2rTYmeqyrRVlvqeCT8jJbHXzjDbjAytTGcnRGx7rAAAAAElFTkSuQmCC",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAABIUlEQVR42r1UIRLCMBCsi8Ph4irr6uri+ERdHQ6HxOF4AY4X4HC8AInD4epwuIUOezM7GQilA9zMiVz2NrnbSzIA2Tc9+wdhAeAKICQSAzFFH8IZHhYkeU7XGIh9S7gg2E6PzaoAsYNuWNEH3TAneJfo4Y6YPEXoAawAHNjwztZMsh7mjJkduS5iwlpIzgRe8NpaAPt73onrLrcxQi9EOirufqMN96Z0MOYEVwqxVyG8KGhxI1nSjdwOLKVds2eiFJF6I5avPRtF01CmVHYsvfOxxE50K3UsOPdubGpR2GIXCmFrU7ru+zk0UkotJQcRohny21S8WcvRaJ99CH0Ig7yGjmgis3rl6IRPCNdM3EbPq+JLsnn8qGSX2PMyPr/9sW+82A+Wq7f2vQAAAABJRU5ErkJggg==",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABZUlEQVR42sVVoW7DQAwNCysrKxssGysLCys7FhZWFhYYFlYWNhYWVjY2tj/oF+QLwsK8Rnuenm53t1y3qZYsxRf7nu/ZlhMRSf5Tk0cBpDdtReSw4pIDfNMYgEI+ZVgBMMC3iAHoEFTB3t30BZcN+N7hXwXfLgZAszKwa/kuNf6Z0Gt9AC2CGqqJsVQ5b+DbxgDkCBp9xSPgEb75WoA9CjY7uN1A7VrNqEUWAlja7U3c8ioiPdk9zlxyZSC9/EgZTyjYwu0FtlCmM9kTwBq8ZiS/kgGYDpvzLV34BFXZOmrSEMgXQKmIxDUHTtS2hrJPPDGl/QLXFBeOtmVpf4jxdpGhYjFdtWPIlJarNZhBAO7ts/VPhc/OoZnxDVBGHcNtrLKnc/XLYvfBM1TtCwF0Ab+7Fk7lmIPjbzfaBq3G011YxR5ATXoPQG9NrLFeNHsoWw2QI8OTY/B0CS2z8O7bZg9d+n+mHxOvSZs+kciwAAAAAElFTkSuQmCC",
+    },
+
+
+
+
+    ["pickaxe"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA4ElEQVR42pWTvRGDMAyF1TFBunQp6TxBJnBHxwSegiWYIBOkYwlKOiZwl47u5cg93elE7BDf6XyW9Mn6sQWAGGkABAAdJVAnJbGHK4CM43oBeACI3PtSgEggGd2N55W2xfv49J90WI1Ty8wm+iT69D6AGGAEsAGYHawXLSxHpNKgO2/y8ER9/BVgoGNwcGaJ1QySaVpmEIVb2vfpNDU4mXp1zWY6n+xqsD0P7MlmbPvqzsD2XYys/xDgDKwjhrEHr6zBKvrYsjZRn/DlBKzjjPw7Il86XYOLv1Gjtv/Au7wBPBZQAcgy31AAAAAASUVORK5CYII=",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAA/UlEQVR42pXUoRWDMBAG4DhcJ6irxHWCukyAw9XhcJVMgGMCJqirw7FBHa5L4P6Wvv/6jjQJIe+dIBwfcHdgABhP5CqOgZxVuBsNgBn/awLQEi0B1ACyGLSskckFowJw99zgoTEXGpg0ENHnep7rAFjCP8yFDp+EG19lWU9e1ClEci33ah+ko1CgixiFl1uQYVIMgXQ1hmSqZtaD9KxTG4MyFnJmF+dArZZuvkKQRiyPR6f1F+ZW8npbiFGtHlizid2UhiwrT0X08MnFhQ9KRSQmNbQraA9iOLRQjfgW+8zNayIiX4CMRiPQSc1FlYBEfyNd6KveC8mT5XsBiTcYHzFMkGHE5AAAAABJRU5ErkJggg==",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAABKUlEQVR42qWUIRKDMBBF43B1dXVITlBXF1fHJTgBsg6Hw+F6gjpcXW9QV4fD4XC/zczfmW2GQkIzsxNYwmPZ/xMDwPyIFEDG2YTGHKQDMOF7uPvHZy4B7Bg5gMMasCXAQetP7sLZ3Y8K3vPa5ewSsObCK4Cj9yzhB2Q0hE8a6gP3AO7qpSeAM5+5fg7MF8xZAkf5/SVBGtXLbgYm0TCfLwEl3FdvqmIfVjDfUygTYoV2BSZCBQGt+u1mBjYooco1oFUqvhRUwzKqP9KnJgRmqf7LM3un1stmMCEwP9cqoc6ef9NYmFXqT/SpUX3MtsB8/x3nKjxFwsT8sk2/epjQmDEwibsvkuxRN6pImOz9mkKlusKRvqoiYIsHrFXnXc+emn+AUmm2FSTxBonmMoXKdGOdAAAAAElFTkSuQmCC",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABK0lEQVR42rVWIRLCMBCMw+HicMi6Olwdn+AFfKSuL8Dh+ERcf9AX1OHqcMswcwc7IWmTBjJz08412c3dXi41AMw/LeS0AFoADsCIzxjF1wFoSggc0sYA4EzznWxukUDHCcCO/K/3o0Q3zpDa1AgmAFcAdSSNdwKt5PlFEtPAT5MjIhsBY7+bI1DbSzomIupiOxWraO4igdpWgB9zuV4TgW99IjikurIILC2uZsBZ+GQCf3cxYdWvJdykEPgAQ0JptlQQJgfcBqLh6tJ1RxY6BzyUrp6qq6YTr73LrAVnf+eXJp+FUnA9J5MXRZBgDbjxhL3EUlQCrm1FG+QpJPKtADx2j7RMoJWwWwnud+H35aMfVaSDkOSCL16ZbcrtVEKwod7/EE3sv/4qfmpPztZ28jFC9PIAAAAASUVORK5CYII=",
+    },
+    ["apple"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA40lEQVR42pWTIRKDMBBF43A4HDfA1eFwuDocjovU4XCcoK4n6Al6iro6XF3dK5n+MCHDlLAzfwib/T+b3Y0BzB8kwFnfzRizIzDwsypWIFFwAxTATSjkq8JsfHILTKztI/g2KXYl0GrTppzLVwIPoZQv967VOgGb0ksbJhKDOInRvfBOjkHuimtUHA6QHaw1dlHrJztAzsSpV+kcEFiu7RzPuSD9AYFenKWNF+A9VzeNIKeKvfgCzjlEtnA5LJxE1BU7Gx1wFTr5Gn+Itt7CGIzxXfDHedx7jSedlAVta7S3iv8C1204h/5KTyoAAAAASUVORK5CYII=",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAA60lEQVR42qWUIRKDMBBFcXF1nKAyjoPgcLieAIfE1fUEuLo6ThCHQ+J6Alxd3W+hP9M0TdoEMvMFm93HZrObBEASoAyA+OUTAmnwWtVW0ADgGptRAaAHcKcUgIlShr2nrxPU8gjj8+9HasR7ueytDaq5UTvSrjz1+YjRxhuALvAGTXWMXUCS5HIFqGSs1D0Cu3iBKhibmRltAS0ZCX40K0C6WXfa0LNPYkGKsV/XLyMge9f1p+zYSwTozJjU7mydVR4Aye26mpuCAzrP1YFS1txp+0Rf4RvalA7mfJ0oc+4GfaR/z4j0FN5nTx6ozBNqtmv+rQAAAABJRU5ErkJggg==",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAABGElEQVR42q2UIRKDMBBFcXF1OBwSh+sJegJcTlCHQ+LqcHU9ASfAcYo6XB2uDvdL2r8zWwZoG7ozO0M22ZfkL5sAQPClRwDMp3XfwnK87PIv4BVADyD1Ae4BVABqnsiO3tEtYzXX7NeAIYAGv1vD3Deg4bVEp1Rt4vS703OVnHItmGs0sOREsVLhaGGuYG6pgT01Cjy9I+MJjLlDtQFYkRG7QaKP7OkiWSL6ODtvAJ7JiCTgKthuALrcQRelJdR4wIw+kASPPHLmAcz0L6e7ZPC8tlw3nLaeCGt/gNlpQae93NPjSZdkdN0tsVofLr02B+54G8U+LTwWDeduHB8+PV+WVROrGbP8FrvPybOmj+ug3Ux8x7nZvAeUvQiLd0UAyAAAAABJRU5ErkJggg==",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABK0lEQVR42rVVKxaCUBCl0Wy014g0m43mCmyswOYObDYbzeYKaDabjR24ApuNdtVz7niu+lCBx5wzZeZx7zDfCEA0pnb9YA7gAuA0FsEDHGMSmAxKkQOwAVALYE2bSZvf/SIoAFzRX67E8BIU8rACkN+jiqk5bf/6i3cCJ5Evv+R0QW3zL+VPnBJsJLKhvV9JnZ4EVrA8AEEuhY/e2y8OQBBrO/fu73/nxQxW4CQAeCKF/qjBLADBzFeDHY2rAAQrYu2UwIbsGIDgqMNmxgmAho50ALgjRkPMl1Wxp7McQFASY+/bRZmwT3uATyULWds23UoHxB2Hq/ZlwPfwzIcH9vRD1579vxb/gfaz5f7bwcnkNHaRi6bm18lMuRUbasWDb/t/7vGnIW5yZ70B9sI/Y01a4OEAAAAASUVORK5CYII=",
+    },
+    ["ghost"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAIUlEQVR42mP4//8/AyWYYdQA2hkwFYpx8WlvwGgsjCwDAGM+AdZ6LiL8AAAAAElFTkSuQmCC",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAPUlEQVR42mP4//8/AzUww6hBg8Mg5f///7Mj8dmhYiQb9AOIK5D4FVAxkg16BcRZSPwsqNhorI0aNPgNAgAh4M4+N2Zp1AAAAABJRU5ErkJggg==",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAO0lEQVR42mP4//8/AzUxw6iBI9xAvv///xdCaXxiRBsY+h8CQgmIEW2gJdA1H6E0PrHRWB41cNRAkjEA4pKyvzWHO8wAAAAASUVORK5CYII=",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAM0lEQVR42mP4//8/Ay0xw6gFoxaMWkCUBcegmFhxki2AAWLFB58PRlPRqAWjFoxaQGsLAHttw8eB0xB4AAAAAElFTkSuQmCC",
+    },
+    ["route"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAvElEQVR42pWTsQ3DIBBF6ZggnafwBO4yQSbIBJmCQdy5YxhP4M5dOncvQTqUk3MYQPoSus8/uPuHA5zAA3eBV/FL5M0NWPmtVWLNCQKwAYMg7edvooeB0UqwAFERkesVc5lZ8AQO4CU4JGY9e9K8JlIZb0Go1B7l1c61dvvk1pYv0cQgwaWCJN7lvNPiXchagpDFlo2+t6SSjRbMJp9tnArios26sy3DU7VxLIzvbIx66JmD4mfrHaC/7/4BoFhJIJp02qYAAAAASUVORK5CYII=",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAA3UlEQVR42p1Uuw2DMBB1584dHRtkgnRMQJeOCdyxARMwiDs6FknnJdK5e1GUh3Q62QZj6XQ6f9793tkAMEI6AA9q0yLS8AAS/ivRbgZ6EiAAeFGD+01ACx862g71leis10CeFwbag4hwycgK4AMgArAS6BfBm56kdpV0DmeTLnZHT4H6SufACI1pbbOQmUCjBrI83JhWTSJB9hyPdh7GC0AbnVoNNBJkvpuq5tHZg2JDjguT4lFOqhSRhY4k2VogYSiQ1uti97ycTsZDj1Ezj6qD3dqd4ldzp9XZz+8LohIpzWUaA+8AAAAASUVORK5CYII=",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAA9ElEQVR42qVUsQ2DMBCko6OjYwOWoHPHEu7o2IAJMkEmyARegjJdJqBLR3cB6V6xPtg4xtJJxn7O/vvzFwAKhYYocuB/tABmfMfMtSzCEsALwLrd7k6sXCtzCDveavI2J645AI8AbjoLmfT82XqbFmljz8RowtpL0RAiQR1Jcc9sAfDeblvpolgS+CfbBN1GxhtNKJUeidQKizT9EeG/aLQ0OqBnVZ+JEImGI2MPnnaphE5SjVW5uSJDzIcxBIsnE0PCMbGqQXtJUEVzLjRriOz0AfjBRp0cGzbVhy0ffKgZuEgT6XKMfdrmcqwRbcRXn92PZz8FPCLgrzwx0AAAAABJRU5ErkJggg==",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAv0lEQVR42rVUyQ3DMAzzLxN4gi7i0bySf1mkE/SXCfxjG4AG1DatZcsiwEcERNRBKwAInvwM3AAUAJUsjC0ROBMd+MZhEZEfhQl3AJHcGSsrBCqTRRGL0OPx+icD2LwEGu5SZOWIEpODnbgsOYlxudm04VLAym4H1uR/dxC4/cwKZvHTRZuoYAbdd5BFBcnj2LWxJK9r+mYvJbu2tnSgepiWHahOywoXXR3HuvIdDAmMcHhEYcJBQ0ueFVHb1IVPMj1kctHve6sAAAAASUVORK5CYII=",
+    },
+    ["globe"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABu0lEQVR4AZyTSyiEYRSG/5mUeyKFSEmisJCN69JGWdnYKMVC2Vq6s7QVC0rZ2FhZWlrIgo1LJE1NxNQ0pXEtGc/T/KNZm+bpnDnve873/d/3TzTI+2QymQKohGYYhukQc2tqBXktwd8AjIUINTAOO7ABCyHm1tRqQi9SkB0QFpqorMME3MMnPMMTmFtT09MU9gRRErdUjWkR3IGrnpH/wCqsgfk5UU2P3mp7fYRyhFFoAc2XxH44hZMQ815yNT167Sl3QBXCCBzBBRRBGxxDOsTcmuekR689VQ5oxVQHbruY2A6l8ABl4A4fieYdRD167Wl1QCPFEhgDn3GaWAFTsAxLMAnW1PTotafRAWj//zogTvs77MMKbMELbIOn7Q7MrW1S06PXnrgDbil6193ED7iCV6gHowfZQP4G16BHrz23DkhRPIQh6ARfGocOknuAMkB+A2p69NqTcoArHCDewRx40t5/D7l330c0t6amR6896WgkEvnGkARPPEH0GbuIEZgHG1zImpoevUl7FQKSL4wxmIVdaAbvu5YovlzW1PTEwp7snwlTbojT9/jtvc8QXVHMraklcs3owS8AAAD//1NASywAAAAGSURBVAMAImmb13Fd6NIAAAAASUVORK5CYII=",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACI0lEQVR4AaSTOUgdYRRGZ14wm4IkISCiYIoEsjUpskAIpEkKtRK0sBLEShA3BAsLC0HcEKxEsLIR7LTQSmxcCgtxAS0UFRFcQHDD7XnO838Wtsoc7/Xe77szc/8xET34SSaTGfAKCuA3lAbMrdnLeGCL7gchjuElgnyohEEYgt6AuTV7+Wohppe6UoNCIZPKT+gHxUnic0iLza3ZU6M2M3jvn+gFhu/QDk+hFcbhBDqhC8yt2VOjVo/eKMFE3zcHYTOcQSPMwl9YgOGAuTV7atTqyXGGr5aFsARyoRvW4B24q1HiQcA8j7wAVkGtHr1ZDsqm+A8WYQau4BtcwzScB+zdkKd7/q1Hb7aDvIt3X0Lk+74lfgR3Qoje8Etc9DH5J1CjVo/ePAf5eJ5IIQKX2kP8A97AhfaRi7kme2rU6tGb6yB0j78ctMMY9zBGrIdamIItaILqgPk2uT01avXo3XGQTU2fEXmk+8QV8DT9GA/JPTlC5Ee7TLIHavXo3XbQEcUJ+AJ+rU+I82D8RXwG7sFcfbqnVo/eIxuexAhiX7GO+B7WYROK4HWgmOjdN4gfQK0evceJOI4vKe5CG3ikHcQfMAlfoRTKwNyaPTVq9ew6wydCE/m+cyQu9ILYAv/BnTQQXaw7s2ZPjVo9eu/+aZnox+YH6NdahXEAXLQnQpq6NFizp0btSfDeDVJmAU7J3YPiCvJyqAmYW7O3pRZ8ANpRdAsAAP//UOwtlgAAAAZJREFUAwBPhLyXtTJ3CgAAAABJRU5ErkJggg==",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACkElEQVR4AazUS6hVZRjG8b1PWeHB9BBZg7ALRdAkaNIwGnSBBlGDoBoEFREV1bhBgwZNFW+IqOBABAeKA0GdeJk50JmCKCoqeMcbRxQvx//Ps0R07GH9z/eu932eZ6+117f2xOiJv5mZmXE8F1OxKN6PTwbUemY04yfso8cCMzmfTPRW/BJrYmusH1DrmdFMDp7Gs4eAB1WDZyoWxFch4NfWd+Ll0Idaz4yGdsHgTTaavcIagufX+Sn+DeErWzfFtdg4oNYzo6HlmT9kjCYqxonnxhfhVo63/h474qM4GYtjSaj1zGhoeXjnynJlcxK+Fn/ElfgnjsYH8VJsjlMhbEurnhkNLQ+vjDkCPYQvB+G61sPhcCV3K3bGjYHtrXfCrGVEy+NDZEwKnNfk4/BJboX5+c7fC7d0plUIzlbrmdHQ8vDKmCdwKpEtQEi0sPM34tW4EB7WK61QXxzq11tpeXhlTAnUfKHhh7E6NsTSsE3cmn2nB7Wei1iWRo+HV8ZCgfWf3iHwfHE3Y1/YAt+3/hm+lz2tP4ce1HpmNHo8vDLOC7yc4Vi8GbfCB5xo9QC8GVerzw2o9cxoaHl4ZVwWeD3xrvCdfdZqkxMdrH74cLwV8KCYDzWjoeXhlXFd4HRDL/2l1h/j3XDs7d+z8WnYq1AL3l3PQcvDK2Na4O0mp2N5+KT/W9+O/UH4deuiAbXegc5paHl4ZdyeGI/HMw1t0G2ttoBbWlH9eXgA9ttf1X+HWs+MhpaH94YsVziquJfYF7629b/wyv3W+k28GN/Ft6HWM6Oh5bk6ZMz+fCUUSmA7+AH4od6qOBLeFn2o9cxoaK8Uxpt09CjQWQNX6iHZAm7FvvPSM0OtZ0YzPXjYH3AfAAD///lPIxMAAAAGSURBVAMAxWvjWdSXGOQAAAAASUVORK5CYII=",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAADnklEQVR4AbTVScxdYxzH8XOrOrxttCSatqJCUsS8IIhhYwq2rCyIiFiJIRIJNkJIBImViIghVizFbGMIEgtzDAlRtE0lqPRttV6u7+ftKX0TXbo53/v/3//we855zvM8d9FwgM90Op3EwbE61sfRsXGELyanZnIAmeE/B0hkcQ2r4ti4Oh6M5+KVEb6YnJpVY0/phdeCASpy18sq2RC3xPNxe1waJ4c4+GJyatRuqH9ZLHiafwYYE8sTOS0ei+tiZXwUX8Zc/BDfB/+rrJwatXr0Lh+1Sg8LpmhpkVPikTgpCNyYfTjWxPa4O+4N/uFZOTVq9eilQav0OEAjmvP1Re4JU/BO9oZ4Py4I0/Z69sV4IfhE5NSo1aOXhgVAc1iU+KQGj3lN9oT4Iu6I78KUmes/8p+OX0eeyZomOTVq9eilQWslbe/ASEfUcGX8GQ/EpnCd1deh8Xl8FrtHPs2Kyanp56BHLw1aNBcbYEXZC+OQeDc+iN/DFJyedb3d1+xkMpmCH2+F64y+1OrRS4MWzRUGmKnAXUyzr8WORP7KLonjQ/yT7J7Yd/HF5OyDJWPPjgpoiNOcMYDRN5YguDW7prk7Mrsujgn5Xdm14uCHO5ZTs26MW200aNFcagDv4LAaPNYT2TfDing1a1WIP5tvSsTBF5M7qpxacb00xGnOv4Py/9/lCSy3nxvit7g2zo9z4uKw/MSvyj8vxMEXk1OjVlwvDXGacwaw9L6u2Ytbm93WC3McbMn/JuRttK3iKGaexeS+7feWMb4tnwYtmrsNsLPge2HDXZS1QcQVOQLEHW5eXOn5i+9IkLO59vSS9diwNMRp7hScrcXW91hn51v7++7Oui40nNvXTCJOW82WtljhQY0n0aOXBi2aswbwDn6s0hl/UPa2sHoyg03zS46DDJaluz+xGOTcaT8HPXpp0KI5t6i5sylskCersv1tLiem5Wf9v1zcUvbnsjrf8cAXk1OjVo9eGrRs2KknGBrEU2yu+c5wplgRj+afGW+ETeXkvDz/snAMiJkGNWr16KWxedQc5geowWUeP85xvjvMHAHO95uK/RT+QjXfNfpWzM35atTq0UuDVqnh3wEa0VR53A/LXB+Ph6nzL0XAlDhCwD+u/KmhRq0evbtGrVL7DeCXRHh0j/pQsSvivngpHG7i4IvdX1yN2k16w40W3nvtP0V7I31X5J34W7QPnip0azjjL8mCLyanZvvYU3rh9TcAAAD//6HvzOMAAAAGSURBVAMAbJtJCBm0CLoAAAAASUVORK5CYII=",
+    },
+    ["hand"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAB10lEQVR4AWzTTYhOURgH8HvfYWZspnylpobQRIpkhR0LYjvK2sKGDVFslI9QkpRvZWXjI0IWysLGRmRngY2UUsb4zny/8/vf7kzv1Dvd35znPPec55577nkbRZu/ZrPZSS8DtcSdbYYWMwUMLOlioYF9HORk7YC2L/fImFK/umYK6M2ln6s8YYDHtV3a5K5r1zJfoW46Wgt0u7GbXp7R5EstcXJL9c9wgq30tBbIChZLfuA+/5ioJU7uo/5KVpEi61oLyFXXmP/DZHKeHImTi1funSYrXlMV8C7ZlA7Jqq9tnfBb/xejtZ/aGNfOaZg8T7CE9SwghbLku+K3vOAo3/lUyyqFRfUZl4kucZmNdDHCTd7zjTf8IF8o/ourK0veIlrNBV6zgkWMlGU5ygTjJP4rn9VlnrAYSzAoykblpJ0SPyWbpWl75WvloJXufk2Bl4KH7GEDt/nMJLMu+5XxPZLbyCu9SyIruCaRJ+/T7iSDcmRzvzAxxzwrzCZvd38H9xhseLfsaHY4G/lIcj/HyN70m5zTt1x/M4c4zHMe8Kd6giL5pkMSVzhHNvKs9g75PWTwRfEm8nXOa4cyryqgU6SjzQGZfpUj+vm0t7Q3OM5eUrSaLC6mAAAA//8UuHbvAAAABklEQVQDAHY8rzmj3aD0AAAAAElFTkSuQmCC",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACOklEQVR4AYSUSUhVURjH733ZKxtALCHbtClqUdCmaReB0LCqbdGmiAYKCqJp0QBNEEG1aREFEW1bR4kKKogiKDhsxAkUUUFFnJ6+6+93ue/yHiLK+fH/znfO+d/znXOemWCdvyiKslANNQnG2XWmByVGLAhhK1SwoBoeweeEx6hmFYw7J6SfthIjsuVwHN7BJ7gEzdAEF0HT9+hJ2IlhGcSGqRGJTQzuhbdwCg6Bk+rQejA+iGryAa0BP1rJ2mxqRFKjA2glfAV3NIcuJhi7I8cs2/HvjD2FXcVGfnEzyRWYTMihhWY8Qccxzf8RN8I5OFJsRD9tEZEgabNfYIFsLVgyElTFRtTobixNjF2wxIx5cNEUOg3qMiqOubM8/TCDiW/DczlKYj/Yt7xu4t/QCa1wF9pgGIZgBJyHBPE7qiJ6AT/gAfgE3OkYsQfrghliDd1VF/EV6IESI6/Tq2xg4C94qF5rJgzDechBHlZANWeJluxRsCTI++VCZ4DMR/gF+2CjVsaE3RDClEYtBO1wGY7BN7gDvhtkbeNcXbeNkRMwC30mPIvndKz5PnoavLW0fvppS0y2k/D1y3/iSc/BWr0FX2gvyYfg7vawyN9TOboF/KHuYMzLOYM+g1H4CTPuKOAQfQ+DJJ6AZd5Gv8B1uABn4Tz4gTeoP2pL0sxN5GIjBorN/NehiV+/xphP4zX6Cu7BYfgDt6ADFthIlBqR0MzXPE7sQ7yB3oSX4A7ciWVfpe/t9qOxCRqsAgAA//8/E0AkAAAABklEQVQDALOQ0AjLVX/HAAAAAElFTkSuQmCC",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACnklEQVR4AXyUW4hNURjH9z4YZpoxE8OMpISUvM/gzQtelJDLixRKpFwivIhyiycJ5cE1xLPLO+XBJS8UkVCMS2bOnLmcue75/fbZe5p9Zjqn9Tvfty7ff631rbV2Lqjwi6KoCpqhFVqgCaoqhATjBAkIQaFaApvgGNyGO6CvaG0yJqQtUzKCDLJex4jlsBcUWI/9Dt9gAxwF+1Zg65IY3FJRoOSV/qdhVsEV2AObYBJchWugvxlrn2PW4c9BtAGmQlguWM0AAww8i/8a+qGQoP8W/xxMgeNwC87DUqgpF5xMYwP8hBfwBgYgStB/hf8c2mA2zIXVcBpmlQumSR6i09UoMIyfFn3b7NP/QccueAYLYUG5IG2Z4sps0KYoZJvC/3D+wm+wvzoWNJlg3iRuY4Cr7MV2g9bAP/i/wBUOYhV1AsWoBmEOIZNbT82ktmKng6IGuZXr1D/BF9gOj8BD+oB9D30wWgz0EHbS8gAuwSLwcJz5I/4N6IAe+Ap56ISTCe4ANy6Rgotxd4ADH2Md0IidB1EYhkUYBP2UAep5UNitq8PwIBY02G175y7TegbchhfclVKtWMy7KXNQQWVz4dNaQ0sLPIF9cBecHTNxIf/G+xiWMKIL2mzw1E5Q+Q9HYCWYO++Yp0h1fEHMO6vYMnq9gy+xeQVNts/pMA0m38e/Ft/Tdju42YKYcTW0urJDWK/VPWwhR2I9TUV9Zoq20+Eb9Ysyn+BG8PHXY2UG/c3gc/NW+PzMvVeo6EwBol7MVHQ/gz/DNrgPfgic6AD+QTA9N7EXwF1cxD6ELnViQSpjRd9R3w3O7uvwu7eR+lbYAh7eTOxT8B07qVfIl5X9YjsDFBno18avtMIKuX1X5yp9BAqfYpyTdxITi1EPRgAAAP//lSxF3AAAAAZJREFUAwCpnvjC2INgMgAAAABJRU5ErkJggg==",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAADBUlEQVR4AZSVXYhNURSA773uXD/TzJQwI2Qk8eqB4oWk/ORNovyU4sFf5OdBeBAeFN68iRQelVKSlBckSSmPyoM8jJ+J7rjXjHF83+mcOWfmnOueue2vvdbae6+119p731MpFfgFQVCDWdAfoVwrsLTUNgAOqziaAyfhQYRyL2Md6P9tuQFYWIUe6GN1P+hwD/3cCOUTyAudA87NDZYJwGR3rOPTOHgMj2AXTIHjEcraHHOOc/tYmwmSCYCDTjgCu8Edz6TvghF4EaGszTHntMwoL8AMnGwCM3HHR5Hr8Bd0LMraHHNOq4xqeQGc3BM5i3fcQJ/YtMXjBk1nZPaHWdCdF6DMgLhLF4oy5nFNm2OinM7I7K1CV16AcV4moUzMyCp0FAkQpIIou1t3LcrxsLI2UbYKyUPjilXAa2Z66cAu+IoXUXanz9FFWWfaRZmhpOlUpmOaB+tgJUyDuFnbcyiiLN4eUTaIwUSZqUlzpzpfgeke3IDr4I0wRWmiP4lolMvlYRiMGMZuEIOJMqakGcDHcgbTMrAMX+j/gOXyEVVxplPJlCAaSwdkadIMMBt1KfyCg7AXXoPNvwBftnJbOEP9TWWimXsmgYYhDOLAEuSPcAxewk/w5tAVal4Qz9IAVmLEAJblDsstiwe5Bvkz7AfranDEQs3zXM1M/b6nbyq4y5soHrL/QxeQ14Ip/rDGyG0b5YnPbCuTR+Ep1Cs40NE3lGtwF6z5RXqfejcL/W9Cbd2Yo3M/SqeYNR/ewTNomEGJIJbHUqWDXGLCTvDL1YkTP0LWFlOphO778VPqX8JijOdhM+jnMv13/I6GAVDSQa6i3wa/uV5f38V29OWwCMcLRBlWwQHwDLfQW4mz9G/hNyR/FSpENBMnmYllGsDuy/Zc7iObti9WlC2pH6dext7AIbD2Q/gKb99YBgyEjQGDDKJ46Dvor4D/+wZzDDVsvuJPSH42rf0+5FdQx8fYg8wEYILl8hb47D+g3wLfxTb6DbA+YiO9G7AkD5EHcNyEcOfoYfsHAAD//zbYpFgAAAAGSURBVAMAjeUuSQJ/59sAAAAASUVORK5CYII=",
+    },
+    ["house"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABhklEQVR4AXyTyy6DQRiG/6kmPaQtYlkXYCM2dti5ApbiJoREnIVInG6BhBVX4CrYkSCxsyKVoBqiv+eJSWlSmnk673zvO99M+7eZpMMrTdMc9MMETII61yGatDUgGMBglfACrMEqqKt6EFi3RqtBNAo4A7ADQ7AZUVvTK8QsVvJ9Awo2KlEZhn1QzzGfRdRltJ6ZUtyTZBBdGJrjzNvwALNwAc8R9Qxaz4zZsns9OY8xBktwDvNwA40QQipquAU9M2bdk7dBEcOOd8x7cA8pVDihT9Tg0NtFmHVP0QZZCt7ikdkrMyV+WYuIrYgnWmOZvPBm1j1ZGwQKDk8Vn8Q0hVHwkcoIegr0zAjLJNhA8RtvVKFwDRsRdTdaj+lndGqg6wkNxFNEbY1l+/irQXvqn5UNPvGb4OfrZe4Bn4yoRS1qM2bd07SB17ti0yCswDKoRS1qUYv6ktybDeqIEzgAH9E7sz8WUYta1K/4h3AK9UwI4QNRg2NYB/+BniJqUYvazBG5mnu/AAAA///XYQ/dAAAABklEQVQDAN7YkB3hNCePAAAAAElFTkSuQmCC",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAB6UlEQVR4AYyTzSulYRiH3/eY6dBgSlnMqJlZzsxumiQbVsRe/BHkq7CiLMSGfG4oO4VspCyx4Q9AsbMmokRCjus6nnPypiOn9zr377nv332/X8+bigr8MplMGr5DQ0CdLmCP3gyiKQYbqmgahKnAELHKGsToxJEYFAwlOH7DONTDWqCOOAHWSoKX5cuRH0RBXUq6GryKX8QRmA2of6Kt6SkNPaSil1sjUcSqHBrBK/lM7IcNOA+oB9DW9OgtD71RCuGVlGFohWE4hW7Yg+s4jp9EDbvQBWegt41Y5gyH+GBrSGjYJ/bCAdwyIEPMHkHfsjiEHtDbSayFdG7Qfxbe3hjxBB7AB1rB2SoDFebAmp5RtD3/iNlBLrzvRxKXnPmeWAxNMAlzAXUzujh4rtD22FvkFbGOYv9e4dvrY/0XNIranDXS+SPbmxuUzwZh41f0FvjMRO2btUY6eRQa5FmesPpwL4iiNmeNVPIoNCjp+sAqN8jX7JncV8Z3W3mLeuw12pvd2T75Gzo/gd/RD2IlfAGfyTeiqM1Z0/OHvD32Pjr1jsQOXMI0bMIKuFFbiOsBtTlrevzm7Nmmfucg980Ri3ZYgFVYgnlYhOWA2pw1PXo7qB3DfYrN5T36Rtz6Fv3aZyi+hx69+U/pGQAA//9PsBi2AAAABklEQVQDALwtruE22gx2AAAAAElFTkSuQmCC",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACNklEQVR4AYSUu08UURhHZxYQMUAkUUNCo52PGvQvMPHRGBtjorHSxMJXNBZqoYaS8KxogVARKCGUtCTQQAcdCVBAICQUCyznzNyBHXYzbO6Z73e/1965M3NLUcGvUqk0Qyd0Qw+omwtKoroNKYzBwi6Kf8NY4A+2yxjE6JpR0zAktpB5F/rhKazCCjwBfcZaQi6u85FrSILzVsLdMAIPYAK+Bsax+oaxPdAaapDpsEGiCDQg2uExDMAN6INB2AgMYfXdxLpSc9tDLa4o3UMcjcw64DX0guMXl0nYjeP4SNSgz1gFba41HaFHVEK4yjaCH+AbbMNnmId9Gh1jkxH0PhNjX7BbYM17bJu9bObq7uN4A+vwCRbhgAYn2NwIvgOc5tjUmrfM70GjDZsQt8E9nMKacIht4B/dn1tY3z9Ru8/mmrNGnjXO76CbbJjhakw6IhDDdfgBvoM+XVHrc7/NMdcaa5M+XqhJhpuc4TY8wvsKOsEViFrfQ3zmZPlaXFH6lBOVv1icrWKU0LuAOkYbMweZH9UrzEfSmbfkU/XJi1pfGq1zvaxhnZJi18WG3k5xRW00V2NDN1Tck6vkXwMPhytYN17rXNTVPnOtOeujKFPoG2/TZ+iX8AI8ILKDwrlc9Jn7nFzHJpdy1nCJyRz4tn/H/gSPKj87rXNRV/vM9SibJX8ZyqXwKe0x+Qsf4R/8Bw9TDwGtc1FX+8zNavbs5QojhLe9Q5MFmAlMY/2stEU+a3ZCj+gUAAD//8lOCUMAAAAGSURBVAMAQXPKpVTU6pwAAAAASUVORK5CYII=",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAACo0lEQVR4AdyVS29NURiG9z6lVJtKQ1G0kZD4AyIRY0H8AgMTYiARhIQwY+ASiSAuY8EPEInLyIShhBFDKYlqk0bjEtLL7vOc/XU3p129nA7brCfft97v1r279motW8RPURStsB62BfqtiyjN5h1AsxxW0WgLnIdngf5mY5CjzbnmHBCFbVTuhDtwBDYG+nfxjbVFLtvZKzmAAvUO0nfBQ9gNX+B4oK/2gL05HVHDtnHZqEEhsQWhE/bBfdgO7+EEvAn01XawN8fczqhFml4NA0hYQagLDsNNWAev4BR8hj/BJ6yaMXPMtaYrehAuVzWAwEqkbjgDl8A/7iOsfn+e5/+gCP6j94Mxc8zVP422IXrhZuUpQvA334RyBY7CKNyAWzBIU/e40yu0QRRzrmPNOYa9DD309BcuByC0w0k4BD/hAjyBYRqNYZMrYsMEn4I11trDXmvQqgFuDiL4yi5iX8MIDcax867IGSHJGl+TPQ6wt2c1wJOzFtHH/Ij9ReEEj1mDdvC9bsX2BvpqxmrmUvMbPoA97GXPakBOQArsOAVa3MwPzUd+zubdDNSMmZNRM0HcJ7bWXlINIJZc/m3OEvGLXY2dWvpq5xDMwaSX7ysdKVUvtB5cj6V/o734oq/myTMHOb0WGuBjis2GeA1fhVZDoGZM2KbXQgPSVU2oy2eAR0t8ohbOuraJF5FlUePZt9ZeUh1Tz69fo/fHHjr3UdCL9fLzIpNuNUnpaH1grT3sZc9qwF+CL8B75zb2LfhhvcT6VYq+muirib6aNdbaw172bBjgPw4vuB80rU/HehS9MUUfqb701URf0RprH7O5B/7vKAdwtr0/BhCvwn7wY1oK1l6jfoCePkk5AMG7ZBTRG/Q79hvUP6omrDXW2qPe3L6TAAAA//8992bxAAAABklEQVQDANakDkCDcxSJAAAAAElFTkSuQmCC",
+    },
+    ["info"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABqUlEQVR4AWyTMSjEYRjG/3dIiYHIpEi60aKUQRGLMsnIil0GKSkZZGcyMCGT0aBsymK8pFM3Xa5b7rpO5Px+7j1dcf1/9z3f8z7ve9/d16WTlle9Xm+HXhiFBVgL1HrW2ltakt8BBDspDMIKnMABbARqPWuDkaWUNAaEMYJzBKvwCFuwHKj1rJkZiZ4kjfBI/QR3wRMYNnTP/jVQ61kzY7bfXr9CD6ElGIN9eIASfIGnErWeNTNm7elxQB/BRbiFJ6imUqk6axvMwTy0hVdFmzFrT58DMpgDcAeVCCITP/UScQHqJGoV9mbtyThgCMMnx9sHNB9PMMVG1Mifx4xZN0MOUPyH1zpLQdTIv48D8mH7Y3WEdrFmo6j1xIxZdd5CFvUGM9DN1aRYfT55KwfqJGrdeGbtyTrA67nB9NceZ+2KYA19GtTC62Jvxqw9JQf4KdcUnmEHJsGr9SQvaFHrWTNj1p5ymqvxeEWCe1CAQ9iEaRgO1HrWzJgt2usJvN93gl6NoTP0BBi+YhW1njUzOZrtafyZCDWHOP2c/Tpsw3Gg1rNWaDZTS74BAAD//6pMb6AAAAAGSURBVAMAyfqf1QUUjGoAAAAASUVORK5CYII=",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACAklEQVR4AXSTvStFYRzHn3O95aVkEaLszDKYFJNEyk7IZJBSBmJQSgaTEKvFZvBSZpn5CwhZpHDzen0+x3PPIPR87vM9v9/3+zvnuM/NhV9/hUKhDOqgFbpgOKK2Zq/sVyxkgzAnUIWhBcZgCzZgPqK2Zq9FLyT00pUOioVqKp2wCSPwADuwGFFbs6dHb3XMZk9UibkDVqAc5mAKfIIDdlFbs6dHrxmzIcdE37cBs4Y8+wycwD28gI8vamv29Og10+AMX60G8xA0wRpcwkuSJF/s3nmAfRAqYs2BevSaMVvjoFpMvXABZ5AnUGD/c8WeT6PXjNlaBzWTaAQbzxh9Ei7T9cnnERzCB6Qrep65MGO22UE+HrVwxUdmRrt8tX6EqJHZ0mvGQpODFP9RQaM7okb+vRx0E1sexNKoi1sJwgGi5jJbes1YuHHQNeoWigfMGpfp8n/0ihI1MgS+bj3FA2z22sIj3WNoB4dVYvTccBkccIoQtUPseQj1mjH76KAnjPvgK06zt0EVw+z5Ne9xLflY8/eoR68Zs085vsp3jHewDN5plb0H6sEQW7rU1uzp0WvmzhneVZd3PkfMwhtoWGcfh76I2po9PXrNmP350TLRk1w8YBMEd6EORmEhorZmT4+H0QNs9mcQxuAw8HfkIdum5hNMsi9F1NbsXemFdAj98A0AAP//F3mdqAAAAAZJREFUAwCQD8GXvPQtHwAAAABJRU5ErkJggg==",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAChklEQVR4AXSUO2gUURSG76yuhmxei6ZQRNHGQsTWUkGwsBARxEIQfIFoJ4oPsLCwUOwUQVEQLEQQtbCwsrXSQixsDIE8iiTkuSFkk0y+b+dswi7Jcr+95/H/Z2ZnZ6aU2j55nmewDaqwF47AicDYmj01WZs9tQzEZF5BdACuwSv4AC8CY2v21FTCQ7tYDmhENLYQ9MEZeAdXYSf8hE+BsTV7atT2hRdJKs6QgoN7qVyGh2D+jP0c3IYngbE1e2rU6umNGalEkCHuhFPgTxlgvw7vYRAmYDowtmZPjVo9ejud5VHKiPfATZiC+/AX5rIsW2a3v5tdylGbI1ejVo9eZ5Qd6J9wGsEOeAv/YAFjzu7aztdduAfGKXoL5Gr16HVGxYHdNI6DR/rOPh8GwsZa4vtL4BkTpubQ+ZSSHr3O6HZgleI++AMzDFszkbvMfxP8AoezFSu0M2R6nVF1YD8F91H2FgO5q4OvK4ExYcvSo9cZ/X61dDdIHHKMuhgTbr4cOEZ7BXbBVmhfavwzxLi9r0evM8YUTKLw3jrM3sO95BNDuLb8txWL8Xojz9X2UNDrjEkHzlL4AT52J9kbNyh7cy0SDAfGhClx4OYDoUevM2YdWEPxFXwKLrEfhI4wECb7DwjEuDnM66lWj15n1BxYRzwEz8EjPWY/BF0M9SfZHyGXetS6yNWo1aPXGfUS95LXxRv0GyJfTfvZX8IF8N7yKfDFIcbW7KlRq0dv44HwDL3rveC+AN4w5BGY32L/CE/hTmBszZ4atXqmOTHz4vWF2KE+ET5Cn8kvwmsYh6NwNjC2Zk+N2imG6UWS1gea0fAoXvj/5P4UX03niW8ExtbsqamFh3axVgEAAP//tfvabgAAAAZJREFUAwDZg+1XEJJxUgAAAABJRU5ErkJggg==",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAADOklEQVR4AZyV3YtNURiH9z7m85zJoIYaNTUXIwkpLkiSIv8AN264kFz4irihpLgh8nUhueDGDf+AKEnighKSuJiaMoWi0ZwzX4ftec5Z5pzVmWm+Ws+sd6/39/7W3muvvU4umeYvy7IUmmERdEMv9AWMHTOnJp3GJplyAkyaKOiEFbAXLsMDeBQwdsycms5QQzpu0QSIvOs2JD1wHB7CKdgCy6A5YOyYOTVqe6hvg+hpJicIiXYM1sFt2A8d8ALOwW7YGjB2zJwatdZY2x68kCbRErUyshauw2r4DAfhMNyHN9AfMHbMnBq11lirh15IwwTM6Jp3M3IeXB7vzMKnXP9I07QIE5AFjIvmQI1aa6zVww2gZ5LDPEXkY+6jXwWf4DT0Y1aCv8QJuhZYHGhxzByUiH0ya6zVQ68OtKnvwJmWI3Jd/9BfggEKx+jrW4GLq3ANjOmqLWgHuLJWD730bHICxdtJLoSX8BpGYa7NGmv10EvPghPkcdoIGTyGYe6osizE9c01P8bAUTCmq7VQM8yIHnrpmXcC33gfCQff04/DfJu1euilZ6sT+A6WBMfv9GWYqrkRbpIQY8KGZq0eJvSsvAMvZoMf4SaEYkw4c/MJnPVnkC6l94noGppac2LcIGDAnB6EiZ5lhW7HL4z4Payhr+xx+vk0a/XQS88xJ/BDeYWbgzvo/UAcJ4yaO8unFeMoyUdlje9GD730LDnolnuC+je4vhvoPVHpojbClXtcjLmMmjXW6qGXnkUn8I6+IvWMX0B/Ejx63b6Ek809fogrMSasNu5ereeQtXropWc5xwfinrXgLvKPsBIugL9aeYq9iQTdOPwKuN89nzzL/FB70VtjrR56+cFm/4t9ikFEZ8AzZTP9LdgGXUxSgMpPI70/SsYeMV3k1ai1xlo9BrkRPaPfA3fTOwqOwAfwp9DCG8R7YD14p2LsmDk1aq2xVg+9kCe1CZjRpfLlvSVzAO6AS+ednSV2XZ/Ri7Fj5tSotcbakeCFtG4Cr0yAp6KPeoWxXXARnsM3mAgYO2ZOjVqP+FHqvVFk1VZ5B9Ww9h+R6zfEiD+F9+hPgGf8TnoxdsycmqFQQzpu/wAAAP//RKmm1AAAAAZJREFUAwCyATsIMrLgQgAAAABJRU5ErkJggg==",
+    },
+    ["keyboard"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABV0lEQVR4AaSRvUoDYRBF91s12KVJkYB5DC3MM/hTaaO1YGEl6ENYaWUnWigoItqIgl1KbRUULCxMkUYQi6is5yQb2AgbEhL25M7O3Dv5dhNHI37iJEkKUIQKVAdEr5mCJyhxiE24hCtQ+9H1mCm5oEZoEQztobKb0WztTPSaqbmgjDmBc7iHB7iGV7hLsbbnXPSaKbsgYPqFb5gFT+RwhboKU7AK9pyJXjPBBczal80jqmP4gW14hCfYAnsn6CHoRaIou0DDF11f6jLqL06jM2C9hDrTo5fb3gXtxrBf2ROYHefrE26gCC/wDNa3qDM9lJ3r/4JJ2v5tPusZ9WmKtT1nemh3Lhf4fGPcOphAD2A/B2d69JpJXNDAHMAXN49WwD7Sc9lzpkevmYbNOrYLWIANWIe1HJzp0Wum7oIm5h1w81yq1nl0PWaacQihBR/wDm8DotdM6w8AAP//RnRTHQAAAAZJREFUAwAxopgh0fht6AAAAABJRU5ErkJggg==",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAABUklEQVR4AaySzS4DURxHzaAh6cJHWPYBuiXxDDyGJXYSxEZEIoSwwfOQsJBYdy1NWJBg0QUVHed0Js2QKbdNm3vm/u+9v/PPfDQeGtAvTpJExpgnYAZmAzGroxt7R2VuagEO4BzOAjGro1u2UQVxH+ZhGEKHWR3dio2qmFNwARuwCesZf9VmdXSrNiohfcErjMIyuCf/1Tq6JRvhtUfSvvZ26Ti/Gz3S5wheMk6z2XW+Pmb/Abo2+uDwExZhCSIoqs2YLWyE0//IP5pdXPtZr1hcwzjcQL6+ZG1OKNPxY8HWCMzBHviuTrI5X3tmxizH6cg38n2ku+HXjmOjJp6PM808CfdwCLtd8MyMWR3dpo1qCH7eFWY/sY/h7e+wLsIzM2Z1dGs2qiNswx34L2UKGmZ1dOs2aqDdwhaswlogZnV0G3EURS14hzd4hqdAzOrotr4BAAD//+PSztsAAAAGSURBVAMAiUagJbcnCwMAAAAASUVORK5CYII=",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAB6UlEQVR4AayTuy9kYRjG54zdzW6xFyK7rXarzRb8C2h1FISEEBLXRqOgoEI0IiqJSyiETk1DFC5xaWlIEBIU4jZ+vzmHEUaMIN/vvO/53ud5csz5Tjz2wX/JwEQikQVf4Tv8eCN69Gb5bHHMX2hyoQSaoBlaMkStHr25ZvmEOZjboRMqoAxKM0StHr1m5BiYh7kItqERaiKqo+q9vdjL416PXjPyDMzGaF2jrsBuxCp1Cw5gPcLePWf3Oj16zcj2EiBOwDV430ptA3/bQmof/IHf0As+ibN7nR69ZgTeoHlYDma4k0vqMoyCT3ZIHQP3nKkRPWyH62ngBdsLsAjO9qmzcBthv0fvbIk6D3oo4XIQduFV4xXtT+iCAvgMlVAF9vlUZ7+oavXQhutpYLj7jmu6QPfOyeyBDfB+ijoJ9ptUZ2dU7ymp9WyD0TcoBv/FWmoDePbE3j1natQyTq10gZ8Yl8NrX4satUhTy8Dk+WHLoefrht5zWE+tewFnatTq0Zs8zwaeYPJN/aP6Vv9TPcQKaNMuZ2rU6tFrxomBO1jm4C8MwDAMweArqFGrR68ZOwYeY+yGDhiBcZjIELV69JpxHA+CwM/oiIBp6Ae/Xb/ZTFCrR++RWT5hjOYGLuAMTt+IHr2+oNgdAAAA///AMbj5AAAABklEQVQDAJYD1im535G6AAAAAElFTkSuQmCC",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABwElEQVR4AbyUS04CURBFuzE4UIGZYqJuw0Tj1IF7cAf+xi7Asb8duAcHTo0mrkMT0IkBZAIxeE6nsSF8GhqR1OHVo+veogv65YI5v/6nQafTyUMJ1mEDNjOiVg+98g4nh9EiSRnO4QGe4SkjavXQq6y3IypidgSHsAohZA21euilZ9EGBdwOYAFOYA92M6JWD730LNjAWZUwbMELVOAr5p1VJt2r1UMvPfM2wCOKDu/fsASXcAXLMZPu1eqhF9Ig6G0QffDXb8MaNGlyBqdgLtPskSUx0CAMwxZ8UqJxd0TmMnKvBpw90iQGGiSXAs0mnb21PdIkHdcgqZohG9fAkWSeffc7DW3gI07BCvi3c10jF3MxF/OoJtZQ1h9DG1DiTG9YHyHtXLLGWjWU98eoBv1VM+x6G4T4LHCrfub8j9l7tqSdS9ZY24y1nkN6IQ+iJ7lNVgOP7W3WLXC+3rLN2I4Na6xVo1YPvfRse7GB/B48Q65ZnWna3EddV6uHXno2bFDH9Bbu4AN+DyryaUOtHnrpWc/Fj3cVpwvYhx1Im/uo62r10Kuqt3cQkLShBhV4g9eMqNVDL3/b6EfmC88vfgAAAP//FI8ivgAAAAZJREFUAwB9AvQxDb3jwgAAAABJRU5ErkJggg==",
+    },
+    ["layout-grid"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABsUlEQVR4AZySMS9DURTH7yttI9UU0aQGBoPBKgaTb2A1ILFZDAZiwYBFGAwWmwSD1TcwGcRqMBhYmjQRTXWokuf3e7n9Am3e751zz/mf03fvPbk0TWUIOw4TkRp2FAoRfWO9vFprcrkQQhFmYBcOYB+0G9ixiL6xXk6tNUUblBCtwjyk0IFBWIHFiL4xc2rUWlOyQR7RMLzAKRzBOfiM8BJMMGZOjVpr8jYI/Oxq92aSJJ+sW/ALSUS/FXNNYmqtCTbIHIJuxYOaxK9CAf4i+lUO1FyNmFpMSG1gt3dWC3AH93ANP/AW0TdmTo1aazo2aCO6gmO4gEtwv9vY54i+MXNq1FrTtgGa/h8buJ91WuzBJnjnW9gzmIvoGzOnRq012TU6SFMIH2EZlmANPLhprOgbM6dGrTXZIHlV6IJnUeeqPlg0wIMbwIp+I+bqxNRiQuIWMoeXX1LhqhzfMmsnzysW/XLMVcipzf7YBl0C3zALO+C8u1/c8BVCkMDPmDk1aq3p2sDPuUHwBHa1u5N3y/ohom/MnBq11mTX6CC9IjyBQ3Detd65Yy36xno5tdZ0/gEAAP//5+HzuAAAAAZJREFUAwBC4qbxH/4m8wAAAABJRU5ErkJggg==",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACBklEQVR4AaSTOUskYRRFq9qlZUaQcRAGnCUdMzEWMRERNBM0MDHRQI3dcMctVgNNTAwUzBRETESMxUxTNxAEQVCw3cpziq9+gU2ffrffu/d1VfF1LuKVJEkxlEMl/Az8oH6DooDaXjbXa6aYFVEOk6KCL+3QDwNg7aM2wveA2p6zzGOmwh1eURnGNhiCLnDYQe2GeagJqO0506PXjNkyF5Vi/AvqTmoLtMIM5OF3QG3PmR69ZsyWKmKM1hfqXRzHV9QbuIc3cCZqezfBc8fMjLPYD75HCR/qEu7XX5YSev4IJX2r7eWDR23GbKT4wPYOhhuozdAEtaDZKxG1PWd69Jox++GiAoETeAQf3hx1Gnyot9TzgNqeMz16zZgtZIuOMffAKEzBJAxCL1wE1Pac6dFrxmy6CN/X316R91nPqjWYhQnwVxepq/AvoLbnTI9eM2bz2aI6zOWwACMwDlvwC/4H1Pac6dFrxmy6yGVFmH3oR9R9OIBTeAX/QqK250yPXjNmcy7BG3lGPAavHDaHYjA9IxpAba8QPGozZtNzpMGGf5UqDtsfQtVQCV6JM1Hbqw6eKuZmnCVekcf8kqaNTeoe7MIYeGXXVFHbc6ZHrxmzLy56xrgDPrwN6jb4UNepw3AWUNtzpkevGbPPOe7X4/+A2eEydQmsK9RDeAqo7TnLPGYe3PEJAAD//6lE+jMAAAAGSURBVAMA4zTOwejQwBIAAAAASUVORK5CYII=",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACdUlEQVR4AazUO6uUZxSG4Znt1qghKQIpU+TUhBACScgvCOlCDiSQLiQQFLVQxEKxEi1EtFBRBMVOUDxgJ/4CUUFEbDwVloKFgmcd7+vjG9g/wM1377VmredZvDPzzlqY9DebzaaxPN6PD5awunwx9CFXW6rh4Z02arJAXLIqvopf4/eR34q/xKfx3ohcTW+u4+FdZZYTLib+Mo7EjtgWW2N77IqD8fGIXE2PhpaH14xFA1ck/jqYLhZ3B9Oe4rX4LJwMcjU9GloeXjNWGAinfJXxcpyJU3Eubsab0IdcTY+GlodXf8Gw9MMz6//LeDadTp8UnwaheunwyNWejppnVXnUSyeT+UAF+cqqvsEPxfBlTIvzR662VMPDa8Yw8HXqF7Esfo4NsSnWx49hyPMi5Gp6NLQ8vGa8NllyNcPt+Cb+ir/jj/gkrsSdEbmaHg0tD68ZLwx0wvsZ/ot/Y02sDfGf4sZ4OCJX05treHjNGE6Y9t09Tuj9extHG3ssDsehEI8X98VHI3I1vbmGh9eMZQa62N9l+CKux8k4EafD2/i++PmIXE2PhpaH14zhYjuhoT7LCxn3x944EJfCdXBVIFfTo6Hl4TVjOGGeievgV+CiPu7SPqr4OFwVQ0qHR662VMPDa8ZwDwdl/xSWF1e2NVYXbSA/J/VeDo9czWahcal51AeBz9B0PyfCH6paS38W52uJRh9yq0qPhpaHV/8NgYt9owEP4qfYElbT5uK3cTfujcjV9GhoeXjNGC62ybcy/B/23M6i1WTPMa3rNQPkano0tDy8Zrxa6AvwQdss87VkJeFsg86H0/kiIFfTo4FVxmsDzd4CAAD//zQr9JYAAAAGSURBVAMAXF3yge/oVh4AAAAASUVORK5CYII=",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABdklEQVR4AbSVQUoDQRBFnYCo6FZ0YdYewhMI4mE8iIcRwRN4CNe6ULJVVATH9yJV9MLMWIuWfkz1/z9dJjOVLLY6/60bjOO4gH04ghNYNrhX1zcn1mp6G7P+7+sGFHtwATdw/wfq+ubEWm0uuxUNDjj0Ck5hF9rlXl3fnFir6U1ls8E2qWP4hHM4a3Cvrm9OrNX0prLZYOBA8UWrYRgeA/QVqOu3qM1lswFn9FlxD/qczqnRYKSWHa6HzSO6dA/q+i1qc9n8iL445Bl80R3X9vFzr65vTqzV9Kay2eCVQ6/hAT6gXe7V9c2JtZreVDYbvJO6hUtoH7uo1fXNibVa+O1VXd9cNuDcPitucmX8K9l8B5Xxr2SzQWX8K9lsEF8B/xn/SjYb9LnDnBo3mbLPigbxFeB0zo1/JZsfUWX8K9lsUBn/SjYbONaOt2Pejn3U6vrmxFot/Paqrm/utwG/Xt/wBi/wBPmLRu1eXd+cWKvpbcz62PwAAAD//48iWCsAAAAGSURBVAMAUGwgQN/6M7oAAAAASUVORK5CYII=",
+    },
+    ["map-pin"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABtUlEQVR4AVSSuUpdYRRGzzUEQpQkBFIkkBQp0iRFki5dLEQ7bVQEJ6ycQdRC7USwEEVE7UQLQWxstBGxcXoBLfQJVLBwwgn0uhZncxw4y/393x74h1uQPPvL5/MFUAhf4T80BcVEPXMverIFBeoi5v2DURiHzmCMOALmiqKWZZLYlGDkWBVCKQzDPQxCTTBE9DNXhnAn9qQDMF7DD+iGbeiHHTgP9PrQxi6itfZkA95iVoEN08QbaITFQK1n7gKvEuzJBrzB+A2bcAkepZq4Hqj1zG3h/QF7sgGvMD7CEXgvf4n7MB+o9cwd4llrTzbgAfMa3kEeLPpG/B6o9cy9x7PWnmzAHeYBuDVvdwl9DD6dqPXcgTXW2pMNuKJ4DX4FNnSgBwK13k/WYq092YBbEhvg5GbiBziB1UCt18La+7DWnnRALpfzPKckJ+ALtIFn9Qcl6na8z2DNafSkAzD9nLiLmIISqIdPQQNRb5K4B9YSkqcBTPSGfedlMnNQB+6klVgLs7ACl1GLfDbAFQmPcob2/WeI5VABar2zqMFKP58lVfGfAs/sfSxg9UIPqD23OZZP3yMAAAD//+NwSLAAAAAGSURBVAMAurWTziGIzwUAAAAASUVORK5CYII=",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACIElEQVR4AWyUOU8WURSG74i4oSFEjbFALWy0dIkaExuXH6A2RhMt1LiUWhkpSCAhQAEJAcJSQEdBS0EDBdAQOggJNCRQsBUsgbB/PA9zGfKxZB7Omfc958yduTffmXDsL5fLFcAVKIWn8D7yhKimV3CsLeQNovAsBcXwGuqhDcoj7cQ60CuOtdymVzYIw6eUIP+GCrgKXVAZMb9GrveLWBJ7SEO6IoSEuyL4AB+hD75CM/RGzL+R630iWlsUe9NBiL7SbeIXGIFqWIRScLCYL3CvZ81n8jtgbzboPMIbuACtsALPoAV+RszV9Px2F9Ffgb3ZoHMI92AOJqEQfsA6+D3EXE1vAn0W7LE3G+RHv4yxBDvgcl32MPl4xFxNz5pldHvszQbtIWq49YeFU2iPwaeKuZpDrLHW17Q3G7RJwxjcgLuwBe7SJWJjxFxNzxprR/HszRvktlr0FtP3HiC63U1EMVfTe4dmbT8xb9AuwjT0gDvxkKjmE91FMVd7hPcSrLVHLV1RkiQ5jDXogHn4C7cAK1nnnzvmofWs/UG3xto1PHvTQRgBYZs4A7VwHf7DTU5uoZjDP9CrIc7EHtJwNOjgLoQN4iA0wAMoA1fmqXaIr6w3hG4tIb0OzkCaBlflVq6GELrBk/ycWBV5QfRE662yGmuR0itvkBIFfjwPZif3Pt0zdD/mfpelWIN0dJ0YpBULPaD+dHxHE/NTh+CHfQAAAP//MU+n5gAAAAZJREFUAwChmbK3MoF8ZAAAAABJRU5ErkJggg==",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACfElEQVR4AWyUS0hVURSGz0kqo4JKB4FF1KAGWVGTBk0CIYhqGj0GRc2CmkVUNOhJ0IMgeo1qEEQ6E3SgjnWgM0UHCo5VfIuIr+v3eRbnerhX9nfX2mv9a+2zz97HbUmVv1KpVAN7oQEaoSnQN2aupkppUtGQwu0ID8BV+AL/4Xugb+wK87rQ4pZHoSGCHaQa4HXQiB2A1kD/JP4beAU+rTW42cgb0swt1BNWeAnbA3fgIbwLHmHvQjeoUVsftYSSwpZ3E7kJF6ATnsEgrEBtsIw19hzbAWpvYa3FRENW8El9bzeIjsMnmAa3/xLbHugbM/eZ2BhcB9+nPfIn9CDOkdgHFk9gXdUG1/BdRPSNmVOjdj/5s2CPQsOjBEvQD2twClzErT3AF31j5tR4SNZYW2iYUrATTC5gHXX8uA3fmVsUfWPmSCdqrfEd2yN/QlebQmHwINYxzI+H4H30+oi+MXOkE7XWTDKxR97Qk3SrrnaepHdrFPsXjsDvQN+YOTVqrbHWHnnDVQpGwJUvYg/BEvyCp9AW6Bszp0atNdbaI2uYpqmrzFPkp7ULew/2wCx4ki+wom/MU75PTK0189Eja0jC4aqeYi+Ty9AEFiwhnhXmaoyZU9NHzI/AOG5SbkjBOpEZ8MLOYR+D16OWi58Kc0/T2BN8n3TzA4haQlsabs6SxBMcwn8Pbvkt9gTYSI7jG3PLatRaQzgb3qnM45eVfJeLuF3wFQ7DBzgDp0HfmDk1i1FDKhuFhoYQuHW3/I/5D/Ar+Ib1f+Ix7E8wNxdapuVR0dAUQi+p7/MP84/gnROf0Ds5ExpSxVG1oZIo8MU3M78dtGA9cRfErRwbAAAA//+E8OHAAAAABklEQVQDABKN0p92IVXhAAAAAElFTkSuQmCC",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAADPUlEQVR4AZSVS4iNYRiA/98Yt5nFDJqZJCyUBcm92LgrRLFxp6QUEUXYKEK5iyJhgY0FyYIQUQoLC5cVuSwwKDHT0Bi343nmfGfO+TrHqZm+Z973e6///13+0yUp85fJZCqgGhpgEAwOqGvTV1GmRFKyAUVS6EFiPcyB3XABbsB1UNc2F73eWEjRi0ZRAwK1VRM5Dk7BPpgJ/aEbdAd1bXvRT8NY8G3MRc2PyEBxn6IK91Q4DqPhIxyDJTA5oK7tE/NRcAKmQFWogZodUQNMPt1I5C7oA1dhGdjsAfJ1QF3bUubGGLsH3VxroGZHRwM6q9di3gJ94RpshzfQBi5bA1LUtekzJtfE3NpQi9Ak2mQ7T8Q6HN7BfvgMXcGlOoK8FVDXps+YA9jNMXcSurUQcYOeWKaBx+4i8gOkMAJc7xnImoC6Nn3GGHsJn7nTkdZCJNEbeEKGYf0LD6EVesFq6Ad3YV5AXZs+Y4y9j8/coUhrIeIGdnftM3h83d9I78IYpImHkU8D6tr0GWPse3zmuuHWYho30GCA0g1XdoY0BOdqtE8LC/3B4pk3cAC6G/gD+QiM24h0E0Vdmz5jjB2I31xrWItpEu2Bx+4J1hQmgBv1HXkSGsHTcRkp6tr0GWPseHzmPkNaC5FEDdyoO1hd21lI74RP8hh9HdyEpoC6Nn3GGDsbn7m3kdZCxA1+YvGGvkC6RPORuRPiUmxg7jEWdW0WMsbTZY651rAW4QUN0jS1u094Bo9PtRI5BCrxtcEXaAyouwyV+I1ZhTTH3CZirIWpoEH7LEncMG+rS+WR3Yq9jqvvJqLmR7DVYdkGHk3vhrnWwJQdnoSsxv/Q2bfw6r/F5GavR/p96TjbFFfvjV2fm+u9MSd6evzRJjuXX/x7BTvhGyyCFVBjYVGH5aDPU7QD/SWYi8iP6A008xZeFDfvHnM/eK6tT7qYucsmfqa16fMHydjWkEtYfhQ10EWgm9SC7gfsKDKFzbA2sAnp8Kvqh7El5GiLKNnACBJ8OvfjLPNDYNM1SNF3EP0cNIdY1OLx3waGhsSv6Dbxh8Vz/py5+nmkm2oz1NKjbANTQpNm9CuwABaCetknJ6Z9/AMAAP//L+2PPAAAAAZJREFUAwDeFgyMIPn6AQAAAABJRU5ErkJggg==",
+    },
+    ["palette"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAB9UlEQVR4AWTTW4hNURgH8HOGublkxrXkFqOZB7mUFIkXSk2NwosieRmRvMmdcomIKFFIiXghD/KkFHlyKYSQIpKESdNMxgxz/P4nRDPt3/6+tWavb6+11zoVhX/+SqVSJfU00Ewra2ihkeFUUfwz7G8BnVU6R7KKU+xjHWvZzWnSHi/WeL5cpFxAI4Mn+MdBVnKPzaxgNTu4ySKOM4Na44oVbv01RrCLsezhDA/4wBwmcpYNdJLZNYjVmcFgyTKaOMBXTrKUWhbTTAY+EfOikthKXQoMlbRwg7w1D/bKc31z28o2Mmig2MYVZjMuBRolw7jFd16T73BRbOchj5nEJZbwiH40pcAYSa6sd6ZkPTV0FovFHn7If5IZCIXEzCx5ZQokiVScJ1nIZMrbJOZKgaeS5VxlKrlepcD7ZIzmAvlI98VeO5RdGiCvZxCZ2TQxW3tHfJkCLyRfmEt24LbYbur5kBmcvT+k7wgnyBa+EY/SlgIZfE1jAdPJofLyUpYwSnsLdXwmH3SvuJG3dKdAh+Qyz9lODk62NtOt1q7kLpnBYfE6n8ywm1KFW086yHl/J+4nb5gvDuEZOWQdns3SusQsT3ehkBkUdGT/s65Nes8zi5zK/ICmyPNR8yLp/1e5QLp+F/koP0eOaU7fMflOssQusc/1CwAA//+kDoY8AAAABklEQVQDAFvbqF7Bv3MOAAAAAElFTkSuQmCC",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACaElEQVR4AWSUSWtUQRRG32sTjUZpDUFFRA0quhEFEVxIcCHiygE1iPOICCqIihMqiAOK4gAqKoruBPUXiLgSnFYhJIsEEjInZJ7TGTrnPNJNOmnq8N26VXWr6t56HQsm/ZLJZDbkQQEUwl4ogs2wHPJhBoQTl6YDOQAzGVwCp+A9vILb47xEP8EFWA2zmZ9eHxk4jJ7L4EZ4A0ehGQx2B70HH6ASdsI72AFx1k5DgygQRg5sgEegfQu9Ch/hO5TAP/B0Z9EmuAa7ITpZjIjZdBbBDRiA69AI22AOTAc3eILOhb/g9YrRc7AOcjyRk/fQMZiTy7H3wWkwmHNqsVuhBxJQDw9B+wgad1IcYyu4w2+0C7zOL9Tr2L+MfQC8UgG6Cgz8A10PCwy0WAP+gDtkoQa5iZZCXxiG7eBCx17gewtWtww12UsNtJCOzeOaA3N1EMcIiwchiZ1qoxipa/ZiO2bFQwPRj5r2MqwtsAssApLRzJHXPITXE5roYewqF3tv7MBkV2A8hftgBQOqGkIWzMLn0/BUXqeQvrk1Tw0GqsFhMN/RCPZX+An9YLP8JvgwnTNwHnwOpsAKv6bfYaBODKu0FjWYvgS5GeUU3n8efp/FRfQYFIGJ/ozqq0YTLurG+AJ1cAnWQC5BHDOQVV2J7xvsh+3gO3uGVrNhVJAYxhAOK3YX9RqPURM+H/Wx+o7asD2x86pY0whdYKIZCtLfmon9j+cKaD9An8Nx2AQtkAcBiy25ZgYePzXou/Bl+2n4seYz8wRY7hWoV0sVgG5miwLpcidwosnzb+IkfqvkC/eLN7jjuKe2MQAAAP//gJh1hgAAAAZJREFUAwAo/M0y2bmeiAAAAABJRU5ErkJggg==",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAC5klEQVR4AWyUWYiNYRjHv+9ghjHmMI1MlkxJKMtM4YIr240tEkpZskSWLOHGhZAtUci+JUSWLDdIlEiKG6IoyhajMGbMmGZOM5/f7zPnNGdmTu+v53m3//s+z/ucLxG0+EVRFEIOFEJfKIVxMB7KoASKIBfCFtuDLEEW2O/Mon6wFE7AJTgMh+AinIF1MBSS7GmPzTQF4g4T7XC6wjQ4C4vA/hPsNbgKj6ADzAKFl2O7s9cx3OD/DRlQOMnIXNgM9vdgZ8NG2AdHYRcsgE3wDTx0K7YYjVg0gRMykAeTYCV8hDVwB2qgGlIwB9zcDXsXlsF9GAuuN/yEN1G5D4OroBLSp+/FvwDmsxN2OgyHEVAHn2A7PIepMBryFMzHcXEh9iS8gVzoD72gNyhwAGse72Ft5vwXzkFohJlQoGAXnDHgZDrMz/TNpTl7hm/Y17E74St4yELsAHDtS+wwSCpoTgz5FQO14O1Mw0N8b1QZhmEKakFhc+7DrGZ+LajxAZsDPewU4bjoO9aamoG17kZiGxFpwDZv9l8zUAHezHDVoRs06ER6oPVmE/HLwNfzANysVk/vFkwGC99cluJXQbmCP3AUK8Z6ugV7A99wLRfcILC8wM1Go+hfJkyP5VSC72NVKPibjokdgjUPj7HbwHDcqJg3tfAHMT4KLJEp2B3g47zFnoYqBf/gPAAfZwLWsRpyVwdcKvJGltYK5i6DpeW/xkMV9/HWM/4FUm725QzRslnM4EDoiJJCuIHWKvBvaeFbPueZsP5cvwH/HcQXUNA8GfJ+BgvA2huMzUc0nTNDdm054z6ERW6IT+n/JJJ68B2CRJNjgm8zeQS8jdZk6/sPMi0vmPMgv0DV7DMt1mcsxFzcPDVg0loyHD9bW5ixbyhX8HeD+euJtQqMCLftFgs6haiLffGb9OfDKbB4TbxfIm96jjG/Rh6I27plBJ1C1IV+st7TPwZLwG+in6p5+MfBULPCZCzT/gEAAP//bwjnzwAAAAZJREFUAwDZqfUGuz9LXwAAAABJRU5ErkJggg==",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAADs0lEQVR4AXSVWYjNURjA751hMDNmGMY6ZZmZPFiSbA+ISBJlVx7EE5I9S5LsIUUpa3kguxCR9UFRFLILiUQMmTEYZnX9fv+595q5497O735n/b7vfOec758SSvKLRCJhaAzZ0AG6QAEUQlfIgxxoAuEkakL/NcCCRizIggKYDtvgOFyKcgq5E+ZCH9BQGusaGKpnwAnQlAV5sABOwnIYAu0hDRpDLvSD2XAEtkIvyGR9PZ3xBgNab8aknrAHXOwublJfA5NhGAyFCbACzkM1jIYDMAay0JWKDErcAK0m0B3cem/kK5gD7uQo8h68g2L4ANdBw9OQV6E1bISJ4E50uPYMsGjM2zGwATrDbZgH98HieIRKOiyEizALyuEhGMb9SJ20PoC6oQ6loFxLGXTMAMPzArkSPoFKLiMXgXNUMI66TijTwuFwJe0vsAuOQXNYDC3RnWqI9K4jHcbYeHpgb2lbVBJTpvIKOs+C40rbIYy47iv9GnmDNNRejGYacNvD6cyGW3AX3LqLVVJXWRlj22EkKCvw0nfShrY7LEGeBvWqM9OKAwPptFzj7yce/UEmKiujvxpK4TOUMsddGb4r1JXq8/xc34O+pnY4qZCGh/gEWaNXyBywFKsMDIPturi2bhgNd1F0greqkQa8syrTgIfl6etNzCt3GF3TQCSGsYoZhtyLo0MRDdAXLw4kemU7PiGhkhjGGsZ94ep9Tb3Cip0ejsrdlpYTD5e5DYthA8/CnbsbU8xMZhqN4Dw14MBLOjXgwWjAGxK7KXrJcG3hfFIhA1qAd70VI22hP5gUTZDPqJ+BMg2o4A4Ni1fLM/iBZ8FNQWrQsRAKTXQmPR/lWjp9+ZuQvuJDyFiKWUW9iLVVGvhFw+18Qw6CvqARxL+CcnfoW1lPr4luEnIsmOhU7Iv2DZgkH9FvZIJcpIcmrxN0es2WITuhMPFwdSafMTOqMTbjbqFtgluCHA96brjL8d45oZRoxTAdZIKJqxtyM+RjJB1UTDPkDrzSSndtjjrMgKE5h3wOJeirhEA57VCwmA53YXJbTae5xGyoh3qbixHfgnNNGx6g34kRzPVl+8L1uAY9ccWMBcVFQYU/Y/YUOR8egLdhN3IHTAU/jX7JnOM6b447Yih5cWIwGrX+m8Zj8KD2Ir/DYFgHfj79DniDTIZ+K3y5DCUvcQNO0Qi4+D1tPZ+C9CBvID+CDji2j/oFcNeI5KWegdg0jHgmeu9n08NfyphhGoU0ubk7s6pZgK7k5S8AAAD//3YGA7UAAAAGSURBVAMA2IpL0Vt5EMIAAAAASUVORK5CYII=",
+    },
+    ["rocket"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAB1UlEQVR4AYzSy4tOYRwH8PeMMa5DbtlJlERhQ4z/QEo2SmwUihLlko2QpNw2khJZiIWyUMTGwsJCyWUhElMWFhq31zTGDOP4fM903mxmmul85vuc5z3P77mc09YYw19Zlu1MYx6r2cJWFoxawAMFE8wxh42c4xJHOEzXiAUMLDwwiSVk4D75hbSPyXbKVoEMoINOZvhxFis4y3QOkpnvyxTvl91VAQPSkdmW6dzPcQ5xgl4y+LHMCvLsGu33fKwKaIxnEedZy1w2MJtTdPOLnMdS2cU9mnWBzL5ZRwcnuc5fbvKGQTJ4vjzAOx7QVxfIwFU6cjDb5V4yKPv9rd1JtpfVTNY+zdeiKP7UBQZ0POQ5OZxvciLrWMgOLjOVHGS9qsb/Ba76MWcQeSj32/TdIKvKNp9pv6Xf7KVstHkDKZLZ1uu4wkWWc4eXfCJv5oXMc0P1YPfVCnI4GbBLRx76LHczjiYp0Cdnkq0NydaV2bOv7PWH3tv0kEMV1bXY/xxeJrqrndcphq8UyN5Wup3CUfKRXJPf+UA+pEdyD6/IWxHDVwqk46fbrOCJzCu8JfPVXZCbyApey9bhaVdXCmTgTnc58TPyKb0OaoAmPSQHZXXyfm9d/wAAAP//CE1HzgAAAAZJREFUAwAI6plxUCJmDgAAAABJRU5ErkJggg==",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACOElEQVR4AYzTSYiPYRwH8BnLmFCMpUaIJPthyE0OXIgsJclBUoQQIpKlcBEHHLiQtSRLtrjJUpSD5CoHYWakWcwwhmbG3+c7zZIo8+/99Hve5/+8v/f3LG+voh7+CoVCMX0pYwwzWMR8ynuUyMDe3jeQcazlFJc5wVEq/ptIkj4GDmEFF1jDT27wiAGU/DORh3t16GvQMHZ0qBS3sYkzfKCZyq5EHswalIrD/TGBSYxlK0u4zXae8pkWJvOemq5EbkqZyVlS9k3xLit5wEmqi4uLf4ipdKI4jcc0tidSRRYzlezXWc41kqRMfEcWt1aSVmOzZpnuBv3fyLim9kRu+jGX8VziHo1k4GnxkyQtHUmGut9IBak+69bSmSilZlol/lzMQVaRQS/FVNJfHM1OlpGX3RG/e0mhM1Grjtc84ytZyAZxJKl0lLiAVLBcvMVx6iVpE4s6E2UBr+vYw152sZ4k3y2e4whTydjzYo0kKUCzqCtREg7Ws5oDLKWOw9SSDchhvKhdIEvwS+y62g+eu0GkmpzeEdrrSDvT/Kj9hvs0kamEZveVSrJj2YHZurPt+8RqppNNSAUZM8v9Qt6So/BnRTrzrcwR81DWZJ52ppIq8k1lHaboy6n+IuYjTaWa3Vcqynxz1LO9GZRdeWJIFrRefEi2+ZCYL/+VmBcI3VcSpTNvf6H7KlvI9KrEvPmKmJ3MrlbZqWYyXd3dVxJlAY/p2kzOxnOxzuAW2miigRy8vxbZ2PbrNwAAAP//1tx4WwAAAAZJREFUAwBHs8RmfP6dhAAAAABJRU5ErkJggg==",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACoElEQVR4AZSUW4hNURjH956GYTKDGUlKLuUBk8vIpWgknkhKvPCAcs0tJNeEciklitxSyIOivLg8yDVECrmUkJLhYXIyzcyZmTOXs+f3m+bsudbMnPav/1rfWuu/1/rWt09W0MtfFEUh5EAhjIQiKIFiKOixIZM16sP7B8Mk2AKX4DZcg8swqkeGmjG5P4yFg3AVVoDmH9H/UAB53Rq2mA1g8ixwF4vQL7AHlsIB+AYpSHQyxCAbciFfmOQuZqMnwba6lfZ9+AvVMAJ+QWVsyGJz5LHGMLAa9sIOWAlHwfwZu0m7LAzDGjQbJsJQeAtVsSGdvjAOTPR2dBlovA91wSn0KVRg1sgGXDuI/nJohAeQNBgwGNIxT5tQt38RXQvXIQ2P4C5UYpZmvuvy6C+AmfAYvkLKATRw6x51Dp1P8BDKYDKUwwUo72BWQsyUOO88bV8WtTV0cQ4DE+AMePQZ6HsoBY9pWobQXgLHwaMeRn9CPQQZQ4/lLbn4NwMOSpL2FJgOw6AYTsARqAMv6RVaw+4jNDZ08UsC62ENrINVsBOsr2Oo5WJBL6TdD27AG0hi5oZoBrFhszsRd7EYNdkuekH7EHjUeegPuAKWTD5a39aMfmxo7qYRMG9+oyb7LP1CeAem4zu6G7wwj+tL6LZ/slpKwLdtY2ggnIZb4K3PR81zAyoW91TaPl6UMdsxTvZNRUTEwn1G+w/4aKA6bzgNb3Qjqllmp3RbHyfm0rU4VS/A4t5MLAFPwHxVoeZ0PPocTEkp+etyhxb1aCaFYH3NRT/DLvBfpAI1n5aKn5lx/21qiXd63KED3uY9Rs+Bn9wG9DX4T+IOTYNl8oFYgp2lIFMZhFofDV1wh9B+8BPS6B8LaiGCNGhg8VomXRqxtvlpAgAA//9jthT9AAAABklEQVQDAFSh41ujXeyfAAAAAElFTkSuQmCC",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAADgklEQVR4AaSVWYjNURjA7zUYZsYgZNCImfBCSCLiQUnWRMpOHmzJlrWQZC0iWRLZnkiUbNkeREIeyJ4tMtPMWJrGzJjFuH6//9wZ945bmnE7v/93znfO+b5zvvOdcxuF/vMXiUSSIAXaQSZkQTZkQEqDHTBZw2msrwMMh1VwAM7BZdgF6fV2gOEwNGeyhucgT8E+mAJ9oRNkQn9IrZcDDDu+BRMHwmFYDV3hAxyH5bAESuAHRJyA/HeJGk9n5FjYD31Aw+uQrn4n8hpUQDl8gsqEDjQGyZAWJYXBrWAUbALr55Gz4QzkhsPhQmQEeoHlOZ+yOAcYM77JdLSHkTAX5sNkGA8bwfgbDuvvMVwMVczVluEbxhgd3UOWqkTWlqbUesAR2AvLYClsAUPQGnkR7PuC4UrqNUXHQ2lkQS48gD87iK6gJcr10A8KwJQzFG6/Ge23YPp9xfhP6kFhbhMqGTAPwnAaChlTFbsDVz+YjgGQDwtgKxwDJxUhD0IOE2tXjvHG6NqAu+2OfAFnoRRCsQ48SOOuvEWnA4zpCOru7CHSLFFPNRTCuCtvS2MRTAAXsQ1ZwCKqkHEOHNwbpQ5mIq+DjlYiDc8NpOmH3UgjPqm0u8AG8MKVITdDEHtkUGJ34LZfo80DV2KMf1E3rxGhiXy8VB60WWZWmU2T0BeDji4gzSqziGoobgcOWox2CHgWNYyj/Qi6wR6YAYfArPKyJVHfAb4/RYTGRdGsLnV3oBNjbPzckTt5xlAP0MPrSd389535Tt3batiohsrqGlcZ68Asykbpam4ir4IvpLfW9FxLW6dhpI/bNKTn4mIMW6wtuqpLoOTA3KbZsB21IXGCeT2L9kKw38vjan3IzPOP6HVovOPCgr62BA5omSU+Yl4wJ05HZ/aYWaOpe0s1JO7A56Qz+kGg7h1SZ4j4Yro5wZTTgQ6PMuQluGJXphPHoAqKaeyN9TnRyRO09yGxAzq8iR2RvoKm5hvqY8BbjAjd4ePbrjP7Paup6AzjbaRn8y3RAdMXpKnb1bhh8sa6A3Nap65sNwONu07uUn8KvlH+sXiDX9GuuStU44shcfsa1oiH6IjHfHxBPWAzyO2bwt4TQ7mG/ivwmZWXg+dA8++iA41eostXcgXSG+ofyUnqeUwODCArwFDkR2XCvGdOXNGBq8tBewLcuofmY1WCIXMcdcPLbwAAAP//iq7zDAAAAAZJREFUAwBWiidUAmWCzgAAAABJRU5ErkJggg==",
+    },
+    ["save"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABuElEQVR4AWyTOyxlURSGnTtjwjWJDJlkZpopJQSdgoJCIREKhU6jFyHxSIi3BAUJPQkVkUg8G0pKjYTWo1AgouAK4fq+41ySEzfru//aa629zt777JPI4pdOp7MhH/7Avy/4S6wQciGcw7TQEgSy8X5BCwzBGIzAIAxE6Hfjl0OSOQEamt2SeM3QCr+hFv7DN8iYdWUMpqAC8jJNTOQQKIYjmIEUbMAEjEeMol1wDsPw0cQGPkl14h1JtQithpqIKvQ7uL1T1K2WoDlORD/sAW8HKqENOiPaUZtdoq7qHm2CZLyBiUkS9dAAjREWL+Cbv0EvIB9+xBsQ+9Jcfh6Zn+CWX1EtiDewqIfMNmzCeoSHuoXfC9Yg7xZv4CutI7UPszAdMYcegDlrcN8t3sDleUkOSa/BaoS+MYZZ1qgh8QYG0/w9QSoIghB9MGYO99Ns8MLQQ8lFPSQvllrAbfP+FxIvAGOZnLXOebXBI8kTKIUO8JB8bd4437noGzNnjbXH1KZs4OVZZjAP17AHZ+DKkND0je0yugLvxAr6kGCfzzi3sAR+dX2oX6FP9asUfWP95LzGi+itc98AAAD//5VXpcQAAAAGSURBVAMAYR+RH8fQqesAAAAASUVORK5CYII=",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAB+0lEQVR4AXyUu0scURSHd9agS0ISJVimTCCBQLqQLpAqIUkTRdBK8IH46FQQWy0ULVQQ1EqwEBQLC8FG/wcFRWxEsFBBEXw/xu+bddZx8MH99px7zu8c5547u9kMf2EYBlACb+HdM5SSy0FUR2lhZQkG7F7CF6iHFmh9BOONxL/Ba+oeNHNTTOITjEAT1EED1EBFgkr8WhiGf+DTW4+byejk8H5AGbTDLJxDFfxK8Bu/GjahE/5CoZmNXhB4BVewAYdwAZdgw5hT9tvQDevQAX8gOqaN8DMBHyFYvI9134v1uDFD7NtgF7rAf+oJvuIXx43wo+WTzOPNgU+AebBu2KnZwvaA8/2OzaUbebwdEoqasd5UjE8zQOwkCAKPu4evvgRblG7kkYpImEzjpbwhV8bV6+NGy5ro1qLd3YeD/4w/CYuwkMKYOTVqSedX+ok8809SH8EmM9gkxsypUUs6v9KNPJZvuQMdQzKYwpg5NWpJ51e6kVHPfI3jUI8YbAFjYE4N7v2KG/kOmYz394qnPbXWWBsN2ys8Ru/wPmBLwTe9nNt5n4R4OZhT46yssfbKrmckl+EA+uE/ePXTWIebxJg5NX3krVnCntnI4a2x8QUcxU6AQ53CJm9M35g5NWp9Wf3eXWQZpmc8oWgVxsHvlj8Vz6FG7Qp6LyW8BQAA//9932QRAAAABklEQVQDAD48vOEUmstSAAAAAElFTkSuQmCC",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACQElEQVR4AYyUOWgUURyHZ9acxhgSLOzUTsFCwdZeUUTFVkRFUDux8cYDrTzAQkXQwkJB8Cq8QGysrDRpQgIhISlyQEJCAknYJJvvCzO7My9DyPK+/Z/vNzPvvZlSlPwqlUoJGmETtK5BC7UGqM5NJFbMSpJiPVEH7IejcByOJRiH7KPWxrw6bG54V4q2kb0Fz+AePEgwdx0/5Qb+bXgNF6A9FFXMu9tD8QB0wwvwygPYR3A/4CHxIJwFRTuyogo6eStFx1f+vsM0DME3+JLhM/57uAxe/BT2PFTvVEGJSS7BHMzCIrTDbtibwSfZTjwMVyAVPYfvRpYUw6+OCp6iPdhd8BReBjwnttaPVbQPexJ2Ql0oSC6a4e8qKPYG+y7gLbEiXti1/EDssu3A1hcJzlPoBTfnCfZxBuNXxGNxHLssC/gukcu1AX/VI5OLLDTjtMJm8EhlcW23sLPW7HWZhNYoKrrDjVTOwE/4Db8CzFmzx17KtVEk2ELZ5kbsP/gbYK6B3GmwF1MbRYIucBMtnXANLgWY6yLnstiLWxtFglZdEzdnksUfz0JxEqzZg5sfoWCcL68rys1R0CuJO+ajir40sZvNWbhErp7EVR2dMslRUPQQ9iB4ZLZhj8CJAHPW7LH3MHXHCH/lVNCd8yj4Svmye2h9Z/0IpJ+u1Jqz5qG211fuB2L/oVxiwT3lUwR34CLcBF89d/Mufvj5MmdN7HWOuSm1vMMIx8eeYPIf8BP1EfspwThLmrfHvHMmEo1oGQAA//+DvIb1AAAABklEQVQDALQA2qX5GchRAAAAAElFTkSuQmCC",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAACb0lEQVR4AbyVu05UQRyHdxEBpSAWoBCtjJroExgTW+OttfIRLLx0NnZaGC8x+gT6BgYIDQUJ0FBDaAgJEG4JCQX3y/J9h50Nw86wJATIfMyc+V9+Z2bO/LepdM5/NYFKpdIMHdANN+FWA/TpwecatEA59a6FAMZmjDfgIwzA8CkYwWcQvsIdaCVPnUghgLEd3sBruA5XoatKK32qmawDwwv4Bfeg7bhIEDDhMxxcyVv657Ba5Sn9owyvmJ+AB/AD7kIkEgQuYfBtduhHYQG2qiyXy+WZ42CbgTF4B+NwH4JIbbuCgMuVfZz2wL5C7/Z0suy6A8fWA658iv49BJHvjG/DZSgFAcdH2ebBVSjQzzh16EPM+8aufpKxImG7HHuuWYE1Ar6BgZv0jZo++n7C0ZV7ZlcYZwU2MPbCS9A5xWNsfhBrnI9JFZlmbhfcumJ3in9MRI2AfTBwiX4W6g6ZuTlYAbezRK9IwHyeaXoFHGoTtEMXeGPrDpl557Tpo2/yZZOTyLt/3oX/jFMHfHROH32NwT1uOQG/AL+E4nbGIdFTG0/6fKA3hi5uOYEW3LrBy3bSTdamj3XMGELilhPwgMTg5E3mUL3Jy6TTR1/hMW45gdjrDE8XJhC+XwW9+snlNliIMcaaI+Sr3QMLnOXZAvWQRB6adUiSxc57gF8n6CP+jhhrDnOZsyawjmMfeM1/0lsmLN+SK3beBW36iPHGmsOxOSOBPyT+B4ugcYle/EoYJps2fcQYY//i+RssmIcCfHL+0FieP2N4Aqnidpo5Y78Qv0BOV3IowITFaofJVZiHXIFLFb0wZ4yx5iiSm/cAAAD//wUa2JkAAAAGSURBVAMAUYE4QERnj3UAAAAASUVORK5CYII=",
+    },
+    ["scan-eye"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAB0ElEQVR4AWzSWytmURjA8Xe/UoZpJjGj5tTUzNQ0NXdzMfM1ppm5mGlcULhwKOVYkkQOcYFCRBHlkI/hiiuFIiWHckoJvSVe//9ub0W0f55nr+dZy7bWSib4SafTmXiOAuTjCQJK4WMOx6zZY2+mxSQFk1xe/qMZtXiDcHGij/lbEmv22JvrXAvZFP6gCDnwufvrvkTSUbTHXudku0AWhS9YQSs6cIw8/sIrmeME1uyx1zlZLnBN4RwHOIML/iYOYCFi/ovcmj32OufaBS4ojGICL9CFEhxhCtM4RCk6kQ97nXPhAikGtuCESuI7NKIHm9hALxrwHlWw1zmpZBAE8eZ8pvADQ1jCa3RHzJfJB/Ed9iac6xfwHj6P7XxYePDrXp/3IB5Yo3ERZfiGPdREzB2zZs864wlOKPAL3NkPDLiBfcRttKEan/AR5u1Ea/1Ee50THqMXo5jBQnj+dcQRvMRf/IMThonW3EB7nZPjF2RQeIoCPIOnMkcsx89IBXEe1uyx1zkZLuCg//9XGppQjzycsMv7Mofnb80ee1cZS7nAJckMxuClIiTijTWPxcdtzziDs7j0HlyRnGISLfAm7hBvED/mu7xYs8ebeMrXXd0CAAD//+dBJ1QAAAAGSURBVAMAKs+cj0Ptru4AAAAASUVORK5CYII=",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACMklEQVR4AXSTO0gcURSGd9ZlXUQIMVXSJRBIAoGUKZN0eZA0eRECSQiCL7QSFAQVLEQrxReIoijiq1DxUWqnpaCohVpqpTYi67Ayft8yhSso9/Oce85/7j2zcyaZ4C+KogCK4R6UQSmkSBUsY2BOjVprAkVJEjolbF5COVTBF8jA7WXsM0E1aq0p8Qw7SpN4Dj1g8jtWcRH29jLmJWrUWmNt2oO85Q0V96EOPkE1hNyUAR9F1IXEzampxbfG2owHeYuiSxI7cAT6D7He7mOIvjFzanbJ61tb5EHeckjQhP4D/L8wAc3wJ0bf2D/2ZaB2D2tt6EFZNgtQCb6peqwdHGAt/o0VfYvUNRBTW4G1NpsMgiAH5wS84T32I8xAI6zDq5gNrAfMYtV9wIbWQs6O2OeXI/ATbx+G4RTeQVPMW6yxIayaH1hrMInEzYPyAf5FMZg7l5qC5M2DLshMwlP4D/6gq9i2GH1j5tRMEbcGQ0fMSQpK2TmYK9hl+Abt8Bo2Y/SNfWW/BOrS1kLKjpwDJ3mAZA46oBeeQCuMwTjoG+vD7wS1/VjnKz+QdqLgGUH9E+wo/IIW0BcPMjZCTI1aP4/H7POfyBWOs1SMNfEIq3+MdUa81S7m2Rszp+YFe31rr3w0nTWCZ9ANi2BhmvnIwnmMOrvwsdV0obPGl5D1IAfRz8OPcZDkNMyBnWIKljG7VKO2hqyfSehkOxO+xm2CJu1GsR0QKljGfEQ1arfIXtBxdA0AAP//EU0iJgAAAAZJREFUAwBpuslz67HkoAAAAABJRU5ErkJggg==",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACqUlEQVR4AYSUS0hVURSGz7l4NbMQDCwwqlGPWdC05tGTnkQRFTQqqKgGNek1qUEPKKpJEBEFBeIbdexYdOZjpKLgAwXx7b14/L7DvuK9Ey/7O3vttf+1zj57r30zUfglSZKBCqiC7ZCFOExvdPrAOTVqjdnIkxoKiKiBE3ABzsIByEJp07cfpxq1x7FrQo7IVZm0GucL+Ab2z+ivQhmUNn3XcKpR+x3bvpqkGZP5xqM4T0IfvId38A/yUNr0OadGbT8CY82RNaFv3IPT1sajHppgDCp5ay3UBWr1wSioUduKbTNHmQkTRjlYgFlYAld9kP4J/Ib2gPZj7EOgRq0xxpojMaFGNwLf1ktfBVfgF1wH99etEO0b+H6Ce7yD3hhjzZEzoXsywsQnmIaL4IYv0r8CEzynF+3X2MugxlM2xlhz5DNxHCewisCVWir3sKfgIbin1uItbNF2zx4wngC1xuTMAekn409bBc/zsBMsH0/P1d9kfDegrc85NWqNMRZJFPnJqREeHpDmmo8tKGgLfSrfnHAFTzPMwX04DJaUJ/sDW7T1ecpq5vEbYywmK6S+YihnZBkM0X+F3fAZzoAr8MRF+zS+L6BGrTHe7XLyxK7QN+5D8Ah2QQN4C7bRv4Q/8Dag7ck7p0atMcaaIy1sV3aMgMvg9bFI/2Pfgb9g4fr5om3S2/jV+MnGGGuO9Oq5SpNa0BZuJWJPcoD+A3iyp+hF+yP2IFhmao0x1hzpJzthTaGJ3J9LGOdgLyxRW5MwFpjUB3Vguah1nxlG4zzyrs6EPQw64Qg8BW+BV8v9ZVjU9BX+vtS6FR0ovII5b4o15954paz8N0y64f5F+ekMi5o+59SoLcTM8hVrrjDCcJUzhHWBJ9dCPwz66YqaPktFTSMzxsyEHNE6AAAA///exZG0AAAABklEQVQDAMOD7E5SRl8oAAAAAElFTkSuQmCC",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAADZ0lEQVR4AbSVSWyNURTH36u2KE2rXbRSaUPCQpAYNmIIQgwbEiwkItiIEEMMMYQNYWFOCDaGEBskbAwhImLYGBLEgoS00WgXrTalaOnz+31T0r6+pJs299dz7rn/c+5373e/+/JS/fyXTJDJZPKhBIbDCKiCMijM9QyOgRq15phrjYI4J5gAUT6BStgD9+EZPIGTMARyNcfUqDXnHsJdUEnNYJJgAgIKN2JXQgUMgL62dCS0lg+5iv4GKIKUQa2dRTiuZAt2OswE/Z/YXM2xzQyqnYFVb42F+NZMJvCJSwh2wguoS6fT9dgWyGO5pVAB7rXolzoGLZG2Dt/cDqxj1kwmyBD8C3/ASaiV8eWW058FB+AGPIq4jjU2G1uOWK01zHUCa9lPJviF8Dn4on5jB8FoOALnYSmMBJcto/CNncOqGYM1x9y4jjWTCX4g2ATup08wFt/kBdh2uARrYW7EGuxFsIias/jjwBXEdawZTsAedsB3BG3gthzCuoI3WE/FMexLaI14hT0Ojr3Gqj2ILYM2a4EPGk5AMG6DcVbAePgI2+Ed+G7mYW9F6Bt7S38HfAJzzLUG3bDFxzTspVLu7xI6xs9ga3kS99X4VvoTIvSLorFaYmrNWYyvFhM2g6GX/T/+gLJHckey6vUM+NJuk98Ffo01HEFPhy/6BDG3RPTbo7Ea4mrNcQutQShsPSew0DWG3oMvziPotgyk/wDcPtE35thR4mrNMdcahMIWTMCTFMIwQsXQDHvBFzcJexm2wWTwa5cp+MYcm4ivdje2CYqtBX58ySkaysCpiAKsT7Meexd8aauxnvuHWLmANeaYN6jaD8QsGtexZjKBR2saAnHPPTke053E1oHXxBesy5fP+DfBwh5TteaYaw2xZjKBJ8Zb0H11BZzAtB+KS35Mof2wDOZELMfuA++mJsRqrWGuNaxlP5ngH2K/UgVT8avZwyqst2IXBbwxG7H1EfretJ4cb1q11ejNtYa1rJlM4LLvIPAW9BfqKb6/Uvr+GNHttTmmRq05+tawljW7TeDXeJUyjRDMju1LC7YCoTnmXsE/Df4YhROwbG/BBoJecvOxviR/pfyFCoTEemuOeQOrNcfcwwgbqOlKwgkIpAh0Qit8g6/gfjdjfYFKsnAM1Kg1x1xrBMVN+A8AAP//klOUKQAAAAZJREFUAwCV7ypAh/Vg3QAAAABJRU5ErkJggg==",
+    },
+    ["settings"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABt0lEQVR4AYyTPSjEYRzH767jyttAKRPFoli9DFZlwiJRrN5CUkoGg5SSvJtN2JiUbBJmisXLppQrLld31Pl8rr9uuBvo//F8n+/v9/ye14uECvxlMpkY1MFggDpWIDWUV4ABYRLLYAHmA9TlQQwr92ULEIiCCZWEqqARWmED1kGtV0VeJZgbxQ9F6CgcOIaxAzMwCkm4gEtQj9BOwzaoLRR1BSUYPdAPCWiDCliFT/gAtV47+gsGwDElFiim0wTP4AqGaCfBRGcUtd4wvit4oW2GYgukENfQAN3wDXWwCO5b1HrGzKkndgMpC7i/czpH0As10AVvMBeg1jPm0s09I5a0AG328/qy4h//Mn85FvAQOzH64Bhe4RSqYSVArWfsBM8Dd0z2EH1hLZhPYNBD9ZDc9z2eqPWK6DvJI61jYq4gTecWasG3sE+7BaXgIxL1Jn1j47Qe6B1t2gIeojMfYPiEvRHvf5a+dy9qvSs8cw5pXUkyEg6Hf+jEYQ8mYA3UztqBFrWeqzFnFz/uWFcQUkACLPRO0H17z1NocVUP6HdzwFwnzv81EvSKfNJLDFgOUDvIGFbu+wUAAP//2la39gAAAAZJREFUAwBjJZgUAjVj5wAAAABJRU5ErkJggg==",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACLElEQVR4AYzTS0hUURjA8TtTOSMUBFJIRRAVQYtWRZseUBBE2XtRtCuiXVEQPen9oIKgdhG1rMS3oqKg4GPjY+VCEBRdKKggCCqOz/H/18OIoKDc33zf+c53jnfuuROP1vhLp9NJ7EYezsM8uUZ7tOpGLNrAghx8whd8xUfkhDnSlVdmIxuQEC3ZOIXDKEQBjsBatj2B/5BytHRHFhntxCWcw16cxAz+Ix/mJ4jO2XOZfFdYG8VJNlLIxQ+8wQf8xTFUYCAoJx7HP9jzmvgdue7hV/MBnqFwED/xGSV4h9/YEvwhvkcx7LHXNa5NupE2M+nVy0c1vqEVd1AUmLeQO2dPH7mXa+NukmJUhyG8xAH4dW8RL6IjMLfmnD0vqA/DtSk38iF2U3iKLHirW4mn0QyPXebWnLMnwdwTuHbGjcgzVyyTrS/J9LvRJtbsgw9wiliLUXjLntwzcplbc86eaeq+sPuJWW7kqXnL2yi8RRdm4SmVEQ8F5tbmGNtj73ZyX9KEG80zmIDXHj7O4iGO4heuBubWHjC2x17SaJyPeTfy69Qw6MRdPMYVeCq3iWOBJ2bNN9oee13j2lQ8Fot5aoM034dv63PiDTQhD/50dhAvwJO7SfSZvSLewxB7zHpHEYl31U/RN7qS2INGeBDXiW5s3kDucVcRSzEQ1i79aCm42ZxFMZ5EPdpxLWgjWpu0J/DBU46WN1ochQ+abBhh6Ev6iCi/zkiYo7TyWgAAAP//glErygAAAAZJREFUAwAMGrT3TnX+cwAAAABJRU5ErkJggg==",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACfUlEQVR4AYyUy0tVURSHz7lpGBE1MNEcFxFBbyjISTToL4geUIPG1aAnkYpPxMdAHTvQgSj+BYKOFBXfgijo2LcDRVDxca/fdz1XkOsV5Xyu311r7XX23mvvEwsy/CUSiRByoBCKItT6wgzDgowFGZAFhVAPLRF1WH3GkOnPeQVzSP8Az2Es4gX2IxjDpD/JgiwnBlcgFwrgJql58BB2oSJCrS/PHDDXMY5N1kr+I9k3vsS2Qjc0Qwk8gSlYiVA/Rhtrwprbhi0CawTOzP3Ix1EKd2ABnIXLG0G7b3tYUesz9gjfItwGX5DPjLOcYTYO31qA7YDv8BY+wS/YhtcRan3GzPmG3zGOtUa2BeM4N+EQ7oK+eewM3Ac7XIsVtT5j5pjrmFSNuI59kiegB57Cf7gGufAProP7JGp9xswx9xnxXpiE/VgYhqnqzmAcpwnuqftot12SMxO1PmPmmDvKmBrYsJYzRJ88Fj/5cUFx6tbYZYu6lL8UcMl2cRntEtaw7+BLhFqfMXPMtRl/iN+gyzGL2WWPwCucTr8SuwXrUA02zK6KWp8xc6qID4OnwMKXLeiUneElArPgsj1b99DT4Ox+Y0Wtz5hn1pMxR8w6NilUHOCwGUvY99AIXWBXPchX0XZR1A38NtaJ9ba4DY61RrLLFnQ/yknwbbewHqMBrHv6A+u2yE+019GYBTzQnscy/Mt0+cAZogMvfR/iM7yBr+AHwUEeET8U8gC/PmPeKHPd23781jj+HlI5DjuwDktgJ1dJspte+mK0qJ39qjlgrmMc694fFyT5rMc3thMYBJcuQ2h9xpDpT2rJ6ZEgcG/98vgxsLviHuozdtaY4AgAAP//w3yEVAAAAAZJREFUAwC99NvTlqG5nwAAAABJRU5ErkJggg==",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAADYUlEQVR4AYSVSWxOURTH72uLUlQt2sQUqSGGEOMGCxGRICHGhBUrO0LMQ0jEFFPYWbEiCMKCRAQbLEiIBSJYmBJdqJqHtp/fz7t9zZOv/Zr36z3vnP85973z7r1fWSjxVygUEqiEOqiPaOtLSqSHkhNQoCsMgwNwNbKfUZ8xzI6vTifgaX3CatJ3w2zoE5nDqK86argtfuUmUAxlUA4WryBtKIyHj7Asoq3Pt6hQC+aYax6y9MomQNAFVw2MgsnQH+pgLNiKp4xPItr6xnCvRq05I7mvibUwQ/oNcPiktXh2wWU4B+dhH2yCZrgD3yLa+jZzr0b9WewrYI3aWDOdAGcPWAGLoBs0wQCYAQVwstOMPyPa+lq5VzOQ8Qv4VtawljVzExjwTbYgXAhrYA+shENgMd9StPUZU6N2AZqtYA3zcxOUE6gCr9f8+wAuyVOMj6EeDsKNiLY+Y2rUmmOub9wTnTWzN/iB4x54ucYnYCTQAn7044yzoG2ZauszpoZQGBdCcK+YdxfbmtkEX3EchgcwBLZDb/BJVjH2g9tgG0RbnzE1am2Pb3Uf3RGwZjbBHxzPYSN8Ate3ve6OPQns+VFGWyLa+oypcamOIN4IrjprWTObAH/uso85R4mb//W26V9K20Zzkw3HYw/t8zNsP5p9tG3q1uJz04m2PmNqGoiZ40Z1AdgBa2ZvYB/XIXI3vmTcC5/BPp5gfA/T4VJEW58xNWrNMXciGmtZM5vAPk4h4Ku6Ox9he7nUPB5Wc3Md/D6irc+YGkLBHPtvDWtZM5vApeaT2LtBIQQ/2lxGd6QteYW9AWZGtPUZU+Ppas5g4tawljWzCb4TuAieL54ttuIY99vAjeTq8knttdj/9cROghq15rirrWEta+YmsNAFEn6B6/ot4y3w8hjxqK7kRpYzLgEnusn4BnrBb7C4tdonSJLEWX0yT8J5iJbCYvB7uLI8X6ZxXxWZyqjPXe/ZpV7m498JDbFm9gYBhxvDjeJZ7258h9Cl6sbyydxIo/F5PHju6zOmRq1L1o/eGGshDe0TeEegAK3QAq4G3+wFsYfQFzymzzBq6zPWrBbMMdc8JOllD1OryH+SFPvbsIPwNdB2mWrra4oaQsWvTieIKbbCJ/V7+MPvknS96zMWZcWHvwAAAP//RelvqgAAAAZJREFUAwBeuhOvcv+X0gAAAABJRU5ErkJggg==",
+    },
+    ["shield-check"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABw0lEQVR4AWyTOS9uURSGz7mDcOfcKO4NQmioDCUFEgl6iR8gRIVEQiEEiZg6JCQKHT+AwvALTJVOoaMRERJz+DzPd46tIefJWnutd7/724NP0Qd/mUwmB/5DK7TAP8j5QBplDWjG8AXy4C/CUuiB6RTzUnugRm1MLzEg0b2M2Ab9sAz1sJhibs2eGhdwTjD4iXAGBqEaNqETVmENumAL7KmZJXdOMMilUAJL0A3zcAzXKeZz5PbUqHVOMHA/Lwiu4DyO42t4ggzjr/ANzC+JatQ6JxhQD99nDio3JY9qEUxBB2T3TQxf9hbCKIp0dcWmKIraoRzGoQJ24RnUEJLvzcCfJ44V/KLdBwtQDKNwBE9gX62ELbinW5q/wdwTXyG/gSE4AHMX+JPm6oLBI8UTqARP19PXwG3sUXOyK38nrwK1zgkGrr5NowZqwcO74RYu4Y6xk38Q68C3sEN0TjC4p6CBqw2QN0M+N+Gz1SyfsTV7++QaPBATA1ZxP97xBMVDcN8eXCN5A3gT1uyp8Zd5I4kBgggTT/iMfAx81oXESfANFBB9vpqeos3un9q7gQMamlyQb0AvDMMI+N+4TrxINaTJ9woAAP//nhWQPQAAAAZJREFUAwDnvZoKWzf0IgAAAABJRU5ErkJggg==",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACJ0lEQVR4AXSTu0uWURjA39eULhbVEkIWjRHUP1DQ2lZLQ0RBN+hCBNXi4mUQwUEXBwVF8LbpoiLOii6Cgqs6qIOKCip4x9ff7/h+Rz7Ej/P7nuc8t/ec55xTklzyy7KsDO7Bc3gB6mWXhCdFhQhOoRRukVAJv6ANWkG9Uh8Yk2KLIxTCUQLlWCvgGXyAdngLYznq2vQ9xVZhDoQa4Q/jNXgF/dALfn0XWQN1Oera9PVhGwBzzI1bc/IGhz3oQv6GbzAMaznq2v4w74ZSMMfcWOgKxquwBK5oHLmapukunAjzfVgHt9qDNNYcc2OhQuOOCdgn8RAy9DDogwn27zEG22FRY5kmIVejkyJI9FTKkdcF50NozAlbQS8ahULx67n3BvIfvAZXUY/0NO3NIfqFUSikw2JhmUyUj5C10AJPwBWNIPfAYYw5Ent0gscA75LNU2/ANgs3QX0IuU3vjDXGWK+D81joiKBFuA93Qadzj/oj80EIReiZx26MscaYGwsdEOiRG2RffCIGrGB3VTuuhCK2Qp8x3jlzzI2FTJomaRLewUu4DeSn3iNqZG5Hmz5jJvDPQGi+X0iIditbGJthGXwWn5EPqHBH0H3En5D6vIxN6FvkFjUbW+Kq5lH+wxR8gQ74Cd+hE76CPmMW0M1BJHFrrsrK7ncOTxVUwwa8B1/8JtLroM8PHhRWg/28kBMd4J4tMIrNS/kD6Yv/i/QebRgDfhjT2TgFAAD//1QIRg4AAAAGSURBVAMAaHbK5mDw2OkAAAAASUVORK5CYII=",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACc0lEQVR4AYSUOWhUURSG34uJcU2hEQNBxAULFSNY2algI1poJ6ighSuCIiLaqiAqKuLaaKGI2gj2LoiFioIhTYpAqiwQspJ9m3zfy507EzJMhvfNWe45/9xtXkVS5pPL5aqgFhoC+lVlWpKSgjRXwDIa6+AMvAvo1zkGJXtjkoJKWAG1NNfDAXgGp6AroP8c37F6a8GeSnLZkwmSXES0Cs7CI/gId2ADvIfTgQ9Yc46Zt/Y8udVBIy55MclDoOBu7BDY4Izu47cG7mFPgmMjWGv9MWesRhR0o12mM75C4Qmw+T+2L03TCdEHc45ZY60968irEQWJM38Cpxe6EOiHccgR5x+3JiVwBe6rtfYoSjrJRDJnoS/2qJqa9XAU1kAUwY9PySSjKQJLoAaWCjkPw/28iL8FSvYWJ4uXZn4zTQ9gP2yFu7ADPkMTTEP+ib02zkuGhHdrO76zeoLdBm/BeziALSvooNeAumS5X9ACt2EU1sIbeAo9HNQk1snka4eJ1YiHYkEbyRQ2glfAou/4F+AGOMu8GGHivduEY087Vo0o6NE3khyHvbASLBzE/oJP0BtmlnBIXh9rrLXHXjWioNPtoOkb7ISDUANoZJd6DGeKWDGX6pg1DeS+gjNUY1aQYk/J2bxgUOHL2CPg66qaGXmNxGX68jjM2CXohJcwFDRmBUn4OGX/s9cJekB7C7sLPBTRv0nsnvZhrbHHXsKkIBh+wZP+x8g5+AF74BU8hofwGvbBT/BF8hc7EnpxiwSNwoCizcTXwD//b6z30f36g2/uKtaaOWLkCjM0EEXBk+smdsNd1jH846D/BdttDbj3hIVnBgAA///NzW0OAAAABklEQVQDAD/b5MVO6lmfAAAAAElFTkSuQmCC",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAADM0lEQVR4AYyVS4hNYRzAzxm3mTsNNY8mbEQZySNiwU4KiQXCwluUrTwWbAw2XkWUbEh5rViIheeCjY0iRNhJahozzUwjZjyO3+/MceYe99w7c/t+9/8//+//+M53vkdNMIpfFEUFaIJJCeqFUYQGVQuQLIRaErXAJrgJt2AztNgHIXrFlluAoBooEtUEc+EEHIQpMBkOwDGYA75NEf/cXKlRB2iA8QRNhaVwCK7BcuiBo3AE1Fcgr4M++rYZC+ZI86YKjvWwEm7DI7gA68Epuo/cAVfBgjuR98A+ffR9wLOx5jAXj0HmGzRg2QfTIYL3cAW2gfaXyN6EF8j9YJ9FP6DbjN2LYi5EtoCjmYB1AFbBRjgOz6ArDMMBiBL06cJun99iA7ox2ieimwuRLRBiEZ1M2EGyXhgE34ju4aYN7NOngx4LGmsOwRRkpig2jPTHR3Tp1iGbwRWUjjYvtvQj5/VnbCQMMdTBNLgIZyGdb/SyVrUACWvBUTpa94WY/AyZFsI4sCgiv1UtQIijO4e8BLNhJpyGWfAW3APfkBXbSAUc3ViiF8D5BJO/QXc5fkQOQsVWWsCV8gtPkzo1SkfXju0duLvbkP+Su/bjpcs06uvHVv7Ex1yIILOKfmP5Cjb3g6elo3OUezA+hSegnibn2aavR4x6N3/mQmQLmMzd61vNo7fIOnckP9C1e1R4RPyfnO7Ajz8fxVh9zcVjtoCJHKVJV9Pr6ilYBJyKbqSo64NLEDA9jt5T1xjtvqW54n4rxgp/Gh8iP8EM8JxpJMEY9NyW9DXSqa8xxprDXJhL3oDROW+dWF2GOuxCd0paSeTODXmOG8/xbuahFfTR1xhjO5NcdAWZj6zhO3+PwR1qwd3op8CLxc1WT3LnuxmbF9FJpD5/kG4+Y83B41ArnaKAyjr20eUxfRjpAbYEeQO8bBYjF4F9XjbL0F017Ujvib4kB49DLVNAEw6O3BvLu3c7trvgd1iD9Py5jFwL2u4g9dG3J4nFNNzKCtiFo2/Sj/4avH+3IH2Lz8gvoL4V6T39CtmfxKBmW24BXQjwcnE9OwXPsXnxez2uS3RtLlvvBJcn5vL2FwAA//9KjeJHAAAABklEQVQDAGdiLaXdVrYSAAAAAElFTkSuQmCC",
+    },
+    ["shield"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABjUlEQVR4AZyTPS9DYRiGexAhrRAxEAapH+BjZMCE3V8gJgYJgxAk4mtjILHzAxh8/APiDxhsLE3TaELQcFxXe5y2SS2a98p7n+e5n7t9c97WJWp8wjBshC6YgknohMYa1kQxgGYADdAM7RjTMA+7Eeq0PdCjN6BXCkCY3sc+DYtwAqNwFKG2Zk+PX+BMHNCCcQ+WYRAuYQZO4Qxm4Qrs6dlHOxMHNFHohWOYg0N4gHyE+gBtT49eZ+IAz/ON4QUyQRDkoQBhhNqwDH09ep2JA6j/bxXfQsVoMbXiuZas8vwGhDjF5yoD9cplT/RKfATP9IazFerhr2WvjeYrOBMHfFJ4hH5Icln8JcjyimpJKgOg15k4wG+/pjEEw5CKBpCJRKRTPIyAd+GG3Zk44J2CAbfsSzABHQx6bZvVYM3eHdqAD/ZSAO/a8+QobME9rMA6jMMYbII1e3pyzHxRKwUoKBTYn2EDvNY97NuwA93g9TX0CW/x/NTKAT7QMCSLvoAFWIU18N94zp6NPMjS+gEAAP//TYHIhwAAAAZJREFUAwCZ0osKwIWMgAAAAABJRU5ErkJggg==",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAB3UlEQVR4AaSTSyt2URiG9/bR99WXMJHCT+APUKZmTAwkA6dySAoTE4c/wJQi5TRjJpkiJoofgAEmFGXinNd1LfvdeRORt32961nP89z33mvttfOiT36ZTKYASqEGasG44JP2KMeI5hjyoRBBBfTBDEyDcYU1sCcml17BiEIe/CdbBtXQCrPQBNsJxuasVZErUwPBI/yR/Af1sArL4N1vGcdgIsHYnLUVcmugRm26NCeNFNyDBcZ+6IJ1uEwwNjfAfBHyQY3a1OgPyb9wBj7RDuNFHMe38JLg01yQ34IlsFeN2tQou3HPNNwjfIQMcc5lDh5J3oO9DFHQZvfIxK/IGn24+09ds0bqNAuP6eQb2KtG0j16QXgHnqWwecRfXfbY6wtQmxo9oTqFcijhkPlqCT9eSa2Eir1q1KZGDxR85Ro0EBcieL9sUlGU5Px87PHMqVGbGul6QPceNEMdFCF0CYTBxLiIiTV7dokPwePwZsTZcJ03JKfgHPws2hkrMSsWYj/iNkZrHsZJ4hu0OZtNLvKpjgmGYR86YA56oRvmoROs2XNCrIYhensio8TZ9R4xH4FRuIIW8Iu/ZhwHa97wIdGQemfkzAK4Zg02yQ1BD/jFDzJuwJU9EJbEPFyvAAAA//+tdemHAAAABklEQVQDAGp6rObwRCUnAAAAAElFTkSuQmCC",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACFElEQVR4AbSUu0scURSHZ4wmkESLRIggKZK0AQOp0iUpQ1IkdRJIiryqiIhoq4WgoFj4aLQT9X9QQWwUBe3srHyA+AIfoOL6feP17orLFqLL/eacex6/uXfu7JQlJX65XK4CqqEuoF9RoiUpKkhzGdynsQZ+w3BAv8YcFO2NQQrK4SFU01wLH6AXfsJGQL8P31yttWBPObFsZIIE7zB7BH+gG8agHZ7BCPwKjGKNmTNu7T9ij4NG3PJdgp9AwTfYfbDBFXXiLwc6sD/A3CHWWm/mitWIgj5ot+mKGyj8DjYvYHfSND0WfTBmzhpr7XlKXI0oyDzzj3G2YQOBXTiCHPNs6IOxXQI+V2vtUZRQkolkzk1dovJtCMatXUM89hauMAZvQvAUEV8DTPKAS+GNmBYd1lhr8oCLGvFQTgisQArPIXunsKWGNS8osGcVq0YU9OgXCR7BO6i8ePPxr4yQqyRhrT32qhEFXe4aBZPwCj5CFY1uCzc/QqyKiDV12AlwhWqcC/KyeiB7JPpB4XrsF/BzdQ+RNOA2/Xh8Jvcf1mEA9oPGuSABh0v2P9vMZAu0bdjX8CSg34rfAjtgjT32Mk3yguEOnvQ8mb8wBW9hEHqgC4bgPUyDH5I57GHoxS0QdBYSii4xbwL//DPYl+DzmsUaa8Rac0mMWH6FTkRR8OQ2mfvA3dZX/G+gP47dtAZ89kzz4wwAAP//3hbCBQAAAAZJREFUAwDJNsDFvTWysQAAAABJRU5ErkJggg==",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAACrElEQVR4AeyVuWtUURSH34shC2myENRGFBTERtE/QAQV0UJFLdxFwVZQC23cGjdQrGwEwa3SQrRwLbRJE0hIqqQMIRCykIRA9rx838xlkstMkilSZrjfO+ed+zvnzNvurUjK+GVZVgkNsCWgX1lGarJiA4qlUEWhJjgPn+ELXIAm5yDFX3aUbEBSBdSQ1QB74CnchW2wFe7AY9gNXk0N+pK1CkEFUAcbSdoOh+AefIAjMAKP4CHoH8V+BDVqd5gL1ijULTgIa+EYfIU/8BrOgLfoJ/YqvAcbXsP+AOfUqP3FubnWsBanSfQM6ojcgp2QQRe8g8tgvB07GmjD3gbnbNqN7zD3Jo61MHED/80molNwHM7BE2iBoTRNpyALqBki7pzP4iy+OcY341sLEzdIiYgiC/ZTbBSmwStienEYA+fU9DNjQ3OtIYSS6BblAmt9WPqQ17p2rt56g9xtWOmw9Bb5pswiTqGKL1KLu/oIWl9Nc2bIsBYmid6iOSKD4PB7KGu1VAxqXWJwk2EO1sLEDaaJ+PV6VXvxXewwZQ21+1Caaw1rcRo3mCTyH7y8E1hXSf8Z7vKD26PGVdccc/+hthamuMFvoj2wC1xn6imwAb/kCHP1TKo1x1xrFDfgs/e+DSB+AQquY101mylUDSnnuaEP1Zw0gxq15pg7EGoxlUQP2cAEh7/wCmx4A/sc3FgaKVoL3u9GYm5Ez7Bq5rEvwVxr4OaHDyXvcaSzwjFcl+kHWBewg9hP4GZzALsfnHOzOYzvW3Mf6z4xFmpwmh9RA0MI/OfuWO69V4h9B5/DSewbeAunwNg3rBq1IyGX0OIoauAUQq9kHL8T3H8vYr2KXmwf6F/Cuk93YMdDDm48SjZQQoKbi++zt6CVmBu/2+Pp4BsbRuee4OtJuHgsAAAA//+MaPAgAAAABklEQVQDALxQ6ZYbqsooAAAAAElFTkSuQmCC",
+    },
+    ["skull"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABqUlEQVR4AWyTTSs+URiHZ/79QySSZGFLNiglIh+AKLY2hJ23DbKVrZWElYUsUCxs+QaEsGThZSWx8J54XJc5ph55mmvu3/nd97mfM+fM/It+/TKZTAy5UAxlAbVe/Ks8ympA8X8KiqAW+mEqoK5DF4UaZHKlDUKiFHsYFqELSgLqBfQQlIZaZJSsAMNG/vMYbjesQh9MBnqJeuZG0a7EOUkDjFxohTaYgxW4iOP4RtCXoDdPbAdrnZM2yMfshBPYhSdwM79Rg94O8RQ6wDlpgxyMSjgErwZuTVAYUOsxjA64VYFz0gY+Tx7mC9TAUqCeKD9jc9ZY65y0wQeF91AOHiXhz8ucNXdknZM2sKtLayZxBSOBM6L8jK8Zt8ARvEJWgy2MYuiBY3BDfSc8e7WeOWs2yT9D2uCdwQXsg2+cR5RBVwfUeub28Kx1TtKAs7bAx7glWQDu+idxAAZB3Uj06Hz+1zAnaUDC643bBjzANFSAE0Q9w/gR1uH7+YlZDVzSOeYsuKI14nZA7a6bc1OtJRW+BVVYkp19mcbx/HiWiaKeQHtS6fIZR18AAAD//6opcrUAAAAGSURBVAMAU/2OZUoeC7MAAAAASUVORK5CYII=",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACFElEQVR4AWyTy0sVURzHZ8xHhRguoiyKgmhXQX9AEEUtatELKqig2gQhiht1oS4EEdy5VkFFEXyAa9G1C8W9ulPEtyiKD9Tr5+Mc5nrVy/nc853v7zFn5pzJiy75ZTKZGPKhGEoD6gJ0fElJdKERifkklsAj+Aj/Amq9GyEHOztyGpFQSKgMKqEXauFHQN2DroCykItMRtqIQAHWXWiG7zAJ1fAZvoB6gtmYOXdCDVaUPBpGzJWPU878HFqhDkZgBqZBXc9szBxXVhJqk0YEXc0T5rcwDP2wEsfxHhwF9vTAmDlv0NZYmza6ivkSjqEPtqGQuxVBXqBID4yZk0FbY23ayK4PCSzABvjC/zC/guKAWs+YOXP4D8DatJHvSMPle+f/JNRACzwOqPWMmXOA7y5bmzY6wlyDm2Aw3U2uzw9jNjJ3naC1aaN9jCkohWfQDm6xK5hHi1rP2FM8c62xNqfRGMEl+A2Obv7G4QN4qtV6vmRzlvFHIdvI7cVYhQ64D+/AJV9j/gU/Qa33Hn0P2mA11KYrwovsvIjwjpvM18Gttrmo9bbwHa7eGnVOo0OcWViBv/ANrsBAQP0V7RFw9Z54a7CibCOW6GF0RQ1ETPjE/BpeBNR+dz6eOUuhhvCZRqdXUbTL7Mc6xHwbLGhiFvUt9CD48ZqLTIZnIlH8cwffzw6yC6qgEdxyUet14u2EXGQyTgAAAP//OZo9vQAAAAZJREFUAwAI97I9Tcam/wAAAABJRU5ErkJggg==",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACZUlEQVR4AXyUy0sWURiHZ0wRk6xdpUHLojZRtKjoDwiK2rQoqFVBl00UVKvosuiyKmpTQUFtgoLcufCCC5e60J0gomtBxQt4/3we550jg/LJeb73Pe/lN2fOOWNDVuevVqs1QDO0Bvp1e3ZN0twIbTyrHc7BleA8tt0cNOLvGBVBinJopqoDHsJf+Aavg69YYw+wHdZCjp9GRZCoYsewn+Eu1KATPgb/scbMfcE/DvZgipEEeVITIV/xHfYk/IHb8BZ+BeZu4Zs7gTXnFtjLNMuSILNWuAM+VQFXNZHn+QwsBDPkJ+ET/AZr7bGXaQiyuj3MDsFlGIefMI3IGrYyIjZN8AdYa8/B0EgrdMmnKWiBLpiDJoraoAW8PqLv6VtvjbX2nLEekqBX4AgBN3wU6/wS9g1ofSXRL2PWWGuPvc6TYE6jAZPr+IfBq+KhaL1Gol/GrCm3xBWrkQQVmULEQ7JRcaZ1hzWuTCF71UiCq7SOwAZcBPfnJdbT1tog+mXMGmvtGaZWjSTo0j2xQRIX4BT0wwvQnsWKfhmzxtohcvaqUQhyFdw7n/idpImn2P2wANpXWNE3doC5Ndb6ac6HRiFI0rHCj6c2hvVE/aS8n14LG0XfffYQrLHWnmV6tobJLSeeYGKegEJ+WvvwJ+BaoO89NOehLBJfjl7crLJCA0v8/IMc3sNN2As+SPSNfSBmjf957GFajLTCYpqZ7MH38vpaV/EfweNA35g597SbuD2YYlQEWbpXwFfuJT0AR+E63Aj0jZnrI+Zh2INbjIqgoRCdxX8G98BVPcGK/n385zAbtbjbYxMAAP//l/CXbwAAAAZJREFUAwCQx9ELkDMn2QAAAABJRU5ErkJggg==",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAADC0lEQVR4AbSVS28OURyH59Stt4XWrUk1PoBEwoIICYIgEYm4LIjvwMrOioQQ12Bjb0VE4i6ERFgLCRIshGpVmkqKtvT1PDNHZ6bztummzXne8z+/87+cOXPmtCGZ5r9JC9RqtQZognbogM6Itppzk+aoO0mSAI08XAfshJNwA55GtNWcs1gj/oG5SqsUwFGtFc9VcAVOwDZYDLMj2mrO6bMSvTXGYubNZGMjHFxFC8JGuAQr4Cuch32wAdbDfrgAzulzGduYlpiDYdZKBZDmwHI4Cu1wCw6ACV7Qf4CP8BxcgHP66HsMzVhzYGZtrACVtduQD8N8uA1H4H0IYSCEMAyjEe0B50Afi8zDNrYt5mKYJCZNDX6s7BYsw/4EvsReEo5g121xrpfJU2CMsW6huZDKBZpQ3McZ9NegOybAnLhFn248roOxm+nNRVcu4AlZijoK7vEQj+pLW0gv2n4Xoq0mHoohYp6BseYwF8NyAasvQK3BZ5gF2+FmRNuViXZR1/cLfsb6LszFsFwgFQo/ruwQY/dVtNVEW0201XCttuJL/sv0NwjQCTNhqk1fY4ztI8hcdEnpFA2jvIIAq8H9PEP/MqI9iC3aRV1fY1zwa3zMRZeUCvxCeQg676KfC/dgR+Q+vfeTaP/X9dF3N/Ou/AG9uejKBTwJT1BdWRe9e+t5/o4tvtyL2H7B2mriiTmI7v1krDnMhVQowHl25f2op8EVbKH3o/FEuMd+hGvR1oC2mnPaW9GMMbY/5kIqFEhHSWLld9jus0fPr5Rh2n7w61i8JhimzbG+PxkZaw7MrPlSMotfKnuOvRp0cm4RsvdToH8EXtHyGFvNvddHX2NGYg6ms+ZEZuW/Puodhn/ARz5L30zgIPREfMJm9HOgj77GGIuUt3oFDPZ6voqbJ2Yd/RKui64iauCcPvr68o1FzlulACt0NT24+A/Fu9+V3mXsXVNEzTl99PXpjMU1b5UCTsUifpH+S3yL9hvGN7U3iMehL8ZgllvdAtHFBH5EexhvmoC96H50+mJW2z8AAAD//wDaBDQAAAAGSURBVAMAIK4VXn7QLt0AAAAASUVORK5CYII=",
+    },
+    ["sliders-horizontal"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABmUlEQVR4AZySTStEYRiG54zxLR9JpGRJWVlbKWVHFCsLZWeBH6CklKWvLJUtipKU8ifssKQsKJowZsxMx3Wd5tRpkoVprnnec9/P88577nPSqT8+YRhmoBdGofW31jRGLbSBjX3UmG4GHBqhbkJ/wrPXmVpPUI+5AKdwnuCI9TC0QQ8kfdfO1LtBCfMKdmC7whZ1D+7hCz4g6bt2puQGBcw7OIOTBBesn+EGDuEYYt9eZwrpIAhCKEGeBqGk6vgJ4Rs8xT71lZ5chTzVmdAQawinCTpo6oIx8B+9bmTdDE1gaJ30SQfVmRpvwRAdWqNpA5ZgEFogqevF2KsXhUjf/7+ewBCv2WIdVmEXbsHkk7pejL16UYhlAjGcN4ZeQGOe+pbQs1zn4B0MM/bKhhgQiK9sA6ZQUkV+Ik2PtXksUoegBa0B9ANvwRAHMKZgpgo1vXb0OfDtm6XGehRiBmEclmGlCjU93wsf52TFj/WMJzDEA4xpmKhCTe8T3XwMz01iPQqxSFhZeILHKtQM0PB8Apds9EBPpFOLPwAAAP//nowXMgAAAAZJREFUAwDlxc+Cj3OnQgAAAABJRU5ErkJggg==",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAABeklEQVR4AbyTXUoCURhAc0BBSghNCyTaQY9BBO2iRURBPURE0FMQEUEFtYo2ET0GvbSDiKg0o8gQErRzZC7MwKAPgTLH7879fkbvYaKJEZ9+vx9BGZbBmNljkRTjoiqxFuN6mucUYRHOYAVmE3kH2xs5PU9yCU7hCi4THLGeBwfOEfcg5K21x968g8j9/3JQlzF3sAMbsJlgn/UTfMIrHEPIW2uPvd0ol8v1oAMf0KRQ3okt+IIO3MM63MAbdQ1ogj329vxF5FJXgbuFmALFPdZteIB2fM8yfWlMPHkNVEnX4QB2oYShKWIZKqDJpFV77M20dkHDKtRgEtbgHIKtEMdnbYun30IDfuAatiHYCnGktWeaDuEEvjlcD1iDwaZGNSZDrf0y4DHGNcvBlbI52El8aUw8eQ1oTWaoES1VYnMl9jSp0Tp75uyxN9NasBKixjSnQU1qVLPjsxashKgxzWlQkxrV7HBrWPI9StJiz1fEQf4lbb6wl7L2BwAA//8Ep8oZAAAABklEQVQDAOfA6nsPIzd9AAAAAElFTkSuQmCC",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACWklEQVR4AayUO2gUURSGd3YTNQ8jxFd8YKPYCAqKopVgYSdYiS/EQkGtVATBxloQBQvfhYUvBFGxsDRpkkAgkCokJFUIeUAg5E2SzeT7LrvJMpmBFAnz5dw99/z/zN5zdvK5dfzFcRxBAxyBnVCVJcuzaXEVsQ4UJalFXA0H4D1cgcZErVo9Ip+wQMFuuAUP4GEF91lfh23QCHvhIpgv16lRq0dBw4iCQ3AVvHsl5m6Q3wHeWI6yvgzJOj3CExbZ7IS7cDuFO+QGYR5m4CeYq6xVq0cxH0XREgVT0AXt0Jagm8/TMAAt8AdaoVynRu2UXn7lHIsYirAgFHsT9zyOJXJ+i2Hyj+A/zJALtaWoNiafU2Rcge5p0kDiEhyEMCII52ESZsEbsrX2Ko/NFoy2QxMle+Ak+DQXiLXkHaVdxKYM1OoRmmLnDiN8DZ9LPCM6Bs5gHWub8In4JQU1avUIY0PNxl2eoQfei+U9cIjlMesRcEzs8FvWN+FaCtar1SOMjR2e46DHwE4OIeqA5/AX7OgEe6MwnIFaPWKfEM3qhcD2T5D5Af2wCOGiITaxhrgVNoVk4l8wZNMXRIFYLdSYL4+GP3oxp8lZ9n36fdRuBjVqHbecd7SwnqJjcBrOpHCK3H6w4yeI5+A8WKtGbT3mec0cm+NsvoEPGbwj/wRqwFeZg/+Uta8zNWr1CGPjmfWx+RW+ZfCd/G9YAI/C+I+1eTVq9QhNcWwckY8UvIQXKbwi1wyOkJPgi8JRsl7U6rEyNot0dxocjzT8Dc9hKL+IvlB7iOMljVo94mUAAAD//2IxjVMAAAAGSURBVAMAMs9CfO1PmqkAAAAASUVORK5CYII=",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAB90lEQVR4AbSVTUoDQRBGjYj4t1EXLkRyDhHBpYfRjQdxo4dxKYh4jiAu1Y0aCGJ8r6Y7NJMe8gOR/qbb7m+qqpNXZH1twb/xeLyFjpK2Zr2+cAIC7qDbJNcsu0ckoJpNdICO0UlF7nu+SahtdIouUH+Gdy0SYNxFd+gJPVfkvuf6fGcDzyF6QG1/6Z0kwLeaYTVG/uZxjc7RWUXue67vj/Nf9I4uUdtfepsb9Hq9EfpAb+i1Ivc9HxFwiF7QIxrM8DYJMC4yvjBfJblm2T3yRzTlgA7J2mdW0hMeKva2n8zKG8V+16MzAS/sofsk1ywXH5GAKq1WzuU9+oBQfSTrMr9d87AX3tZsDGPFrSMBgeRbzmU4cy3jsi7z+mqe7C1nYxhL/1JfMvXMP6xMt3zLuQxnrmVc1mVe9mue7C1nYxhLf3MDiJAMOZf36AOyDpCsy/yw5mEvvK3ZGMYKwvINiDU1ZHxu3qfeThudCajKW8m6imrSOzFBjuTZIyqIiYPWozNBy1f7196Y2SeRIFUjuzJcYzvvea7Pirt+F0pP8yVTnszKrgyXTLfXnuvTb3H2iL1iz2Rv6ZkkIMdqhlUYWWZlV4ZLpttrz/XptzfsEXvFnsne0tPcIBEjuzJcYzvvea5Pqrp+F0pPk8ArLKEf3rlJcs1yevwDAAD//2vo0ccAAAAGSURBVAMAjPpecjON9CEAAAAASUVORK5CYII=",
+    },
+    ["swords"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAB9klEQVR4AVySOUhcURRA/5+MRENUBEn6kJAmXQIpAglkI5CEEEIgIYuColgpCoKdihZaCBaCiPvaWCguYCFoIYIL2gl22oiFKzgqjI7n6IyIw5x/l3fffffddyOJRCIKmfAwSRYyGtz66QPXjHuA7p5ohLgM+AjVUAM/IJuAO8jLf1LPxvgJtWDcB2SGCe6hvIfnkAtl8A9y3CjqkA+lYMwL5HUC9CDkswmN0A8G/0XmQCb8BpMOIhvAWA8P/RzjWIAn8AbGoA9SSTzxNXYPjMBbeAzuOTZBDGMUuuAPfIYJSCWxJ1XYw/AJfkEvmCwWCcMwjrEPlt6NtNSbSSz/C/678Ao6wWr23WsFAcoZzgMYArPfTuJ1rMTuW+0pcQkILhPQaWUWjqeQ6sHNJFZnU4tZb4Fn4J6rBEnDzfXoXyHVA5NY/jS+OfgOVuornKNfJ9BYxzEJJfANxsGT85Ce/A65DU2wx7XdEzjKaTjug+9to9LR/8NLsNMzSKs4RDqNDlAu13as07yHmwpZbAOfsQPZDDvgEz9CzkIRtEMB+BJWlW4CX2ARp9k3kD7lANJ7e2odeiWsgZNojA2fx46bwCdZwagAe7DL/Y7gBNsKTL6Fre68TOEvh1U4dZBshotLOLyGo40aOB/nbIyDMQE/11qRyxDTfwEAAP//S0r9lgAAAAZJREFUAwCAF7FCJ17X5QAAAABJRU5ErkJggg==",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACPUlEQVR4AXyTS0iVQRTH57t2M1tIUIsCq01BVBS0iTbRpkWtgiBqU5sogl4UBEVFRQ+igmgZ0braFBVB9EDBB4gL34qIoILiwjcoesXr7zd8yr2iXuZ3z5kz5/y/YeZMJp/PSyl2E2yGcsiGVX6ugTnmWmNtJkO+Rbuwl+AqXIQKkkuxRSONVRA0x1xrdjPPKrQB5yQYPI+9DC9hZ1qIG0Lq72DyAhZztdaWKbSOhY2QwAV4A3vhOUQxRNbjb4ensA9egR+1pgy/RKEczgTMgQJ/sIrtwUYxbDlcA49AkX/4ri/W5hSaJvgNmuA6HINKKBRzN64/IV4FR+EmNMJXmM4kSaLqAJP70Am3YbnYQ2INUAsH4Qa0wwMYVMMdBZwZAr1wD1YS82YU28b6FqgBc/vS2hCFCDpm+euHtXb2mPVmeAuTkIc4CoVsAw9TQQtW25lrHvw7FLxtTCjakUL2z7O4EoIFhWLVxN/DITgNbTAPcRTuyJ18Imqit4NbJHaCwH4oge/wEaYgDt9ZQsP5TBStJ9oBR+AReKPuzIu4y/wUeC7uREHfWZb6xGJFPJszJNnydm4dvs/hMHYEukDRL9jPcBxuwTnwRuNbU/kAAfvnLPYn3AEf5i+srbEV+wF8Z6+xv8EPW2NfLT2R/yz8gDFoARtUO4zv87mC9cqHsMZasePgWf3F5uxs39goE7/kedi9szTafIr+GP4EmOulmOOFWDNq3DMKOggp5hd68C3ArDhc62bF9xlF8MMCAAAA//9mBchZAAAABklEQVQDAKPQ0TWqpdjIAAAAAElFTkSuQmCC",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACsklEQVR4AXyUSUhVURjHz3uvXqWS0UBtWhQtgmYoqKBpUdCuaBstK2hVUDTPRbUpCIIiKNpFQYuCiGhRrRpUHBBFRcSFC0FUnJ96/f2u7z6fD/FyfnznfN93/me+6cAXRVEGlkAFlEMWUoTmLMbAHHPtY9+MyWkCVippHIHjcAy2gcnxgNQLhXx95Ti2grn2sW8lsYzBLIF98Ajuw114CYfA0c2hGgIdrCt2AIc55trHvmpkTXCGS0kog2/wGhbBA7BjLFokth//Q3Air7D2sa8a8QwjnJMwDu3wAa6BpSBKYzHsBmeECeZ8pNIG9lUjcoY5HM3QBydhM/yDG2BJRJfROApDoFgVdhPYpxerRi4RbMJxCybAfdmJ/Q/Fontov4HT4IA7sPfAmd3EqpFLp1Ipl+yoP3E6MiaYWCp6m8B66IKVcAUUu4r9BUNqOcNAxcAAzvlEHdiBPE3v6B/yL4Fig3mNEAviTEQHqZtwHWtRoHSmHspGgs+hEdQQqmFGkGuxEM9yWAHuUbJ/paLO1OWfIM9rcwprX0yRIC2dbvg76rug+FASUU/WGXrv3LsN5LmnDkJ1tqAn7L5UEPGqlC5V0b3EhmE0z1PsDxiDuBTWTsv7WIN9BqvhCSiaLN9cn5j+NcS8d7+xw8mBUA/+HMQluHdeB9+wMS+yy7LzXxxvQZ/UUl8H52Et+78KyiDtqL7lLQR8Ri+wB+ErXIAGcOZuhwN1074D5+A7HAZ/Ep+w/qEKb9mn48Z6+1sJ+vg/Y51BC9Y98yfgxX9P2/f7OG+3Yx0w1nCGNjpxXoY6WAA97Et/nhHa3k//Ql+o9+HXp4B/nHp89u3ATiRPz5NT7AxOb78CVKcLAuPg0xrB+qoMmHORyllwTz2c+G/jK3G5irqUahKcAWbeYo531S2JxcyeAgAA///fXSi3AAAABklEQVQDAFfN/imxQg05AAAAAElFTkSuQmCC",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAADC0lEQVR4AbSVyWpUQRSGbzskcQKHRQSJCorivFBw2PgAbvQJRNSV4giKIOJGERXnjYgouHPnA7gQFcSV8wzO6EpFDWQg6XxfdVcl9yY3aQIJ98+pqnPO/9d4elw2xn9BoFqtNoGZYA5oA9pZ2GZQKZuDPmCMsebEXLmazAsCNKaCK+ABeAi0N7GLQQskg0TqY834F4EbwJyYK5ecWRSYRMB60ApagP212AtAgpxIgfw8MeuAOebKIZf9JKDQeIL+g01gC3gJlgIJkkiB/Bz+5eA52AzMlUMuOZNAL84eoJ2AfQP2g1cgJ0Jf/3zsGSD5C6yxb7ESyxG5kkAHTmeh6kna88BncAAURaYwthG0gafAmK9Y+yewcjzDypkEXNZRBhVZgnXpZSIL8d8Hns9e7BcguTnLaEsul5xJoAvHe3AQxBmbMJSIWzOZuNvAVc7GOha3yxXJJWdNoFKpVAlySe6jAcOJuMLTxCvuNS1u1zt8nXXOmgADWX2gUZF48AO3aw88OXL6/QJ2RiHi1rhdd8j/A7z7E7Hp88RThzvu857OgIGfsI1s11niNoCr4CLwlmFqX06AIZ2XsNeBe+whlol4IXwvK4k13tc7jXaurBQFdFpDLBO+4OFEfkJ2Gfi5LT64Y3TaQfqKAjqP4/WwVmDLRHwDbosvWPLXxB4BH0C4ntjwFQV0+nCcmc9+DVGKzMXGM4nbco2xVcA4y4Ogm/+CgIcLZuCyEi7A7gJ+3fzzSroqYxXxjBjO4sx9udamUwwa2yoX8MKkaxoP9xZB1nIDn9DeAR6Bf8DHqMhW2go/xu6uw/33JZsrh5OQMwnEw11NgrfCmR6ifRdsA9Ycz0cR77s/LvsYt3ZZ1g/T/gjcMjm8KHImAZPdBpfra3bG30j4y+P7BX4Dz8c4iXfi8yIYK77Tt7jZtsKm2+SS8WUmm+BM7zHwA6R6Qjt8igDFFA1++q6qkwCvrbmWjNJi5w3ZTrBCzpZmQ5+xEpvrRIO4mXEFodgxGx3Ozlm6KmNGBHldwBxz5XBVIa8PAAD//0VrxB8AAAAGSURBVAMA/uwwQNm5VF0AAAAASUVORK5CYII=",
+    },
+    ["target"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABoUlEQVR4AZyTPUiCURSGPy1oklIMg7AQCVtbGxuDpmiK2qKCaOhnaamWln6GCAraiqZoam9sbU0ipCRIEiucgsKeB6/hnPh4X8/7nuN3L9d41PZqNBqdkIQ8jMN8QG1Nr7OtJfobQLALIwMzcAI7sBhQW9PLhCxW1BwQCjkqezALd7AFcwG1NT0zudATxRE+UprgJvSB4UvWQfAXRW1Nz4zZtL1uIUFwEoZgH37AR55m7QmoremZMWtPwgEpQhNwAxVYgU9Yg92A2pqeGbP2pBxQINQLtzAK3XAIA3AUUFvTM2PWnoIDsoR8v/CRh3t4Bw+wxipqa3pmzGJFWQco/o0DyqG7n/URhiEJp+D5iNqanhmz2FHZAUXUG7T25mEt8/0ZlgJqa3ru36w9RQe4x2uCY+BNPGD1sLww62hRW9MzY9aemgPqhK7gAVahAzbgAj4Camt6ZszaU4/HYrFvQlXYhlfwtk2xPsF5QG1Nz4zZqr0+QYT4IlgCL8wZ6wgY9vBEbU3PTCn0NP9MhFtDvGX+6gI1H/mYVdTW9CqtZrzoFwAA///5z83SAAAABklEQVQDADdBmdX8/FuJAAAAAElFTkSuQmCC",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAB+UlEQVR4AaSTOUhdURRF7/tgJgWxM6IkkDZVICFFICEkIX0gnaA4NtqKioqKiq02jihY24uKaCcKVrYWoqidCM4W37X0/F/YKi7O/ufsfd7Afbn05C+fz5dABbyHb/A/UNtzVvIkloqLMGfwBkMNNMI0TEBvoLbnrEYvZMwe/h8WRaOUzleYgno4hXkYDtT2nOnRWxrZ4h29xvwFRuEl9AVr1PNAXejr0WvGbMqx0eetxNwF19ANe9AMszASqO0506PXTKU7fLQyjP+gCsbAOxik/oYN8MqitudMj14zZstcVI75D+wGtdR34LvxBR+hRW3PmZ6C32y5i6oxvoUt8Hl/UFdhB1pgPFDbc6ZHrxmz1S7y9vAmr+rSF/wwoP6L3g7U9pzpUZthnKpcpHg2LipuZdsh3MInUC9RPwdqe870qItP4yIbx5g9E1fUdfgFBiapbYHanjM9es2YPXTRGcZl+BgsUPfBM9JK9aqitudMT8Fv9sxFnolFAj5iO9Vz1UNdge/QEajtOdOj14zZ81yWZXcYT8Az8oo6BB/A76mB2hmo7TnTo9fMiTu8I3zJ5/VMePUbGv3BT6pXF3Whr0evGbOPHy0b8wQuYBP8nuaoFVAHvhdR23OmR+9FZB8XYU424BJ9ADPQBL7gAaqo7Tk70AveAOOU7gEAAP//gDYITQAAAAZJREFUAwD4p72XFofI0QAAAABJRU5ErkJggg==",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAChklEQVR4AazUS6hVdRTH8X1uGOTF9FIWRRQ1ahI1DIIgiiIaRDRp1IOoSdFrUBCUqCDowBc6UcTHyImIAxEFEQTBoeDEkSKI4gtfXB2IXr8f7wbRsYf9PWvttX6/tR///zlTwxOfubm5STwbM/F6vBufjMjV9GgmT9iHxwZmcj6d6K34ObbE7tg8IlfTo5kePbXnDwMeZjWeKVkSX8XO+ClejOOxZ0SupkdDu2T0Jhnm77CCwYur/Bj/h/N1xW9jVewYkavp0dDyLB5nDFMlk8QL44vwKGeKv8WBeDv+iA0jcjU9Gloe3oVmucqCxK/Fr3E9lsW1+DtWx6fx/IhcTY+GlofXjAUGWoQvM7wQHu1i0Z0we2fe1w/VIFfTo6Hl4TVj2sBFiT8KVzpSfC8+jmOxMtzJZ0XI1fRoaHl4zVhk4EziN+Jk3A3CwrCtr+fCAvxVhFxNr9JAy8NrxoyBS+uIF4oWyP66VH4+Pow3Y++IXE2PhpaH14ylvtI+vcPAy427H6/EXJyOl+LVOBq2hg0MuZoeDS0PrxmXDfSiz2Z8J2yhw0WHDXun5M9YOyJX06s00PLwmnHNwFt1rJSfnZU60TnhB8X/wqIdLEKupkdDy8Nrxi0DZxPvi6vxfbwc6+NQvB9bY/uIXE2PhpaH14xZAy37uQybwpWWF93JmuI/wXyzCLmaHg0tD68Zd6cmk4mXejvD/vDXZGtsLP88ToU7+b0IuZoeDS0P722z3OFQYoVuZLJhVxSdW4Bd5f+Gx4JcTY+GlufGOGP+7yuDofeKfkI28Xfl3teVonf2dRFyNT0a2usN400yPBrorIarWiT7y6P4a/qm3i8jcjU9mtnRU3v+eAAAAP//dk6SuQAAAAZJREFUAwDi/ONX9pYMEQAAAABJRU5ErkJggg==",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAADaklEQVR4AbTUW8hnUxjH8f1/zZhjRhQamXIxkpAbRQgh4Upx51SkUMohpRxyKCWHUihRTneUKySEEOVGSOJuZEJRozkYXt75fmZWM/Ovmct5+3/f9ezn+T2/tfbaa++F6SB/S0tLs1geR8b6ODE2DsRyajSzg9hMB5wgk2U1rIuT4vp4Mt6I9wZiOTWadaOn8vxvboJEVr0yyYa4M96Me+K8ODaWD8RyajS0G+pfGXN3s3eCUViVwRnxQtwUa+PzeCiujvMHYjk1Glo9elcNr6TT3BatKHN6PBOnxo9xS1jd240/xz8DsZwaDa0evTx4JR0TNKM9X1/m0bA9VnZr8VdxTDB5vfHjgVhOjYZWj14eDgDPaSHzWU1u84bGU+KHuD/+jCvi1bgxPEwrg1hOjYZWj14evNby9gzMdHwG9vW/xifij7g8Hoij4qO4LS4aiOXUaGj16OXBi+cyE6yp6eI4Ir6Ir0PR/h5e/GzcG1/GtoFYTo2GVo9eHrx4rjHB6prOiqV4P/6PK8PqrPK1Yro7Gt8diOXUaGj16OXBi+dqInu6sUbJbxs9k3MbXXuhnBwP9Npyxw3Ecmo0tHr08nDNc4UJPAMrqHf6vX9EJzRazfeNh8VlQXd3I8RyajS0evTySDbx3P0MXBwy3MFi7o5Zw+Rcuz0vkpoj51TYezqnBGI5NRpaPXp58OK5qLCzq5/C7Z3WSPRZo2vHzSl5vmsP9NdGiOXUaGj16OXhmudOE2yvybGTvKRY7q1GK7iw0QO1x08X23eI5dRoaPXo5cGL53YJZ/uDmv+Ks8MH65fGp8Ip8VI9VuzYeWcgllOjodWjlwcvnttMYD8VHTenwik5OsN34uGwOqv0Un3YNcRyajS0evTy4MVzcWE2m9m3rTW+HI7cyY2PhGPmi3ld8Uvhi+l5QSynRkOrRy8PXlt5u4OpwF1szuS+2BTnxHNxZjjXHug1xRcMxHJqNLR69PLYPDyn3RPU5Gdl3xTcHt+FLyYT++uL6UVyaiCWU6Oh1aOXB68spn0TNKOt2lHWB+vmxhfD1lnZg8X29ZNGiOXUaGj16N0xvJLuN4Erhfi72K1a3VXFj8en8Vv8OxDLqdHQbtIbFppsz2//LdqT6X8iz2RLoYf5SuNd4YW6tBFiOTWaLaOn8vxvFwAAAP//cGivzwAAAAZJREFUAwDo1zUIgYVriAAAAABJRU5ErkJggg==",
+    },
+    ["trophy"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABvklEQVR4AXTSzSulURzA8fNcdxjzsjBNTWqkZmYzMzWzwd+Aha0sUUgpIi9bG9mRDRYk7wsbC69/gZS3DVnY2IhYSELx+H7dp5tu0fPp/M7v/H7Hfc5zUiH5i+O4EGVoQtsbXLOmMGkLKQrT+EyiGM3ogmMD42vmXGshX2wP0v6CIhJ1WEAV9lCLmhzmXKskb609RW7wn0Qr9nGMa5xFUXT6mjm4Zs0BsT3/3KCEyTus4BxPeOuJWbBmldGeEjfYYWKyk/E30oiQ+5jLI2lNB+MFdt3ghKAbW7jDR+RxQDYQhpDENn8gcY9t2HPiBjdMfP9Bxjn8gK9VYKOYF+A7fmIWA/BAb1IcVIwHEpdYxhV68BffEsZ9xK5Zc2kPYn8B+RCYPIYQztCPL5jCSMLYnGt+IWtZCiG7wcssBM/A1/G/fSLnHZFxL3PXrCHMPLkbRKT9PH8YbzGNGRj7Gq5ZQyrz5G7gHfc2+pnWKNnEBtbRjmpYw5B5XjbgpPPxlVQpGnEEr+t7Rs0zHqIepdYinzh7Bu46SmIRfqpyxgksJYwriH/BGmvtyW7g9fWkxygYwjDGMZkwNueaNdbaE54BAAD//54L5+AAAAAGSURBVAMAuN6q+Xk6C/oAAAAASUVORK5CYII=",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACD0lEQVR4AYSTOy9mURSGz/nmEjSMTOammklmMpOZarppJpliFBRuHQoFJRVxvxWucfkBChKCDh3xCyhQ+QEU7kqC8Hke30HOKZD9ZK291rvWd6y9dyqI/tLpdAryoQiqn6GYvNqHeotDgq/olwd/YBR6oBVaEhgzN0JcbZ61ENoxm+BXaAYL32DnoAvaEhgzp0atNdZm2+gd4gEoBZteYrdgFVYSGDOnRq011r630S/E32AaJuAMruAiDMMYxsCcGrXWWPvTRuck0/ABnJUx3CeXmtcoPoK15wa22fjJhVhnkoU1HmKTy5g5NQ7+PwJrtw2esOmHbliEG3gLLyG5jJlTs0TSE+zDnqSYg4M7YmOTcewB/INcjtVC3CCI/Fw25tSM4S/AsT38ogDnBpzVPol5+A21UEADL16+PtSBOTX71oBfF9w1Inm/PA3vyTKBKpiCduiASagEr8QsVi0ms2KN6H5N2JkNY234HVsOZfADbDCEPY20uJkVa5QJBTZzbjvs/Xd7sQ5VfxffnBrcxxVrxDw83hzSHms91pmtYddhDxrAXE6kZZtZd40MwgtC3o8v2EY4BN+TzcR7Y6yJ+GfIsgb88Ydhe6Nt4K/VICqATfgEfyP0N/C1atRaY22skcftPEoQ+54qsJ3ghRN9Y+Z8rGqtiTVyeDMUDUI3+FQcsC/bmOgbM6fGmDXWBrcAAAD//4VOpC4AAAAGSURBVAMAWT7SpTsgEyYAAAAASUVORK5CYII=",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACeElEQVR4AYSUO0wUURSG765oiCBGBKK22hlLbYxa+Co0amzUaDS+H4WJ0cRKC1+FUWOjsVI7tZEECAQaKCl4FDwKaEigIVDxTmAZvm922F2yLJD77Tn3nP+cGe6cmXQo+IuiqBwOwFk4vwlq1JYXtAhxQwrTsI1ENbyF7/AVPpfAnJo35KuthRR+sFEZThUcg4dwGFz1/PwpgTlS4Qg/j+Ao7KRpmXdos2sEvsFd8C7HsT/gSwnMqVF7B413a48qG+4l8ACm4B2MwDzMplKpqfUwB2rUekTT7O2xx4a1bCqhG3rAZITdbKlR24uwC+xRZ8MxNhNwHC5ADRjHbLjU7EZhzQnsJIwZtNknNgtwEzwCn3j81Nivt8yp2UfSGmvtMWHDGYJtcB1ewyDsggqe2hbsmpXEthNUM4B9BTegFWbSHHoGZxaGoQGawWE9ha2kgRfFDSHxPaszBNS0YBthCHyImVhM0whs7JP+T9JjeIL1bGpotEPYe77GHuOrUeskZKj3IWXfFJLxIriEMwofQIHn8h7/VoJxY+aMjyY1pLMrvsOsm/t1vtrZPQeH9xL2ZcJFrLEX2A5Qi8mvooZccZn0HPRDJyzCzwR9Y33s5xItbn4VNeSsHAkP/CAy31XPtQlf9I2Z88ukllR+FTUk5Xwdwn4EZ/IX1gmQ3/jGzKlRSyi/4obeFWyFClK+ivewdeAD+IdVJ3/xjZm7j19rDVgb360i4sFP2H4cR+Up9jS4/Ndu4xgTfWOEwkl+jFljrT1yY2Njv4NXEF0Gr+ZonMO/Cn6aRN+YOWvUWmOt+1xDh9pXx3FYvarDq/+MhoUYMyf61lhrj7ACAAD//94a5NMAAAAGSURBVAMAWVj4JIKu2yoAAAAASUVORK5CYII=",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAC+UlEQVR4AZyVu2sUURSHZ3d1Y0xITAoT0CiIxMZCECsbC/GBCorgo1MUH71g5bsUbdRCLbQTfOATGxUL9S9QK0EEQ8g7ZPN+br5vmexkd4Zkk3C/nHPPPb9zZ+6cmU0HZX/5fL4KmmEztFaIuWqqysoFsQ1IqIG78Ak+V4i5atQiiUZhA64yDTWwlqUW2AVNELsiYuXDHHPVtFgDrFWobeEMino4Cs/gIzTCIOyHnYtgjrlq1FrDWvVslHGXWgochBuwFbwiTDDOv+5UKvV/IcwBczGBWmtYy5q1blDHymnw/B5jj0AOljrUqH2EcDWcgjo3yOKsh2l4DR0wd0W4FQ81at+gmAGfZdYNJpi0gf5hbDN4q5glDTVqrWEta07oeGtPKTUC58C78NhS+JUOc9WotYa1niDOucEQznu4Dr9hDDwuRcV2IxYbdIl6n525atT+IvEafIChNB3iwgCTl3AC9sJPULQF661jEodr5pirRu1JMl/BgLW9ggBnBoahiwXP7itW0XFsA1fqu4IbjTDWQMQcc9W0WQOs5YNO/FSMInoB/eDbeQbbRMFqyIRUG4OzYE4fVo1a3GgU7iCaFrxJ/v+BO2DrXcTehn3QGuLba+wCc7vQ75AatYSiEduA28uzbBfYEbfw7TIL+gLNffweEjfm2k18c0dCLdNoxDZwiUQfvGIfvFfp3E+Km4u+sfPkezS5UMO0dCRuEKb4kGw7384pYnbaIazoG+tk7jGaixsfC23gJ2QTksuwEv5Be4i+MdfMMZel+EjcgE5ZQaqvvQ/as+5mfh98KeUBfg+4Zo6/ZmoIlY7EDUixDY9ht8FfsB3fYW1DeYtv+7pmjrlqCJeO4gZcdRYaYR0pG8GzXoX1Idrna/BdE31jz4mZcwC7QS1Yo3hkxQ1I8JtyD/sNbMftWLvlCtbf3O/YHyH6xq4yV7cD+wXUWsMY0yDxTXbBl6cXxy7xzJO6xJhrfl7MVYOkdMy/A8/2Est7YPcyUWsNa1EiCGYBAAD///O5B2EAAAAGSURBVAMABVowogcJxA0AAAAASUVORK5CYII=",
+    },
+    ["user"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABbElEQVR4AXSSPS8EURSGZ6zORrZQ+4qPn0KtoRWiUvlOJIgfoVJSaBX+hI6ejmY3NtmgwXiembNjZ+1uzrP3ve8598yduXckGfDLsqwGYzARqGsDSpN/DVgwSmEDluAoUDcih/UXlQYUpKTqsAknMBWo9epRg11EpQGW25xlXIUr2A3UeuaswS5iUIN5UhbdMb4Gar1uDruI/gY/2C0w5vgbD9TIxJw16pz+Bt+4D/AIe7AeqPXMWYNdRKVBmqZ2b5M6h3tYCdR67ajBLqLSgC/s3Hd9I30BW4Faz/thDXYR5YTFved/QHoftgP1IXoZKvchb8Di3vM/o2ga9BjyUE+iTmEDyvuQN8Bw2zOMnvU14w4c9+GdMLeGb61ryqvs9hdJaN4yvvCxmtAKmnpgztoFtGPZgHmS8fcJHRZVjgovCa+D/oAyuq/wheMZ3zC+w7AwZ413wjXlDnziM6suofIE5r1hzponTNckvwAAAP//igzGoAAAAAZJREFUAwDiVXc9mHWtpgAAAABJRU5ErkJggg==",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAABmUlEQVR4AXSSPS9DYRiGT0WoiNRQQ1e/wCRi8jFgRiJBDFjMRqMQIbEZjTYbfoCFWE0+I7oZWFR8pq6Ltz097ak8V96n932/t36clqjJX7lcboEs5ALuTfOpBhdb6c9BPywF3C3VQ0pOQxElapasEN2DSpG7mmVmsOJpELDaYQRm4RTmAu5qemaQ40krymKPwgvswmXAXU3PDHI8aUVqXUSe4Q2+Au5qemaQ42kQsD7hCnqhD3oC7mp6ZpDjSSt6xz6EJ1iHtYC7mp4Z5HjSir6x72EVLmAw4K6mZwY5nrSiDHYZHmATKr+au5qeGax4EkU8Q21YeRiHZViAmYC72hiv8yHL+j/VIgyf2ALyFmzAPEzDVMBdzXdmphDuYEdRtYhXnbAIA7APkzBRh6V6ZnzivUMkWdSBMgzncAA3mUymWAvaNeidcQ6BdziSRX60btRHKFHww5mYoJUQi2DWO6zJIn/SV1RpKEGvjJ4Z8c6fXvsdaeygHsEHNBu9Y8xt8A5H8h35tBq4w6n+J/b60btFPAHvcETRLwAAAP//VsCVgAAAAAZJREFUAwCDNIQzitMDrgAAAABJRU5ErkJggg==",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACBElEQVR4AYSUO08VYRCGd5EoGAORQg2FiYWFmmivhbFVKztjbWKn0U4KKi6BlntCDSS0EH4BlFDTQUIogIL7NRyehzOw+djDgczDzPfOO3OWPbs0ZHV+KpVKDo3QHFjndUayWxey4B6DLfASPgfWLdFDKkfNhTHQhv0XTEFvYK3WFh7kNGouxPIQvsNP2IThwFrNnh7kNEoL+WTvUSu2H7ABf2A8sFaz1xpeWkWUFtJSayc/hnlYy/N8OwdrULOnRy9SESWBVgWOwfyI7DfbwNXobeSsZu/Kg1SEpuJUrTSvUy7DR3gPzwJrNXt69NIqorSQP03TLpYB8Cr6yEOBtZq93fDSKqK0MFoOea9+c16AF4G1mj09yGncttCrdGAJ+3/4FlirnXDWQ0ojWciN91VrwvIEPoBvyCey906s1ayf4m8CHzMs1UgWIrnsLXkMRqATOm6gNoqm5x3ZGVI1rhfyST4SPlu+Zm9oz0E/dENXYO0XM8v5NfRAe8xSZsk/hwcoX+E5eAWaJ6inbzDJ2Q/Vo/cLZ2dJ6cL7KK/gHGZgk8diHw7gMLDetwdepV5nnEVKF/rnez80+YydXTpq/GK5vR1aepvJzpLShZq2UH35fWQo64Yevc44e2m+3szpEHwj/pH34K7Q8xfTIDhLSq/wFGUFFuEI7go9PuSrGJ0lZdkFAAAA//+J88cAAAAABklEQVQDANsBrik0wzbKAAAAAElFTkSuQmCC",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAACRklEQVR4AbSUu0okURCGd1xZdl0WL2wg+wS7+wSCJgYKmmiiRqIIBiZeQp9AMzVSUEwMTYwUBDFSfALNNfcC3vA2fh99aJk+Pe0gKPV5qqv+OjXT50zVffnkv3cblMvlOmiA3/AnoG/s3fpCAZvV8wVboB9WYT+gb6wlaAjnW9UGFJpromwa5qANfgb0jZlrClpSsblJHE0i31m6YRheYAF6AvrGzKlRSyq2ogYNyAfgGyzDOpwE9I2ZU6OWVGxFDSz+T8kz7MBlqVR6En0wZk6NWkKxFTWI1R+IFDV4YL9j+Aq+ew+zngP1Znn4xsypUYsstqIGt8g3weIJ1jH4F9A3Zk6NWlKxFTW4R74LG6BuhtX3LvrGzKlRSzo2RXGUCIfpNbzEXYRZOIKbgL4xcx6+WlKxVW2glCZPrOewBePQGdA3dh40hPMttwEHmc4fylrBcfGD1UMVfWOtaAvnUtSAAm9JM5v1gTNnj/UQDjIYM6fGudQcapG9WUUDBD43kp6EeXDm/GKtZubUOJemEDWGPXATc8PES/47U7pwR6EMzhzvewd+ewZjvcSWwEMeYY3mUraBM2UIoT99Z40z54SDPIWzDKfo/JGtsa6ANYOs7sGSWLaBor+knDHbrF5BbxJubDQ051X2t2GNte6RirMNfHbm+5WvwgapOM8JGptYY617pNKKB6K+90dW8RPh1mRqrRH3SIuyDe7IeP28kvo81mRqc+uyDa7ZzivqldPnsSZTm1tX0YD3+QAXASdlTbujr1r3CgAA//9tFEUIAAAABklEQVQDADcAyDGJY/YKAAAAAElFTkSuQmCC",
+    },
+    ["users"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABs0lEQVR4AXSSOS9EURiG71gSQZhCQ2ELkQj/QURQK9CKpVKIPZHYGgW1io6EkoIfgYaGSJQoCCIoLNfzzJyZDGFynnu+99vm3PPdvCjnF8dxPpRARUBbXwG6FIohP6ckyjYgUEAgCV0wG9DWV4Luhw4oD7mYUboBjgSqFIZgHmoC2vrK0C2wCMPgaaxJN8DhserZ+2ALJgLa+qrQa7ADanOt+dGgkaDOA/abgLa+WvQjHIKvmsnNNvgicA+uBh4eWbSR0QOPIlDH7OZak23wifMUzmASBgLa+i7R3TAGanOtSTdIJBJ284jLJBxBT0Bb3zO6DTL6MdSkGzAFx+m7etR1EkcC2vre0dOwAreQF2oijUIcztqZmzSFHg1oz2C3g+uDRy90QpImhf6zxc7aGXvbqfmS4NKuxliAQfBiW9mXwJqkDZoQznabfRzmfuE3YcwvsZLYKuyCuskGzQjff5/9msu5g/vAnT4w5vzrsL2TPXZrmm3gXN9wPFOUGg12dgWfU3gNTnOesNWxDY4RHumF/b9lzBy/AS9S7Wd9YoMLqjbAjmx/LmPmXBH1BOpN7PNvAAAA///wP6HvAAAABklEQVQDAG8HmVOCiaujAAAAAElFTkSuQmCC",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACNklEQVR4AXSTyUuWURSH31dD+yqbvlwUtmhRuWnVomHTsAgKWlUQUS0aoKC2TataFBGpoAtBRV2IulD/AHEhunBCUNwpiOBCRXAC5+H1eXDAKxrv0zn33HN+373nHjOiff+SJMmEY3AaciALYsgA/Wxs5r6yKBAiIYuENDyAD/AKrsIJOArX4C6kt3Nxt75dITaOELoA/+APvIbPUAUP4SQ8gb9gzvntGpZRcKLjRN7CDaiEp/AJJuAL+CNl2Howx1xrWIZCKSL3oBNqYQg6oBAsuIWdghrogftgDSYU8pr2YpKd5TiOV7Eyhk0gBzZgGcxxbQ3LUGiFiKe4ib3I/W16Lv4j8Bvkv2zIA6/m2hqWodA8kWo4BcXwFX6DvejG9sIdKABPY641LEMhj9xO9AfYYEfgMn4D/IRZuARe1RxzrSEUCsVE1sFGeprn+G/Al5rBeo0KrCPRhlXEGtwoclqdWrvv3X3y9+w4iAq9wFdMruPb3EXsObB3efQyBbEbijix5Wx+A4ufYRUV/XesS+EjnIHb4PU8obUphXyd72ychV/wGJzkHfxlT+h1XrJnw1ux/8Fa25BWKJ/AFaiDZhhhhkZ3YD0KA1AEDqRCS/gt4JRbn6+Qs+LADbOxgIBDh7v1sU7ARs8RGQdPbp1P79xZm2tAdYMSiFC093PKFTPP1zVXX5YU8rlLqOiDNTjs87UcQtE3t59kh7dHIYevkcA0V/BXcA/8nJsudsS/RXPtWROxiU0AAAD//9w9K+oAAAAGSURBVAMAAbm5QfCNrWMAAAAASUVORK5CYII=",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACeklEQVR4AXyTuU8VURSH7wAKLkiIEGOQmLgkLjFqaYy1JmpsNVpYuHVqopU2Fi6F0Vi5RUNIKFhaQgUU7PwB0FDSsIR9DzB8H7w3mSEvvMz3zj2/s8zMnXOLQoFfHMdFUAoHQZvk4Rsr1hYoDUmiQZIiKGNdDdfhHmir1aEEvxIuQxV+GUSskyvTENVmV7B/4Rd8AK2++mH826AvV1lbg9m5kobcybvXIH+BC9AG30Crr34cfxDa4SJ8gppcLcuQeeVSlDtwAnyqz9gG0Oqr38Qfg6/wG2rBJ7aWZbbhfpRzEINPNRlF0TzrSdBXN44bpvhrBbXzWGsx2YabKCsQwREoBi+tvrpxm+Q148v8WYsJmVdeQ+kDC55jT7I3x7Sgr97P2mbu9QvWXgP8WYvJNlxF6cxxA1sPP0Crb6wL/xL8gbzWwdpaTKoh++VjT6M6Km64r+e8afXVZ4j7AeawNlWbztUipRpueyHY1KI6/MdwF7T66r5aN9oT+AkTsAHJtT2H7JVHqQL1LDga4itdw9fq32J9BpzXWazNT2FPU18B7m3wXJrgcXpKsBEc4PfYdyn0nUfjz9DNP4T9Dk3gR6ukaYlPWI5wH/xqzpdD7An4iJZHX92ZtNj8fcT/gzXe5AHrchtWsXgE4/AS/kEztKTQV3+FZp75DrMD/xrNvXyIPWpDj5Sv0IMwyhebhSVYTqHvvo2S0wvmO6NOgJq1arU2PECCQ7uIXYe9LuMLJJhvHcuQ0WzoncW9yIyA2bswbp75nnMbp7UZGw5R9Bbcs2Ti8Qtdxt3PNwRHwLlNa8M2dOo9w2PsmY9PXuErF/ejeKYX8WOwJq/NbQEAAP//0up+JgAAAAZJREFUAwA+wuYu4E//dwAAAABJRU5ErkJggg==",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAC3klEQVR4AbSUu2tUQRSHdzcP4kqepAiCvfoXCNpYKGihNmrlA0HQxkdpIdiplS9EQbHRShsrBUGsfPwFprGKfTbBaJLNY/N99869mZ3dwBZJmC9z5nfOnHPvndlTq+zwX9cCrVarBnWYhD0BbbVsD9oAjMIElHr6vFlwLBLcz3oCTsNL+BrQVjOhMbvR78AzOAXjYS/m5mgrQIDrMdw34R4cBBOJtpo+YyyyD/9huA/qvpE5WOajbYE0BMfgPKzDQzge0FbTZ8wa+nV4CuoXmNXNgZmPtEAd+QwMwnN4DdMBbTV9xvShz0Csn2VtDqZ8pAXcfACXT/eJea5ara6KNqjpM2ZwK524cqQFSsd2GWmBJol/ga/vtx/j4PsFzYNV02dMs4vu5zQH4flIC/xHfg8GXWO+DPsD2mr6jPFT7cV3CQr9HbY5mPKRFlhC/gxvQN8tZr+7aKvpM8Y3eYL/Bqi/ZVY3B2Y+dOQW/zk0r9sc5iO4DT/hX0BbTZ8xq+i/4Qeoe429FOZAykdbASWKuHEW+wNcgSMBbbXZEGPhu/iuQqyz3BxlAQ6s7D+4p8B2sYvZTyHaalPETqIPwF+K+TAr2MPotpG2vpQVwOHPfpwge4o95wv2d/iWoKbPGPtS0X9sJUVfOsmeQq/41D7dKKI/e3uKPWeY9VZDnzH2JQ/YvT5g0ZcesDHTefA+38Cf9lFEr1uL2cPyvtvEDrGOUTuB9hg8zIvM9h+vrA9Y9CV1c9YtMELQObBN2GvsLdN82xn4k2Dv8Uf2ivgX4B77j19Bn3tjfcQCdj9fz6f4yCavmjcJs3NQUJ/X1N+Ge9wb9yVzqNuvhixgdQ/JV54PCTozR0qIsYh73GueStDnCVX302dn4MJrJlbG39Mw1j3i2RWbYn3dygt4vH5eyUXsXoex3fapm0sWLNAgozfAq2Uxlj0NY7vtUzeXNGp8t2VoBOyUPWUnvgkd+9BifXkDAAD//9QVGwgAAAAGSURBVAMALT0iQBnnbf4AAAAASUVORK5CYII=",
+    },
+    ["webhook"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABxklEQVR4AWTSS4iNYRgHcN/JGLORZCxGiYXCJDUuWVAWsqLkUhKzsXCNjZSFS1lIiiI2WLBwSdkghUKxsLKRmnKJhA1mhsVMcznz+5/OdOY7M72/eZ738j3f+73vqUxp+qtWqxVmsJjddNNJxiatnzSg3nRWc4WjdVfFNWROaLRSAW9Jv930cX5ymEN8ZC+tlFoemDgwVWcps7jBHOZynosMUmrNBTJZ+FdllHnsI29+Kw5Qas0Fhs2+5y8beEkK7RTbSGGh0UoFiqLI4n7Tr1hOL/dYzxKyE6HRSgXqh9hiOlv/I/7jMT/Ip+RqO6ybSQtF7jxJm840i3JNXWI8EP/zm8ss4Cb3Ocl8WrODnPgenUUk7xY/8Jp8Ug71nfwA53jISk7QngJ52y6dDtaykNvkSteJ29jICnIGb8RLLKMrBfJgTjgHlm9/buIzx8gbj4gH2U92ukr8QtrsFOiRjZCTfiTeYhPZzVlxC5vZSj7viZi1ufKe8QJ3DW7nTF3u/Y78Kd9c73fxF53kZ75DzDO1Atn6dQOn+FSX/Jq838M5SGmt5Yf0VXaa/NR7KxYM6fTxjHxzJO8zl20arrXkL2QXGJ8fGgMAAP//1zy3JwAAAAZJREFUAwAd65FzEPBAsAAAAABJRU5ErkJggg==",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACH0lEQVR4AWzUS4hOYRgH8PlmzIQZn4YajcZshCgWspVSQjIbC2HBhhVlYaEQC7ksLLBxSQq5hoiUskOiLFzKFFkwbAxjXGbc5vP7T2M0fWd6f9/7dM7zPue9nDO1NQV/lUqljjLT6GA5icfr6wqG1FQVkliSOJaFHGMv+zjBYhqHcoT/W1Uht+qZw05+c4iDfGULM6iaVVGhMRI7SNvl5wEP2cZ9KlS1okKjZE2mi27WsoPPZJbP9H8Y0YoKZTnvZLVS5jEzWcpAqVTqp2pWRYX6DbhJA0vIsp7rV9NqozNj4chWVOiXlNdDZum/cZJmVjJOsapxVRck5okt+im8IYUe6e+yggW0K9ZCE4MnWJuABurJxSaJa0h8Rf+dXo7QQ96r6/rTJK/ZuPrMKAPzlLluNJLlLNLfopMs9af+BRs4wFX62Mw6yimUJeR4l7kwgdz4oT9P2iQ/7WS5OfZ74rPkvcpB5BDaUmi6ixN5RRuzyZKyjFXiy+QUb+ivcZEsMyu5Ix7N1BT6IkjLEz8IkpSpzxdv5D2XyAzjgjjF86DMNu9Ubwpl7ZGjnScpL2D2a5P4JVvJt5Zv7rD4OLdJbsZkHztTKJ/BfjfSZ93nxNv5yG7eepN7yMll9tmGo64nNzn5z9CdQtn9p26sZw+nSJ8TeiLOxuuGW5af5aVAxmRsX60nVUixfF/Zm3971JXrZA8Gq4gHBJ84Q/ZpOOcvAAAA///m1nC+AAAABklEQVQDABQkvFqVkxzEAAAAAElFTkSuQmCC",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAChklEQVR4AXSUS4iNYRjHv+/MyHGZGTNMYmRGaXZySS6LKUVYEEVIVnJboBQlbNxSLiUWIhK5JJEFKQsidmwluYRjymiamkPMzJk58/vNvE3n6zvn9P76P+9znvf5nveaiSr8isViFdRCM7QFWtA6qKowLCqbkAH6axi0Aq7B1cB1dBXUhBjMZHNg0jPcyyLL4Tg0wrPABPQIrARjkGRLJeTLMSFWtx3thX1wLrAbbYdFUHbaqYQEmnAyOh1ew1dYB5vhG+yCs9ADqVYuoUEmVcWYFowtMBussD2OY6unm2wGJz1RVMTxC36AU6tDH4Af2YbWQsWWSsiXTfiHEffAwcvQL/AUZsFSGANlWyphiHI674LdjP6Dm/AXtkIjmzcKTbVKCT0SS0L0R9SEbs59bNfTjWklaRM0QBZckiijAd6KajSGagZNgY3QAY/hP1jdHfQDbIBH8ATOwwIYx9iMFboeM3HMBe3x6CaYBLehg3UtCPZP2AMX4TlY9WL0AqhjTVhP5yicAHd0Buq5cyOsrp8ve38n4vfAW+lD7NNwAA6BS7QXrTfhNIw54DHxD6czmv4N8PAuRI+BUxMP9Un6h6EN3sIraIUmEzpNtRuHzTV8gfEGXBunsxp7PswrwSUyyQA+j5mbkjVRDkcXuAZOy/U5Rd+HYD9qjPfZB8EHQ3yF1vLfJXCtHWuOnMGdOG+Br4rr4pTX0/dBmIpegZfwnY3JCfZvaIA1cAYca45OE+Zx3IXLYIU70J2grc+dzpPIG4R7qHmoPYvGWaFx5shnCCwQYrlWYnUH6Yu2vi5i+vGVtj46TtcdLo0rWGEUBrgpnwn0zop2d/gPd6K5++/x+PB+QkfiBgEAAP//87JuwQAAAAZJREFUAwA6/Mw42mfZwwAAAABJRU5ErkJggg==",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAADSklEQVR4AYSVSWxNURjH32sN1bnVGEoiIhIJiYWFKeZZggVBTBERw4JgZSUWggQxLcSQmEIIiYg5CCGIjQUi7BBpU0ObVjVV2uf3e+57afvevW3Or/9zv/Pd833n3O+clxPr4i+RSORCEVTCkIABqLbcLl6PRQZgkm5MUAqz4Sjcgptgfz5aFvjQzd5CA/CiYyW8tgn2wzgohCIYC7thG5QGvnQzm5NkWv9beiJTYTXYzHouHTmAtsJSmAzdIWuLCpDPGwvBQMfRM1AdcAHdA98gDqEtKkAP3hoOZnoP/Qtm7kocu8LzArgDjiGZLSqA3qnsEjxYMX3R8eDEbWhNPB5vBJPgMbNFBWjB/R3oMw21XeSfQf0u/ekbFAlvvhw22sSA22Cmy+hbQQ/RV+DkSRsVZEBM2VtUgN+88gI+QAWMhEY4AX9gMQyG0ApiLPKgue/ubT2OZlmAum0v0cfgAVyjsorQrYpagZUyjAlGgdv1GjVAA3oStPmxF9EfShCvjwo0H9Lzpjs4pVvg4Clei9FAXg8f6bsig7yln/rgO+jfhwdwCgyavkJymMzLrAAth0JwuR6uMThPhDrwkFmOCUrSrfuJzfOwD30Dfi+vkNH098JmKHEuV9CLB6+Ea+g8yAP3dz3qZXcJ/QTtD5MrqcV2GpaD18Uc9BBYdZbxTPr5BiimsxKsiDLUgDNQq6YKNYDbYkZe2YOwyUC0N3ilOM9X+ufhGLitVlmxA2Y8AqN9y9KyMyu3wq35wVgl7AT3+in6pBOPePYasXzv0neFFkiek1qCgj3m8hw0m2cYroMr2oUugXJI+ejXHlfJcLqZYPIcNGN6D35cf1jcd+95fwfMyKX6sWvwse4noRM6MYXn7eDq/RbO5ZzNrsC6vsygGWxAV4BXQT90FVgRZuoWuKrPVNKXFIy7WpPsQ99vuRF1rqtogwE8MO7tWQw+b0Vvg9fwFtTtO4dqS5Yq/fbNE34Qww1I+fvtvOKbcsjE7LwODuPgMp+jrspa96Nrc4J6fN1/hrM2/b1G9D+Ch/6tZhzjRWvcA+VHtf6n4+AVvQ7VVhf48JjRfmEx81moJ7+DfzIAAwZpY5Im+A5VAfa1hWaOXwvUQjVk+P8DAAD//6Ptt2wAAAAGSURBVAMA3UIVQFAr9AAAAAAASUVORK5CYII=",
+    },
+    ["wheat"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAB2ElEQVR4AXzSS4iOURgH8O+bYdyGBbJwSZJ7SlbSlB1FmpJyrVkoZUQWLFzKJbeIjQUrRYpYUEoW7qGo2bhEkZURQlFohplvfv9vZr6ae+c3z3nP+c5znnPet6owyF+pVKphNCMYyRTqaaSB6QMmMFkj9yR2sIgZHOUQ29hFXb8JLB5icgIH2chpjjCN/Wyimto+CSzOzuNNbmAe2fWLuJDbvCTJW8XmHgm6Fk82kR23im95zk3Spvq3jp28oKmSwOKUPdbgXubSQkpONXP001b418hPTvG9nMDilD3RQAN1HCdnzSWe1V/JDQ6TI6TKcfqFKouH6eSHx8TtDOUNr8lFzRJ/c4X7XGY4i6lOBWN0tjCTWxTJOXOJ7fpfGUWq2ifmFT4TL9HSnWCJh6uc4RWbyXGuicvZQ+4ix8vv8txcLBZbk8BcIbt2S9m5kxzlXyZp4y9PuMDnLBYLSfBL5yFryVc3W3zEU9ZwnQM0kSP8sPi/frklwR+9nCe71Os/Zjd5nXfFXPJ5MWV/tDgfkMfOlgS1ukvJN/BBnM8yMrZAfEDewLfei42Xj5AF2fmcgXzjd8RVrOYeKTtnrpRtrNJSwTtPOeNF8T0nyCtcL57kU387Gy+3DgAAAP//bzYdbAAAAAZJREFUAwBsqo0Cc158SQAAAABJRU5ErkJggg==",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAB/klEQVR4AYSTSUiVURiG771KIJFgA0S1aiJatKig9tGqhIIiqkXRsoU7RUFx2jgg4oQbUXTjgCC4060ILhRE0ZUiKCiKqKio4HB9Hv3vxeH3ejkP7xm+/z3nO9+5scg1v3g8ng4ZcAPsZ6LPIBt+wye4n9KIgHT2yYKv8AruwkdogSoohQp4faURJmkEaJKD+kET+gvs76F10AMZkBVqFJhkEvA9YAT1gwLUDQrRfliAfdi6ZISJ6dxm8Qf8gVmohBo4giXYhQfwBVZg+pwRJu6WSMfdnxJk4DY6D3F4AQ3QAQ+hHlaSRoHJ2XSGCHD3d+hb8H408puXjO9BKwzDjpMRTMLSsRrVBHnCZvQzeC8/0TxwE9N/RD8WC0wMtjph6ZjuHYLVQXQORmECvMvnaJonuknHd/INDUvnkPlVOIByKAHfkOl20dd8X6NbDDz2DHpVOqaQz7pVy0Z9mF6ybESj0QONPLKXvExAojrOXUxnjPVxMKYN7YQ1TdCIRr6JKQZvAqxOqnQsey+xm5gYRzdyYrRFrx2cbERN0+pcl47xhJ82T+SEj85TefG+lQGWrU7KdIhJNo0s4T9m3kMfLEIR+H/y8k05NB1ikk2jx4w+gP/kYvQ/+FqfoJ6uFk1Ux9MzvNw0suy5LHk/nmaSfhn8BU270XUu1ndEN7wdAwAA///wDvO4AAAABklEQVQDAB4Du+HU3lAGAAAAAElFTkSuQmCC",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACtElEQVR4AYyUWYiOURjH33e+Gfs6dkkZEuGOIkpCComQG1dSlmxFyBJZirihEMIF5UKWZE+JRCnZM1dTU7PPNDPf7Ps3v983M980fbN2fvM/73POec5znvOcLyXox18sFkuBNEiFEOyPRWfDClgN8yG9T4dMirDncFgAM8D+RHQvPIQbcA1uQUavDnHmuA42MfkOuGgRehK2QjG8gGwYDeNdgPbYBjGyEg6DczNQo1mHfoNdcAV+QBM0OAnt2ogsAsOwToH9UA8H4CoYSSr6FMrA/jy0CnKTHOJI2wgGN4OLZqFf4Cc8hhJwjnlcTv8sTIPnUOwA2tZwFtIbCh7pGOoiIxhF3+O7kTqE79NwHZbBe7gN0YRDnNl34kwGDkI56DQLXQxewnF0ABRAIRhAJfoEKqBJJwHOLI2RGIzsDDoG7sJrcGejOkLfaD6h62EtXIDB4EaT0IgFq1MvYAOGc7AE0qAUvAwT74amYiC232D0NehfqIZxYBChztzdoj2E0bA/o82wBSxktYW+jmvRnXARToGKBJf49w+adWh0G/kwqhPoUciEpXAfFsJH2A0WtMW8ir7FbgCuMYdVYRi26FBH3maUSe5S1K5GPpW+R7qMfoBXcBM8gfO20X8JFTjTFuiwAUM+WBpz0AkwFzymObSQTYcXsgb7djC/HjMPRzXgXMxB3KERWLA6tki9uemMfod78AcsG1+Jx/NinPcMuzlFOpsR1vH5C1zsWzV3vk1/TVyo6lxHvhaP6QuKEln8mKxNNB2aQ0vC9+gDb2TUN2z+rDF1Mjaf3AP0P8QvAE1qOkzHatF6LJN+nm8vxF+RR/RVX4f2N3zXElkM7bZ1ODS6t8ywLDz6PvrvIAdUv82zt5m4AMaSmg7zsO4A8+Ub9Qb9dfHx78GufkUriSwpZ9i7tFYAAAD//23mMfwAAAAGSURBVAMAIbbUwv8BghAAAAAASUVORK5CYII=",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAC4klEQVR4AaSWy29MURzH752iVFviWURINCVE7MQjsfP+D9hh4xGPBRGJBAvBQhCPkJDYW4pHWHoskBBE4pEIC4kuUNRU2k4/n9t7p3c6kzu3aXM+/Z1z7jm/3znf3+/OTCEY5V+pVGqAFpgDC6AD2qENmnIHYHEIjTAlxv4YzjcZNsNFuA0P4QGchdZcAXAYsrgROuBGzGJsG+yD07ACWmA8zISV0JwrAAvHQTt4qjVYuYDdDtugBOdgU8wfbAMU6gbg9K5RhmNsWAof4BMsgYPgiS9jr8N7+B/zF9vnZmx1w3GkOU+mwwbwyt+wB0BZvmK9mQ7v0vfUzdiN4OnfYYs1A+ich2nNTzKeACbPU8o9xjo30claJdsZz9/CdtUMwANPlmi+ivE0GAvpZuIdt/LvDhhQyQx4k/F96K4KwOmdS2vuaV+zuA/WwUJYBOvBIL3YJvAQ5uMaffkVhuFQDnCcpfleNn2G+XA+ZjbWhJtgUXMlW8u8wcxD4GkDnTOZ6Gid19LcK7tpGWutoC/Y3XAmRu2T6jrO3EQYDEAnr+ZKosYGsvaF7VGz3x/1gsB+1C1wehePRHPru8hui0BpTOwhxvbnYV/AUXBddAOlWc3EckjqvJ7mV1ib5GQX/R0wAx6D74m5MR/lAGpqPtJ1Xk9zHX/EofL+wx4Bc6LzHiookkmnzNds6i1Zmlu63ex+Cb4H33Fcds5cdIMeOm/BBFliw+tcLbM0f87ew/AT5/qgO9S8gQGeMPUMZoGfitZ6us5za87+ilYgqtf8way1b237iWlO7KtpUue5NMdPRbNM1dmbaKPExCu8bnps38Nkah7vLRsd+/lhTZ9i1jp+hZW52EswvM4zNWd9RTPAJGZOgF+Bb7DKohyP6E+FrbAF7FfVOfOZzQBevYtVT8GXxIoy0B7GfrFcxcp+rMEr6py5zGaA36zwVffUvjhFEm9ldTLvy+avBbHOO30GHorH9dsAAAAA//+Oml9dAAAABklEQVQDAFpKFZ3W1IVTAAAAAElFTkSuQmCC",
+    },
+    ["wrench"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABoElEQVR4AYTSSyhEURzH8bkjNKMYxUpYyJryKAsLC2k2HkmRVzZjQbGTrefCY23lnawUYWMhZUtILGkiq2kMMeV1fX+3mTF0r9H9+J9zz///P2fuvW6Xw59pmga8KIQfAbSjBJ54mW0DEgwSlFRGnMUMRjCNOWTCumwbsJKOUqhAjeYZ70PXMf88bOKDx6mBl6QefGAK+ajDAnbRiSUUODXQrpUkHCCCNmhnzZsYD6AcFU4NdD+LhBBecIZqBNANneKL6FMi8efid6Uxy8AziqAGk8QTVGEdp4gi+KtBrDiXBR05j3gHvZEn4ji6cIQWXOEy0SCpuJcFPaQ1opJbicNoQCPGkA29mZDV4E+xnv4GCTvQAxsk1qIffpxjCBeIumPFOUxUKCreZq7d4ifpY65mHcQJXCNqGIapE+iV1XNDR98kJhevMl9EkOR7POARbzC571IDfZY1TG5xiGZoZxWvMA6T/Em0vdTgnRUdqZg4Ch1ThfJvMbnWCV4ZbEGf6Q1Rn+4yMWUxOS43x9P3Hmaih6d3vcc4wn3HY7OeuL4BAAD//wqGFVIAAAAGSURBVAMAUQSIRq4/XZMAAAAASUVORK5CYII=",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAB7ElEQVR4AYzTy4uNYRwH8HOOMTPJNUUhRI2SlLIll5AlWdhioVggdzZyKVKsKEkKG/+B5J4sUBSFaGg2kxJZMGMmXp/vOMdMM3POzPR+5ve8z3ne7/tczqmUGvwVRVGmhWksZkPVInUKTbXHGwYZ1MIcDnKNM5znBusZOcjbxho4m3Os4wkJ+K2O4wfNxrXS1GhG4w3czlxOc52l9HCKl6xkIxOGDfKG9E81YBV3eMpW2jjLI1aQ9gF1Zh5Qh1xj9GQmzeozupnHFz6QmRxSs0eT1bZ6QT4rlfOvqku9zCSyrMwigVfdZ6lFvaC86adBqVnOL+1bJCSzy9LSnqEvm94+JMj+5MhnGbCHvO2VmnF/1LtsI3szX13GPTozQP13VUNy5Cf1LCAPPFdXs5e1LGcHh/nEJb7/DxoUstCHCckS8uAx95s5QgJyYre1E96h9vQFCcnp1GYyOGSfge/Ywm52sYkTtJfL5W6KipBs6HSdxxku5K3+zOKF+oCHfPTwN3q1+67MqFVrDUu4yGOynMwkIUfdd3ioi96qbLzu/itB+b5M1JUv4Vc1v6v96sCQHL+u+leCcsT3DflMTit78Fo7G5uZjBhibKkW9N7NTi6Q08o3d9QhnilVrLnQyE/gjXqFm3Tqz0w1R3f9BQAA//9j6c2QAAAABklEQVQDAIggojr8/7SDAAAAAElFTkSuQmCC",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACUUlEQVR4AZTUS4gNUBzH8XvHMCNi1HhMFqaUhTxCFHksNGVnZ+OxELJEkfcj74iFWLCQQhYeUXZSbGRDyGMlikaZxWDGI8P4/MZcMyMzc93O9/7P439+93/+/3NuRaGMT3t7eyVqUI/ZaMBU1KEaxZJMv4KcB3KuxTKcxTmcxhUcRNbKEyRWacMYHMA6DMN9vMFITMIQVPANxV4j5JBfHcp5LRbgNtK/xdYhorvZZozHWFT1KmhxAMZhMV7gOEZhPVqxGQ8xC+exFyP6EkzuZnCqwnW0YAWG4zAeYToOYQLmYnRfgqX8/eT4Et/wHtkzjY3APrYaj5ET1WZR/5+t3exXxCdRpX/COJEtYfcjPnvYV/iOljizPZuCZH6Q2Tgl0on6P/AaG3EDqfY29jmy/pZ9l41sV+sUy1WYY3YNUsV7bI4UGvVTgAgnFauNa3AVzT0Eu4nNt5gjJX879Z9hJjagAVOwCEexEHdwGV1H/kssF9l6YbuvB0i1s3mlfqp6kt2EXKtL7C40FYvFto4I+xHL1Ug1k8tjNp5Cnl+El+ofQSOx5LvQ8VxMDMY85JhMoRRZSSxzW3xdwBmk2hfZp/hArI3taIkwic6zSdiJYoeVHLO72FZzyVOzzS34hC9oQ66O5d8tghGZbJh/jSQ2zyw5yzFNFyJ2V6fV5hRJt/cWwfxCE5fcs1yV5KVUlP8So1GIYJL5xOAa6pH/vTz+5KzsyOzraBWdx/holAe/is11WM4mZ2Udk++flggLRFOlvIg8p5tW8wI+m+83Z3x7tF8AAAD//6xqVEIAAAAGSURBVAMAHTm9MEgZ2moAAAAASUVORK5CYII=",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAC1klEQVR4AaSUW4hNURjHz2HmjMsUmeQ+xITk8uiBB8KTSFGKoiiKB9dEEZJ4cL8VKSFPJDzgQTzx4knkLqFpZhKiY5gzOH6/c87e7ZlzZmafmdP6nf/ae6/v+9b61rdWr0QZv2w2m4QqqIFaqCtgfxD9FCSjLmMHwNCx1RhPgo1wAW7DHbgI62Eo9IawaRQ+dNTBuUYD+L4ELsFqmAgDYRhMh1UwFxyL5FuXAXDukvsxfBHshhp4AFthHbyHVngDDyFIY4W2XQbAoALGwWZIwWnYCe/AAIPRx2DAJnQ0LIfhUBknQF8GLgZnfh+9DL7bh7ofz1CDf0Jr4STsgpVQHTfADAZn4So0w0KYCh9gB+h8FHoE3I8h6GyIFcAUjWTwP3gBGTAYknB/qujUgc4nox/BsQZMxVkB43OOVGnh7waYGlOi41M86/w5ugdcZW4SnQawChjswAbU8puAOmtT46Y+5dmZGugJ/e1QCVaVact0GKDg3OVbDf0xspkKA7iKV7zwcB1HZRP6GRaAYx6hP0sGiDgfz6CDMAJMyV3U1sc/cCVn0POQhmXg5n5Br0O6KEA75+bX3OrclJgq63wtxvNgDHiSZ6IHwBVZBNq95bltijpxHq3zExhug7Nwr4CHL5j5Xt5ZBM3JZDIbriCGczfTmVn/jTjxJP9Gf8FLME0r0GvwHed/0UQuQBnOg3StwXgpzAJnbu4P0TeVaZx7DnhM5APQs7TGoochcBKkJZh59L2OGnBUX6AJ/QGtYFnjJt9yK6BrGXrHT6HvYdmCWselnL/mW0t7R7wr2YIAlp33jYP281cPHh5zHp15Wc7xEabIZblhBvQwTePjUeiRc+zDAN4dt3hhDXsNX6HvVexV4F6UPXPsc80Z2zHAOTpi7r/SvwkboNvOsc2vgA37w4P3yDF0PswBLy5PY+wNxaaoBStIGAQstUbUEvyGZsD9KTKM++I/AAAA//9Jb5AjAAAABklEQVQDAIds9DGmL/MrAAAAAElFTkSuQmCC",
+    },
+    ["zap"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABnElEQVR4AXzSyytEYRjH8TkzjQxTMpLrFBsWFhYSUpOsKKEslPIXKGVHbrlmJwt/gSwslMuCpSSXZKMs2FCIySXJZSKO7+90ZmrMOaP3M8973vM873Pe43g9Ln+mafoQQjMiCDqlOm5AstazKWjCAmYRQMpQYtKiXaxuKp7mZjFe4DiSNrCL1bmR7FFc4gl7iCFlJDag2OBuFhowhgts4wu7cN/ALlbnWhLHcY45hBGFiovIC6MUBQjC5+Un3rmGxElcQfGW+IxCLGEdG9BTbRJbEdARMplUYQaPUGcVfjNfht6F1uaZL2IVOaiHP75BNxf5OEUd2tEJHemYuAZ1PyJW4wEriGkDdTrk4hVd6MMABjGFHvgRgtbyiMM4g7XBJ5MttKEF6t5B7MU9VFBC1H+mzI4nxA/DMEwvPz94QxQ3uObmHfRu9AJ1rc6VrE1AR3onz2Tu0REU/1NxhMUM6KkqiCo+IFqdidZIt4G+Rj1+OZl6F/tEdf4lJobbBnq8XLL0LYwQd6BjJhWz5noEfXlDJPRDxSmdWbfGHwAAAP//EpGoGgAAAAZJREFUAwCqJIWxUWKTJwAAAABJRU5ErkJggg==",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACBUlEQVR4AXyTS0tVURiG9znasRsK0aBBRIMKKsIo6EJBUXT5GQ2CiEZB0Z2I7tSgUQ6c6K8QEUVEEQVF8QaKKOLAgYiKt6NHt8+z3cg5nn2U9ez3W2t96/Vbl5MO9vkLwzANlVANN6AKUklLShrFCw6x6ArUwn84DYlrEgfzTC6z8C+ch2NQshUZ5ZlUs+o3VMECDMMMbEFRKzCKTQ6SdQF+gltzWxvEbbCSSqVCtKjtGu0xsZIjZH+FA7AOXRCQVxGTQcshOvzIKO5UkHgOfoHb+YT2gGNZ1IO+hz6KeYi6/aOsL/N6ddTkLBOaHEc/Qwd4NoOoVb1Bv8MPMO8fWge3IWNF5QQnwTM5hZrUjeZi6tHn8Brew0cwtxWthDNQppHVPKZzCTohA7fgAdwHD94bayZuAiv1zG4SD0ADZDXaJBiHRbgL7+AbuIU/aA08ASuXa8RvYQrMnUZzGuneTsfkl6hJbuEDsbfn1V8k9gKs9AvxLJg3hmZ9Emk+VrTEQD805tFCPAlufRS9Cj4HL0ATxyITxgMrCjALIQfr4KTX7fx1Pp6ZVfsclulr4pmtkbv7OCMjJgsa78IncZjBO+DVP0NXwTMZQgtM6O9UZLAH/8EJxvyxejbzxL4jt7+aXwnjUXNBFCR8rGqO8RF4BX2QaMJ4yYr8hU+Q8AKeQi+UNGEu2AYAAP//JOtRvQAAAAZJREFUAwBScaia9FHimwAAAABJRU5ErkJggg==",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACWklEQVR4AYzUWaiNURjG8b2PKUOGFBmLuDAkEsoQobjhQilSFCWRDClCRIQSIpQLRclw4YIbCZGhiELkggghSaYk4/F79tnK0d7nOK3/97xrfe96zlrrXd+uKTTyV1tbW0Qr9MIQdECTatMaNDSxaGIL9MF+HMIYNEXF1qChGTHrS3diFDqjK6rOq/rC6mLW2+RtGIRf+Iqb+IGKraJh2ayXGVvRDyfxAffwHP9vyKy5CT2xBQNwArcRkyv0S7FYrKUVW70Vls16yNyMbPMoPYiBSLvl0Vxe279oI26BklfpIalgICvrJt6Eocg299D3yIqTO1m8GMvLLKNLMB6tedQkKWbNDHTBBgzHKezAW3zGWXzBFMzAzDKz6SJsR380reGaS9pBZx3G4hx2ISvLPczZHdGP0Vw6v8xCuhbP0BqdUMwKc0lH6EzAK1xELnJWOlIc7U5T3Rv0GqKP6DhkZ+fpdfyIYSr2Ridby1nlDPfpHyiTohwXz0L+efLbi5diIi5hI96p/s8YZkv3DazAXhxGqhuOiU+jJSYhW+tIU5SpNCtdT18x+04LNYJ8AVndBQO7kc8sBQmp8hljyXlKs7JUeZo4Vyhn+ILHN/1SywoLBn7hKz7h4x9kJDFXSFjIVzJPkArfoWvwXG5yhHWtZFgX1n+qfiqcrY72Jmc3mE5Hjmc1ffavmbFCVUMvY5Lq5itpp59tPqCr8IRZfiiE9VtjhsOk51cneXfFK/G4mpl3Da4whXgp6TWuIp/ZQ1pxZcZLLf+5FFR45DpdNj4HC5CLnMLlHupWbr8BAAD//1a7PW4AAAAGSURBVAMAQZC9h0puKrAAAAAASUVORK5CYII=",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAACz0lEQVR4AaSVy4tOYRjAv+MyLiO3mVLTKDuXlYWdsJKFWwkLJEUuiYRC/gAsXCKXhCQsxMKtlBWys7By2anRlBrDyIy7z+935rznO775zpkzzfT+zvO8t+d53ud93m9GVIbwV61Wm6AVpkMLjB5se2kHGBuFsRbYD/dgO4yDwlbKQWK8FUsHYAvMhDUwfAeJcSPfh8H1MBFs7/j8hcJWeILE+FQs7IZ1EEE3fINnoETkt1wHGB/JtimwEzbBTzgNf6AXnsIPKGwNHWSMb2X3ZtDQMWQXeIrXyA74DYVtgIOMcQ3vYLdGjiAfw1yogtH3RVGkTje//ecgMT6Z5RvA1JiOo+h34DvMgyZ4A+E9+CYC7diYBs0Q244/LK4wYM4noXuZe5G243xuQQ/8StDBBfQn8LwBvpHljMclHDvAuNLyW82E5WieT6HfgB5S4Um8WB0afR/j9enxIRrgHOb2QDNUNKzU2zKUQ+DCc8hr8DkxjlqxJB+iGN18ZJaF9JeCAfk2tGuQqYMJTO4Ca/4u8hE41sbp4vzSbwOj8iSdOO4QxjrhKyyBleA7OYN0LHXgcUXPvlYjtVLqc3yfjUbqicO9WRQbGbcoQsU9oO+JUwdGdZLBV+CFuhA1bR53PL1ZYAFYJaEoDMicG6B3dJs1XzidqUod6M3oVjCZzW3QFzG+DXzNVpE/017oWsZCUZxAvwmhKFAr/Q70Br3wAd5DnN8gWekLno3UwQvkWFgFB8GTmPPr6NmioJs4iLWcD5ccMWV6rBT1l/QXw2Gw4s4jr8AnArKcUWvNS631GmsaaWfKE5jn8H/BVF1m/CI0NM54f4pUChjDnHdgiZoOf7o1fpXxs5BrnLlSDizJBSxW+k48hZfpT3c3aamvOJbWWpkUuWZGssUS9rVajh8HM+4eNyuLsISt7bcsugTx/4UyxllbKkU6sFJ8I0beVda4Dv4BAAD//4iSRxgAAAAGSURBVAMAOlftcPvStwMAAAAASUVORK5CYII=",
+    },
+    ["file-cog"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABuUlEQVR4AXyTTStEURjH7x0azJCFMYr4AuyULGbFxsrGxIIiScnM7LzspCQLLwsLJfkARFjJV5CdhY0SZjAJo7zE6Pr9T/feJpmZnt/8n+c55zznnGfOBCw+juMEoRHikIBkASn8SYhBLZg1LDPmBVVEEzAH4zDqMoYmYRZWoB1CFLFRY16BEFEP7EAf9LrIX8fXvBd0Hjog7BXRALFVxpf8KzRt2/aNkA9P8AqrcA+LoCKVqKVF0k++LuEW8uDZD84jKBdDz6EeFqAG/AJvBCm4AB1P99SptPCU3AHoigNoGKIQBCvAXTSxgkD3TqBTMAhmBzQHy6BxoSvoxKaRuoImdjNhCLRDPyq/Cw3Rizzk4I44Dc/wDcZUoAFvGqpBJxAqOkMc4YRmJ/x/TQVULcPoNaiRQr5yX+RKmgqIOma1wohLGxqBcihpWqydtPCMmXEX+cP4We7uoEUtwIR3RtUgvTj9lOrBGrkMY+o2rm/qhzZVwhT2Aj2YLFkt0Gt8wI/SwOZCyDVBC+h9aI3/kFS5k4El2IV9OISjP+wR62c+RnVyv4CqnZDUg9lCt4uwSV5/qA30A6xfAAAA//9KJvpjAAAABklEQVQDADkroT8OI9XRAAAAAElFTkSuQmCC",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAACDklEQVR4AXyUS0hVURSGz71hWvaAahw1bxJUEAVJEAVREUGUNCgIGjSq6F2+QBERxIHgQNCZOFDUkY+JIk4UceREJ+pAQfEx8P06ft/Bc/GKnsv++Pdae5911l57nZsO+IVhmIYLcANew7tjKMRXAJfhFI9ljSgQntNwE+qhFH4d4jfzEqgC15+ivjR+FjMIYiMP6y2cgWr4C38OKEKbIRd8of5nzC+SWfx8JlAOC5dgEnqgC7oP6EVHYRnqYAJ+gMEymcUR91hYhxVYS6VSmzHYG+DaDroGNTAH/+EJeJpMRm5sw9kKzpHM2GU2DgvwEb5CPniCl2hWoC0cAzAC5zn7FTgLaTIz0Cx+azOMmtU86lEtSXSDXrsTi3yPxRb4Ce3wEPINhprlEOptfka/wRj4khQaHc00CzDew1V4BeoH9AHkkVUIG7AMZrOE39qFaDQs9jlmZnEbbYDnoGqbgdniSh4GEtM2egfbbYFOVFu/65jJw01e/R22edYX6HUwK22zch1X8jCQvVPJNm/E6zUrVdvPwkKznDziQP1sa4RpsJem0CboA4uKJA/7xNRX2WYfFaK18AYGwW7OoQVyD4Pf7862YRpYy+j6NcQ2MNBdjFtwHx7B4yP4Wei/hn8RtiErkG1gE/5joRwqTsC176xZO/8VoqNbI3xRejNMvkAZWPwkitnzCfxX8PMK9gEAAP//H8MATQAAAAZJREFUAwB7kcP0rIosvAAAAABJRU5ErkJggg==",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACWUlEQVR4AZSUSWtUQRCAe0aNcYkxQYIioqB4UMST4EFP3qLiTfQkLrjiggrixZugB0UFN0RcLm6guOBN1J8gZoOQ5BRySMi+b5Pve3kvzGR7ZOhvqrqqu7q6u/plQ/zL5XJFsBZ2QyUcmIO92CtgSTy1QEQBcSpX47kBr+EB3MvjPvojeAZv4AyUMW8xsqAZSEMRf/vgIDTCR3iXx3v0v7AS1sBpOAvl04MmAU1/MwNsT/gzQ7NKeIjtA3TCd2iAYzAjaBIwg3MRjEI3dGUyme4E+9APw9ACt6AejoNBS8nU+SEJaKBWnO1gFuPI/Jaj0wHatyEr4AuMwSmoBI9tKqArf8J4AZogsGIWzNyugZpRfsJWuAM3oRyWwyaILijKkK2ZoVvCHlx9I8oOWAYBvxn2oN8Ft2slvEX/CkPgdqPFzUKKMa6Hl/AKnKDcQJbFkCXoCPY2+AxeknhRA/SnmhmuoLcHrsA62BKjfhld31KkmY4ReBDM1sszmOeoO8KAbusSvUNQDUdj1LVdpB8FRKY2Azrot3/wA/7HqKOGP2EBvyTgTuaob0eWxahr0xcdOPbU5gQPu46Rlst+5IsYdW019K0CRHozYC/DnsI16APrTNSv038OHj4ivSXl4I3VMtwvzAmkqJudTzAtQ+uUaWHypVAGGgax+JyqkP/AenMHJdThqungL4USsKgtHWNMBsRo8y36PbxNxyd4Hmk5XUXOhnV7Dp/Nr493URDQFTzPXYw4Akk9ziUPM8ZP3jfkL5gR0Df5GMdJcHUvaT4c4zfR993JsbntMAEAAP//eSD6sQAAAAZJREFUAwBUeeKVRQBW4QAAAABJRU5ErkJggg==",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAACzUlEQVR4AYyVS4iPURTA7/+PeTCliSgZJczCI8lKZEUeKWXnkS0LSsmCUhZi47Wg2Fgge+WRWIksrOSRjc2M8jZN3gyf3+823zd3zDczV+fnnP85537nPs690wzJv6IoWmA6zIXucZhPfBa0QyP5zDCzKkDSRCIz4ABcgztwdwyMXyC+ANoYX1ukKkDSFNgDO2AmTIA6acXpRLrQq+EMdENtkbTAZJI2givZh14FK2vYgK8ffkEPLITTUFskLeCMp5L4Gx5CT6PR6P0f/O/hJ3yBg/AcRi2SFiAvuI9/MQb4sBpzhBR4xBW8xN4PaRHPpAVflLSAM/+AV7Qxa+UPXrdoEnoZ/IBT4MqWo49CB0RJC7jkw3hFG7NWvuG9CQPg3ttNF7HngY2yBN0GUdICzuQeXvefrivsig6MVnDrCEWxwDmsK/AWXJFjP2Nb1LOsvlsZBA24f4ewV4AddAS9CNwOVAicjdv3JoRwDNaBeVJ2F64haTo78FA6cW+CbXB1EG19neZAXIlFoB9ewyvoJd8zsLswh8QVuF+Lce2CndAOpWjrM2aOEyljWdoC3kxnupsR0+A2bB5EW58xc6qtIp4lFnBPb5HtGdjbXv3H/BZtfd5uczxEQvligZxsL1bc/5zkNMcCLtsOsN3cY9+hpSSJtj5j6/G5ElS+WMCTt2vOM+wj2Ho+16Ktz5g5bicp+WIBL8lThvi2X0J/h3I7tPUZM8fzIJwvTXq4AAf2Mew6ONOt6O2gra/PHPAscOeLKyizXf4LfhyHR/AAvMnP0MZQ9cIF9Dt2odpJSEzWEQ3+c1t8rLZg+yr6V8vbrZ7NR7pGg/w54PNiw/jS2hS4QkgLaNs5e4lchvvgKnIw1zvjPfGl9UFk+PAC/oF5gvcGfAJ/o7LEGfuyOrGzjPgKUZx1NDhAP+hBn8ThU7EWvSYTcx1zgvx3fMuVYIbwDwAA//+YFxnRAAAABklEQVQDAJfxFkhGbNfhAAAAAElFTkSuQmCC",
+    },
 }
 
 return Icons
@@ -5481,6 +9671,7 @@ modules["ui/layout"] = function(...)
 
 local import: (string) -> any = ...
 local Color: typeof(require("../core/color")) = import("core/color")
+local Effects: typeof(require("./effects")) = import("ui/effects")
 local Hits: typeof(require("./hits")) = import("ui/hits")
 local Motion: typeof(require("./motion")) = import("ui/motion")
 local Painter: typeof(require("./painter")) = import("ui/painter")
@@ -5493,9 +9684,11 @@ type Spec = { [string]: any }
 
 local COUNTED_KINDS = { toggle = true, slider = true, dropdown = true, button = true }
 
+-- the toolbar search of the Finder look hides every row whose name does not hold what was typed
 local function matches(app: App, spec: Spec): boolean
     local query: string? = app.SearchText
-    if query == nil or query == "" then
+    -- a page is never filtered while it fades out for the results, and the results are already what was found
+    if query == nil or query == "" or not app.ShowingResults or app.ShowingResults and type(spec.id) == "string" and string.sub(spec.id, 1, 7) == "result:" then
         return true
     end
     if spec.kind == "custom" and spec.ownSearch then
@@ -5517,6 +9710,14 @@ local function rowVisible(app: App, row: Spec): boolean
     return visible(app, row)
 end
 
+-- an option that only shows under a switch, it fades out and folds away when the switch goes off instead of vanishing
+local function gated(row: Spec): boolean
+    if row.kind == "pair" then
+        return row.left.show ~= nil or row.right.show ~= nil
+    end
+    return row.show ~= nil
+end
+
 function Layout.activeIndex(app: App, tab: Spec): number
     local saved = app.State.SectionByTab[tab.name]
     return math.clamp(saved or 1, 1, math.max(1, #tab.sections))
@@ -5527,52 +9728,149 @@ function Layout.setSection(app: App, tab: Spec, index: number)
     local target = math.clamp(index, 1, #tab.sections)
     if not state.AnimationsEnabled then
         state.SectionByTab[tab.name] = target
-        state.NextSection = nil
+        state.NextSection, state.NextSectionTab = nil, nil
         return
     end
     if target == Layout.activeIndex(app, tab) then
-        state.NextSection = nil
+        state.NextSection, state.NextSectionTab = nil, nil
         return
     end
-    state.NextSection = target
+    -- the section belongs to its own tab, a swap of the page in the same fade must not hand it to the page that fades out
+    state.NextSection, state.NextSectionTab = target, tab.name
 end
 
+-- the section a tab shows or is about to show
+function Layout.shownIndex(app: App, tab: Spec): number
+    local state = app.State
+    if state.NextSection and state.NextSectionTab == tab.name then
+        return state.NextSection
+    end
+    return Layout.activeIndex(app, tab)
+end
+
+-- picking a search result: the results stay on screen while they fade out, then the page of the result fades in, even when it is the
+-- page that was open before the search, so the swap is one smooth fade and never a jump
+local function goTo(app: App, tab: Spec, sectionIndex: number, clear: (App) -> ())
+    local state = app.State
+    -- a Settings page opens in the settings window and leaves the page behind as it is
+    if app:usesSettingsWindow(tab.name) then
+        clear(app)
+        app:openSettings(tab.name, sectionIndex)
+        return
+    end
+    -- the results only stay on screen while they fade out when they were showing, a jump from elsewhere goes straight to the page
+    app.ResultHold = if app.ShowingResults then app.ResultPage else nil
+    clear(app)
+    if not state.AnimationsEnabled then
+        app.ResultHold = nil
+        app:switchTab(tab.name)
+        Layout.setSection(app, tab, sectionIndex)
+        return
+    end
+    local from = state.NextTab or state.CurrentTab
+    if from ~= tab.name then
+        app:switchTab(tab.name)
+    end
+    state.NextTab = tab.name
+    state.TabSlideDirection = state.TabSlideDirection or 1
+    Layout.setSection(app, tab, sectionIndex)
+end
+
+-- the page that stands in for the open one while something is typed in the search: every option of every tab whose name holds the text,
+-- each as a row that opens its own page when it is clicked. the rows are kept between frames so they keep their motion and the page its scroll
 local RESULT_KINDS = { toggle = true, slider = true, dropdown = true, button = true, bindrow = true }
 
 function Layout.results(app: App, query: string, clear: (App) -> ()): Spec
     local found = app.ResultPage
-    if found and found.Query == query then
+    local scope: string? = app.SearchScope
+    if found and found.Query == query and found.Scope == scope then
         return found
+    end
+    local items = app.ShellItems
+    local allowed: { [string]: boolean }? = nil
+    if scope and items then
+        for _, item in items do
+            if item.Label == scope then
+                allowed = {}
+                for _, name in item.Tabs do
+                    (allowed :: any)[name] = true
+                end
+            end
+        end
     end
     local cache: { [string]: Spec } = app.ResultSpecs or {}
     app.ResultSpecs = cache
     local rows: { Spec } = {}
     local function consider(tab: Spec, sectionIndex: number, section: Spec, entry: Spec, number: number)
-        local text = entry.text
-        if type(text) ~= "string" or not RESULT_KINDS[entry.kind] or string.find(string.lower(text), query, 1, true) == nil then
+        -- a block of cards lists what it holds (card titles and their options), each opens its card
+        if entry.kind == "custom" and type(entry.finds) == "table" then
+            if entry.show and entry.show(app) ~= true then
+                return
+            end
+            for position, item in entry.finds do
+                local text = item.Text
+                if text == "" then
+                    continue
+                end
+                local hay = string.lower(text .. " " .. (item.Words or ""))
+                if string.find(hay, query, 1, true) then
+                    local id = "result:" .. tab.name .. ":" .. sectionIndex .. ":" .. number .. ":" .. position
+                    local row = cache[id]
+                    if not row then
+                        row = { kind = "result", id = id }
+                        cache[id] = row
+                    end
+                    row.text = text
+                    row.label = nil
+                    row.target = item.Control
+                    row.detail = tab.label .. (if #tab.sections > 1 then "  ›  " .. section.title else "")
+                    row.onClick = function()
+                        goTo(app, tab, sectionIndex, clear)
+                        if item.Open then
+                            item.Open()
+                        end
+                        -- the card or the option on it lights up with the moving outline once its page is in
+                        app.Highlight = { Spec = entry, Key = item.Key, At = nil, Scrolled = false }
+                    end
+                    table.insert(rows, row)
+                end
+            end
             return
         end
-        if entry.show and entry.show(app) ~= true then
+        local text = entry.text
+        local found = type(text) == "string" and (string.find(string.lower(text), query, 1, true) ~= nil or (#query >= 3 and type(entry.keywords) == "string" and string.find(entry.keywords, query, 1, true) ~= nil))
+        if not found or not RESULT_KINDS[entry.kind] then
+            return
+        end
+        -- an option inside a closed Advanced group is still found, picking it opens the group
+        local base = if entry.advanced then entry.baseShow else entry.show
+        if base and base(app) ~= true then
             return
         end
         local id = "result:" .. tab.name .. ":" .. sectionIndex .. ":" .. number
         local row = cache[id]
         if not row then
-            row = { kind = "button", id = id }
+            row = { kind = "result", id = id }
             cache[id] = row
         end
         row.text = text
-        row.label = function()
-            return text .. "   ·   " .. tab.label .. (if #tab.sections > 1 then " › " .. section.title else "")
-        end
+        row.label = nil
+        row.target = entry
+        row.detail = tab.label .. (if #tab.sections > 1 then "  ›  " .. section.title else "")
         row.onClick = function()
-            clear(app)
-            app:switchTab(tab.name)
-            Layout.setSection(app, tab, sectionIndex)
+            goTo(app, tab, sectionIndex, clear)
+            if entry.advanced then
+                entry.advanced.open = true
+            end
+            -- the page scrolls the option into view and it lights up with the moving outline, so the eye lands on it
+            app.Highlight = { Spec = entry, At = nil, Scrolled = false }
         end
         table.insert(rows, row)
     end
     for _, tab in app.Tabs do
+        if allowed and not allowed[tab.name] then
+            continue
+        end
         for sectionIndex, section in tab.sections do
             local number = 0
             for _, row in section.rows do
@@ -5587,9 +9885,32 @@ function Layout.results(app: App, query: string, clear: (App) -> ()): Spec
             end
         end
     end
-    local page = { Query = query, rows = rows, title = "Results" }
+    local page = { Query = query, Scope = scope, rows = rows, title = "Results" }
     app.ResultPage = page
     return page
+end
+
+-- opens the page of an option by its name and lights the option up, like picking it from the search. false when nothing has that name
+function Layout.reveal(app: App, name: string, clear: (App) -> ()): boolean
+    local scope = app.SearchScope
+    app.SearchScope = nil
+    local previous = app.ResultPage
+    local page = Layout.results(app, string.lower(name), clear)
+    app.SearchScope = scope
+    app.ResultPage = previous
+    local pick: Spec? = nil
+    for _, row in page.rows do
+        if row.text == name then
+            pick = row
+            break
+        end
+    end
+    pick = pick or page.rows[1]
+    if pick and type(pick.onClick) == "function" then
+        pick.onClick()
+        return true
+    end
+    return false
 end
 
 function Layout.countOptions(app: App, section: Spec): number
@@ -5597,6 +9918,8 @@ function Layout.countOptions(app: App, section: Spec): number
     local function add(spec: Spec)
         if COUNTED_KINDS[spec.kind] then
             count += 1
+        elseif type(spec.count) == "number" then
+            count += spec.count
         end
     end
     for _, row in section.rows do
@@ -5652,7 +9975,9 @@ function Layout.sectionHeight(app: App, section: Spec): number
 end
 
 local WHEEL_STEP = 64
+local HIGHLIGHT_TIME = 2.8
 local EDGE_SLACK = 6
+local TREE_INDENT = 22
 local SCROLL_RATE = 8
 local BAR_KEY = "page:bar"
 local Z_BAR = 9
@@ -5679,7 +10004,8 @@ local function drawScrollbar(app: App, cell: { [string]: number }, x: number, y:
     local thumbHeight = math.max(26, viewport * viewport / content)
     local travel = viewport - thumbHeight
     local thumbY = y + travel * (cell.Pos / maxScroll)
-    local thickness = 3 + 2 * cell.Bar
+    local thickness = 4
+    -- the bar runs 2 inside the edge of the content panel
     local right = x + width + 6
     local alpha = (0.30 + 0.60 * cell.Bar) * app.Alpha.Text * shown
     local trackAlpha = 0.14 * cell.Bar * app.Alpha.Text * shown
@@ -5720,6 +10046,28 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
     local lift = if state.HighPerformanceMode then 3 else 14
     local slide = if state.HighPerformanceMode then 12 else 16
     stacked = width < STACK_BELOW
+    -- the option a search result opened: it lights up once its page has faded in, holds and fades out again
+    local mark = app.Highlight
+    local swapped = not state.NextTab and not state.NextSection
+    local level = 0
+    if mark then
+        if not swapped and mark.At then
+            app.Highlight, mark = nil, nil
+        elseif swapped and not mark.At then
+            mark.At = os.clock() + 0.15
+        end
+    end
+    if mark and mark.At then
+        local age = os.clock() - mark.At
+        if age > HIGHLIGHT_TIME then
+            app.Highlight, mark = nil, nil
+        elseif age > 0 then
+            local rise = math.clamp(age / 0.4, 0, 1)
+            local fall = math.clamp((HIGHLIGHT_TIME - age) / 0.8, 0, 1)
+            level = Motion.glide(rise) * Motion.glide(fall)
+        end
+    end
+    app.HighlightLevel = level
     local cursor = y
     local index = 0
     local lower = 0
@@ -5729,6 +10077,8 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
         end
     end
     local lowerCursor = bottom - lower
+    -- the options between two text rows sit together on one lighter card with a hairline between them, the card follows the rows while they glide.
+    -- it is only drawn in the Finder look, the other themes keep a fill behind every row
     local run: { Top: number, Bottom: number, Alpha: number, X: number, Lines: { number }, Splits: { { number } } }? = nil
     local groups = 0
     local function flush(clipped: boolean, clipAt: Vector2, clipSize: Vector2)
@@ -5746,14 +10096,26 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
         else
             Painter.unclip()
         end
-        Painter.rect(Vector2.new(app:pos(current.X, 0).X, current.Top), Vector2.new(app:size(width, 0).X, current.Bottom - current.Top), pal.Panel, app.Alpha.Btn * current.Alpha * pal.Pick, 3, 14 * app.Unit)
+        -- a card: the panel colour on a soft shadow with a faint edge, so the group floats a little over the window
+        local cardPos = Vector2.new(app:pos(current.X, 0).X, current.Top)
+        local cardSize = Vector2.new(app:size(width, 0).X, current.Bottom - current.Top)
+        local radius = 18 * app.Unit * Painter.curve()
+        local shown = app.Alpha.Btn * current.Alpha * pal.Pick
+        local dark = 1 - 0.6 * pal.Light
+        Painter.rect(cardPos + Vector2.new(-2 * app.Unit, 4 * app.Unit), cardSize + Vector2.new(4 * app.Unit, 2 * app.Unit), Color3.new(0, 0, 0), shown * 0.07 * dark, 3, radius + 2 * app.Unit, true)
+        Painter.rect(cardPos + Vector2.new(0, 1.5 * app.Unit), cardSize, Color3.new(0, 0, 0), shown * 0.16 * dark, 3, radius, true)
+        Painter.rect(cardPos, cardSize, pal.Panel, shown, 3, radius, true)
+        Painter.fade(cardPos, Vector2.new(cardSize.X, math.min(cardSize.Y, 90 * app.Unit)), Color.lerp(pal.Text, Color3.new(1, 1, 1), pal.Light), 0.045, 0, 90, shown, 3, radius, true)
+        Painter.border(cardPos, cardSize, radius, pal.Text, shown * 0.07, 3, 1)
         for number, at in current.Lines do
             Painter.scope("group:" .. groups .. ":line:" .. number)
-            Painter.rect(Vector2.new(app:pos(current.X + 14, 0).X, at), Vector2.new(app:size(width - 28, 0).X, math.max(1, app.Scale * 0.8)), pal.Off, app.Alpha.Btn * current.Alpha * pal.Pick * 0.9, 3, 0)
+            -- the hairline over a row that has folded away would hang below the card, it goes with the row
+            local fits = at < current.Bottom - 1
+            Painter.rect(Vector2.new(app:pos(current.X + 14, 0).X, at), Vector2.new(app:size(width - 28, 0).X, math.max(1, app.Scale * 0.8)), pal.Text, if fits then app.Alpha.Btn * current.Alpha * pal.Pick * 0.07 else 0, 3, 0)
         end
         for number, split in current.Splits do
             Painter.scope("group:" .. groups .. ":split:" .. number)
-            Painter.rect(Vector2.new(split[1], split[2]), Vector2.new(math.max(1, app.Scale * 0.8), split[3] - split[2]), pal.Off, app.Alpha.Btn * current.Alpha * pal.Pick * 0.9, 3, 0)
+            Painter.rect(Vector2.new(split[1], split[2]), Vector2.new(math.max(1, app.Scale * 0.8), split[3] - split[2]), pal.Text, app.Alpha.Btn * current.Alpha * pal.Pick * 0.07, 3, 0)
         end
         Painter.unclip()
         Painter.scope(outer)
@@ -5761,7 +10123,16 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
 
     local viewBottom = bottom - lower
     local viewport = math.max(1, viewBottom - y)
-    local content = math.max(1, Layout.sectionHeight(app, section) - lower - Widgets.GAP)
+    -- rows that are still folding away keep the part of their height that is left, so the page and its scroll shrink with them instead of jumping
+    local folding = 0
+    local moving = section.Moving == true
+    for _, row in section.rows do
+        if not row.bottom and row.Shown == true and gated(row) and (row.Appear or 0) > 0.02 and not rowVisible(app, row) then
+            folding += rowHeight(app, row) * Motion.out(row.Appear)
+            moving = true
+        end
+    end
+    local content = math.max(1, Layout.sectionHeight(app, section) + folding - lower - Widgets.GAP)
     local maxScroll = math.max(0, content - viewport)
     local cell = scrollCell(app, section)
     cell.Target = math.clamp(cell.Target, 0, maxScroll)
@@ -5775,7 +10146,10 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
     end
     cell.Pos = math.clamp(cell.Pos, 0, maxScroll)
     local offset = cell.Pos
-    local held = maxScroll > 0 or section.Query ~= nil
+    -- search results come and go while their rows glide into place, so that page is always held inside the view
+    -- rows that fold in or out, and the rows that glide after them, are held inside the view too, so nothing ever spills past the panel
+    local held = maxScroll > 0 or section.Query ~= nil or moving
+    local stillMoving = false
     if maxScroll > 0 then
         Hits.add({
             key = "page:wheel",
@@ -5787,17 +10161,62 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
         })
     end
 
+    -- the last visible child of every tree branch ends its guide line with the elbow
+    local treeLast: { [Spec]: boolean } = {}
+    do
+        local previous: Spec? = nil
+        for _, row in section.rows do
+            if rowVisible(app, row) and not row.bottom then
+                local child = if row.kind == "pair" then row.left.tree == true else row.tree == true
+                if child then
+                    previous = row
+                else
+                    if previous then
+                        treeLast[previous] = true
+                    end
+                    previous = nil
+                end
+            end
+        end
+        if previous then
+            treeLast[previous] = true
+        end
+    end
+    local treeCount = 0
+    -- the switch a branch hangs under reads bold, so the main options stand out from their settings
+    if not section.TreeMarked then
+        section.TreeMarked = true
+        local root: Spec? = nil
+        for _, row in section.rows do
+            local child = if row.kind == "pair" then row.left.tree == true else row.tree == true
+            if child then
+                if root and root.kind == "toggle" then
+                    root.bold = true
+                end
+            elseif not row.bottom then
+                root = row
+            end
+        end
+    end
+
     for _, row in section.rows do
-        if rowVisible(app, row) then
+        local live = rowVisible(app, row)
+        local leaving = not live and row.Shown == true and gated(row) and (row.Appear or 0) > 0.02
+        if live or leaving then
             local height = rowHeight(app, row)
+            local advance = height
+            -- a row glides to its new place when rows above it come or go, so a search or a shown option never makes the page jump
             local target = if row.bottom then lowerCursor - bottom else cursor - y
-            if not animated or row.Settled == nil or not row.Shown and (row.show or row.Filtered) then
+            if not animated or row.Settled == nil or not row.Shown and (gated(row) or row.Filtered) then
                 row.Settled = target
             else
                 row.Settled = Motion.ease(state, row.Settled, target, app.Dt, 13)
                 if math.abs(row.Settled - target) < 0.05 then
                     row.Settled = target
                 end
+            end
+            if not row.bottom and row.Settled ~= target then
+                stillMoving = true
             end
             local place = (if row.bottom then bottom else y - offset) + row.Settled
             local inside = row.bottom or maxScroll <= 0 or (place + height > y and place < viewBottom)
@@ -5811,15 +10230,26 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
                 dy = (1 - settle) * lift
                 dx = (1 - settle) * slide * direction - (1 - state.TabAlpha) * 10 * direction
             end
-            if row.show or row.Filtered then
-                if not row.Shown then
+            if gated(row) or row.Filtered then
+                if live and not row.Shown then
                     row.Shown = true
                     row.Appear = if animated and state.TabReveal >= 1 then 0 else 1
                 end
-                row.Appear = Motion.ease(state, row.Appear, 1, app.Dt, 11)
+                row.Appear = Motion.ease(state, row.Appear or 1, if live then 1 else 0, app.Dt, 11)
                 local entry = Motion.out(row.Appear)
                 alpha *= entry
                 dy += (1 - entry) * 8
+                if not live then
+                    advance = height * entry
+                    if row.Appear < 0.02 then
+                        row.Shown = false
+                    end
+                elseif row.Appear > 0.998 then
+                    row.Appear = 1
+                end
+                if not row.bottom and row.Appear < 1 and row.Shown then
+                    stillMoving = true
+                end
             end
             local grouped = inside and not row.bottom and row.kind ~= "text" and not row.bare
             if inside then
@@ -5828,11 +10258,19 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
                 local clipAt, clipSize = app:pos(x - EDGE_SLACK, y), app:size(width + EDGE_SLACK * 2, viewport)
                 if grouped then
                     local top = app:pos(0, place + dy).Y
-                    local bottomEdge = app:pos(0, place + dy + height - Widgets.GAP).Y
+                    -- a row that is folding away only claims the part of its height that is left, so the card never reaches past the page
+                    local bottomEdge = app:pos(0, place + dy + math.max(advance - Widgets.GAP, 0)).Y
+                    if not live then
+                        -- its share of the card shrinks back to the row above it, so the card ends where the rows below glide up to
+                        bottomEdge = app:pos(0, place + advance - Widgets.GAP).Y
+                        if not run then
+                            bottomEdge = math.max(bottomEdge, top)
+                        end
+                    end
                     if run then
                         table.insert(run.Lines, app:pos(0, place + dy - Widgets.GAP / 2).Y)
                         run.Bottom = bottomEdge
-                        run.Alpha = math.min(run.Alpha, alpha)
+                        run.Alpha = math.max(run.Alpha, alpha)
                     else
                         run = { Top = top, Bottom = bottomEdge, Alpha = alpha, X = x + dx, Lines = {}, Splits = {} }
                     end
@@ -5842,48 +10280,105 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
                 else
                     flush(clipped, clipAt, clipSize)
                 end
-                if held and not row.bottom then
-                    local clipAt, clipSize = app:pos(x - EDGE_SLACK, y), app:size(width + EDGE_SLACK * 2, viewport)
+                local wasSuspended = Hits.isSuspended()
+                if not live then
+                    -- a row that folds away is cut to the part of its box that is left (and to the view), and it takes no clicks while it goes
+                    local fromY = app:pos(0, place).Y
+                    local toY = app:pos(0, place + advance).Y
+                    local leftX, rightX = clipAt.X, clipAt.X + clipSize.X
+                    if clipped then
+                        fromY = math.max(fromY, clipAt.Y)
+                        toY = math.min(toY, clipAt.Y + clipSize.Y)
+                    end
+                    local boxAt, boxSize = Vector2.new(leftX, fromY), Vector2.new(rightX - leftX, math.max(0, toY - fromY))
+                    Painter.clip(boxAt, boxSize)
+                    Hits.setClip(boxAt, boxSize)
+                    Hits.suspend(true)
+                elseif clipped then
                     Painter.clip(clipAt, clipSize)
                     Hits.setClip(clipAt, clipSize)
                 else
                     Painter.unclip()
                     Hits.setClip(nil, nil)
                 end
+                local branch = if row.kind == "pair" then row.left.tree == true else row.tree == true
+                local pad = if branch then TREE_INDENT else 0
+                if branch then
+                    treeCount += 1
+                    local pal = app.Pal
+                    local lineX = x + dx + 12
+                    local middle = place + dy + (height - Widgets.GAP) / 2
+                    local from = place + dy - Widgets.GAP / 2
+                    local to = if treeLast[row] then middle else place + dy + height - Widgets.GAP / 2
+                    local shade = app.Alpha.Btn * alpha * 0.4
+                    Painter.scope("tree:" .. treeCount)
+                    Painter.rect(app:pos(lineX, from), app:size(1.5, to - from), pal.Accent, shade, 4, 0)
+                    Painter.rect(app:pos(lineX, middle - 0.75), app:size(TREE_INDENT - 10, 1.5), pal.Accent, shade, 4, 0)
+                    Painter.scope("tree:" .. treeCount .. ":knot")
+                    Painter.rect(app:pos(lineX + TREE_INDENT - 12, middle - 2), app:size(4, 4), pal.Accent, shade * 1.4, 4, 2, true)
+                    Painter.scope(nil)
+                end
                 if row.kind == "pair" and stacked and not row.noStack then
                     local at = place + dy
                     for _, side in { row.left, row.right } do
                         if visible(app, side) then
-                            Widgets.draw(app, side, x + dx, at, width, fx)
+                            Widgets.draw(app, side, x + dx + pad, at, width - pad, fx)
                             at += sideHeight(side)
                         end
                     end
                 elseif row.kind == "pair" then
-                    local half = math.floor((width - Widgets.GAP) / 2)
-                    Widgets.draw(app, row.left, x + dx, place + dy, half, fx)
+                    -- the two halves keep the same gap between them as the rows keep between each other
+                    local half = math.floor((width - pad - Widgets.GAP) / 2)
+                    Widgets.draw(app, row.left, x + dx + pad, place + dy, half, fx)
                     Widgets.draw(app, row.right, x + width - half + dx, place + dy, half, fx)
                 else
-                    Widgets.draw(app, row, x + dx, place + dy, width, fx)
+                    Widgets.draw(app, row, x + dx + pad, place + dy, width - pad, fx)
+                end
+                local found = mark and mark.Key == nil and (row == mark.Spec or (row.kind == "pair" and (row.left == mark.Spec or row.right == mark.Spec)))
+                if found and level > 0.004 then
+                    local hx, hw = x + dx, width
+                    if row.kind == "pair" and not (stacked and not row.noStack) then
+                        hw = math.floor((width - Widgets.GAP) / 2)
+                        if row.right == mark.Spec then
+                            hx = x + width - hw + dx
+                        end
+                    end
+                    local outer = Painter.active()
+                    Painter.scope("search:highlight")
+                    Effects.highlight(state, os.clock(), app:pos(hx + 4, place + dy + 4), app:size(hw - 8, height - Widgets.GAP - 8), app.Unit, level * app.Alpha.Text * alpha, 12 * Painter.corner() * app.Unit, app.Pal.Accent, 9)
+                    Painter.scope(outer)
                 end
                 Painter.unclip()
                 Hits.setClip(nil, nil)
+                Hits.suspend(wasSuspended)
+            end
+            if mark and not mark.Scrolled and swapped and (row == mark.Spec or (row.kind == "pair" and (row.left == mark.Spec or row.right == mark.Spec))) then
+                -- the option (or the card in a block of cards) sits a third of the way down the view once the page has scrolled to it
+                local within = if mark.Key then mark.Offset else 0
+                if within or not inside then
+                    mark.Scrolled = true
+                    cell.Target = math.clamp(row.Settled + (within or 0) - viewport / 3, 0, maxScroll)
+                end
             end
             if row.bottom or row.kind == "text" or row.bare then
-                flush(false, Vector2.zero, Vector2.zero)
+                -- a card that runs past the view is cut at the view like its rows are, rows below the view end it too
+                flush(held, app:pos(x - EDGE_SLACK, y), app:size(width + EDGE_SLACK * 2, viewport))
             end
             if row.bottom then
-                lowerCursor += height
+                lowerCursor += advance
             else
-                cursor += height
+                cursor += advance
             end
             index += 1
-        elseif row.show or app.SearchText ~= nil and app.SearchText ~= "" then
+        elseif gated(row) or app.SearchText ~= nil and app.SearchText ~= "" then
             row.Shown = false
             row.Filtered = row.Filtered or row.show == nil
         end
     end
 
     flush(held, app:pos(x - EDGE_SLACK, y), app:size(width + EDGE_SLACK * 2, viewport))
+    section.Moving = stillMoving
+    -- the bar fades in when the page grows past the panel and out when it fits again, it keeps its last length while it fades out
     cell.Need = Motion.ease(state, cell.Need or 0, if maxScroll > 0 then 1 else 0, app.Dt, 12)
     if maxScroll > 0 then
         cell.Need = if animated then cell.Need else 1
@@ -6047,6 +10542,19 @@ function Logo.icon(app: Map, name: string, wanted: number): (string?, number)
         cache = {}
         app.IconCache = cache
     end
+    local set = Icons.SETS[name]
+    if not set then
+        return nil, pixels
+    end
+    if not set[pixels] then
+        local best, gap = pixels, math.huge
+        for size in set do
+            if math.abs(size - pixels) < gap then
+                best, gap = size, math.abs(size - pixels)
+            end
+        end
+        pixels = best
+    end
     local key = name .. pixels
     local found = cache[key]
     if type(found) == "string" then
@@ -6060,6 +10568,17 @@ function Logo.icon(app: Map, name: string, wanted: number): (string?, number)
                 cache[key] = result
             end
         end)
+    end
+    -- while the size asked for is still being written, the nearest size that is ready stands in, so an icon never blinks out
+    local near, nearGap = nil, math.huge
+    for size in set do
+        local ready = cache[name .. size]
+        if type(ready) == "string" and math.abs(size - pixels) < nearGap then
+            near, nearGap = ready, math.abs(size - pixels)
+        end
+    end
+    if near then
+        return near, pixels
     end
     return nil, pixels
 end
@@ -6103,6 +10622,10 @@ function Motion.ease(state: State, from: number, to: number, dt: number, speed: 
     local start = Util.finite(from, 0)
     local goal = Util.finite(to, 0)
     local step = Util.finite(dt, 0.01)
+    -- Reduce Motion: every ease settles about three times as fast
+    if state.ReduceMotion then
+        speed *= 3
+    end
     return start + (goal - start) * (1 - math.exp(-speed * SMOOTHING * step))
 end
 
@@ -6117,6 +10640,11 @@ function Motion.spring(state: State, bag: { [string]: any }, key: string, goal: 
     if state.HighPerformanceMode then
         cell.x, cell.v = target, 0
         return target
+    end
+    -- Reduce Motion: a short, fully damped move with no bounce
+    if state.ReduceMotion then
+        response = math.min(response, 0.12)
+        ratio = math.max(ratio, 1)
     end
     local total = math.clamp(Util.finite(dt, 0.016), 0, 0.05)
     local steps = math.max(1, math.ceil(total * 150))
@@ -6140,6 +10668,7 @@ function Motion.out(t: number): number
     return 1 - u * u * u
 end
 
+-- a long soft landing like the system sheets on a phone, fast at first and then it settles very slowly
 function Motion.glide(t: number): number
     local u = 1 - math.clamp(t, 0, 1)
     return 1 - u * u * u * u * u
@@ -6195,6 +10724,142 @@ end
 
 return Motion
 end
+modules["ui/opener"] = function(...)
+
+local import: (string) -> any = ...
+
+-- a small round button for touch devices, shown only while the window is hidden, so the menu can always be opened again
+local Opener = {}
+
+local SIZE = 46
+local RESTING = 0.25
+local HELD = 0.1
+
+type App = { [string]: any }
+
+local function touchOnly(): boolean
+    local ok, result = pcall(function()
+        local input = game:GetService("UserInputService")
+        return input.TouchEnabled and not input.KeyboardEnabled
+    end)
+    return ok and result == true
+end
+
+local function place(gui: any)
+    local ok = pcall(function()
+        gui.Parent = gethui()
+    end)
+    if ok and gui.Parent then
+        return
+    end
+    if pcall(function()
+        gui.Parent = game:GetService("CoreGui")
+    end) and gui.Parent then
+        return
+    end
+    pcall(function()
+        local player = game:GetService("Players").LocalPlayer
+        gui.Parent = player:FindFirstChildOfClass("PlayerGui") or player:WaitForChild("PlayerGui", 5)
+    end)
+end
+
+-- builds the button, returns update(hidden) and destroy. both do nothing on a device with a keyboard
+-- a square button with the logo only and an outline whose light runs around it
+function Opener.new(app: App): ((boolean) -> (), () -> ())
+    if not touchOnly() then
+        return function() end, function() end
+    end
+    local gui: any, button: any, logo: any, stroke: any, sweep: any = nil, nil, nil, nil, nil
+    local built = pcall(function()
+        gui = Instance.new("ScreenGui")
+        gui.Name = "OkloUIOpener"
+        gui.ResetOnSpawn = false
+        gui.IgnoreGuiInset = true
+        gui.DisplayOrder = 2147483646
+        gui.Enabled = false
+        button = Instance.new("TextButton")
+        button.Name = "Open"
+        button.AnchorPoint = Vector2.new(1, 0)
+        button.Position = UDim2.new(1, -12, 0, 60)
+        button.Size = UDim2.fromOffset(SIZE, SIZE)
+        button.BackgroundColor3 = Color3.fromRGB(18, 20, 26)
+        button.BackgroundTransparency = RESTING
+        button.AutoButtonColor = false
+        button.Text = ""
+        button.Parent = gui
+        local corner = Instance.new("UICorner")
+        corner.CornerRadius = UDim.new(0, 10)
+        corner.Parent = button
+        stroke = Instance.new("UIStroke")
+        stroke.Thickness = 2
+        stroke.Color = Color3.new(1, 1, 1)
+        stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+        stroke.Parent = button
+        sweep = Instance.new("UIGradient")
+        sweep.Transparency = NumberSequence.new({
+            NumberSequenceKeypoint.new(0, 0),
+            NumberSequenceKeypoint.new(0.35, 0.9),
+            NumberSequenceKeypoint.new(0.65, 0.9),
+            NumberSequenceKeypoint.new(1, 0),
+        })
+        sweep.Parent = stroke
+        logo = Instance.new("ImageLabel")
+        logo.Name = "Logo"
+        logo.AnchorPoint = Vector2.new(0.5, 0.5)
+        logo.Position = UDim2.fromScale(0.5, 0.5)
+        logo.Size = UDim2.fromOffset(SIZE - 16, SIZE - 16)
+        logo.BackgroundTransparency = 1
+        logo.ImageTransparency = 1
+        logo.Parent = button
+        button.Activated:Connect(function()
+            app.State.Visible = true
+            app.LastToggle = os.clock()
+        end)
+        button.MouseButton1Down:Connect(function()
+            button.BackgroundTransparency = HELD
+        end)
+        button.MouseButton1Up:Connect(function()
+            button.BackgroundTransparency = RESTING
+        end)
+        place(gui)
+    end)
+    if not built then
+        pcall(function()
+            gui:Destroy()
+        end)
+        return function() end, function() end
+    end
+    local function update(hidden: boolean)
+        if gui.Enabled ~= hidden then
+            gui.Enabled = hidden
+        end
+        if not hidden then
+            return
+        end
+        pcall(function()
+            local pal: any = app.Pal
+            local accent: Color3 = if pal and typeof(pal.Accent) == "Color3" then pal.Accent else Color3.fromRGB(120, 140, 255)
+            stroke.Color = accent
+            sweep.Rotation = (os.clock() * 120) % 360
+            local asset: any = app.LogoAsset
+            if type(asset) == "string" and logo.Image ~= asset then
+                logo.Image = asset
+            end
+            local emblem = app.Options.Logo ~= nil and app.Options.Logo.Emblem == true
+            logo.ImageColor3 = if emblem then accent else Color3.new(1, 1, 1)
+            logo.ImageTransparency = if logo.Image ~= "" then 0 else 1
+        end)
+    end
+    local function destroy()
+        pcall(function()
+            gui:Destroy()
+        end)
+    end
+    return update, destroy
+end
+
+return Opener
+end
 modules["ui/overlay"] = function(...)
 
 local import: (string) -> any = ...
@@ -6205,6 +10870,7 @@ local Discord: typeof(require("./discord")) = import("ui/discord")
 local Effects: typeof(require("./effects")) = import("ui/effects")
 local Logo: typeof(require("./logo")) = import("ui/logo")
 
+-- things drawn on the screen outside of the window: the watermark with the fps and the notifications
 local Overlay = {}
 
 type App = { [string]: any }
@@ -6222,9 +10888,16 @@ local function stateOf(app: App): App
     return overlay :: App
 end
 
+-- the corners follow the roundness of the rest of the interface
 local function pill(state: App, name: string, position: Vector2, size: Vector2, pal: any, alpha: number, unit: number)
     local radius = math.min(14 * unit * Painter.corner(), size.Y / 2)
-    Painter.rect(position, size, pal.Main, alpha * 0.92, Z_BODY, radius, true)
+    local dark = 1 - 0.6 * (pal.Light or 0)
+    Painter.rect(position + Vector2.new(-2 * unit, 5 * unit), size + Vector2.new(4 * unit, 2 * unit), Color3.new(0, 0, 0), alpha * 0.1 * dark, Z_BODY, radius + 2 * unit, true)
+    Painter.rect(position + Vector2.new(0, 1.5 * unit), size, Color3.new(0, 0, 0), alpha * 0.22 * dark, Z_BODY, radius, true)
+    Painter.rect(position, size, Color.lerp(pal.Main, pal.Panel, 0.35), alpha * 0.94, Z_BODY, radius, true)
+    Painter.fade(position, size, Color.lerp(pal.Text, Color3.new(1, 1, 1), pal.Light or 0), 0.06, 0, 90, alpha, Z_BODY, radius, true)
+    Painter.border(position, size, radius, pal.Text, alpha * 0.08, Z_BODY, 1)
+    -- the same light that travels around the main window, it runs along the edge of the pill
     Effects.outline(state, os.clock(), position, size, unit, alpha, name, radius, Z_BODY + 1)
 end
 
@@ -6243,6 +10916,7 @@ local function watermark(app: App, overlay: App, rawDt: number)
     if alpha < 0.01 then
         return
     end
+    -- two slow stages in a row, the number glides instead of jumping with every frame
     local live = 1 / math.max(rawDt, 0.001)
     overlay.Fps += (math.min(live, 999) - overlay.Fps) * (1 - math.exp(-3 * app.Dt))
     local goal = overlay.Fps
@@ -6274,6 +10948,7 @@ local function watermark(app: App, overlay: App, rawDt: number)
     local inset = (height - button) / 2
     local logoSize = button
     local logoSpace = if logo then logoSize + gap else 0
+    -- both ends hold a square of the same size at the same distance from the edge
     local padLeft = if logo then inset else pad
     local padRight = if invite then inset else pad
     local slotFps, slotMs = Painter.textWidth("000", size), Painter.textWidth("000", size)
@@ -6300,6 +10975,7 @@ local function watermark(app: App, overlay: App, rawDt: number)
             app:openPopup("discord")
             Overlay.click(app)
         else
+            -- the watermark can be dragged anywhere on the screen, it stays where it was dropped
             overlay.Grab = place - mouse
         end
     end
@@ -6339,7 +11015,7 @@ local function watermark(app: App, overlay: App, rawDt: number)
         if emblem then
             Painter.image(logo, logoAt, Vector2.new(logoSize, logoSize), alpha, Z_TEXT, 0, pal.Accent)
         else
-            Painter.image(logo, logoAt, Vector2.new(logoSize, logoSize), alpha, Z_TEXT, 4 * unit)
+            Painter.image(logo, logoAt, Vector2.new(logoSize, logoSize), alpha, Z_TEXT, logoSize * 0.3)
         end
         x += logoSpace
     end
@@ -6364,7 +11040,7 @@ local function watermark(app: App, overlay: App, rawDt: number)
     text(overlay.Clock, x, pal.Sub)
     if invite then
         local hover: number = overlay.Hover
-        local round = math.min(10 * unit * Painter.corner(), button / 2)
+        local round = button / 2 * math.min(1, Painter.curve())
         Painter.rect(Vector2.new(at.X + box.X - padRight - button, mid - button / 2), Vector2.new(button, button), Color.lerp(pal.Off, pal.Accent, math.max(0.25 + 0.4 * hover, pal.Pick * hover)), alpha, Z_BODY, round, true)
         local pixels = math.floor(button * 0.62 + 0.5)
         local icon = Logo.icon(app, "discord", pixels)
@@ -6383,10 +11059,12 @@ local function toast(app: App, overlay: App)
     local live = notice ~= nil and os.clock() < notice.Expires and state.ToggleNotifications == true
     if live and notice and notice.Text ~= overlay.ToastText then
         if overlay.Toast < 0.05 then
+            -- the pill is hidden, the message just appears
             overlay.PrevText = ""
             overlay.Swap = 1
             overlay.ToastWidth = 0
         else
+            -- the pill stays where it is, the old message lifts away while the new one rises in
             overlay.PrevText = overlay.ToastText
             overlay.Swap = 0
         end
@@ -6407,6 +11085,8 @@ local function toast(app: App, overlay: App)
     local height = 36 * unit
     local viewport: Vector2 = app.Viewport
     local at = Vector2.new(viewport.X / 2 - overlay.ToastWidth / 2, (22 - 10 * (1 - alpha)) * unit)
+    -- above the window, its settings page and every popup
+    Painter.lift(100)
     Painter.scope("overlay:toast")
     pill(state, "toast", at, Vector2.new(overlay.ToastWidth, height), pal, alpha, unit)
     local color = Color.lerp(pal.Text, pal.Accent, 0.35)
@@ -6417,6 +11097,85 @@ local function toast(app: App, overlay: App)
         Painter.text(overlay.PrevText, Vector2.new(viewport.X / 2, center - rise * swap), size, color, alpha * (1 - swap), Z_TEXT, true, true)
     end
     Painter.text(text, Vector2.new(viewport.X / 2, center + rise * (1 - swap)), size, color, alpha * swap, Z_TEXT, true, true)
+    Painter.scope(nil)
+    Painter.lift(0)
+end
+
+-- a notification style pill at any point of the screen, built from the same pill, font and colors as the watermark and the
+-- notifications. segments are runs of colored words, a thin line is drawn between two segments. bar is an optional slim gauge
+-- under the pill { Value, Color }. scale sizes the whole pill, 1 is the size of the watermark
+function Overlay.chip(app: App, key: string, center: Vector2, segments: { { { Text: string, Color: any } } }, alpha: number, scale: number, bar: App?)
+    local overlay = stateOf(app)
+    local state, pal = app.State, app.Pal
+    local unit = math.max(0.6, app.Scale) * scale
+    local size = 14 * app.FarmTextScale * scale
+    local height = 34 * unit
+    local pad = 14 * unit
+    local gap = 10 * unit
+    if bar and bar.Only then
+        -- the whole pill is the gauge: a slim notification pill with a rounded fill inside it, no words
+        local fullWidth, slim = 120 * unit, 20 * unit
+        local from = Vector2.new(center.X - fullWidth / 2, center.Y - slim / 2)
+        Painter.scope("overlay:chip:" .. key)
+        pill(state, "chip" .. key, from, Vector2.new(fullWidth, slim), pal, alpha, unit)
+        local inset = 5 * unit
+        local inner = Vector2.new(fullWidth - inset * 2, slim - inset * 2)
+        local round = inner.Y / 2
+        Painter.rect(from + Vector2.new(inset, inset), inner, pal.Off, alpha * 0.9, Z_TEXT, round, true)
+        local shown: number = overlay.Gauge and overlay.Gauge[key] or bar.Value
+        shown += (math.clamp(bar.Value, 0, 1) - shown) * (1 - math.exp(-10 * app.Dt))
+        overlay.Gauge = overlay.Gauge or {}
+        overlay.Gauge[key] = shown
+        Painter.rect(from + Vector2.new(inset, inset), Vector2.new(math.max(inner.Y, inner.X * shown), inner.Y), bar.Color, alpha, Z_TEXT + 1, round, true)
+        Painter.scope(nil)
+        return
+    end
+    local space = Painter.textWidth(" ", size)
+    local widths: { number } = {}
+    local goal = pad * 2
+    for index, runs in segments do
+        local width = 0
+        for run, item in runs do
+            width += Painter.textWidth(item.Text, size) + (if run > 1 then space else 0)
+        end
+        widths[index] = width
+        goal += width + (if index > 1 then gap * 2 + 1 else 0)
+    end
+    local chips: App = overlay.Chips or {}
+    overlay.Chips = chips
+    local width: number = chips[key] or goal
+    width = Motion.ease(state, width, goal, app.Dt, 10)
+    chips[key] = width
+    local at = Vector2.new(center.X - width / 2, center.Y - height / 2)
+    Painter.scope("overlay:chip:" .. key)
+    pill(state, "chip" .. key, at, Vector2.new(width, height), pal, alpha, unit)
+    local mid = at.Y + height / 2
+    local x = at.X + pad
+    for index, runs in segments do
+        if index > 1 then
+            x += gap
+            Painter.rect(Vector2.new(x, mid - height * 0.24), Vector2.new(1, height * 0.48), pal.Sub, alpha * 0.35, Z_TEXT, 0)
+            x += gap + 1
+        end
+        local left = x
+        for run, item in runs do
+            if run > 1 then
+                left += space
+            end
+            local color: any = item.Color
+            Painter.text(item.Text, Vector2.new(left, mid + unit), size, if type(color) == "string" then pal[color] else color, alpha, Z_TEXT, false, true)
+            left += Painter.textWidth(item.Text, size)
+        end
+        x += widths[index]
+    end
+    if bar then
+        local trackWidth, thick = width * 0.72, 4 * unit
+        local top = at.Y + height + 6 * unit
+        local left = center.X - trackWidth / 2
+        Painter.rect(Vector2.new(left, top), Vector2.new(trackWidth, thick), pal.Off, alpha * 0.9, Z_BODY, thick / 2, true)
+        local share = math.clamp(bar.Value, 0, 1)
+        Painter.rect(Vector2.new(left, top), Vector2.new(math.max(thick, trackWidth * share), thick), bar.Color, alpha, Z_TEXT, thick / 2, true)
+    end
     Painter.scope(nil)
 end
 
@@ -6527,10 +11286,21 @@ function Overlays.drawDropdown(app: App)
     local height = math.floor(fullHeight * math.max(0, swing))
     local width = shownBox.Size.X
     local grow = clamp01(swing)
+    -- a menu like the ones of macOS: it unfolds from the row with a soft spring, a rounded card with a hairline rim, a highlight
+    -- that slides to the row under the cursor and fills it with the accent, and a check before the value that is chosen now
     local position = shownBox.Position + Vector2.new(0, shownBox.Size.Y + 4 * unit - (1 - grow) * 6 * unit)
+    if shown.above then
+        -- a menu at the bottom of the window opens upward, it grows from its anchor the same way
+        position = shownBox.Position - Vector2.new(0, height + 4 * unit - (1 - grow) * 6 * unit)
+    end
+    local radius = 14 * unit * Painter.curve()
+    local cardSize = Vector2.new(width, height)
     Painter.scope("dropdown:card")
-    Painter.rect(position, Vector2.new(width, height), pal.Panel, alpha * state.UITrans, Z_DROPDOWN, 12 * unit)
-    Painter.border(position, Vector2.new(width, height), 12 * unit, pal.Off, alpha * 0.95, Z_DROPDOWN_ITEM + 2, 1.2)
+    Painter.rect(position + Vector2.new(-3 * unit, 6 * unit), cardSize + Vector2.new(6 * unit, 4 * unit), Color3.new(0, 0, 0), alpha * 0.12, Z_DROPDOWN, radius + 3 * unit, true)
+    Painter.rect(position + Vector2.new(0, 2 * unit), cardSize, Color3.new(0, 0, 0), alpha * 0.22 * (1 - 0.6 * pal.Light), Z_DROPDOWN, radius, true)
+    Painter.rect(position, cardSize, Color.lerp(pal.Panel, pal.Text, 0.03), alpha, Z_DROPDOWN, radius, true)
+    Painter.fade(position, Vector2.new(width, math.min(height, 80 * unit)), Color.lerp(pal.Text, Color3.new(1, 1, 1), pal.Light), 0.05, 0, 90, alpha, Z_DROPDOWN, radius, true)
+    Painter.border(position, cardSize, radius, pal.Text, alpha * 0.1, Z_DROPDOWN_ITEM + 2, 1)
     Painter.scope(nil)
 
     if spec then
@@ -6561,7 +11331,7 @@ function Overlays.drawDropdown(app: App)
     local glow = Motion.ease(state, app.NavAnim["dropdown:glow"] or 0, lit, app.Dt, 16)
     app.NavAnim["dropdown:glow"] = glow
     Painter.scope("dropdown:highlight")
-    Painter.rect(position + Vector2.new(pad, slide), Vector2.new(width - pad * 2, itemHeight), pal.Accent, alpha * glow * state.ButtonTrans, Z_DROPDOWN_ITEM, 8 * unit)
+    Painter.rect(position + Vector2.new(pad, slide), Vector2.new(width - pad * 2, itemHeight), pal.Accent, alpha * glow * state.ButtonTrans, Z_DROPDOWN_ITEM, math.max(2, radius - pad), true)
     Painter.scope(nil)
     for index, value in values do
         local y = pad + (index - 1) * itemHeight
@@ -6596,6 +11366,8 @@ function Overlays.drawDropdown(app: App)
     end
 end
 
+-- a popup that takes the place of another one: how long the whole change takes, when the old content is gone and when the new one starts to show,
+-- the card eases from the old size to the new one in between, so no text is ever drawn on a card of the wrong size
 local SWAP_TIME = 0.5
 local SWAP_OUT, SWAP_IN = 0.3, 0.65
 
@@ -6608,6 +11380,7 @@ local function smoother(value: number): number
     return t * t * t * (t * (t * 6 - 15) + 10)
 end
 
+-- only the Default theme gets the nearly black popup card, every other theme keeps its own tint
 function Overlays.isDefault(app: App): boolean
     local preset = app.State.ThemePreset
     return type(preset) == "table" and preset.Name == "Default" and app.State.ThemeName ~= "Custom"
@@ -6615,7 +11388,7 @@ end
 
 local function popupColor(app: App): Color3
     if Overlays.isDefault(app) then
-        return Color.lerp(Color.lerp(app.Pal.Main, Color3.new(0, 0, 0), 0.62), app.Pal.Accent, 0.02)
+        return Color.lerp(Color.lerp(app.Pal.Main, app.Pal.Panel, 0.55), app.Pal.Accent, 0.015)
     end
     return Color.lerp(app.Pal.Main, app.Pal.Accent, 0.07)
 end
@@ -6662,6 +11435,7 @@ function Overlays.drawPopup(app: App, now: number)
     if popup.Open and math.abs(grow - 1) <= 0.002 then
         grow = 1
     end
+    -- while the popup is still opening, closing or changing size everything sits on eighths of a pixel, whole pixels would make it jump from one to the next in the last frames
     local settling = morph < 0.999 or grow ~= 1 or from ~= nil
     Painter.fine(settling)
     local designPos = Util.lerpVector2(popup.SourcePos, finalPos, grow)
@@ -6669,9 +11443,20 @@ function Overlays.drawPopup(app: App, now: number)
     local position, size = app:pos(designPos.X, designPos.Y), app:size(designSize.X, designSize.Y)
 
     local intro = state.IntroAlpha
-    Painter.rect(app.WindowPos, app.WindowSize, Color.lerp(Color3.new(0, 0, 0), app.Pal.Main, 0.18), popup.Alpha * 0.45 * intro, Z_DIM, math.max(12, math.round(36 * app.Scale)))
-    Painter.rect(position, size, popupColor(app), morph * intro, Z_POPUP, 32)
-    Effects.outline(state, now, position, size, app.Scale, morph * intro, "popup", 32 * Painter.corner(), Z_POPUP + 1)
+    local pal = app.Pal
+    local radius = 22 * app.Unit * Painter.curve()
+    local outer = Painter.active()
+    Painter.scope("popup:card")
+    Painter.rect(app.WindowPos, app.WindowSize, Color.lerp(Color3.new(0, 0, 0), pal.Main, 0.18), popup.Alpha * 0.45 * intro, Z_DIM, 28)
+    -- the sheet floats on a wide soft shadow, with a faint light along its top edge and a hairline under the moving outline
+    local lift = morph * intro * (1 - 0.5 * pal.Light)
+    Painter.rect(position + app:size(-6, 12), size + app:size(12, 8), Color3.new(0, 0, 0), lift * 0.14, Z_POPUP, radius + 6 * app.Unit, true)
+    Painter.rect(position + app:size(0, 3), size, Color3.new(0, 0, 0), lift * 0.22, Z_POPUP, radius, true)
+    Painter.rect(position, size, popupColor(app), morph * intro, Z_POPUP, radius, true)
+    Painter.fade(position, Vector2.new(size.X, math.min(size.Y, 110 * app.Unit)), Color.lerp(pal.Text, Color3.new(1, 1, 1), pal.Light), 0.05, 0, 90, morph * intro, Z_POPUP, radius, true)
+    Painter.border(position, size, radius, pal.Text, morph * intro * 0.08, Z_POPUP, 1)
+    Effects.outline(state, now, position, size, app.Scale, morph * intro * 0.85, "popup", radius, Z_POPUP + 1)
+    Painter.scope(outer)
 
     if popup.Open then
         local outside, outsideSize = fullScreen()
@@ -6687,12 +11472,15 @@ function Overlays.drawPopup(app: App, now: number)
         })
     end
 
+    -- while a popup takes the place of another the old content is drawn on its own size until it has faded out, then the new one fades in on its size
     local shown, shownArg, shownWidth, shownHeight, fade = definition, popup.Arg, width, height, seg(swap, SWAP_IN, 1)
     popup.Leaving = from ~= nil and previous ~= nil and swap < SWAP_OUT
     if popup.Leaving and from and previous then
         shown, shownArg, shownWidth, shownHeight, fade = previous, from.Arg, from.Width, from.Height, 1 - seg(swap, 0, SWAP_OUT)
     end
-    local textAlpha = math.clamp((popup.Alpha - 0.2) * 1.25, 0, 1) * app.Alpha.Text * fade
+    -- the words only come in once the sheet has nearly reached its size, text is not scaled with the sheet and would spill out of a small one
+    local roomy = smoother(clamp01((math.min(grow, 1) - 0.55) / 0.4))
+    local textAlpha = math.clamp((popup.Alpha - 0.2) * 1.25, 0, 1) * app.Alpha.Text * fade * roomy
     local kit = Kit.new(app, shownWidth, shownHeight, position, size, textAlpha)
     if popup.Open then
         kit:shield()
@@ -6708,6 +11496,7 @@ function Overlays.drawPopup(app: App, now: number)
                 end)
             end
         end
+        -- a broken script popup must not leave the hits suspended or the drawing on fine pixels
         pcall(shown.render, app, kit, shownArg)
         Hits.suspend(false)
     end
@@ -6720,6 +11509,7 @@ modules["ui/pages"] = function(...)
 
 local import: (string) -> any = ...
 local Builder: typeof(require("./builder")) = import("ui/builder")
+local Theme: typeof(require("../core/theme")) = import("core/theme")
 
 local Pages = {}
 
@@ -6728,85 +11518,49 @@ type Window = { [string]: any }
 
 local CUSTOM_GROUP = "UI"
 local SETTINGS_GROUP = "Settings"
-local BACKGROUND_EFFECTS = { "Random", "Bokeh", "Dust", "Silk", "Snowfall", "Fireflies", "Rain", "None" }
-
 local function performanceOff(window: Window): boolean
     return window.State.HighPerformanceMode == true
-end
-
-local function animatedTheme(window: Window): boolean
-    local state = window.State
-    local preset = state.ThemePreset
-    return state.ThemeName ~= "Custom" and type(preset) == "table" and type(preset.Cycle) == "table" and #preset.Cycle >= 2
 end
 
 local function transparencyLocked(window: Window): boolean
     return performanceOff(window) or not window.State.Transparent
 end
 
-local function themeLabel(window: Window): string
-    local state = window.State
-    return "Themes: " .. tostring(state.ThemeName)
-end
-
-local function category(section: any, text: string)
-    section:label({ Text = text, Size = 15, Bold = true, Height = 30 })
+-- every page of the Settings window is split into short sections, each one fits the window without scrolling
+-- a small caps headline that starts each group of options so a page reads at a glance
+local function headline(section: Map, text: string)
+    section:label({ Text = text, Size = 11, Bold = true, Height = 36, Offset = 0, Accent = true })
 end
 
 local function customization(window: Window)
     local tab = Builder.newTab(window, "Customization", { Group = SETTINGS_GROUP })
-    local compact = window.M.Height < 460
-    local look = tab:section("CUSTOMIZATION")
-    category(look, "Size & Motion")
-    look:slider({ Name = "UI Scale", StateKey = "UIScale", Min = 0.50, Max = 1.50, Float = true })
-    look:slider({ Name = "Animation Speed", StateKey = "AnimationIntensity", Min = 0.25, Max = 1.50, Float = true })
-    category(look, "Shape")
-    look:slider({ Name = "Corner Roundness", StateKey = "Roundness", Min = 0, Max = 0.6, Float = true })
-    look:slider({ Name = "Toggle Roundness", StateKey = "ToggleRoundness", Min = 0, Max = 1, Float = true })
-    category(look, "Animation")
-    look:pair(
-        { Type = "Toggle", Name = "Smooth Pages", StateKey = "AnimationsEnabled", NoStack = compact },
-        { Type = "Toggle", Name = "Outline Anim", StateKey = "PremiumEffects" }
-    )
-
-    local colors = tab:section("COLORS")
-    category(colors, "Transparency")
-    colors:pair(
-        { Type = "Slider", Name = "UI Transparency", StateKey = "UITrans", Min = 0, Max = 1, Float = true, Disabled = transparencyLocked },
-        { Type = "Slider", Name = "Btn Transparency", StateKey = "ButtonTrans", Min = 0, Max = 1, Float = true, Disabled = transparencyLocked }
-    )
-    category(colors, "Colors")
-    colors:pair(
-        { Type = "Toggle", Name = "Light Mode", StateKey = "LightMode", NoStack = compact },
-        { Type = "Toggle", Name = "Transparent", StateKey = "Transparent", Disabled = performanceOff }
-    )
-    colors:pair(
-        { Type = "Color", Name = "Edit Accent Color", StateKey = "AccentCol", Default = window.DefaultAccent, NoStack = compact },
-        { Type = "Color", Name = "Edit Main Color", StateKey = "MainCol", Default = window.DefaultMain }
-    )
-    local extras = colors
-    category(extras, "Theme")
-    extras:pair({
-        Type = "Dropdown",
-        Name = "Background Effect",
-        StateKey = "BackgroundEffect",
-        Values = BACKGROUND_EFFECTS,
-        Disabled = function(window: Window): boolean
-            return performanceOff(window) or animatedTheme(window) or window.State.ThemeName == "Default"
-        end,
-        Callback = function()
-            window:regenerateParticles()
-        end,
-    }, {
+    local look = tab:section("APPEARANCE")
+    headline(look, "APPEARANCE")
+    look:add({
         Type = "Button",
         Name = "Themes",
-        Label = themeLabel,
+        Label = function(target: Window): string
+            return "Themes: " .. tostring(target.State.ThemeName)
+        end,
         Callback = function()
             window:togglePopup("themes")
         end,
     })
-    category(colors, "Reset")
-    colors:button({
+    look:add({ Type = "Toggle", Name = "Transparent", StateKey = "Transparent", Disabled = performanceOff })
+    look:add({ Type = "Slider", Name = "UI Transparency", StateKey = "UITrans", Min = 0, Max = 1, Float = true, Disabled = transparencyLocked })
+    local motion = look
+    headline(motion, "MOTION")
+    motion:add({ Type = "Slider", Name = "UI Scale", StateKey = "UIScale", Min = 0.50, Max = 1.50, Float = true })
+    motion:add({ Type = "Slider", Name = "Animation Speed", StateKey = "AnimationIntensity", Min = 0.25, Max = 1.50, Float = true })
+    motion:add({ Type = "Toggle", Name = "Smooth Pages", StateKey = "AnimationsEnabled" })
+    motion:add({ Type = "Toggle", Name = "Reduce Motion", StateKey = "ReduceMotion" })
+    motion:add({ Type = "Toggle", Name = "Outline Animation", StateKey = "PremiumEffects", Bindable = false })
+    motion:add({ Type = "Toggle", Name = "Compact Sidebar", StateKey = "CompactSidebar", Bindable = false })
+    local shape = look
+    headline(shape, "SHAPE")
+    shape:add({ Type = "Slider", Name = "Corner Roundness", StateKey = "Roundness", Min = 0, Max = 0.6, Float = true })
+    shape:add({ Type = "Slider", Name = "Toggle Roundness", StateKey = "ToggleRoundness", Min = 0, Max = 0.5, Float = true })
+    shape:button({
         Name = "Reset Settings",
         Callback = function()
             window:resetAppearance()
@@ -6836,8 +11590,8 @@ end
 local function keybinds(window: Window)
     local tab = Builder.newTab(window, "General", { Group = SETTINGS_GROUP })
     local compact = window.M.Height < 460
-    local behavior = tab:section("GENERAL")
-    category(behavior, "Window")
+    local behavior = tab:section("WINDOW")
+    headline(behavior, "WINDOW")
     behavior:pair(
         { Type = "Toggle", Name = "Watermark", StateKey = "WatermarkEnabled", NoStack = compact },
         { Type = "Toggle", Name = "Click Sound", StateKey = "ClickSound" }
@@ -6846,7 +11600,6 @@ local function keybinds(window: Window)
         { Type = "Toggle", Name = "Lock Position", StateKey = "LockPosition", NoStack = compact },
         { Type = "Toggle", Name = "Remember Tab", StateKey = "RememberTab" }
     )
-    category(behavior, "Behavior")
     behavior:pair(
         { Type = "Toggle", Name = "Notifications", StateKey = "ToggleNotifications", NoStack = compact },
         { Type = "Toggle", Name = "Start Hidden", StateKey = "StartHidden" }
@@ -6860,7 +11613,7 @@ local function keybinds(window: Window)
     })
 
     local section = behavior
-    category(section, "Keybinds")
+    headline(section, "KEYBINDS")
     section:button({
         Name = "UI Keybind",
         Label = keybindLabel,
@@ -6906,9 +11659,9 @@ end
 
 local function config(window: Window)
     local tab = Builder.newTab(window, "Config", { Group = SETTINGS_GROUP })
-    local section = tab:section("CONFIG")
+    local section = tab:section("CONFIGS")
+    headline(section, "CONFIGS")
     local files = window.Config
-    category(section, "Save")
     section:input({ Name = "Config Name...", StateKey = "ConfigName", MaxLength = 32 })
     section:button({
         Name = "Save Config",
@@ -6916,8 +11669,8 @@ local function config(window: Window)
             window:saveConfig(window.State.ConfigName)
         end,
     })
-    category(section, "Load")
-    section:dropdown({
+    local loadSection = section
+    loadSection:dropdown({
         Name = "Select Config",
         StateKey = "SelectedConfig",
         Values = function()
@@ -6940,16 +11693,12 @@ local function config(window: Window)
             end
         end,
     }
+    load.NoStack, delete.NoStack = true, true
+    loadSection:pair(load, delete)
     local compact = window.M.Height < 460
-    if compact then
-        load.NoStack, delete.NoStack = true, true
-        section:pair(load, delete)
-    else
-        section:add(load)
-        section:add(delete)
-    end
-    category(section, "Auto Load")
-    section:dropdown({
+    local auto = section
+    headline(auto, "AUTO & SHARE")
+    auto:dropdown({
         Name = "Auto Load",
         StateKey = "DefaultConfigName",
         Values = function()
@@ -6959,7 +11708,7 @@ local function config(window: Window)
             setDefault(window)
         end,
     })
-    section:dropdown({
+    auto:dropdown({
         Name = "Auto Load For",
         StateKey = "AutoLoadScope",
         Values = { "All Games", "This Game" },
@@ -6967,8 +11716,8 @@ local function config(window: Window)
             setDefault(window)
         end,
     })
-    category(section, "Share")
-    section:pair({
+    local share = auto
+    share:pair({
         Type = "Button",
         Name = "Copy Config Code",
         NoStack = compact,
@@ -6982,7 +11731,7 @@ local function config(window: Window)
             window:importConfigCode()
         end,
     })
-    section:label({
+    share:label({
         Size = 11,
         Height = 19,
         Label = function()
@@ -7050,7 +11799,7 @@ local touched: { Scope } = { fallback }
 local lastTouched: { Scope } = {}
 local frameStamp = 0
 
-local corner = 0.46
+local corner = 0.46 * 1.3
 local font = Fonts.DEFAULT
 local imagesReady, imagesLoading = 0, 0
 
@@ -7058,6 +11807,7 @@ local Z_SLOT = 100000
 local order = 0
 local warming = false
 
+-- while the loader card still covers the window everything is drawn barely there, so every part is built and set up before it fades in
 function Painter.warm(state: boolean)
     warming = state
 end
@@ -7066,13 +11816,29 @@ local function lift(alpha: number): number
     return if warming and alpha <= 0.004 then 0.005 else alpha
 end
 
-local function depth(zIndex: number): number
-    order += 1
-    return zIndex * Z_SLOT + math.min(order, Z_SLOT - 1)
+-- everything drawn while this is set sits that many layers higher, so a window can lift a whole page over the rest
+local zBase = 0
+
+function Painter.lift(layers: number)
+    zBase = layers
 end
 
+local function depth(zIndex: number): number
+    order += 1
+    return (zIndex + zBase) * Z_SLOT + math.min(order, Z_SLOT - 1)
+end
+
+-- every relative corner is drawn this much rounder than the Roundness setting says, the setting still scales them all
+local ROUND_BOOST = 1.3
+local DEFAULT_CORNER = 0.46
+
 function Painter.setCorner(value: number)
-    corner = math.clamp(value, 0, 0.6)
+    corner = math.clamp(value, 0, 0.6) * ROUND_BOOST
+end
+
+-- 1 at the default Roundness, for corners given in pixels that should still follow the setting
+function Painter.curve(): number
+    return corner / (DEFAULT_CORNER * ROUND_BOOST)
 end
 
 function Painter.corner(): number
@@ -7087,8 +11853,14 @@ function Painter.font(): number
     return font
 end
 
+-- the bold face that belongs to the window font, the window's own bold when that font has none
+function Painter.bold(): number
+    return Fonts.boldOf(font) or Fonts.BOLD
+end
+
 function Painter.begin()
     order = 0
+    zBase = 0
     Draw.beginFrame()
     frameStamp += 1
     lastTouched, touched = touched, { fallback }
@@ -7163,6 +11935,7 @@ function Painter.hideAll()
     Painter.finish()
 end
 
+-- cuts everything drawn after this call off at the given screen box, until unclip
 function Painter.clip(position: Vector2, size: Vector2)
     Draw.setClip(position.X, position.Y, size.X, size.Y)
 end
@@ -7171,6 +11944,7 @@ function Painter.unclip()
     Draw.clearClip()
 end
 
+-- the screen box of the clip that is set now, nil while nothing is cut off
 function Painter.clipBox(): (number?, number?, number?, number?)
     return Draw.clipBox()
 end
@@ -7199,6 +11973,7 @@ function Painter.rect(position: Vector2, size: Vector2, color: Color3, alpha: nu
     node:show(true)
 end
 
+-- a box with a color gradient over its whole size, the colors are spread evenly along the direction of the angle in degrees
 function Painter.gradient(position: Vector2, size: Vector2, colors: { Color3 }, angle: number, alpha: number, zIndex: number, rounding: number?)
     local z = depth(zIndex)
     alpha = lift(alpha)
@@ -7218,7 +11993,8 @@ function Painter.gradient(position: Vector2, size: Vector2, colors: { Color3 }, 
     node:show(true)
 end
 
-function Painter.fade(position: Vector2, size: Vector2, color: Color3, from: number, to: number, angle: number, alpha: number, zIndex: number, rounding: number?)
+-- a box whose color fades from one strength to another along the angle in degrees
+function Painter.fade(position: Vector2, size: Vector2, color: Color3, from: number, to: number, angle: number, alpha: number, zIndex: number, rounding: number?, absolute: boolean?)
     local z = depth(zIndex)
     alpha = lift(alpha)
     local index = current.rectCount + 1
@@ -7232,11 +12008,14 @@ function Painter.fade(position: Vector2, size: Vector2, color: Color3, from: num
         node:show(false)
         return
     end
-    node:update(position.X, position.Y, size.X, size.Y, color, math.clamp(alpha, 0, 1), z, (rounding or 0) * corner, 0)
+    local radius = if absolute then math.min(rounding or 0, math.min(size.X, size.Y) * 0.5) else (rounding or 0) * corner
+    node:update(position.X, position.Y, size.X, size.Y, color, math.clamp(alpha, 0, 1), z, radius, 0)
     node:fade(from, to, angle)
     node:show(true)
 end
 
+-- a thin border drawn as a real stroke around the box, so every side has the same width and the corners stay round,
+-- it sits on the outside of the box, the box itself is not changed
 function Painter.border(position: Vector2, size: Vector2, radius: number, color: Color3, alpha: number, zIndex: number, thickness: number)
     local z = depth(zIndex)
     alpha = lift(alpha)
@@ -7279,11 +12058,17 @@ function Painter.line(from: Vector2, to: Vector2, color: Color3, alpha: number, 
     local delta = to - from
     local length = delta.Magnitude
     if length < 0.5 then
+        -- a line too short to see still takes its slot, so the objects drawn after it keep theirs
+        Painter.rect(from, Vector2.zero, color, 0, zIndex)
         return
     end
     local middle = (from + to) / 2
     local angle = math.deg(math.atan2(delta.Y, delta.X))
-    Painter.rect(middle - Vector2.new(length / 2, thickness / 2), Vector2.new(length, thickness), color, alpha, zIndex, thickness / 2, true, angle)
+    -- the box is turned around its own center, so it is sized in whole pixels first and placed from the middle, then the
+    -- rounding of its corner can never push the middle of the line off by a pixel
+    local long = math.max(1, math.floor(length + 0.5))
+    local thick = math.max(1, math.floor(thickness + 0.5))
+    Painter.rect(middle - Vector2.new(long / 2, thick / 2), Vector2.new(long, thick), color, alpha, zIndex, thick / 2, true, angle)
 end
 
 function Painter.image(url: string, position: Vector2, size: Vector2, alpha: number, zIndex: number, rounding: number?, tint: Color3?, rotation: number?): boolean
@@ -7313,8 +12098,23 @@ function Painter.imageStats(): (number, number, number, number)
     return imagesReady, imagesLoading, 0, 1
 end
 
-function Painter.textWidth(text: string, size: number): number
-    return Draw.measure(text, math.max(1, math.ceil(size)), font)
+-- text is always drawn and measured on a whole font size, a size a hair over a whole number from float error stays on that number
+local function wholeSize(size: number): number
+    return math.max(1, math.ceil(size - 0.02))
+end
+
+-- the width the text takes on screen, measured in the face it is drawn with (the window font unless one is given)
+function Painter.textWidth(text: string, size: number, face: number?): number
+    return Draw.measure(text, wholeSize(size), face or font)
+end
+
+local lastText: any = nil
+
+-- the width the engine really drew the last Painter.text with, falls back to the measured width
+function Painter.drawnWidth(text: string, size: number, face: number?): number
+    local node = lastText
+    local drawn: number? = if node and node.drawnWidth then node:drawnWidth() else nil
+    return drawn or Painter.textWidth(text, size, face)
 end
 
 function Painter.text(
@@ -7337,16 +12137,23 @@ function Painter.text(
         node = Draw.text()
         current.texts[index] = node
     end
+    lastText = nil
     if alpha <= 0.004 or text == "" then
         node:show(false)
         return
     end
+    lastText = node
     local face = fontIndex or font
-    local drawSize = math.max(1, math.ceil(size))
+    local drawSize = wholeSize(size)
     local width = Draw.measure(text, drawSize, face) + 2
-    local x = if center then position.X - (width - 2) * 0.5 else position.X
     local y = if middle then position.Y - drawSize * 0.5 else position.Y
-    node:update(text, x, y, width, drawSize, drawSize, color, math.clamp(alpha, 0, 1), z, face)
+    if center then
+        -- an even box keeps its middle on the given point, an odd one would centre the text half a pixel to the right
+        local box = 2 * math.ceil(width / 2) + 80
+        node:update(text, math.floor(position.X - box * 0.5 + 0.5), y, box, drawSize, drawSize, color, math.clamp(alpha, 0, 1), z, face, true)
+    else
+        node:update(text, position.X, y, width, drawSize, drawSize, color, math.clamp(alpha, 0, 1), z, face)
+    end
     node:show(true)
 end
 
@@ -7404,6 +12211,17 @@ local function lightSet(state: { [string]: any }, main: Color3): { [string]: Col
         Text = Color.lerp(BLACK, main, 0.55),
         Sub = Color.lerp(WHITE, main, 0.58),
     }
+end
+
+-- a white or pale grey accent disappears on a light window, there it turns into the text color as the light mode comes in
+local function readable(accent: Color3, text: Color3, light: number): Color3
+    if light <= 0.001 then
+        return accent
+    end
+    local high = math.max(accent.R, accent.G, accent.B)
+    local low = math.min(accent.R, accent.G, accent.B)
+    local pale = math.clamp((0.299 * accent.R + 0.587 * accent.G + 0.114 * accent.B - 0.6) / 0.25, 0, 1) * math.clamp(1 - (high - low) / 0.2, 0, 1)
+    return Color.lerp(accent, text, light * pale)
 end
 
 function Palette.glide(state: { [string]: any }, colorKeys: { [string]: boolean }, dt: number)
@@ -7470,11 +12288,12 @@ function Palette.compute(state: { [string]: any }, dt: number): Colors
     local dark = math.max(light, if bright then 1 else 0)
     local accentText = Color.lerp(Color.lighten(accent, 0.55), Color.lerp(accent, Color3.new(0, 0, 0), 0.4), dark)
     local presetOf = state.ThemePreset or Theme.Default
-    local pure = true
+    local pure = true -- the Finder look is the layout of every theme, a theme only brings its colours
     local pick = 0
     if pure then
         pick = 1
-        accentText = if bright then Color3.new(1, 1, 1) else Color3.new(0, 0, 0)
+        -- text and marks that sit on the accent follow how bright it is, so a white accent gets dark ink
+        accentText = if (accent.R * 0.299 + accent.G * 0.587 + accent.B * 0.114) > 0.62 then Color3.fromRGB(20, 20, 24) else Color3.new(1, 1, 1)
     end
 
     local set = lightSet(state, main)
@@ -7486,7 +12305,7 @@ function Palette.compute(state: { [string]: any }, dt: number): Colors
         Sub = Color.lerp(Color.lerp(sub, main, if pure then 0 else SOFTEN_SUB), set.Sub, light),
         Disabled = Color.lerp(disabled, Color.lerp(set.Sub, set.Main, 0.5), light),
         AccentText = accentText,
-        Accent = state.AccentCol,
+        Accent = readable(state.AccentCol, Color.lerp(text, set.Text, light), light),
         Light = light,
         Pick = pick,
         Well = Color.lerp(Color.lerp(panel, main, if pure then 1 else 0.35), set.Main, light),
@@ -7653,6 +12472,7 @@ local function drawPanel(app: App, panel: Panel)
     end
     local alpha: number = math.clamp(panel.Anim, 0, 1)
     local full = Vector2.new(panel.Width * unit, panel.Height * unit)
+    -- opening and closing share one pop, the panel grows from 90% while fading in and shrinks back while fading out
     local pop = 0.9 + 0.1 * alpha
     local size = full * pop
     local pos: Vector2 = panel.Pos + (full - size) / 2
@@ -7667,6 +12487,7 @@ local function drawPanel(app: App, panel: Panel)
 
     local closeKey = "panel:" .. id .. ":close"
     local closeSize = Vector2.new(24 * unit, 24 * unit)
+    -- the X keeps the same room to the right edge as to the top and bottom of the bar
     local closePos = pos + Vector2.new(size.X - closeSize.X - (barHeight - closeSize.Y) / 2, (barHeight - closeSize.Y) / 2)
     panel.LockAnim = Motion.ease(app.State, panel.LockAnim, if panel.Locked then 1 else 0, app.Dt, 10)
     local dim = 1 - 0.65 * panel.LockAnim
@@ -7744,6 +12565,7 @@ function Panels.draw(app: App)
     for index, panel in list do
         local shown = panel.Open and (panel.Persistent or app.State.Visible ~= false)
         if shown and panel.Warm and not panel.Warmed then
+            -- one invisible pass so Render can size and place the panel before it fades in
             panel.Warmed = true
             Painter.scope("panel:" .. index)
             drawPanel(app, panel)
@@ -7902,9 +12724,9 @@ local Fonts: typeof(require("../fonts")) = import("ui/fonts")
 local Hits: typeof(require("../hits")) = import("ui/hits")
 local Kit: typeof(require("./kit")) = import("ui/popups/kit")
 local Logo: typeof(require("../logo")) = import("ui/logo")
+local Theme: typeof(require("../../core/theme")) = import("core/theme")
 local Motion: typeof(require("../motion")) = import("ui/motion")
 local Painter: typeof(require("../painter")) = import("ui/painter")
-local Theme: typeof(require("../../core/theme")) = import("core/theme")
 
 type App = { [string]: any }
 
@@ -7915,26 +12737,13 @@ local NOTICE_MIN_WIDTH = 220
 local FONTS_PER_PAGE = 16
 local FONT_PAGES = math.ceil(Fonts.COUNT / FONTS_PER_PAGE)
 
-local function themeList(app: App): { any }
-    local list: { any } = {}
-    local known = false
-    for _, name in Theme.PresetOrder do
-        local preset = Theme.Presets[name]
-        known = known or preset.Name == app.Preset.Name
-        table.insert(list, preset)
-    end
-    if not known then
-        table.insert(list, 1, app.Preset)
-    end
-    return list
-end
-
 local function closer(app: App): () -> ()
     return function()
         app:closePopup()
     end
 end
 
+-- every popup shares the spacing of the kit, body text is 13 high on rows of LINE and lined up on the left
 local EDGE, GAP, SECTION, BUTTON, TOP = Kit.EDGE, Kit.GAP, Kit.SECTION, Kit.BUTTON, Kit.TOP
 local LINE = 18
 local TEXT_SIZE = 13
@@ -7948,11 +12757,13 @@ local function widest(app: App, lines: { string }, size: number): number
     return width
 end
 
+-- wide enough for the body and for the title next to the Close button
 local function fitWidth(app: App, title: string, lines: { string }, minimum: number): number
     local head = widest(app, { title }, TITLE_SIZE) + EDGE + GAP + Kit.CLOSE + EDGE
     return math.ceil(math.max(minimum, head, widest(app, lines, TEXT_SIZE) + EDGE * 2))
 end
 
+-- the popup ends right below its lines, or right below the row of buttons under them
 local function fitHeight(lines: number, buttons: boolean): number
     return TOP + lines * LINE + (if buttons then SECTION + BUTTON else 0) + EDGE
 end
@@ -7968,6 +12779,7 @@ local function confirmRow(app: App, kit: any, onConfirm: () -> (), yes: string?,
     kit:button("confirm:no", EDGE + width + GAP, y, width, BUTTON, closer(app), { label = no or "Cancel" })
 end
 
+-- the font grid packs its cells tighter than other rows, the same gap both ways
 local FONT_CELL = 24
 local FONT_GAP = 4
 local FONT_ROWS = FONTS_PER_PAGE // 2
@@ -8008,6 +12820,99 @@ Builtin.fonts = {
 local function deleteLines(app: App): { string }
     return { "Are you sure you want to delete", "'" .. tostring(app.State.SelectedConfig) .. "'?" }
 end
+
+local THEME_ROWS = 4
+local THEME_COLUMNS = 2
+local THEME_WIDTH = 460
+local THEME_CARD = 62
+local THEME_GAP = GAP
+local THEME_CYCLE = 7
+
+local function themeEntries(): { { [string]: any } }
+    local entries: { { [string]: any } } = {}
+    for _, name in Theme.PresetOrder do
+        local preset = Theme.Presets[name]
+        if preset then
+            local animated = type(preset.Cycle) == "table" and #preset.Cycle >= 2
+            local paper: { [string]: Color3 }? = if name == "Light" then preset.Light else nil
+            table.insert(entries, { Name = preset.Name, Main = if paper then paper.Main else preset.Main, Panel = if paper then paper.Panel else preset.Panel, Accent = if paper then paper.Text else preset.Accent, Cycle = if animated then preset.Cycle else nil, Tag = if animated then "Animated" else "Still", Live = animated })
+        end
+    end
+    return entries
+end
+
+-- the sky of an animated theme drifts through its colors while the card is on screen
+local function themeSky(cycle: { Color3 }, offset: number): Color3
+    local count = #cycle
+    local at = ((os.clock() / THEME_CYCLE * count) + offset) % count
+    local index = math.floor(at)
+    return Color.lerp(cycle[index + 1], cycle[(index + 1) % count + 1], at - index)
+end
+
+-- a small copy of the window in the colors of the theme, its name, a tag and a marker when it is the one in use
+local function themeCard(app: App, kit: any, entry: { [string]: any }, x: number, y: number, width: number, number: number)
+    local pal = app.Pal
+    local name: string = entry.Name
+    local key = "themes:" .. name
+    local selected = app.State.ThemeName == name
+    local hover = kit:ease(key .. ":hover", if kit:hovered(key) then 1 else 0, 16)
+    local lit = kit:ease(key .. ":active", if selected then 1 else 0, 14)
+    local height = THEME_CARD
+    local body = Color.lerp(Color.lerp(pal.Main, pal.Panel, 0.30), pal.Accent, 0.13 * hover)
+    kit:rect(x, y, width, height, body, 1, 14)
+    kit:border(x + 1.5, y + 1.5, width - 3, height - 3, 12.5, pal.Accent, lit, 1.5)
+
+    local preview = height - 18
+    local px, py = x + 9, y + 9
+    local accent: Color3 = entry.Accent
+    local cycle: { Color3 }? = entry.Cycle
+    kit:rect(px, py, preview, preview, if cycle then themeSky(cycle, number * 0.7) else entry.Main, 1, 10)
+    kit:rect(px + 5, py + preview * 0.42, preview - 10, preview * 0.58 - 5, entry.Panel, 0.82, 6)
+    kit:rect(px + 5, py + 6, math.floor(preview * 0.42), 5, accent, 1, 2.5)
+
+    local textX = px + preview + 12
+    kit:text(name, textX, y + 22, 14, pal.Text, false, true)
+    local tag: string = entry.Tag
+    local live: boolean = entry.Live
+    local chipWidth = kit:measure(tag, 11) + 18
+    local chipColor = if live then Color.lerp(body, accent, 0.42) else Color.lerp(body, pal.Off, 0.9)
+    kit:rect(textX, y + 35, chipWidth, 19, chipColor, 1, 9)
+    kit:text(tag, textX + chipWidth / 2, y + 44.5, 11, if live then Color.lighten(accent, 0.7) else pal.Text, true, true)
+    if lit > 0.01 then
+        local label = "Selected"
+        local labelWidth = kit:measure(label, 9) + 8
+        kit:rect(x + width - labelWidth - 10, y + 38, labelWidth, 13, pal.Accent, lit, 6.5)
+        kit:text(label, x + width - labelWidth / 2 - 10, y + 44.5, 9, (if pal.Accent.R * 0.299 + pal.Accent.G * 0.587 + pal.Accent.B * 0.114 > 0.6 then Color3.fromRGB(20, 20, 24) else Color3.new(1, 1, 1)), true, true)
+    end
+    kit:hit(key, x, y, width, height, function()
+        app:chooseTheme(name)
+    end)
+end
+
+Builtin.themes = {
+    size = function(_app: App)
+        local rows = math.ceil(#themeEntries() / THEME_COLUMNS)
+        return THEME_WIDTH, TOP + math.min(rows, THEME_ROWS) * (THEME_CARD + THEME_GAP) - THEME_GAP + EDGE
+    end,
+    title = function()
+        return ""
+    end,
+    render = function(app: App, kit: any)
+        local top = kit:header("Themes", "Colors of the whole menu", closer(app))
+        local entries = themeEntries()
+        local rows = math.ceil(#entries / THEME_COLUMNS)
+        kit:scroll("themes:list", EDGE, top, kit.Width - EDGE * 2, kit.Height - top - EDGE + THEME_GAP, THEME_CARD + THEME_GAP, rows, function(index: number, x: number, y: number, width: number)
+            local cardWidth = (width - THEME_GAP * (THEME_COLUMNS - 1)) / THEME_COLUMNS
+            for column = 1, THEME_COLUMNS do
+                local number = (index - 1) * THEME_COLUMNS + column
+                local entry = entries[number]
+                if entry then
+                    themeCard(app, kit, entry, x + (column - 1) * (cardWidth + THEME_GAP), y, cardWidth, number)
+                end
+            end
+        end, 4, true)
+    end,
+}
 
 Builtin.deleteConfig = {
     closable = false,
@@ -8106,105 +13011,10 @@ Builtin.discord = {
     end,
 }
 
-local THEME_ROWS = 4
-local THEME_COLUMNS = 2
-local THEME_WIDTH = 460
-local THEME_CARD = 62
-local THEME_GAP = GAP
-
-local function themeEntries(app: App): { { [string]: any } }
-    local state = app.State
-    local white = Color3.new(1, 1, 1)
-    local entries: { { [string]: any } } = {}
-    local seen: { [string]: boolean } = {}
-    for _, preset in themeList(app) do
-        if not seen[preset.Name] and preset.Name ~= "Custom" then
-            seen[preset.Name] = true
-            local animated = type(preset.Cycle) == "table" and #preset.Cycle >= 2
-            table.insert(entries, { Name = preset.Name, Main = preset.Main, Panel = preset.Panel, Accent = preset.Accent, Sky = preset.Sky, Tag = if animated then "Animated" else "Still", Live = animated })
-        end
-    end
-    table.insert(entries, {
-        Name = "Custom",
-        Main = state.CustomMainCol,
-        Panel = Color.lerp(state.CustomMainCol, white, 0.075),
-        Accent = state.CustomAccentCol,
-        Sky = nil,
-        Tag = "Yours",
-        Live = false,
-    })
-    return entries
-end
-
-local function themeRows(app: App): number
-    return math.ceil(#themeEntries(app) / THEME_COLUMNS)
-end
-
-local function themeCard(app: App, kit: any, entry: { [string]: any }, x: number, y: number, width: number)
-    local pal = app.Pal
-    local name: string = entry.Name
-    local key = "themes:" .. name
-    local selected = app.State.ThemeName == name
-    local hover = kit:ease(key .. ":hover", if kit:hovered(key) then 1 else 0, 16)
-    local lit = kit:ease(key .. ":active", if selected then 1 else 0, 14)
-    local height = THEME_CARD
-    local body = Color.lerp(Color.lerp(pal.Main, pal.Panel, 0.30), pal.Accent, 0.13 * hover)
-    kit:rect(x, y, width, height, body, 1, 14)
-    kit:border(x + 1.5, y + 1.5, width - 3, height - 3, 12.5, pal.Accent, lit, 1.5)
-
-    local preview = height - 18
-    local px, py = x + 9, y + 9
-    local accent: Color3 = entry.Accent
-    local sky: Color3? = entry.Sky
-    kit:rect(px, py, preview, preview, if sky then Color.lerp(entry.Main, sky, 0.7) else entry.Main, 1, 10)
-    kit:rect(px + 5, py + preview * 0.42, preview - 10, preview * 0.58 - 5, entry.Panel, 1, 6)
-    kit:rect(px + 5, py + 6, math.floor(preview * 0.42), 5, accent, 1, 2.5)
-
-    local textX = px + preview + 12
-    kit:text(name, textX, y + 22, 14, pal.Text, false, true)
-    local tag: string = entry.Tag
-    local live: boolean = entry.Live
-    local chipWidth = kit:measure(tag, 11) + 18
-    local chipColor = if live then Color.lerp(body, accent, 0.42) else Color.lerp(body, pal.Off, 0.9)
-    kit:rect(textX, y + 35, chipWidth, 19, chipColor, 1, 9)
-    kit:text(tag, textX + chipWidth / 2, y + 44.5, 11, if live then Color.lighten(accent, 0.7) else pal.Text, true, true)
-    if lit > 0.01 then
-        local label = "Selected"
-        local labelWidth = kit:measure(label, 9) + 8
-        kit:rect(x + width - labelWidth - 10, y + 38, labelWidth, 13, pal.Accent, lit, 6.5)
-        kit:text(label, x + width - labelWidth / 2 - 10, y + 44.5, 9, Color.lerp(body, pal.AccentText, lit), true, true)
-    end
-    kit:hit(key, x, y, width, height, function()
-        app:applyTheme(name)
-    end)
-end
-
-Builtin.themes = {
-    size = function(app: App)
-        return THEME_WIDTH, TOP + math.min(themeRows(app), THEME_ROWS) * (THEME_CARD + THEME_GAP) - THEME_GAP + EDGE
-    end,
-    title = function()
-        return ""
-    end,
-    render = function(app: App, kit: any)
-        local top = kit:header("Themes", "Colors of the whole menu", closer(app))
-        local entries = themeEntries(app)
-        local rows = math.ceil(#entries / THEME_COLUMNS)
-        kit:scroll("themes:list", EDGE, top, kit.Width - EDGE * 2, kit.Height - top - EDGE + THEME_GAP, THEME_CARD + THEME_GAP, rows, function(index: number, x: number, y: number, width: number)
-            local cardWidth = (width - THEME_GAP * (THEME_COLUMNS - 1)) / THEME_COLUMNS
-            for column = 1, THEME_COLUMNS do
-                local entry = entries[(index - 1) * THEME_COLUMNS + column]
-                if entry then
-                    themeCard(app, kit, entry, x + (column - 1) * (cardWidth + THEME_GAP), y, cardWidth)
-                end
-            end
-        end, 4, true)
-    end,
-}
-
 local LOG_ITEM = 12
 local LOG_STEP = 24
 local LOG_MARK = 18
+-- text inside a row starts this far in from the row and keeps as much room on its right
 local LOG_INSET = 10
 local LOG_ROWS = 9
 local LOG_WIDTH = 340
@@ -8247,12 +13057,14 @@ local function logWrap(app: App, text: string, limit: number): { string }
     return rows
 end
 
+-- the open group grows and the others shrink a little every frame, this runs once per frame from the size function
 local function logStep(app: App, notice: { [string]: any })
+    -- every time the popup is opened again it starts with the default group already open
     local now = os.clock()
     if not logSeen or now - logLast > 0.5 then
         logSeen = true
         local first = if notice.Groups then notice.Groups[1] else nil
-        logOpen = notice.Open or (if first then tostring(first.Name) else nil)
+        logOpen = notice.Open
         table.clear(logGrow)
         if logOpen then
             logGrow[logOpen] = 1
@@ -8267,6 +13079,8 @@ local function logStep(app: App, notice: { [string]: any })
     end
 end
 
+-- every row knows where it sits in the content, the groups below a growing or shrinking group slide with it
+-- a line is shown only above the Limit of its group, so a closing group is wiped away from the bottom instead of snapping
 local function logRows(app: App, notice: { [string]: any }): ({ { [string]: any } }, number)
     local rows: { { [string]: any } } = {}
     local at = 0
@@ -8305,10 +13119,13 @@ local function logRows(app: App, notice: { [string]: any }): ({ { [string]: any 
     return rows, at
 end
 
+-- the title moves right of the script's logo, which is as high as the title row
 local function logTitleX(app: App): number
     return if app.LogoAsset then EDGE + Kit.ROW + GAP else EDGE
 end
 
+-- the release sheet: the logo on the left with the title and the number of changes to its right, then one collapsible card per mode.
+-- every change has a small glyph for its kind, all lines are wrapped to the same size they are drawn with so nothing leaves the popup
 local SHEET_WIDTH = 340
 local SHEET_LOGO = 40
 local SHEET_LINE = 16
@@ -8329,6 +13146,7 @@ local function sheetHead(app: App): number
     return if app.LogoAsset then 76 else 58
 end
 
+-- a reopened popup starts with the first mode open and the others folded
 local function sheetStep(app: App, notice: { [string]: any })
     local now = os.clock()
     local groups: { any } = notice.Groups
@@ -8412,6 +13230,7 @@ local function sheetRender(app: App, kit: any, notice: { [string]: any })
         Painter.image(logo, kit:p(EDGE, 18), Vector2.new(SHEET_LOGO * factor, SHEET_LOGO * factor), kit.Alpha, kit.ZText, if emblem then 0 else 10 * factor, if emblem then pal.Accent else nil)
         left = EDGE + SHEET_LOGO + 12
     end
+    -- the title shrinks before it could reach the close button
     local room = kit.Width - left - Kit.CLOSE - EDGE * 2
     local title = tostring(notice.Title)
     local titleSize = 17
@@ -8554,6 +13373,7 @@ local function logRender(app: App, kit: any, notice: { [string]: any })
     end
     local pal = app.Pal
     kit:title(tostring(notice.Title), logTitleX(app))
+    -- the logo of the script in the top left corner
     local logo: string? = app.LogoAsset
     if logo then
         local factor = kit.ScreenSize.X / kit.Width
@@ -8604,6 +13424,7 @@ local function logRender(app: App, kit: any, notice: { [string]: any })
                 local grow = logGrow[name] or 0
                 local hover = Motion.ease(app.State, logHover[name] or 0, if kit:hovered(key) then 1 else 0, app.Dt, 14)
                 logHover[name] = hover
+                -- a card per group: an accent bar on its left grows while it is open, a drawn chevron turns down and a count sits on the right
                 kit:rect(x, top + 1, span, LOG_STEP - 2, Color.lerp(pal.Panel, pal.Off, 0.25 + 0.5 * hover), 1, 12)
                 kit:hit(key, x, top, span, LOG_STEP, function()
                     logOpen = if logOpen == name then nil else name
@@ -8645,6 +13466,7 @@ local function logRender(app: App, kit: any, notice: { [string]: any })
         end
     end
     kit.Alpha = base
+    -- Close sits in the top right corner, the bottom bar holds the invite
     kit:closeX(function()
         app:acknowledgeUpdate()
         app:closePopup()
@@ -8662,6 +13484,7 @@ local function logRender(app: App, kit: any, notice: { [string]: any })
             app:acknowledgeUpdate()
             app:openPopup("discord")
         end, { hoverColor = pal.Off, base = pal.Panel, rounding = 12 })
+        -- the icon and the text are one group, centered together in the button
         local label = tostring(footer)
         local iconSide = 14
         local gap = 6
@@ -8685,6 +13508,7 @@ Builtin.updateNotice = {
         if type(notice) == "table" and notice.Title ~= nil then
             return logSize(app, notice)
         end
+        -- a plain list of lines: the first is the title, the others are the body
         local lines: { string } = app.Options.UpdateNotice
         local rest = { table.unpack(lines, 2) }
         local height = if #rest > 0 then fitHeight(#rest, false) else Kit.HEAD + EDGE
@@ -8715,6 +13539,7 @@ local THANKS_LINES = { "Join the discord server if you need help", "or want to s
 
 Builtin.thanks = {
     size = function(app: App)
+        -- the two lines and the small note under them take three rows
         return fitWidth(app, THANKS_TITLE, THANKS_LINES, 340), fitHeight(#THANKS_LINES + 1, app.Options.Discord ~= nil)
     end,
     title = function()
@@ -8745,6 +13570,7 @@ local previewText: string? = nil
 local previewLimit = 0
 local previewResult = ""
 
+-- a code can be thousands of characters long, so only a short head is ever measured and the result is kept until the text changes
 local function preview(kit: any, text: string, limit: number): string
     if text == "" then
         return ""
@@ -8769,6 +13595,7 @@ local CODE_BOX = 78
 
 Builtin.configCode = {
     size = function()
+        -- the code box, one row for the note under it and the buttons
         return 440, TOP + CODE_BOX + GAP + LINE + SECTION + BUTTON + EDGE
     end,
     title = function()
@@ -8803,7 +13630,7 @@ Builtin.configCode = {
         kit:swapText("config:note", state.CodeNote or "", EDGE, top + CODE_BOX + GAP + LINE / 2, 11, pal.Accent, false, true)
         local width = if importing then (kit.Width - EDGE * 2 - GAP * 2) / 3 else kit.Width - EDGE * 2
         local y = kit.Height - EDGE - BUTTON
-        local hasCode = tostring(state.CodeBuffer or "") ~= ""
+        local hasCode = code ~= ""
         kit:button("config:copy", EDGE, y, width, BUTTON, function()
             app:copyCodeBuffer()
         end, { label = "Copy", disabled = not hasCode, active = not importing and hasCode })
@@ -8842,11 +13669,13 @@ local ColorPopup = {}
 local Z_OUTLINE, Z_BASE, Z_WHITE, Z_BLACK, Z_EDGE, Z_DOT = 28, 25, 26, 27, 29, 31
 local BAND = 2
 
+-- the mixer follows the spacing of the kit: board and hue bar, then the fields, then the buttons
 local EDGE, GAP, SECTION, BUTTON = Kit.EDGE, Kit.GAP, Kit.SECTION, Kit.BUTTON
 local WIDTH = 394
 local SPAN = WIDTH - EDGE * 2
 local BOARD_Y, BOARD_H = Kit.TOP, 142
 local HUE_Y, HUE_H = BOARD_Y + BOARD_H + GAP, 22
+-- a field is a small label over its box
 local LABEL = 14
 local HEX_Y = HUE_Y + HUE_H + SECTION
 local RGB_Y = HEX_Y + LABEL + BUTTON + GAP
@@ -9001,6 +13830,7 @@ local HANDLE_SPEED, GROW_SPEED = 26, 16
 local glide: { [string]: number } = {}
 local grow: { [string]: number } = {}
 
+-- the handle follows its value smoothly when the value is set from outside, and sticks to the cursor while it is dragged
 local function follow(app: App, key: string, goal: number, dragging: boolean): number
     local shown = glide[key]
     if shown == nil or dragging then
@@ -9015,6 +13845,7 @@ local function follow(app: App, key: string, goal: number, dragging: boolean): n
     return shown
 end
 
+-- a soft shadow, a bright ring and a fill with the picked color, the ring grows while hovered and a little more while dragged
 local function handle(app: App, kit: any, key: string, center: Vector2, width: number, height: number, fill: Color3, active: number)
     local pal = app.Pal
     local alpha = kit.Alpha
@@ -9211,10 +14042,14 @@ type App = { [string]: any }
 local Z_BODY, Z_CONTROL, Z_TEXT = 22, 24, 26
 Kit.Z_BODY, Kit.Z_CONTROL, Kit.Z_TEXT = Z_BODY, Z_CONTROL, Z_TEXT
 
+-- one spacing for every popup: the same edge on all four sides, a small gap between related items and a bigger one between sections
 local EDGE, GAP, SECTION = 16, 8, 14
+-- every popup button is this high and this round, the title row and its Close button are a little lower so they read as one row with the title
 local BUTTON, ROUND, CLOSE, ROW = 28, 16, 62, 24
+-- the capitals of the title are centered on the Close button (measured on a zoomed screenshot, the baseline of the title ends 6 zoomed px under the label baseline)
 local TITLE_Y = EDGE + ROW / 2 - 0.4
 local HEAD = EDGE + ROW
+-- the body starts one section under Close, a header has its divider in that gap
 local TOP = HEAD + SECTION
 Kit.EDGE, Kit.GAP, Kit.SECTION, Kit.BUTTON, Kit.ROUND, Kit.CLOSE, Kit.ROW, Kit.HEAD, Kit.TOP = EDGE, GAP, SECTION, BUTTON, ROUND, CLOSE, ROW, HEAD, TOP
 
@@ -9247,6 +14082,18 @@ function Kit.rect(self: Self, x: number, y: number, w: number, h: number, color:
     Painter.rect(self:p(x, y), self:s(w, h), color, self.Alpha * (alpha or 1), self.ZControl, rounding or 10)
 end
 
+-- a box with a corner radius in the same units as Kit.border, so a box and its outline always match
+function Kit.box(self: Self, x: number, y: number, w: number, h: number, color: Color3, alpha: number?, radius: number?)
+    local factor = self.ScreenSize.X / self.Width
+    Painter.rect(self:p(x, y), self:s(w, h), color, self.Alpha * (alpha or 1), self.ZControl, (radius or 0) * factor, true)
+end
+
+-- a box whose strength runs from "from" to "to" along the angle in degrees (90 is top to bottom), same corner units as Kit.box
+function Kit.fade(self: Self, x: number, y: number, w: number, h: number, color: Color3, from: number, to: number, angle: number, radius: number?)
+    local factor = self.ScreenSize.X / self.Width
+    Painter.fade(self:p(x, y), self:s(w, h), color, from, to, angle, self.Alpha, self.ZControl, (radius or 0) * factor, true)
+end
+
 function Kit.image(self: Self, url: string, x: number, y: number, w: number, h: number, radius: number?, alpha: number?, tint: Color3?): boolean
     local factor = self.ScreenSize.X / self.Width
     return Painter.image(url, self:p(x, y), self:s(w, h), self.Alpha * (alpha or 1), self.ZText, (radius or 0) * factor, tint)
@@ -9274,8 +14121,9 @@ function Kit.text(self: Self, text: string, x: number, y: number, size: number, 
     Painter.text(text, self:p(x, y), scaled, color, self.Alpha, self.ZText, center, middle, font)
 end
 
+-- the bold face of the window, for a small heading that has to stand out from the text around it
 function Kit.boldFace(_self: Self): number?
-    return Fonts.find("Gotham Bold")
+    return Painter.bold()
 end
 
 local function easeKey(app: App, key: string, goal: number, speed: number): number
@@ -9285,6 +14133,8 @@ local function easeKey(app: App, key: string, goal: number, speed: number): numb
     return value
 end
 
+-- a line whose words change while the popup stays open, like a note under a button: the old words fade out first and the new ones fade in on the same spot,
+-- so two texts are never drawn over each other
 function Kit.swapText(self: Self, key: string, text: string, x: number, y: number, size: number, color: Color3, center: boolean?, middle: boolean?, font: number?)
     local app = self.App
     local store = app.PopText
@@ -9313,19 +14163,116 @@ local function pressOf(app: App, key: string, enabled: boolean?): number
     return Press.scale(app, app.Springs, key .. ":press", key, enabled)
 end
 
-local function drawSwitch(self: Self, key: string, x: number, y: number, width: number, height: number, knob: number, on: boolean, hover: number, off: Color3)
+-- the colors of a small square switch. they come from the text and accent colors and the panel the switch sits on, never from the window
+-- color alone, so a switch reads the same on a dark, a light or a see through window. dim mutes both states the same amount, an on
+-- switch on a muted card still looks on
+local DARK_KNOB = Color3.fromRGB(22, 22, 26)
+local LIGHT_KNOB = Color3.fromRGB(250, 250, 252)
+
+local function luma(color: Color3): number
+    return 0.299 * color.R + 0.587 * color.G + 0.114 * color.B
+end
+
+-- the fill of an on switch: the accent, or the text color when the accent is a plain white or grey
+local function switchFill(pal: { [string]: any }): Color3
+    local accent: Color3 = pal.Accent
+    local high = math.max(accent.R, accent.G, accent.B)
+    local low = math.min(accent.R, accent.G, accent.B)
+    return if high - low < 0.12 then pal.Text else accent
+end
+Kit.switchFill = switchFill
+
+function Kit.switchColors(pal: { [string]: any }, shown: number, hover: number, dim: number): (Color3, Color3, Color3, number)
+    local base: Color3 = pal.Panel
+    local offTrack = Color.lerp(base, pal.Text, 0.13 + 0.05 * hover)
+    local onTrack = Color.lighten(switchFill(pal), 0.08 * hover)
+    local offKnob = Color.lerp(Color.lerp(base, pal.Text, 0.78), LIGHT_KNOB, pal.Light or 0)
+    local onKnob = if luma(onTrack) > 0.72 then DARK_KNOB else LIGHT_KNOB
+    local track = Color.lerp(offTrack, onTrack, shown)
+    local knob = Color.lerp(offKnob, onKnob, shown)
+    local mute = 0.55 * dim
+    track = Color.lerp(track, Color.lerp(base, pal.Text, 0.08), mute)
+    knob = Color.lerp(knob, Color.lerp(base, pal.Text, 0.4), mute * (1 - 0.4 * shown))
+    -- a hairline keeps an off switch visible on any window, it fades out as the fill comes in
+    local outline = (0.2 + 0.06 * hover) * (1 - shown) * (1 - 0.5 * dim)
+    return track, knob, pal.Text, outline
+end
+
+-- how round a switch is: the Toggle Roundness setting (0 to 0.5) mapped so that even its lowest step keeps soft corners and
+-- the default is a full pill
+function Kit.switchRound(state: { [string]: any }): number
+    local setting = math.clamp(tonumber(state.ToggleRoundness) or 0.5, 0, 0.5)
+    return 0.4 + 0.6 * math.clamp(setting / 0.4, 0, 1)
+end
+
+-- a checkbox: a rounded square that fills with the accent while a check mark draws itself in, the mark takes the ink that reads on
+-- the fill. side is in screen pixels, pos is its top left corner, value goes 0 to 1 as it is switched
+function Kit.checkbox(pal: { [string]: any }, pos: Vector2, side: number, value: number, held: number, hover: number, dim: number, alpha: number, z: number, factor: number)
+    local fill = Kit.switchFill(pal)
+    local ink = if luma(fill) > 0.72 then DARK_KNOB else LIGHT_KNOB
+    local mute = 0.55 * dim
+    -- everything is placed from one whole pixel center: a press sinks the box by whole pixels on every side and the mark keeps its
+    -- size and place, so holding and letting go never moves the check
+    side = math.round(side)
+    local origin = Vector2.new(math.round(pos.X), math.round(pos.Y))
+    local center = origin + Vector2.new(side / 2, side / 2)
+    local inset = math.floor(side * 0.045 * math.clamp(held, 0, 1) + 0.5)
+    local size = side - inset * 2
+    local at = origin + Vector2.new(inset, inset)
+    local radius = math.max(3 * factor, size * 0.3)
+    local off = Color.lerp(pal.Panel, pal.Text, 0.07 + 0.05 * hover)
+    local body = Color.lerp(Color.lerp(off, Color.lighten(fill, 0.08 * hover), value), Color.lerp(pal.Panel, pal.Text, 0.08), mute)
+    Painter.rect(at + Vector2.new(0, math.max(1, factor) * 0.6), Vector2.new(size, size), Color3.new(0, 0, 0), alpha * 0.16 * value, z, radius, true)
+    Painter.rect(at, Vector2.new(size, size), body, alpha, z, radius, true)
+    -- the edge and both strokes of the check are always drawn, clear while they are not shown, so the box takes the same draw
+    -- slots in every state and whatever is drawn after it in the same scope never trades objects with it mid animation
+    local edge = (0.30 + 0.22 * hover) * (1 - value) * (1 - 0.5 * dim)
+    Painter.border(at, Vector2.new(size, size), radius, pal.Text, if edge > 0.005 then edge * alpha else 0, z, math.max(1, math.round(1.2 * factor)))
+    local a = center + Vector2.new(side * -0.23, side * 0.03)
+    local b = center + Vector2.new(side * -0.07, side * 0.19)
+    local c = center + Vector2.new(side * 0.24, side * -0.17)
+    local thick = math.max(1.6, side * 0.12)
+    local inkColor = Color.lerp(ink, Color.lerp(pal.Panel, pal.Text, 0.4), mute * 0.6)
+    local first = math.clamp(value / 0.4, 0, 1)
+    local second = math.clamp((value - 0.4) / 0.6, 0, 1)
+    local inkAlpha = if value > 0.02 then alpha else 0
+    Painter.line(a, a + (b - a) * first, inkColor, inkAlpha, z + 1, thick)
+    Painter.line(b - (c - b).Unit * thick * 0.4, b + (c - b) * second, inkColor, if second > 0 then inkAlpha else 0, z + 1, thick)
+end
+
+local function drawSwitch(self: Self, key: string, x: number, y: number, width: number, height: number, knob: number, on: boolean, hover: number, dim: number?)
     local app = self.App
     local pal = app.Pal
-    local value = Motion.spring(app.State, app.Springs, key .. ":on", if on then 1 else 0, app.Dt, 0.34, 0.6)
-    local shown = math.clamp(value, 0, 1)
-    local held = Motion.spring(app.State, app.Springs, key .. ":held", if Hits.isPressed(key) and app.HoverKey == key then 1 else 0, app.Dt, 0.22, 0.8)
-    local round = math.clamp(tonumber(app.State.ToggleRoundness) or 0.55, 0, 1)
-    self:solid(x, y, width, height, Color.lerp(off, Color.lighten(pal.Accent, 0.25 * hover), shown), height * 0.5 * round)
-    local travel = math.abs(Motion.velocity(app.Springs, key .. ":on"))
-    local knobW = knob * (1 + math.min(travel * 0.07, 0.35) + 0.18 * math.clamp(held, 0, 1))
-    local pad = (height - knob) / 2
-    local room = width - knob - pad * 2
-    self:solid(x + pad + room * value - (knobW - knob) * value, y + pad, knobW, knob, Color.lerp(pal.Sub, pal.Main, shown), knob * 0.5 * round)
+    -- a plain slide without overshoot, and a small squash of the knob while it is held
+    local value = math.clamp(Motion.spring(app.State, app.Springs, key .. ":on", if on then 1 else 0, app.Dt, 0.18, 1), 0, 1)
+    local held = math.clamp(Motion.spring(app.State, app.Springs, key .. ":held", if Hits.isPressed(key) and app.HoverKey == key then 1 else 0, app.Dt, 0.16, 1), 0, 1)
+    local factor = self.ScreenSize.X / self.Width
+    local topLeft = self:p(x + width - height, y)
+    local pos = Vector2.new(math.round(topLeft.X), math.round(topLeft.Y))
+    Kit.checkbox(pal, pos, math.round(height * factor), value, held, hover, dim or 0, self.Alpha, self.ZControl, factor)
+    do return end
+    local round = Kit.switchRound(app.State)
+    local track, knobColor, line, outline = Kit.switchColors(pal, value, hover, dim or 0)
+    local sizeW, sizeH = math.round(width * factor), math.round(height * factor)
+    local radius = math.max(3 * factor, sizeH * 0.5 * round)
+    local alpha = self.Alpha
+    Painter.rect(pos, Vector2.new(sizeW, sizeH), track, alpha, self.ZControl, radius, true)
+    if outline > 0.005 then
+        Painter.border(pos, Vector2.new(sizeW, sizeH), radius, line, outline * alpha, self.ZControl, 1)
+    end
+    local base = math.round(knob * factor)
+    if (sizeH - base) % 2 ~= 0 then
+        base -= 1
+    end
+    local pad = (sizeH - base) / 2
+    local knobW = base + 3 * factor * held
+    local knobH = base - 1 * factor * held
+    local room = sizeW - pad * 2 - knobW
+    local knobRadius = math.max(2 * factor, radius - pad)
+    local knobPos = Vector2.new(pos.X + pad + math.round(room * value), pos.Y + (sizeH - knobH) / 2)
+    -- the knob floats over its track on a small soft shadow
+    Painter.rect(knobPos + Vector2.new(0, math.max(1, factor)), Vector2.new(knobW, knobH), Color3.new(0, 0, 0), alpha * 0.22, self.ZControl, knobRadius, true)
+    Painter.rect(knobPos, Vector2.new(knobW, knobH), knobColor, alpha, self.ZControl, knobRadius, true)
 end
 
 function Kit.dim(self: Self, key: string, on: boolean, strength: number)
@@ -9354,7 +14301,16 @@ function Kit.button(self: Self, key: string, x: number, y: number, w: number, h:
     local darker = type(preset) == "table" and preset.Name == "Default" and (preset :: any).Pure ~= true and app.State.ThemeName ~= "Custom"
     local base = opts.base or (if darker then Color.lerp(pal.Panel, Color3.new(0, 0, 0), 0.22) else pal.Panel)
     local fill = if active then pal.Accent else Color.lerp(base, opts.hoverColor or pal.Accent, (opts.hoverMix or 1) * hover)
-    Painter.rect(moved, shrunk, fill, self.Alpha, self.ZControl, opts.rounding or ROUND)
+    if opts.rounding then
+        Painter.rect(moved, shrunk, fill, self.Alpha, self.ZControl, opts.rounding)
+    else
+        -- a pill, as round as the Roundness setting lets it be
+        local radius = shrunk.Y / 2 * math.min(1, Painter.curve())
+        Painter.rect(moved, shrunk, fill, self.Alpha, self.ZControl, radius, true)
+        if not active then
+            Painter.border(moved, shrunk, radius, pal.Text, self.Alpha * 0.06 * (1 - hover), self.ZControl, 1)
+        end
+    end
     local textColor
     if active then
         textColor = pal.Panel
@@ -9366,6 +14322,7 @@ function Kit.button(self: Self, key: string, x: number, y: number, w: number, h:
         if opts.font then
             labelSize = labelSize * Fonts.scale(opts.font) / Fonts.scale(Painter.font())
         end
+        -- a label sits in the middle of its button unless the caller lines it up on the left
         if opts.align ~= "left" then
             Painter.text(opts.label, moved + shrunk / 2, labelSize, textColor, self.Alpha, self.ZText, true, true, opts.font)
         else
@@ -9398,6 +14355,7 @@ function Kit.pager(self: Self, key: string, x: number, y: number, w: number, pag
     self:text(tostring(page) .. "/" .. tostring(maxPage), x + w / 2, y + BUTTON / 2, 13, pal.Sub, true, true)
 end
 
+-- body text of a popup, lined up on the left edge like the title above it, y is the middle of the first line
 function Kit.lines(self: Self, lines: { string }, y: number, step: number, size: number?)
     local color = self.App.Pal.Sub
     local base = size or 13
@@ -9423,8 +14381,8 @@ function Kit.switchRow(self: Self, key: string, x: number, y: number, w: number,
     local bx, by, bw, bh = Press.area(x, y, w, h, scale)
     self:rect(bx, by, bw, bh, Color.lerp(Color.lerp(pal.Panel, pal.Main, 0.10), pal.Accent, 0.08 * hover), 1, 16)
     self:text(label, bx + 12 * scale, by + bh / 2, 13, pal.Text, false, true)
-    local trackW, trackH = 42 * scale, 22 * scale
-    drawSwitch(self, key, bx + bw - (42 + 12) * scale, by + (bh - trackH) / 2, trackW, trackH, 16 * scale, on, hover, pal.Off)
+    local trackW, trackH = 34 * scale, 20 * scale
+    drawSwitch(self, key, bx + bw - (34 + 12) * scale, by + (bh - trackH) / 2, trackW, trackH, 14 * scale, on, hover)
     Hits.add({ key = key, position = self:p(x, y), size = self:s(w, h), click = onClick })
 end
 
@@ -9450,6 +14408,19 @@ function Kit.slider(self: Self, key: string, x: number, y: number, w: number, h:
     })
 end
 
+-- an invisible drag area: the fraction 0 to 1 of the mouse across the bar is given to onDrag while it is held
+function Kit.dragBar(self: Self, key: string, x: number, y: number, w: number, h: number, barX: number, barW: number, onDrag: (number) -> ())
+    local barPos, barSize = self:p(barX, y), self:s(barW, h)
+    Hits.add({
+        key = key,
+        position = self:p(x, y),
+        size = self:s(w, h),
+        drag = function(mouse: Vector2)
+            onDrag(math.clamp((mouse.X - barPos.X) / math.max(0.001, barSize.X), 0, 1))
+        end,
+    })
+end
+
 function Kit.input(self: Self, key: string, x: number, y: number, w: number, h: number, shown: string, onFocus: () -> (), base: Color3?)
     local app = self.App
     local pal = app.Pal
@@ -9457,15 +14428,17 @@ function Kit.input(self: Self, key: string, x: number, y: number, w: number, h: 
     local hover = easeKey(app, key .. ":hover", if app.HoverKey == key then 1 else 0, Press.HOVER_SPEED)
     local scale = pressOf(app, key)
     local bx, by, bw, bh = Press.area(x, y, w, h, scale)
-    self:rect(bx, by, bw, bh, if focused then pal.Off else Color.lerp(base or pal.Panel, pal.Accent, 0.22 * hover), 1, ROUND)
+    self:rect(bx, by, bw, bh, if focused then pal.Off else Color.lerp(base or pal.Panel, pal.Accent, 0.22 * hover), 1, ROUND * 1.4)
     self:text(if focused then (app.Buffers[key] or "") .. "|" else shown, bx + bw / 2, by + bh / 2, 13, pal.Text, true, true)
     Hits.add({ key = key, position = self:p(x, y), size = self:s(w, h), click = onFocus })
 end
 
+-- the Close button in the top right corner of a popup, its top is level with the top of the title
 function Kit.closeX(self: Self, onClose: () -> ())
     self:button("pop:close", self.Width - EDGE - CLOSE, EDGE, CLOSE, ROW, onClose, { label = "Close" })
 end
 
+-- the accent title with its short line under it, x moves it right of a logo
 function Kit.title(self: Self, title: string, x: number?)
     local pal = self.App.Pal
     local left = x or EDGE
@@ -9479,6 +14452,7 @@ function Kit.header(self: Self, title: string, subtitle: string?, onClose: () ->
         self:button("pop:back", EDGE, EDGE, ROW, ROW, onBack, { label = "<", size = 14 })
         left = EDGE + ROW + GAP
     end
+    -- a title with a subtitle under it is centered on the row as one block, a title alone has its capitals on the middle of the row
     self:text(title, left, if subtitle then TITLE_Y - 2 else TITLE_Y + 3.5, 15, pal.Text, false, true)
     if subtitle then
         self:text(subtitle, left, TITLE_Y + 11, 10, pal.Sub, false, true)
@@ -9510,40 +14484,115 @@ function Kit.listRow(self: Self, key: string, x: number, y: number, w: number, h
         self:text(options.title, textX, middle, 12, pal.Text, false, true)
     end
     if options.arrow then
-        self:text(">", bx + bw - (14 - hover * 2) * scale, middle, 13, Color.lerp(pal.Sub, pal.Accent, hover), true, true)
+        self:text(">", bx + bw - 14 * scale, middle, 13, Color.lerp(pal.Sub, pal.Accent, hover), true, true)
     end
     if clickable then
         Hits.add({ key = key, position = self:p(x, y), size = self:s(w, h), click = options.onClick, rightClick = options.onRightClick })
     end
 end
 
-function Kit.miniSwitch(self: Self, key: string, x: number, y: number, on: boolean, onClick: () -> ())
+-- a small square switch, 30 by 18 with a 12 knob, x and y are its top left corner. dim (0 to 1) mutes it without hiding its state
+Kit.SWITCH_W, Kit.SWITCH_H = 34, 20
+function Kit.miniSwitch(self: Self, key: string, x: number, y: number, on: boolean, onClick: () -> (), dim: number?)
     local app = self.App
-    local pal = app.Pal
-    local width, height, knob = 36, 20, 14
+    local width, height, knob = Kit.SWITCH_W, Kit.SWITCH_H, 16
     local hover = easeKey(app, key .. ":hover", if app.HoverKey == key then 1 else 0, Press.HOVER_SPEED)
-    drawSwitch(self, key, x, y, width, height, knob, on, hover, Color.lerp(pal.Off, pal.Main, 0.2))
+    drawSwitch(self, key, x, y, width, height, knob, on, hover, dim)
     Hits.add({ key = key, position = self:p(x - 4, y - 4), size = self:s(width + 8, height + 8), click = onClick })
 end
 
-function Kit.segment(self: Self, key: string, x: number, y: number, w: number, h: number, labels: { string }, selected: number, onSelect: (number) -> ())
+-- the room each label of a segment wants: its text and the same padding on both sides
+local SEGMENT_TEXT, SEGMENT_PAD, SEGMENT_INSET = 11.5, 11, 2.5
+
+function Kit.segmentWidth(self: Self, labels: { string }, size: number?): number
+    local total = SEGMENT_INSET * 2
+    for _, label in labels do
+        total += self:measure(label, size or SEGMENT_TEXT) + SEGMENT_PAD * 2
+    end
+    return total
+end
+
+-- cuts a label down until it fits, with two dots at the end
+local function clipLabel(self: Self, text: string, size: number, room: number): string
+    if self:measure(text, size) <= room then
+        return text
+    end
+    local cut = #text
+    while cut > 1 and self:measure(string.sub(text, 1, cut) .. "..", size) > room do
+        cut -= 1
+    end
+    return string.sub(text, 1, cut) .. ".."
+end
+
+-- a segmented control. every cell is as wide as its label and the room left over is shared out evenly, so a long label never leaves
+-- its pill. when the labels do not fit the text gets a little smaller first and is cut only as a last step. the pill keeps the same inset
+-- from the track on every side and springs in both place and width
+function Kit.segment(self: Self, key: string, x: number, y: number, w: number, h: number, labels: { string }, selected: number, onSelect: (number) -> (), dim: number?)
     local app = self.App
     local pal = app.Pal
     local count = #labels
-    local cell = w / count
-    self:rect(x, y, w, h, Color.lerp(pal.Main, pal.Panel, 0.42), 1, 12)
-    local slide = Motion.spring(app.State, app.Springs, key .. ":slide", selected - 1, app.Dt, 0.34, 0.82)
-    self:rect(x + 2 + slide * cell, y + 2, cell - 4, h - 4, Color.lerp(pal.Panel, pal.Accent, math.max(0.30, pal.Pick)), 1, 10)
+    if count == 0 then
+        return
+    end
+    local inner = w - SEGMENT_INSET * 2
+    local size = SEGMENT_TEXT
+    local widths: { number } = {}
+    local natural = 0
+    for index, label in labels do
+        widths[index] = self:measure(label, size)
+        natural += widths[index]
+    end
+    local padding = SEGMENT_PAD
+    if natural + padding * 2 * count > inner then
+        padding = math.max(5, (inner - natural) / (count * 2))
+        if natural + padding * 2 * count > inner then
+            local smaller = math.max(9, size * (inner - padding * 2 * count) / math.max(1, natural))
+            local factor = smaller / size
+            size = smaller
+            natural = 0
+            for index in labels do
+                widths[index] *= factor
+                natural += widths[index]
+            end
+        end
+    end
+    local spare = math.max(0, inner - natural - padding * 2 * count) / count
+    local starts: { number } = {}
+    local cells: { number } = {}
+    local cursor = x + SEGMENT_INSET
+    for index in labels do
+        starts[index] = cursor
+        cells[index] = math.max(1, math.min(widths[index] + padding * 2 + spare, x + w - SEGMENT_INSET - cursor))
+        cursor += cells[index]
+    end
+    local radius = h * 0.5
+    local trackColor = Color.lerp(pal.Panel, pal.Text, 0.07)
+    local mute = 0.55 * (dim or 0)
+    self:box(x, y, w, h, trackColor, 1, radius)
+    self:border(x, y, w, h, radius, pal.Text, 0.07, 1)
+    local slide = math.clamp(Motion.spring(app.State, app.Springs, key .. ":slide", selected, app.Dt, 0.26, 1), 1, count)
+    local low = math.floor(slide)
+    local high = math.min(count, low + 1)
+    local share = slide - low
+    local pillX = starts[low] + (starts[high] - starts[low]) * share
+    local pillW = cells[low] + (cells[high] - cells[low]) * share
+    local fill = Kit.switchFill(pal)
+    local onFill = if luma(fill) > 0.72 then DARK_KNOB else LIGHT_KNOB
+    fill = Color.lerp(fill, trackColor, mute)
+    onFill = Color.lerp(onFill, fill, mute * 0.6)
+    self:box(pillX, y + SEGMENT_INSET + 1, pillW, h - SEGMENT_INSET * 2, Color3.new(0, 0, 0), 0.2, radius - SEGMENT_INSET)
+    self:box(pillX, y + SEGMENT_INSET, pillW, h - SEGMENT_INSET * 2, fill, 1, radius - SEGMENT_INSET)
     for index, label in labels do
         local cellKey = key .. ":" .. index
         local hover = easeKey(app, cellKey .. ":hover", if app.HoverKey == cellKey then 1 else 0, Press.HOVER_SPEED)
         local lit = easeKey(app, cellKey .. ":lit", if index == selected then 1 else 0, 14)
-        local color = Color.lerp(Color.lerp(pal.Sub, pal.Text, hover), pal.AccentText, lit)
-        self:text(label, x + (index - 0.5) * cell, y + h / 2, 11, color, true, true)
+        local color = Color.lerp(Color.lerp(Color.lerp(pal.Sub, pal.Text, hover), trackColor, mute * 0.7), onFill, lit)
+        local shown = clipLabel(self, label, size, cells[index] - 6)
+        self:text(shown, starts[index] + cells[index] / 2, y + h / 2, size, color, true, true)
         Hits.add({
             key = cellKey,
-            position = self:p(x + (index - 1) * cell, y),
-            size = self:s(cell, h),
+            position = self:p(starts[index], y),
+            size = self:s(cells[index], h),
             click = function()
                 onSelect(index)
             end,
@@ -9573,7 +14622,9 @@ end
 local WHEEL_STEP = 56
 local SCROLL_RATE = 8
 
+-- a list fades its rows out over this many pixels at an edge that has more rows behind it
 local EDGE_FADE = 24
+-- how far a row may reach over the edge of the list, it is invisible by then
 
 local function smooth(value: number): number
     local t = math.clamp(value, 0, 1)
@@ -9626,8 +14677,10 @@ function Kit.scroll(self: Self, key: string, x: number, y: number, w: number, h:
     local outer = Painter.active()
     local first = math.max(1, math.floor(cell.Pos / rowHeight) + 1)
     local last = math.min(count, math.ceil((cell.Pos + h) / rowHeight))
+    -- a list that moves one whole row at a time has room above it for the outline of its first row, which is drawn around the row
     local room = if contained then 4 else 0
     local clipAt, clipSize = self:p(x - 4, y - room), self:s(w + 8, h + room)
+    -- inside a scrolling page the list is also cut at the page edge
     local pageAt, pageSize = Hits.getClip()
     if pageAt and pageSize then
         local left, top = math.max(clipAt.X, pageAt.X), math.max(clipAt.Y, pageAt.Y)
@@ -9657,7 +14710,7 @@ function Kit.scroll(self: Self, key: string, x: number, y: number, w: number, h:
         local thumb = math.max(24, h * h / content)
         local travel = h - thumb
         local thumbY = y + travel * (cell.Pos / maxScroll)
-        local thickness = 3 + 2 * cell.Bar
+        local thickness = 4
         local trackX = x + w - thickness - 1
         local alpha = 0.30 + 0.60 * cell.Bar
         self:solid(trackX, y, thickness, h, pal.Sub, thickness * 0.5, 0.14 * cell.Bar)
@@ -9686,9 +14739,13 @@ function Kit.scroll(self: Self, key: string, x: number, y: number, w: number, h:
     return cell.Pos
 end
 
-function Kit.measure(self: Self, text: string, size: number): number
+function Kit.measure(self: Self, text: string, size: number, font: number?): number
     local factor = self.ScreenSize.X / self.Width
-    return Painter.textWidth(text, size * self.App.TextScale) / factor
+    local scaled = size * self.App.TextScale
+    if font then
+        scaled = scaled * Fonts.scale(font) / Fonts.scale(Painter.font())
+    end
+    return Painter.textWidth(text, scaled, font) / factor
 end
 
 function Kit.hit(self: Self, key: string, x: number, y: number, w: number, h: number, onClick: () -> ())
@@ -9703,6 +14760,29 @@ end
 function Kit.line(self: Self, x1: number, y1: number, x2: number, y2: number, color: Color3, thickness: number, alpha: number?)
     local factor = self.ScreenSize.X / self.Width
     Painter.line(self:p(x1, y1), self:p(x2, y2), color, self.Alpha * (alpha or 1), self.ZControl, thickness * factor)
+end
+
+-- a chevron made of a trail of round dots, so both arms are smooth at any angle. turn 0 points right, 1 down, -1 up
+function Kit.chevron(self: Self, cx: number, cy: number, turn: number, color: Color3, arm: number?, thickness: number?, alpha: number?)
+    local reach = arm or 4.5
+    local factor = self.ScreenSize.X / self.Width
+    local dot = (thickness or 1.9) * factor
+    local angle = turn * math.pi / 2
+    local cosine, sine = math.cos(angle), math.sin(angle)
+    local function point(px: number, py: number): Vector2
+        return self:p(cx + px * cosine - py * sine, cy + px * sine + py * cosine)
+    end
+    local tip = point(reach * 0.45, 0)
+    local half = Vector2.new(dot / 2, dot / 2)
+    local size = Vector2.new(dot, dot)
+    local shown = self.Alpha * (alpha or 1)
+    for _, far in { point(-reach * 0.45, -reach), point(-reach * 0.45, reach) } do
+        local delta = far - tip
+        local steps = math.max(2, math.ceil(delta.Magnitude / (dot * 0.3)))
+        for step = 0, steps do
+            Painter.rect(tip + delta * (step / steps) - half, size, color, shown, self.ZControl, dot / 2, true)
+        end
+    end
 end
 
 function Kit.region(self: Self, key: string, x: number, y: number, w: number, h: number, onClick: (() -> ())?, onRightClick: (() -> ())?)
@@ -9732,17 +14812,21 @@ type App = { [string]: any }
 Press.SHRINK = 0.04
 Press.HOVER_SPEED = 16
 
-local RESPONSE, RATIO = 0.26, 0.5
+local RESPONSE, RATIO = 0.2, 1
 
 function Press.scale(app: App, bag: { [string]: any }, name: string, key: any, enabled: boolean?): number
     local goal = if enabled ~= false and Hits.isPressed(key) and app.HoverKey == key then 1 else 0
     local value = Motion.spring(app.State, bag, name, goal, app.Dt, RESPONSE, RATIO)
-    return 1 - Press.SHRINK * math.clamp(value, -0.6, 1.2)
+    return 1 - Press.SHRINK * math.clamp(value, 0, 1)
 end
 
+-- the box sinks by the same whole number of pixels on every side, so its center never moves while it is pressed or let go
 function Press.box(position: Vector2, size: Vector2, scale: number): (Vector2, Vector2)
-    local smaller = size * scale
-    return position + (size - smaller) / 2, smaller
+    if scale == 1 then
+        return position, size
+    end
+    local inset = Vector2.new(math.floor(size.X * (1 - scale) / 2 + 0.5), math.floor(size.Y * (1 - scale) / 2 + 0.5))
+    return position + inset, size - inset * 2
 end
 
 function Press.area(x: number, y: number, w: number, h: number, scale: number): (number, number, number, number)
@@ -9754,6 +14838,7 @@ end
 modules["ui/runner"] = function(...)
 
 local import: (string) -> any = ...
+local Color: typeof(require("../core/color")) = import("core/color")
 local Canvas: typeof(require("../render/canvas")) = import("render/canvas")
 local Chat: typeof(require("../input/chat")) = import("input/chat")
 local Draw: typeof(require("../render/draw")) = import("render/draw")
@@ -9768,6 +14853,7 @@ local Layout: typeof(require("./layout")) = import("ui/layout")
 local Motion: typeof(require("./motion")) = import("ui/motion")
 local Overlays: typeof(require("./overlays")) = import("ui/overlays")
 local Overlay: typeof(require("./overlay")) = import("ui/overlay")
+local Opener: typeof(require("./opener")) = import("ui/opener")
 local Painter: typeof(require("./painter")) = import("ui/painter")
 local Palette: typeof(require("./palette")) = import("ui/palette")
 local Panels: typeof(require("./panels")) = import("ui/panels")
@@ -9788,10 +14874,10 @@ local STARTUP_DELAY = 0.1
 local UI_SAVE_INTERVAL = 0.5
 local LEAN_EVERY = 3
 local MOTION_DT = 1 / 30
-local HALO_ALPHA = 0.23
-local PRELOAD_LIMIT = 30
-local HOLD_ANSWER = 1
-local HOLD_LIMIT = 4
+local HALO_ALPHA = 0.23 -- how strong the loader card draws its halo
+local PRELOAD_LIMIT = 30 -- a window built while the loader plays shows by itself after this long if the loader never says so
+local HOLD_ANSWER = 1 -- an older loader never says its card is gone, the options start fading this long after the window was drawn
+local HOLD_LIMIT = 4 -- the options never wait longer than this for the loader card
 
 local function clamp01(value: number): number
     return math.clamp(value, 0, 1)
@@ -9897,6 +14983,7 @@ local function updateGeometry(app: App, now: number, dt: number)
 
     local motion = math.min(dt, MOTION_DT)
     if app.RevealStart then
+        -- counted in capped frame steps, so a freeze while the script builds cannot skip the fade, and held at the start while the loader card still covers the window
         if not app.RevealHold then
             app.RevealTime = (app.RevealTime or 0) + motion * (app.RevealSpeed or 1)
         end
@@ -9907,6 +14994,7 @@ local function updateGeometry(app: App, now: number, dt: number)
         state.TabReveal = math.clamp((elapsed - 0.12) / 0.66, 0, 1)
         local visual = math.clamp((elapsed - 0.08) / 0.72, 0, 1)
         app.WelcomeVisual = visual * visual * (3 - 2 * visual)
+        -- after a loader handoff the frame eases from the card's look into the window's own once the card is gone
         local card = app.HandoffCard
         if card then
             local settle = math.clamp((elapsed - 0.08) / 0.9, 0, 1)
@@ -9930,6 +15018,7 @@ local function updateGeometry(app: App, now: number, dt: number)
     local previous = app.MenuPos
     local follow = 1 - math.exp(-22 * dt)
     app.MenuPos = Util.lerpVector2(app.MenuPos, app.TargetPos, follow)
+    -- the glide ends exactly on the target, a position that keeps creeping by fractions of a pixel makes the outline and the body round to different pixels for a frame
     if (app.TargetPos - app.MenuPos).Magnitude < 0.45 then
         app.MenuPos = app.TargetPos
     end
@@ -9938,6 +15027,7 @@ local function updateGeometry(app: App, now: number, dt: number)
 
     local animated = state.UIScaleAnim
     local current = app.MenuSize * animated
+    -- the frame always sits on whole pixels so every layer of it, the outline included, rounds the same way
     local origin = app.MenuPos + app.MenuSize / 2 - current / 2
     origin = Vector2.new(math.floor(origin.X + 0.5), math.floor(origin.Y + 0.5))
     current = Vector2.new(math.floor(current.X + 0.5), math.floor(current.Y + 0.5))
@@ -9963,6 +15053,7 @@ local function updateGeometry(app: App, now: number, dt: number)
                 app:finishFarewell()
             end
         else
+            -- the logo stays until the window is fully back at its default size and place, then it goes and the window hides
             if not farewell.ReadyAt and ((not app.Recentering and elapsed >= 0.9) or elapsed >= 3) then
                 farewell.ReadyAt = now
             end
@@ -10001,16 +15092,19 @@ local function updateTabs(app: App, dt: number)
             state.TabAlpha = Motion.ease(state, state.TabAlpha, 0, dt, speed * 2.2)
             if state.TabAlpha < 0.03 then
                 if state.NextSection then
-                    state.SectionByTab[state.CurrentTab] = state.NextSection
-                    state.NextSection = nil
+                    state.SectionByTab[state.NextSectionTab or state.NextTab or state.CurrentTab] = state.NextSection
+                    state.NextSection, state.NextSectionTab = nil, nil
                 end
+                app.PageShownAt = os.clock()
+                app.ResultHold = nil
                 state.SectionSwap = state.NextTab == nil
                 if state.NextTab then
                     state.CurrentTab = state.NextTab
                     state.NextTab = nil
                 end
+                -- the new page starts from nothing and fades in, so the swap never flashes a frame of it at full strength
                 state.TabReveal = 0
-                state.TabAlpha = 1
+                state.TabAlpha = 0
                 state.TabFading = false
             end
         elseif state.TabAlpha < 1 then
@@ -10030,13 +15124,15 @@ local function updateTabs(app: App, dt: number)
         end
     else
         if state.NextSection then
-            state.SectionByTab[state.CurrentTab] = state.NextSection
-            state.NextSection = nil
+            state.SectionByTab[state.NextSectionTab or state.NextTab or state.CurrentTab] = state.NextSection
+            state.NextSection, state.NextSectionTab = nil, nil
         end
         if state.NextTab then
             state.CurrentTab = state.NextTab
             state.NextTab = nil
+            app.PageShownAt = os.clock()
         end
+        app.ResultHold = nil
         state.SectionSwap, state.TabFading = false, false
         state.TabAlpha, state.TabReveal, state.NavReveal = 1, 1, 1
     end
@@ -10054,6 +15150,7 @@ local function handleKeys(app: App, now: number)
     end
     local captured = Keys.findNew(down, app.PreviousKeys)
     app.PreviousKeys = down
+    -- everything below only acts on a key pressed this frame, so frames without one skip the walk over every bind
     if next(fresh) == nil then
         return
     end
@@ -10063,12 +15160,20 @@ local function handleKeys(app: App, now: number)
         app:finishCapture(if clear then "None" else captured)
         return
     end
+    if app.SettingsOpen and fresh.Escape and app.Focus == nil and app.Popup.Name == "None" and app.OpenDropdown == nil then
+        app:closeSettings()
+        return
+    end
     local blocked = app.Focus ~= nil or Hits.busy() or app.Popup.Name ~= "None" or app.OpenDropdown ~= nil
         or app.ChatTyping
     if blocked then
         return
     end
+    -- with no menu key bound the hidden window still opens on the default key, nobody gets locked out
     local menuKey = Keys.normalize(state.Keybind)
+    if (menuKey == "" or menuKey == "None") and not state.Visible then
+        menuKey = Keys.normalize(app:menuKey())
+    end
     if menuKey ~= "" and menuKey ~= "None" and fresh[menuKey] then
         if now - app.LastToggle > MENU_TOGGLE_DELAY then
             app.LastToggle = now
@@ -10111,6 +15216,12 @@ local function runFrameHooks(app: App)
         Now = app.Now,
         Visible = app.State.Visible,
         Canvas = Canvas,
+        -- a notification style pill, not drawn while the window is unfocused because that frame has no painter pass
+        Chip = function(key: string, center: Vector2, segments: any, alpha: number, scale: number, bar: any?)
+            if app.Lean ~= true then
+                Overlay.chip(app, key, center, segments, alpha, scale, bar)
+            end
+        end,
     }
     for _, hook in app.FrameHooks do
         pcall(hook, frame)
@@ -10146,6 +15257,7 @@ local function updateWindowBlock(app: App)
     WindowBlock.setBlocked(block, blockAt, blockSize, enabled and (over or Hits.busy()))
 end
 
+-- unload: while the content fades the logo shows in the middle of the empty window and stays until the window has hidden
 local function drawFarewellLogo(app: App, now: number)
     local farewell = app.Farewell
     if not farewell or farewell.Start == 0 then
@@ -10165,6 +15277,7 @@ local function drawFarewellLogo(app: App, now: number)
     local size: Vector2 = app.WindowSize
     local middle = app.WindowPos + size / 2
     local breathe = (0.82 + 0.18 * mix) * (1 + 0.02 * math.sin(elapsed * 3))
+    -- the loader card's halo behind the logo: the same soft picture at the same strength, it swells in a little after the logo and breathes with it
     local halo = Skyfx.halo()
     if halo then
         local swell = clamp01((elapsed - 0.25) / 0.8)
@@ -10191,15 +15304,67 @@ local function drawFarewellLogo(app: App, now: number)
     end
 end
 
+-- the corner grip at the bottom right, dragging it resizes the window from its top left like a Windows 11 window
+local MIN_WIDTH, MIN_HEIGHT = 520, 360
+
+local function drawResizeGrip(app: App)
+    local m = app.M
+    local key = "window:resize"
+    local held = Hits.isDragging(key)
+    local hover = Motion.ease(app.State, app.NavAnim[key] or 0, if (app.HoverKey == key or held) and not app.Modal then 1 else 0, app.Dt, 14)
+    app.NavAnim[key] = hover
+    local reach = 22
+    local at = app:pos(m.Width - reach, m.Height - reach)
+    local size = app:size(reach, reach)
+    local color = Color.lerp(app.Pal.Sub, app.Pal.Text, hover)
+    local alpha = app.Alpha.Text * app.State.IntroAlpha * (0.35 + 0.5 * hover)
+    local dot = math.max(2, math.round(2 * app.Unit))
+    local step = 4 * app.Unit
+    local corner = at + size - Vector2.new(7 * app.Unit, 7 * app.Unit)
+    Painter.scope(key)
+    for row = 0, 2 do
+        for column = 0, 2 - row do
+            local p = corner - Vector2.new(column * step, row * step)
+            Painter.rect(Vector2.new(math.round(p.X), math.round(p.Y)), Vector2.new(dot, dot), color, alpha, 13, dot / 2)
+        end
+    end
+    Painter.scope(nil)
+    if app.Modal then
+        return
+    end
+    Hits.add({
+        key = key,
+        position = at,
+        size = size,
+        press = function(mouse: Vector2)
+            app.ResizeFrom = { Mouse = mouse, Width = m.Width, Height = m.Height }
+        end,
+        drag = function(mouse: Vector2)
+            local from = app.ResizeFrom
+            if not from then
+                return
+            end
+            local scale = math.max(0.10, tonumber(app.State.UIScale) or 1)
+            local viewport = app.Viewport
+            local maxWidth = if viewport.X > 0 then math.max(MIN_WIDTH, (viewport.X - 12 - app.MenuPos.X) / scale) else 1400
+            local maxHeight = if viewport.Y > 0 then math.max(MIN_HEIGHT, (viewport.Y - 12 - app.MenuPos.Y) / scale) else 1000
+            app.WidthGoal = nil
+            m.Width = math.floor(math.clamp(from.Width + (mouse.X - from.Mouse.X) / scale, MIN_WIDTH, maxWidth) + 0.5)
+            m.Height = math.floor(math.clamp(from.Height + (mouse.Y - from.Mouse.Y) / scale, MIN_HEIGHT, maxHeight) + 0.5)
+        end,
+    })
+end
+
 local function drawWindow(app: App, now: number)
     local state = app.State
     local m = app.M
-    app.Modal = app.Popup.Name ~= "None" or app.OpenDropdown ~= nil
+    local overlay = app.Popup.Name ~= "None" or app.OpenDropdown ~= nil
+    app.Modal = overlay or app.SettingsOpen == true or app.SettingsVisible == true
 
     Hits.add({
         key = "window:drag",
         position = app.WindowPos,
-        size = app:size(m.Width, 54),
+        size = app.WindowSize,
         press = function(mouse: Vector2)
             app.DragOffset = app.MenuPos - mouse
             app.Recentering, app.ScaleGoal = nil, nil
@@ -10212,12 +15377,43 @@ local function drawWindow(app: App, now: number)
         end,
     })
 
+    if not app.DefaultSize then
+        app.DefaultSize = Vector2.new(m.Width, m.Height)
+    end
     local tab = app:currentTab()
     local index = Layout.activeIndex(app, tab)
     local section = tab.sections[index]
     local typed = Chrome.query(app)
-    if typed ~= "" and not tab.ownSearch then
-        section = Layout.results(app, typed, Chrome.clearSearch)
+    -- the results stand in for the page while something is typed. going from the page to the results and back is the same fade as a
+    -- page change: the shown content fades out, the swap happens while nothing shows and the other content fades in
+    local want = typed ~= "" and not tab.ownSearch
+    if app.ResultsShown == nil or not state.AnimationsEnabled then
+        app.ResultsShown = want
+    end
+    if app.SwapSeen ~= app.PageShownAt then
+        app.SwapSeen = app.PageShownAt
+        app.ResultsShown = want
+    end
+    app.UpcomingTitle = nil
+    if app.ResultsShown ~= want and not app.ResultHold then
+        if not state.NextTab and not state.NextSection then
+            state.NextTab = state.CurrentTab
+        end
+        if want then
+            app.UpcomingTitle = "Search"
+        end
+    end
+    app.ShowingResults = false
+    if app.ResultHold then
+        -- a picked result keeps the results on screen until they have faded out
+        section = app.ResultHold
+        app.ShowingResults = true
+    elseif app.ResultsShown and not tab.ownSearch then
+        local page = if typed ~= "" then Layout.results(app, typed, Chrome.clearSearch) else app.ResultPage
+        if page then
+            section = page
+            app.ShowingResults = true
+        end
     end
     local baseText = app.Alpha.Text
     local behind = 1 - 0.92 * clamp01(app.Popup.Alpha)
@@ -10227,17 +15423,24 @@ local function drawWindow(app: App, now: number)
     Layout.draw(app, section, x, y, width, bottom)
     Painter.fine(false)
     drawFarewellLogo(app, now)
+    drawResizeGrip(app)
 
     if tab.meteors and not app.Boot then
         local reveal = Motion.out(if state.AnimationsEnabled then math.clamp(state.TabReveal, 0, 1) else 1)
         Effects.meteors(state, now, app.ContentBox, app.Scale, app.Alpha.Text * state.TabAlpha * math.min(1, reveal * 1.4), app.Pal.Text)
     end
     app.Alpha.Text = baseText
+    Painter.scope("overlay:settings")
+    Chrome.drawSettings(app, now)
+    -- the dropdowns and popups of the settings window sit over it
+    Painter.lift(if app.SettingsVisible then 16 else 0)
+    app.Modal = overlay
     Painter.scope("overlay:dropdown")
     Overlays.drawDropdown(app)
     Painter.scope("overlay:popup")
     Overlays.drawPopup(app, now)
     Painter.scope(nil)
+    Painter.lift(0)
 end
 
 local function processInput(app: App)
@@ -10302,8 +15505,17 @@ local function snapColors(app: App)
     state.PaletteShown = nil
 end
 
+-- a hidden start says once how to open the window
+local function hiddenNotice(app: App)
+    if app.HiddenStart and not app.State.Visible then
+        app.HiddenStart = nil
+        app:announce("Menu started hidden, press " .. app:menuKey() .. " to open it")
+    end
+end
+
 local function finishBoot(app: App)
     local state = app.State
+    hiddenNotice(app)
     state.VisibilityAnim, state.IntroAlpha = 0, 0
     state.NavReveal, state.TabReveal = 0, 0
     app.Springs.open = { x = 0, v = 0 }
@@ -10323,17 +15535,21 @@ local function present(revealing: boolean)
     end
 end
 
+-- a frame of an unfocused window: only the frame hooks run, so the ESP keeps drawing while the menu work waits for the next full frame
 local function leanStep(app: App, now: number)
     app.Dt, app.Now = math.min(now - app.LastNow, 0.05), now
     Canvas.begin()
     refreshCamera(app, now)
     Canvas.setCamera(app.Camera)
+    app.Lean = true
     runFrameHooks(app)
+    app.Lean = false
     Canvas.finish()
 end
 
 function Runner.step(app: App, now: number)
     local state = app.State
+    -- while the game window is in the background nobody uses the menu, so two of three frames only run the hooks
     if app.Unfocused and not app.Boot and not app.Welcome then
         app.LeanTick = (app.LeanTick + 1) % LEAN_EVERY
         if app.LeanTick ~= 0 then
@@ -10362,26 +15578,39 @@ function Runner.step(app: App, now: number)
     if app.Handoff and app.Viewport then
         app.Handoff = nil
         snapColors(app)
+        -- the window opens at the size the card grew to, a saved ui scale that differs is glided to once the card is gone
         local cardScale = if type(app.CardLook) == "table" then tonumber(app.CardLook.Scale) else nil
         local savedScale = state.UIScale
+        local hidden = app.HiddenStart == true
         Welcome.handoff(app, cardScale)
         if cardScale and math.abs((tonumber(savedScale) or cardScale) - cardScale) > 0.002 then
             app.PendingScale = savedScale
         end
-        app.RevealStart = now
-        app.RevealTime = 0
-        app.RevealSpeed = 0.7
+        -- the loader still waits for its answer, a hidden start just has no window under the card
         app.RevealHold = { Since = now, Frames = 0, Signaled = nil }
         local look = app.CardLook
         app.CardLook = nil
-        app.HandoffCard = {
-            Main = if type(look) == "table" then look.Main else nil,
-            Accent = if type(look) == "table" then look.Accent else nil,
-            Spin = if type(look) == "table" then look.Spin else nil,
-            Radius = if type(look) == "table" then look.Radius else nil,
-            Settle = 0,
-        }
-        Painter.warm(true)
+        if hidden then
+            -- no reveal either, it would draw the window over a hidden start
+            app.RevealStart = nil
+            state.Visible = false
+            state.VisibilityAnim, state.IntroAlpha = 0, 0
+            app.Springs.open = { x = 0, v = 0 }
+            hiddenNotice(app)
+        else
+            -- the loader card sits above the window: the options wait at the start of their fade until the card is gone, then fade in like a normal open
+            app.RevealStart = now
+            app.RevealTime = 0
+            app.RevealSpeed = 0.7
+            app.HandoffCard = {
+                Main = if type(look) == "table" then look.Main else nil,
+                Accent = if type(look) == "table" then look.Accent else nil,
+                Spin = if type(look) == "table" then look.Spin else nil,
+                Radius = if type(look) == "table" then look.Radius else nil,
+                Settle = 0,
+            }
+            Painter.warm(true)
+        end
     end
     local waiting = app.PreloadWait ~= nil
     if waiting and (getgenv().__OkloReveal == true or now - app.PreloadWait > PRELOAD_LIMIT) then
@@ -10460,6 +15689,7 @@ function Runner.step(app: App, now: number)
         end
     end
     present(revealing)
+    -- after two drawn frames the window is on screen under the card, the loader is told so and takes its card away
     local drawn = app.RevealHold
     if drawn and not waiting and not drawn.Signaled then
         drawn.Frames += 1
@@ -10504,14 +15734,17 @@ function Runner.start(app: App): () -> ()
     app.WasDown = false
     app.DragOffset = Vector2.new(0, 0)
     app.WelcomeVisual = 1
+    -- the loader intro asks for this when its card has grown to the window, then the window opens in place without boot or welcome
     app.Handoff = getgenv().__OkloHandoff == true
     getgenv().__OkloHandoff = nil
     getgenv().__OkloDrawn = nil
+    -- the loader can also start the script while its card still plays: the window is then built and drawn hidden, it answers "built" and shows when the loader sets __OkloReveal
     if not app.Handoff and getgenv().__OkloPreload == true then
         getgenv().__OkloPreload = "built"
         app.Handoff = true
         app.PreloadWait = os.clock()
     end
+    -- the loader leaves the look of its card, the window starts as that card and eases into its own
     local cardLook = getgenv().__OkloCard
     getgenv().__OkloCard = nil
     app.CardLook = if app.Handoff and type(cardLook) == "table" then cardLook else nil
@@ -10537,12 +15770,15 @@ function Runner.start(app: App): () -> ()
     Logo.start(app)
     Logo.startIcons(app)
 
+    local updateOpener, destroyOpener = Opener.new(app)
     local connection = nil
     pcall(function()
         connection = game:GetService("RunService").RenderStepped:Connect(function()
             if not running or app.Suspended then
                 return
             end
+            local state = app.State
+            updateOpener(state.Visible ~= true and state.VisibilityAnim < 0.05 and not app.Boot and not app.Welcome and app.PreloadWait == nil)
             local ok, problem = pcall(Runner.step :: any, app, os.clock())
             if not ok then
                 if problem ~= app.LastProblem then
@@ -10581,6 +15817,7 @@ function Runner.start(app: App): () -> ()
                 link:Disconnect()
             end)
         end
+        destroyOpener()
         app.Typing:destroy()
         pcall(app.flushUi, app)
         Overlay.destroy(app)
@@ -10612,6 +15849,7 @@ local STOPS = 20
 
 local skyFx: string? = nil
 
+-- the sky of the current frame, kept in plain values so the strips need no closures or tables
 local skyNow = 0
 local skyCycle: { Color3 }? = nil
 local skyFlow = 0
@@ -10630,6 +15868,7 @@ local skyTopR, skyTopG, skyTopB = 0, 0, 0
 
 local ringPoints: { [{ Color3 }]: { number } } = setmetatable({}, { __mode = "k" }) :: any
 
+-- the points a smooth curve needs so that it passes through every color of the ring, worked out once for each ring
 local function ringControls(cycle: { Color3 }): { number }
     local known = ringPoints[cycle]
     if known then
@@ -10652,6 +15891,7 @@ local function ringControls(cycle: { Color3 }): { number }
     return points
 end
 
+-- a smooth closed curve through the ring of colors, its bends are smooth too so no color stands out as a line where the curve passes it
 local function ringAt(cycle: { Color3 }, position: number): (number, number, number)
     local points = ringControls(cycle)
     local count = #cycle
@@ -10672,6 +15912,8 @@ local function ringAt(cycle: { Color3 }, position: number): (number, number, num
         math.clamp(a * points[i0 + 3] + b * points[i1 + 3] + c * points[i2 + 3] + d * points[i3 + 3], 0, 1)
 end
 
+-- the ring keeps turning while its speed swings forward and back, two waves travel through it in opposite directions,
+-- a soft glow rolls over the height and some skies breathe or let their middle wander, so the colors move in waves and never like a plain scroll
 local function skyPrepare(now: number)
     skyNow = now
     skyDrift = skyWay * skyRate * now + skySwing * math.sin(now * skySwingSpeed) + skySwing * 0.3 * math.sin(now * skySwingSpeed * 2.45 + 1.7) + skySwing * 0.13 * math.sin(now * skySwingSpeed * 4.8 + 0.4)
@@ -10679,6 +15921,8 @@ local function skyPrepare(now: number)
     skyPulse = skyBeat * math.sin(now * skyBeatSpeed)
 end
 
+-- level is where on the shape the color is taken, shift moves the ring for that layer and tone says how far it is mixed from the box color to the sky color,
+-- shade fades the plain gradient under the ring so every shape turns into the same flat box color while one sky hands over to the next
 local function skyColor(level: number, shift: number?, tone: number?): Color3
     level = math.clamp(level, 0, 1)
     local mixed = tone or level
@@ -10701,6 +15945,7 @@ local function skyColor(level: number, shift: number?, tone: number?): Color3
     return Color3.new(r, g, b)
 end
 
+-- the ring is sampled along the gradient of the box, the gradient turns to the random angle of the sky
 local stops: { Color3 } = {}
 
 local function skyGradient(position: Vector2, size: Vector2, base: Color3, top: Color3, alpha: number, baseAlpha: number, z: number, rounding: number, cycle: { Color3 }?, flow: number, reach: number)
@@ -10722,6 +15967,9 @@ local function skyGradient(position: Vector2, size: Vector2, base: Color3, top: 
         stops[index] = color
         peak = math.max(peak, color.R, color.G, color.B)
     end
+    -- a gradient keeps its colors far coarser than the screen near black, a dark sky splits into hard tinted bands that jump as the colors drift,
+    -- so the stops are lifted until the brightest is near white and the gradient is laid faint over black instead, which shows the same colors.
+    -- the lift moves in small steps so it rarely changes, and the black under it makes both together cover exactly as much as the gradient alone
     local lift = math.clamp(math.ceil(peak * 50) / 50, 0.04, 1)
     if lift < 1 then
         for index = 1, STOPS do
@@ -10744,6 +15992,11 @@ end
 
 type Sky = { Sky: Color3?, Cycle: { Color3 }?, Flow: number, Glass: number, Clear: number, Veil: number }
 
+-- the sky of the theme, eased so choosing or leaving a flowing or glass theme fades instead of jumping,
+-- a flowing sky on screen keeps its colors, motion, shape and particles while it fades out, and the next one fades in after it,
+-- a still gradient fades flat before a flowing sky comes in and only comes back once the flow is gone, so the shapes never swap while they show
+-- every time a flowing sky comes on screen it starts from somewhere else: a random place on the ring of colors, a random side the colors come from,
+-- a random way they travel and a random angle of the field
 local function rollSky(): { [string]: any }
     pcall(math.randomseed, math.floor(os.clock() * 100000) + os.time())
     return {
@@ -10826,6 +16079,7 @@ local function skyOf(app: App): Sky
     return result
 end
 
+-- how strong a glass panel is drawn over the veil of the window, so both together cover as much as the panel alone would
 local function glassLeft(cover: number, veil: number): number
     if veil <= 0.004 then
         return cover
@@ -10833,6 +16087,7 @@ local function glassLeft(cover: number, veil: number): number
     return math.clamp((cover - veil) / (1 - veil), 0, 1)
 end
 
+-- how much of a card is drawn over the glass veil of the window
 function Sky.cover(sky: Sky): number
     return glassLeft(1 - sky.Clear * (1 - sky.Glass), sky.Veil)
 end
@@ -10865,11 +16120,15 @@ function Sky.left(cover: number, veil: number): number
     return glassLeft(cover, veil)
 end
 
+-- the frame of the window: the outline backing, the sky of the theme with its particles, the glass veil and the outline colors,
+-- the welcome screen draws the same so it follows the theme exactly
 local function skipping(name: string): boolean
     return string.find(tostring(getgenv().OkloUISkip), name, 1, true) ~= nil
 end
 
 function Sky.surface(app: App, position: Vector2, size: Vector2, rounding: number, ui: number): Sky
+    -- right after the loader card is replaced the window is drawn as the card, a flat body with no backing under its outline,
+    -- and the backing, sky, lift and veil ease in under it
     local card = app.HandoffCard
     local settle: number = if card then card.Settle or 0 else 1
     Painter.scope("frame:rim")
@@ -10882,6 +16141,7 @@ function Sky.surface(app: App, position: Vector2, size: Vector2, rounding: numbe
         skyPrepare(os.clock())
         local dark = ui * (1 - pal.Light)
         local effect = if sky.Cycle then skyFx else nil
+        -- the orbs and glows fade in with the rest of the window instead of showing at full strength at once
         local fxIn = app.WelcomeVisual or 1
         fxIn = fxIn * fxIn * (3 - 2 * fxIn)
         if not skipping("skygradient") then
@@ -10894,6 +16154,7 @@ function Sky.surface(app: App, position: Vector2, size: Vector2, rounding: numbe
         if effect and not skipping("skyfx") then
             Skyfx.draw(effect, position, size, rounding * Painter.corner(), app.Scale, dark * sky.Flow * fxIn, Z_FRAME, skyNow, first, second)
         end
+        -- the glass panels share most of their tint with the whole window, so the frame around them is as calm as the glass itself
         if sky.Veil > 0.004 and not skipping("skyveil") then
             Painter.rect(position, size, Color.lerp(pal.Panel, pal.Main, 0.35), ui * sky.Veil, Z_FRAME, rounding)
         end
@@ -10958,6 +16219,8 @@ type Field = {
     Flow: number?,
 }
 
+-- the particles every theme with a field of them picks from: count, direction (1 falls, -1 rises, 0 stays), speed range, sideways sway, size range, height per width, strength and twinkle,
+-- flow slides the whole field sideways (part of the width per second, the larger ones faster so it has depth)
 local FIELDS: { [string]: Field } = {
     rain = { N = 26, Dir = 1, Speed = { 0.1, 0.16 }, Sway = 0, SwayFreq = 0, Size = { 1.3, 2 }, Aspect = 9, Alpha = 0.5, Twinkle = 0, Sharp = 1 },
     petals = { N = 16, Dir = 1, Speed = { 0.022, 0.04 }, Sway = 0.05, SwayFreq = 0.35, Size = { 5, 8 }, Aspect = 0.62, Alpha = 0.55, Twinkle = 0, Sharp = 1, Flow = 0.006 },
@@ -11037,6 +16300,7 @@ local function field(kind: string, left: number, top: number, width: number, hei
             local pulse = 0.5 + 0.5 * math.sin(now * spec.Twinkle * (0.6 + hash(index, 6)) + phase)
             shine *= pulse ^ spec.Sharp
         end
+        -- every particle always takes its own slot of the pool, a hidden one just draws with no strength, so the others never move to another object when one fades
         local w = size
         local h = size * spec.Aspect
         local px = left + (width - w) * math.clamp(x, 0, 1)
@@ -11046,6 +16310,7 @@ local function field(kind: string, left: number, top: number, width: number, hei
     Painter.fine(false)
 end
 
+-- a straight piece of a bolt on whole pixels, so the pieces meet without seams or overlaps
 local function piece(x: number, y: number, w: number, h: number, color: Color3, alpha: number, z: number)
     if w >= 1 and h >= 1 then
         Painter.rect(Vector2.new(x, y), Vector2.new(w, h), color, alpha, z, 0)
@@ -11054,6 +16319,7 @@ local function piece(x: number, y: number, w: number, h: number, color: Color3, 
     end
 end
 
+-- a side step of a bolt from the column at x to the column at goal on the row at y, the glow behind it only fills what the columns leave
 local function jog(x: number, goal: number, y: number, core: number, glow: number, coreColor: Color3, glowColor: Color3, coreAlpha: number, glowAlpha: number, z: number)
     if goal > x then
         piece(x + core + glow, y - glow, goal - x, core + glow * 2, glowColor, glowAlpha, z)
@@ -11064,6 +16330,7 @@ local function jog(x: number, goal: number, y: number, core: number, glow: numbe
     end
 end
 
+-- a fork that leaves the bolt at x on the row at y and zig-zags down away from it, thinner and dimmer
 local function branch(slot: number, x: number, y: number, side: number, reach: number, core: number, glow: number, low: number, high: number, coreColor: Color3, glowColor: Color3, coreAlpha: number, glowAlpha: number, z: number)
     local thin, soft = math.max(core - 1, 1), glow
     local goal = math.clamp(x + side * math.floor(reach * (0.9 + 0.6 * hash(slot, 70))), low, high)
@@ -11093,6 +16360,8 @@ local function branch(slot: number, x: number, y: number, side: number, reach: n
     end
 end
 
+-- a forked bolt every few seconds, each time slot decides from its number if it strikes, where and when, so nothing has to be remembered,
+-- it flashes, fades out and often flickers once more, the whole sky lights up softly with it
 local function bolt(left: number, top: number, width: number, height: number, scale: number, alpha: number, z: number, now: number, first: Color3, second: Color3, position: Vector2, size: Vector2, radius: number)
     local slot = math.floor(now / BOLT_SLOT)
     if hash(slot, 31) > 0.82 then
@@ -11150,6 +16419,8 @@ local function bolt(left: number, top: number, width: number, height: number, sc
     end
 end
 
+-- big soft balls of light on the black of the window that drift on their own slow paths and breathe, every ball is a stack of circles that get smaller and brighter towards its middle,
+-- so the edge melts into the dark like a blur, the balls overlap and add up where they meet
 local ORBS = {
     { Tone = 0, Size = 0.46, AX = 0.34, AY = 0.30, WX = 0.113, WY = 0.083, Phase = 0.0, Breath = 0.17, Power = 1.0 },
     { Tone = 1, Size = 0.34, AX = 0.40, AY = 0.34, WX = 0.071, WY = 0.131, Phase = 1.9, Breath = 0.11, Power = 0.85 },
@@ -11158,6 +16429,8 @@ local ORBS = {
 }
 local ORB_LAYERS = 72
 
+-- a bat seen from the front with its wings spread, the wing is a membrane between the arm, three long fingers and the body with a scalloped back edge,
+-- the membrane is filled with a fan of thick lines from the wrist so it reads as one solid shape, the wing beats down fast and comes up slowly
 local function bat(x: number, y: number, unit: number, now: number, phase: number, _dir: number, color: Color3, alpha: number, z: number)
     local beat = math.sin(now * 7.5 + phase)
     local flap = beat + 0.28 * math.sin(now * 15 + phase * 2)
@@ -11175,6 +16448,7 @@ local function bat(x: number, y: number, unit: number, now: number, phase: numbe
             local angle = lean * 0.45 + drops[index] + 0.1 * flap
             tips[index] = wrist + Vector2.new(side * math.cos(angle) * reaches[index] * unit, math.sin(angle) * reaches[index] * unit)
         end
+        -- the edge the membrane hangs from, the dips between the fingertips are pulled in towards the wrist
         local edge = { tips[1] }
         for index = 1, 2 do
             local middle = (tips[index] + tips[index + 1]) / 2
@@ -11202,6 +16476,7 @@ local function bat(x: number, y: number, unit: number, now: number, phase: numbe
     end
 end
 
+-- a web in a corner, spokes fan out over the quarter circle and the rings join them
 local function web(cornerX: number, cornerY: number, sx: number, sy: number, length: number, color: Color3, alpha: number, z: number, thick: number)
     local spokes = 6
     local rings = { 0.26, 0.48, 0.70, 0.94 }
@@ -11225,6 +16500,7 @@ local function web(cornerX: number, cornerY: number, sx: number, sy: number, len
     end
 end
 
+-- two bones from the hip to the foot, the knee always bends upwards
 local function knee(hip: Vector2, foot: Vector2, first: number, second: number): (Vector2, Vector2)
     local delta = foot - hip
     local distance = math.clamp(delta.Magnitude, 0.001, first + second - 0.01)
@@ -11243,6 +16519,7 @@ local function limb(from: Vector2, joint: Vector2, to: Vector2, color: Color3, a
     Painter.line(joint, to, color, alpha, z, thick)
 end
 
+-- a spider on its thread, it swings like a pendulum, lets itself down and pulls itself up again, the legs hang bent and twitch one by one
 local function spider(x: number, top: number, drop: number, unit: number, color: Color3, alpha: number, z: number, now: number, seed: number)
     local thick = math.max(1, 1.05 * unit)
     local swing = 0.16 * math.sin(now * 0.75 + seed) + 0.05 * math.sin(now * 1.9 + seed * 2.1)
@@ -11269,6 +16546,9 @@ local function spider(x: number, top: number, drop: number, unit: number, color:
     Painter.rect(center + Vector2.new(-2.8 * unit, -5.6 * unit), Vector2.new(5.6 * unit, 5.6 * unit), color, alpha, z, 2.8 * unit, true, tilt)
 end
 
+-- a spider that walks along the floor of the window, seen from the side, the near legs are bright and the far ones dim,
+-- every foot is planted on the floor until the body has moved a full stride past it and then it swings forward in an arc,
+-- the legs of one tetrapod step together and the other four hold the body, the knees are worked out from hip and foot so they arch up like a real spider
 local function crawler(position: Vector2, size: Vector2, unit: number, color: Color3, alpha: number, z: number, now: number)
     local pace = 15 * unit
     local span = size.X - 110 * unit
@@ -11304,6 +16584,7 @@ local function crawler(position: Vector2, size: Vector2, unit: number, color: Co
             limb(hip, joint, tip, color, alpha * (if near then 1 else 0.5), z, thick * (if near then 1 else 0.85))
         end
         if not near then
+            -- the body goes over the far legs and under the near ones
             Painter.rect(body + Vector2.new(-9 * unit - forward * 6 * unit, -6.2 * unit), Vector2.new(18 * unit, 13 * unit), color, alpha, z, 6.5 * unit, true)
             Painter.rect(body + Vector2.new(-4.8 * unit + forward * 8.5 * unit, -3.6 * unit), Vector2.new(9.6 * unit, 8 * unit), color, alpha, z, 4 * unit, true)
             local eyes = Color3.fromRGB(255, 190, 90)
@@ -11338,12 +16619,19 @@ local function haunt(position: Vector2, size: Vector2, radius: number, scale: nu
     end
 end
 
+-- one soft round glow picture (white, strongest in the middle and melting to nothing at the edge), a stack of hard circles shows every shade step of the dark as an edge that
+-- moves with the ball, a picture melts smoothly, it is written into the workspace once and loaded from there, without file support the stack of circles is used
 local GLOW_PNG = "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"
+-- the loader card's soft halo behind the bird, same falloff, white and full strength in the middle so the alpha it is drawn with sets how strong it is
 local HALO_PNG = "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"
 local pictures: { [string]: string | false } = {}
 
+-- writes a picture into the workspace once and hands back its asset, nil when the executor cannot write files,
+-- data is base64 unless raw says it is already the bytes of the file
 local tidied = false
 
+-- the effect pictures used to be written straight into the oklo scripts folder, they now live in its loaders folder with the loader pictures.
+-- the first picture of a run removes the old copies, the new ones are written below
 local function tidy()
     if tidied then
         return
@@ -11419,6 +16707,7 @@ local function glowImage(): string?
     return picture("orbglow", GLOW_PNG)
 end
 
+-- the soft round glow the orbs are made of, the window uses it for its frosted glass, nil until the picture is written
 function Skyfx.glow(): string?
     return glowImage()
 end
@@ -11426,6 +16715,7 @@ end
 local function orbs(position: Vector2, size: Vector2, radius: number, scale: number, alpha: number, z: number, now: number, first: Color3, second: Color3, spooky: boolean)
     local reach = math.min(size.X, size.Y)
     Painter.clip(position, size)
+    -- the balls drift very slowly, on whole pixels their edges would step from one pixel to the next instead of gliding
     Painter.fine(true)
     for index, orb in ORBS do
         local cx = position.X + size.X * (0.5 + orb.AX * math.sin(now * orb.WX + orb.Phase) * math.cos(now * orb.WY * 0.6 + orb.Phase * 0.7))
@@ -11450,13 +16740,18 @@ local function orbs(position: Vector2, size: Vector2, radius: number, scale: num
     Painter.unclip()
 end
 
+-- the soft halo of the loader card, nil when the executor cannot write files
 function Skyfx.halo(): string?
     return picture("oklohalo", HALO_PNG)
 end
 
+-- a tall strip peaked in the middle for the veils, a small crisp dot for the motes and a thin bubble for the bokeh
 local BEAM_PNG = "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"
 local MOTE_PNG = "iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAACQElEQVR42u2Za27CMBCEgZYWQnkEFYKIUAGh0J+chFtwL67CVXKRqSLNqisrzgtQsUuk/YGzseZbj01itwC0XI7WE+AJ8HgA7ZJ4SIB2w/hTgDxBnYpxM5hbidfiXkqiCOTuADbhIu7ViC7DbDdhGoM0FZ8nXMS+lYSGKgK5KYBNvCn8ndFj9BnyW+7ngTSCaCLerPqbEp2JDQAMLBEoIA1ijkZliDoApnhTeCbwA8AQwMgSQ+YMckBsEFcB2Gwj4qXiInwMYAIgBDA1IuS9sQKRETEhOlUh6lrHFC9VH1FcJvQTwAzA3IgZ702ZOzJGIw+i1Ep1rCOe1+Kl6iHFZUIXAJYAYiOWvDdnbqhGQ0N0LRBXA8iE7SnbjFnRrLoRRa4AfAFYA9gw1mxbMSfiM1P2IXbqqYl9FUBZ9cU2IYUsWOVM5BbADkACYM9I2LZlTsxnZuxD7FR7FJpUX6wzoRUiJX5HwQcARwAnxpFte+YIRMQ+JspKtUahCEBWgrzqi3XmtISI/6bYM4AUv1fKtiNzBGLJPrSVzFHQK1IlgKKVJzCqv6Cvt6xuJvAC+3Vhzp7PrNiHHoWgZEVqDCD20d7X1T+wymXXmbl6FPRc0Da6G4DYJ+YKk7CyaQWAlLkJn42Vje4CIBO4bwHY0BInVL9OfGZjAehXncj/AsB5C3kziZ1ZRp3/I/PmVcLplznnX6e9+qBx9pPS+Y96L7ZVvNjYcn5r0YvNXS+217044PDmiMmLQz6vjlmfJ/VPAFfjB0B8b0Kp4MYmAAAAAElFTkSuQmCC"
 local BUBBLE_PNG = "iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAT2ElEQVR42u2d+XcUVRbHZQuQrbN0CCSBBGSRNUhAESSAYgRR0CEYCBhxA0SQRVGRAC6jCIwBBtkiu4R9x2EJYpQEFBCXwZFx+1vuVJ3zeZ5nWVVd1d0kzdA/vJOkU1X96vu993vvu+/VqztE5I5bpDWzac1pdv+7Je4rloE2gW0hIi1FpJWIJIhIGxFpKyKJIpIkIsm0JD5ryzEJnNOSazSPVWJiCXQFeCtANIFNF5F2IpIrIp1FpLuI9BKRfiJyt4gMoPXns14cU8A5WSKSxrXacG2dkNuaAAW6aaWtASkD4LoD7HAReVREJonI8yIyR0QWishiEVlmXONt2jI+W8gxz4lImYiMFZFiyOrGtTPwmNZ8d5OS0VTAt0AmTCCCWKxpxQ8A3Gzj2LdEZJ2IfGL875iI1IrIlyJySUSuGMR8IyLX+HlVRC6LyEWDtDoROSMih43r7jC8aK2ILBWRWSIy0bjGSBEpFJF84/qZ9CGBPjX7fyZAAW9aXgBr7Csio0SkQkTeNCRjPcDVAex/DOv/r4j8zE/z73+LyHeAf1Vr5vHfisj3HPOjiFzn2K9F5JyI7Dc84J8i8oaITIXwPvQlQN8alYjGBL4Nmm5a+z0GOBNE5FVAPwFIP4nIrwB+HUv/QkROG1Z7VET2isguEdkqIptFZKMRIzbQzN+rRWSbiOwWkYMi8qkhQZ+LyFeQ8wM/L0C06R3zjc+fEJFBeEVaYxLRGBrfmpsygb/PAHgKur1HROqx6t+w8GtY/3FDs2sMy/wYGfrQyHBWGEH0PQOYdznflJVKPGeRiLwuIq8RB17DypcYOv93w7pXi8gWw9oPichnyNV3eM1nSNUSYs1giAggTTc1RtxM8FsSWHOxrsmAdxDL/gVr/x4rPwoQGwDsH4Y+r7JpKyFjOYS8QxCuBHTTq+YRR14UkZm02fzvLWRoL+BfwSu+hHTzWk8a3jOQvidzL81uBQKU1bchuPY2bm4cGco+bvZXwL+KtNQgJyYoa5CFj5CUzXiBakp21nO8Isok5H3IWIpXLISIl0TkBRF5hlhTQZY0B7A34nGX8EDTGHbiUY+S2mbiyc1jmQDd6jsa1nU/lmfqcoNm8Sbw/0LLNyIx6zluO1nPHloNx22HgA0AX4UnLEdiVCq6BLKVJOneMAMSppJpTeTnMxy3mrhwkT7WYggmeUMMCcsjY4qqN0QT/FZofQ+s3gTlJBr/O5p7BoA3AWY11rYXfT6MRO3l82oIWgXQS5GZV0RkrkVmZljaTEubzlhiGnHIJOBxw+ofM/o23jCQcshag0d8TfA+iLyNZXySxr02ixUCVKANMuCpANyLBNcbuPV+AN1IFlMD4Mdph7H6LVj5cm58ASA/A0g6cCYoYwywRtPM3x9BOsaR3ZSi6ZM5fwo/y8jEHuPcEs6dhEdsJnW9gjes5txC7jUhGpIUDfBNvW9PhjMbEH/A6r/FC7Zj9Vv4/1FSRLMdIW3chKyYEvIygD8JQA8xKr6PgK6XH/pqrR+fDyCI3muAOJRzHzQs+mFIGweJ47n+GMYjIzh2NIZkxpQDxIcLpLgzuW429968qQhoTvErl06/jiXfQOsbNKuvBmQT+FME32N4wQaymVeRiIkAUsx4oZBAaJYSupDOdiLO5PH9ufyex+f51I7utNSPBgDe/YA9Cssv0QgYSip6P+S8TP/rIGIfXjnM+DwnUhKiAf4DBL+zAG8ScB6t34z1HyTwnsXq92Px7zEQehqrHImF9wHwAkDtgMVl4f5BMpNMajsZ2t+Z/D+Lc9rTz06Q0g1CCvGSwYA+jDYE4k2yiiClgjh0mrhwBIMbESkJkchODuAvI5/+jeH/aUCv1uo4Z2lH+d9KLP5p9HoY8aOHVslUgCuQ0wmAaQyS3Jo6Lp2mSGkHmXl8T1fDGHpq3jEQAyhCyvrQ7iGeLON+LvFzESR0CJeEcLKd1ljVcCxfgX8d695KyriXv89Byn7SuiWkdo8jM/2xyk5cN8sCuA5sahhNJyWda+tkdNQ8oyeAq9iiytvd+Gw0WdghkoxjeMIwDCbBb3YUTqoZJBi+hlUr8E8SZLcA9mnA/xRPWIXcTCYgFnFzCvigDeipN6HZkZGN1+UTZ7rRt+7EkQL+1wOvf4XgfBEy5hNbgn5TVL+DrDSkYjYB91dk51MN/APk++c4ZisliJlkHUMYIRc4AO9mxX6aHzIybCQqXwO+I5LbAYKGQ8Ihko09jD0KuWbLaBPQnBFuDwLSHoLtDSxdyY4Cvxa934zkTCMFLNImRpTUOAEfiHLz6hWZENEewBXw7bQg3wkS3sDI6jG+crwmyWs88Gr9bbCCcaSNP1Ba+IzcuJr07DTgH2HAtUiruxeite25CTvgQwVVvy1SIoJa5qWMJYVjOzE+eQcprqNEMhYPau1FirxKT5C8+G1073dcbxfpZA1pprL8DVjHZCylD67czsXqvYKeHqJ5JcNPrFDnJ2uLAgLI0XjKF2reYjEym+mlbuRVenqj4ScJutew+I3UbE5gBccgZBHgF5NJdMSS0sMAPj3C5oeIFK1ZP0/WVl4oEtK5vwpK6Q3g8jwZVXIoKfKScuYiPdUE3J8AXJUWjqD7J/i7kprJ8BDguwHvBGaGx+aFDC8kpFjA1wloi9ZnMXZYQDy4QEl9LPHDNTV1I6AFnRtEfb0e668j6G6C7VNkQTuQqKfR/N4ewXcDPiNKzS8RVvCTtLVHVhJS0PwSBph1YLKQpCMAlr4IUIG3ACnZS9D9lgxoPYAfR/v3MCkynY70I0iFC74diJk+WygivJKQHIKERK5xF1K0GynaRl0r3y0gu1l/OgOudynJ/gyzaqbqAJZ/EJebS/GqiGynnUfw3YB3Ajfo0LySYUdEJCQkcb9DkOBaxkGVDNDSnLzATfsLyGsPYv2XCbjr+HmcoPsxElUGYV1JNTMiAN8r4KGaGxHRIEGXolSyolIkugGcyty8wE3772EC+worFk5Sy9mE9R/H3d5njvUBgm6uluf7Bd8L8Fkhmh8i3EhIdSDBTYqCxMw3yArPkZYO5DrNQxHQjKidy2xRDdJzmSrmWn4ewTPWUQcZRzUxX1uPGfAAfoZLOdkP6F7JCOUNTiR49YIU5LeUGNBAZvg4GdFf6kR2eX8SlcBXSal+JtCuwwP2MH24HQ+ZyiCtWwjpCQd8K6DtPDY3IqJJgpMXDGb++jxxcy5Z4V9KFFYC1Kh3FJnOj2Q+uxhmVyM/exn9zWEetR8pZ9BBerzITjSAD4cIP3LkNRZ0JSPaR/pexWRTpjUYOwXfCgZWv8DiR0xK76DUvBXrn8JsUldKuuk+rT8U+FZAsz02NyK8kBCJFyShBA8CfD1ElCPRfxqY2ZUdCslqvmLUe5ClgWqlco2Wdo7l+I4ugTcc8MMF3isRkZIQygvSwWWBVh1eiFL8SYas2U8G2YySn6sEkZXk/7sJLu8y4i2m/NreYv0Bm5mo9BCabwe+FdD2HpsbEVkOc8tOJLh5gVNGpILxJAxWydAIrt/CSoCa7cplKcghgu9nWPtK9H8XcrSQOdIi3CoYofWHAt8O5A6WFooILySE6wV2wTgbGVoDAZ+QWaps6C8EtMGaX2JJ9w3SzRWsv9yC9a+kMvoQkT0nROYTTfA7eGzRJsGrF1hlqAg5P884agbZYhsVB6z6P4DgepVVyztZOlIFAZtYGTDVJfhGav1egc+xNK9ERMMLvATjVGYQpzNo/ZxBWX+9TG2t/QxnWeB1gvAG9H4NErSW8YFf+fELfrYD+Dkemx0J2WGSEK4MJVOQLCV21qMkw7jenwhoSYceRefV4qoPmXJbQxBegUSNZrCWG2X58QN+rqX5ISFaMuSWDSXynSUkNQ0Y8Ri+s6VOgArAk5hSvIFmLdcIWMfvzzKo6OGS/bjJT6Tg54Zo0SDBTYa8xgE1Kjal+gOqCnsoUf8RiPX6T2eKamfJ/w8A+NsMwlYTUMq56J3cgNfsJ1zrdwI+z9KciIjEC7zGgVCBuJIYcJQVIgVqQGbNgOYwuXydtGkpQflDbTlhKZXSAq3wFq7+ewU/xwV4JyJyfJLgNw54CcQBFiQsYDB2iqX2f2RCioC2lJIXsurhO7Ie9UD0KsrOL2uVz050OBz9D9f68yyroPXmRoIfL4gkDthlQnfxjLJaNTKfCfu2OgGJDJMXU3r+hqCrnjT8ACl6USu+5dFRPwQEo0RAR4cWDQKCUSQghVT9eVLR86wl7ctxfxCQRH66jAmYK9qIdzFjAbWotkR7uDnjJhDgFfxOluaHhMYkoAu6f0QbCxRyfDN9DmAAVn6V56PWsv5xEZ8vIgMaFcEI+HYjIBkCKrQdACoxdlcCviL1nM8q6KX8fFqbeowTECUC7CToawiYSwR/E294ijFAzzgB0ZMgPQireYDLSNAcSHgdb5jaCATclkFYpaGvUrO4ShCeTenhFVLQKRDQK8IqaDwNtaShaiA2Gze5RuVTPWGuHoouh4DeHrKg+EDMx0AsgZHtsxz0PbV/tfvULE4sZ5Khj4dxQLwU4bEUoRfjypgN+4HC0Twynxeoa5eThuqrIAIO6+rjxTiPxThVjs5ikn0HBBxjIPYUrD3HQt0SMqZ8m1pQvBwdZjm6BV9STPp5Dc1aQuYzBU+YrD3r1dmmGhqfkAlzQkZNSd7NoOsSjH2AB5RBQhkM3qMtwo10LVB8SlLLhLoRcGtJRTcQmCewWmIixbjBXNwuFY1PyocxKa8vS5nISq7vWIL4EnPAZvsbBAxlLJBnMyccX5YSxrIUfWHWSEbB3/DU3yKAV3vwPIKO9dWefEzzsEVAfGGWy8IsvShXyHD5CyZnVnGh0drmSGqPhy4OK6LjSxPDWJqoFufmk/kcIhvaSS3jYcYAavMk9dR7js2ALL44N4zFuUqGMik5r6UyepqZsbG40AgkaCB1jo4O44H48nSfy9N1GepD0aiW6uhaUtBiAvBQHsXpxbA620GG4g9o+HxAQ39E6QmegrmKHM3GM+6lFUFUF7KQTEueHC0SbqtHlKwPaFcSjC+wKm484KtN83rjbrkWGbI+7h9/SM/jQ3rWYDyJYfQV9Gwm+l+o7SjVlTigngt22nMh/piqx8dU9drQvWhZHXsrr2As0J9JBbWjVEdLHEiJAgm37YPaVi94kgrpZS0WDCUDulPb2dBKgOq0FxLiWxW4xIIiVkSc4cLrcLN+lm0lszQJSra0FA+Buak360gNA/ybtlmHnhHlMAZYx8j4NAWmkeh/jradl7L+JK15ISEWt6vxAv5N3a5GL1P3ZDS8n3FBDbNkRdrWBAHLvjrhkBArGzZZwXeSnpu6YZO+ZVkmAWYxUlTPqolStC+obefV1iMJKTG0ZVlKGOA3ypZlekDOw62q+LJzbCn/MLEg1eKeiTZEhCIhtQk27UvxIDt2KWejbNpnLVF0Z2ZM5bknGHQU86UpPkgIh4hobltpB7wX8FXQLW6sbSv1ifsAg7AZzPA3kJouIDXNtSEhlCSFIiJcQpyuEwp4p4CrwM/lXhc05sat1q2L76VYd0gLPPPoWB43muiThGSXAVykLcUFeC/gJ3KdPO5xHvfc0FhbF1tT02xKEq+z2KhB21e/GH0MuJDglwg/pLid6wV4uz4HuKdi7lGBf7QxN++2bl/fgbmBRRoJh9DFh8gQ0rm5th6JsCMjFCF+AE+2+b5EF8lJ4h66cE9vaF5/tCm2r7d7h8AIrEB17DiZwXhy5CzASIwCEZE0P8An0ucs7mE893RcM7Qme4GDnScMQwfV2/HOkhtXMErMIy208wYrEXZk+CXF6fzEEMArq0+jz4O4hzXcUz33OJ977tBUrzCxkpBNEJpBOlbHWGEHmlnCgK2dQ4B2IsKNDK8t0SPwKtC2o68l9H0H91LHvc2IlZf46CQkkAEUkgtXMSpUkrQSSxqCngZdZMmNjEia2/ek0Kcu9LGCPivJOc09lcfaa6ysKWqAgchY7fWFF7Ce3dTHS3HtztxIqos0hUuKl2sl8d1B+jKIvlXS1zr6vo97US9yC8Tai9ysdaMk9HMIRam1lGcbmKjYSjZRyuS1vsY0xQeA4TRl7el8Z1f6UEqfttLHBvq8lnuI+VcZ2r1ZL5OK4Fhq49uoHzUQ0LYx21bBGhr1godsy7xCYpikqPOSuVY61+7Mdz3Idy+lL2fp2zn+Xkjfe94qL/N0erFnDmXribj3To2I87h4FQFvkvaCnx42L/hxWp2sD9ICHBvk3E5cq4hrT+K7qvju8xrwO+njRI7PudVeZ2v3atsEQMkneyhDU7fg5vW0M8wzrGHCZzrSUMLwXy2DuQvp6GJpXflfH44dyrmlXOtNrl2jldTr6YPaF6OMPt7yL3R2epd8Gjc3kLUyczVLrNVAOa/tTb2e5xTUiz1naW9FVe8HnsZnszimknPWcw31iKi6fq3meXPpy8D/t1eauxGRinv3ZmqzHM2tYhn3SR5oqEceLvB3LY97HufB58O0I9q7DGo59gLn1vP3Sa5dxXfpT3zm0KdGA74pCLBKUyuyikwsrx9D+wkMdhbzSE+19gbWUwB8HlDraJ/zmXoU9CjnVHONxVxzAt/Rj+/MpA+tbrbUxBIBViJaoLVJTKjnsOq6P8P9MQTFaTwqO586zGKkppLf1dP8L3KseivrMO11ieqJniS+s0VTAR8LBDiR0YohfjJ6nAVwBdr7HvuSSvanqZV6PbW3sOZoyyWTuWarWAA9FglwIqQ5KWArLLaNluPb1XzackwC57TUrtMsFu81VglwIsVPuyXu63+GjeFcvKsQPgAAAABJRU5ErkJggg=="
+-- the background of the plain themes: three calm looks made of soft pictures, picked at random by the window. every piece is a stretched, tinted and faded picture,
+-- the same number of pieces is drawn every frame and only their place and strength move, so nothing flashes and nothing has a hard edge.
+-- Bokeh is a slow rise of soft discs and thin bubbles, Dust a parallax drift of crisp points over a few big lights, Silk wide slanted veils of light with a few motes
 local AMBIENT_BOKEH = 26
 local AMBIENT_DUST = 64
 local AMBIENT_LIGHTS = 6
@@ -11488,6 +16783,7 @@ local function ambient(name: string, position: Vector2, size: Vector2, scale: nu
     end
     ambientLast = now
     alpha *= smooth(math.clamp((now - ambientStart) / AMBIENT_INTRO, 0, 1))
+    -- a dark picture on a light window needs more strength to read as much
     alpha *= if light then 1.7 else 1
     local width, height = size.X, size.Y
     local left, top = position.X, position.Y
@@ -11573,6 +16869,7 @@ function Skyfx.ambient(name: string, position: Vector2, size: Vector2, scale: nu
     end
 end
 
+-- how many rects a field draws at most, the sky leaves that many strips for them
 function Skyfx.count(name: string?): number
     local spec = if name then FIELDS[name] else nil
     if not spec then
@@ -11581,6 +16878,7 @@ function Skyfx.count(name: string?): number
     return if name == "lightning" then spec.N + BOLT_RECTS else spec.N
 end
 
+-- the field of particles a theme draws over its flowing sky, kept between the rounded corners of the window
 function Skyfx.draw(name: string, position: Vector2, size: Vector2, radius: number, scale: number, alpha: number, z: number, now: number, first: Color3, second: Color3, pointer: Vector2?)
     if name == "orbs" or name == "orbshaunted" then
         if alpha > 0.004 and size.X >= 40 and size.Y >= 40 then
@@ -11601,6 +16899,7 @@ function Skyfx.draw(name: string, position: Vector2, size: Vector2, radius: numb
     field(name, left, top, width, height, scale, alpha, z, now, first, second)
 end
 
+-- the bolts of a stormy theme, drawn over the glass of the window so they flash bright, only while one strikes
 function Skyfx.strike(name: string, position: Vector2, size: Vector2, radius: number, scale: number, alpha: number, z: number, now: number, first: Color3, second: Color3)
     if name ~= "lightning" or alpha <= 0.004 or size.X < 48 or size.Y < 40 + radius * 1.1 then
         return
@@ -11608,8 +16907,13 @@ function Skyfx.strike(name: string, position: Vector2, size: Vector2, radius: nu
     bolt(position.X + 4, position.Y + radius * 0.55, size.X - 8, size.Y - radius * 1.1, scale, alpha, z, now, first, second, position, size, radius)
 end
 
+-- one breath of the second light behind the popups of the default theme, in seconds
 local PULSE_PERIOD = 8
 
+-- the calm black and white motion behind the popups of the default theme, kept faint so the text on top reads as on a plain popup:
+-- a light that slowly turns around the popup with a shade swaying against it and a second light turning the other way that swells and fades.
+-- every layer is a soft fade shaped exactly like the popup, so nothing in it has an edge, a ring or a pixel it can jump to,
+-- the same three are drawn every frame and only their angle and strength move, so nothing behind the text pops in or out
 function Skyfx.popup(position: Vector2, size: Vector2, rounding: number, alpha: number, z: number, now: number)
     local white, black = Color3.new(1, 1, 1), Color3.new(0, 0, 0)
     local turn = now * 5
@@ -11716,6 +17020,7 @@ local function createBox(self: Self): any
         local app = self.App
         local hover = app.HoverKey
         if not enterPressed and self.Bound == "head:search" and app.Focus == self.Bound and type(hover) == "string" and string.sub(hover, 1, 11) == "head:search" then
+            -- a click on the open search keeps it open, the box just takes the focus back
             task.defer(function()
                 if self.Bound == "head:search" and self.Box then
                     pcall(function()
@@ -11830,6 +17135,9 @@ local Painter: typeof(require("./painter")) = import("ui/painter")
 local Press: typeof(require("./press")) = import("ui/press")
 local Skyfx: typeof(require("./skyfx")) = import("ui/skyfx")
 
+-- the Updates page every script shares, laid out like a system update sheet: the script logo on the left with the version, the script name and the date to its right,
+-- one line saying what follows, then a small chip per mode that opens into plain bullet lines of changes.
+-- every pill, row and the heading draw the same pieces in their own scope every frame, so nothing is handed to another piece while it moves
 local UpdatesPage = {}
 
 type Map = { [string]: any }
@@ -11837,8 +17145,11 @@ type Entry = { Kind: string, Rows: { string }, Top: number }
 
 local KINDS = { "Added", "Changed", "Removed", "Fixed" }
 
-local HEAD = 92
-local HEAD_PLAIN = 92
+local HEAD = 72
+local PAD = 14
+local GAP = 8
+local RADIUS = 10
+local CARD_HEAD = 44
 local INTRO = 28
 local TITLE_X = 82
 local LOGO = 64
@@ -11846,13 +17157,14 @@ local PILL = 30
 local PILL_GAP = 6
 local ROW = 17
 local ENTRY_GAP = 5
-local BODY_TOP = 7
-local BODY_BOTTOM = 8
-local MARK_X = 16
-local TEXT_X = 32
+local BODY_TOP = 2
+local BODY_BOTTOM = 14
+local MARK_X = 22
+local TEXT_X = 38
 local TEXT_SIZE = 12
 local NAME_SIZE = 12.5
-local CLOSING = 40
+local CLOSING = 34
+-- a pill opens on the same kind of spring as the search field, a row fades in or out in these seconds and rises this far into place
 local RESPONSE, RATIO = 0.42, 1
 local FADE_IN = 0.3
 local FADE_OUT = 0.16
@@ -11860,6 +17172,7 @@ local RISE = 8
 
 local wrapped: { [string]: { string } } = {}
 
+-- the words of a line spread over as many rows as the width needs, a word wider than a whole row is cut where it fills it
 local function wrap(kit: Map, text: string, limit: number): { string }
     local key = math.floor(limit) .. "|" .. tostring(kit.App.TextScale) .. "|" .. Painter.font() .. "|" .. text
     local cached = wrapped[key]
@@ -11894,10 +17207,11 @@ local function wrap(kit: Map, text: string, limit: number): { string }
     return rows
 end
 
+-- the lines of one mode in kind order, wrapped, each with where it starts under the pill, and the height of all of them
 local function entries(kit: Map, group: Map, width: number): ({ Entry }, number)
     local list: { Entry } = {}
     local at = BODY_TOP
-    local limit = width - TEXT_X - 10
+    local limit = width - TEXT_X - PAD
     for _, kind in KINDS do
         for _, text in group[kind] or {} do
             local rows = wrap(kit, tostring(text), limit)
@@ -11915,10 +17229,12 @@ local function factor(kit: Map): number
     return kit.ScreenSize.X / kit.Width
 end
 
+-- every change is a plain round bullet, like the lines of a system update
 local function mark(kit: Map, _kind: string, cx: number, cy: number, color: Color3)
     kit:solid(cx - 2, cy - 2, 4, 4, color, 2)
 end
 
+-- the same smooth arrow picture as the sidebar folders, it turns from pointing right to pointing down while the pill opens
 local function chevron(kit: Map, cx: number, cy: number, turn: number, color: Color3)
     local asset, pixels = Logo.icon(kit.App, "chevron", 11 * factor(kit))
     if asset then
@@ -11935,6 +17251,7 @@ local function chevron(kit: Map, cx: number, cy: number, turn: number, color: Co
     end
 end
 
+-- the script logo large on the right of the heading: it fades in once it is loaded, floats and breathes slowly over the soft halo of the loader card
 local function emblem(kit: Map, cx: number, cy: number, shown: number)
     local app = kit.App
     local logo: string? = app.LogoAsset
@@ -11955,6 +17272,7 @@ local function emblem(kit: Map, cx: number, cy: number, shown: number)
         Painter.image(halo, middle - Vector2.new(side, side) / 2, Vector2.new(side, side), kit.Alpha * shown * 0.5, kit.ZControl)
     end
     if bird then
+        -- the bird draws itself in, rests, fades out and draws itself in again. It stays on whole pixels so the picture never shimmers
         local play = app.BirdPlay
         if not play or now - play.Last > 0.4 then
             play = { Start = now, Last = now }
@@ -11979,6 +17297,8 @@ local function emblem(kit: Map, cx: number, cy: number, shown: number)
     Painter.fine(false)
 end
 
+-- the rows of a mode are cut off where the opening ends while it moves, each one rises and fades in like a search result once the opening reaches it,
+-- and they all fade out as soon as the mode starts to close. a closed mode draws no rows and one at rest is not cut off
 local function body(kit: Map, scope: string, list: { Entry }, top: number, edge: number, full: number, snap: (number) -> number, appear: { number }, opening: boolean)
     local app = kit.App
     local pal = app.Pal
@@ -12034,44 +17354,33 @@ local function body(kit: Map, scope: string, list: { Entry }, top: number, edge:
     end
 end
 
-local function chipWidth(kit: Map, group: Map, count: number): number
-    local badge = math.max(22, math.ceil(kit:measure(tostring(count), 10.5)) + 12)
-    return math.ceil(TEXT_X + kit:measure(tostring(group.Mode), NAME_SIZE) + 10 + badge + 8)
-end
-
-local function pill(kit: Map, key: string, group: Map, count: number, top: number, height: number, open: number, hover: number)
+-- one mode as a card header: the name on the left, the count and a turning arrow on the right, the same padding on every side
+local function header(kit: Map, key: string, group: Map, count: number, top: number, open: number, hover: number, width: number)
     local app = kit.App
     local pal = app.Pal
-    local width = chipWidth(kit, group, count)
     local grown = math.clamp(open, 0, 1)
-    local press = Press.scale(app, app.Springs, key .. ":press", key)
-    local fill = math.min(1, app.Alpha.Btn / math.max(0.01, app.Alpha.Text))
-    local full = kit:s(width, height)
-    local size = full * press
-    local position = kit:p(0, top) + (full - size) / 2
-    Painter.rect(position, size, Color.lerp(pal.Panel, pal.Accent, 0.12 + 0.22 * hover * (1 - grown) - 0.06 * grown), kit.Alpha * fill, kit.ZControl, 12)
-    local middle = top + height / 2
+    local middle = top + CARD_HEAD / 2
     kit:nest(key .. ":arrow", function()
-        chevron(kit, MARK_X, middle, grown, Color.lerp(pal.Sub, pal.Text, math.max(hover, grown)))
+        chevron(kit, width - PAD - 5, middle, grown, Color.lerp(pal.Sub, pal.Text, math.max(hover, grown)))
     end)
-    kit:text(tostring(group.Mode), TEXT_X, middle, NAME_SIZE, Color.lerp(Color.lerp(pal.Sub, pal.Text, 0.8), pal.Text, math.max(hover, grown)), false, true)
+    kit:text(tostring(group.Mode), PAD, middle, 13, Color.lerp(pal.Text, pal.Text, 0), false, true, Painter.bold())
     local label = tostring(count)
     local badge = math.max(22, math.ceil(kit:measure(label, 10.5)) + 12)
-    local badgeX = width - 6 - badge
-    kit:solid(badgeX, middle - 9, badge, 18, Color.lerp(pal.Main, pal.Accent, 0.12 * grown), 9, 0.65 * fill)
+    local badgeX = width - PAD - 10 - 8 - badge
+    kit:solid(badgeX, middle - 9, badge, 18, Color.lerp(pal.Main, pal.Text, 0.06 + 0.06 * grown), 5, 0.9)
     kit:text(label, badgeX + badge / 2, middle, 10.5, Color.lerp(pal.Sub, pal.Text, grown), true, true)
 end
 
-local function block(section: Map, version: string, date: string?, groups: { Map }?, lines: { string }?, closing: string?, openFirst: boolean)
+-- one version: a heading card with the version, the script and the date, then a card per mode that opens into its changes
+local function block(section: Map, version: string, date: string?, groups: { Map }?, lines: { string }?, closing: string?, openFirst: boolean, latest: boolean)
     local holder = { Value = HEAD }
     local goal: { [number]: number } = {}
     local springs: { [string]: any } = {}
     local hover: { [number]: number } = {}
     local appear: { [number]: { number } } = {}
     local plainAppear: { number } = {}
-    local logoShown = 0
     for index in groups or {} do
-        goal[index] = if openFirst and index == 1 then 1 else 0
+        goal[index] = 0
         hover[index] = 0
         appear[index] = {}
     end
@@ -12092,23 +17401,23 @@ local function block(section: Map, version: string, date: string?, groups: { Map
             local function snap(value: number): number
                 return (math.floor(origin + value * unit + 0.5) - origin) / unit
             end
-            local pillHeight = math.max(2, 2 * math.floor(PILL * unit / 2 + 0.5)) / unit
             local dated = date ~= nil and date ~= ""
-            local head = if dated then HEAD else HEAD_PLAIN
-            logoShown = if still then (if app.LogoAsset then 1 else 0) else Motion.ease(state, logoShown, if app.LogoAsset then 1 else 0, dt, 7)
-            local left = if app.LogoAsset or BirdSheet.ready() then TITLE_X else 2
             kit:nest(owner .. ":head", function()
-                kit:text("V" .. version, left, 22, 24, pal.Text, false, true, Fonts.find("Gotham Bold"))
-                kit:text(tostring(app.Options.Title or ""), left, 47, 14, pal.Text, false, true)
-                kit:text(if dated then "Released " .. tostring(date) else "", left, 67, 12, pal.Sub, false, true)
+                kit:box(0, 0, width, HEAD, pal.Panel, 1, RADIUS)
+                kit:border(0, 0, width, HEAD, RADIUS, pal.Text, 0.1, 1)
+                kit:text("V" .. version, PAD, 26, 20, pal.Text, false, true, Painter.bold())
+                local sub = tostring(app.Options.Title or "")
+                if dated then
+                    sub ..= "  ·  Released " .. tostring(date)
+                end
+                kit:text(sub, PAD, 54, 12, pal.Sub, false, true)
+                if latest then
+                    local w = kit:measure("Latest", 10.5, Painter.bold()) + 16
+                    kit:box(width - PAD - w, 17, w, 20, pal.Text, 1, 5)
+                    kit:text("Latest", width - PAD - w / 2, 27, 10.5, pal.Main, true, true, Painter.bold())
+                end
             end)
-            kit:nest(owner .. ":logo", function()
-                emblem(kit, 2 + LOGO / 2, head / 2 - 4, logoShown)
-            end)
-            kit:nest(owner .. ":intro", function()
-                kit:text(if (groups and #groups > 0) or #plain.Fixed > 0 then "This update contains the following changes:" else "", 3, head + INTRO / 2 - 2, 12, pal.Sub, false, true)
-            end)
-            local y = head + INTRO
+            local y = HEAD + GAP
             for index, group in groups or {} do
                 local scope = owner .. ":mode" .. index
                 local list, used = entries(kit, group, width)
@@ -12120,36 +17429,46 @@ local function block(section: Map, version: string, date: string?, groups: { Map
                 local key = scope .. ":pill"
                 hover[index] = Motion.ease(state, hover[index], if kit:hovered(key) then 1 else 0, dt, 14)
                 local top = snap(y)
-                local edge = snap(top + pillHeight + used * shown) - top - pillHeight
+                local edge = snap(top + CARD_HEAD + used * shown) - top - CARD_HEAD
+                local height = CARD_HEAD + edge
                 kit:nest(scope, function()
-                    pill(kit, key, group, #list, top, pillHeight, shown, hover[index])
+                    kit:box(0, top, width, height, Color.lerp(pal.Panel, pal.Text, 0.03 * hover[index]), 1, RADIUS)
+                    kit:border(0, top, width, height, RADIUS, pal.Text, 0.08 + 0.08 * hover[index] + 0.06 * shown, 1)
+                    header(kit, key, group, #list, top, shown, hover[index], width)
                 end)
-                body(kit, scope, list, top + pillHeight, edge, used, snap, appear[index], goal[index] == 1)
-                kit:hit(key, 0, top, chipWidth(kit, group, #list), pillHeight, function()
+                body(kit, scope, list, top + CARD_HEAD, edge, used, snap, appear[index], goal[index] == 1)
+                kit:hit(key, 0, top, width, CARD_HEAD, function()
                     goal[index] = 1 - goal[index]
                 end)
-                y = top + pillHeight + edge + PILL_GAP
+                y = top + height + GAP
             end
             if #plain.Fixed > 0 then
                 local list, used = entries(kit, plain, width)
-                body(kit, owner .. ":plain", list, snap(y), used, used, snap, plainAppear, true)
-                y += used + PILL_GAP
+                local top = snap(y)
+                kit:nest(owner .. ":plainbox", function()
+                    kit:box(0, top, width, used + BODY_TOP, pal.Panel, 1, RADIUS)
+                    kit:border(0, top, width, used + BODY_TOP, RADIUS, pal.Text, 0.08, 1)
+                end)
+                body(kit, owner .. ":plain", list, top + 2, used, used, snap, plainAppear, true)
+                y = top + used + BODY_TOP + GAP
             end
-            kit:nest(owner .. ":closing", function()
-                kit:text(closing or "", 3, y - PILL_GAP + CLOSING / 2, 11.5, pal.Sub, false, true)
-            end)
-            y += if closing and closing ~= "" then CLOSING - PILL_GAP else 0
-            holder.Value = math.max(head + INTRO, math.ceil(y))
+            if closing and closing ~= "" then
+                kit:nest(owner .. ":closing", function()
+                    kit:text(closing, PAD, y + CLOSING / 2 - 4, 11.5, pal.Sub, false, true)
+                end)
+                y += CLOSING
+            end
+            holder.Value = math.max(HEAD, math.ceil(y - GAP))
         end,
     })
 end
 
+-- spec: Version, Date, Groups, History ({ Version, Date, Groups?, Lines? }), Closing, Name and Group of the tab
 function UpdatesPage.build(window: Map, spec: Map): Map
-    BirdSheet.start()
     local tab = Builder.newTab(window, spec.Name or "Updates", { Group = spec.Group or "Settings", Late = true })
-    block(tab:section("V" .. tostring(spec.Version)), tostring(spec.Version), spec.Date, spec.Groups, spec.Lines, spec.Closing, true)
+    block(tab:section("V" .. tostring(spec.Version)), tostring(spec.Version), spec.Date, spec.Groups, spec.Lines, spec.Closing, true, true)
     for _, entry in spec.History or {} do
-        block(tab:section("V" .. tostring(entry.Version)), tostring(entry.Version), entry.Date, entry.Groups, entry.Lines, spec.Closing, false)
+        block(tab:section("V" .. tostring(entry.Version)), tostring(entry.Version), entry.Date, entry.Groups, entry.Lines, spec.Closing, false, false)
     end
     return tab
 end
@@ -12172,12 +17491,14 @@ type App = { [string]: any }
 
 local DEFAULT_WIDTH = 400
 local Z_CARD, Z_TEXT = 30, 32
+-- the card sits MARGIN inside the window and keeps the popup spacing inside it: EDGE on all sides, a section between the parts
 local MARGIN = 9
 local EDGE, SECTION = 16, 14
 local TITLE_Y = EDGE
 local HEADING_Y = TITLE_Y + 26
 local RULE_Y = HEADING_Y + 20
 local ROWS_Y = RULE_Y + SECTION
+-- a line is a row like the window's rows, the same 4 between them and its text 12 in from its left
 local ROW_GAP, ROW_PAD, ROW_LINE, ROW_TEXT = 4, 5, 17, 12
 local BUTTON_WIDTH, BUTTON_HEIGHT = 84, 28
 
@@ -12234,6 +17555,7 @@ function Welcome.render(app: App, now: number): boolean
     end
 
     local viewport: Vector2 = app.Viewport
+    -- the lines are wrapped at about the size they are drawn, the card is exactly as high as its rows and the footer under them
     local popupWidth = math.clamp(tonumber(copy.Width) or DEFAULT_WIDTH, 300, 700)
     local wrapScale = math.max(0.10, math.min(state.UIScale, (viewport.X - 42) / popupWidth, 1.10))
     local textLimit = (popupWidth - MARGIN * 2 - EDGE * 2 - ROW_TEXT * 2) * wrapScale
@@ -12317,6 +17639,7 @@ function Welcome.render(app: App, now: number): boolean
         cursor += rowHeight + ROW_GAP
     end
 
+    -- the footer text and the Close button share one row at the bottom, the text on the middle of the button
     local barY = cardSize.Y / unit - EDGE - BUTTON_HEIGHT
     line(copy.Footer, EDGE, barY + BUTTON_HEIGHT / 2 - 6, 1.70, 0.50, pal.Sub, false, 12)
     local buttonReveal = reveal(elapsed, 1.90, 0.50) * content
@@ -12352,6 +17675,7 @@ function Welcome.render(app: App, now: number): boolean
     return true
 end
 
+-- the loader intro card has already grown to the size of the window, the window opens right there without any opening animation
 function Welcome.handoff(app: App, scale: number?)
     local state = app.State
     local viewport: Vector2 = app.Viewport
@@ -12385,16 +17709,24 @@ export type Fx = {
 type App = { [string]: any }
 type Spec = { [string]: any }
 
-Widgets.HEIGHTS = { toggle = 40, slider = 50, button = 36, dropdown = 36, bindrow = 30 }
+Widgets.HEIGHTS = { toggle = 40, slider = 50, button = 36, dropdown = 36, bindrow = 30, result = 54 }
 Widgets.GAP = 4
 
 local Z_BG, Z_TEXT, Z_CONTROL, Z_CONTROL_TEXT = 5, 6, 7, 8
 local BIND_WIDTH, BIND_HEIGHT = 58, 22
-local SWITCH_WIDTH, SWITCH_HEIGHT = 42, 22
+local SWITCH_WIDTH, SWITCH_HEIGHT = 34, 20
 local KNOB = 16
-local INSET = 12
+local WHITE = Color3.new(1, 1, 1)
+local SHADOW = Color3.new(0, 0, 0)
+local KNOB_LIGHT = Color3.fromRGB(250, 250, 252)
+
+-- a switch, a slider and a segment fill with Kit.switchFill: the theme accent, or the text color when the accent is a plain white or grey
+-- text and controls keep the same inset from both ends of a row
+local INSET = 14
+-- a toggle's keybind chip sits 8 left of its switch, a button's chip sits at the inset
 local TOGGLE_BIND_INSET = INSET + SWITCH_WIDTH + 8 + BIND_WIDTH
 local BUTTON_BIND_INSET = INSET + BIND_WIDTH
+-- the value box of a slider is centered on the row, its track ends this far left of the box
 local VALUE_WIDTH, VALUE_HEIGHT, VALUE_GAP = 46, 22, 16
 
 local function anim(spec: Spec, name: string): number
@@ -12416,6 +17748,8 @@ local function clamp01(value: number): number
     return math.clamp(value, 0, 1)
 end
 
+-- the soft light of the search field on every control: a wide glow under it that rises with the level, a ring that pulses out once
+-- when kick() was called for it and a thin focus ring that stays while the ring level is up. the same three pieces are drawn every frame
 local function kick(spec: Spec, name: string)
     anim(spec, name)
     spec.Anim[name] = 1
@@ -12434,12 +17768,9 @@ local function aura(app: App, spec: Spec, name: string, position: Vector2, size:
     Painter.border(position - Vector2.new(pad, pad), size + Vector2.new(pad * 2, pad * 2), rounding + pad, pal.Accent, alpha * 0.22 * ringLevel * (1 - pal.Pick), Z_CONTROL_TEXT + 1, 2.5)
 end
 
+-- in the Finder look the rows of a group share one card, so a row only shows its own fill while it is hovered
 local function rowShow(app: App, hover: number): number
     return 1 - app.Pal.Pick * (1 - clamp01(hover))
-end
-
-local function disabledMix(app: App, color: Color3, disabled: number): Color3
-    return Color.lerp(color, app.Pal.Main, disabled)
 end
 
 local function springTo(app: App, spec: Spec, name: string, goal: number, response: number, ratio: number): number
@@ -12458,24 +17789,45 @@ local function pressScale(app: App, spec: Spec, name: string, key: any, enabled:
         spec.Spr = bag
     end
     local shrink = Press.scale(app, bag, name, key, enabled)
+    -- a row of the Finder look already sits on its group card, so it does not sink when it is pressed
     return if name == "press" then 1 + (shrink - 1) * (1 - app.Pal.Pick) else shrink
 end
 
 local shrinkBox = Press.box
 
-local function fitted(text: string, size: number, limit: number): (string, number)
-    if limit <= 0 or #text * size * 0.6 <= limit or Painter.textWidth(text, size) <= limit then
+local function fitted(text: string, size: number, limit: number, face: number?): (string, number)
+    if limit <= 0 or #text * size * 0.6 <= limit or Painter.textWidth(text, size, face) <= limit then
         return text, size
     end
-    local smaller = math.max(size * 0.76, size * limit / Painter.textWidth(text, size))
-    if Painter.textWidth(text, smaller) <= limit then
+    local smaller = math.max(size * 0.76, size * limit / Painter.textWidth(text, size, face))
+    if Painter.textWidth(text, smaller, face) <= limit then
         return text, smaller
     end
     local cut = #text
-    while cut > 1 and Painter.textWidth(string.sub(text, 1, cut) .. "..", smaller) > limit do
+    while cut > 1 and Painter.textWidth(string.sub(text, 1, cut) .. "..", smaller, face) > limit do
         cut -= 1
     end
     return string.sub(text, 1, cut) .. "..", smaller
+end
+
+local function fitText(text: string, size: number, limit: number): string
+    if Painter.textWidth(text, size) <= limit then
+        return text
+    end
+    local cut = #text
+    while cut > 1 and Painter.textWidth(string.sub(text, 1, cut) .. "..", size) > limit do
+        cut -= 1
+    end
+    return string.sub(text, 1, cut) .. ".."
+end
+
+local function labelOf(app: App, spec: Spec): string
+    local label = spec.label
+    if type(label) == "function" then
+        local ok, text = pcall(label, app)
+        return if ok and text ~= nil then tostring(text) else tostring(spec.text or "")
+    end
+    return if label ~= nil then tostring(label) else tostring(spec.text or "")
 end
 
 local function region(app: App, key: any, position: Vector2, size: Vector2, click: (() -> ())?, drag: ((Vector2) -> ())?)
@@ -12489,6 +17841,10 @@ local function isDisabled(app: App, spec: Spec): boolean
     if spec.gated and app:get(spec.gated) ~= true then
         return true
     end
+    local master = spec.cardMaster
+    if master and master.get() ~= true then
+        return true
+    end
     local rule = spec.disabled
     return rule ~= nil and rule(app) == true
 end
@@ -12496,36 +17852,40 @@ end
 local function drawSwitch(app: App, spec: Spec, boxPos: Vector2, boxSize: Vector2, scale: number, fx: Fx, disabled: number, hover: number)
     local pal = app.Pal
     local on = spec.get() == true
-    local value = springTo(app, spec, "on", if on then 1 else 0, 0.34, 0.6)
-    local shown = clamp01(value)
+    -- a plain slide without overshoot, the same at any frame rate
+    local value = clamp01(springTo(app, spec, "on", if on then 1 else 0, 0.18, 1))
     local raw = app:size(SWITCH_WIDTH, SWITCH_HEIGHT) * scale
     local size = Vector2.new(math.round(raw.X), math.round(raw.Y))
     local rawPosition = boxPos + Vector2.new(boxSize.X - (SWITCH_WIDTH + INSET) * scale * app.Unit, (boxSize.Y - size.Y) / 2)
     local position = Vector2.new(math.round(rawPosition.X), math.round(rawPosition.Y))
-    local held = springTo(app, spec, "held", if Hits.isPressed(spec.id) and app.HoverKey == spec.id then 1 else 0, 0.2, 0.62)
-    local grip = clamp01(held)
-    local track = Color.lerp(Color.lerp(pal.Off, pal.Sub, 0.14 * grip * (1 - shown)), Color.lighten(pal.Accent, 0.25 * clamp01(hover)), shown)
-    local round = math.clamp(tonumber(app.State.ToggleRoundness) or 0.55, 0, 1)
-    aura(app, spec, "switch", position, size, size.Y * 0.5 * round, (0.55 * shown + 0.25 * clamp01(hover)) * (1 - disabled), 0, fx, 10)
-    Painter.rect(position, size, disabledMix(app, track, disabled), app.Alpha.Btn * fx.Alpha, Z_CONTROL, size.Y * 0.5 * round, true)
+    local held = clamp01(springTo(app, spec, "held", if Hits.isPressed(spec.id) and app.HoverKey == spec.id then 1 else 0, 0.16, 1))
+    local side = math.round(SWITCH_HEIGHT * scale * app.Unit)
+    Kit.checkbox(pal, Vector2.new(position.X + size.X - side, position.Y + (size.Y - side) / 2), side, value, held, clamp01(hover), disabled, app.Alpha.Text * fx.Alpha, Z_CONTROL, app.Unit)
+    do return end
+    local round = Kit.switchRound(app.State)
+    local track, knobColor, line, outline = Kit.switchColors(pal, value, clamp01(hover), disabled)
+    local alpha = app.Alpha.Text * fx.Alpha
+    local radius = math.max(3 * app.Unit, size.Y * 0.5 * round)
+    Painter.rect(position, size, track, alpha, Z_CONTROL, radius, true)
+    if outline > 0.005 then
+        Painter.border(position, size, radius, line, outline * alpha, Z_CONTROL, 1)
+    end
 
-    local bounce = easeTo(app, spec, "bounce", 0, 13 * Motion.intensity(app.State))
-    local travel = math.abs(Motion.velocity(spec.Spr, "on"))
+    -- the knob keeps the same gap to the track on every side, a press squashes it a little wider and lower
     local base = math.round(KNOB * scale * app.Unit)
     if (size.Y - base) % 2 ~= 0 then
         base -= 1
     end
-    local knobHeight = base * (1 + bounce * 0.22)
-    local knobWidth = knobHeight * (1 + math.min(travel * 0.07, 0.35) + 0.2 * held + 0.06 * grip)
     local pad = (size.Y - base) / 2
-    local room = size.X - knobHeight - pad * 2
-    local knobX = position.X + pad + room * value - (knobWidth - knobHeight) * value
-    local knobColor = Color.lerp(Color.lerp(pal.Sub, pal.Main, shown), pal.Disabled, disabled)
-    Painter.rect(Vector2.new(knobX, position.Y + (size.Y - knobHeight) / 2), Vector2.new(knobWidth, knobHeight), knobColor, app.Alpha.Text * fx.Alpha, Z_CONTROL_TEXT, knobHeight * 0.5 * round, true)
-
+    local knobWidth = base + 3 * app.Unit * held
+    local knobHeight = base - 1 * app.Unit * held
+    local room = size.X - knobWidth - pad * 2
+    local knobPos = Vector2.new(position.X + pad + room * value, position.Y + (size.Y - knobHeight) / 2)
+    Painter.rect(knobPos + Vector2.new(0, math.max(1, app.Unit)), Vector2.new(knobWidth, knobHeight), SHADOW, alpha * 0.22, Z_CONTROL_TEXT, math.max(2 * app.Unit, radius - pad), true)
+    Painter.rect(knobPos, Vector2.new(knobWidth, knobHeight), knobColor, alpha, Z_CONTROL_TEXT, math.max(2 * app.Unit, radius - pad), true)
 end
 
-local function drawBind(app: App, spec: Spec, boxPos: Vector2, boxSize: Vector2, scale: number, fx: Fx, disabled: number, inset: number)
+local function drawBind(app: App, spec: Spec, boxPos: Vector2, boxSize: Vector2, scale: number, fx: Fx, disabled: number, inset: number, rowHover: number?)
     local pal = app.Pal
     local key = spec.id .. ":bind"
     local size = app:size(BIND_WIDTH, BIND_HEIGHT) * scale
@@ -12535,10 +17895,26 @@ local function drawBind(app: App, spec: Spec, boxPos: Vector2, boxSize: Vector2,
     local press = pressScale(app, spec, "bindPress", key)
     local pressedPos, pressedSize = shrinkBox(position, size, press)
     local capture = app.Focus == app.CAPTURE_PREFIX .. spec.flag
-    local fill = Color.lerp(Color.lerp(pal.Main, pal.Accent, (0.18 - 0.12 * pal.Pick) * clamp01(hover)), Color.lerp(pal.Main, pal.Disabled, 0.4), disabled)
-    Painter.rect(pressedPos, pressedSize, fill, app.Alpha.Btn * fx.Alpha, Z_CONTROL, 10)
-    local label = if capture then "press..." else app:shortKey(app.State.OptionKeybinds[spec.flag])
-    local textColor = if capture then pal.Accent else Color.lerp(pal.Sub, pal.Accent, 0.35 * clamp01(hover))
+    local bound = app:shortKey(app.State.OptionKeybinds[spec.flag])
+    local empty = bound == "" or bound == "none" or bound == "None"
+    -- QuietBinds: an empty keycap only shows while its row is hovered, so a page of options reads as names and switches
+    local quiet = if app.Options.QuietBinds and empty and not capture then clamp01(math.max(rowHover or 0, hover)) else 1
+    if quiet < 1 then
+        fx = { Alpha = fx.Alpha * quiet, Scale = fx.Scale }
+    end
+    -- a keycap: a lifted well a touch lighter than the row with a hairline, an empty one shows a faint plus, capturing pulses an accent outline
+    -- the well is built on the row's own hovered colour, so the keycap keeps its look while the row lights up under it
+    local base = Color.lerp(pal.Panel, pal.Accent, (0.15 - 0.10 * pal.Pick) * clamp01(rowHover or 0))
+    local fill = Color.lerp(Color.lerp(base, pal.Text, 0.08 + 0.05 * clamp01(hover)), base, 0.6 * disabled)
+    local round = pressedSize.Y / 2
+    Painter.rect(pressedPos, pressedSize, fill, app.Alpha.Text * fx.Alpha, Z_CONTROL, round, true)
+    Painter.border(pressedPos, pressedSize, round, pal.Text, (0.08 + 0.06 * clamp01(hover)) * app.Alpha.Text * fx.Alpha, Z_CONTROL, 1)
+    if capture then
+        local pulse = 0.5 + 0.5 * math.sin(os.clock() * math.pi * 2)
+        Painter.border(pressedPos, pressedSize, round, pal.Accent, (0.45 + 0.45 * pulse) * app.Alpha.Btn * fx.Alpha, Z_CONTROL_TEXT, 1.5)
+    end
+    local label = if capture then "press..." elseif empty then "+" else bound
+    local textColor = if capture then pal.Accent elseif empty then Color.lerp(pal.Sub, pal.Main, 0.35) else Color.lerp(pal.Text, pal.Accent, 0.35 * clamp01(hover))
     Painter.text(label, pressedPos + pressedSize / 2, 11 * app.TextScale, textColor, app.Alpha.Text * fx.Alpha, Z_CONTROL_TEXT, true, true)
     region(app, key, position, size, function()
         app:beginBindCapture(spec.flag)
@@ -12555,7 +17931,8 @@ local function drawSideButton(app: App, spec: Spec, boxPos: Vector2, width: numb
     local hover = easeTo(app, spec, "sideHover", if hovered then 1 else 0, 16)
     local p, s = position, size
     local fade = app:sourceFade(sideKey)
-    Painter.rect(p, s, Color.lerp(pal.Panel, pal.Accent, (0.15 - 0.10 * pal.Pick) * clamp01(hover)), app.Alpha.Btn * fx.Alpha * fade, Z_CONTROL, 10)
+    -- on the Finder cards the plate only shows on hover, a resting plate in the panel colour reads as a dark block on the card
+    Painter.rect(p, s, Color.lerp(pal.Panel, pal.Accent, (0.15 - 0.10 * pal.Pick) * clamp01(hover)), app.Alpha.Btn * fx.Alpha * fade * (1 - pal.Pick * (1 - clamp01(hover))), Z_CONTROL, 10)
     local sideColor = Color.lerp(pal.Text, pal.Disabled, disabled)
     local labelAlpha = app.Alpha.Text * fx.Alpha * fade
     if side.label == "?" then
@@ -12613,10 +17990,12 @@ function Widgets.toggle(app: App, spec: Spec, x: number, y: number, width: numbe
     local fade = app:sourceFade(key)
     aura(app, spec, "row", p, s, 10, 0.16 * clamp01(hover) * (1 - disabled), 0, fx, 14)
     local bg = Color.lerp(Color.lerp(pal.Panel, pal.Accent, (0.15 - 0.10 * pal.Pick) * clamp01(hover)), Color.lerp(pal.Main, pal.Panel, pal.Pick), disabled)
-    Painter.rect(p, s, bg, app.Alpha.Btn * fx.Alpha * fade * rowShow(app, hover), Z_BG, 16 - 6 * app.Pal.Pick)
+    Painter.rect(p, s, bg, app.Alpha.Btn * fx.Alpha * fade * rowShow(app, hover), Z_BG, 14)
     rowEdge(app, p, s, app.Alpha.Btn * fx.Alpha * fade)
-    local title, titleSize = fitted(spec.text, 14 * app.TextScale, s.X - (12 + (if spec.bindable then 126 else 58)) * app.Unit)
-    Painter.text(title, p + Vector2.new(12 * app.Unit * press, s.Y / 2), titleSize, Color.lerp(pal.Text, pal.Disabled, disabled), app.Alpha.Text * fx.Alpha * fade, Z_TEXT, false, true)
+    -- a quiet empty keycap leaves its room to the name, it comes up over the end of a long name only while hovered
+    local keyRoom = spec.bindable and not (app.Options.QuietBinds and app:shortKey(app.State.OptionKeybinds[spec.flag]) == "none")
+    local title, titleSize = fitted(spec.text, 14 * app.TextScale, s.X - (INSET + (if keyRoom then 122 else 54)) * app.Unit)
+    Painter.text(title, p + Vector2.new(INSET * app.Unit * press, s.Y / 2), titleSize, Color.lerp(pal.Text, pal.Disabled, disabled), app.Alpha.Text * fx.Alpha * fade, Z_TEXT, false, true, if spec.bold then Painter.bold() else nil)
     drawSwitch(app, spec, p, s, press, fx, disabled, hover)
     if disabledGoal == 0 then
         region(app, key, position, size, function()
@@ -12627,7 +18006,7 @@ function Widgets.toggle(app: App, spec: Spec, x: number, y: number, width: numbe
         end, nil)
     end
     if spec.bindable then
-        drawBind(app, spec, p, s, press, fx, disabled, TOGGLE_BIND_INSET)
+        drawBind(app, spec, p, s, press, fx, disabled, TOGGLE_BIND_INSET, hover)
     end
     if spec.side then
         drawSideButton(app, spec, app:pos(x, y), width, height, fx, disabled)
@@ -12663,6 +18042,7 @@ local function sliderText(spec: Spec, value: number): string
     return tostring(value)
 end
 
+-- the value box grows to fit its widest text, like "24 studs" or a typed number, and never gets narrower than the plain box
 local function valueWidth(spec: Spec, value: number): number
     local widest = 0
     for _, sample in { spec.min, spec.max, value } do
@@ -12690,11 +18070,11 @@ function Widgets.slider(app: App, spec: Spec, x: number, y: number, width: numbe
     local p, s = shrinkBox(position, size, scale)
     local unit = app.Unit
 
-    Painter.rect(p, s, Color.lerp(pal.Panel, Color.lerp(pal.Main, pal.Panel, pal.Pick), disabled), app.Alpha.Btn * fx.Alpha * rowShow(app, hover), Z_BG, 16 - 6 * app.Pal.Pick)
+    Painter.rect(p, s, Color.lerp(pal.Panel, Color.lerp(pal.Main, pal.Panel, pal.Pick), disabled), app.Alpha.Btn * fx.Alpha * rowShow(app, hover), Z_BG, 14)
     rowEdge(app, p, s, app.Alpha.Btn * fx.Alpha)
     local label = spec.text
     if spec.label then
-        label = spec.label(app)
+        label = labelOf(app, spec)
     end
     local value: number = spec.get()
     local VALUE_WIDTH = valueWidth(spec, value)
@@ -12706,20 +18086,23 @@ function Widgets.slider(app: App, spec: Spec, x: number, y: number, width: numbe
     local trackWidth = width - INSET * 2 - VALUE_WIDTH - VALUE_GAP
     local trackPos = p + Vector2.new(INSET * unit * scale, 36 * unit * scale)
     local trackSize = Vector2.new(trackWidth * unit * scale, 5 * unit * scale)
-    Painter.rect(trackPos, trackSize, pal.Main, app.Alpha.Text * fx.Alpha, Z_CONTROL, 8)
-    local fillColor = Color.lerp(Color.lighten(pal.Accent, 0.25 * clamp01(hover)), pal.Disabled, disabled)
-    Painter.rect(trackPos, Vector2.new(math.max(1, trackSize.X * clamp01(fraction)), trackSize.Y), fillColor, app.Alpha.Text * fx.Alpha, Z_CONTROL_TEXT, 8)
+    Painter.rect(trackPos, trackSize, Color.lerp(pal.Panel, pal.Text, 0.11), app.Alpha.Text * fx.Alpha, Z_CONTROL, trackSize.Y / 2, true)
+    local fillColor = Color.lerp(Color.lighten(Kit.switchFill(pal), 0.1 * clamp01(hover)), pal.Disabled, disabled)
+    Painter.rect(trackPos, Vector2.new(math.max(trackSize.Y, trackSize.X * clamp01(fraction)), trackSize.Y), fillColor, app.Alpha.Text * fx.Alpha, Z_CONTROL_TEXT, trackSize.Y / 2, true)
 
     local near = springTo(app, spec, "near", if hovered or held then 1 else 0, 0.28, 0.7)
-    local grab = springTo(app, spec, "grab", if held then 1 else 0, 0.22, 0.6)
+    local grab = clamp01(springTo(app, spec, "grab", if held then 1 else 0, 0.22, 1))
     local tip = trackPos + Vector2.new(trackSize.X * clamp01(fraction), trackSize.Y / 2)
-    local thumb = math.floor((7 + 3 * near + 3 * grab) * unit * scale / 2) * 2 + 1
+    -- a round knob like the knob of a switch, hovering only lights its glow, it grows a little around its center while dragged
+    local thumb = math.floor((15 + 2 * grab) * unit * scale / 2) * 2 + 1
     if held and not spec.WasHeld then
         kick(spec, "thumbPulse")
     end
     spec.WasHeld = held
     aura(app, spec, "thumb", tip - Vector2.new(thumb / 2, thumb / 2), Vector2.new(thumb, thumb), thumb / 2, (0.35 * near + 0.5 * grab) * (1 - disabled), 0, fx, 12)
-    Painter.rect(tip - Vector2.new(thumb / 2, thumb / 2), Vector2.new(thumb, thumb), Color.lerp(Color.lighten(pal.Accent, 0.55), pal.Disabled, disabled), app.Alpha.Text * fx.Alpha, Z_CONTROL_TEXT, 16)
+    Painter.rect(tip - Vector2.new(thumb / 2, thumb / 2 - 1.5 * unit), Vector2.new(thumb, thumb), SHADOW, 0.28 * app.Alpha.Text * fx.Alpha, Z_CONTROL_TEXT, thumb / 2, true)
+    Painter.rect(tip - Vector2.new(thumb / 2, thumb / 2), Vector2.new(thumb, thumb), Color.lerp(if (pal.Accent.R * 0.299 + pal.Accent.G * 0.587 + pal.Accent.B * 0.114) > 0.72 then Color3.fromRGB(24, 24, 28) else KNOB_LIGHT, pal.Disabled, disabled * 0.6), app.Alpha.Text * fx.Alpha, Z_CONTROL_TEXT, thumb / 2, true)
+    Painter.border(tip - Vector2.new(thumb / 2, thumb / 2), Vector2.new(thumb, thumb), thumb / 2, SHADOW, 0.12 * pal.Light * app.Alpha.Text * fx.Alpha, Z_CONTROL_TEXT, 1)
 
     local boxKey = key .. ":value"
     local boxPos = p + Vector2.new((width - INSET - VALUE_WIDTH) * unit * scale, (height - VALUE_HEIGHT) / 2 * unit * scale)
@@ -12728,8 +18111,9 @@ function Widgets.slider(app: App, spec: Spec, x: number, y: number, width: numbe
     local boxPress = pressScale(app, spec, "valuePress", boxKey, disabledGoal == 0)
     local bp, bs = shrinkBox(boxPos, boxSize * scale, boxPress)
     local boxFocus = springTo(app, spec, "boxFocus", if app.Focus == boxKey then 1 else 0, 0.3, 0.8)
-    aura(app, spec, "box", bp, bs, 12, 0.5 * clamp01(boxFocus) + 0.12 * clamp01(boxHover), clamp01(boxFocus), fx, 10)
-    Painter.rect(bp, bs, Color.lerp(Color.lerp(pal.Main, pal.Accent, (0.15 - 0.10 * pal.Pick) * clamp01(boxHover)), Color.lerp(pal.Main, pal.Panel, pal.Pick), disabled), app.Alpha.Btn * fx.Alpha, Z_CONTROL, 12)
+    aura(app, spec, "box", bp, bs, bs.Y / 2, 0.5 * clamp01(boxFocus) + 0.12 * clamp01(boxHover), clamp01(boxFocus), fx, 10)
+    Painter.rect(bp, bs, Color.lerp(Color.lerp(pal.Panel, pal.Text, 0.075 + 0.05 * clamp01(boxHover)), pal.Panel, 0.6 * disabled), app.Alpha.Text * fx.Alpha, Z_CONTROL, bs.Y / 2, true)
+    Painter.border(bp, bs, bs.Y / 2, pal.Text, (0.08 + 0.06 * clamp01(boxHover)) * app.Alpha.Text * fx.Alpha, Z_CONTROL, 1)
     local shown = if app.Focus == boxKey then (app.Buffers[boxKey] or "") .. "|" else sliderText(spec, value)
     local boxText, boxTextSize = fitted(shown, 14 * app.TextScale, bs.X - 10 * unit)
     Painter.text(boxText, bp + bs / 2, boxTextSize, textColor, app.Alpha.Text * fx.Alpha, Z_CONTROL_TEXT, true, true)
@@ -12786,20 +18170,36 @@ function Widgets.button(app: App, spec: Spec, x: number, y: number, width: numbe
             label = spec.display(app)
         end
     elseif spec.label then
-        label = spec.label(app)
+        label = labelOf(app, spec)
     end
     local typing = springTo(app, spec, "typing", if inputKey and app.Focus == inputKey then 1 else 0, 0.3, 0.8)
     aura(app, spec, "row", p, s, 10, (0.16 * clamp01(hover) + 0.14 * lit + 0.4 * clamp01(typing)) * (1 - disabled), clamp01(typing), fx, 14)
-    Painter.rect(p, s, Color.lerp(base, Color.lerp(pal.Main, pal.Panel, pal.Pick), disabled), app.Alpha.Btn * fx.Alpha * fade * rowShow(app, hover), Z_BG, 16 - 6 * app.Pal.Pick)
+    Painter.rect(p, s, Color.lerp(base, Color.lerp(pal.Main, pal.Panel, pal.Pick), disabled), app.Alpha.Btn * fx.Alpha * fade * rowShow(app, hover), Z_BG, 14)
     rowEdge(app, p, s, app.Alpha.Btn * fx.Alpha * fade)
     if spec.align == "center" and not spec.bindable then
         local shown, shownSize = fitted(label, 14 * app.TextScale, s.X - 20 * app.Unit)
         Painter.text(shown, p + s / 2, shownSize, textColor, app.Alpha.Text * fx.Alpha * fade, Z_TEXT, true, true)
     else
         local indent = if spec.fold then 22 else 0
-        local shown, shownSize = fitted(label, 14 * app.TextScale, s.X - (12 + indent + (if spec.bindable then 74 else 14)) * app.Unit)
-        Painter.text(shown, p + Vector2.new((12 + indent) * app.Unit * press, s.Y / 2), shownSize, textColor, app.Alpha.Text * fx.Alpha * fade, Z_TEXT, false, true)
+        -- a search result names where it lives on the right in the quieter color, with a chevron that brightens on hover
+        local detailRoom = 0
+        if spec.detail then
+            local detailSize = 12 * app.TextScale
+            local arrowX = p.X + s.X - (INSET + 4) * app.Unit
+            local detail = fitText(spec.detail, detailSize, s.X * 0.45)
+            local detailWidth = Painter.textWidth(detail, detailSize)
+            detailRoom = detailWidth / app.Unit + 20
+            Painter.text(detail, Vector2.new(arrowX - 12 * app.Unit - detailWidth, p.Y + s.Y / 2), detailSize, pal.Sub, app.Alpha.Text * fx.Alpha * fade, Z_TEXT, false, true)
+            local arm = 3.5 * app.Unit
+            local tip = Vector2.new(arrowX, p.Y + s.Y / 2)
+            local chevron = Color.lerp(pal.Sub, pal.Text, clamp01(hover))
+            Painter.line(tip + Vector2.new(-arm * 0.7, -arm), tip, chevron, app.Alpha.Text * fx.Alpha * fade, Z_TEXT, math.max(1.4, 1.6 * app.Unit))
+            Painter.line(tip, tip + Vector2.new(-arm * 0.7, arm), chevron, app.Alpha.Text * fx.Alpha * fade, Z_TEXT, math.max(1.4, 1.6 * app.Unit))
+        end
+        local shown, shownSize = fitted(label, 14 * app.TextScale, s.X - (INSET + indent + detailRoom + (if spec.bindable then 74 else 14)) * app.Unit)
+        Painter.text(shown, p + Vector2.new((INSET + indent) * app.Unit * press, s.Y / 2), shownSize, textColor, app.Alpha.Text * fx.Alpha * fade, Z_TEXT, false, true)
         if spec.fold then
+            -- a drawn chevron that turns from pointing right to pointing down while the entry opens
             local turn = easeTo(app, spec, "fold", if spec.fold(app) == true then 1 else 0, 14)
             local angle = math.rad(90 * turn)
             local center = p + Vector2.new(17 * app.Unit * press, s.Y / 2)
@@ -12826,7 +18226,115 @@ function Widgets.button(app: App, spec: Spec, x: number, y: number, width: numbe
         end, nil)
     end
     if spec.bindable then
-        drawBind(app, spec, p, s, press, fx, disabled, BUTTON_BIND_INSET)
+        drawBind(app, spec, p, s, press, fx, disabled, BUTTON_BIND_INSET, hover)
+    end
+    if spec.side then
+        drawSideButton(app, spec, app:pos(x, y), width, height, fx, disabled)
+    end
+end
+
+-- a dropdown with only a few choices, drawn as an iOS segmented control: the name on the left, the choices on the right
+-- with a thumb that springs to the picked one
+local function segment(app: App, spec: Spec, x: number, y: number, width: number, fx: Fx)
+    local pal = app.Pal
+    local height = Widgets.HEIGHTS.dropdown
+    local disabledGoal = if isDisabled(app, spec) then 1 else 0
+    local disabled = easeTo(app, spec, "disabled", disabledGoal, 12)
+    local unit = app.Unit
+    local position = app:pos(x, y)
+    local size = app:size(mainWidth(spec, width, height), height)
+    local hover = easeTo(app, spec, "hover", if app.HoverKey and string.sub(tostring(app.HoverKey), 1, #spec.id) == spec.id then 1 else 0, 16)
+    Painter.rect(position, size, pal.Panel, app.Alpha.Btn * fx.Alpha * rowShow(app, hover), Z_BG, 14)
+    local values: any = spec.values
+    if type(values) == "function" then
+        values = values()
+    end
+    local list: { any } = if type(values) == "table" then values else {}
+    local count = math.max(#list, 1)
+    local current = spec.get()
+    local picked = 1
+    for index, value in list do
+        if value == current then
+            picked = index
+        end
+    end
+    local textColor = Color.lerp(pal.Text, pal.Disabled, disabled)
+    -- every cell is as wide as its label with the same padding, the room left over is shared out evenly
+    local labelSize = 12.5 * app.TextScale
+    local pad, inset = 12 * unit, 2 * unit
+    local widths: { number } = {}
+    local natural = 0
+    for index, value in list do
+        widths[index] = Painter.textWidth(tostring(value), labelSize)
+        natural += widths[index]
+    end
+    local main = mainWidth(spec, width, height)
+    local limit = math.max(count * 30, main * 0.62) * unit - inset * 2
+    if natural + pad * 2 * count > limit then
+        pad = math.max(5 * unit, (limit - natural) / (count * 2))
+        if natural + pad * 2 * count > limit then
+            local factor = math.max(0.72, (limit - pad * 2 * count) / math.max(1, natural))
+            labelSize *= factor
+            natural = 0
+            for index in list do
+                widths[index] *= factor
+                natural += widths[index]
+            end
+        end
+    end
+    -- equal cells, each as wide as the widest label, so the control is even and every label sits in the middle of its own cell
+    local widest = 0
+    for index in list do
+        widest = math.max(widest, widths[index])
+    end
+    if widest * count + pad * 2 * count <= limit then
+        for index in list do
+            widths[index] = widest
+        end
+        natural = widest * count
+    end
+    local boxW = math.min(limit, natural + pad * 2 * count) + inset * 2
+    local title, titleSize = fitted(spec.text, 14 * app.TextScale, main * unit - boxW - (INSET * 2 + 8) * unit)
+    Painter.text(title, position + Vector2.new(INSET * unit, size.Y / 2), titleSize, textColor, app.Alpha.Text * fx.Alpha, Z_TEXT, false, true)
+    local boxPos = position + Vector2.new(size.X - boxW - INSET * unit, 6 * unit)
+    local boxSize = Vector2.new(boxW, size.Y - 12 * unit)
+    local spare = math.max(0, boxW - inset * 2 - natural - pad * 2 * count) / count
+    local starts: { number } = {}
+    local cells: { number } = {}
+    local cursor = boxPos.X + inset
+    for index in list do
+        starts[index] = cursor
+        cells[index] = widths[index] + pad * 2 + spare
+        cursor += cells[index]
+    end
+    local radius = boxSize.Y / 2
+    Painter.rect(boxPos, boxSize, Color.lerp(pal.Panel, pal.Text, 0.07), app.Alpha.Text * fx.Alpha, Z_CONTROL, radius, true)
+    Painter.border(boxPos, boxSize, radius, pal.Text, 0.07 * app.Alpha.Text * fx.Alpha, Z_CONTROL, 1)
+    if #list > 0 then
+        local slot = math.clamp(springTo(app, spec, "slot", picked, 0.26, 1), 1, #list)
+        local low = math.floor(slot)
+        local high = math.min(#list, low + 1)
+        local share = slot - low
+        local thumbX = starts[low] + (starts[high] - starts[low]) * share
+        local thumbW = cells[low] + (cells[high] - cells[low]) * share
+        local fill = Kit.switchFill(pal)
+        local onText = if 0.299 * fill.R + 0.587 * fill.G + 0.114 * fill.B > 0.72 then Color3.fromRGB(22, 22, 26) else WHITE
+        Painter.rect(Vector2.new(thumbX, boxPos.Y + inset), Vector2.new(thumbW, boxSize.Y - inset * 2), Color.lerp(fill, pal.Panel, 0.5 * disabled), app.Alpha.Text * fx.Alpha, Z_CONTROL, math.max(2 * unit, radius - inset), true)
+        for index, value in list do
+            local cellPos = Vector2.new(starts[index], boxPos.Y)
+            local cellSize = Vector2.new(cells[index], boxSize.Y)
+            local cellKey = spec.id .. ":seg:" .. index
+            local chosen = index == picked
+            local label = fitText(tostring(value), labelSize, cells[index] - 6 * unit)
+            local color = if chosen then onText else Color.lerp(pal.Sub, pal.Text, if app.HoverKey == cellKey then 0.45 else 0)
+            Painter.text(label, Vector2.new(math.floor(cellPos.X + cellSize.X / 2 + 0.5), math.floor(cellPos.Y + cellSize.Y / 2 + 0.5)), labelSize, color, app.Alpha.Text * fx.Alpha, Z_CONTROL_TEXT, true, true)
+            if disabledGoal == 0 then
+                region(app, cellKey, cellPos, cellSize, function()
+                    app:rememberClick(cellPos, cellSize, cellKey)
+                    spec.set(value)
+                end, nil)
+            end
+        end
     end
     if spec.side then
         drawSideButton(app, spec, app:pos(x, y), width, height, fx, disabled)
@@ -12834,6 +18342,10 @@ function Widgets.button(app: App, spec: Spec, x: number, y: number, width: numbe
 end
 
 function Widgets.dropdown(app: App, spec: Spec, x: number, y: number, width: number, fx: Fx)
+    if spec.segment then
+        segment(app, spec, x, y, width, fx)
+        return
+    end
     local pal = app.Pal
     local height = Widgets.HEIGHTS.dropdown
     local disabledGoal = if isDisabled(app, spec) then 1 else 0
@@ -12850,10 +18362,10 @@ function Widgets.dropdown(app: App, spec: Spec, x: number, y: number, width: num
 
     local opened = springTo(app, spec, "opened", if app.OpenDropdown == spec then 1 else 0, 0.3, 0.8)
     aura(app, spec, "row", p, s, 10, (0.16 * clamp01(hover) + 0.3 * clamp01(opened)) * (1 - disabled), clamp01(opened), fx, 14)
-    Painter.rect(p, s, Color.lerp(pal.Panel, pal.Accent, (0.15 - 0.10 * pal.Pick) * clamp01(hover)), app.Alpha.Btn * fx.Alpha * rowShow(app, hover), Z_BG, 16 - 6 * app.Pal.Pick)
+    Painter.rect(p, s, Color.lerp(pal.Panel, pal.Accent, (0.15 - 0.10 * pal.Pick) * clamp01(hover)), app.Alpha.Btn * fx.Alpha * rowShow(app, hover), Z_BG, 14)
     rowEdge(app, p, s, app.Alpha.Btn * fx.Alpha)
     local shown, shownSize = fitted(spec.text .. ": " .. tostring(spec.get()), 14 * app.TextScale, s.X - 44 * unit)
-    Painter.text(shown, p + Vector2.new(12 * unit * press, s.Y / 2), shownSize, textColor, app.Alpha.Text * fx.Alpha, Z_TEXT, false, true)
+    Painter.text(shown, p + Vector2.new(INSET * unit * press, s.Y / 2), shownSize, textColor, app.Alpha.Text * fx.Alpha, Z_TEXT, false, true)
     local arrowColor = Color.lerp(pal.Sub, pal.Disabled, disabled)
     local arrowAlpha = if app.Modal then 0 else app.Alpha.Text * fx.Alpha
     local arrowCenter = p + Vector2.new(s.X - 16 * unit * press, s.Y / 2)
@@ -12883,40 +18395,31 @@ end
 function Widgets.text(app: App, spec: Spec, x: number, y: number, width: number, fx: Fx)
     local pal = app.Pal
     local size = spec.size or 13
-    local color = if typeof(spec.color) == "Color3" then spec.color elseif spec.accent then pal.Accent else pal.Sub
+    local color = if typeof(spec.color) == "Color3" then spec.color elseif spec.accent then pal.Accent elseif spec.bold then pal.Text else pal.Sub
     local label = spec.text
     if spec.label then
-        label = spec.label(app)
+        label = labelOf(app, spec)
     end
     local limit = (width - INSET * 2) * app.Unit
-    local font: number? = if spec.bold then Fonts.find("Gotham Bold") else nil
+    local font: number? = if spec.bold then Painter.bold() else nil
     local scaled = size * app.TextScale * fx.Scale
     if font then
         scaled = scaled * Fonts.scale(font) / Fonts.scale(Painter.font())
     end
-    local shown, shownSize = fitted(label, scaled, limit)
+    local shown, shownSize = fitted(label, scaled, limit, font)
     if spec.boxed then
         local box = pal.Panel
-        Painter.rect(app:pos(x, y), app:size(width, spec.height or 23), box, app.Alpha.Btn * fx.Alpha * rowShow(app, 0), Z_BG, 16 - 6 * app.Pal.Pick)
+        Painter.rect(app:pos(x, y), app:size(width, spec.height or 23), box, app.Alpha.Btn * fx.Alpha * rowShow(app, 0), Z_BG, 14)
         rowEdge(app, app:pos(x, y), app:size(width, spec.height or 23), app.Alpha.Btn * fx.Alpha)
     end
+    -- offset moves the line down (or up) from the middle of its row, so a heading can sit closer to the line under it
+    local middle = y + (spec.height or 23) / 2 + (tonumber(spec.offset) or 0)
     if spec.center then
-        local center = app:pos(x + width / 2, y + (spec.height or 23) / 2)
+        local center = app:pos(x + width / 2, middle)
         Painter.text(shown, center, shownSize, color, app.Alpha.Text * fx.Alpha, Z_TEXT, true, true, font)
     else
-        Painter.text(shown, app:pos(x + INSET, y + (spec.height or 23) / 2), shownSize, color, app.Alpha.Text * fx.Alpha, Z_TEXT, false, true, font)
+        Painter.text(shown, app:pos(x + INSET, middle), shownSize, color, app.Alpha.Text * fx.Alpha, Z_TEXT, false, true, font)
     end
-end
-
-local function fitText(text: string, size: number, limit: number): string
-    if Painter.textWidth(text, size) <= limit then
-        return text
-    end
-    local cut = #text
-    while cut > 1 and Painter.textWidth(string.sub(text, 1, cut) .. "..", size) > limit do
-        cut -= 1
-    end
-    return string.sub(text, 1, cut) .. ".."
 end
 
 function Widgets.bindrow(app: App, spec: Spec, x: number, y: number, width: number, fx: Fx)
@@ -12937,17 +18440,139 @@ function Widgets.bindrow(app: App, spec: Spec, x: number, y: number, width: numb
     local press = pressScale(app, spec, "bindPress", chipKey)
     local pressedPosition, pressedSize = shrinkBox(chipPosition, chipSize, press)
     local capture = app.Focus == app.CAPTURE_PREFIX .. entry.Flag
-    Painter.rect(position, size, Color.lerp(pal.Panel, pal.Accent, 0.06), app.Alpha.Btn * fx.Alpha * rowShow(app, 0), Z_BG, 16 - 6 * app.Pal.Pick)
+    Painter.rect(position, size, Color.lerp(pal.Panel, pal.Accent, 0.06), app.Alpha.Btn * fx.Alpha * rowShow(app, 0), Z_BG, 14)
     rowEdge(app, position, size, app.Alpha.Btn * fx.Alpha)
     local name = fitText(tostring(entry.Name), 13 * app.TextScale, size.X - chipSize.X - (INSET * 2 + 8) * unit)
     Painter.text(name, position + Vector2.new(INSET * unit, size.Y / 2), 13 * app.TextScale, pal.Text, app.Alpha.Text * fx.Alpha, Z_TEXT, false, true)
-    Painter.rect(pressedPosition, pressedSize, Color.lerp(pal.Main, pal.Accent, (0.18 - 0.12 * pal.Pick) * clamp01(hover)), app.Alpha.Btn * fx.Alpha, Z_CONTROL, 10)
+    Painter.rect(pressedPosition, pressedSize, Color.lerp(pal.Panel, pal.Text, 0.08 + 0.05 * clamp01(hover)), app.Alpha.Text * fx.Alpha, Z_CONTROL, pressedSize.Y / 2, true)
+    Painter.border(pressedPosition, pressedSize, pressedSize.Y / 2, pal.Text, 0.08 * app.Alpha.Text * fx.Alpha, Z_CONTROL, 1)
     local label = if capture then "press..." else app:shortKey(entry.Key)
     local textColor = if capture then pal.Accent else Color.lerp(pal.Sub, pal.Accent, 0.35 * clamp01(hover))
     Painter.text(label, pressedPosition + pressedSize / 2, 11 * app.TextScale, textColor, app.Alpha.Text * fx.Alpha, Z_CONTROL_TEXT, true, true)
     region(app, chipKey, chipPosition, chipSize, function()
         app:beginBindCapture(entry.Flag)
     end, nil)
+end
+
+-- a search result: the name with the typed text marked, where it lives under it, and on the right the option itself as it stands right now.
+-- a switch can be flipped from here, the rest of the row opens the page of the option
+local function chip(app: App, text: string, rightX: number, centerY: number, fx: Fx, fade: number, hover: number): number
+    local pal = app.Pal
+    local unit = app.Unit
+    local size = 12 * app.TextScale
+    local shown = fitText(text, size, 130 * unit)
+    local width = Painter.textWidth(shown, size) + 18 * unit
+    local height = 22 * unit
+    local at = Vector2.new(rightX - width, centerY - height / 2)
+    Painter.rect(at, Vector2.new(width, height), pal.Text, app.Alpha.Btn * fx.Alpha * fade * (0.07 + 0.04 * clamp01(hover)), Z_CONTROL, height / 2, true)
+    Painter.text(shown, at + Vector2.new(width / 2, height / 2), size, pal.Text, app.Alpha.Text * fx.Alpha * fade, Z_CONTROL_TEXT, true, true)
+    return width
+end
+
+function Widgets.result(app: App, spec: Spec, x: number, y: number, width: number, fx: Fx)
+    local pal = app.Pal
+    local unit = app.Unit
+    local height = Widgets.HEIGHTS.result
+    local key = spec.id
+    local position = app:pos(x, y)
+    local size = app:size(width, height)
+    local hovered = app.HoverKey == key
+    local hover = easeTo(app, spec, "hover", if hovered then 1 else 0, 16)
+    local press = pressScale(app, spec, "press", key, true) * fx.Scale
+    local p, s = shrinkBox(position, size, press)
+    local fade = app:sourceFade(key)
+    local alpha = app.Alpha.Text * fx.Alpha * fade
+    local target: Spec? = spec.target
+    local centerY = p.Y + s.Y / 2
+
+    aura(app, spec, "row", p, s, 10, 0.16 * clamp01(hover), 0, fx, 14)
+    Painter.rect(p, s, Color.lerp(Color.lerp(pal.Panel, pal.Text, 0.045 + 0.03 * pal.Light), pal.Accent, (0.15 - 0.10 * pal.Pick) * clamp01(hover)), app.Alpha.Btn * fx.Alpha * fade, Z_BG, 14)
+    -- the controls on the right: first the chevron or the switch, the value chip next to it
+    local rightX = p.X + s.X - INSET * unit
+    local flip: Spec? = nil
+    if target and target.kind == "toggle" then
+        flip = target
+        rightX -= (SWITCH_WIDTH + 6) * unit
+    else
+        -- a chevron of round dots that brightens while the row is hovered, it never moves
+        local arm = 4.5 * unit
+        local tip = Vector2.new(rightX - 4 * unit, centerY)
+        local color = Color.lerp(pal.Sub, pal.Text, clamp01(hover))
+        local dot = math.max(1.6, 1.9 * unit)
+        local half, dotSize = Vector2.new(dot / 2, dot / 2), Vector2.new(dot, dot)
+        for _, far in { tip + Vector2.new(-arm * 0.9, -arm), tip + Vector2.new(-arm * 0.9, arm) } do
+            local delta = far - tip
+            local steps = math.max(2, math.ceil(delta.Magnitude / (dot * 0.3)))
+            for step = 0, steps do
+                Painter.rect(tip + delta * (step / steps) - half, dotSize, color, alpha, Z_TEXT, dot / 2, true)
+            end
+        end
+        rightX -= 14 * unit
+        if target then
+            local value: string? = nil
+            if target.kind == "slider" then
+                local number = target.get()
+                if type(number) == "number" then
+                    value = sliderText(target, number)
+                end
+            elseif target.kind == "dropdown" then
+                value = tostring(target.get())
+            elseif target.kind == "button" and target.label then
+                value = labelOf(app, target)
+            end
+            if value then
+                rightX -= chip(app, value, rightX, centerY, fx, fade, hover) + 6 * unit
+            end
+        end
+    end
+
+    -- the name with the typed part lit, and the page it belongs to
+    local room = rightX - p.X - (INSET + 8) * unit
+    local titleSize = 14 * app.TextScale
+    local title = fitText(spec.text, titleSize, room)
+    local left = p.X + INSET * unit * press
+    local query: string? = if app.ResultPage then app.ResultPage.Query else nil
+    local from, to = nil, nil
+    if query and query ~= "" then
+        from, to = string.find(string.lower(title), query, 1, true)
+    end
+    local titleY = centerY - 8 * unit
+    if from and to then
+        local before = string.sub(title, 1, from - 1)
+        local mark = string.sub(title, from, to)
+        local beforeWidth = if before ~= "" then Painter.textWidth(before, titleSize) else 0
+        local markWidth = Painter.textWidth(mark, titleSize)
+        Painter.rect(Vector2.new(left + beforeWidth - 3 * unit, titleY - 10 * unit), Vector2.new(markWidth + 6 * unit, 20 * unit), pal.Accent, app.Alpha.Btn * fx.Alpha * fade * (0.2 + 0.1 * pal.Light), Z_CONTROL, 5 * unit, true)
+    end
+    Painter.text(title, Vector2.new(left, titleY), titleSize, pal.Text, alpha, Z_TEXT, false, true)
+    if spec.detail then
+        local detailSize = 11.5 * app.TextScale
+        Painter.text(fitText(spec.detail, detailSize, room), Vector2.new(left, centerY + 11 * unit), detailSize, pal.Sub, alpha, Z_TEXT, false, true)
+    end
+
+    region(app, key, position, size, function()
+        app:rememberClick(position, size, key)
+        kick(spec, "rowPulse")
+        if spec.onClick then
+            spec.onClick(app, position, size)
+        end
+    end, nil)
+
+    if flip then
+        local disabled = if isDisabled(app, flip) then 1 else 0
+        local reach = (SWITCH_WIDTH + 12) * unit
+        drawSwitch(app, flip, p, s, press, fx, disabled, hover)
+        if disabled == 0 then
+            local tkey = key .. ":switch"
+            local box = Vector2.new(reach + 8 * unit, 34 * unit)
+            local at = Vector2.new(p.X + s.X - box.X - 6 * unit, centerY - box.Y / 2)
+            region(app, tkey, at, box, function()
+                app:rememberClick(at, box, tkey)
+                kick(flip, "switchPulse")
+                app:toggle(flip)
+            end, nil)
+        end
+    end
 end
 
 function Widgets.custom(app: App, spec: Spec, x: number, y: number, width: number, fx: Fx)
@@ -12963,16 +18588,15 @@ function Widgets.heightOf(spec: Spec): number
     if spec.kind == "text" then
         return spec.height or 23
     elseif spec.kind == "custom" then
+        -- a table holder lets the block change its own height, it writes Value while it is drawn and the page follows
         local height: any = spec.height
         return if type(height) == "table" then height.Value else height
     end
     return Widgets.HEIGHTS[spec.kind] or 36
 end
 
-function Widgets.draw(app: App, spec: Spec, x: number, y: number, width: number, fx: Fx)
+local function dispatch(app: App, spec: Spec, x: number, y: number, width: number, fx: Fx)
     local kind = spec.kind
-    local outer = Painter.active()
-    Painter.scope(spec.id)
     if kind == "toggle" then
         Widgets.toggle(app, spec, x, y, width, fx)
     elseif kind == "slider" then
@@ -12985,8 +18609,20 @@ function Widgets.draw(app: App, spec: Spec, x: number, y: number, width: number,
         Widgets.text(app, spec, x, y, width, fx)
     elseif kind == "bindrow" then
         Widgets.bindrow(app, spec, x, y, width, fx)
+    elseif kind == "result" then
+        Widgets.result(app, spec, x, y, width, fx)
     elseif kind == "custom" then
         Widgets.custom(app, spec, x, y, width, fx)
+    end
+end
+
+function Widgets.draw(app: App, spec: Spec, x: number, y: number, width: number, fx: Fx)
+    local outer = Painter.active()
+    Painter.scope(spec.id)
+    local ok, problem = pcall(dispatch, app, spec, x, y, width, fx)
+    if not ok and spec.Failed ~= problem then
+        spec.Failed = problem
+        warn("[OkloUI] row " .. tostring(spec.id) .. ": " .. tostring(problem))
     end
     Painter.scope(outer)
 end
@@ -13015,6 +18651,7 @@ local Util: typeof(require("../core/util")) = import("core/util")
 
 local Window = {}
 Window.__index = Window
+
 
 type Map = { [string]: any }
 
@@ -13048,6 +18685,7 @@ export type Options = {
     Height: number?,
     SidebarWidth: number?,
     NoSidebar: boolean?,
+    Dock: boolean?,
     MainColor: Color3?,
     AccentColor: Color3?,
     Font: number?,
@@ -13061,10 +18699,12 @@ export type Options = {
     Discord: string?,
     FirstRunInvite: boolean,
     FarmMode: (() -> any)?,
+    QuietBinds: boolean?,
 }
 
 local CHANGE_KINDS = { "Added", "Changed", "Removed", "Fixed" }
 
+-- a script can hand over its changelog data (VERSION, GROUPS, OPEN, CLOSING) and the update notice is built from it
 local function noticeFrom(options: Map): any
     local data: any = options.Changelog
     if options.UpdateNotice ~= nil or type(data) ~= "table" then
@@ -13102,6 +18742,7 @@ local function normalizeOptions(options: Map): Options
         Welcome = options.Welcome,
         UpdateNotice = noticeFrom(options),
         ShareId = tostring(options.ShareId or string.upper((string.gsub(title, "%s+", "")))),
+        Dock = options.Dock == true,
         Width = options.Width,
         Height = options.Height,
         SidebarWidth = options.SidebarWidth,
@@ -13119,6 +18760,7 @@ local function normalizeOptions(options: Map): Options
         FirstRunInvite = options.FirstRunInvite == true,
         Logo = if type(options.Logo) == "string" then { Url = options.Logo } else options.Logo,
         ForceTheme = if type(options.ForceTheme) == "string" then options.ForceTheme else nil,
+        QuietBinds = options.QuietBinds == true,
     }
 end
 
@@ -13130,6 +18772,9 @@ function Window.new(rawOptions: Map)
     end
     if tonumber(options.Scale) then
         state.UIScale = math.max(0.10, options.Scale :: number)
+    end
+    if rawOptions.CompactSidebar ~= nil then
+        state.CompactSidebar = rawOptions.CompactSidebar == true
     end
     if tonumber(options.Font) then
         state.UIFont = tostring(options.Font)
@@ -13199,6 +18844,7 @@ function Window.new(rawOptions: Map)
         window.PopupDefs[name] = definition
     end
     window.Particles = Effects.createParticles(state.SnowAmount)
+    getgenv().__OkloWindow = window
     return window
 end
 
@@ -13223,6 +18869,7 @@ function Window.prepareState(self: Self)
     for key in Settings.COLOR_KEYS do
         state["Target_" .. key] = state[key]
     end
+    -- the first time a script runs on this machine its discord invite opens by itself, once, the marker lives in the script's own folder
     local invite = self.Options.Discord
     local opened = self.Folder .. "/discord_opened.txt"
     if invite and self.Options.FirstRunInvite and not Storage.isFile(opened) then
@@ -13260,12 +18907,31 @@ function Window.loadUiSettings(self: Self)
         saved[key] = state[key]
     end
     self.UiSaved = saved
-    local menuKey = tostring(state.Keybind)
-    if state.StartHidden and menuKey ~= "" and menuKey ~= "None" then
+    -- Start Hidden always starts with the window closed. the menu key brings it back, and with no key bound the default
+    -- key does (see Runner). a device without a keyboard could never open it again, so there the window still shows
+    if state.StartHidden and Window.hasKeyboard() then
         state.Visible = false
+        self.HiddenStart = true
     end
 end
 
+function Window.hasKeyboard(): boolean
+    local ok, enabled = pcall(function(): any
+        return game:GetService("UserInputService").KeyboardEnabled
+    end)
+    return not ok or enabled ~= false
+end
+
+-- the key that opens the window: the bound menu key, or the default one while none is bound
+function Window.menuKey(self: Self): string
+    local key = tostring(self.State.Keybind or "")
+    if key == "" or key == "None" then
+        return Settings.create().Keybind
+    end
+    return key
+end
+
+-- writes the window behavior settings when one of them changed
 function Window.flushUi(self: Self)
     local state = self.State
     if state.RememberTab and state.CurrentTab ~= "" and self.TabByName[state.CurrentTab] then
@@ -13291,10 +18957,16 @@ function Window.flushUi(self: Self)
     Storage.writeJson(self:uiPath(), data)
 end
 
+-- puts the window back in the middle of the screen at the default size
 function Window.resetWindow(self: Self)
     local state = self.State
     self.ScaleGoal = if tonumber(self.Options.Scale) then math.max(0.10, self.Options.Scale :: number) else Settings.defaultScale()
     self.Recentering = true
+    local size = self.DefaultSize
+    if size then
+        self.WidthGoal = nil
+        self.M.Width, self.M.Height = size.X, size.Y
+    end
 end
 
 function Window.updateMarker(self: Self): string
@@ -13400,6 +19072,83 @@ function Window.finalize(self: Self)
     if self.State.CurrentTab == "" or not self.TabByName[self.State.CurrentTab] then
         self.State.CurrentTab = self.Tabs[1].name
     end
+    -- a dock window has no Home, it opens on its first page
+    if self.Options.Dock then
+        local now = self.TabByName[self.State.CurrentTab]
+        if not now or now.home or now.group == "Settings" then
+            for _, tab in self.Tabs do
+                if not tab.home and tab.group ~= "Settings" then
+                    self.State.CurrentTab = tab.name
+                    break
+                end
+            end
+        end
+    end
+    -- the Settings pages live in their own window, a remembered one would leave the page behind it empty
+    if self:usesSettingsWindow(self.State.CurrentTab) then
+        for _, tab in self.Tabs do
+            if tab.group ~= "Settings" then
+                self.State.CurrentTab = tab.name
+                break
+            end
+        end
+    end
+end
+
+-- the Settings pages open in a window of their own over the page, the classic layout keeps them as pages
+function Window.usesSettingsWindow(self: Self, name: string): boolean
+    local tab = self.TabByName[name]
+    local options = self.Options
+    return tab ~= nil and tab.group == "Settings" and not (self.M and self.M.NoSidebar)
+end
+
+function Window.settingsTabs(self: Self): { string }
+    local names: { string } = {}
+    for _, group in self.NavGroups do
+        if group.Name == "Settings" then
+            for _, name in group.Tabs do
+                if self.TabByName[name] then
+                    table.insert(names, name)
+                end
+            end
+        end
+    end
+    return names
+end
+
+function Window.openSettings(self: Self, name: string?, section: number?)
+    local names = self:settingsTabs()
+    if #names == 0 then
+        return
+    end
+    local set = self.Set
+    if not set then
+        set = { Alpha = 1, Reveal = 1, Dir = 1, Page = names[1] }
+        self.Set = set
+    end
+    local want: string = if name and table.find(names, name) then name else set.Page
+    if section then
+        self.State.SectionByTab[want] = section
+    end
+    if not self.SettingsOpen then
+        set.Page, set.Next, set.NextSection, set.Alpha, set.Reveal = want, nil, nil, 1, 1
+    elseif want ~= (set.Next or set.Page) then
+        set.Dir = if (table.find(names, want) or 1) >= (table.find(names, set.Next or set.Page) or 1) then 1 else -1
+        if self.State.AnimationsEnabled then
+            set.Next = want
+        else
+            set.Page = want
+        end
+    end
+    self.SettingsOpen = true
+    self.OpenDropdown = nil
+    self.Focus = nil
+end
+
+function Window.closeSettings(self: Self)
+    self.SettingsOpen = false
+    self.OpenDropdown = nil
+    self.Focus = nil
 end
 
 function Window.pos(self: Self, x: number, y: number): Vector2
@@ -13415,6 +19164,10 @@ function Window.currentTab(self: Self): Map
 end
 
 function Window.switchTab(self: Self, name: string)
+    if self:usesSettingsWindow(name) then
+        self:openSettings(name)
+        return
+    end
     local state = self.State
     local target = state.NextTab or state.CurrentTab
     if target == name then
@@ -13432,6 +19185,12 @@ function Window.switchTab(self: Self, name: string)
     state.NextTab = name
     self.Focus = nil
     self.OpenDropdown = nil
+    -- the search lives on Home, leaving Home for another page leaves the search behind
+    local target = self.TabByName[name]
+    if target and not target.home and self.HomeTab then
+        self.SearchQuery = ""
+        self.Buffers["head:search"] = ""
+    end
 end
 
 local NOTICE_SECONDS = 2.2
@@ -13572,6 +19331,7 @@ function Window.rememberClick(self: Self, position: Vector2, size: Vector2, key:
         Pos = (position - self.WindowPos) / unit,
         Size = size / unit,
         Key = key,
+        At = os.clock(),
     }
 end
 
@@ -13586,7 +19346,13 @@ end
 function Window.openPopup(self: Self, name: string, arg: any?)
     local popup = self.Popup
     local click = self.LastClick
+    -- a click from a while ago belongs to something else, the popup then opens from the middle
+    if click and click.At and os.clock() - click.At > 0.5 then
+        click = nil
+    end
+    -- a popup that opens over one that is fully shown takes its place in the same card: the old content fades out, the card eases to the new size and the new content fades in
     if popup.Open and popup.Name ~= "None" and popup.Alpha > 0.5 and popup.Shown then
+        -- while the content before is still fading out it keeps fading, only what comes after it changes
         if not (popup.From and popup.Leaving) then
             popup.From = { Name = popup.Name, Arg = popup.Arg, Width = popup.Shown.X, Height = popup.Shown.Y }
             popup.Swap = 0
@@ -13600,9 +19366,10 @@ function Window.openPopup(self: Self, name: string, arg: any?)
     if self.PopText then
         table.clear(self.PopText)
     end
-    if click and popup.Name == "None" then
+    -- a popup always grows from the control that was clicked, also while the one before is still fading away
+    if click then
         popup.SourcePos, popup.SourceSize, popup.SourceKey = click.Pos, click.Size, click.Key
-    else
+    elseif not (popup.Open and popup.SourcePos) then
         popup.SourcePos = Vector2.new(self.M.Width / 2, self.M.Height / 2)
         popup.SourceSize = Vector2.new(1, 1)
         popup.SourceKey = nil
@@ -13670,61 +19437,22 @@ end
 
 function Window.loadTheme(self: Self)
     local state = self.State
-    local options = self.Options
-    local given: any = options.Theme
-    if type(given) == "string" then
-        given = Theme.Presets[given]
-    end
-    local forced = options.ForceTheme or Theme.Season or "Default"
-    local forcePreset: Map? = if forced then Theme.Presets[forced] else nil
+    -- only the one look is left, in Dark or Light. a name saved by an older version (any other theme or Custom) becomes Dark
+    local base: Map = Theme.Default
+    self.Preset = base
+    self.DefaultMain, self.DefaultAccent = base.Main, base.Accent
     local saved: any = Storage.readJson(self:themePath())
-    local applyForce = forcePreset ~= nil and (type(saved) ~= "table" or saved.Forced ~= forced)
-    if applyForce then
-        given = forcePreset
+    -- the theme picked last time comes back, anything unknown becomes the default look
+    local preset: Map = base
+    if type(saved) == "table" and saved.Version == THEME_VERSION and type(saved.Theme) == "string" and Theme.Presets[saved.Theme] then
+        preset = Theme.Presets[saved.Theme]
     end
-    local preset: Map = Theme.Default
-    if given and given.Main and given.Panel and given.Off and given.Text and given.Sub and given.Accent then
-        preset = table.clone(given)
-        preset.Name = tostring(given.Name or "Theme")
-    end
-    self.Preset = preset
     state.ThemePreset = preset
-    self.DefaultMain = options.MainColor or preset.Main
-    self.DefaultAccent = options.AccentColor or preset.Accent
-    state.MainCol, state.AccentCol = self.DefaultMain, self.DefaultAccent
-    state.Target_MainCol, state.Target_AccentCol = self.DefaultMain, self.DefaultAccent
+    state.MainCol, state.AccentCol = preset.Main, preset.Accent
+    state.Target_MainCol, state.Target_AccentCol = preset.Main, preset.Accent
     state.ThemeName = preset.Name
-    state.CustomMainCol, state.CustomAccentCol = Theme.CustomMain, Theme.CustomAccent
-    if not Theme.isPreset(preset, self.DefaultMain, self.DefaultAccent) then
-        state.ThemeName = "Custom"
-        state.CustomMainCol, state.CustomAccentCol = self.DefaultMain, self.DefaultAccent
-    end
-    if applyForce then
-        self:saveTheme()
-        return
-    end
-    local data = saved
-    if type(data) ~= "table" or data.Version ~= THEME_VERSION or type(data.Main) ~= "string" or type(data.Accent) ~= "string" then
-        return
-    end
-    local main, accent = Color.fromHex(data.Main), Color.fromHex(data.Accent)
-    if not main or not accent then
-        return
-    end
-    state.CustomMainCol, state.CustomAccentCol = main, accent
-    local savedName: any = data.Theme
-    local saved: Map? = if type(savedName) == "string" then Theme.Presets[savedName] else nil
-    if saved and savedName ~= preset.Name then
-        state.ThemePreset = saved
-        state.ThemeName = saved.Name
-        state.MainCol, state.AccentCol = saved.Main, saved.Accent
-        state.Target_MainCol, state.Target_AccentCol = saved.Main, saved.Accent
-    elseif data.Theme == "Custom" then
-        state.ThemeName = "Custom"
-        state.MainCol, state.AccentCol = main, accent
-        state.Target_MainCol, state.Target_AccentCol = main, accent
-    end
-    if data.ShownMain ~= Color.toHex(state.Target_MainCol or state.MainCol) or data.ShownAccent ~= Color.toHex(state.Target_AccentCol or state.AccentCol) then
+    state.CustomMainCol, state.CustomAccentCol = base.Main, base.Accent
+    if type(saved) ~= "table" or saved.Version ~= THEME_VERSION or saved.Theme ~= preset.Name or saved.ShownMain ~= Color.toHex(preset.Main) or saved.ShownAccent ~= Color.toHex(preset.Accent) then
         self:saveTheme()
     end
 end
@@ -13734,7 +19462,7 @@ function Window.saveTheme(self: Self)
     Storage.ensureFolder(self.Folder)
     Storage.writeJson(self:themePath(), {
         Version = THEME_VERSION,
-        Forced = self.Options.ForceTheme or Theme.Season or "Default",
+        Forced = "Default",
         Theme = state.ThemeName,
         Main = Color.toHex(state.CustomMainCol),
         Accent = Color.toHex(state.CustomAccentCol),
@@ -13745,11 +19473,7 @@ function Window.saveTheme(self: Self)
 end
 
 function Window.colorEdited(self: Self)
-    local state = self.State
-    state.ThemeName = "Custom"
-    state.CustomMainCol = state.Target_MainCol or state.MainCol
-    state.CustomAccentCol = state.Target_AccentCol or state.AccentCol
-    self.ThemeDirty = os.clock()
+    self:themeFromColors()
 end
 
 function Window.flushTheme(self: Self, force: boolean?)
@@ -13761,38 +19485,37 @@ end
 
 function Window.themeFromColors(self: Self)
     local state = self.State
-    local main: Color3 = state.Target_MainCol or state.MainCol
-    local accent: Color3 = state.Target_AccentCol or state.AccentCol
-    local current: Map = state.ThemePreset or self.Preset
-    local near = Theme.presetFor(main, accent)
-    if Theme.isPreset(current, main, accent) then
-        state.ThemeName = current.Name
-    elseif near and Theme.Presets[near] then
-        local preset = Theme.Presets[near]
-        state.ThemePreset = preset
-        state.ThemeName = preset.Name
-        state.Target_MainCol, state.Target_AccentCol = preset.Main, preset.Accent
-    else
-        state.ThemeName = "Custom"
-        state.CustomMainCol, state.CustomAccentCol = main, accent
-    end
+    local preset: Map = self.Preset
+    state.ThemePreset = preset
+    state.ThemeName = preset.Name
+    state.Target_MainCol, state.Target_AccentCol = preset.Main, preset.Accent
     self:saveTheme()
 end
 
 function Window.applyTheme(self: Self, name: string)
     local state = self.State
-    if name == "Custom" then
-        state.Target_MainCol, state.Target_AccentCol = state.CustomMainCol, state.CustomAccentCol
-    else
-        local preset: Map? = if name == self.Preset.Name then self.Preset else Theme.Presets[name]
-        if not preset then
-            return
-        end
-        state.ThemePreset = preset
-        state.Target_MainCol, state.Target_AccentCol = preset.Main, preset.Accent
+    if name == "Light" or name == "Dark" then
+        state.LightMode = name == "Light"
     end
-    state.ThemeName = name
+    state.ThemePreset = self.Preset
+    state.ThemeName = self.Preset.Name
+    state.Target_MainCol, state.Target_AccentCol = self.Preset.Main, self.Preset.Accent
     self:saveTheme()
+end
+
+-- a theme from the list: its colors glide in and its sky starts moving
+function Window.chooseTheme(self: Self, name: string)
+    local preset: Map? = Theme.Presets[name]
+    if not preset then
+        return
+    end
+    local state = self.State
+    state.LightMode = name == "Light"
+    state.ThemePreset = preset
+    state.ThemeName = preset.Name
+    state.Target_MainCol, state.Target_AccentCol = preset.Main, preset.Accent
+    self:saveTheme()
+    self:regenerateParticles()
 end
 
 function Window.resetAppearance(self: Self)
@@ -13806,13 +19529,8 @@ function Window.resetAppearance(self: Self)
     end
     state.Target_MainCol, state.Target_AccentCol = self.DefaultMain, self.DefaultAccent
     state.ThemePreset = self.Preset
+    state.ThemeName = self.Preset.Name
     state.CustomMainCol, state.CustomAccentCol = Theme.CustomMain, Theme.CustomAccent
-    if Theme.isPreset(self.Preset, self.DefaultMain, self.DefaultAccent) then
-        state.ThemeName = self.Preset.Name
-    else
-        state.ThemeName = "Custom"
-        state.CustomMainCol, state.CustomAccentCol = self.DefaultMain, self.DefaultAccent
-    end
     state.UIFont = if tonumber(self.Options.Font) then tostring(self.Options.Font) else state.UIFont
     if tonumber(self.Options.Scale) then
         state.UIScale = math.max(0.10, self.Options.Scale :: number)
@@ -13895,6 +19613,12 @@ end
 function Window.applyCodeBuffer(self: Self): boolean
     local state = self.State
     local text = tostring(state.CodeBuffer or "")
+    -- a code still being typed or pasted into the box counts, it is only stored once the box is left
+    local typing = self.Buffers["config:code"]
+    if self.Focus == "config:code" and type(typing) == "string" and typing ~= "" then
+        text = typing
+        state.CodeBuffer = typing
+    end
     local loaded = if text ~= "" then self.Config:loadCode(text, state, self.Flags, self.FlagDefs) else nil
     if loaded then
         self:finishLoad(loaded)
@@ -13941,6 +19665,7 @@ function Window.acknowledgeUpdate(self: Self)
     Storage.write(self:updateMarker(), self.Options.Version)
 end
 
+-- the window plays its goodbye first (unload: the content fades to the logo, reload: the window glides to the middle), the runner ends it with finishFarewell
 local function startFarewell(self: Self, kind: string)
     local state = self.State
     if state.IsReloading then
@@ -13988,6 +19713,7 @@ function Window.finishWelcome(self: Self, position: Vector2, scale: number)
     state.VisibilityAnim = 1
     state.IntroAlpha = 1
     state.UIScaleAnim = 1
+    -- the open spring starts where the card left off, so the window does not drop to its opening size and grow again
     self.Springs.open = { x = 1, v = 0 }
     state.NavReveal, state.TabReveal, state.TabAlpha = 0, 0, 1
     state.UIScale = scale
@@ -14007,5 +19733,10 @@ function Window.applyFont(self: Self)
 end
 
 return Window
+end
+if type(getgenv) ~= "function" then
+    getgenv = function()
+        return _G
+    end
 end
 return import("lib")

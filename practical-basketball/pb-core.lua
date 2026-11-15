@@ -1,1 +1,9109 @@
-return(function(...)local H={".MThVqk==";".fca7xXjahjz=",".dX==";".EGUio91JDX==";"%t1+<$","%22E\'Y";".UNffy0kL6sv7GDyD3lk=","%1\\";"%kT9<]_Yq","%ia0Bq";"%V`^Pp","%5Ne8","%VH!\']Ad,1Y(d]+KGDGZ_b3","%K,gl,k1l","%Np\'mF","%dEaEP";"%?C-Kdc/QK",".25gCVXdTIX==",".GZxy5Qab1F==";"%m(!M??t";"%*[\'Qq(O";"%\\Y9G(Wj";".1lYgCF==","%7&OueW4bXgEg&@A";"%V]","%tjRhl-?","%G)#9U";".RgOKyk==";".J0vCZz==",".NXqU";".oWrZsA1v";".fYV94XQ=";".z0cs";".qDBaSID3af6kZCZJ68k=";"%3,4D,Kj^","%]O98Yda",".uuXBEk==",".XOodXzg=",".5RxOsRy=";".3/hoK05DAGnyUDK01z==";"%78]O\'3\\>5ikB",".r+pAEOV=";"%[)=JO","%nl:>:q.1(D";".FwsY4vQ=";".FFsQWgUjnk3rCOg=","%>;L&0tl",".ZDzyDQZXvR6AbX==";"%M#=UlI+NM\"*abO4e,td","./Lo8NiO9psORg3QKk58hXViB1lgzyfbRaFX6QQrlqi+2MF==";"%h8h(TVAX,",".enx7YUSDGke=",".VRfh0bPmzir8k6e=","%4t";".L0BY9g7R",".7EzA0Q94";"%n\"??K",".bCi1iFGsAF==";"%!Wa\\";".KhxUR4LqfwkAQF==";"%J,$8uL#I";".Yw9jYg42glEY",".mh3tsX==";"%EO_GtSu$","%eb+;5","%:d:@XY<>","%<](O(89#.j*t";".nPMs75cBgZLMeTL=",".kLs9wF==";"%<p\"";".v3Biyk==";".JT/uq++i4xz=";"%.!Ur9";".pmAkWme=",".8VFLefkoIk==","%0+kknQ1","%A3Ges.ar8";".g65A3BbZuWvUjF==";"%VDR3A&bt+fNO#",".dTuDPF==";".ajd8th4QJFjV2k/vweMnPWh+xRvRj1PwfN/zYwFkgrP1ah+OAdARZd7ywmAg",".NwBuO1SCaF==";".y5HeN7AL";"%4XqB8M?Y!Ct7WX3@Ee2a7RiUN5u:fM?\\Sr9oQZu>*hH3_L8tYO$EO@YhJi`";".2bZ65VloPX==";"%Ngb;D9nJii8Hao?","%+AAGH\\c";".PRQSmUYAIZe=",".ZWp2DPmE424n3F==","%qmdk[#/t",".zBjgbl6jffqLfQN60hMlnrP=";"%I(0VW@\\";"%F.n@S",".o35utX==","%!:pKs$1i<(8s`;";"%9ubUV",".bB5WFGzpUADbTz==","%OGDu\">#;;PqSK";"%VYZ]?[L";"%Y^r$bYLl*IKh5q7";"%=d5TQN4";".naY4agL=";"%WnR=uLBEQNLj";".lFbuky82ldIw",".pMLhAz==",".7yb8CZ4/MHJZwX==";"%aN31rq+gWC(Ls","%U8;s%";"%\"0VkHNF30@UVB4","%W*%73p*";"%`It\'kSF0;]";".lNBPeX==","%eUk*6Q2Q#@u;9";".di1DpE2IQQzC",".lk==","%dGH%^kTM","%\']<nG!AIH";"%[[eOhQ,$e\"9\'-h","%_hBAgs:?EN","%E+T]";"%(*JhWhdkc!";"%JG";".PdhuBRhZlsNji53j","%U4F/m%3<O";"%[j<df)iJ>3Kj^$4=/[!_@k]1!iu";".fHRuq7hwZk==","%[^Ej1Gp","%oF53\'";"%WM8i(Z)s","%sQXHNgd\"","%\\:SI*";".2k6VGQw82+4t";"%^4dC/M$Nk-","%#LEj;",".zlWsDF==",".QlE6","%)IqK>",".x21lpoAlfDWuhF==",".CW7ldQpVycwjDX==";"%o/0Z";".vFe6jXZF";"%V@ODS",".ccNFQlP=",".KOlEKUFP";".6n7/fIQQXk==",".HHt=";"%0%)1\\S_8r];+N,*oW",".5a0D+TNj","%_Zf5?";"%&O(3Mq*&[DUE",".UsUm4k==";".iZluZKF=";"%l!^`Go-7";"%1!)3";"%#?Gg(UbL#d";"%(;=D";"%.XSd:k>s","%@jTU]a&hN59]",".3wtP0JhUTRGOJz==","%O`UaF*(%3V",".bItIyX==","%\\\'&dU";"./YQiWdpndC6Djs2=";"%HuJD.cUYh.9S",".X+rzh0Mh+r0DPZ+=",".6Px297gCJ4Rnn0jM",".hU3eXUMTCNNj","%\"dBcu","%I8Ik1c7-PN.\\<!:eY";".MTcz+dqBSpSSkX==";".DX==";".lHu3AF==";"%t,.@#=fKo\\";".uN+G1xaj";".u6IIFp4i",".0IQ5wCb9TgqtG6Gacz==";"%,C/9Y","%+<jW3g7V)";".M7ZCiAWu8k==";".fANlAz/u8sL=";"%sb$VX";".sjrFafzuR5y=";".n7FUQFz=";".EjGtTit=",".39edgFz=","%W;>hT*j[n";".0IybZyrrliee",".YvCGGXAfEMLmnHPv2F==";"%4\\SSb";".jKpiwwgZZwlWsZmA","%*H!YAoVfR",".ozi84dXCRnz=";".yuekLxe=","%8&!\'p\\mH#";"%,aQL/",".+X9gyPX=";"%sV*,6",".KN77EIfV";"%g(K0F";"%j\'n5>`2",".cpAZCX==","%r-N/Z,7Kc","%8J19&[<",".5MBt";".+bPL0Kz=";"%REu$";"%Iu`&8!dA","%1@.p\\@9fZP\"B","%1SM4f&]";"%Y#tbUQno","./Yj7J155qF==";".uxqOmkdJKaL=";".mhazWo8m";".yrKSMk==",".x4e3QOEvEjZP";".hWObtuhamko2",".fX==";".dRQeU06R";"%;>#ou,S","%N3p[?",".B0KqC2PnCWSr","%.:,AIo::)1IED0N-B",".vl0D7F==","%P=lkS","%I-@953NB","%pS`Xf5^(","%StSqTo]","%L,NC6";"%:6KP%","%8j;W2d4]i[4!kI";".KLRLdFZkfcdW",".GjJm",".","%dmN$fmHcA";"%T@2L^<:YY","%07#M",".8bpZL/Kx4EvJmVcD","%Olc4B";".MFsi";"%:=N94H?","%$6\\ZAeQaq](L";".cMr0wF==";".9FY/WwOPTa0XLF==",".kvsqnnl=";".O75w6q+f5gy=";".1ZxJ8qgD2Ol=";"%0SAslpQA";"%&AFnMTg2";".ypP4pTKZMNe=";"%tNea";"%hkF#PEmp";"%:4OSZ-,L%Nej";".SmTzj6+O","%,/*I-";"%7Sq@()MK,N[bPQ","%%br&-j`%#!Or(";".hX==","%jY5!$dp<hN";".Peub0vOuXoa=","%P#IS.?U";"%R$\\TOdk>0",".mD/s6la4gbL=";".lBVPFE5I";"%\"CIC5r\"$3W=Z";".WILxSOuK","%_kKJC_&6dk";".uRsk32A4cTng","%$1DPg";".LXXn7oPrZoe=",".BCv39vV=";"%#>4if:q";".hmv3Mel+","%b\\(-";".GSfRjwTK47Qd",".pjsm/VQ=","%F*ds\\MJ#!5IK6kK>_c-";"%-#IT:Z[m",".qE2QHmQz";"%\"CkIKcB;",".YwV0H7Y4";".c4MN6tTr2k==",".PyFGdV6ejXu3Mk==";".iNMgf8+dMlxU2C2=";".0rpEqDP=",".s2trVRGZPFL=",".FR15JSk=";"%\\M60V-;d#";"%-8eQ(","%,P2@N";"%3d!^Qe:`^_)5W";"%G4mC`","%bHG5)Kb";"%L;0;K>E8he:4",".CnIHGvWqAk==","%&RZdP\'l-^8[o?>";"%1.V.bn\\I\"\'3sX";"%!X6V";".3TACZ2OMUz==";"%4Or.";"%?e=g_?m`klg(%>1ZI";"%ug\\79";"./Ak75F==";".Ydn3KgWpZUfd34Ba";".InJAQv0r";"%l,o\\\':)f%S\'0";"%-DV=V>*_\\\\:>%dB_B+VV";"%*OD";"%\"m?j>","%_a]?`$YSG36XX+So!N","%uf^!U","%mR@BKtJu\":(C";"%Jc;b1dO3Q4+O";"%WsWmD","%\\$binYK[","%Qg1YU:PtdXroIe1ecJ<nNtV5L(Ptt3GDMJEPG";".WTsUVw6x6LIZ";".Krw49RlWWVm4j6qbkLd6v7DMaDpa9pYRKIDJecCE",".B0g+i4w6";".pqz2nzuwLX==";"%tPY7@kKtlN6]","%).X","%cuP,Fo\'";"%1&Q/&WTX";"%<Rds]","%ZcJ2\\\'RZV&eO2&",".vYrkTsxGiX==",".f46tVcV=","%X@PuFR,49]2@/o",".E7hLDF==";"%r,\'$7?U","%Uu:kcuDIq";".CJMvdigW";"%l5EH<iT&VPC96t9PCcK","%^58eVY7";".VZAaWi5uAtomYAqS";"%m!r-r%W","%2/?9DufgHu";".mhqkJk==","%f(GRTidBBg>/9L","%It&?c49cSG","%ulo[=tA*I";".n+S0zoQvxz==";"%a[6",".xpRqluD1xQd+f0OTvfUUJsQpGWu/MkJ+bmsnJ4SFbdcOSuoiiiaeEwW5",".qTfI27nxUPkCfX==";"%W,K!maN",".V6sm","%k9,`d:E2A";"%\\p`X#\"3aL]!8";".ate96ik=";"%PWA<($7";".nUrdqjHfjG9M";"%Y0UmLDQ2eJ";".y/Bony6UBx9G";".yIsqWk==";".VmdjAoiG",".mnROYql+Txq38sPFLTbBJhbM",".WmgHdAeZWvglmJ7ftF==";"%K916)";".1/7WIj21","%AZf:[9ca";".pCAHNijV9Z97bYe=",".RJnJ0T+=",".Rwxf4Vl=";".B0fcwk1Qz3R4Jk==";".hb39O47DFlF8","%!lZ,f6\"h%";"%O\"C:p";"%,\\Dd-",".sUEaqk==","%7^)\">%8rFZNSf=";"%&.j!uuf\\NI.KD","%Pt#\',&!g","%&,!(U,kQe9\'lC";"%6=ep_";".Gh2HKo+=";"%oY,2N\"_n-:,o(BD5Z",".deaakNVEXJy=";".LeT/",".EWlc4u2=","%f$[";"%W`en-=L>";".2j7SRuj9X7JonrdFZk==";".zF==";"%c^Wga";"%i)b6\\csS";".ukxGuk==","%7W,O&Qamn^m;9",".Q/V/HxxIPQF=";"%5_VgB;9G;","%Nt:@b\"no5(74","%dZcc9#mrm";".tneo","%k&>S?dqi9",".U8+v";".zdh1V0uFfQC/nX==","%uD<V-+:ZST";"%omAA:7nT",".Npfw+uV=";".TKePvSxl",".9QKQ6621ZTo+",".vU+VBxxgkikO";".qniZ45GbrX==","%AbSe3?P(E[","%O=&L:","%W(?n7<p";".1XKz+F==";"%R8",".FpRH";".I7DDqF==",".OhB1Tlq9hz==",".Y2vOOizmOF==";".s6/J";".dLAkrF==";"%6EV?=4Q@>","%ZP]=I";".RtNdxFsiQ6evGH1z";"%kY.*X%0\"9","%Z69p/m*jU";"%Lstr";".+bneV1Jl/45/Gyzhoj/44Ng=","%`MQ[roVA";".l0I/g86F",".rocUCWicAF==";".j8TS3Ke=";"%^ej^X!5D2R5)Z";"%Re/QjAL",".RObHX/y5Qyzdf8HZEFy5Drziwakznx+Z/F==","%pbspE8Z+",".sw1qgw+=","%9W","%\\%p?r][hB$<\\";".QfjdNK1ywPB0";"%Go^\".^6[M";".KE4S8pf54z==",".fspVEX==","%]HK@U4U","%:^\'\\G0C6j76&)$?:HYG+^7]Mq";".P0Vs0OnvUPW8U1y=","%M]_lC[nlLG3\\beTQBq8!5D;$?=end)<t%tm-^c2.^@Xi5s\"YMDl*T",".O4j8Iiz=","%Fq[9rQ1",".oW4eazbmeBO+Hz==",".W9ZNc47zScdY0o7k";"%Pp@qd0?k\"Th@9",".jvtajEz2jX==";"%sVk0q?Fr";"%840(Kq_)@3";".9NEZS0v8vdX2XvxYecz=","%*k9U",".3oSfTk==";".1L1v","%hZd=L3CoC)0AuN*8g\"\\n]?O`Y\"g`:AWC4TRfMPs4V4F!aYS@DrA+85RTK.",".P8ODd42=","%K[I,;R<)=k[fo";"%@auGN1PF";"%OcSE.P(s1T^3\'F";".51FDuk==";"%UB4q^g9::Ea5VnT_3Ah1UB!n[d(T","%c3UX\\Q1";".DC0pqk==","%id(>=2-B";"%%S";"%g7";".5c7pnP8nBGXJLX==";"%H!:eJ$N;nG";".2Gg0+QyRDX==";"%?ikVK";"%)l]<W2u";"%]K*=",".0t2=";".eZFAsk==","%t4HB1AO>R";"%EOO@","%\\-^WO=QI","%^$L18*U",".ZF==","%l5D=:","%(P1OZ$AbBR[L";"%@))9:^b";"%=#\'bZ.u";"%Lf5E!rARR,^]V4";".dPWFb+UjyLWk3Umg9+GlnaFdEX==";"%.<LInui>>0";".bGGXiHEHQZQ=";"%\"M^$C30uVSC%>j";".QuYWoza=";".I/oMt0F=","%VnagD+Sff\"C\\M0>";"%j;LM";".27ooVF==";"%`ZumN";"%C$>I%Uf-R\\ZI","%D,!)?I?";"./sPg";"%(U8:^p`L&";".xJ29j8e=";"%J<dLB)La%^iJ04U$\\\"F.)Rndq-=K]u_\".ifdG",".OL4n9t9m",".iDWIZYal3jsH",".M2/W",".Q27zdF/D",".auCZnz==","%fHeg+";"%FrFAZSHj`","%\\30pS=pZ;4M*FGg`kK";".eCJv02t=";".U4tk0+Kc","%NmWc#>I.*_HcY(:a0","%%QE<!","%S<!HJ","%nqd7\"";"%6nT/ZcpDDOQ3`Hb","%oguN";".4efz+N27gk==";"%5U\\DG";"%H7un#",".LFn1ZvwF5F==",".qQ173QUt";".vMcgZ2sQc0ZtuuP53z==";".XW+hwF==",".IUKSFjjTPCMYd8X=","%\\<3ZJ2\'K*[";"%%ln.",".da+KVxeg5GH+4XJCMz==","%t3``>a[%";".vDGMmk==";".xFfpX1y=";".1ldOtyz=",".faDMTVpN";"%9Zg6L","%3(l:S-=Fk","%g$SEp";"%RN)!]4\\&c";".orqx8iCT6uz=","%Y>qfcfB";".R201rk==";"%c3O8GpY^;";".z4DleYXonr+s","%4j`lCrJJT";".4cIzXSJSIUZjTgdu",".YIQlL3X=",".hpadl6VB9F==";"%(k384",".ftO5i5a=",".Xl76Ivdm";"%O0tRZpm.Q6","%%n;JoMi4NL",".ncab4Ds3";"%1\\KJ3.Rb!NkB";"%HhQIRrLD";".bOngVdy=";".RpFN5k7fuhP=";"%ieYeFS?TE5","%F0A93U_h",".sODZHk==",".WmNeFHf4","%C1Xna","%_G5Ai";"%4k:uPV5FWR",".lZt8Pb/aTez=";".VUvWvMl=";"%]eGOg6S","%Q1";".NtwuRz==","%\\mtfDeCK";"%%A=N;m-d!",".ngxZM+beGoLKZ3zpdRy9",".pdiIucy=",".dZWV1l+FaX==",".JN/naiyTr2vgSeFVuF==",".uz==";"%MV%4(>10Mk",".eOsCUz==",".w4mOscT9","%7madD2l",".qfV7FPoy";"%L#";".xtP4xF==","%lFV7",".6q/MyvXu";"%s79GBMZ",".fx/eJF==","%U$]=^*t";"%fbina";"%#BR`0.u","%[+-A(9W",".Vj313nlvK3Q=";".piKh";".k3C7zBwW";".VpmEfyVvIF==",".fCcF/Ok=","%0$eZC","%3ID[,>d]Y\\2c","%tsP<-";"%e>STI3_u4FWUc","%TW&q=r_TF";"%4)l%>+M`R";"%[R:TO",".mkeuuzAVN0cbCn+t";".FwIzb/V=";"%!UX:Gu,Mto","%X!H\"M<j]ieoTP*_\\)l#7";".YRxTpX==","%@r3F2O7#ke[<","%:e(mBWsH#4:.bCcP:aiN.c",".Q8vxJk==";"%>CF:S`<]H@FsD","%j#:*ZJ\'=_QOP.",".vFSv6X==",".WFO0wz==";"%A2SjY8I=",".fV2osz==";"%bFWAat]>","%,;Kh&",".oS7kmCqMUnz=";"%)N9IKf4i",".8xmTe7N5m70r","%%U1O&jd.";".4mKz6VjU";"%f-Z1l]l=+lP5>CAa6D",".Gt+Gwx+=";"%;h3!=b%`",".HlQ=","%;\\GVWo]",".kzQit0C1z7WC";".PoJ1pbwREk==","%\'BG^_qOM";".n7UYzu+pQVch",".NBGfck6ZCElH";".WapxFty=";"%Foj5_",".F+K0ZrIgPJl=","%anXe;eN",".W3Z3L6Q=";".lg51WBhUYF==","%D=9Ml%pN",".nXtU";"%MPLkS";".cQTPTk==",".nTwx4k==";".wOv7SJKW4PBhl4e=",".730RkKa=";"%mVka#>G";"%2[!U1";"%J\"W)m13","%4Vc#*s2G#2Z%m?EO1W(",".VWYm9HfZCey=",".MVI+kK+fL1lR8qz=";".b3quNF==",".5i5XoF==","%TU^.p0Vo3",".apvLcCYG",".C6XBXjTXGerrMra=";"%JK:8Yfks=";".ZShODWh5W3Wnqk==";"%NZ4\\6E7>7<M4";".yZxI38GisaZTXJiDZX==",".961LYtndYz==","%eS*<2T-&;t)Cs","%#Hi?b","%4K(7-]YF","%TP>1d.tDOE";".lz==",".Te09RINc";"%1PXUsj$e1",".0F==";"%1KJ\\eh6i48I1?K%";"%(-i@Q";"%1sJS9s<","%VIWsc";"%\"+t5^","%ZnErH4c,N8\\.*";".uS8PAffCEF==";".PT/fKgY+PPQ=",".QmM6yh3F";".wVMUD4q0ojX=";".b80UVksy2aV=";".Twyzbk==";".r6Vr0tmvBuA2jIszI0xGsFO6O9Sb1IMqfTVJTJA4QhAlDz==",".Wnd9vz==";".HkBQDIPqeHG+",".+c1bmk==",".AtLzK8L=";"%-#9Z@(tEt\\<p",".JiQ2hz==";".bg0nS5I2Fkz=";".XYxJN+2WfX==",".ohSJfsQ=","%ofAM&,8kJS","%A<!el;\'8^8",".LCSgAQa=";".j9pVCqCoOMDFgF==",".XPV4i5jN";".U1LajX==";".1orTsV7tgczK";".a48SU8z=",".lF1mPIDdf5XRAIMKQh+q",".bK2R/gY4GaHpuvypCz==";"%NPbmsYF_";"%D3krZ";".7xFgvpjx6z==";".Q4EE4X==";".DtvUAXEZP2KR";"%C7bkee\"%";".pm00Iw1glF==";".eJU8yX==",".ofb3NCOf",".btVW0F==",".taIPPtE+wz==";"%%:[bGC9chQr.MA",".YgXskASFWk==";".pDertaV=","%#HW^",".Hj9OkjwVn/IY",".PGx683Lq2z==","%01G\\W3.rT","%ok8JTRY%7",".FOCNBqZWBP88GX==";".qM3jiyjFC6t=";"%@di;",".zvnNoRIP";"%f]I)j0t;0aU,F";".h9srpF==";".AWvJ0fL=";"%-EmW5A-q->\'f@",".ACI4tWXZEgqn",".gxeL/Egucz==";".ISYxVwXC4Go/V4jo";".okohJXZnkTXb";".Rs2ivz==","%FBm0sZr](",".FMmS/AGGgyUn+X==";"%n0U2aNBE-1-:";".ZMkKQLbpr3W7Nd+dhtOl5X==";"%T0YOCOj";"%3OmK)EJYoQFCrf3:Y<hjHhSIOJanBg]\\l[93Q.jX\\3ttDdfe?J`#d#m!MkXm>!iV&&jUR7K,.G<-R*355=.V72FP&8M8s2G+2FlR:nKj3TZF\'6Sp";"%[Z<C.DN",".S70zgHwF","%?\\f]UL\'\"\\W9W";"%9TIn]",".rdfU",".Tzxl1Ga=";"%@->Ymb\'3^eKS";".igwUt8Bw","%VEJ;Zi!%N","%E@]H\"VHSu";".3HdwPF==";"%HYshoiu","%4`pA?","%nVsnIU\"CT","%%oQH:nj@&PWu)8-,\'5F>,.%ape5:","%p:";".MTNi";".BljUg2IBxmt=",".0SuZ5q/Q/8Zejk==";".XWu3zz==",".Tie=",".acMlCtQjODG/CBQ=",".Ki+sA86x";".hXhq",".eFrbZF==","%m\\8.71m&6R]6*nD^S";"%&7,jP",".Yd6rtziW3xtrEnr1";"%i#U7";".VWOikfsPdiZI";".TYXdiF==";".HR/ntQFkyY2gmIXd",".lF==",".FQ5f1X==","%pdi8kI<hV\\\")e@-Gf";"%S-@KN\")E","%Unp1nNC9<)",".1GOlRxkuDiL=",".jVezpM72jJ2pSqLt/X==",".XH4cO8vW/z==";".YL602k4sjig=";"%bc,B/9bb?fj)B8/H8VBb-dmP]Lh\"L!sU]inaAr/A-M],\\.r%`m";".B3mbDBaT0qklL59/7m36eOa=",".ECfgYX==",".CbYmpckUrF==",".0/05LpP4ZX==";".FEtxeX==";"%m1h\"/;fL@?Nq1YsjalhCk9WprH:","%IUG^iOQ3kX(\\l%).p`Jsa%>$/+GbXJ<k9LT\"[=Ual\"qa283\'6(:1T=V:=*RfqoE","%[<A<@#RRS8PG";"%+Z\\>Gs<)","%>b?p2*1qtV",".YFHCj7re","%;;<5T(YQG";".xE69QnEHdOC55VK/n/hEwLBAGH7K9kn3Pp6PLmzwyItkNF==";".Fx+clLrB","%k3s)%";"%`&_XAk:",".tu8IIGw4iS0dvYL=";"%fDW;";"%ng&.E7DiZ^<G-tT","%Rc1\'t",".nDHpuk==";"%P/G5mW)mJ#",".m3LjQjtNaGhWMz==";"%,S";"%i>Jc","%\"*WXVL0";".Vtio2z==","%:7Y,b";"%CPlqLol&&";"%oIACSPY;H%",".rz==",".rdDqA0dVOIXf5bdn","%k=Su$h<","%5fh^P",".do0lIX==",".iZNAowgyInnM0wJbzD97fNwlpX==","%H1O;bmr1buPt+",".1Z7UgX==","%9;;T4HM";"%4$.re1\\Z\"h",".XVyVqit=",".9dYB2UE5KIV=","%HB";".DNuFZh5HbMX=";".Cgi5pPe=";"%`F!S>5+Pd2",".0zvJilYAA9g=";".cI4cTk==";"%$;CUUNCd!","%?8Kakuu","%^%XAmP\"1$+HB";".WO2Yvz==";".JLAtfRaV3jL=","%,F?Ye:46#a]e2";".gDrxpQ3CZwL=",".V3hMGHWMUpvo";".0XWj2G+t";"%fRLYR:;*";".oYxs/1Ts",".zubCHfl=";"%OEhg^u(Z#G*U";".qXePvNMCCF==",".+ALCW0iBwSBx","%n52E0$Z";".2K3HVk==",".idPP";".5oRdgVfS634w9F==","%.[h@/";"%,jn]\'H+C5f95a+",".0+dQa54UWHjRo2B9Ba/cMIMH1+DzQTW4TU0jUsyAM05WD9QXsBb0qEa//Xa=",".SpsdWpqK6q5wLz==","%k%-A",".ED78Jfg=",".sypknk==";".dBYBMX==";".G8TyHuwWCNQtTz==";".a7hqAbV0JSl=";"%2)\\kAeH0?",".QWPHOGZ6xKk=";"%Hj&=s",".Zovk8j2=","%;V[of";"%?9+pL\\Sm3";"%F4:e6aX2K&.mq=[+L";"%Ru``",".yfd+8ItoV0gG+tl2Z4++7uo7n3D2fecN3CtKqj4q4unirMY1868wcMqfzGJ/Bx/eMgX=";"%GB:2Z69qmi%32CV";".3mca5z==",".4065";".T/RXx34V7k==","%?%F?%",".uDM/HT3BL50p","%;uJ#!",".kJaiGWXw";"%cREF",".PBuI",".7UEOzwrlSC7swlnyMQ1jq055ZC3UGc2QQKmMgJDqliblEmfUbUVix4n9LF==";".zCnwdKDpemR6Djdf4T+qfF==",".4X==";".1B2=",".aZf7ek==",".qAOIoJg=",".bK1F5a1AIz==";"%Z@qs&rA_&3V.]`R%,8o",".GciCYoJOady=";"%\"@,/.";".czya8F==","%QUsT.$Y^3";"%M4l4`eQu,3";".SOTHmk==";".llkCQF==",".VRTeRaDf/z==";"%k7TM:o_)";"%qjT(P","%gQShHT?","%LkSh4";"%0DnuC";".V48/VLg=",".LC5Ts6P9k5l9";".ORbc";".kXBcvb1zXF==";".6eMyk8pNiADNYlg=";".q3OoXPkdf0zBfF==";".+4bC5dt=","%rX;gRKK]45ZCc)cs?@^";"%r?<D",".kB+twOP=","%`Q*";"%91N+bZT,#Z",".HnXeVk==";"%_?U31=AU";"%Q)lBoT?kqZWhX!\\";"%5kK)cgua";".otThD4zPxk==";"%S$Z.@";"%hHKF4<([a";".KXqqyt7a",".NMYPwowYXqtC";".e1XKku4Ulz==";".CziSSJkw",".9HiEiWk8q7KfTrQ=",".LFpkHy38UAHYYW5C","%2]XPZ5,ZOr%g;","%bBPCB","%rMq[p6Ys";".xZDe+z==",".Nn6RecBN",".WSDcvUCItX==";"%+S1cHc6G7R,s]";"%m,W/;,Fg";".9qi0zYOPNsOHOv1X";".v5iS+b6j49NQ","%F\"P5MQs?oS57";".OY7iuxQHJgkPwoTEQ7gXMVafB3EBmrXFrdz1GkCFnVEEQDHKWoOFHlKc/he=";"%LH--7Uc";".kyTMBkbrRX==";"%EBb9LpVc",".vjUa";".kDF4bMQ=","%gH\'qC";".JvcXTRqR1SRuwGl=","%q.tY7d1","%9\\g",".gsuE6Z9Qjvl=",".uXFEXlfQL8L=",".IyFM6F==",".5JJGYz==","%]hSE1HbSYYb)63.(]Z\'LAPoAW,eNPH",".eEYF",".Fg2m+k==";"%hp5KUAL","%hVlr@F!V",".ERZGudHmvX==";".kp/i/NZlHF==";".cgGdnlL=","%KNs)f\\c",".ZsryU9AeRF==";"%23q\"$4bi6h$Jn%$7(_ml**U^9","%lT","%Lc+Jd","%7lRNIl^Y]2W#","%bEm^R)tX\"\\\"?",".at5j",".rBrSak==";"%k*-)s0Q]gRhnf.!",".gYhArX==";"%j#deS?U",".GQaHbns1";".V2UsPYjSN0W+aDg=","%)>gA)L&CCSjU",".2kxfwHK06/EmJMVbjX==";".ptGNDxEryIy2UVd9Dz==","%[pW2[rCOSpLe_$[:hug",".smMK",".DgVZIMhu",".aQyzatCRsNB5ZHxuNL9B";".eklo8iL=";"%K]";".gC6N+h9I",".Xr+Ph4F=",".3CzR";"%ZE;+J1Y\'F",".3MGkFza=",".OoIVeN4/sz==";"%VOPr1?)d","%)u!J#H:";"%#lJ\\U$NcmaeUX","%1bd%";"%hC+/e\\Pb2<\'-G,";".sMFQcwIgkatpdGbKOV8nOkC5fKXMaoOdqMKXpiUKdyq4tvvtvoIo0AoQWA67b4K87RQ=";".wM1pdOUCE3TpGDP=",".viUN2z==",".iKhkTiLl/z==",".uYLrTQKe0FP4XF==",".DK0DsONrFX==";".ulR3F+ApRO1ODF==",".jzMzvF==","%+-*Y";"%H%N/(";".Ne8ol8h/","%6Im!UF1$EiHf6F";"%Do!mc5O(u";".BXon",".8z40GwPD","%,GqD";".uyRWsz==";".2DovIAl=";"%rV`g\'\\<n";"%Po?78","%7,%@k";".AbLF/b3sYF==";"%RA>h&51->",".PSF3oFt=",".HIOIAyMY9LQ=","%\\Md%VIu#+q";".qhyNZI6vjvUBx5ML33Fv1gLThnDbkZix1joIZWIqjcTzeZhTNmpdwKPISdblVwiU";".Y6MSUrd88IX=";".aTjZv1+t","%s_eBQ(7(R","%O64Q";"%J(\\^t";"%olcF";"%sktaj","%Gd9+^F;Nluf0A\\C";".T8KfaX==","%<1W$KpJ#F5Cug#",".aTvih1IGsk==";".+7Mvl1bzR4Jbak==","%!AY#3",".2+McUD7Y",".JDgBPCMjVE4ylF==","%$*7!4\'N","%0j-!G[@/","%AQ?%`a>aP\"oN\'@",".cmrcjk==",".fl52U0e=","%jZZk.",".i+vgmF==","%g3BZ44_N";"%E6-fgFr4!Q","%ar$s3AC","./yIaLF==","%QC*\\GEB";".zwouSz==","%l_0JV",".A/ZpukxVGGbNbaF=";"%]@!4f","%*Fs:\"+eNO=h\";?KcH`","%<Y4umr6/s[G3","%4PK;^U?_`,",".1m8N9SKQHsAzlZX=";"%=q",".pN/euAQ=","%gb_:TrO","%\"64.(T]l";"%R)I*r";".65bgNX==",".zlHvzuQgjrQn","%d-GZT","%+uRMd`@=","%%!K7?(<&";"%*]:uKo^+";"%N5tmO",".Yj5s+qQ=";"%sbU7-?$O>";".GMUjS4QlKk==";".rWNidyczOKe=","%Wj57","%9c-7!";".uvo5Flt=";".qsi+gSRQ";".IQkyZhF=","%:]EsE";"./dyyTQIR",".v+d227HSXhmlifhl4k==";"%_\\[ldl@\\`G","%*MTJMJ36lS";".id7U67SADv2cNStFpkXu/z==","%uWS[BEEN8,";".JeMMqnxAI9g8ZX==";".j110bge=","%8DLMR0HU@A";".TIoF6Jtihgl=";".a+yvcLnC",".L2guCWfLHKhgood/TF/Ox6XDr6T1Qy0dLKykSoea7BiG";"%iBVf>lq(*","%9r3sV<+(?sU\'\\%8O72QCTIOH3<**\";)G!/=qe;2?aeac0\"-qiH5os&";"%kgh2j";"%aj","%eK6a[ToAZ`6f^K","%p9C=JE1s/1?M<";"%t7CD_T:";".ALoQ9Lfs9iGcGUiRDemIUtECGbjyq3MVS1Ix+YcwuVdvO819or4G4aTeTp66+kL=";"%Dl)I]QG";".dR/hICQdhl/1Flpk",".hF==";".vdvBfBcpaz==",".QMyVB5l=";".4V597Y6gG85xnSYqSR3Q","./PNdegSmXidnwp2d";".Mxm9SCrdIQGNBz==";"%btr#j?Dp";"%W#";"%0=CNaT?",".xsrg5T8p",".sbfZzFe=";"%h\'^N-Vg[\'gV?[.8+3[M(LmEp8ZI&*c]p","%u;3i\'Yrt:O8_8",".mXq66K3VHdAi",".2ts5PF==",".RUn3fRCg";"%R6A+","%<[@e*SO(pP","%^b",".PWVa6X==","./4Er";"%b\"3)S",".1NHmuX==";"%:!iW]\\faH";".glQvxz==";"%[#[3bfbnj-@*r";"%)Og95X;s<M\").\\",".JDrVeJQ=";"%<O=A%H:";".U3Yv4lYHli2=","%Gqt)K",".9aCTptMx";"%Uj+nlT?";"%HFQ)[";".iwmb4OE5Cva=";".nJbLFjQ/F5sutky=",".pk0qrF==","%pod2N";".2Mrr+05dXz==";".4NL3ImUw/de=","%NZ5_n","%+^7[*k:",".U4aepbpkVRya","%\'!Q$N";"%qufnj";"%(X3iV9X5ssCg-K>";".nGrwgobK";"%VO(TDpe6K";"%:c!Qc)k:k-3c","%t8u=50TjXceY";"%EbmU5I?";".5T+hIMRnUBk=";"%IKN2>$!BJd8\\","%anbVC.PmD#",".TEZa","%1g=<Zri]WLVpe?";".nKnq";"%q2.@<lD+SRrO","%4^1$U";"%8`N+m1g`!",".DZfCBF==";"%-%?@H@(u@","%mb@$*SL/<nqC16\"2g^oNngrl","%DU;oUe$(;DJ63";"%Nq","%2N8l";".Nf6feZzLMOBLKWNG+vSAxyxqouJY+yaUfv8NOD2XVZYf";".WEvsFPTuUddBpz==";".yIk34jfS",".SbqxYk==";".wPQl01T0hIH9vF==",".AmzKYm+=",".Gh8I3BTacct=",".1vY89zIPcF==",".Cda5";"%]VB=tSF\'23+Snj*V.AD.";".HPuzYCMfD2RAgX==";"%p(g3_";".3+17ZX==","%?TOAI";".eX==","%13";".I266Uk==";".v0E4";".DZXioX==";".z4m7NMX=","%O\"4BuhC";".H8xvbsMO";".wW+wPODEm/y=","%I,`4^q])^";"%GQKpK";".wrCBtwDUAz==",".JvA7Gwe=",".cuTIEk==";".bIgWQKWJAjURaV4hceTXKPt=";".SjhJ/qtxn7k=";".nk==","%-95dPKb";"%^H;0K";".YiU8Ese=";"%208]@.GSDYFa";".EuTHF9+Rqk==","%1oe</7#Zs";".ZOXnIvB1cBVO","%h9ELZ";".CBsySUyRkJqj",".qaMGZYejTeF=","%o&1rO",".KJyRNz==";".5QiJP52m+2eZ",".F33ByF==";".qk==";".fDqZHig=","%f_ug4^.U8SF8>U&nO!jplQFS]r6Hsc;VN*HaQig@,9sAc1HI!\';E*cUT?";".0l7Ucz==";"%?iFZpY7",".oRxUdFV=","%ac#f=m2q?@f;L>krIU<-1\\",".//VgqNMa/7LRPTyd/l7ixgE0VUK5SvGUBHgCwkpyCcqGYo3Vqpz=",".nkHg","%`,u8R",".PF6T1iYLvX==";"%[M8A]VOMmUPPi","%Eq[iV6@]80cl";".3CyZio0THF==";"%*\\CtHf-r*AYf\"4J",".OdfWmQp7";"%T%X+L";"%-BMI(;*Fgg\"_b[l]iY7AL7*B\'f=A1.sLJUrGC?u`8bJK6TT;C;Q%i8=\\FAfS3e5t<:fq_\"r\"[#?SmSEPeEjlu\\C,I6L)+,EhPmY!ON#P03=D,4gaP+n$WQcKrs]p:tM;jVh#3^+9/9\";T\"G62";"%EZW&Uq5`h";".OzMCpAskerMn";"%O0bA8l?FfUoMiQAa@&(APR3L=.RHQE\\+0X.P\\bF<PaCn<Aa*#";".41hTJ33IoWjh";".Xminzx/+l3OZuj6s",".MhBI99onb0GK3/E3";"%O2bR(:q";"%4)mA7",".fT1q+XS1wIoG22a=";"%,B1J^",".jUDwwh+=";"%G756%_Y";"./XuL5YuxAmHRCNEgVz==";"%$P!`,OF^W",".R9uhfprGJz==","%chgK!W>JiMJ8","%XRsk.=AGR7\"?";"%9MBe22T\\:$","%@7PG#kM";"%1T8ZP>Bl";"%(MSXd";".+eoVxqTb";"%rpa1c";"%\\+]h";".kKfoRX==";".bH6YcX==","%)DfAP.1>:2=S*";"%25@n=";"%?_AQo.:$";".rPEEB1KoyrF=","%i&TJ","%()BpL,tsq1_YEoe[%a";"%eY","%E3CW@+`17J,S";"%$Cd>",".7SJ/WfX=";".3sTx6DnC2z==";"%qF1i";".YMoKwF2=";".c+T1jxJDSsl=",".zMLHbZ+f","%E:";"./ealSQhkSk==",".+iNE",".ekdGz/aT";".SpIw4F==","%G+29afNC%!A^\",",".ZlCaOyPteQ2=","%&p+:DPl=X+q)W&GqAQ";"%6k2aq",".5lnppG80";"%]8^@.<,T.W";".Ku8rqF==";".+Nf6Nz==",".N+TMBeyaqcDBINV=","%i*eE",".opdhirz=";".RpKjr/2=",".GTULMy+=",".Z4o6MKTHDLG7";".UBPj5H5Ydz==";"%+C";".AF==",".+o8MPMUh","%=eG$H73!O",".2aq39hOjSz9V",".tlt2vs10";"%a1;`";".5l1lal5OSX==";".1Psr0CwuPrStP2a=","%(ZrU;";".tK7uMk==",".FMWYGgW+mI0Ofh10UGlszlotup1ujS4x8GQUjWt61+cyFdvXYvHAQk6L5XbV";".PHt3eJ5lsKg=";".85WGRf897z==";"%P.^2",".LiWBw+9MD+g=","%<8U2?","%i=hf8EC`Atb/V","%V+mpu_TPjq&H/<",".ntY/VLz=","%Ne:?82f[19(C","%=ScnpJ8","%JsT@67IOR";"%VRI3BWFqo";"%DY";"%QdjBVlJ#I)([U,!","%->B_mr^6,q8<R@2";"%O;gFC6G.f",".EDCqjz==";".rhxt9ng=","%AnjL302F";"%WQ`j","%91l\"CtumOup.b^5",".1QqHf1MwDfIiW0z=",".r15gSzxHXX==",".0ckUWJe/+Xmp4k==",".ZxPuj45ZmYPUVyfA8k==",".i87lD4+=";".wwgTiF==","%K:r6F",".8JQ=","%IYcEC]6;E^f::kGQ#`n.<aK=k","%FnU3BZ/*";".ERee/HC1VF==";".zCEh";"%[dMAA";".HkYLTJqQVsX=","%]egK:I:";"%GCgF8,Cb5";"%c/#fI0K7",".CnfSKeBx9oe=";"%mU4[*cc";".iaXNDk==","%83B),hCV","%W\'DeT:g^",".JojM+e7NkYKxlF6/9z==";".7CvfL7LgMLy=";".0l5m";".w+0J";".pRM4CX==",".3bG0/X==",".QiTXQk6p";"%4F)Ykk?";".pTG8QSI5";".NamW/v07dwL=",".eHHl9F==",".KorC+DF5";"%@U5\';Z;E_";"%b\"L5\'S\\";".nTJ5ZX==",".iN0AMcqceF==","%)31Y5)e&7QPY0";"%*R40498@XL03`";"%PCZe","%2L1^",".GEk8uBx76F==","%ehj6inan&","%G<[4VM4",".yDPbKA7OP/yb";"%*!D%dfEkQG",".AT4auW0uff77CT3Y2wg=","%MHW16^)T<","%r2V41RNGh7",".k+U16Qg2iMFX9vQXT29JDYK4f8AzQVuYH+zhhTwtKKZAwRIojoYWQlRUXk==";".f+u0dcbGGT4rvZQ=";"%41]0n..";"%ll";".A+Omr/mhe7oESz==";"%CZ>0OX`DhRj72=",".ERZKpEHorWhwuWe=";".nb+T";"%DUDB2";"%<$>jdj;P^^";"%3Dimlaj";".evlAcZaIqX==";".izj7JSaSa8vXQF==";"%W7U-";".AhpcUlM+1/E6";".pZy9MF==","%Hq6ej]f",".uKW66sa2";"%</@9HGf";"%iFMttNK`_P9]";".nJZxkX==",".G9Lr",".d7rpqAa=","%j^u`I):q/","%6.nKk:Jd.til";".YqrFAYQuhsVt",".S6/W1z==","%JQ)l#s\\EfsEB";".N/BB",".bm0r";"%#YiM,?a-","%5I3J3*JRI`";".7wGZtF==",".GTRSDz==","%qg/s/k2Wt\'a=B",".Xp9fBea=";"%hrTg",".rzGI6X==";"%2sYNb_Tcl",".wAIJjj+cfst=",".3Po7UjYVTBIcWOih9RWi+YNcAWGNMk==";"%[-nhk>iGlE";"%)7qRAf3Ti\"f%s\"[gd_h;;4X^!$!,2",".YBLhYz==",".mYftr4AUyz==",".MVprzVq/",".aZa5thNpurjTltFmG4A7I+av8J1jnWyzsBaCNc/K12SsGIsMnEv5YhwXstbkK5xT7z==",".o0eKF9sErk==","%sfOc";"%EDFF/>-A";"%.`>!7ga=-(";"%i>\':iQG",".9jtrhUEhEW/N";".qtox","%[A\'G`\\<?N";".eqIX5DxDFFO3PTrS","%YVo*5";"%_lK$]=^Es";".qX==";"%Rn<2";"%bWWXB","%!GPAg]<\\";".IMtLez==";"%])Y*V1e;pNO^ZXbj\"";"%)XF]^aq$_Hm0";".p/9aMX==";"%7\"s\'(*f^";".l1BFF3L/";".2l9tnRV=";".tZ0SxWZB",".4eDaDK5pGKP=",".xsZb0tEAvF==";".W/4F/vL5GZS/Zz==","%j?=;u";".WTPNmtX=","%<\"(=l>\\(",".n6htQcQ=";".g3+z9Hy=",".7KMEWNMR";".iyocAg2=";"%9m<HUI?";".SZDxozQ7gpd0","%$Sn8Hso0L4i_Q*pO2\\U";".CrZ6kdODyaaHZIEv";".p2ZnHF==","%\\<]WhHdTUc","%jJII+(\',";"%L61t5WEq7Z=u]E\":gRmAq\"","%4Z;$5";".cnCiL0awXy2HwweDx+3whIV=","%iKTTON@=[";"%u<H-Z`2","%8@O9]o[u";".vpqlnP5a";"%;s3))O;G\\",".KqSb2q4uD2r8FtgXbEHNi+F=";".FKxIwz==";".e4YB";"%UZ[r^MIBn";"%u(=6N_e*VC4t";".VTtJAja=",".qr9KiF9Z6kz=";"%Ek8Jb\"a;1-sC","%_R1Ck(0L,s5Tu";"%E[q+;(Y),QFnd",".pIXZqF==","%&oV\"D",".3P4EA1PM","%R3?P^GVHK]kFYn","%0F$<\"O0",".xWFp";".A/zSLX9r7kBOvDfTeygXFfNKAAOg+VrROBrtcAMZHFiz+1afjnGQ3OXL2fEzwihMXNl=","%0t";".lwv8w1sQXF==";"%^NI^Q)F<7","%1dW\\\'?t",".YMBEYSEZ+AKFECL=";"%#)Q(b";".4H5g0X==","%mW[T";".50yS6LCVWucmgATAmwBi";"%bB\\`W=o5*8",".zXdq";".6Skq2v3G";".LscnhUTCBALeeaz=";"%qk/$c!\"g";"%Z%nM",".EDOE0veW";"%>^D:j";"%\"mA9!r+V\'`";"%\'dH6>13SQ/j7bK",".+ezXR8rH";".x8bjCHmobk==";".OirCgJGOMu+=","%0WP)]!1",".cNYmqaC8+k==";"%*SL^::Qos_";".MO1R0z==","%[=[`Bn.b:A";".rRkNmz96IHvspz==",".Fw4Z4julmz==",".U8ENEvQ=",".TBZHsY0mNz==",".U2rnuc+S5X==",".dei3SJSHlfWZHHAYXfzvumk=","%g]\"Vd#)C3K>p+eSGA1";"%hS<\"siit[X#sar","%P+:skIB","%rO)m^`gX__","%K_e(H","%j7=sA1HEap^D\"%<^0E&`PM>U.`0_fRS.&_?",".H1XKC9wDGHykok==","%Yb:9";".Zavbx8FRTDx/";".+W7tDzVhbrcbsF==","%ZAK&)i#T";"%;0P@2o#+q4";".k6yGaz0H8hl=","./QcsdgyRwUoY4m+=",".yvtrPj1k","%<i_XnZFf<",".l9q35YU9","%_%dIXK_^^H\"-IYB&S","%?PguV?8n0Oe\'_","%=Rk<>pMmX","%-!X3VL#/H=_*c%",".JLYp1X==","%MRWg/EKGN","%lOUs>T?",".chvgyHlXWeKleQbKoF3y8QBO05IpSv0N5I3Odm+M0yqn7OgKN+zoR4Wptk==";"%j3UupeY","%YMWRiMgTR+",".Jx7n6X==",".zAPKLYl=";".lMeN67V2eX==",".WYyvQfEJZLz=","%=[SP";"%.T`HosL";"%-=5S56mDp;",".pBTB",".vgltlX==",".1VlZxBl=","%7f[+sV)4I/d3&";".sUay";"%,]","%gt8f";".kfQOoutl";".8RjaZzlA4HfHjF==",".Bz0mDHignEl=","%g,V8WSULT7Xh$*",".vQuztH3ifeHI";".vlz=";".AK9kx3k=","%_\'S=",".HR9PRk==","%#[NkKrL",".8G8T+elnq6UTRkLUDQdykF==",".tdUZlF==","%tdt",".+2wbhg/APrFE";"%UKKUc\"lJM<cM+kX","%$7![*";"%EkVf";"%p(\'O*;#.\'.]p","%F8;\'m@\\";".xpGuik==";"%A;MbdgV(";".KkEMIGvN","%g-`e_";"%6rM_`_<Q8Q>>X",".oRE5RGz2rXzo0X==","%94\\Yo","%%Bd=,eY";"%VEo%hSC\"";"%W3]1nr:$fn",".Z3jy45L=","%t>t<W\'Xpk`qM$Af\"i\"C4*t","%#C9=l";".Bql=";".Nk9gnWDusrX=";"%VY*)N;deh>ko,m",".OSdkV+o5";".Gfg2Mfkmbpk=","%R+@Bbd1","%$(OZY:A1\\+s<";"%kLI\"o",".1X==";"%\";\'o%PP5R",".+rdgbz==","%,iO)(21H7Z6/\")LFq:lc6^6Vb(.\"O";"%\"4\\.H@M\\#N9!)W[[^!#+=lWtP1`4s$%f^0-meqT`C27s\\CXa6\"",".kAiG","%eEi4p(-gSD";"%5[_\'!T\"H%Y&Cp&;,PBm47D^]Bo&a=Y<u<>O*I$H;ZBtEWtO;g(lU0";"%9YJa_c(\\",".yCw+MW+=";"%<r.Qr";"%2=3%AP=r";"%W+A+n!8=q7:?+";"%;n+t`+hcc7";"%RSGns\\B=";".UDDJ/qfWiBZkQadVgiHzkF==","./oVnjafLIcbS","%q&c1Xq#CU2P\\P",".hBI7R23Mc3xuLfH7QMttdz==",".VM07VL31zk==";"%\\QSq",".r8Zr9X==","%n$\"Q53$\'TlJ1";"%\\s`mT#E;1","%^0g$/3c";".9yHj","%H3p;lATr\'PWa7","%ZZ#>%","%ZEZJ";"%a\']R@M(qn#M9F!8";".7GzOQ3XfsMB/","%#uGqFWlrp";".w6imx9c0";"%N:l/0Is<W2F\\2$].<S[Y]ofe.qKS[\\Cau&UN&B^06e#2l(Jj&(qC!>X[@BS","%+)JNA","%DKC\\2\\fa\\I(gB";"%e^4jrDkt^",".MDNNPvg=";".vVfl";"%U^&gsP1";"%!T_KIcCnf";"%(]J<$m?E",".uJMMIglxIryB";"%o&AIt";"%-B";".P/J4nDz=",".BTOFok==";".eW1Elit=";"%k@;thG.DG",".Rq7jhz==","%-I^Wq$\\Um";"%PZ.t[f*","%^5/bQPtI(",".+Drapoc3O1rqEJdJ";"%mtoH";".nROAflk=";"%1gnqWhC%","%^i.^3",".8OvMabxvfiBy";"%FW_bV;)a&[";"%\\/r\"%W:!#Io\'";"%4C)mi",".U+ev+F==";".wsAvA9MJlcjK1pfVCvNCfkP=";".PJiEUpIp";"%=g=D4$7","%Im=SY065L*HM";".s6qt","%Ii`soDJi>\"o]",".syf/sWsotHA0C9qh6ktFPz==";"%Q+)?I";"%job`rlE";"%o3*BZL(q\'442";".628bkLl/qug+0yk=","%\\c","%t.Y\"KNh5b";"%<3iuZ]*us";".TbhWwbpt";"%h]iU3DeB)cYpV4XZTCCe;@",".+1yKwRl=";".OOs4xf6x",".2SqxM87m4n8Uyjab";"%mqI;nNT4],[:W";"%W<iBbEl^","%@U(caH?",".vedwvPLc";"%:qko\\J*cFkY=\'O[",".8OGE8k==",".0uQzmCQRaF==",".HWO6eUa8",".2RxhIdCB";".r0WqQF==";"%2*4TE";"%ODTN","%#MHaS#4d9^",".svZ9Mi69","%@d\\?nTh5Du\"6&uNgqZu3&SfPA&Vo_o<>-D^mbD%7k2aaM:q*!2+nC3u*L\'OZ[?^a",".wijeDuaDO294kz==";"%Z\"*=M9)ONdlj.G[Qa",".5hGmi3exEz==";"%*2rn%Pji";"%,oIug","%ahhqu";"%ml=26\'&?Q";".XFvXZHJQ";"%Z&?ipIB";".RWu2rhUICRJQSv2=";".X/4X/pX=","%iHN;W42";"%*\'j#5Gp","%b/F7k\\c",".WjnY2ol=";".+E8f2RP=";"%`?\'\'X-l8Oi";".DaZqCubm2yz8";"%lhNoA=PK;";".7DKzR8JZKjmZUF==";"%L[@9GmrYUaC+!=-FL?2:2HPb";"%jU",".hYTF0ZLmrF==","%-,`rR";".903LZ43ArjCWOk==";".O6Wvpne=",".BuhMSz==","%0JEZ-(/W^";".s+XITBvi9wv7";".e/KGEF==";"%Krdj*0U",".VWXk7EF=",".mjAW8gd7+pNUezl=","%(^o<T4U";"%rqBuC";".tujo8X==";".Dk==";".3BVmGCaDEk==";".UK1+I3nt58z=";"%DJ\"7P",".GUgsoz==";"%`LR\"b","%R>EA","%UB=oK","%!pJ6rHB9rI%mB^",".PF==","%^MZ--(#[KArb+";".QjK050hN","%CpcE2=k[E*";".qyo40Ng=";".c4zMJG2=","%F<\"<X","%6&^O","%N,I%C2u",".GHpDLz==",".93gpr3RNxk==";"%>p)VT",".tiKeYz==",".K86JiOI5I5y=";"%%0#tE:,#JA";".GSjAM/l=",".HBcISj9HbB1cgk==";"%D0I\\[?*_cQQG","%NU%\"\"bhB",".lRkkAujgPqzc";".pxE+bJ8wfk==";"%nI%@f8@8UjIU$s_";".wYloeic2/odeEUI3Gm3GRYVRtVApsiczpGCJgDX=";"%Q?j):l(B,","%>(+NN",".KWwztwDopCKkhdxSRWbORVeZp/sdMvED8yf7a/OFxF4687+=",".A1djoLlauTQzjz==","%3Om3c&0!",".D0bDmwxv+yQ=",".WX==","%T9i:4";"%L6$)=",".kitLMF==";".DGJErwsI0yk=",".pSNSO+6K59axwF==",".PEb8ZAgPW7WFGk==";".NvqHdk1x";".u65w+z==";"%kukm7@rus";".6tnqFRG+z5gLPh/k";".rff9IKP=";"%N6`B",".QEEk8gvK","%a-fJ","%pi)s)k5a,","%Ug3K,JI&,2bOHC";".0D+yfjP=";"%-\\13",".xAZ+PJQX";".zooBRFk=","%^S";"%0..>Xh5:",".VlL30saZpk==",".5IyKtaSNiA8+xwQ=",".VgCqRz==";".hvXdRSs4pk==","%<tqH",".tawvEjXa+H/nODNiP+BUP6YUieHeL9L28AkKiZyiTCrFMJM6m8En2uRWJGe0vW+kLUh4Dxn1THPm","%>RRt]",".Itz/N7+qe83hKk==",".nVEdCSe=";".8zjbZiF=",".vakb0aTzXnL=","%f\"J%J",".27v0COz/6M5zeDdKrk==";"%0XKp7eJTU?";".P/nELY+iLcRqff6t";".mTnJKmg=";".u+5oxRls8X==",".a2KhiRCISX==","%oUOYaY5=A0",".2Wpe07f2nk==";"%VMFt_FZg9";".77DQU9jHr2Rj";".IZfA0Sx59hCY16L1q5Jwa/a=";".cndH8N2=",".EFm5Ud+yXTrvPF==",".2WYG1TTC61IxhX==";"%4M3P\'ssh3lT?";"%k/n%9n8","%\"?";".YmUmgwiYek==","%?>b,YL*qU6q3bC:E)6[+(`SIB;#Z9_\'(*r`RnsVYg4\'ZI-7I]^KVs-@&H!>s&$@H%r\"7mB!]*bn<S0dVkm\"Rl","%b<O=siQZkF;_&",".1FwSlLXxbX==",".fY3yHyhkI1yGf/klJz==";".ManGnF==",".0Q5yDk==";"%K4ue.nJV";"%_QXemWLE",".vrwUSF==";"%Dk>[7";"%:,uVs_Dk";".5ZA4mJX=";"%RpfeiG3";".ttdkg18idec++givgroPieIhotfGPTDW9dzk";".61E/l7n4ICNAuk==";".8jQ6G3t3";"%qNV2)mj";".MJY3",".jUz=","%JAUDM1fCZ","%DnrGUoUp",".u/XjEX4P";"%OM<<FeAQq!l.u";"%\'h_eM.c";"%-!3uGMHk+^F5)A5E\'UsV-4N;a+`?@J:BsY5.\"brW4MiZ>(%+b",".uw9q8X==","%\'D.o";".5lO4rSUOoXJsLtcUBa84BeY5o1ww","%o*k8do\'";"%+9>S\'i8Jnt";"%$Z:P]\"\'&QP($O";".pEYk+SQ=";"%CH9o]j1E<Qj#4";".vkamuuAKvk==";"%E_tZiqkJ";"%t/V;tHcQ52","%SLF9\"o\'","%!fPfnGO[PB","%6S`>&Yk?-^S68","%DI\"A]4(/[38KR_aTXD\'*d(!<.ONVafM7h?&dQN_t`_I5CJ7*:mKp.6_O0","%EX(/jAR>3K+1R";"%NNU</FNb",".mAqVgBg=","%]dp37Tp\":5E*";"%1W`)6lK\'",".VXqak/mu","%:lXj@+&T";".BkXHT6Ru/qmbzvz=",".dO30RD3p","%OKpHGSZ\\+5(^@Dr;gK\'\"2l";".gleXr+TXzz==";".WV5vwNllHAZmZiGXAArWIEX=";".e7fTfx92Hmz=";".Hz==",".ik==","%c4dg\"MXQ8*";"%:[g_",".LBUhAKgvLig=","%k/:W","%W_.jkV>%#",".dKqGk7i/R+2=";"%T\'Ze`9sYqg_Y";"%K?*W0";"%t0[]J","%!<+suKS";"%#]ij]4VUsf7-UqG",".8Iokhql=";"%4\"%-n:0\'Z5$Ra\\JQMX*\"N(IcNFj18g%N&hbfn`Q0ussnd","%2H16Q",".+jOHuvjaMYfAR11TXMg+o17cosYcTz4TdMP=","%pubWi3M/!doTl";".wQCE2lgXkF==",".bz==",".aL0qTTcxck==","%Xnlad","%Z+)T;at0";".5PdxZvLbnIC95pxOXF==","%]SFJ>4I$^p";".cnTo";".NlLhQnp9tF==";"%JaDQkpFG>U","%Mu>l))\\D+A>l*ML","%eV,]\\;C%HArrk$>DK]bE!8";".7F6icD1i",".aHiIE5k=";".I1Uo0X==",".iBlc";"%KLD8,mRbEsNZ",".BqM6fz==","%t0:olf*";"%Fc+k;6Df3/(O";".kBOmTIbbqxe=";".oBT/qX==","%W\\p`:K4bX","%sJg1I",".yzRowpxt";"%IZss/HXGI,";".xZkTSX==";"%oQ>CX@_>N",".Fz==";"%bi*\"6n*6J>",".R/uMLMysLsU2",".M9vzZowWfQrfDoPnVz==",".4ZlU7GNdX+ro5k==";".cw/f6AzO+QZ5i6+WAyzlq2jJ4chw6l2PnuY1Q2/XVixSxMV5fDaNzRHfIil2jqe=";".uhUupjq3zk==","%K\'C^&7uZDKcXucgHA\"pKL?G,^pc]a+JH!a1!Ao%/+L";".QmkQRk==";"%\\0g,`jCfPf",".VMY5RVPsfXRl";".DvjEOaNIqck=","%A\\W!=3c";".S6T+sF==","%ru?u",".YGs+7X==";".fFuMJH0H/Y2UQTe=";"%\\P>6nKQf3W$J\"";".yWchL4L=",".svDmVuIuJx4G",".l/uW19q2zjUzL1X=";"%aH+VN",".F+MJyD7u6C20lF==","%36(Ns-?";"%SrVFN","%76,8mmGs?*FQ]6";".jyvSlWRwULF=";"%N-Bj%,3\'l:i4W","%69QQ3";".9swxJ8q4+z==","%7iJgj",".PGtzNeRpasF=",".6uEcZsEiUaRs";"%<p>(2?)P",".MCxiak==";".Xdl=";".cLAomr55zz==";"%E@R`",".llAyIna=";"%WiKt";"%a@h#$SkALck?";".zF6c2fAg1QX=";"%%Zo)8","%DsP(!+Ofud^s5JDt:&gH";"%[Q/n$";".z2tVu3rKWkmYcbnA6z==";".YAJnLYBlEJW/";"%n%A`o*`q";"%qL8M?)L","%15Xft","%pB";"%R3OmP";".CiHNvpUBUwbopk==","%VA%c",".s4aF8X==","%NK3Ag",".FxEGUBr3RChvlA2u3xsHhk41VLhavxJR6yPAktN1eHzZczXjfYIUQeX6CBSD";"%S^!\\Dp*";".kFuZJo2M",".fz0DhGv8rWFM",".4a4CSk5HQXVHYX==";".Yy09VdakTz==","%2D:sR[<";".6UU7YYa=",".J529kh0lX9e=","%=gf0L";".AWNnhh2=","%`C[3Ciu";".yggbNF==",".DiGk8k==",".7oPfw/LPhAa3qIHwYX==","%9!Q.Ro0HrN7Z";"%PN$?_d`1";"%.3Y*>K&\"`","%-+`UBi+>","%pi(aU","%6#03l_\"(5",".9D0qiLhdDM1Z","%%$.oI",".V8nZGUBU2xp4SdFKNuu/y3F=",".sxDPXjt5SV3eZk==";".iaU4yyVS3Jy=","%]LhR[",".yNvg7O30";".NSR8F6V=",".VpvmQ1sdk87H+k==",".WOH8QJsVSCFk/1Rd",".dbyMnShE8k==";".CYWoLUNs";".HWU0wF==","%Z_VYaSlP[%ej","%ZV/BiAYs8r;A6Fa>h)e9W[WJ@j?%MqeT+\\1(!.R_^7H";".vuoZpUQ=";"%9\'#8DU_&%)";"%ii0f*4U","%0FhoT";"%4lG!Fd,/h",".r0WFmck=";"%uhE]5","%(#X!d";".sk==",".h2XlOtPdR9dAqXpA";".DMmGKQn9dKffrz==","%cF>`g";".AgWqsLru1orO2cQ=",".MLkFDELc",".bUyBj2UtYburNz==";"%U7d>;";"%_cl(C";".42Ss4pP=";"%Zr]7@I;q+p[<>ZINih5E";"%-JY]N?Z;Q&hC";"%b!;HQNu\"!",".XAwUmFlilF==",".yqy9LWeKRGxKe7tQv1jVoNaDjFN2IhMlxTmN3xJkVnzkiz==",".2l1qOdvP1TL=";"%TE&c]i>B","%r>eW@4De";".nHOjNX==";".xFvCt2D1yk==","%ni4\\CdS`(2P1";".Kqz+",".Wz==",".PTAh4O12lz==";".p7ZgKjvj+k==";"%qbVD?","%T_\"=CD4tE+,lg>g";".B75jJ6wN/3Wj+v2=","%k0B$W","%\'LPM[";"%dhk0/Fa","%Q.`#j5CVq";".LX7DxCk=","%Vc*#$j48_8R>i",".w8VVo0jTCFJ7AhkbVDDmnOD2rOSgD/V4Kyj6VNkpw2X60IqOR746I1Drr/75";".H3Pg","%_Hm4+#QjT,";".5XTtvuQ=";".MyPzPQngH+XGQJDn7ingr4Tpsuzn/JeXG8rL0GuxKQaJ8YmloJHdUme1iz==","%st$:F";"%dsQjF";"%ZTjNqtc";".cn/c5Og=","%Lo-H<mC*E>O:<","%?e%%@Rl6:","./rtWmkv74rdCO1LYLZM1uaUfTpzDao1rAqBx7F==",".n9CmYLZx/z==",".soMzRk==",".ZmyfjwQ=",".I2O7nKe=";"%d0IG=KQRDYR*i";"%ICEbD",".5xsaRk==";".c1adTF==";".dyRMUF==";"%1i$,GSR.fL";"%Q$qT2tlp:&EOo6",".PFaBjz==";"%\"8-5iI>NJ";".oF6Erk==",".mUob/k==";"%P\"oe8aXpBRFSo_","%Qa^QV",".uqSY0F==";".7jue6Ulbo6Q=",".vYmv5nd8";".YEVpmc3eSIt=","%I1*\'8)O";"%34\'`XgW8>=]QaQ5lo&,cFYo9hjt","%K$>\"elQhs<",".+7PlCUoN";".1bYBqz==","%a&5;5c;S8E71@#o",".gPxi",".0wyAdCz=","%>GcoaUWTO69$K";".Ld5a3cSOER2=";"%O;4r;[WL)Mqb\'sD\"!0d.tA>8Y8m2";".C4VMHcsJkbBizX==";"%W\'&f\\7Z$.","%@QW%=";"%+d-BNp43t!il";".GhWl";"%!2F3\\qI&\\",".iidTFuqHRpfSMKSj";"%MMm<lS-ugU0p(";".7ghsNF==";".XXu5OmF7Vz==";"%@D438a7gT-OE-3";".NnW9ribqWYe=";".ZbxAJr6tFX==";".r2v0gtoViyyInE0HY1URlcab5x4tckW+uK70YIeCSXy=";"%oU^=6n/+>,","%iMteL";".PYYuXk==";".yr/4yWGQzty=";"%p8!3","%ooe7",".nFx1NarsszC5fvTRBbFZUwy156b2lPFdj4b/mfmhla8lwWe=";".72HZ6X==",".liHeE4p7hwF1";"%ldcRC";".upqOmHL=";"%IY:oRki:/6";".vDiZrdy=","%7R-9[9=8bD!$SD$$[p602l","%RKqT4";".y4j72WE/hHtZtIQ=";"%nh[e9Kb";".xz==";"%Q4$TbpRnl.C3";".ZGN3Bga46Z2=",".MDN5zwiiqK72mSIMoM1DMX==","%_AQU&";".Bz==",".fR25oDjqfB9YMba1","%3\"/lgrSkB;)L","%QkdUhT,\\/","%C@1dOm1U+4","%3hE1#","%c*8_4_s9q";".+xXdpVbA";"%*D0^,";"%(7jPt",".3KLUEqP=";"%L[$-";"%cpQX0YN(e4!1";".hXO7Xz==","%q)nH$\"?";"%fm(ag(r>",".KN02zDB6wX==","%Ocq<pQ1";"%\"PffZ";"%FG&b",".1I8JEQXtuX==";".nevH3X==";"%43WdQ","%s_?jtkB","%cG\\/7ioY212^3\\3dr4tHJ4J<5dGP,S!iR";"%@TkN;_j","%mMl,:",".oPokUX2DJ12=",".i79FC5GY";".ICwxbl9asG/2",".W6uwZX==";"%YA<3Y3nSm","%=ER^:;NJ.`";"%gU$:L]sHE9=t$","%Zm-hJ",".TucYQePv3Qi9fm+=";"%6ca]kCp",".cHQePGeS",".PwilIK2h8z==";"%s[T_>-?";"%iEC^B\"5tL4)b,";".xAQsFbX0tW1k","%JT;McbRJ";".w2EqY2ANngF=";".Q1YOMM2jq+OtsQac",".24tefxGJ";"%:$<bN&OPt)\"B","%Mpe3$VB.;^]%bmQP)J<uEe@(%V$Mn/a$aZ`Jl94paAdCbi5t-gtkR9>5od16I?","%%5hr%","%*/0\\3\'N";"%`E(asVP\'!%7,&VYCcZe",".CcffZF==",".mnqmWGjcUxV=","%=[!98";"%*T-<$(\'9&_.\'h","%h8LaI";"%ap($%W#","%DVRU=","%=7",".Z9S4tXl=","%7O*qgrUTaE(O",".M8FZi4y=";".hBsrxf+orea=","%uNCStVW";".1w6hXAe0mF==",".72ttMuL=",".L2Wjv3gDNtXpzlNHgY1NBGivv48dlF1Wb/35MenaUsuN639UaIjP8k==";".FeMlolqJhWAQ";"%*\\)oKNSoiJ","%m.!sO5c(:";"%`O&7o";"%jpnGd:4";".CvmvTywaQk==";"%V.N","%oJG#",".KzDEt33VJX==","%6uqH-C3";".NcEO";".8bWLWd/vOZ0u4TLB7X==";"%$U,8Qm(GlR=FC:";"%6q\'8T^/o2";".KtNZh/e1SltooX==",".PPxCVY29";"%uq!oV";"%S_N/5e5@E=EB",".IIJN",".V1lBNvZQfqmpSX==";".YF==",".m8c6faa1y/g=";".sJDa8Yz=","%F8aoP\'mS\\:t+CuBAh:Mq3t9S;\"fUbSGXT5<p2V\"[,LL(P$X6@\'5q",".agikyEP=";"%D0b@";"%;2:n=(.]kj0U";"%E8Ks%F9<","%?t","%S*Pj-";".62EYjC6WQF==","%AC","%2)7WUHZdn:","%s`K_KKO7t";".tuwRlZwg","%%5b#3aAD0)H?W3i","%83\"._@Mq5G$Z";".kWBu9rYH";".E659Rz==";"%ktNPsrY:YCqpd";"%P?h5GeiQAgCf","%AcGEU*T=f","%7*c^$%%oJ";".DpLAH1Bm";".6AQCb6/TBekhvTk=","%#LQL";"%21?]n",".WI46FV1Sx9tJ","%\'nLcHkQYS","%%Ij*uTY^",".AHR8j0g4RqLW","%D7\\KW:Xe";"%k\"ON+4)dfp#$C";"%i`&<NbnfG:[c!84QQ=c\'AY9.J4OSu(l;V+hKk.;[0!LGlq?_d7";".OOnZ5X==","%(dsPl";"%kO/%j77i.S\'$]",".BpekQxQl",".PfvFkIezave=",".UkRgSF==",".IdJ4jsg=";"%#6T`";"%eJ*9","%ul";".cA7ZJz==",".2BjOb96q5F==","./a8tbWwMak==";".vP7KFYa=";".rE1n3erpGz==";"%bg`D=07THP<p",".kUP+Uz==",".Plf8LTP=","%R(u(Qk?","%_bZ7H",".sffWOk==",".zzZF+KX8ZiCMkX==",".GMYGgzAVberS";".yz==",".2n3WRwl=";"./j7k","%.bWsn@ZP",".IUoPSOL=";".nAM91E507F==";"%nKPS","%1YP(08/Tk",".uDXWP6hYHk==";".rcjOnHLnSuNxRz==";"%)Xo[@",".UMnbxAL74z==",".KvnIaX==";".P7fjwBlh3X==",".mNlBpyCm4mhA+NOYxz==",".zxWiA3ZeOk==","%X7:%H!qIhL","%h.J0Md`h;/";".2oJa";"%iRT;d@EKB_VcNP[3!U`&944Z",".ZhK5";"%FDZnPrKk";"%;;0)6JdWqT</Oj","%Y\'/0;bCr$#-B";"%tA\\[r*plR6iU#XD-M";".jIyEss7JIcgulz==","%!o!63$Xk^jFM2KQ`7;c3-;*[,^m6#BR$A\\35[,;Ghg$%W(L",".hgltVvHQX6OiOpJ6s3Dm","%&9(5Gk<ANQN+KQ";"%An.^g-:";"%M*R(mgFp";"%k:N:&5q";".nGB9QhfU7P+U",".Fikui47uooCdgF==","%#N8Ti_?s<K)H<AmghPCu#s52;mpR=K@g<cX4ESK!?\"+VNZA/",".Pz==";"%0V`+V<p";".cZFdNJQStYjmEoszaig=","%Ts\'J`sS/Uc";".iXfOMYOp",".NZecT5t=",".thQzW+4o","%s+SPn";"%`E`O+","%;K3FR.I8",".QtqLQo+=";"%fYQ:8;C";".AB6v/k==","%$HCHjcE",".qt5rBUX=",".1xgPQ/ZT9k==","%1eEU";"%3bsO8";".oh2Tzj4KcDP=",".7YuKxF==","%c8d0=K]&Ml[M]",".tk==","%?,N(OFG";"%+rm6r)=5",".7kK6v5ne",".lTwUnKgWJX==","%.ON?3nqa0mGI?7";".2ft9pAsFVmikXz==",".SRbGzJJ5xumE","%rnCff8c`gP";"%-1bH<g*m\'",".edTic+492amoc9dKjk==",".2SSfCX==";"%uoaTN";"%!5<I$;@";"%2$5SrF$8","%l#$RQ!#dElIKE=\"#n\\","%:r@B(RG;m6@g%",".P16WO5msjk==",".Ok==";".9xkCtpkTfiyc";"%?t^[<",".HXaZvz==","%o&3m*R+W$",".01XjJ+30lk==","%IjW>";".4A//rk==";"%\"r4j)ddd","%OPaoK",".INLzaN3L","%*7&H7`=I=bu@%C:J\\:DTgItq%EB",".rI0iI9q1",".W5FI1F==",".WLhRHz==";".tMDf8k==","%fLf&","%MdcD\\p%OR";"%;K>:L","%]Hb%qP/%nD","%9a=T9.Y,g+","%V7Qqqm)=C>";"%Ni+]RQHD",".eh8MCBVqQ1+nzF==",".o9YohVtorAR9";".ycPptz==";".766m","%FoC$";".gghH4D1Z3T9cLb1IHlgEfF==";"%)XP1hF)BY<";".qU6VQl2=",".Vd3pYX==";"%F?cE(";"%T:tN7Ij\'Et";".rCnRZGgIJ+IF",".AlkO2k==";"%S^VZA",".yTxZH4Q=",".95HyKhV1wVB9";".j2Yno7k=",".BMMdxLfYNrGL","%*\"";"%ZE]8YqU",".pFg1rvWaqe8IbnxFTuL=";".JwLd7z==";".i+4ANrHLCsl=";".cMU9oz==","%9hV7:pB";".MQyj";".yZtSLc+AQk==";".bHm7gBT1SwO1OrqEiZ01/BhByKU2hX==","%a#Q[ID#W;\'qR2";".a6vTajLT";".pE6X",".B3ltCnN5","%J%r8S&3N";".AR7Uy8qSJX==";"%9`fk@2*>V","%2#HRuUKNi-","%.o.3=";".irIlTrF=",".ui9Fbk==";".mDI9cUwtNXZYmtFwvIe=","%)E;dlY#o=","%F%N\"*","%R0jb",".KwR0Ofm0hZtN";"%7d_I,`o\\kK";".C7Q7mk==";"%@i",".EfTJnCl=";"%IPtY=$4G?";".kia7Eqr/cq06";".zuQdEXMvhOMXd1kbWN/HtUSJyHG2Q61qOxLzGeqPFOXKuzgRgBqKR3cPsUGFfQQ=","%LcW2cc,Ipt_XYE","%#Y,Y&$#U.Z<9rHS";".1LUiIz==","%!ciP\':q",".po8P29nSoX==","%o.rh\'mph9G6:oj";"%S-jjs","%\'&9n";".9SdhIvaa",".EyAV",".uCoHOdlTGX==";"%P/SpTI:Hl0","%S\\","%_N","%G<_a,","%Z\"",".44Y4mlu9vdhFIJovPSrBo8hDYM9Wek==",".OX==";".sAh0D9RVyXpiN6L=","%]qL_uZ,PRf=q";"%sgG2%!`b.",".S2QRpz==",".aqdSDa1wUX==",".I3HzEKhSeX==","%icZ3qTr\'A]cc",".Y/GYnX==","%4rMsMnj1S5ikfF";".oATmGsQ=","%RF8<(;@",".dRGcdcF=";".CJhNxO5fUOVaZFz=",".I74QjDVTK4JMZX==";"%(,@kZ?+&2BRP_e","%JHL5jDPr#)PfD",".Xwmte30gc/L3n5ci4ZxsGuy=","%Q;ao/";"%(%H0-","%sVa`]87tgfN4","%)_^spA/\\(eqON";"%)nmt[5^>U","%d55r_QF#dHW#\\:\'nG","%\\d3tlf]:";".nzplyF==";".dJTn7yadHTg1QE58viT8koXhHQR52JwaOMf5";".GcO94Zz=";"%\\L[$#SWd3%>c]+EGN])";"%isfc)\'R[YEPoHk";".bF8nABP=";"%#t";".gRNtDJ8g4mpMNdP=";".wazYwk==";"%kehS9SM7V3","%gj-U>UE";".OwBAagITAQy=";".PtS6g5y=";"%<Lud!";"%+gg3l=7",".rOOAXIBRsax5","%P%).?-:NC,.2B","%itm_mQ!aZ";".04xBFBcBkX==";".rfV5jF==";".0yGe7hjC";".sGtS01iUnF==";".pyXSrCeU",".UGPzZyPUAfBSMF==","%#C<PL(^k";".9IDjxFnkXQ1ETZ8rK6A7HLE76y2sQAJQtgGG/tk=";".iESAlV8/",".7g0aAgBr",".bxp/OJl=",".6SEXk1Rf+4JRxza=","%fN[KeHbd)J\'ps";".oOSHJNa=";".Sz==";"%&Y-u\\(P:","%*$`4o",".LiIS";"%\"3/GSL9;m",".GU8Ftk==",".SMTadOFy","%QBH`+oW";".EPEQ";"%0Er:fOA^";"%pM2T[aN",".Qxu4qX==","%\"m%0n0PYI`[L",".sNP86z==";"%gF#Uo";".8epjptKXOjdL";".rcFj50RCx154vyIj5k==";"%p%Lc$\'0";"%=GoaI[@D_A5q","%guYqk","%pI`;(`5/l+","%So,*fMRO#";".+1aw0d+QJaRb9X==";".xIJoXg9FfxX=";"%\\B6UR",".hpzczk==",".xAGL","%]0^][*q<";"%t*U9DE&4QGgZ",".vT2=","%IPa^.aj",".5bM2LhYG+wKf";".Ma3F";".q0jJi0X7J2GoZz==",".YJIl4pDj9/NRLqZh/xnTXzaFKMukAaKpbBo8s2g3FlG9yHaCWdGG4zzDF/g5KebDRky=",".IDOheX==";".YX==";".zcp9bJe=";".mEQEmEfFwX==";".8Ev4uUP=","%3F5EWcPL","%eFD8&","%:OG-$A[*[:,lj5","%e+f%c%S",".jWWeAVa=";".Yz==";".GhkE3al=";".2CmYgf9vg+Au";".Psgrnj5J+9aaNF==","%R5n)N?q2%TWJ,s",".54Fr1ybrC2V=";"%Kl)\'0j]3Y_YBg!MMjrsX4U";"%b*^,7+r/-P&S";"%<$P\'CcWK7";"%Ic=PGO^J8YQa","%;T8$9Hu0*S?U";"%GPDH5>fJ";".IYi2uoj1UX==",".FLe6hLRahxe=";".+OYbBX==";".30k7P+S5W79e1OP=","%@\'C%[+d<(\'I*";"%3)sLU",".JjSSNE2REF==";".fFa7bpka";"./i/LmIKNTxBw",".ziWLfX==",".Kk==","%].uU_.+)",".tEnwTJAQmqKCqS5Q","%V2fo=",".6obWjsQ=",".6OT3UFkyb/qY1OY+";".ex7pJX==";"%NZ1R]V<)A","%:A=10";".Mtt7+X==";"%a`_O2Sp";"%J$Xo!&5%>","%nui!h^k<*";".b0Poo2GdpGQ=",".qEcsOX==";".OIDrpF==",".XCqD7z==";".58HNsX2=";".A1isX3LBuF==",".qdr0jWq9vj7/lk==","%s%5G","%9<:J.h;&a?fB";".Tn0+lJuF2pfqZS09";".61phawg=","%$E\'MA_`;Tm","%ml\'=#Jmk&sJdl)";".ZOvgCSHG";".NPdP9yJOXgvW/tPF","%,/lif7E8A7,S";"%:4";".5v6/5z==",".1fn3TAsT/aL1Vwz=";"%*1Z#ds[!Mu";"%W&kT\'V]",".44Tjqz==",".Xi9lpPl=","%Uc";".3CM7fdlB","%T8qOE6Ass";"%P\"\\]";".KgSyFui9p4bJ",".fkzuDZ6FQ822",".WySc2j2=";"%+^P\'-uNkr,`In",".cXBCWPRH";"%N#StW3l","%+;6VK?1/7`HB","%!MeS0Mkp",".RQTlWk==";"%nJ#m[hJ1EAN4","%[m5)!)b?i@";".D1TFa/P=","%%S\\HD.c.ZW";".xxtD";"%HGs5Co<Mgp","%K!cIoO*XJTs),\"Q,.(Hj7LB$4mK(cXZ)h";"%frjM,";"%3pB:WK6,","%[6Lj&8]E",".pzpOUX==","%KW=p\\WH34","%2D#%1:4","%\"D69s",".rSTQAk==","%jt";"%r:`i",".GhhDP5xbpOER","%^?cMr";"%Zu*N,8$ob","%jfq!5e4f?@[L3$";".mGjSaS+=","%oTT\'i";".jUudZF==";"%]:pp",".ADq6G5O2qO2=","./SwTNws+";"%&j\'Ib)9%*";"%=K@\\;$XT",".OmkjIaB/JQxK";".lpRGSifnp0k=",".+A1HUX==","%\\>IlOSU*]X";"%Wd]r5Fbr8N";".claFvNL6eNCk";".V6dKx+2=","%(Fl8b^I4_T#2";"%kUGSm",".0Y3cg7vM52JP","%NaQ)JWVs(I";".4B73p3BhlQnwymmueNl=",".z6Qd5HZhUk==","%b>Vfb%f#L8g5";".mB1pG+Q=",".pM+e0X==";"%VV<.8HL\"f0@G6$";".9OuRE31wmuoh";"%_Es7tj4U";".Xz==",".DFDOQxDayG/BT+QSlfg=";"%TRmiG,?NXLm0Kh.";".mp/j8X==",".WNSVlk==",".VXxB7k==";"%>qW2dUE";".d5De",".zaJ74Df4cD9y";".2M1dqlQ9";".nf27A2AfzU1+lpe=";"%UXW..Lj";"%RbBDI";".o4sB02oTdX==",".z8Vmd+CroX==";".rySZyz==";".YdOCy7z9ns2=",".ty2sgP/mSX==";"%lr-mF[q1p/-\\H","%p\"PEQ";"%DSEW`R1";"%M\\ih",".4F4vUTYUcZk=",".2EKj2RMYWQ+=",".7iqmQ8m7ok==",".1NOEWDg=";".2le87jF=","%qr3l>ll";".nyyr",".xwO43z==";"%=@?4";"%9XhC5";"%r`U\\_","%q0a9)W%++#%\"GmG",".aHuTAaUgoEeb","%$PQf%HB";"%F*W/Rmj";"%J@$;%ML0P\\",".eCr2AzII64HmfKrJSHXezvPZHs+WeJWg/a848G67A3tTZKrsHSZQEYoEJ2VIV9tamB74zYF8SWYfbDacM1VfG/e/Uj3Bl63XL+dA6vwU6/+4Qnyai8TKdX==";".MqrfMVuJCz==";".c3RNcufkL8CEvKma1LpxiePmLHomDDlGkKhMTO+y";"%0f.&ks7taK";".UtSzJB707Je=";".C3sMtBLplzg=";".6sy=";".WurRmUaF";".E2IL",".E56J2r+5","%jciO8",".wh79wbOP4NRx","%Z8o.2e4t";".Xt9J4OL=";".Rpvm";"%m(2(2;KE5";".eCXoJjTdCdAiBX==";"%3.*?:Y5s&V\\_%";"%riR-`",".zM6KK0pm";"%Fgg1GVn<#";"%Yf/:oG)bYX_Sk","%ND0Ke0M`&",".6yDqnX==","%9u>mt\\u";".4o6a3QGi";"%PuGa:J4i14ObCAk2p-Psf>!gt5+e0\"keG";"%*!WJkmjD,<dG",".uaWtHk==","%2Tc.AaqB","%?fi&U_)/HarmP[I","%Qj#Y;RG";".1WTgTBbh";".hwQ5Dx2ednvq";".YEQzkD4ftz==",".pBmzAF==","%Z,m+RPQYmXsC";".swCUe3n3PIW0";".J0R2WePbNoF5";".s6N8AkJX/K2=";".3HFa+F==","%$7";".DMA7kzX=";"%Xn7D(!i\\a\'&b";"%KO&9?205;grC","%I=F&H\"A<Fu$nJYo","%F&7mt]pOQCSp";"%1Kog1)ga`dhSP";"%M^AJlWc.+W";"%V\'";"%WrZZINn7%(57",".pk==";".bW2uD4caUwONMYiYaSG8","%=-5r_";"%#ABNU1>,","%$iAfR","%J.B\"N:Z";"%dm8c3Ji`m";"%\'R3ApV;!s_4U","%oj-5P6YM6";"%:gtj<g5";".EJkLHVaJYIrcoF==";"%A+`i-";"%*B+bGV$$";".pGq8GMapek==";"%ZF-\"_`Q*","%92=VCMq";".pFD0sczVPk==";"%qA4T)\'/7H<","%NK?dqs<";".Fja/GuQw";".5ZhNyoPOpBys9m3LuPorZKb4","%>HCL():P$]hf)";".QcAGAlc40X==",".CJOmvz==",".9k==",".2+mLhX==","%u>^N&";"%1_\'L1tc";"%Z-T:$^b","%N8T?,sI1";"%^FVJ\"m\"=1","%=DZgJ";".WZAiIz==";".U2EiQLk=";"%>rYj\"V(*","%*N\"$VtE","%L!_#ZUdCA<cc",".7IPD95xdgcwJitXI",".ClNdzk==";".QzfrLFrVQDec";".vZ/n3jSZkX==",".lPeXgF==","%\'k*W6EC3Em0?H;","%)[AJ";".r6OOqZQ=";"%CF79m\\Pd(:!OUG.rMto=";"%k:";".3F==";".ANaz";".WGqziX==";"%4uo#K","%O.[8d[L";".4P1RaKWEVnCCiz==";"%^i.$FNjX;ORm&lV";".2X==",".VI/WJk==","./aX6icm17F==",".ftJij56AUz==",".cgqjbLMYwqWVomt=";".9wIZqX==",".o7AylYj3qX==";".vHhf08gxitVlkTsPe9akAmYD7RAjEF==";"%1No#X";"%$q","%c8LLF[<u1AFWX$#","%Og&?d#B:K";".nG70RoMzPk==";".DJmD6z==",".C07Dnz==",".XX==",".jQpO2DP=";".2vsE4+a1jzJ2";"%TS@]7H.[<","%aUPT@su.",".TOPfBbeH";"%>jB0Z";"%MtbJYDMTfB\"@E";".+DwjWX==","%9NjX,@\\";"%@IG:TR>P";"%F!:4,";".CZAzNURo8zRax9FTVenA2CBBdNikfPU2fbNALxfyahXVkPrW7hlplT4rmHvJpgUCSvFzBHtmUQFLNwAxWYknlREngcQ2sS+Z3lyA8AwEJlhj9tchAkaC0i1fhz==";".MDc72dz=",".GmGYOLuA+gQ2","%;HqX";"%ch33W";"%1Fr@;jLIiUd\"D";"%aC_K-q5Qon]!2,";"%sQm3hDAV$0-^S^";".AZ36+78o";"%a)5i&E\'\'1";"%kb#WK#Z$\'J=edd\'N\",bP","%47mQ,[80Fj*^^]9GOfkr9\\!>bOTdd[6S",".siRPmsns","%QI#Ek5+\\=UIu=GsQfgCuIddWRj+#TRE8CU&S`$_upOm9p_;I%](>8",".Mg8O4mfHSla=";"%:,35#I:/7u",".MdKf6k==",".GYt0";"%?(0*A";".Kygf0kz=";"%t^N_";".lwa4SyUf";"%^:?3\"4QdU6","%89:\\%sL";".XT9kSkg2","%=e;(!\\7p",".mDF3bhKAtX4UuX5P7k==";".AZtHgk6GWX==","%<;PFl*mBCiUE";"%LkrJ$&s:pe@+W";".zuuqqk==",".l/J2ppNswF==",".SP5tqvL=",".jGwr9k==";".4/gwJFZL";"%oHGj5*eLZp";"%iZ!tBdG","%fY_k3";"%QE\'a?tSOiR+6Mm";".KtYbjCg=","%3$gMYf\"nqq","./z==",".4JadC61abbRGnF==",".PS00ox6RGF==","%PpCN7",".FigRTPj7ZjUl";".XA18fX==";".SThF",".q32bEF==","%is;)%DqY",".ZioZ/QCI","%S0Ar^--1J9u]QtS?XJDVsL09tftIhois7A3?4D]\\H\\XB\"J.1\"ZHQ0k=DO\\i9-1VT+-g<0`UL(6Ojrd]Y[qJ65m\'#K9R]Ke-HlN<Imei#k7KAA[glm\\ImhHm8;k^0\\d;/5boB787AdeEX";".jX==";".QTvH0HL+e8ffD6tlKaWlLoc9FxeeLAAKuJuWURrynqnLFjV=";".CP+Sufdy1OmLaKY+sMl=",".HBrs1jKhj+Q5Lhtt";"%9r\'k1?guhE,K%";".HF==",".7vSWoKXkiKWsOk==",".Ibiv4uAYFdoW","%Th)\'X.^0(h<\\";".byWcljhQ/O4bM/5s3XvvLTyc0ywccOOKgNZLbKGUpwBHn6k1xaV=",".TnjtCZGZgAk=",".SpRxjk==",".x1EHSk0Z";".N7G9iYy=";"%N%Kk9E\'W?M%)U",".POuNX/k=",".A2auQk87tnJd",".2J8vt91z";".UOMj";"%u\\miW:&A";".vcUfq29+";"%pC(Hc_?=<","%39&LKshfuYh<DrMo5(te2oRt","%n2S-*)oX\"5fi=:01@0",".OIY+1nvr1X==";".TF==","%KUE9.";"%d6=$","%rFM@?R1";"%kOVrD(T0E";"%:Sf1bM==";"%t(G\\jsu3*FVAnm";"%6=%Z.ohC";".ZPQRQcec","%q>Xg<K]4sI4d>^G#TYLB`jd%O`=/\'8Kb^munGVPMItD";".bi5DDPtFq3Q=","%o3NL",".iJiNaNlL6SXMXX==";"%>?d3e3l","%L/Hl04U";".aSLILz==";".PIwW3F==","%Ns;g\'9rp",".nZSBwYWM9rWWfF==",".AVUevtt=";"%J^LLLUAoj";"%=)[`+l-C",".SB/oMIp92M7Azw6FE0iwtI52vv/OSMm2uO6oH7PWeB/ZUF+jOsKGW0k1","%\"\'YD","%2`TUiqgS","./JwMc2ZgTt2=","%FVN^R";"%hT09q_%(Y6a1cdtH<fN1`&M","%r*!LmsYsp3hC",".5pNFhwzVZ6b2AGhC6jPG+F==",".SeVd",".D7inW1x7+8gSTX==","%$%DA3ON(A>";".1wpylfmDPsbAqAh/1iJmg+bGcEG9cF==";".bglU/k==",".867hn0tQJk==",".n+z=","%-Pp+t",".okowp62L",".TvwLtUh7B2zuIBTnlOUL1uRc+xz467+i0rdMFzOOZMVV5OUG";".hKe=","%Mb#n_",".7/pK1X==";".4lN7HrENL/tDma9h","%\'Fe(H9eu#",".PwEnvk==","%nD`eme@#U=","%g1=_P\'?1MPmN","%Oj";"%oP^^pJhS7b",".MQCz0s8HmRQ55rV=","%!kB3X";"%HD6X?pb^L";"%tZQ\'@Mo4]C=q";"%V/$d^NZ",".5qig",".V+SRDlU/BX==",".LrlQ7NWGeeX=";"%,W";"%P^\\$F";".hnmZy2SZIX==",".q97lXKC6WA99",".GcDdpF==",".HWiQYk==";".jvwh3CZ+vWQRJMV=",".sjtViJnvAF==",".nkNcbF==",".blqqvnAXnF==";".uMvLNuFtMXx7VC2Z8vwBpg2g",".cHQOhz==","%Ti\"<T]$%DbSTZ6U\\/nIORHU\"_nt\"gSFk@\'8S\"R/5?#S0MnMc4^k.@:$qsL[[";".p8etdk==";"%[=R\"hT(q\\$<Yme";".Ksz6mmV=",".oOXmTRdutcjomF==",".YyfIVMP=","%1)P\\9M\"]","%kpVk/";"%q07`@";".AJPi";".uopXZVslvSSDdjbq",".irrjMk==",".jTl3bd6g";".TSpx";".qR4oXXvDmqK7","%R1",".qeStUbOY",".O+hd/k==";"%ZuOhi!IQQOV9Ak";"%iVqn#YSb";".+PmWGTB8tEQ=","%^*`LW","%K/rC,^92","%hNJrc2u","%Zg%*CWj";"%1r$Xg3(#dAN4",".5+Daez==",".6jMvEdaCY5B+";".11+y";".rVsBI+vDcz==";".NPmRIx9y4867","%%H#-0e)6","%sm>^M&b";".z9R02F==",".HMExJvz=";"%>769$+N\"",".DdIJb/+uXBbC8w4eeF==",".FWpA/okJzq0ClX==";".n9QisWHjZwRf1fQ=","%-7t\'t";"%@YSl\'I*";"%`MZ\"2";".2Jf2pX==";"%Yfett&WOZ\'FLt";".LGUo";".Wwt4bjvy8F==",".vW4dDXpO6yrttqHOfKbuFWfaUhNgOgCjMst=";"%j=N\'DlX[+gg^$IDF]gaJN6C.\\f\\/Z";".7VyUTAbO";".WtLhz8W0xF==",".4hSL";".HSVm5ne=";".YWQGitPGJy2PczGE","%s,bL.[eX]n`X3p.):?",".PFDNDzWUKF==";"%nWD!I]g`l9KD#";".nQqGGVy=",".3QUq6md60NDv";"%i/KL)9?^",".0sOi3o4c+UuVPh2nXXfFiS+=","%>I;u",".9OdNnX6MR0kcGKKk03ZyTE843NYf",".2AcoPCW+4k==";".3WjQ+22MLe0hzX==",".lig6Sw/o",".YZ0S","%nmC*.f_,=W%UD","%-\\*lIGET",".aajydswD5F==",".mV0vHna=";".Z+CXAjl=";".ItHa0F==";"%pFjFX",".CS2Uki2i","%Piu>nS^VIEWj";".2ZDapenI5z==";".a2YCjwEsrz==";".KmOSBk==","%VH4SZ";"%<Iu`*[WJ";".7oFfOpV0iHQ=";".uuC7";"%haVVFbp";"%smfbJ0W7-6",".jwMTN3/w17QYmk==","%-A/2q5,>qQ>cQ";".zio3oSAADtmj2F==";".SRIyIg7S","%d^&H-\\hV","%uO+G","%=\"M2*\"[-n&sL",".qiLT",".XX2NogW5s32=","%!0[Sd=Z/",".8nnnE1g8hX==","%MsnO(";"%Yurbk$bN?I%QlM0K%2","%WF)V_Fa";".GgSiWRSDnq6JXF==","%M@dj?L6;P";".XuUmPVHyVRAarA2KB97g4AqjQaHFuBO5a9oKMR71tKTrMQhT6soP0MOvQF==";".TIXa+CedwCyG8IZia3Q1E9PMkk==",".DnzaNRDduhuIFzy=",".w+9P+ye=";"%[LQ`Egpeq7@?b",".SRUggz==",".0Cg9ZbSgKk==",".WHhA2vCV/Ca=";".t17GteF=";"%=n]9M",".lkopCAQ=",".cz==",".4PHGzz==";".Ol43HxkK/c7f","%)0$IMN4";"%7o=mGW)6%9ES\'R;tX:T";"%A7u_QKM\'\'<scjYn`R?gAsA39rmOr(\"F\\FJREc9&\\$aX#U&6c#Z9p-cQ&+9.i#=irHYg%6TmMi5STu(hfr#^/nn$(Rp_#V7i!A4jchPg@4d<:tY";"%E&,4\'Q^!),\'F6!fF:F",".Ok1zBpnQt/GhKKt=";"%uJBLL";"%L\\OgZ)]E6W","%K7&b\'&HZq";"%%Ab:d";"%6QVsM.(5H";".Kif2PGzz3OmWkqF=",".rU/5Sa9H/Tz=";"%U9f:";".PAUHMX==",".Yk==","%H<PF?^b";"%-@\'%n",".sGY/LbF=",".ju5jmv3yrX==";".TslP7F==";".pG2mfeSOnKDeo+B7Pya=";".KOfMfyKn",".sMb+vgz=";"%YB\\5N:q";".4cGDyX==","%-r%m3.-1-85Z";".a3MIGF8VqvKoOdV=";"%lVGM+dVPp4Iol";"%#U/KP[C","%EgnKlHD\'IG_.8%-)O","%VPHPX";".WkT11F==";".d4oVZ8aJ5JBLMNfOahSw/X==";"%E/_tZ;!S)em-X)?AL","%^eFm",".SkUoW8X=";".r2Q=","%A%F,+)[b/pmN","%gZBBg";".N4F+","%g@[DX";".4xrwETJkiz==","%-^i%T(/e7\\?e7";".E5CpbF==";".PNo24WX=";".p625lFaJi0flxycnP7f8i3cL5vUGoE6GFGj/A0hfXp53Yl/sjfYnh1PcqsYf","%9u^+l";"%;^Y\"k:B2M","%7T=.-dej\\";"%69H%QG$aaE\'N";"%H?",".zMKP3gU+rMLu1p/m+O6/tmLuSkWS3BeCTAxCAelsuTFBMFe=",".hQFubhTaJsCWhX==";"%^1ns6e7&^";"%Rjr-O";".UAD5hOX=",".T+zDd6K+pci1N/a=";"%\\_+VB8hLS/";".o50g+xz=";"%s9[+d";".HlzLQDqe","%*-LCQ","%ag\"E","%jiB=QYN\"hVM)`S",".w6bG","%++leg]8fB2KiW";".63QbqJuFGz==";".BvdlH/KU3Jpc";".+reA9o6lYCeK";".os8y",".KwEZaVDy1Brq",".TjdL1MKH0ip6r7AR",".6k==";".58w6UOvuIlLu";".OlSXZGy7Vua=";"%,oD.1";".tK/BlaDIAyVU5/SzBF==",".uKlM8Vk=","%4\"b\';00.^b";"%rL>WQ","%?8(eCro,e\'O]cW@",".3k22Ek==","%ITF1WVjg-R7o>2eH:";".elN7","%iGar";"%OC@n*)O","%g>Gp@?_D";"%P.X]\"[C";".FkctgxR1SoQb","%o<]Y*:(._";"%44O\\CUW03uc_i8Z0Z8$\'j[H)Q%]R*4S-HK$>K@a#cao";".nqcIVX==",".aiex9h5MCh4IEk==","%@!kYWnjW^BQJZ!",".ByM+SkN2VX==","%Vnc$n[KHLs*V\'";".YMLcjMkgEz==",".v0PBNA98gk==";"%H1k4#jU";"%S^t]k";"%JWp>n$Z";"%hUbW]",".l9gxEuV=",".1QZZMz==",".qtTxFI31Od3e";".1JM3/sa=";".KSJE5OEIsX==",".3ZLz54fyXz==";"%NPEdI^Z##lYq",".6wpYE1z7dz==","%o2!Y!T((eKVhZ";"%P;]HO";"%9)!%Q9A+fDbk49";".v/IdSABFmF==";"%UJPf","%_[(YoOj";"%2\"P/6DR;^@p?",".jVhiU9V=","%LuV/",".EYGA";".wxv1bz==","%CJ>J","%;WFHQ,`KEr";".qwo4zWGzk/a=",".nz0vzN2=","%hfnkq0KaA*brB+";"%;ZYMl";"%Z]\\bY";".Fu06rF==",".X1FBkr3Hgk==",".IwFcOu00mF==",".6COk6lF=","%FW\\1\'VW","%=\\S*!bXNkP","%usk[)","%3dY72)KYC\'GfL";"%!0-<[eF\\aiQ1",".rpBUxX==";".9cF/Du2JvlKGKMLOBG1d+Bz8x67XQqCdJgm2Tz3rdyhGblkSdQmJgsprFhPTvyOiKiYm6zkm7aJAyWYxBl0/","%@LI?]0TP";"%,tRh75Z","%\'ai,%#@+[Z";".L+sNC2MAlzQ=";"%U\\$7HM/rF","%Qmn-_iOmHe",".v8AQI+GUaHTa";".PMPf4y5a",".TCIYbk==";".az==";".4DdWKgtml+5pwk==",".WZTXscgk0z==",".uAjn1AFX0Bl=";"%]E2+a00j","%m.>WC)uL%J",".CV/kpSeLMzn0xY2=","%`n^:H";".LwbV3bP=","%6!+iXZA.B`SV;BPa@Vnd.:($4NtBhK6X@J;JECI9!gEH3;!m?@fP44";"%K?M]X^$g",".6yNYyz==",".+B8Dql/EfST6Jk==",".QdZaauP=",".Ann6";".3X8ELgfjmk==";"%^6@-0","%Gf","%OB<+4$7",".PbjCjyTNnCPekjnh17g1KttA1rl=";"%DLBVReD2L";".S0dUvK7ecdC3",".SIWH1F==";".bPTHtk==","%)i&qmJ1";".vnsb6gP=";"%9JEG.PG";".5MjO",".ppK8AchIevDDBBF=","%jAS7N<\\";"%>md7+m,Z#bAC";"%s5G*<i,l]-","%&$:Ma";"%)=PPIcE",".p7+tpQDS";"%Hp26Xc12`K^!8e","%C=sE\\eY","%GS[PX0U";"%ZmQNDDf\'/Z0=i",".DAlfCRQHhce=";".sgLvF2vaakw3g3L=","%oMRKdp&S@Z;oR";"%=?Ls";".HgYmmNvBPz==","%k8o(-!1";".M+WFE5en69+=";"%a7=C";"%<jj2+8*6rp","%gT<C[\'jnp5bY+,+Um:7^;G^]MI7a)A5`F_)kot[o";".pLIS3HrAxDtD";".ueUm","%!Q;@";".yID1UmsOpqt=",".aLBH4F==";"%OdS*G";".v5F1U1q5","%>+p$5o4r";".HRL+BFoI6X==";"%GS#go","%1RX:t";".vW/uNH62xYCa74Q=","%R_SMi,V=4,";".tq5OdmcjFmkOLY+=";".vMlZp2L=";"%#bBq";".iK63Ps8NEO3RjX==";".Lk==",".vV2IvVtIIHd/lk==",".3atHbk==",".yqbWNcxWYQP=","%-I<0c<p";"%90J_f<@W&Kd\\K","%ulp4+R^4","%Y^##=3YRYN";".Z92GoD9yGHWjyWPau7/OsDzl",".B5o85X==","%9ePiX[o`ait4J%s6pN6/\\SpTi*JAIA+%H8M\'+f_<A:q\"F*9=","%fpHr;t#N",".a/c4yCNkuz==","%gYhTg!MRos-:",".Ym4p4J6Y";"%as.e*ZO:",".gYqeTxSqrze+/m2=",".iz==";"%>KY<GM4";".aK8/Xz==",".0if9sR6Yf7aZ",".nWtzkje=";".aCg3ek7N";".xPsodf/sMF==";".dmQRPqw4iz==";"%eIT=V",".p+6cbry=";".uEV//BmN";".xUyIX/t=","%4$Ll4Vu>LrtQuq4";".aBN3bXWan0X=","%klAQX";".oEI3NF==";"%%@\\\"]NE.+`0t",".RvKAjFV=";"%`-\\1Al`4IsT=\'_SspE&";"%kIY[`)`\"";"%O:T=5%uH`]:4",".iwQjGug=","%JDdJ9iN%E","%Mbfe/DN";".jBP2hk==";".sEDyYRAo9JQ=","%%\"d>Bq=*";".2OyiAkKgXeIv",".Y7eJ2VQx","%obl3Y","%CA_Q";".rA1dHk==";"%Pc\"qp";"%HApt;SLZf","%HNQ0US3";".IHsi+LNMi3IV";"%\\W=E";".TDQV+twpd2ItEifzPagNeF==",".7DQxEZMviz==","%\"g<J!rL",".Zd906UaUlX==";"%s=eZ4`XDI","%-rc)d";".UeYdO5lDgkhesFlD2B4tjKCfa1XQ8oN60k==";"%HmXFk\"RUBZpJpAJ<qf7>fbkLs>md)lR9sccH@PE-u0(+5)Xqo$FCs=T#l/*)FTL]T(c4MKp]D\'A+RW2:dE&!#=Y@>YkO,H[SJ.Jk4\"\'ZC";".Rb8z";".iLUM0k==";".cX==","%6Q?pf,%sV^N4";"%#9s>9Q7n)Bp\"/b";".dobE0pULLz==","%ossjme2Zm";".sqXiRk==";".sZK2wpTXYX==","%NddB&Qk4mcZ_!A+4V\"(C<!e","%8_Q!g;<`oZcAd",".GPrjuz==","%^\"?G2Hn5/9+r6";"%h%pC","%#e;\"UuLR","%W>`485ZQ,pjDGu_=tl\"S";".NCaWQp1f";"%c\"VAcW><o";"%`;^j[.n-1",".cqpXmYmgr+F=",".mfMDeFs5OsacO7l=",".zz==","%eEaiPW0","./Gr6lNewAIk+";".gVD2IBa=";".gV5O5X==","%r]#%:V\'","%a0";"%^V7o","%O7e;R\'B781k<\'4/","%aN";"%\\d1X$!t<#",".XJ7801z=";"%7/5nGlE";"%s6og+A<",".vNtzCz==","%q4/Hdt;n`U";"%:$AQW$,kd";"%@O-^RKgRF";".P4T3Dk==","%]7og5e&MmJ";"%kN;##FS\\+","%*,s4r\"*","%Eq#\"hn7t/H";".4ae4nF==";".6TQ7ZsnyS0HMgwqvYzKG+5bVi5DOQYsEec5qA1zbWLY4Hp4HEzj7i1VDyH6M6BP=","%hijBS",".rzpUXt2I";".veG90Ur+qjeRcGkabimDhkuZe+r4dqWtrSdVz/o6eSCC",".bjDe9k==";"%ckNFVLj";"%kb0VYGrp","%i\'(R,:Z","%4#/0KY#H"}for B,d in ipairs({{(1366390593-(-144732))%13944238,2350821229%9365808};{60307+-60306,-480532+482580};{910613-(499813+252598582)%4424383;-740698-(-1117604-(-373485))}})do while d[387855-387854]<d[-485696-(-485698)]do H[d[296351-1439331496%9657954]],H[d[(-1022073+1140404)+-118329]],d[715043+-715042],d[132797103%879451]=H[d[(1486108753-450701813%3716354)%6213748]],H[d[421645+-421644]],d[1144345729%(8537499-(-402702))]+1980785071%9256005,d[297022+-297020]-(508644-508643)end end local function k(B)return H[B-138049781%5749353]end do local B=string.sub local d=H local x=string.char local D=table.concat local K=table.insert local z={K=-744325+744329,["3"]=125425238%1320265,["7"]=-927019+927039,k=3178592457%16641845;["-"]=1033990791%7385648,N=-453698+453709;Z=1806586155%13896816;A=124266-124223,q=-397797+397845;[">"]=3234369128%(6733040301%(26373610-(-75196))),[","]=(-608996+-51440)+(915134+-254667),["<"]=-857184-(-857217),i=28654+-28645;F=-647497+647534,["%"]=-898568-(-898608),_=237959-237900;M=(((-301894-((-151356+-287496)+229468))+83533040474)%430614116-51187)%5813320,["."]=229757903%3766523;W=215426-215412;b=131721+-131706,["2"]=(1038731+-123926)-914787,["`"]=388673-388670;["4"]=222978+-222957;["="]=667076+-667020,["\'"]=-349032+(-308215-(((((-1667663-(-337678))-(-55170-(397961+-599590)))-(-929584))+-380187)-(-269759))),V=-272406-(-272473);Y=850350+-850312,e=-227358-(-227426);["6"]=212223+-212165,[";"]=464251-464244,D=-388580-(-388657);f=(-252556+1003519015)%(801374+5799063);["+"]=345630-345578,P=-525498+525553;n=870114-870104,t=288547+(-74780-(941112+-727417)),h=794278+-794262,["$"]=((-269017-492873088%16987979)+769285)-(-876711+1155217);L=(177455+885284084)%(778871417%12284078);["8"]=3711692492%16423418,["?"]=634080-(963166-329143);U=782828+-782783,S=297040+-296998,["@"]=30325+-30319,m=935655+-935605,["("]=-691063+691133;r=393265-393204;I=446037804%6371968;O=-124632+(-354330-(-478994)),Q=(-189009-848223)-(640081+-1677359);l=957363719%12433294;["9"]=-662931-(-662980);C=211478-211418;o=2062033431%13303441,E=(25060-645668)-(903414+-1524048);["5"]=2248300806%14320387;X=(478205-(1155911-384273))+796333925%16937030,["\\"]=470557+-470521;G=(-1771265-(-1029617))+741726;p=-351366+608158976%3871386,[":"]=187085520%4350826;J=954418+(363407+-1317797),["#"]=963848-963836;["/"]=448052+-447969,j=(370943+-1043597)+672720;["*"]=((526747-(-390921))+(-137800+-1525803))+745965,a=(2769226185%15211655+1035197088)%4465095;B=(64496+1718784521)%6736963+-923368,["]"]=9885470%254751-204863;["&"]=-285415+(627456-(915185+-573166));["0"]=-534003+534042,s=863818+-863793,u=(55671946-(-874851))%1615622,[")"]=935919-935840,["1"]=(68998073983%403584825)%2966822;["["]=-904961-(-904995),g=(-351933-(-530545+291277))+(-522490-(512408+-1147637));["!"]=(-133157-(-544909+-289381))-701132;["^"]=821019744%3585239,T=((-123659+-104914)-(-91903))-(-136723),["\""]=1993106496%14985763;d=177239867%((-694502+6924188)-512273),R=-340268+340287;c=2558439446%11027756;H=540895+-540815}local Y=type local A=string.len local a={b=(659126294-(-977931))%6056002,["1"]=12191457%68491;k=(-1315821-(-947881))-(((-1342246-(-251579-158349))+748268)-(519836-335930)),W=(1265293859-(-254307))%15819352;o=-397050+397083;K=-12335+12380;B=(270040+185129130)%12359944,u=1424568480%6166963;x=-600899-(-600910),j=(-1235822-(-391916-464613))+379319;y=1060697210%5356956-19914,A=559307-559257;h=-403019-(-403024),S=-1005155+1005170;G=277711525%1348114;i=2623777719%14182582,L=1357897237%5878343,w=3137303140%14457618;f=-394900+394903;a=(-176777+(38758+613288))+-475213;["8"]=-588528-(196757-785303),d=755884-755846;c=-217093+217148;["6"]=2063530176%9171245,J=470895-470853,e=534531+-534511;["3"]=-592206-(-592268),E=(63203373446%407811007)%(273980998%11823831),I=-44794-(-44841),H=277704403%8958206,Y=-833201+833240,r=-143744-(-143773),C=1934430830%13527488;["2"]=(14677360-(-973672+572128))%2888306+(-389683+-247667);D=1719878869%(-1019806+12409732);O=-1006674-(-1006675);Z=((-108653+-78775)+2038268632%13857405)+-1042608;F=-944894+944926,V=635869-635841,Q=248736+-248700;p=-858483+858508;n=-884896-(-884905);t=882107223%14950969;["+"]=1023683869%11007353,v=-224015+987098661%4146532;q=((-633616+1324336)+(-1491686-(-370576)))-(-1293428-(-863019)),["9"]=1828715041%12969610,l=917087414%(66262+(143163651641%1203176228-(-52694))%(74200+10955401))+-1015226,["5"]=-752807+752864,R=266875+-266822;X=378495285%(44926971%17056410);P=671217-671205,z=(69558391390%306447217)%4017604,T=137413276%(1971683503%26061828)+-1042038,N=-384202-(419623-803888);U=653055621%6947400;m=-629104-(-629141),["7"]=-475132-(-475186);M=-358007-(-358065),s=679803-679768;["4"]=3624421630%15896586,["0"]=-649678-(-649691),g=381899-1980670500%8017363,["/"]=2556971782%11622599}local J=math.floor for o=-614307+614308,#d,-125686+125687 do local H=d[o]if Y(H)=="string"then local Y=B(H,146831626%1957755,171869214%6608976+(830095-865932))if Y=="."then H=B(H,-176357+43112119%(-555479+3622319))local z=A(H)local Y={}local k=56078+(284976+-341053)local q=-496524-(-496524)local e=-49274-(-49274)while k<=z do local d=B(H,k,k)local D=a[d]if D then q=q+D*((443813664%(796393159%17252594))^(((-227249+(-519666+746918))-e)))e=e+2295108821%10825985 if e==629438266%3116031 then e=417349-417349 local B=J(q/(((118312+-724310)-319943)+734162077%(15866082-(-426598))))local d=J((q%((-1742757-(-947414))-(-860879)))/(443577-443321))local D=q%(-677165+677421)K(Y,x(B,d,D))q=-640241-(-640241)end elseif d=="="then K(Y,x(J(q/(173864432%(544707342%10049475-(1366846-732758))))))if k>=z or B(H,k+(-32600-(-32601)),k+(18380-18379))~="="then K(Y,x(J((q%(566748096%8854415))/(342076-((1489203-505986)+-641397)))))end break end k=k+(1015607+-1015606)end d[o]=D(Y)elseif Y=="%"then H=B(H,510902498%10643802)local Y=A(H)local a={}local k=2915177586%13554571+-944820 while k<=Y do local d=(Y-k)+(464256+-464255)local D=d>=(-508032+(2382839625-(-58492)))%10635670 and 884746505%6702625 or d local A=488423+-488423 local o=D>(-620544-(-129428))+491117 for d=1860629808%7625532,3133435414%12287982,(833254-230193)-(-555380+158342720%6549345)do local x if d<D then local D=B(H,k+d,k+d)x=z[D]if not x then o=false break end else x=15931-(-489459+505306)end A=A*(1277449275%13025656+-934902)+x end if o then local B=J(A/(17180642-2986276036%15715119))%(942369614%15448678)local d=J(A/(-135808-(-201344)))%(558497-558241)local z=J(A/(1182906713%((5035448-(-943426-(-14249)))-(-164424))))%(138388-138132)local Y=A%((358689-117274)+-241159)if D==(57636-(1142807-355522))+729654 then K(a,x(B,d,z,Y))elseif D==315397+-315393 then K(a,x(B,d,z))elseif D==(-793930+1276375)-(-135417+(-219179+837038))then K(a,x(B,d))elseif D==3127578734%15109076 then K(a,x(B))end end k=k+D end d[o]=D(a)end end end end local J,o do local B={}local d=math[k(1303192576%7320925)]local x=982774340%(5534821305%(6788867711%40749597))local D=math[k(384003940%10969644)]local K=string[k(147071771%(13048722-(-315271)))]local z=609139148%3403012 local Y=table[k(792412+-724741)]local A={}for B=247916+-247915,1027695+-1027439,-430562-(-430563)do A[B]=B end repeat local d=D(-357671+357672,#A)local x=Y(A,d)B[x]=K(x-(-83967+83968))until#A==416933-416933 local a={}local function H()if#a==-371992+371992 then z=((z*(164414+-164209)+(5155367981042-(-681285))))%((423921+180115)+35184371484796)repeat x=(x*(413480-413330))%(-986541+(890443+96355))until x~=-771908-(-771909)local B=x%((-389868-(-702879))+-312979)local D=(-507876-(-507889))-((x-B))/(((-38162+-287303)-(820613+-1359737))+-213627)local K=(d(z/(885441-885439)^D)%(230984+4294736312))/(1400392492%12177326)^B local Y=d((K%(516004-516003))*(4295651791-684495))+d(K)local A=Y%(-897112-(258226+-1220874))local J=((Y-A))/((1800920492-(-111309))%12420457)a={A%((266171+40313349)%2536204);((A-A%(-472970-(-473226))))/(58491+-58235),J%(2131584131%12535353-573865);((J-J%(79004335%((-786690+688847787)%9549503))))/(117159+-116903)}end local B=#a local D=a[B]a[B]=nil return D end local q={}o=setmetatable({},{[k(((-353574+105389367998)%537769417)%5514840)]=q;[k((180060-729934)+615184)]=nil})function J(d,D)local K=q if(K[D])then return D else a={}local Y=B z=D%(-217416+35184372306248)x=D%(658837+(176893-((-889431+2449504)-724598)))+(-1002704-(-1002706))local A=#d K[D]=k(905372+(-951135-(-113353)))local J=-811010+811233 local o=k((149510386986%701989588)%4442108)for B=-481488-(((741131+-1588515)-(-516139))+-150244),A,996915797%4702433 do J=(((string[k((((627091+-186103)+-796149)+2232422684)%9417721)](d,B)+H())+J))%(43068928%7178112)o=o..Y[J+3285635706%15720745]end K[D]=o end return D end end local B={}local d={}local function x(D)local K=d[D]if K~=nil then return K end local z=B[D]if not z then error(o[J(k(206930+-138416),663044+26551269709432)]..tostring(D))end local Y=z(x)d[D]=Y return Y end B[o[J(k(1277+67227),662307888%((44460733983%370591737-((-179792-605098)-(-65623)))%15381176-(-898664))+1681974824676)]]=function(...)local B=...local d=B(o[J(k(49890896%(2181667377%15578529)),5758546410491-285865)])local x={}x[o[J(k(((-794406-(-225425))+-186259)-(-820793)),-370059+8406332472428)]]=x local D=1.3 local K={[o[J(k(-125807+193208),10841370829910-492085)]]=true,[o[J(k(3366199047%14446921),-558734+8331382471911)]]=true}function x.new(B)return setmetatable({[o[J(k(-382663+449360),-358917+33058798312849)]]=B;[o[J(k((2026607295%10180699+-1246029)+663195),1047096+23899531704184)]]=-math[o[J(k(1538413956%(11936809-193691)),7345716812371-824144)]];[o[J(k(-231821+80981507%(461299+406256)),(-783221-156877)+21551699777353)]]={},[o[J(k(782347+-716275),30696811450646%(21584+(61394180760628-576829)%1705394318871))]]={}},x)end function x.step(B,x)local z=B[o[J(k(252581-184808),3408201475779%148182923766-(-557166))]]local Y=d[o[J(k(((1433732-435239)+(143359+-1430497))-(-356815)),-748616+9326025673305)]]local A=d[o[J(k(634133482%3390723),-588930+5923637369423)]]if z(o[J(k(441097-374044),-639908+9252351994053)])~=true or not Y or d[o[J(k(-508610-(-574871)),12503033549981-373714)]]or(A~=o[J(k(1831989512%8033254+-340010),462145180627-(-897347+894276))]and A~=nil)then if next(B[o[J(k(984631+-915951),4093776548017-(-178723))]])~=nil then table[o[J(k(712699+(-912671+265737)),915073+6166446760307)]](B[o[J(k(-584573+653284),154103+(691130+30269424947752))]])end return end local a=z(o[J(k(-118846+184301),24308512554656-854851)])or-770190+770200 local H=((z(o[J(k(-662731+729186),((-607787+979972)-856173)+29292945460260)])or 666785180%2899066))/(-119696-(-120696))if z(o[J(k(159799+-92339),20629194527496-((-13481-(-717685))+-155979))])==true then H=math[o[J(k(-331231+397002),-834930+28669621124825)]](H,.15)end local q=B[o[J(k(-785450-(-1397403-(-545208))),33735809124439-(-1034500))]]local e=B[o[J(k(-278924+344580),-85512+27088085569793)]]local b=Y[o[J(k(-430236+(776765+-280738)),670079+5329265420572)]]local s,j,t=d[o[J(k(-549475+615915),-272832+27013701434683)]],d[o[J(k(797166+-730596),(34192143995627-880293)-605337)]],d[o[J(k(676608+-610895),34303625423551-43287)]]for z=293161+-293160,d[o[J(k(476849-410517),302957+16186324607225)]],3087300811%(411346+11695716)do if t[z]and K[s[z]:GetAttribute(o[J(k(42392222%320641),-121101+2417290950210)])]then local K=j[z]local Y=b-K[o[J(k((-991239+882964)-(-175898)),7674209457392-226479)]]if Y[o[J(k(2762312243%12788171),9945310093848-(-488309-8438))]]<=a then local A=s[z]local a=q[A]or x e[A]=a if x-a>=H and x-B[o[J(k(930893+-863526),12102070700520-(-365960))]]>=D then local D=Vector3[o[J(k((765207-358654)+(39454-377371)),668406+12860603144254)]](Y[o[J(k(-157095+223631),9068539383332-88567)]],499582-499582,Y[o[J(k(61027+6807),19218968811677-(-588024))]])local z=K[o[J(k(238663212%1428712),(32257419779684-(-1001856))-(-21638))]][o[J(k((-724106+(1132534-36845))-303371),33553105268240-339289)]]if D[o[J(k(552762+(-891015-(-405241))),673187+(3633921698683-324319))]]<-235054+235055 or(Vector3[o[J(k(211758+-144568),25977277823500-146879)]](z[o[J(k(558608-490994),12421725632903-(126328103011%(18876269745%629444424))%9630305)]],473471425%12796525,z[o[J(k(-758915+826443),6676+6942124873014)]])):Dot(D[o[J(k(746205+-680199),-637535+16350505810659)]])>-0.2 then local D=d[o[J(k(452303+-383853),518141+26975441850241)]](o[J(k(550803+-484681),35118669109808-655368)])if D then B[o[J(k((58484736564%749836472)%4270065),700573+24746742199238)]]=x d[o[J(k(1114451-(-136490+1182446)),(-457468+1248649)+16093802222970)]](D)end end end end end end table[o[J(k(581766837%(4315607412%29857285)),1.9741845548332e+14%1811178610601-(-404131))]](q)B[o[J(k(244189965%1922235),996240+((-1957478-(-1035142))+11799110375798))]]=e B[o[J(k(16247+51725),26995384256320-(-965122))]]=q end return x end B[o[J(k(865250449%9831617),16431274853384-344900)]]=function(...)local B=...local d=B(o[J(k(1084643-1018126),24305736215034-(107976-(382938-133485)))])local x=B(o[J(k(2206576993%14054195),904129+21524721581769)])local D={}D[o[J(k(522806224%3394418),238091+28404404552944)]]=D local K=1.1 local z=2225724%9892 local Y={function(B)return B[o[J(k(-940073+1005628),(11614835784562-(-996531))-61969)]],B[o[J(k((352381-740523)-(-454862)),(227227+-93218)+32993700086456)]],B[o[J(k(-251301+316955),-318148+34965785363774)]]end;function(B)return o[J(k(77764-(548762-536750)),12602957396798-(-225240))]end,function(B)return{[o[J(k(-377575-(-445172)),23493316848331-(-603456))]]=o[J(k(38263638%12731837),18866160207523-(-262717))]}end}local function A(B)local d=B[o[J(k(701779138%(746761+7606956)),4890610240560-94012)]]if d[o[J(k(507514-439877),-348111+16792693197612)]]==nil then return false end local x=d:GetAttribute(o[J(k(-295113+363027),138577+5294202265624)])return d:GetAttribute(o[J(k(19405-(-47301)),8842106339025-(91112-((-601091+416837)-(-720376))))])~=B[o[J(k(1151651898%6813193-153917),490405+21467785002017)]]or(x~=o[J(k(128039+-60449),(29262513159747-677850)-(-496466))]and(x~=o[J(k(-528511-((617000+-1397383)+184149)),-689318+19695847266620)]and x~=nil))end function D.new(B)return setmetatable({[o[J(k(608054004%13510836),(529247+22769551560180)-(-537226))]]=B;[o[J(k(-217757+286387),3431057864200-(-889316))]]=-math[o[J(k(1099543073%(7012285-765253)),(443285-944372)+9285815375941)]],[o[J(k(-81375-(-147013)),(-217680+(91849+809003620)%5771265)+16469675336967)]]=263714+(284560-548274);[o[J(k((246321+166300)-((186176+-360931)+217669705)%4523947),-383259+7083939147256)]]={},[o[J(k(762512757%4883137+-677805),99465550089768%((296630-728711)+(8288796651411-(-173471))))]]={}},D)end function D.step(B,D)local a=B[o[J(k(-23731-(-91447)),-576249+16638666076040)]]if a(o[J(k(127093791%779301),26258376660943-(206087+-857813))])~=true or D-B[o[J(k(186988-118467),17093776852655-307571)]]<K then return end local H,q=d[o[J(k(1014701+-946827),14378558097230-(1089386-205911))]],d[o[J(k(-47683-(-115410)),(476798+-322457)+(25357490347291-(-967414)))]]if not H or not q or not d[o[J(k(-748732-(-817275)),-801979+(16791851101544-(-82107+363316262%3391583)))]]then return end local e=q[o[J(k(1024008-955960),17403789303987-(-1033412))]]local b=d[o[J(k(259901-193376),23466532397045-851645)]](e)if b and b<z then return end local s=d[o[J(k(2123839127%13029270),171519389034-((-2224987-(-690695))-(-732240)))]]if s~=o[J(k((139452787709%2145651295)%10495232-506620),13662906693989-(-302566))]and(s~=o[J(k(-645269+712859),32858341280246-((667628+-1448677)-(-944180)))]and s~=nil)then return end if d[o[J(k(((726193909328%(16783384606518%80689353049))%524037800)%4534431),-31497+(27495681137576-(-213979)))]](e)>((a(o[J(k(2238075936%10168302-981626),16565740058505-640694)])or 96255+-96248))then return end local j=d[o[J(k(2311938005%11114762),-714893+19420250701307)]](o[J(k((26061359640%120718659)%3954795),813262+13083962025684)])if not j then return end local t=d[o[J(k(392200+-324717),287521+11295111946228)]]()or d[o[J(k(40353-(-25515)),570565+8078403402301)]](q[o[J(k(184567-117155),24240107508838-(-347808))]][o[J(k(371449932%9773263),((-366145+2722865064940)-912243)-(-627801))]])if t[o[J(k((59059229-(-837333))%2492933),8049601727411-(-903306))]]<.01 then return end t=t[o[J(k(-908383+(-394827+1368919)),912722341421-598197)]]B[o[J(k(964312+-896424),30740827976825-40917)]]=D local T=x[o[J(k(10169+57992),14369348939607-(-233710))]](o[J(k(-21139+89268),33488534789912-870307)])local h=if type(T)==o[J(k(-841-(-69551)),24583581533136-42757)]and type(T[o[J(k(-667120+734637),481565+31053696063256)]])==o[J(k(-98924+166373),(508618+21370804292935)-162492)] then T[o[J(k(-272332+339672),(((231670+(17518543161%101911923-796583))%1648799+-414177)+735223)+19113737320952)]] else nil local E=B[o[J(k(120539+-53364),-380207+13309603894854)]]table[o[J(k((-193980+531498)-(311255-40782)),((-1311362-(-486938))+31447502652264)-(-517180))]](E)if h then for B in h do if type(B)==o[J(k(-364147-(-432565)),65369+10400588453315)]then table[o[J(k(-132260+200183),196608+(-85801+(((-482695+33108372567075)-807212)-681494)))]](E,B)end end end if#E>(7130+(-752446+146807228))%6085913 then table[o[J(k(784956579%9233988),26592865894237-(-513187))]](E)B[o[J(k((1034967-869420)-96843),8139749532141-572740)]]=B[o[J(k(118276+-52491),10190116798388-(-844046))]]%#E+(1036930-1036929)local x=h[E[B[o[J(k(43582900%(104511193%3119911)),-529301+4920631107433)]]]]local D=x[o[J(k(-522193-(-590663)),((-585138+904443)+38120429899733)%19060223213538)]]or#x local K=table[o[J(k(38194-(-28506)),1.6940055474569e+14%3850012764416)]](D)for B=(((-980012+1209506)+-260464)-(-35500))-(342344-337815),D,681182-681181 do local d=x[B]local D=typeof(d)if D==o[J(k((-13529-(-215590))+((39956+-656099)+481563)),(673990-139495)+4760307190768)]and(d[o[J(k(-254632+321459),(2755047780888-588437)-17572)]]>.01 and d[o[J(k((329361485-677589)%7824205),326613+18310528416843)]]<403931+-403929.5)then d=t*d[o[J(k(353381913%4976266),916279+16567445969041)]]end K[B]=d end d[o[J(k(932983+-865105),-980082+21140248242262)]](j,table[o[J(k(837968585%3565545),25704132333437-(542031-1042815))]](K,-641545+641546,D))return end B[o[J(k(1996284696%16635134),30167055086740-(-420644))]]=B[o[J(k(-62719+129132),-14776+24798346175865)]]%(841466402%11219552)+(-14659+((-683167-69128)+766955))local f=H:GetAttribute(o[J(k((984441+-1468128)+549053),-919812+8327401485500)])==o[J(k(1071981-1005816),433849+10837626696428)]local n=B[o[J(k((67247510164%375716888)%1795322),387801+19471212752889)]]n[o[J(k(721938009%4877501),28600619653087-(18799+-450752))]]=H n[o[J(k((1506792454-(18320-931139))%10541785-162978),10867505191288-(52211+165965))]]=if ((B[o[J(k(2176949315%9718221),-172468+25178281912333)]]==747903+-747902))==f then o[J(k(846809+-780309),-559097+4854198690526)] else o[J(k((64288+-838523)+1213803908%14440023),(-227351-(1028869+-2054056))+(20023399166047-(-219250)))]n[o[J(k(739757054%4455974),16652908690628-(-584127))]]=d[o[J(k((575940+-314297)-194768),-879686+14144115426095)]]()or H:GetAttribute(o[J(k(956757-(1605999-715837)),-203199+16438352165076)])==true n[o[J(k(-940843+1006158),947549+17880176861059)]]=d[o[J(k(-691248-(-758899)),86512+35113146023171)]]()or Vector3[o[J(k(124458-(-894597+953438)),((-80773+-702348)+(26173016627056-193402))-728007)]]n[o[J(k(-35345+102043),218911+32329695776985)]]=H:GetAttribute(o[J(k(-300071-(-367384)),-136548+(-497326+19532647538381))])d[o[J(k(588720-520557),-374436+32736444595066)]](o[J(k(-583098+650532),25655723613165-(-318619))],Y,A,nil,n)end return D end B[o[J(k((-871312-(-382109))-(-555533)),31535019351666-846283)]]=function(...)local B=...local d=B(o[J(k(-502213+568303),6385724401497-(-640129))])local x=B(o[J(k((361506+-626427)+331346),33553966698166-(-116570))])local D=B(o[J(k(876457-810815),33449084805642-(-783964))])local K={}K[o[J(k((369212+((541167+(-1692765-(2572953585%11586099+-1883635)))-579604))-(509537-893223)),899884+(-989369+12317284046429))]]=K local z=933804-933802 local Y=4.6 local A=-221901-(-221912)local a=786954+-786934 local H=949387-949373 local q=-44171-(-44177)local e=1522041508%7805341 local b=292140780.5%4173439.5 local s=(-101766-(-233063))-(15881-(-127408-(-12000)))local j=16.8 local t=.35 local T=.34 local h=.6 local E={[o[J(k(1482202105%(38439+12629387)),30215657864684-(-604617))]]=false;[o[J(k(295377897%10937466),(33899890505585-806295646%(177138+5748541))-(567129+4212539064)%16583482)]]=o[J(k(531889-(-488042+954327)),31361536153698-752076)],[o[J(k(271179552%7746068),((379424+462171)+101449)+15415743606375)]]=true}local f={[o[J(k(610911982%8726375),-602385+19688395283613)]]=true;[o[J(k(3679877029%14837949),-1005599+26876859415883)]]=o[J(k(-80434-(305508-(379439-(-74663)))),12894679862230-303648)],[o[J(k(351940+(-21932+-263879)),-789630+(945034+13230029217318))]]=true}local n=d[o[J(k(498046+-431061),745525+31260488879220)]]function K.new(B,d,x)return setmetatable({[o[J(k(23852631%1829593),-1012235+25264232053145)]]=B,[o[J(k((84363-828532)-(-809575)),21900763125774-1002774)]]=d,[o[J(k(-844125-(-157737-754023)),-266402+32641511295207)]]=x,[o[J(k(404030358%2183580),(1026327+-1231771)+((15544403508547-(-42152))-(-199787)))]]=-math[o[J(k(-590645+1226809662%10050440),256055+19906878758114)]];[o[J(k(903218+-834857),(12610641686598-796192)-(-275209))]]=false,[o[J(k(-483110-(273563+-823973)),-730284+(220905120%10472337+13722965119328))]]=false;[o[J(k(727346-659007),29286167465149-1045056)]]=false;[o[J(k(1150778419%8989936),430068762293-410355)]]=797804-797804,[o[J(k(513121+-447431),-1006703+2805630808358)]]=nil;[o[J(k(2850135612%14767203),6556043356090-528889)]]=nil},K)end function K.idle(B)B[o[J(k(-412331-(504158-984913)),12112766832083-(-487288))]]=false d[o[J(k(624443-555914),(14064741835063-239414)-(-463306))]](o[J(k(923834+-857953),5405157026462-138501)],false)D[o[J(k(67416300%4810702),34852931968776-4160)]](o[J(k(62675534%411892),-8728+19187317732)])end function K.finish(B,x,D)if not B[o[J(k(72901702%4855586),903558+33691292429532)]]and((d[o[J(k(1157488387%(5484163-(-1018206))),-293121+((-176498-(-538354))+31465486652606))]]==o[J(k(1733394015%9420260),15248027775525-(-1103251-(-586729-119330)))]or x-B[o[J(k(383525+-316086),494983+1112027408659)]]>=1.2 or not D))then B[o[J(k((-341748-691877)+1101195),-42499+4426451172832)]]=x end local K=B[o[J(k(749752629%10269668),4.2438943232091e+14%15156766037606)]]if K and x-K>=.15 then if not B[o[J(k(-973946-(-1039667)),8709049567857-(-816186))]]then local B=d[o[J(k(1104415-1038004),29244208026991-(483962-1019981))]](o[J(k(-749327+815986),20958426052427-(-430819))])if B then d[o[J(k(101576-(3648+29440)),-878074+33344779351138)]](B,E)end end B[o[J(k(-838001+904183),24012004599558-669531)]]=false B[o[J(k(-293915-(-729296+369842)),8127432509482-665540)]]=false B[o[J(k(887630+-820381),32594524489639-((-981716+793913)-(-133015)))]]=nil B[o[J(k(20072+47511),126464+21660178662668)]]=nil end end function K.step(B,x)local K=B[o[J(k(1163687704%6649258),(28119+4325969301275)-(-133597))]]local Y=K(o[J(k(3032353114%13783124),15905300952173-(-572082-(-81766)))])==true if B[o[J(k(422632-356968),12158363062168-(-389108))]]then B:finish(x,Y)end if not Y then B[o[J(k(-292012-(-360349)),487743+24028406057915)]]=false end local A=Y and K(o[J(k((943836-583343)-292248),8886984637250-736411)])==true local a=if B[o[J(k(-693227-(-421610+((-10246+-298943)-27906))),1527805683%10459192+14358818376932)]] then B[o[J(k(540448-((-749998-(-470124))+752081)),(7.9605962744613e+14-(-221310))%(-766987+4766824918534))]] else nil local H=false if Y and(x-B[o[J(k(95002-28254),28377168983245-(-909411+36609))]]>=z and not B[o[J(k(79327140%330251),-513117+(32813044641487-(1719131-753669)))]])then a,H=B:plan(x,A)elseif B[o[J(k(715152585%3783517),12056629794117-55605)]]and a then H=true end if A and a then D[o[J(k(1147460242%12608717),385910+33997412932156)]](o[J(k(-698014-(-763777)),23899861615221-((-681210-256986)+1082037))],a,j,false,true)d[o[J(k(757903-(-657788+1350162)),9716893348705-(-113565))]](o[J(k(-940029+1005845),17068001196317-671433)],H)else d[o[J(k(907852+-841451),(-263369-(647479+-407063))+21506816087980)]](o[J(k((-292666+131870543651%1081037307)%9678824),-787594+13556170542691)],false)D[o[J(k((-782900-3529)-(-852162)),15872857266149-(239206+-1202225))]](o[J(k(898005995%15744752+(-247002+-240162)),190839+17818902767985)])end end function K.plan(B,D,K)local z=B[o[J(k(-394518+460986),(964000+28533773161281)-468300)]]local j,E=d[o[J(k(144852-(78125-(-398))),21470454624449-(-246464))]],d[o[J(k(300067+-231702),845151+32688598403816)]]if not j or not E or not d[o[J(k(-68975+137630),(25394042808408-1028884)-1047928)]]then B[o[J(k(865614+-799722),(-281536+-41626)+23845327116221)]]=false return nil,false end local R=d[o[J(k(967426096%5559542),11839166276776-475556)]]if R~=o[J(k((470306+-953655)-(-550939)),1.8564147327368e+14%8438248946318)]and(R~=o[J(k(683019-616532),-632489+5129076515709)]and(R~=o[J(k(1772047498%12657007),7123312109733-1032608)]and R~=nil))then return nil,false end local p=K and not d[o[J(k(242231354%2917655),-935713+(33256493691050-500501))]](j)local U,v=d[o[J(k(-776903+842547),-422269+16888154526161)]](E,t,z(o[J(k(606814+-539713),-51374+19045470466418)])or-817550-(-1225648-((-307150-558257)-(-457339))))if not U then B[o[J(k(-1031817+1099134),16448680128828-1190381021%((977225+-630223)+11094612))]]=false return nil,false end if z(o[J(k(-767599-(-835767)),2479423796750-748592)])==true and d[o[J(k((490502+-679550)+255003),(31722460411375-(-790723+647695))-245133)]](E[o[J(k((43892111129%256731764)%11792572),-275632+(-834774+989388085388))]])<=((z(o[J(k(152912-(299032699809%1480411904)%14270106),20058462540909-214066)])or-213694-(-213700)))then return nil,false end local i=E[o[J(k(-84590-(-150444)),(314868392089%1478331622-(-288574+-130488))%9191695+8826230185492)]]local O=Vector3[o[J(k((1448965-1008044)+-374075),-138773+(21512799939527-924371))]](U[o[J(k(524503762%6243283),26171782618543-(1649613-983310))]][o[J(k(-527454+594262),371843+33796711491073)]],i[o[J(k((-209640-(-283799))-8585),1034406+16490082710955)]],U[o[J(k((-575676-(-205896))-(-435185)),247850+23604384804866)]][o[J(k(-1035753+(760217-(-341024))),-649498+34379332112699)]])local W=n(i-O)local X=if v>.1 then W/v else -n(E[o[J(k(572656485%3196006+-505791),7884931752718-(-824544))]][o[J(k(228531+-160501),868028287668-(-560481+-112888))]])local r=d[o[J(k(58389+972768855%12970115),129549+7367094724002)]](U)local I=if r then X:Dot(r) else -794500-(-794501)local M=X if r and I<h then local B=X-r*I local d=if B[o[J(k(920046-854539),3231258400936-(-489073))]]>.05 then r*h+B[o[J(k((220736-484961)-(-331911)),13475206942772-690468)]]*math[o[J(k((-689483-(-345937))-(-411092)),23105580832820-783138)]]((-901095+901096)-h*h) else r M=d[o[J(k((-574573-(-179441))-(-462827)),-710458+12561687279038)]]end local u=I>=T B[o[J(k(523866-457101),2616093785095-(697651-940714))]][o[J(k(1047836+-979123),24917774548831-33566)]]=D+.4 local G=d[o[J(k(1812741631%11397117+-532765),28456297077715-(-293039))]]()local Z=if G then G[o[J(k((462566+248349866)%3272988),(2648324814844-(-545032))-((-604798-(-971510))+-761204))]] else Vector3[o[J(k(697280+-628654),30744240338389-192188)]]local S=n(Z)local c=S[o[J(k(465840-399249),27798611543012-789245)]]local L=z(o[J(k(-1004195+1070783),-842085+(14453930863704-(-540828)))])or x[o[J(k(2676660792%(14905998-359296)),28145522010175-(-109788+-96096))]]local C=L==x[o[J(k((-96505+632617)+-467445),15956428930007-(-753219+(1959719-453041)))]]or(L==x[o[J(k(1888116646%8466594),(829106-116785)+2138774142010)]]and((v>=H or B[o[J(k((362354+(1442540074-572976))%(2965438614%14539094)),27805989978136-983429)]]==true or c>=b-(553837+-553834))))local m if not C then B[o[J(k(-759115+826626),-593101+19902167354563)]]=false if v<Y or v>A or not u then return if p then O+M*s else nil,false end if c>=121846-121844 then return nil,false end else if not B[o[J(k(574717722%5320838),(196383+-403723)+6378336436782)]]and p then if v<a or not u then return O+M*((a+(-848281-(((36634217447034%159974809348)%975401266)%5357884+-1580613)))),false end B[o[J(k((558446+-721339)-(-229329)),7011897912916-(-905490+1444062))]]=true end m=if p then O+M*(521255+-521252.5) else nil local d=if v>.1 then -S:Dot(X) else 91594128%1065048 if v>e or v<q or c<b or d<b*.8 or not u then if v<q or(B[o[J(k((-926317-(-437759-(-6509)))+456213235%1998463),957257+(17404083587720-708492))]]and not u)then B[o[J(k(-35904-(-102048)),29416659798525-(-610664))]]=false end return m,B[o[J(k(1040746-(-1004124+1977063)),128014+(33145429657936-(-67978)))]]==true end end if j:GetAttribute(o[J(k(130083-63314),((-789314+(785478-(-555180)))+22690428387618)-(-505985))])~=true then return m,B[o[J(k(-959013+1026717),245707+12501407173786)]]==true end B[o[J(k((645723485683%2690581341)%14858217),33490780886275-39226)]]=D B[o[J(k(-139-((-114379-(-271572))+-223558)),8013789872720-981752)]]=true B[o[J(k(590341-524375),5.1604096646632e+14%28668942964440)]]=D B[o[J(k(-491529-(185757+-743833)),8174463776265-523890)]]=nil B[o[J(k(-691621+757666),-38334+5875193353140)]]=m B[o[J(k((-613793-(-712434))+-31667),(6622309633696-552674)-(-100673))]]=false B[o[J(k(-129895+196946),433799+7621947807772)]]=B[o[J(k(285260+-217583),3821814360293-782178)]]:begin(true)if not B[o[J(k(656749+-590188),27332105831411-479260)]]then local B=d[o[J(k(347599+-280752),717554+14691511970499)]](o[J(k(388810+-320891),927584+3.4306160315742e+15%20420333614353)])if B then d[o[J(k((-369502-(-313531))+122927),7678902653497-(-683571))]](B,f)end end local Q=d[o[J(k((-186018-174152)+426646),((-60867+24073879262872)-(-779859))-514363)]](o[J(k(-978632-(-1044642)),18358947882152-643798)])if Q then d[o[J(k(-431697-(-497328)),(1627681-360548874%4384419)+17504948328096)]](Q)end return m,m~=nil end function K.shutdown(B)if B[o[J(k(-488147-(-554637)),-513819+29091679042633)]]and not B[o[J(k(3225826969%(13402399-342638)),(-345960+374159)+83481183461)]]then local B=d[o[J(k(353758+(-187337+-100854)),(15419831864933-(2818043648%16671809+-1042585))-496684)]](o[J(k(429712-361228),24357845188784-441287413%4162520)])if B then d[o[J(k(797748719%3727482),916843+1779231582412)]](B,E)end end B[o[J(k(-550053+618292),34521332148181-(-1038989))]]=false B[o[J(k(953217+-887582),-85429+19429159874037)]]=false B[o[J(k(188353-121192),20452023503403-(-850236))]]=nil B:idle()end return K end B[o[J(k((215544-903508)+754549),(-127269-(-449853))+(4489056627497-(-165812)))]]=function(...)local B=...local d=B(o[J(k(-510483+(826916-249067)),-75816+16948583124411)])local x=B(o[J(k(7707+59349),(-662829+12495959417557)-(-650454+230405))])local D=B(o[J(k(-625474+692677),(((-994140+402772)-78181631%11113635)-(-280698))+(729874+(-729136+15812877700594)))])local K=B(o[J(k(234892230%2041956),25305713064560-899671)])local z={}z[o[J(k(-285863+1695060603%8690807),1020715+6533113445896)]]=z local Y=o[J(k(1780113258%11337870),6221107029514-(-131494))]local A=o[J(k(-818796+887029),831148057569-166150)]local a=599804+-599799 local H=.8 local q=(923452.5-3825633370%((774458722663%4278850363)%21145739))-872294 local e=.7 local b=.9 local s=-674116+674129 local j=.3 local t={[o[J(k((-602090+838854)+(-779646-(-610636))),-452039+((100152+-398244)+16800534887462))]]=true;[o[J(k(710036+-643290),21916198007535-(-588850+1536241))]]=true}local T={[o[J(k(279535-213354),(7014142420912-1220421680%((-582103+611662)+8940874))-(297594-(-297640+662437)))]]=true;[o[J(k((437559-589136)+218958),19976238834537-66980)]]=true;[o[J(k((156583369653%639150062)%(-628632+4620325)),-944925+(26535716830938-(253347040%(1366238-(-154770))+-200697)))]]=true;[o[J(k((516778-684547)-(-235974)),751805+(18966926879811-1826053103%10257825))]]=true;[o[J(k(1494740857%6075912),-642253+9954377342845)]]=true}local h={[o[J(k(-379853-(-446198)),24700031984951-248246)]]=true;[o[J(k(105352921%1986509),5524996310966-(-930443))]]=o[J(k(725019974%15103189),28773572685910-((165530-(-636569))+86871))]}local E={[o[J(k(929611-(430434+433054)),30121863631379-139056)]]=true;[o[J(k(808252-739824),952732+18064794823431)]]=o[J(k(997370-928704),29772481473424-722755)];[o[J(k(113214283%(5579184-(-24401+-53763))),((-1206919-(-240309))+(-191139+24419107876300))-624195)]]=true}local f={[o[J(k((1185209665-(-428544))%((8716774-(-620006))-146314)),23070560081472-798870)]]=false}local n=Color3[o[J(k(-362640+430208),34126+15279890927100)]](-537251+((935929+-1064195)+665772),-467665+(-427053+894973),(5734778856%(8158519822%44902055))%965820)local R=Color3[o[J(k(866092+-797984),843672+23986827141014)]](-742176-(-742196),577934084%2739024,571544700%3337100+-900580)local p=Color3[o[J(k(651643+-585136),(-279465+(-850710+15501616230859))%861201257855)]]((-373159+572534)-199350,-344907-(-344932),(1801590696-(-164661))%(6668120-(-626436)))local U=Color3[o[J(k(955834+((-1370219-237229)-(-719438))),27837327973759-(-777552))]](2942870643%(3718666768%23000082),-1034913+1035148,794588-794353)local v=Color3[o[J(k(179111-111036),494665+1723946224243)]](1346416570%(-370276+16210470),-871426+871656,(-430257+(-656402+280458))+806311)z[o[J(k(-52907-(-119289)),-9930+2443777017347)]]=t z[o[J(k(-916459-(-982232)),(13173021505871-(-846795))-3906796846%15320482)]]=T local function i()local B=D[o[J(k(29342076%(1153369950%9440521)),507881+9628731281304)]](Y)if type(B)~=o[J(k(462524249%15415215),10567668847425-6393)]then B=D[o[J(k(-590591-(-656277)),1.0595513312594e+15%5118605528202)]](A)or{}D[o[J(k((112825+480713)-(984618+-459234)),-483387+10595762500660)]](Y,B)end return B end local function O(B,d)for x=#d,((1509076-703119)+-329062)+(198065622%794400-(962338-225422)),-197819-(-197818)do local D=d[x]if not D:IsDescendantOf(B)then table[o[J(k(174712+-108270),322454+29733538574119)]](d,x)elseif D[o[J(k(-834531+902620),-716508+30232956718087)]]and string[o[J(k(617496-548961),-733460+16848392523988)]](D[o[J(k((142450+(706224016-(-882089)))%5238370),31332838144465-(-920901))]],(-144122-(303040-(-403429)))-(-850586))==o[J(k((1092886-137252)-887676),29346138778729-(-946109))]then return string[o[J(k(-101014-(-166494)),-121687+7315774973957)]](D[o[J(k(871558-(1181995-377112)),2914487396001-351075)]],141154-141153,-755845+755839)end end return nil end function z.new(B,d)return setmetatable({[o[J(k(323162228%2001268-892750),54250040467364%2009261317256)]]=B;[o[J(k(((3269315687-588148)-(48818+346701115%(392191+6020634)))%12917232+-144830),9113559420094-405986)]]=d,[o[J(k((659292-1033685)-(-442792)),3533005666711-(-589768+-258063))]]={},[o[J(k((1166265713%17143345-(-578638))-1029287),359160+19539787421308)]]={},[o[J(k(261697101%16351846),-295639+2272512093612)]]=nil,[o[J(k((-457302-394176)-((-419144+38124858)%(4018552-(-583922))+-1803083)),-999847+(734486+(32735203017932-8718)))]]=nil;[o[J(k(175823513%2067721),-718644+3915268722381)]]=-math[o[J(k(-980779-(-1124655-(-77467))),2404230178432-981813)]];[o[J(k(1458539%696349),-528075+15566702345727)]]=-math[o[J(k(834367+((-193015+-744355)-((343553821%1896430+-1433170)-(-961776)))),879721+34000159997178)]];[o[J(k(((-1470310-(461441+-1360926))+381329)-(334344-590833)),10188785569376-(-387561))]]=(1828649769-3757010097%16261640)%11718452,[o[J(k(-598518+664318),8616950327440-844624)]]=nil;[o[J(k(-16445+(415258+-332446)),22791427304200-653739)]]={};[o[J(k(-841039-(-906757)),23043757162324-(-445740))]]=nil,[o[J(k(1024499-956818),-685403+18913103181378)]]=nil,[o[J(k(1177871945%8597122),14074997495774-(-851354))]]=false;[o[J(k(3219187195%16015527),367498130%3364961+2627426771736)]]=false,[o[J(k(537662+-469911),21138650691696-(-87710))]]=false,[o[J(k(((-202337+-361363)+2251884556)%8969142),48635+30265597957856)]]=false;[o[J(k((212712-567646)+(24252+396658)),24882076447264-907962)]]=nil;[o[J(k(-654068+722052),(448031+29111993197274)-937159)]]=false;[o[J(k((-208993-(-721118))+-445766),(153091719%1561995-534005)+13805192041035)]]=nil,[o[J(k(588175+-519518),(15604717173453-457307)-(-177440))]]=nil,[o[J(k(864195891%5643685-1985371758%16678382),25774565421352-(-402897))]]=false,[o[J(k(2732468564%14381053),(-1178752-(-477196))+(32175509256135-978473))]]=false;[o[J(k(785660+-719172),761275+1549695038745)]]=626983-626983,[o[J(k(555339955%3559437),309657+30409282064772)]]=nil;[o[J(k(-682972+748983),20526665494561-564122)]]=false;[o[J(k((1692472883%11669306-942410)-(-586078)),(169020+((851183-195954)+31071674709629))-(-554803))]]=nil,[o[J(k(-102911-(-171222)),-951915+1977399622486)]]={[o[J(k(629088-563766),22321941002598-(810862-85227))]]=593733-593733;[o[J(k((16858523260%702572952)%3207699),-207610+12177646732285)]]=-231498+231498,[o[J(k(-808419-(-876284)),9.0925102208385e+14%4785531735764)]]=(295634960%(468095234%53107843))%8918398+((-518972+-465346)-(-417890)),[o[J(k(964703-896675),14725252382462-(-564753))]]=o[J(k(432551-367189),(-113800+156537)+(15984687578573-(-925609)))]};[o[J(k((-825639+1279504)-1514233674%10368810),23955703430741-(-570604))]]=nil},z)end function z.allowed(B)local d=x[o[J(k(376094645%1790606),33412277361954-(-544655))]]if not d then return true end local D=B[o[J(k((113297-(127661+-700194))+(-735306+115033)),238847+(840385+2835010904819))]]if D(o[J(k(508662225%5353617),(403880+-901555)+((747328+22463698366534)-(-208290+796325)))])==true and x[o[J(k(1065763601%12996319),17714428437622-147724662%839613)]](d[o[J(k(-450380-(-517559)),34440245574329-(-35418))]])<=((D(o[J(k(-222771-(-289094)),19613488712509-(-63612))])or 14383-(92913-78536)))then return false end local K=D(o[J(k(575125-509576),(441010-700665)+19363096905111)])or 731620-731620 local z=D(o[J(k(485223-416712),-498527+27115594193046)])or-641558-(-641678)if K>711146+(-1194050-(-482904))or z<-592081+(173388701%2009763+59744396)%1421459 then local B=x[o[J(k(398421+(-1094097-((((91140+-268080)+1325709)-744498)+-1167643))),28088126091257-(1036736+-1293385))]](d[o[J(k(410711-345274),868589256924-(-127479))]])if B and((B<K or B>z))then return false end end return true end function z.peak(B,x)local D=d[o[J(k((-347089+-537298)+358476083%(15273742-2203310932%9878628)),958929427412-478951)]][x]or(i())[x]return if type(D)==o[J(k((((-1122237-(-621866-(-142791)))-257003)+1024234)-56047),-381561+3858406512388)] then D else nil end function z.canHold(B)local d=B[o[J(k(539898107%12268863),349445+11593073799908)]]if d and not B:peak(d)then return false end return B:allowed()end function z.fire(B,d)local D=x[o[J(k(-846699+912600),16552678682088-(-451552))]](o[J(k(3190580034%14177058+-675878),9.1987271341921e+14%22996818062451)])if not D then if not B[o[J(k(201405+-133429),289554+22994444726201)]][o[J(k(1059872034%6088887-337413),30650533458477-(-34698))]]then B[o[J(k((915227773-(-925846))%5295294),990876+3624618000726)]][o[J(k(774051+-705360),-741925+30477735460088)]]=true B[o[J(k(896299+-829498),557478+10136073222848)]](o[J(k(76576-10847),(679653+66432207482908)%390777736748)])end return false end return x[o[J(k(2852038311%((-246119+(((6652-(-672947))+-984762)+174059))+(428502+11402417))),(891570+-1274964)+(26877414901579-(-729941)))]](D,d)end function z.send(B)B[o[J(k(95923+((-832901-(-319132))-(-486306))),(376127+294768)+18269554728363)]]=nil B[o[J(k(-941248+1008019),28183343125970-(-604692))]]=nil B[o[J(k(812200-744434),22581730332612-(-933740))]]=false B[o[J(k((436064+(3788155841-906639))%16117527),75588212747757%2438329499024)]]=nil local d=B[o[J(k(174330+-105679),22159684331580-((-514679-(448184-902330))-(623971+-667156)))]]if d then d[o[J(k(346404-280457),(-360717+18712469819215)-(-211295-(-362124-(-558984))))]]=true end if B:fire(f)then B[o[J(k(1397507101%9442159),17854094999692-919044)]]=os[o[J(k(525377407%2750314),(561507887654-829945)-(945227-998142))]]()end end function z.settle(B)if B[o[J(k(276835934%2912882+-46557),-363582+32624817399562)]]~=nil then B:send()else B[o[J(k(3090044427%13918813),-393793+16764592695991)]]=nil B[o[J(k(105230+-38771),-616307+25891814799120)]]=false B[o[J(k(843059+-775849),82237663912512%6853138877525)]]=nil end end function z.release(B)local d=B[o[J(k(-549769+617307),34000146153165-1038034)]]if not d or d[o[J(k(-39149+105797),329480+11450081269769)]]then return end d[o[J(k(-581088+(-172655+819733)),-438705+26570311821446)]]=true local x=B[o[J(k(-277633-(-344326)),-475851+6771184805047)]]if not x or not t[x:GetAttribute(o[J(k(758179350%((4075775175-707922)%17082806)),-32236+19106139191767)])]then B:settle()return end B:send()end function z.onPress(B)local D=B[o[J(k(-369843+436579),-872778+6.2952133411536e+14%12343555621224)]]if B[o[J(k(-218060-(-286601)),19162779491376-(-80276))]]or D(o[J(k(1575798685%15601307),155952+28459115317520)])~=true then return end local K=x[o[J(k(948797+-880481),(-984478+25873902536246)-(-753134))]]()if not K or(not x[o[J(k(1358016587%13057195),(-155738-64606)+((21249150253577-791880)-(959835+-110866)))]](K)and not T[K:GetAttribute(o[J(k(129939-62958),28666779465073-(-15791))])])then return end local z=B[o[J(k(4853920%798013),5430495361049-795072)]]if z and z[o[J(k(923296+(-543911+-312176)),(4248265185278-(924397+-944895))-(-36293))]]then return end if B[o[J(k(18683682%(1357394668%6995583)),898727+23083477099246)]]~=nil then return end local Y=os[o[J(k(381635150%3848667+-549740),(968430+-1155535)+1734008109863)]]()B[o[J(k(-845636+913343),34497258822809-(-330717+-305944))]]=Y B[o[J(k((((-653989-(-982523-(-594767)))+-709633)+1428088)-386062),(-1207821-(20766+(-776116+-81245)))+14094699084981)]]=Y B[o[J(k(-929732-(-997001)),(13371389288790-330000)-(-101377))]]=Y B[o[J(k(11745+56722),52153+(-552739+23872073346473))]]=nil local A=false if D(o[J(k(-616687+682333),29259819766727-(-672420-(-405238)))])==false then local B=x[o[J(k(-372093-(-516774+78165)),(943893+694988858143)-(908558-1011429))]](K)local d=if B then x[o[J(k(113892+(-541626-(-496091))),33959773136359-163968)]](B[o[J(k(-917945+986368),534682+34772665931704)]]) else nil A=d~=nil and d<=s end B[o[J(k(1661902453%14326153),404982+(11111174672078-(-153576)))]]=not A and(B:canHold()and D(o[J(k(536704+((344577+-943382)+128586)),8727121485416-30502)])~=d[o[J(k(-266231-(-334759)),15429542198861-(-71984))]])end function z.begin(B,d)if B[o[J(k(173124115%1479118),4858377929571-843485)]]or B[o[J(k(-22597-(-89759)),(-367664+1372166999%((89279+10093330)-919814))+4227937633511)]](o[J(k(1005717806%5465488),595362+28073483371490)])~=true or B[o[J(k(971078-903674),-703208+24485235113422)]]~=nil or not B:canHold()then return false end B:onPress()local x=B[o[J(k(410507804%2345370),753420+3308644517607)]]if x==nil then return false end if not B:fire(if d then E else h)then B[o[J(k(977048062%6556923),29431093486213-(-827914))]]=nil return false end B[o[J(k(-602303-(-667981)),-638146+23084870987766)]]=x B[o[J(k(-223477+291066),6638690914553-912747)]]=true B[o[J(k(((1054093084-(-764435+((-698048-(-885938))+328100)))-(346676-(-475702+957563)))%9585548),-312527+19810416611251)]]=true return true end function z.holding(B)return B[o[J(k(108103254%1543363),26653978195754-805691)]]==true and(B[o[J(k(2482294364%(14318210-528059)),-944728+12772141139021)]]~=nil and B[o[J(k(218237+((387331+(986998040-(-83419-(-793309)))%6708580)+-663919)),1361642412248-(-444225-16760))]]==true)end function z.dropped(B)local d=os[o[J(k((-867521-(-359736))-(-575493)),6659491734201-997809)]]()return B[o[J(k(-366540+(590367+(823394-980422))),29095006132399-(-541312))]]==true and(B[o[J(k(-837398-(-904708)),623822+14593925681561)]]==true and(B[o[J(k(1703722808%7188415),9782612560384-(-539041))]]~=true and(B[o[J(k(418805156%(3764342-(-77292))),(-750360+141896)+(-850377+1397475472768))]]==nil and(B[o[J(k(788839852%7584340),14127046324633-889261)]]==nil and(B[o[J(k(702454+-635773),-1030336+32847040780731)]]~=nil and(d-B[o[J(k(-627038-(-693559)),33788414958649-(-303554))]]>=.6 and d-B[o[J(k(106324558%948722),2962045923020-(-995176))]]>=729810-729809))))))end function z.rescue(B)local d=os[o[J(k(-731872+798730),-64360+17543170059076)]]()B[o[J(k((-149339-(-74694))+141002),-105144+1488748019625)]]=d B[o[J(k(-1029538+1097887),((582937-(-86337))+-335912)+(-864565+(-144767+6385891267629)))]]=true B[o[J(k(75427573%593395),3022982177483-127294779%723625)]]=d+e end function z.passed(B)if B[o[J(k(1358435676%7342528),27519665421062-((990174+(-2190311-155667))-(-1012645)))]]==nil then B[o[J(k(786348546%8105994),16535448682583-(-1019796))]]=nil B[o[J(k(-707503-(-1586168-(-812957))),103585+(32044461974545-628190))]]=nil end end function z.sample(B,d)if d~=B[o[J(k(-625598-(-693176)),4586193312117-(-795040))]]then return end local D=d:GetAttribute(o[J(k(-100076-(-166315)),297934+16351786968596)])local K=typeof(D)if K~=o[J(k(367262-301657),28851042031390-(503699-(672380-860445)))]then return end local z=D[o[J(k(1165929935%5473534),15470368765933-487354)]]local Y=d:GetAttribute(o[J(k(-744776+(-107018+919212)),-959297+(-845564+14517406972176))])if not t[Y]then B[o[J(k(-880027-(-946330)),8922859679570-(-768085))]]=nil return end local A=os[o[J(k((259207956805%1864862178)%8440492),-23414+33791365418952)]]()local a=B[o[J(k((1018213+-1675835)-(-725174)),616778+5384189725748)]]local H=B[o[J(k(1299186466%11009474),25473755292028-(-705520))]]if not H then local D if math[o[J(k(1673051073%8364923),21513881999928-(-324795))]]()>((a(o[J(k(177833+-109506),14068400353673-(-86388+(1193989-299998)))])or 635085557%10411237))/(135628+-135528)then D=((if math[o[J(k(179540265%1255065),22859844299379-(685280-879834))]]()<-360651.5-(-360652) then -600440-(-600439) else -494979+(-1013690+372345254778%1970159050)%15384604))*((.04+math[o[J(k(8210368%((998403+42314491)%1927643)),(583535+2057122170031)-298645)]]()*.05))end local K=false if not B[o[J(k(150928+(30350+-115243)),205739+19295932786748)]]and a(o[J(k(962648-895823),(-367480+28425818691962)-(417041+321778))])==false then local B=x[o[J(k(-653434+721159),(5059273874419-1017936)-615306)]](d)local D=if B then x[o[J(k(((3085515870%12048105-550160)+-1382722)-(-150057-648317)),111178+5417546632694)]](B[o[J(k(-789103+857138),46646554394982%203696775078)]]) else nil K=D~=nil and D<=s end B[o[J(k(1860967770%10946466),17500592965379-(-904732-(-744207)))]]={[o[J(k(-694176+761840),549158+(-741079+5173609989443))]]=A,[o[J(k(670723585%(784804+(5649699-(-935336)))),26160257239018-(-971269))]]=z;[o[J(k(434232+(-136058-230520)),20008591602516-561586)]]=z,[o[J(k(-169691-((956990586%9663505+-1167122)-(-625302))),(20400274579270-1029908)-594699)]]=false;[o[J(k(974506-(-279279+1187157)),509916+26753692824134)]]=nil;[o[J(k(78152216%4593291),170253894%((729305+-28505)+1723379)+16975046460262)]]=D,[o[J(k(358793+-292661),(398570+2171864996053)-(-974641))]]=not K and B:allowed(),[o[J(k(-141489+209348),784456+7754996523676)]]=if Y==o[J(k(44983638%14972617),(572576+(692513+(82778+5876169488059)))-(-881815))] then A+b else nil}return end if z<H[o[J(k(-598300-(-666871)),((765833+-830181)+(-576595+34194129630452))-(-597715))]]then H[o[J(k(290805352%3928916),(-547485+(-255337+7938487386080))-702001)]]=z end if H[o[J(k(299316+-231065),29046209954297-437229)]]then return end if a(o[J(k(-162507+231068),(409366+45565698797777)%6509385619287)])~=true or not H[o[J(k(-552355+618832),28414953554354-1038070)]]then if B[o[J(k(-407983-(-475850)),(-404794+722889)+27196940539279)]]~=nil then B:release()end return end local q=A-H[o[J(k(169023716%1104284),18250999504108-(-600562))]]if q<.02 then return end local e=H[o[J(k(546244-478816),9152196570979-872860)]]or O(d,B[o[J(k((3173339375%(1058563261-(-344056)))%8181839),11754972781942-(-316073))]])or o[J(k(500089340%10000435),-790093+16548220493617)]if e==o[J(k((-690754-69730)+828074),72130006612931%(622162+538283128793))]then return end if not H[o[J(k(-726652+(-47460-(-839627))),21435765994764-(-634235))]]then H[o[J(k(179725-3355938222%(13253368-(-544374+(-1041572+856711)))),-409974+450305614590)]]=e B[o[J(k((16352460-163385)%2015372),((-129513+11696492051093)-334923)-(-1029895))]]=e end local j=B:peak(e)if not j then if not B[o[J(k(246608+-180033),691773+9292583618080)]][e]then B[o[J(k(744144+-677973),23667069569477-(-3702))]][e]=true B[o[J(k(250304+-182372),23721356959166-477797)]](e..o[J(k(-945647+1011401),33240701999845-(-176731))])end if B[o[J(k(492301199%5657854),-652120+25164668568030)]]~=nil then B:release()end return end if z-H[o[J(k(449237-383518),-237226+9898790079444)]]>.012 then B:release()return end local T=((z-H[o[J(k(-281685-(-350367)),91510959158286%10167884478985)]]))/q if T>=-0.05 or H[o[J(k(205478+(855168-(-299285+(1055373-(-236878))))),20112717208507-941995)]]then return end local h=((j-z))/T local E=((h-(x[o[J(k(-801398-(-868439)),(33048743349536-(-175725-222348))-611747)]]*((a(o[J(k(-1048122+((-231074+367503)-(-979138))),-648857+(-118023+(1013124+31762596586762)))])or 265228-265128)))/(1188669637%((-892575+422728926%7387552)+11260876)))+((a(o[J(k(-961269+1027660),-693061+1048291823323)])or-820603+820603))/(963320+-962320))+((H[o[J(k((-648868+(792051-256455710%(10710091-(-399269))))-(-862866)),32092242005033-827519)]]or 636918+(358497371%10242250-(-396954+1052493))))H[o[J(k(-189383+256785),244349+18294774786676)]]=z H[o[J(k(-249045+316454),248697+12474797442607)]]=A H[o[J(k(1564289816%14350653),1016539+30211604461788)]]=T H[o[J(k(-459417+527983),-378850+17713094048055)]]=j H[o[J(k((633523+-1109501)+543203),17009402863312-653719)]]=A+E if E<=1793458800%10248336 then B:release()elseif E<.05 then H[o[J(k(2378694127%11717377),-384637+22406019867400)]]=true end end function z.rated(B,x)local K=B[o[J(k(131207+-64407),153204+4058685354099)]]local z=os[o[J(k(-885496-(-954040)),-139309+13379411904388)]]()-B[o[J(k(-913333+978785),412649+(-624220+13848651132580))]]<-655032-(-655034)if K and(K[o[J(k(-665325+731306),33072941077202-(-680027))]]and(x==a and not B:peak(K[o[J(k(1514957811%(-719380+12283440)),-186235+3048294568011)]])))then local B=i()B[K[o[J(k(721904-654913),619472+29397250840657)]]]=K[o[J(k(-587647-(-653136)),-408671+34494345686755)]]D[o[J(k(-193025+260623),31073879892430-505473)]](A,B)end local Y=B[o[J(k(-251031-(-317817)),434716416184-(412679+-1241665))]]B[o[J(k(847139-780534),23497393852312-(-612850))]]=nil Y[o[J(k(167834-101512),18046076164870-(-724406))]]+=794049-794048 Y[o[J(k((461904-(-389016))+(-917872+(399366+-266210))),(153069-809617)+472375592009)]]=d[o[J(k(-167301+234244),-583795+10366494418978)]][x]or o[J(k(648552-580317),925909+27993799213372)]if B[o[J(k(1024278-958177),25950515375653-397894)]](o[J(k((-117989+269067014)%3126522),6897454979860-955717)])==true and z then B[o[J(k(131093-63028),5631953205682-844109)]](Y[o[J(k(129284-62023),(-545387+25667213345551)-(-91985))]])end if x==a then Y[o[J(k(576885+-510936),26452177460447-784694)]]+=-971776+971777 Y[o[J(k(((485704+-389019)+-875835)-(-844515)),462639369045-(-876343))]]+=87560-(961080+-873521)else Y[o[J(k(244974+-179251),402212+10776313791365)]]=(161995832180%(2454116639-(-871922+474069)))%10480300 end end function z.detach(B)for B,d in B[o[J(k(2578208209%10523031),21014247673314-134169)]]do pcall(d[o[J(k(601023071%2988731+(-973133-(-751301))),-698751+22980461875372)]],d)end table[o[J(k(470396-(-860065+1263256)),-692342+6995747886470)]](B[o[J(k(598609488%(-809496+1255479390%9735307)),11444237082680-(-1010974))]])table[o[J(k((-194351+(((-384700+-136489)+914173495)%13224071-343346))-586686),7266512509619-(-205939))]](B[o[J(k(227562-161312),15296194743854-(-926099))]])if B[o[J(k(-671420-(-737132)),-16696+20769454537178)]]~=nil or B[o[J(k(439890-372984),32170485082733-293502)]]~=nil then B:settle()end B[o[J(k(-850292+917087),866691+26038337014715)]]=nil B[o[J(k(-493726+560925),31331433225209-162883)]]=nil B[o[J(k(401100+-334828),25502537793079-821120)]]=nil end function z.attach(B,d)B:detach()if not d or B[o[J(k(1804090468%(7562860-(-384378))),19554630456532-763520)]]then return end B[o[J(k(100480813%(-257291+11414538)),632845+30409060083495)]]=d local x=B[o[J(k((2998435480%120604408)%10386418),377243+2168314178624)]]local D=B[o[J(k(441338+-373144),-838255+(986194+4220505481527))]]local function K(B)if B:IsA(o[J(k(328526+-260501),6054038725542-(-543914))])and not table[o[J(k(463533-398214),-169684+29413764542271)]](D,B)then table[o[J(k(-470253+535606),2911641503005-(-532888))]](D,B)end end table[o[J(k(715497-649611),1242392125309-(-296825))]](x,(d:GetAttributeChangedSignal(o[J(k(-584250-(-651772)),831536+(-114417+((-335035-9631)+30823524600456)))])):Connect(function()B:sample(d)end))table[o[J(k((-390550-(329410+-1083330))-297541),-792826+29102453982347)]](x,(d:GetAttributeChangedSignal(o[J(k(884776259%7021492),(14508963372961-874740)-(-834097))])):Connect(function()if B[o[J(k(148966-81889),3384651567527-834587)]]==d then B[o[J(k(25890+42641),(-316306+6651)+33254888428989)]]=nil end end))table[o[J(k(-578927+644452),26695754720674-805427)]](x,(d:GetAttributeChangedSignal(o[J(k(-820470-(209372+(-820092+-277905))),(((-385609-(25785937393%104398899)%12925090)+1789664)+-1803304)+(187339+8565337681254))])):Connect(function()local x=B[o[J(k(3024113545%14065325),(168294+27142644211585)-((924278+2384449924)%10889783+400829))]]if x and(B[o[J(k(8966-(-59009)),739381+11245472600556)]]==d and d:GetAttribute(o[J(k(27979792%279121),113756+9661285540303)])==true)then x[o[J(k(-171226+239239),(-141512+(556343+19804735283413))-(((-596193-(535708+-850929))-(-329159))-883926))]]=os[o[J(k(434991046%1797203),((16053-1018006)+488539)+(9804331194755-(-714858)))]]()end end))table[o[J(k(932365+-865316),(1379584996-(-960717))%16827237+5677218612663)]](x,d[o[J(k(-316607-(-384013)),4712599507601-382895)]]:Connect(K))for B,d in d:GetDescendants()do K(d)end end function z.step(B,d,D)local z=B[o[J(k(362979+-295913),664642+21061077638348)]](o[J(k(-349483+415517),5287024274338-(-482845))])==true local Y=x[o[J(k(487093+-419075),18835112302180-((-244790+455020)+711268))]]if Y~=B[o[J(k(-610895-(626115+-1303981)),((610589810%4728794+-581836)+21308411584401)-((-1300370-(-804454))+-217823))]]then B:attach(Y)end B[o[J(k(259782769%1374163),(495920+(-742575+303427))+28656143834577)]]=z and Y~=nil B[o[J(k(115140+-47071),720788+5401994859217)]]=z and x[o[J(k(752678+((-514352+-1009566)-(-837044))),-1018274+16202526933521)]]if B[o[J(k(2257176784%10748134),-939046+(722109+((1032558+-172423)+(7471359209495-(-89958)))))]]and(not B[o[J(k(337196767%3210761),962914+(838244+(28231148134323-(1403835-(-60522+(887898-((349963271%8138077-314800)-(616025+-1115751))))))))]]and d>=B[o[J(k(1582771805%6911378),983131+(22288093542434-(875263-302649)))]])then B[o[J(k(484811+(((-352032-833671749%4248834)-(-154843))-(-680313))),27524759919400-49428)]]=d+((-814519+-144843)-((-1798082-(-46877))-(-791841)))if B[o[J(k(329611039%10984792),2946825608%16190386+(-282025+(13935171342991-(-14567))))]]and not K[o[J(k(503965-437027),-88612+19092959093549)]](B)then B[o[J(k(731428+-663521),26552959774110-142107)]]=false B[o[J(k(-1012238+1079171),-96176+(-259244+31802711151446))]]=false end end if z and(B[o[J(k(-189493-(-257140)),3307066752811-(-700317))]]and not B[o[J(k(1002871-935553),64290006108771%10715003700517)]][o[J(k(8593-(-59805)),6583394843473-(56190-943319))]])then B[o[J(k(-327138-(-392520)),(33757857285828-233989)-(129977-1001182))]][o[J(k(-315715+381791),-383099+2744968230708)]]=true B[o[J(k((-664437-(-273348))+458819),31985227424300-(-935578))]](o[J(k(91615-24312),-921026+27574733783120)])end local A=x[o[J(k((631993-864269)+3532855075%14477690),22449561830-302749)]]local a=B[o[J(k(907650+-840131),(260333+(-860029+217335))+(20850368163184-1022328))]]if a then if not t[A]or(a[o[J(k(543610-475534),(105234+9187278656266)-(-533286))]]and d-a[o[J(k(3325356328%12989412),949079+12010718189113)]]>=(-413189+558339.5)-145149)then B[o[J(k(711801727%6910048),24596894759467-(-114647))]]=nil a=nil elseif not a[o[J(k((1634837-(706338062-(-780324))%15354410)-(-257745-(82788+(615236+-1706768)))),2315145056863-728216)]]and z then local x=a[o[J(k(797744-731361),670473327%8171312+29665657431522)]]if x then if d+math[o[J(k(2000151966%8230799),(108374+4338762488945)-(783192+-582068))]](D,.05)*(779692.5-779692)>=x then B:release()end elseif a[o[J(k(-460548-(-528974)),633324+1373195721616)]]and(a[o[J(k(-518322+586663),506812+33885287624181)]]and d>=a[o[J(k(534548868%3563505-(-45293)),(60460636546224-(-1238494-(-777104)))%((577930+5496422203760)-(-82573)))]])then B:release()end end end local e=B[o[J(k(989258-921464),(-1065867-(-335896))+16392837839324)]]if e then if not z or not Y then B:settle()else local D=B[o[J(k(-343413+4005525192%(-808419+(17301212-(-623086)))),21094569868395-(-822276))]]~=nil or t[A]==true or T[A]==true if D then B[o[J(k(257544+-190131),-411642+28448657756397)]]=d end local K=B[o[J(k(1817246520%15940171),33191282934592-406394)]]~=nil and(not D and not x[o[J(k(-823939-(-891193)),102781+(145483471%644705+19132342902005))]])if not K then B[o[J(k(206576+-139737),27151143964597-(-708630+243420))]]=nil elseif not B[o[J(k(670373+(-1452320-(-848783))),852631+23347181514364)]]then B[o[J(k(301527+-233580),-172149+21332604846925)]]=d end if d-B[o[J(k(190941026%1373187),20510186539592-(-443937))]]>=H or d-e>=q or(K and d-B[o[J(k(-950685+1016703),-187705+4454519851210)]]>=j)then B:settle()end end elseif B[o[J(k(244671-(-551425+((317363179746%1594868367-921223)-887013)%(7032689-(-1011733)))),15891162895411-(356087+((779966-(904272-(29822+698810)))-(2366302468%10284779+-520886))))]]~=nil then B:send()end local b=B[o[J(k(-603898-(-671109)),5258083818336-(-84457))]]if b then if not z or not Y or d>=b then B[o[J(k((-686519+1327749898)%9546743),(-1813001-(-800209))+7500215626432)]]=nil elseif A==o[J(k(410112990%13668180),946798+2385731814348)]or A==o[J(k((-757742+1594755)+-769392),(1962004671827-746394)-(-375636))]or A==nil then B[o[J(k((-423972-63399)+554303),(-190988+186059)+25371296069343)]]=nil if x[o[J(k(599921323%(9119310-(-686554+-191685))),(177374+(120503-663137))+7624767133149)]]then B:begin(false)end end end end function z.draw(B,d,x)local D=typeof(x)if not d or D~=o[J(k(361333+-292965),-282284+6633311748736)]then return end local K=B[o[J(k(719509-651640),-770428+17517667107395)]]if K(o[J(k(3393546061%15783623),30377920141943-974924)])==true then local D=B[o[J(k(931913983%12261164),-888139+(706165+26162164916943))]]if not B[o[J(k(162876+-96933),26107522892292-201123)]]then local d=if D[o[J(k((((804221+21778947561810)%187749597298)%1159014318)%5036585),19664632066208-542616)]]>-274069-(-274069) then math[o[J(k((88111897873%(97481893130%658668373))%8963971),401098+14418273382016)]]((D[o[J(k(439373226%2834232),-17414+(671974+14233534360626))]]/D[o[J(k(770733+-704130),-212134+1556284366043)]])*(717720+-717620)+(-776009+776009.5)) else (667658+-250989)+-416669 B[o[J(k(570821-502964),8752760580790-(-54830+2398))]]=string[o[J(k(-326000+393473),7448910816195-(-254757))]](o[J(k(1085064-1016621),29702+29869394269100)],D[o[J(k((123322+84219451743%2105556979)%12900529),30804630444612-905612)]],D[o[J(k(406504744%7257811),584775+26734247296312)]],d,D[o[J(k(407477277%(596089+2562136)),28860596579461-(-935408))]],D[o[J(k(79498558%8825789),516529+2545170388819)]])end d[o[J(k((-969865+986512)+48849),-338853+15116193131467)]](Vector2[o[J(k(-932603-((537046+332312)+(-559802+-1309909))),128540+18662687849042)]](x[o[J(k((-841152+1164415)-256666),-25910+3827269891125)]]/((-186369+-19103)+205474),x[o[J(k((-865012+1677230)+-744893),10225596409449-645009)]]-(-485454-(-755422-(-269858)))),(-210591+-311197)-(-521801),n,B[o[J(k(556770-488669),834404937464-(-795534))]],R,.45)end local z=B[o[J(k(-343282-(-410621)),-558923+18129350098130)]]if K(o[J(k(-529722-(-597165)),(11729621833823-217415)-(-866735))])~=true or not z or z[o[J(k(485544-419416),403429+19461557718232)]]or not z[o[J(k(-329676-(499804-897243)),-301902+7601392105048)]]then return end local Y=os[o[J(k(-900641+969240),-989883+27369670857202)]]()local A=z[o[J(k(-584164+(-683321+1333085)),26851421218834-596625)]]-z[o[J(k(91599-25137),-257714+33432018820061)]]local a=if A~=-923066-(-923066) then (((z[o[J(k(996928-929795),425649+31225078447907)]]+z[o[J(k(-165112+(167988-(-63594))),(388690+-1062209)+18048649870214)]]*((Y-z[o[J(k(-367614+(1022870+-586732)),593305+14061276460668)]])))-z[o[J(k((-168544-688980)-(-925505)),5598964676114-(-928314))]]))/A else 151498-((1023233-708876)-458973764%2057448)a=math[o[J(k((-776860+1748918)+-904663),424297+12437915437354)]](a,689313-689313,739438+-739437)local H=Vector2[o[J(k(1185355513%6372524),649719+3199166161665)]]((1165009131-357399)%8378788,(-1112742-(-828184))-(-284566))local q=Vector2[o[J(k((249720424824%(2869711325-(-801362)))%13042310),574978+(10412572324394-184811))]](x[o[J(k(-598062+666189),27474165672067-(-550471))]]/(-556263+((((-204125-(-631421))+597533931%(4438938-775209))+-468146)+251011))-H[o[J(k(-142886+208490),(52267800269214-(119279+710012))%1493365737409)]]/(1449884942%13808428),x[o[J(k(184673+-119010),((127963826069%2843684169)%17429375+6526883120969)-808556)]]-(-1042829+1042979))d[o[J(k(343604481%1500165),12400339184762-290839)]](q,H,p,.6)d[o[J(k(34331798%926043),6235244640597-(633246-906759))]](q,Vector2[o[J(k(514793+-447406),(8897530427465-961271)-129584)]](H[o[J(k(940996+-874320),9176696640130-(-11517))]]*a,H[o[J(k(32268+35143),(12259072468828-(-49260))-(-822762))]]),if a>.93 then v else U,.9)d[o[J(k(285811270%4464747),203803535%((-331924+2004164214)%10815370)+23309131849581)]](q,H,n,((250296+1590343662.5)-(-1037332+(1021290-(-373770))))%7228346.5,-413883-(-413884))local e=math[o[J(k(69660+-1143),(186967-508519)+14827600304855)]](-182581-(-182581),z[o[J(k(921464059%5906399),-502596+17840577230686)]]-Y)d[o[J(k(-958124+1026578),3790241039815-841687)]](Vector2[o[J(k((410992+334499164)%(12081062%9009104)),1246845323%13694613+7769858283605)]](x[o[J(k(221657+-155157),477424+32563332220560)]]/(950427+(472724+(-2077709-(-654560)))),q[o[J(k(1540746224%8957441),150602+3093489689188)]]-(172151282510%896661734)%16771534),1034084556%16157571,n,string[o[J(k((135287+(-765469-(-209756)))-(627143+(-203615+(-105210-807440)))),529508+27197707256833)]](o[J(k(-659129+726611),-985713+29393743194685)],tostring(z[o[J(k(137388-69009),750089+(999012+19573069841286))]]),e),R,.45)end function z.hook(B)if B[o[J(k(372334592%13787648),1567358722880-706875)]]or B[o[J(k(121509+-53252),12761245637110-803174)]]then return end B[o[J(k(830660-762828),19928841051370-976821)]]=true local d,x=K[o[J(k(1042501807%9391318),-469570+31902031719088)]](B)if B[o[J(k(18667+48322),10254159497655-682726)]]then K[o[J(k(-254707+322852),527597+34463083937422)]]()return end if d then B[o[J(k(-893848+961521),-391340+31008001995199)]]=true else B[o[J(k(949288838%(62863+5760584)),(32030606398949-(945141+-60155))-(-390081))]]=x or o[J(k(557720-492270),5633142718045-515020)]end end function z.bind(B)task[o[J(k(-355408+421049),99377+3250350573755)]](function()local d=x[o[J(k((857840129%6448150+-768306)-(-600700)),15378965489523-(-135332))]](o[J(k(-431537-(-497085)),(((-226077-612552)-(-666830))-633624)+9622334571492)])local D=48378876%1240484 while not d and(D<775834+-775804 and not B[o[J(k(1305960133%7336487),16754903519244-637929)]])do D+=task[o[J(k(566286219%7077732),13943532603138-(-63480))]](349068-349067)d=x[o[J(k(717565+-652119),718128+21136737345229)]](o[J(k((107689-732678)+693081),-266752+14338714882515)])end if not d or B[o[J(k(-1035057+1103774),(714540+-1505412)+29832791499900)]]then return end local K,z=pcall(d[o[J(k((2695847290%13747585-(1505155-873163))-621158),35022425865613%289441664774)]],d,o[J(k(704009-636111),32209796623495-(-617552))],2166631126%(4128016616%19781535))if not K or not z or B[o[J(k(3164803868%13524516),-1009613+(20874013212007-(-809066)))]]then return end B[o[J(k((455382+361126433)%5239328),-346229+21410469297982)]]=z[o[J(k(-545841+613556),988647+21461680745811)]]:Connect(function(d,x,D)if d~=nil and d==B[o[J(k((-358620-479235)-(-906501)),406644+7812561325983)]]then local d=tonumber(D)if d then B:rated(d)end end end)end)end function z.shutdown(B)B[o[J(k(-430825-(243447-741564)),(53664+7003943836608)-(-848061))]]=true B[o[J(k(((322034-347204)+(739082+(770103+716624836)))%10559429),24666504699154-(891798+-119642))]]=false B[o[J(k((14807+-35712)+86730),23186424017116-(276223-(-67160)))]]=false pcall(B[o[J(k(-454168+(200190+319349)),28205135044869-(-866626))]],B)B[o[J(k(-607388+675379),10632326493376-233259)]]=nil B[o[J(k(1816414676%7599784),(-920197+358229)+7477281877719)]]=nil local d=B[o[J(k(943300+(500161+-1378021)),546913+8550759127228)]]if d then B[o[J(k(864002868%4385462),-744709+22973948524856)]]=nil pcall(d[o[J(k(-524078-(-589833)),21622898186449-(-757919))]],d)end pcall(K[o[J(k(-110187+177123),910+18000866556192)]])end return z end B[o[J(k(138805-70616),89628+25100132752699)]]=function(...)local B=...local d=B(o[J(k(1615525931%12923668),-871190+7712946108288)])local x={}x[o[J(k(-244848-(-312407)),(-1037013+656759)+27593448944453)]]=x local D=game:GetService(o[J(k(146519564%((140908355-162876)%19642614)-329829),16728623390357-15894)])local K=840102941%6942999.5 local z=.15 local function Y(B,x,K)local z,A=x[o[J(k(75091-6717),-391553+13078699154072)]],x[o[J(k(2907474390%14610083),((923472+(-62924-876618))+12526526020982)-836000)]]local a=A[o[J(k(-240876-(-307213)),(15775896838824-559778)-319138)]]if typeof(B)==o[J(k(140830+-74999),-666449+83647148922)]then if B:IsA(o[J(k(((441718+(-510110+-129467))+-772857)-(-1037718)),-943702+7567042043209)])then return D:FindFirstChild(z[o[J(k(1422520422%9297071),28212295525765-(-193826))]])or B end if a and(B[o[J(k(418220+(-140560+-209680)),-763596+(7448033159542-660351))]]==a and B~=A)then return z end if a and(B:IsDescendantOf(a)and not B:IsDescendantOf(A))then return z:FindFirstChild(B[o[J(k(1010405-942449),212754+20586473086891)]])or B end return B end if type(B)==o[J(k(252907381%1123734),265325+27289736892091)]and(a and(B~=A[o[J(k(116637909%6857191),7651885174504-883008)]]and a:FindFirstChild(B)))then return z[o[J(k(445087730%10580570+-637370),29289458145143-(-15243-437510))]]end local H=typeof(B)if H==o[J(k(3288270402%15808673),(85114-112049)+6045195666675)]then local D=B local K=d[o[J(k(-458957+525037),(348527+-249126)+3643259933802)]](z)if K and D[o[J(k(-241533-(-307388)),73736+25052744253977)]]>-232574+232576 then return K[o[J(k(505329520%13655711),(-974969+867121)+7930736061451)]]end if K and D[o[J(k(-460583+527679),-429879+(-335152+15253304758854))]]>.01 then local B=K[o[J(k(761165+-693806),14771545908098-(-135359))]]-x[o[J(k(820226+-754662),22541230889610-(-463669))]][o[J(k(-193404+260294),24243+27882528023661)]]return if B[o[J(k(97286434%1023358),(25056559726628-55460)-495395)]]>.01 then B[o[J(k(-471522-(-537417)),19041561338903-((644702-(-659385+2949904064%11518749))+-249359))]]*D[o[J(k(168965+-100465),(17274455797580-120036)-(-396211))]] else D end return D end if type(B)==o[J(k(443360258%(6107282-829974)),15704023330512-307465)]and K<-507718+507724 then local d={}for B,D in B do d[B]=Y(D,x,K+(-963493-(-963494)))end return d end return B end local function A(B,d)return Y(B,d,614655360%12805320)end local a={function(B)return{[o[J(k(-962882+1028556),15942501738511-345524)]]=B[o[J(k(1027872+-961444),-190742+20961158653231)]][o[J(k(1717801508%8993378),567019+21348015331662)]],[o[J(k(305485-239568),-339899+17936091419867)]]=506408+-506407}end;function(B)return B[o[J(k(107028+-39215),-29093+26841908284461)]]end;function(B)return B[o[J(k(638081+-569479),866797+7592894438406)]][o[J(k(364799726%16578727),-383642+86730892862)]]end}local function H(B)local d=B[o[J(k(-965377-(-1033195)),(-1916139-(-944712))+(27264800222484-965840))]]return d[o[J(k(693986065%7885458),330377+27640860806543)]]~=nil and d:GetAttribute(o[J(k(1191791185%((139497761277%4227443400)%18720133)),20804342400374-679570)])==o[J(k(355056106%3348948),(-473868+(399059-(-366274)))+28557422544122)]end function x.new(B)return setmetatable({[o[J(k(-856824-((453665+-1352355)+-24186)),16922370937745-(-775793))]]=B;[o[J(k(862453-796159),-305319+20642664942539)]]=-math[o[J(k(246037+-178212),18023712307866-(-570459+803682))]];[o[J(k((148491320329%1362325456)%5418740),126094+(5490439928800-517979))]]={}},x)end local function q(B,x)local D local K=-math[o[J(k(593122+(783194+-1307658)),((124643+8126312306117)-(77929790442%2997435753)%(11845600-(-1598412-(-760501))))-(-245671))]]local z,Y,A=d[o[J(k(247936+-179594),147071+(18419655672569-(-579179)))]],d[o[J(k(912095464%((-173699-442710)+6045143)),((-474863-269163951%3282248)+107257044%423798)+21921163386074)]],d[o[J(k(-382554+449651),418231+4.5627149954765e+14%2010006661184)]]for a=895649887%5528703,d[o[J(k(125602-58026),583996+34978791876492)]],2599948252%12679932+-562191 do if not A[a]then local A=Y[a][o[J(k(201907+-133902),-193642+(296792+28554126800185))]]local H=((A-B))[o[J(k((155351+-376502)-(-286608)),-757627+27506803461300)]]if H>=342427+-342421 and H<=(-489128+860163)-370975 then local B=d[o[J(k(-295675+(-553850-(-915646))),6553469152219-(-824049))]](A)if B>x then local x=d[o[J(k(135901+-68847),(944082+-1248770)+17022046148630)]](A)local Y=(math[o[J(k(1238899582%12771465),7898453141301-(-311076))]](B,(-985940-(-612627))-(-617822-(-510525-(-980991-(-714955)))))*(498553+-498551)-H*.4)-((x or-181159+181159))*.3 if Y>K then D=z[a]K=Y end end end end end return D end function x.step(B,x)local D=B[o[J(k(-86351+154235),(81807+14769952545944)-(-132225))]]if D(o[J(k(1094294-1025994),-55872+(458040+30341818205780))])~=true or x-B[o[J(k(839966+-771279),-427646+3096555467130)]]<K then return end local Y,e=d[o[J(k(582502698%4016804),(736604-(-301224))+31040647398609)]],d[o[J(k(904928627%4479516),15876581385036-333395)]]if not Y or not e or not d[o[J(k(390180-324782),11324712664650-500600)]]then return end local b=d[o[J(k(7494953%3713693),(46408126463%450641796)%10795648+28521571232858)]]if b~=o[J(k(-848828-(-916418)),1015838+19541796813642)]and(b~=o[J(k(-182632-(-248178)),-930703+13668797955870)]and b~=nil)then return end local s=e[o[J(k((730281+2529652516)%11245848),23059327685084-16524)]]if d[o[J(k((236324+-616867)+446816),25688333936724-407709)]](s)>((D(o[J(k(710541-642584),698062+6860042028089)])or-505080+505086))then return end local j=q(s,D(o[J(k(1634201880%11507996),4925145939031-631220)])or 795741318%16577944)if not j then B[o[J(k(1458634528%9231433),201882+15811154805083)]]=(x-K)+z return end B[o[J(k(90279878%3922304),-718320+30573849323868)]]=x local t=B[o[J(k(2956474731%14078135),4489594500788-(-760588))]]t[o[J(k(689367+-623126),694180+31884732940937)]]=j t[o[J(k((10362-359146)-((862865727%15676449-992631)+-84316)),361586+2824908247794)]]=Y t[o[J(k(290396289%5477891),-961248+18284375974984)]]=e d[o[J(k(734937+(219176-887541)),-1037910+(102704+27628023668793))]](o[J(k(-178669+246887),23588901280402-922017)],a,H,A,t)end return x end B[o[J(k(-870243+938973),564292826420-164531)]]=function(...)local B=...local d=B(o[J(k(67056+-999),24486275596397-(-524526))])local x={}x[o[J(k((746199-(-195607))+-875335),2363964068017-113556)]]=x local D=1.2 function x.new(B)return setmetatable({[o[J(k(470822036%2307620),25800292597150-498819)]]=B,[o[J(k(770816830%5505365),23114253629301-450642)]]=-math[o[J(k((424233+-1087953)+731818),4083026505814-(-944848))]]},x)end function x.step(B,x)if B[o[J(k(963660+-895235),864315266%3927079+28914034113557)]](o[J(k(894249-828071),3931814292003-(-469523))])~=true or x-B[o[J(k(258265-192206),((341983+-1333105)-(-461337))+2514589121750)]]<D then return end local K=d[o[J(k((22959615320%396053675)%(9361472-(-497211))),892052+14418467255588)]]if not K or d[o[J(k(613045136%8633500),(2274142583%10379775+(-510735-171591))+28627865698087)]]or d[o[J(k(516024563%4409902),34886731314545-(168006-(271940+-740023)))]]or d[o[J(k(-311898+379069),10001339851556-(806664-(-199120)))]]then return end local z=d[o[J(k(666267784%3601092),-690912+16896829207250)]]if z~=o[J(k(-20763+88353),3930709157086-883872)]and(z~=nil and z~=o[J(k(666635+-598014),466241+(-527456+34026623743886))])then return end local Y=d[o[J(k((235452-(-607348))+-774324),(-604816+897110)+28368096105839)]]()if not Y then return end local A=Y[o[J(k(-721069-(-789504)),11133351801437-44220)]]-K[o[J(k(-190329-(-257111)),60193+8506741087552)]]local a=A[o[J(k(-600024-(-667124)),7696521711833-(-688011))]]if math[o[J(k((67106889284%3532111101)%15753666),8491+((-840848+(152372+527114))+7670552670865))]](A[o[J(k(812234308%8732965),1524265314468-878527)]]*A[o[J(k(1847008850%7630959+-250610),22311268834843-(-271398))]]+A[o[J(k(-768988+835342),20175865857893-740682)]]*A[o[J(k(1016152+(-941690+-7362)),523752763767-(-292631))]])>((B[o[J(k(2693473226%11659762),((23967877754836-168803)-630239)-1018307)]](o[J(k(4121240349%(4100128829%(-656909+(21954757-(-657228))))),29400355211525-301807)])or 523668+-523660))or a<605760+-605758 or a>25950-25938 or Y[o[J(k(2441760592%12087588),26479101794678-497588)]][o[J(k(1266983629%12300150),(501429-877347)+858855953475)]]>2289297304%15468225 then return end local H=d[o[J(k(-536597-(-603581)),-973909+14661753593393)]](o[J(k(463053074%4286902),10566729598911-(-626038+(-362359+377945)))])if not H then return end B[o[J(k(837639253%13950285-((-505355+1809223)-747168)),-866692+8984013156455)]]=x d[o[J(k(-853544+919751),4711890923896-((-758472+926052)+-643080))]](H)end return x end B[o[J(k(477785+((((-1169746-204964)-(-640224))+-107472)+431337)),427463+29357551825531)]]=function(...)local B=...local d=B(o[J(k(-399959-(417077-885085)),211828+31239065100158)])local x={}x[o[J(k(6000087%5933911),19622623746421-779085)]]=x local D=1.6 local K=150582532.75%1673139.25 local z=1073023960%11411147+-376129 local Y=.34 function x.new(B,d)return setmetatable({[o[J(k(2273578118%11965842),(3475860245131-626330)-(-277436))]]=B,[o[J(k((((((-690579+1769016)-682769)-(-541690))+-769278)+(-68520-482976))+450931),20374916151062-34650)]]=d;[o[J(k(-859303+(473847+451903)),26428787941445-416005)]]=-math[o[J(k(1084623-(1533046-((393812+(-1538201-(-313227)))+1345246))),42424+(-493479+10505772294382))]],[o[J(k((241406+166938)-340657),388141+(513810+23854665809649))]]=nil},x)end function x.step(B,x)local A=B[o[J(k(-704928-(-773401)),33169004063267-61882)]]if A(o[J(k(67473416%11234222),23384693763975-(-79222-(281278440%11219955+-334699)))])~=true or A(o[J(k(((1177880051%11209243-410726)+-440124)-(-7588)),-916503+1862491812652)])~=true then B[o[J(k(-836264+903957),-498127+22357849562712)]]=nil return end local a,H=d[o[J(k(1368148879%((84184966-985431)%18408133)),(-213018-(-419539))+21773319090370)]],d[o[J(k(532198+-464172),6638918019849-538093)]]if not a or not H or not d[o[J(k(306198-240637),21993321251070-193230)]]then B[o[J(k(1890243637%15367287),(27810583489163-1047462)-952281)]]=nil return end if not B[o[J(k(375289691%6469362),14955114757274-(-980691))]]then B[o[J(k(1405979445%(454422+8014923)),-399678+21788211856473)]]=x end if x-B[o[J(k(-361096+(-139454-(-560208-5654))),-731447+6567857855143)]]<D or x-B[o[J(k(-937316-(-21034+-982078)),-1019178+(22599346694275-41833))]]<((A(o[J(k(2003709998%7888364),691022+35144245739408)])or-962797-(-962797)))/(((14041+(321529+1020457908))-(1010616+-1705070))%10113732)then return end local q=d[o[J(k(49992+15473),(-929075-(-447344))+15866172492538)]]if q~=o[J(k(175715846%2429991+-688904),774520+26782377918476)]and(q~=o[J(k((-949954+3365681265%14080186)-(-500731)),10207171680720-(-346658))]and q~=nil)then return end local e,b=d[o[J(k(727451+-660447),23736082544140-370422)]](H,(-769801-69488)+1290826524.5%14333191.5,math[o[J(k(-121195-(-186898)),-940900+29266003207823)]])if not e then return end if A(o[J(k(-584780-(-249503+-401827)),-1047483+(11691616191645-(-134723)))])==true and b<=((A(o[J(k(261703105%2669751),35096392488383-412994)])or 137609258%698524))then return end if b<((A(o[J(k(1462236947%16067792),-524663+((15768769760833-(-620525))-(-1085607-(-73426))))])or 39973-39973))or b>((A(o[J(k(3834303524%15649868-19836),-281349+15091272302983)])or 976478254%(6606302-(-905069))))then return end if b<=z then local B,x=d[o[J(k(533150-466983),144551+11865177783563)]](e,H[o[J(k(1412001640%7240699),-597163+29294091852268)]])if B and B<Y*math[o[J(k(25826-(-39510)),30776987%(14212114-(-772133))+7904865771613)]](B*B+x*x)then return end end if d[o[J(k(-272946+(1270767-929738)),-117822+18473695304479)]](H[o[J(k(2111052159%((665375835-(-620976-122527))%14520057)),744261+28333229488024)]])<=((A(o[J(k((-351389+-52219)-(-471807)),-514606+7178010768038)])or 282878+((248629+-1404917)-(-873416))))then return end if B[o[J(k(1066980123%15462521),673989+(70175+29029252047199))]]:begin(false)then B[o[J(k(459653339%5050395),366872+758777312677)]]=x else B[o[J(k(188980189%(489568-(-621689))),-594335+30190350349206)]]=(x-D)+K end end return x end B[o[J(k(756981+-688791),660647+4507700343523)]]=function(...)local B=...local d=B(o[J(k(-809567-(-875891)),675445+(-570446+1123211044480))])local x=B(o[J(k(104653838%439439),773573+14323081133440)])local D={}D[o[J(k(-377817-(-444329)),31162350052685-(-633129))]]=D local K={[o[J(k((9943184017%99540660)%(-219330+1801309)),122144+27143824460130)]]=true;[o[J(k((1277458031-471110)%8238202),(747060+((9159816787719-(-121286))-1783306517%10074676))-(-581254-223313))]]=true;[o[J(k(-541526+609120),748342821044-(-1871120-(-971629)))]]=true;[o[J(k((409055-(-391864))-734591),-411831+11704994819666)]]=true,[o[J(k(((2209218318%(((-1527149-(-781838))-(-310748))+277721197))%16749666+181565)+(559268+-890799)),4661765214123-(190035+-778777))]]=true;[o[J(k(((170607450-(-1513792-(-856243)))-404862)%15526574),-658895+5709398929805)]]=true,[o[J(k(313018+-245287),16856476833028-512651)]]=true,[o[J(k(343226285%3466256),-539482+26650385133746)]]=true}local z=3.35 function D.new(B)return setmetatable({[o[J(k(448288+-382622),555927+24857137036707)]]=B;[o[J(k(1080744453%15892291),575358106673-428007)]]=false;[o[J(k(-373344-(-402766-36853)),6752666885058-(-1002802+547676))]]=-math[o[J(k(960446+-894400),((-716377+684733)+(-304875+-90905))+30229974321013)]]},D)end local function Y()if K[d[o[J(k(22068955%((-614826-(-565694))-(-163140))),-682316+10086615472340)]]]then return true end local B=d[o[J(k(-803860+871028),136386+17654894402785)]]for d=98219+-98218,d[o[J(k(-885762-(-952699)),-663274+20845117999542)]],74125769%(861675806%12465198)do if K[B[d]:GetAttribute(o[J(k(536493-468689),951134+21391216742125)])]then return true end end return false end function D.stop(B)if B[o[J(k(-44021-(-109716)),1438155611716-(-168289))]]then B[o[J(k(3116988369%14363688),125187+28267766318323)]]=false x[o[J(k(3982423781%16803197),26217797025783%(672251175045-(-365477)))]](o[J(k(-568570-(-636010)),1.1838152404062e+14%2573511708045)])end end function D.step(B,D)if B[o[J(k(976075-907513),(344128+(-993270+-198096))+4867102223337)]](o[J(k((((4102085500-(-633133))-(-736989))%16091436-459817)+386378),12022441783722-(-53724))])~=true then B:stop()return end local K,A=d[o[J(k(-556108+622989),1101431506185-(-109462))]],d[o[J(k(-703683+771212),662155+12605973079270)]]if not K or not A then B:stop()return end if Y()then B[o[J(k(1893911631%(198699737%(1894962933%((131941376160%643669090)%((24589526-841124)-(-67480)))))),((((-128548+(531101+-1068640))+15344437333021)-(-739821))-(588399209500%2736797975)%14642452)-(-1169346-(-881454)))]]=D end local a=d[o[J(k(-115816+181993),13336175012986-921454)]]if d[o[J(k(647794272%5223597),22116242832906-(-314919))]]or d[o[J(k(376460926%2509285),-228120+(89089441390-(746541-887786)))]]or d[o[J(k(-179949-(-245831)),13685786953413-(-81467))]]or D-B[o[J(k(470470-403796),-315977+15258647385950)]]<2682164624%16060866 or(a~=o[J(k(-264332-(-331922)),24825697119261-833240)]and a~=nil)or K:GetAttribute(o[J(k(1099697181%16171030),-1010704+16495585731799)])==false then B:stop()return end local H=d[o[J(k((((577070-831280)+((350413-343555)+(4692076796-(-665357))))%72322045)%10636078),-615328+32522395248447)]]()if not H then B:stop()return end local q=A[o[J(k(763065-696484),5634557455267-(-872749))]]local e=H[o[J(k(-494542+563028),-193979+6051442470691)]]local b=H[o[J(k((523070+-1424672)-(-967632)),10917+31398215253456)]]local s=if B[o[J(k(-442608+680056438%(1368948171%16181433)),-124184+22186288392976)]] then 1098582235%7275379 else 82575-(222166714%6161603+-266435)local j=if B[o[J(k((662504+-1400034)+805425),38431221268438%784310832243)]] then -309725+309755 else -664995+665017 local t=((e-q))[o[J(k(509338+(-520916+77647)),715799+32905561058993)]]if t>((B[o[J(k(-884601-((-214976-833679)-(-95464))),(-33465-1004895)+31035325392916)]](o[J(k(-955599-(-1024325)),531776+21677364952742)])or(((-613136-(-565347))-219496)-(-395955))-128650))or e[o[J(k(-949827+1017187),-553449+11465290303203)]]-q[o[J(k(2497938645%15418955),(-540165+24310009689896)-369044)]]>s or b[o[J(k(2298943202%10497148),33237583621787-(427310+(95126120%11796295+-1778309)))]]>j then B:stop()return end local T=K:GetAttribute(o[J(k(108115389%5686802),7801189575574-(856042+118559))])local h=math[o[J(k(508583+(-814903-(-374730))),80711+33683971043430)]](if type(T)==o[J(k((-973952+1073400832)%(((-46050+804732)+(-571206+602878))+14751111)),2157160305917-218455)] then T else 77546702%((3458146528-(-450956))%17455425),-875767-(-875775),216515801%2023512)if t>349668858%10284378 then h+=z end B[o[J(k(-632039+(134911+563526)),(122636+720766)+21774464774170)]]=true x[o[J(k((299618+95541)+(623332-952026)),-702165+32452592026119)]](o[J(k(126882+(2354171075%9929158+(-769354+(-731250+480350)))),(-886835+2352191567%15998328)+15799306741070)],Vector3[o[J(k(614408-547018),(21054290741103-(259038-596915))-324467)]](e[o[J(k((178470978804%1019845884)%12105593+-856554),456184+23467029177159)]]+b[o[J(k(-297869+364245),1378226948463-(-392471))]]*.15,q[o[J(k(77463473%6449690),(844062-557899)+13007648025913)]],e[o[J(k((1512431494-312471)%(784492+13346842)),-31743+34101057863968)]]+b[o[J(k(682383+-615564),-134070+19002245277256)]]*.15),h,true,false)end function D.shutdown(B)B:stop()end return D end B[o[J(k(618846-(-373749+923998)),(724260+-1125942)+22603130094413)]]=function(...)local B={}B[o[J(k(1918833853%15228306),22148168017106-(-253738+626872))]]=o[J(k(-442406-(-510736)),-559486+16834048016069)]B[o[J(k(1057520649%5974316),27561607349064-1048411)]]=o[J(k(1008616068%(-49498+8053868)),-179784+24546770705143)]B[o[J(k(1384863327%11167714),-891778+16243662194584)]]={{[o[J(k((986565+-986978)-(-66576)),-816927+19877804020864)]]=o[J(k((73993+-162291)+154051),23866771337141-(-787013))];[o[J(k((1103969131-(-253731))%5135615),12254503088254-(-765621))]]={o[J(k(-202475-(-269641)),-609297+17086711770711)];o[J(k(870097+-804330),(11300309318633-782928)-(-471360))];o[J(k((253488866787%1564846864)%7269742),12890940970494-(-162097))];o[J(k((523333+-53952)+-403290),587565+27498610981955)];o[J(k(827099+-758421),(9604870931745-(-877245))-(-66991))];o[J(k(-474179+542759),34243199320990-(-952790-(-31869)))]},[o[J(k((-722212+863752865)%4541906),2745227080004-841170)]]={o[J(k(184741466%1079969),17994760631217-(-953999+943352))];o[J(k((934282+-517131)-349296),((898312+6473118167752)-(971551+-1396550))-(-630469))],o[J(k(-896825-(588154+-1550394)),-166077+35000668764151)],o[J(k(-888115-(807241+-1762174)),(-587489+29008595072981)-(-388928))]};[o[J(k(623152117%5279146+-146197),(789362+6537672333368)-(-793565))]]={o[J(k(1563753166%14751756),60162+(25007739447881-781926808%(6025003-(-768961))))]}}}B[o[J(k(765932+-699156),((-130689+-15537)+-104649)+1586756154695)]]={{[o[J(k(-126130+((-425773+288201)+331385)),(-119663+35049823454471)%245103693509)]]=o[J(k((212985+127230499)%7492724),(662327+31866831452125)-984482)],[o[J(k(48600267%495220),-62884+4312664334252)]]=o[J(k(515439-449840),454141+5747753467827)];[o[J(k(955140061%3898259),-936238+(-378886+3963767836296))]]={{[o[J(k((-227599-714818)-((265886+(634264+-87733))+-1822069)),4522564639058-(313556+-516521))]]=o[J(k(399517715%2481069),((-259301+9479013893172)-870014)-(-807128))];[o[J(k((-315174-(205646+-303362))+283373),26429182922302-1017790)]]={o[J(k(1086142-1019772),866186+17100133291707)]}};{[o[J(k(-268633+334699),-1022092+34576607819304)]]=o[J(k(988337-922232),745701+31718342409544)],[o[J(k(1972600091%8018425),984951+24066483109885)]]={o[J(k(510301-443350),21354868463362-55654)];o[J(k(-660690+729349),383258+9787669899092)];o[J(k(-515636+582383),1045495+15970806090330)],o[J(k(3162013806%14844817),20936034053779-(-993927))]}};{[o[J(k(2248666974%(16409836-348414)),-750161+28688856021666)]]=o[J(k(-107366-(-174599)),(-474889+29346450991135)-944918)],[o[J(k(770917+(-1313485-(-610152))),79143+30326612741754)]]={o[J(k(-117360+182818),-751137+26107823880159)];o[J(k(680743292%9864858),(-816948+264939)+16995676457728)],o[J(k(301831-236047),19630867013317-743294)];o[J(k(-900297+(692848+276034)),-245803+28529198965054)],o[J(k(971881-905350),-799215+11038874055146)]}};{[o[J(k(119331-53277),(-723899+768110)+20138502811406)]]=o[J(k(1769743734%(169270+15354221)),-691074+28992973583973)];[o[J(k(-203821+269731),-745642+(-375722+(657084+22105220827191)))]]={o[J(k(1514846827%9016553),-890935+26235111194491)];o[J(k(488432-422932),21568223255941-864619)];o[J(k(949311-883729),436979+(4832401372487-(-209138)))],o[J(k(-660757+1169490392%5814742),30714895661756-(-607764))];o[J(k(492636+-426943),29488894325061-210935)]}};{[o[J(k(-847725+(821025+95182)),14427759649754-53071)]]=o[J(k(2551044627%10718396),14597590799365-110608)],[o[J(k(464948-397062),-304059+12760826956176)]]={o[J(k(-831197-(-897184)),18357970467480-(-597693))]}}}}}B[o[J(k(((-1039741-(-678878))+287645)+141640),13895168325375-(-701872))]]=o[J(k(770212864%5834447),376926+166637652797)]B[o[J(k((315508628-415754)%11667655),-868810+20526129533352)]]=o[J(k(378978-310759),258309+(27331044115857-781893))]return B end B[o[J(k(1132073343%11790245+-143907),19158300641997-(-338936))]]=function(...)local B=...local d=B(o[J(k((-630591+-8404)-(-707074)),171799171363-(-919782-24296))])local x=B(o[J(k((933877+(819777+-780335))-907258),(-726913-(990132+-966777))+(169404+12884317264708))])local D={}D[o[J(k(-67356-(-135186)),20891285737478-732411)]]=D local K={[o[J(k(413763080%7955711),11225575823967-1612236739%(4417385989%22473431))]]={[o[J(k((9720909821%68051463)%(((88089063725-(-546739-150649))%908279736)%20588779)),-765222+4303789276049)]]=o[J(k(-1036215+(87862+1100518702%10886171)),-789671+1153629754129)],[o[J(k(((-211936-(-877044))-265797)-331287),12594404019353-(-64045))]]=o[J(k(-234357-(-299887)),2057071918862-160968)]},[o[J(k(622715+-554665),(17220517882466-917903)-(-392541))]]={[o[J(k(-608558+676172),-561201+13619129615033)]]=o[J(k(-585891+652820),(-876530+11873641336942)-(-88172))];[o[J(k(249354-182947),18608029603298-(-935235))]]=o[J(k(2762221169%14461538),939020+(32089341848087-(-293813)))]};[o[J(k(-45569-(-112845)),782236+(-119762+13856820193798))]]={[o[J(k(1989004561%7861414),31996514169222-(122073+-770263))]]=o[J(k(-964525+1032640),(3908833623040-212955)-((666669426092%3316837165)%15140419-967794))];[o[J(k(-133146-(-584180-(-384358))),863553+(952276+14596776204017))]]=o[J(k(-396019+462660),910036+(18783974304152-527159))]},[o[J(k(240924421%5874541),68990+(16295751870177-194441))]]={[o[J(k(-116723-(-183899)),9671695707768-(-710497-28442))]]=o[J(k(2049101040%8467089),457094+20630453305548)];[o[J(k(145073-(-131757-(-208806))),22577181496555-(-879465))]]=o[J(k(-775684+842748),-959392+26387474734637)]};[o[J(k(718950-652850),8766121631988-664799)]]={[o[J(k(-807752+873559),466402+13825983783255)]]=o[J(k(-863993-(-931420)),435996+1857718721792)];[o[J(k(1309115311%13926057),((367319+437408)+3878661374042)-(-12882))]]=o[J(k(289958+-224186),-142621+25062930896811)]};[o[J(k(2468822119%((4521553606-860492)%22327440)),25896789699284-867973)]]={[o[J(k(99393-32033),15747733670448-(411642-895997))]]=o[J(k((960745+-1693371)-(-799716)),(595847+-1616714)+5557356266888)],[o[J(k(467503+(-756832+(((-90664+505540)+(990814+(-742185+-1619553)))+((1608684-928506)-((-936277+(906861-163638))-438212))))),27465168963497-((-1206175-(-923628))-626056))]]=o[J(k(-576151+643074),34198555275034%226480528806)]};[o[J(k(515840454%15629490),-161625+17901309102724)]]={[o[J(k((728943+(-766141+460885))+-357986),(-155194-(-121506))+5281582637204)]]=o[J(k(711456+-644263),-953775+19425925002616)];[o[J(k(907051061%(509409+4733274)),-643807+((-999767-(-220150))+8614817761533))]]=o[J(k(-824854+891538),20498823945346-759057)]},[o[J(k((912389+-1750243)+904650),(109553+26717640758684)-(505679-(-445209)))]]={[o[J(k((-974440+799360)-(-243532)),-714311+8634401855357)]]=o[J(k(426622+-361100),10064060044234-839345)];[o[J(k(484254396%8966455),(-359434-(-715982))+((27327184706841-(-27610))-710446))]]=o[J(k((450761+(525263-989266))-(-78737)),((-851614+383771)-(-498889))+26184762187266)]};[o[J(k(369323-300617),1041535+32702447482317)]]={[o[J(k(1081856387%8451481),46238+8133497108692)]]=o[J(k(-882031+949356),-844058+22888722882966)];[o[J(k(-18739+87382),27406083246178-119263)]]=o[J(k(816602106%15990444-1020929),885988+26812812689394)]};[o[J(k(1630300120%13473003),26687657721721-(-488879-226217))]]={[o[J(k((-1046363-(-364307))-(-748585)),24012396893645-642428)]]=o[J(k(399722455%2137191),13427533965344-(148187+112616))],[o[J(k(-52302-(-320485-(595374-797909))),170176+17119836017686)]]=o[J(k(-456060-(-521948)),(-654873+(154310063641-(-716418)))-(-696110+539122))]}}local z=.45 local Y=.05 local A=.4 local a=275866-275842 function D.new(B)return setmetatable({[o[J(k((14584928400%58820134)%309282),32538857967610-(-580591))]]=B,[o[J(k(-552065+617404),6619589650830-(194974+-867713))]]=-946236+2925339360%13172942;[o[J(k(84374-17446),29525333780012-(-430311))]]=2063025756%8154252;[o[J(k((-901491+502822321%5017417)+-112813),16082+1176163892357)]]=true;[o[J(k((647631+421849)-(862708+139823)),(-670475+13280976223283)-(-754788))]]=nil;[o[J(k(686371-620831),723471+9353787441961)]]=false},D)end function D.reset(B)B[o[J(k(150021+-83231),80023645430205%1025944295448)]]=613403-613403 B[o[J(k(1728027159%9930806),29328773696060-(((729176+-1486992)+29336752)-483291)%1138165)]]=false B[o[J(k(26970+41425),15671637904812-763377)]]=nil end function D.step(B,D)local H=B[o[J(k((348315119063%1583298834)%10346102),464583+((-303500+10953535049447)-(-942249)))]]local q,e=x[o[J(k(-625885-(-691820)),20849881989045-924931)]],x[o[J(k((314192+-39951)-206912),19874733864204-(-822409))]]if H(o[J(k(1759621711%10050833-(82586+575576)),40821342487642%1943873674922)])~=true or not q or not e or not x[o[J(k(((867975+-392672)+-1274673)-(-867046)),1050230834370-(-219087))]]then B:reset()return end local b=e[o[J(k(-108015+((-375504+(39924646-994595))-(-716069))%3554103),28364064832484-811808)]]local s=x[o[J(k(660428-593003),-681621+(-170000+10711111239520))]](b)if s and s<a then B:reset()return end if H(o[J(k(1032318-((7037-(-106884))-(-851289))),-250631+29900122459738)])==true and x[o[J(k(-477361+544184),29232787181233-435779)]](b)>((H(o[J(k(1084978599%((140983091667%573104565)%13858204)+-330144),10880497815293-(-366891))])or 1772217857%7705295))then B:reset()return end local j=x[o[J(k(382905893%(-877022+(23441448152%404171202)%11409493)),618048+56074772201786%1933613223920)]]if j~=o[J(k(-324142+391732),(-432961+(6440417511267-(((-294430-(-688347))-330730)+-327522)))-(-282473))]and j~=nil then B[o[J(k(446486+-378426),(1017706+21969657978615)-424917)]]=true B[o[J(k(252238258%9006099),(549835+-687241)+((((-466143+255649)+465571)+198487)+30308545793307))]]=nil return end if q:GetAttribute(o[J(k(-511475+578612),7613225772242-(-49618))])==false or q:GetAttribute(o[J(k((-181666+570773)+-321197),12974671390086-(-400716))])==true then return end if not B[o[J(k(-960311+1025943),-513913+26701971241597)]]and D<B[o[J(k(105139724%1616497),21572946965006-(-260483))]]then return end local t=B[o[J(k(68375065%822989),33694334273350-470901)]]or D B[o[J(k((26613295869%397351283)%2395343),-11651+6168221531446)]]=t if D-t<((if B[o[J(k(808503-741073),(43477+(525299+2245901476))%15488941+24338206157421)]] then A else Y))then return end local T=x[o[J(k(746911+(455417+-1135696)),-187424+13014720004100)]](o[J(k(148780-80442),-654009+17168758402582)])if not T then return end local h=d[o[J(k(-667386+733571),12022420420027-778687)]][H(o[J(k(1656408641%(11537436-(234867+476815))),11910354163197-337831)])]or d[o[J(k(88519-19835),-419969+(-818306+14509254701037))]][d[o[J(k(-981755+(456025+594132)),-979732+25107028974851)]][618047617%4352448]]B[o[J(k(614425819%9308476),57531+23863285823206)]]=B[o[J(k(-829165-(-895580)),(14610836834638-318987)-163077)]]%#h+((-996979+591414833)%10539290-217613)B[o[J(k(570153-503739),(4184267203081-(-154506+-414296))-460206)]]=B[o[J(k(328997445%4568462),((-598271+-958679)-(-1034054))+2669802728751)]]==#h local E=K[h[B[o[J(k(-85230-(-153493)),2642+(595602+34783424997558))]]]]B[o[J(k(-415560-((654552+-1154067)+17077)),-297249+19209587556040)]]=false B[o[J(k(38108-(-29603)),-42373+10334918670303)]]=D+z B[o[J(k(-395434-(-463564)),165200+9233173797900)]]=nil if not E then return end local f=x[o[J(k(627361049%(7153616-(87318+-678080))),-221521+16276626606338)]]()or q:GetAttribute(o[J(k(445688-377362),484584+21648438742008)])==true x[o[J(k(((599846+133338977580)%(45356039603%2268148078-1011822))%14044267),-763122+15703473705434)]](T,E[if q:GetAttribute(o[J(k(1434470849%13405646),((-46172+-322941)+25884071557554)-241700)])==o[J(k((195717211-(-224578))%12242084),-130291+10760513348174)] then o[J(k(848333-779817),2620582274876-140337)] else o[J(k((3103699366-807500)%16772028),((-433322+137546)-(513574-647583))+28091741759916)]],f,x[o[J(k(182861296%5376322),22917630677570-294930)]]()or Vector3[o[J(k(-903236+971837),116606+19846749461225)]])end return D end B[o[J(k(-700160-(-766935)),21303212796966-236955)]]=function(...)local B={}B[o[J(k(248049-((62223-(-361721))-244228)),-254114+21004580358030)]]={[o[J(k(-577151-(-642565)),16685919947577-278923)]]=-0.99;[o[J(k(699212-631409),877629+15185582867777)]]=-0.985;[o[J(k(-42779+111240),1121317455744-(-155284))]]=-0.91,[o[J(k(94218+-27636),17662986449679-132480)]]=-1.48}B[o[J(k(-851424-(-918422)),-707762+15356911776208)]]=o[J(k(563547+-495269),945669+5277223394652)]B[o[J(k((654651+-649133)+62008),-79633+23716451289772)]]=o[J(k(-240133-(-306975)),588134+26593299475504)]B[o[J(k(-808548+(791289-(-83708))),-409652+17505599036010)]]={B[o[J(k(-15583+82601),-484406+30010282168006)]];B[o[J(k(-815847-(-562415+-321089)),-358993+29520497161726)]]}B[o[J(k((-1026756+56049)+1037451),-387508+10188445787752)]]={o[J(k(-961982-(-1029020)),32519526990577-(186818-1044172))],o[J(k(576193-508976),8052656375398-(-128327))],o[J(k(420349-(-777976+1129798)),25246141865269-605556)];o[J(k((716088-633361)+-17080),26532626752509-1358270864%9498366)];o[J(k(-969973+1037687),509883340%3349890+30631318891644)];o[J(k(238007-171769),983475+12465987460864)]}B[o[J(k(-247756-(95876+-411651)),-218730+(-824574+534142910356))]]={[o[J(k(250068803%9259278),32923472587918-654704)]]={o[J(k(-406981+472310),83638+15169128762455)];o[J(k(-292255-(-89275+-269694)),-438835+((-403428+21740672223081)-1007975))],o[J(k(-160194+228247),59236971237-(-115528))]},[o[J(k(-852296+919416),13773227965797-104827)]]={o[J(k(1341271023%12192757),-674394+(15549800505748-1001843))],o[J(k(984014913%3889124),-879051+20818054235023)];o[J(k(574590078%4287495),-90353+11156684528253)]},[o[J(k(543947-477170),993796+22945088212066)]]={o[J(k(-831284+898719),31357237008023-368365)];o[J(k(245818177%2082636),1.3111005162721e+14%4682501970727)]},[o[J(k(480658+-413817),34941001009036-(-372667))]]={o[J(k((411611+376938)+-720624),20007485892881-560910)];o[J(k(-302271-(-369787)),-319588+4178115253346)]},[o[J(k(((-1131523-(-141358))+2877485635)%16159711),31121492722486-(-1044512))]]={o[J(k(-855359-(-922424)),29822053956425-113490)];o[J(k(630183435%6563714),11129170044251-200807)];o[J(k(289165-223356),2911868733029-55947)]},[o[J(k(-441651+507037),873865+34395717150512)]]={o[J(k(924709535%6511567),3796526527676-198343)];o[J(k(94341222%798927),881508+18347995831900)]}}B[o[J(k(135752217%10437247),-427310+2640965369114)]]=o[J(k(2616360089%10901218),-193475+(16898914005580-(-107585)))]B[o[J(k(-302290+368680),31266031333919-854022)]]=o[J(k(592204-526693),16921355197628-639523)]B[o[J(k(828726+(-676553-83791)),12693323820132-(-199275))]]={B[o[J(k(1309756091%8731260),38289847%786467+144622846178)]];B[o[J(k(2651208901%(347393+10791856)),657414+18677647001305)]]}B[o[J(k(982705+-915036),28248897846726-(-333079))]]=o[J(k(608290904%(842072+12674023)),16245378612098-994145)]B[o[J(k(2447097895%15686106),441263+23790908334692)]]=o[J(k(560750+-495012),4591883104684-120302)]B[o[J(k(-271752+339767),(-570451+(476807-(897217-862232)))+29756202698029)]]=o[J(k(863086-796136),987310+33488069539186)]B[o[J(k(332257+-265606),368495+19613737318050)]]={B[o[J(k(-906308+971639),2.3740227677122e+14%13964840368020-(-227989))]];B[o[J(k(-313967-(-382553)),-284261+11286224440519)]];B[o[J(k(495743686%5163311),10340049075477-657665)]]}B[o[J(k(-212956+278769),(-825525-((384838+32645)-(-529492+666691715)%3519681))+17491580689693)]]={o[J(k((-1169825-(-476215))+760926),((24110902478081-(-640938))-785810)-(-929041))],o[J(k(-972983-(-1039840)),28666289962949-168983)],o[J(k(-709085-(-777714)),17853275643788-648361)],o[J(k(-797615+(862805+(97709089989%((1655247726-(-794570))-(-227257)))%(10394360-(-810676-221724)))),1040856+28964932821213)],o[J(k(551225-485378),28950028291592-822600)],o[J(k(-311914+451582881%11280140),773509+14968303669463)];o[J(k((-583611+1338681)-(304918-(-382485))),(7459607445390-(-309779+33541))-(75847-953558))],o[J(k(-692847+761509),19228379989396-(-110468))]}B[o[J(k(116850+-50966),32248970634501-(-660586))]]={[o[J(k(1318490108%(5796603-(-862096))),11982951172981-(-49545))]]=false;[o[J(k(178991+(349766+-462697)),(-1029613+(1016898+66423768)%1485583)+28165633659127)]]=314975+-314975,[o[J(k(1010807353%5710394),((-828379+2712207492%16333164)-73025)+(373017+13835950373258))]]=662404388%6369272,[o[J(k((695445991-397378)%12636037),15415366812060-(669528-(-221984)))]]=o[J(k((-511451+224157196)%6210499),38879+14320625959113)],[o[J(k(514384-445862),-432034+182151768428)]]=true,[o[J(k(900780098%4816642),(14785894344008-494422)-92493)]]=true,[o[J(k(746776+-678720),33741293859535-(-703137))]]=false,[o[J(k(-740823+806721),-1042386+32552274588135)]]=397588930%2516385,[o[J(k((1011258-(-164469-(685423+-1539245)))+-253217),23362128699398-(-610669))]]=false;[o[J(k(149116950%7097666),24601899901399-915030)]]=36085041%343667,[o[J(k(3008458078%(15607305-716127)+(967383+-1341576)),28830843734437-778557)]]=-1017460+1017460;[o[J(k(-681450+749443),16190267470594-(-487791))]]=209259840%1937590;[o[J(k(-51326-(-118458)),20368037797419-(-509680))]]=false;[o[J(k(-459985-(-527332)),((-455977+446493)-1417155980%9909538)+((1007229-71661234%7076334)+32591128167362))]]=false,[o[J(k(537905868%7575213),(871864+28696833663206)-(-150932))]]=778619+-778589,[o[J(k(387241882%11732544),(((829492+-1863309)+-490778)-(-905180))+24475440166696)]]=o[J(k(817658548%((986907638-(-7258))%11991624)),3182501505685-777429)];[o[J(k(505253770%13294409),28718232369740-409228)]]=false;[o[J(k(439695+(985171+((120019+-739280)-(-647752+1386433)))),-146515+21683203400493)]]=false,[o[J(k(602219+-536592),4648851167328-(-482488))]]=107756169%7183743;[o[J(k(-714156-(-779887)),24125078797158-280546)]]=-143718+143718,[o[J(k(-111752+177255),18717142529208-(-175454))]]=false,[o[J(k(-280434-(-348657)),1319457359741%659735058619)]]=false;[o[J(k(-942808-(-1008671)),24730158706459-871125)]]=false,[o[J(k(123116+-54729),6053535351846-((895182+(-125575+-403325))+-813750))]]=1259027734%13529628-(676402-(-95920));[o[J(k(-8361+75305),(-1014207+5408802047239)-(-762369))]]=false;[o[J(k((584609-43235)-((-1124503-(-139300))+1458141)),770647+1902347306416)]]=(303981491-(750391+-1635456))%1847676;[o[J(k(((180710223678%821448178-140286)-(-349991))%9681150),7649281916969-(792354+-473996))]]=o[J(k(50407805%284414),-772161+25299097580735)];[o[J(k(514630+-446486),-916202+(-583777+(885335+14814616358963)))]]=false;[o[J(k((1762094-(646992-(-241571)))-807121),-632347+19840496188382)]]=(2840353909%(13089003-634572)-901915)+158284,[o[J(k((59622961159%(97825+270960237))%3731116),28788940441737-932933)]]=true;[o[J(k((976483+-44907)-864338),-601326+24737582704541)]]=true,[o[J(k(140990139%11743490),27748509363835-313777)]]=true,[o[J(k(-693042-(-685832+-75707)),4751842079037-847279)]]=false,[o[J(k(((873687870%11046915+(-1474573-(-877560)))+(((439688+-1359387)+178749855)-(624693-164648)))%1326037),-719464+14901100580769)]]=false;[o[J(k(-539673-(-605328)),443857+13756622767793)]]=759909348%(878116+785632516%8646222);[o[J(k(111670-102036322%4434418),34000448702365-776494)]]=false,[o[J(k(-758567-(-356174-470743)),20403791557293-944051)]]=false,[o[J(k((1012417+-1511477)-((160708-(561351-(-32221)))+-134527)),32088303129255-(-105561))]]=false;[o[J(k(104234+-37986),197400+11713451886361)]]=false,[o[J(k(409963+-343376),15947482701240-(-268231))]]=false;[o[J(k(814661+-748567),1631071488102-(-828966))]]=false;[o[J(k(2751434500%((1148996768422%5152480422)%28194944)),306349+21919689614540)]]=false,[o[J(k(3210579621%13958744),(-390046-(1044296+(-301283-1047697)))+29310869813317)]]=Color3[o[J(k(907412+-840399),300459+12890120419922)]](-482606+482861,73614895%669224,-525080-(-525335));[o[J(k(1033739+-966967),-136590+(5308871970349-(69653+349360)))]]=Color3[o[J(k(-807518-(-872879)),17854042946248-(-375882))]](-113227-(-113482),905751-905661,453722+-453632);[o[J(k(46893875%632815),33816919919977-((535564+(-1726532-(-798597)))-(1031458+-792304)))]]=Color3[o[J(k(348909-280384),31008633459965-(-507299))]](540111438%2143299,-539288+921484804%(3500272624%16491583),697383+(769533+-1466661));[o[J(k(996679+-929870),16812741633110-73070)]]=Color3[o[J(k(1478941527%10060372),14275427859387-(-244401))]](752402+-752147,744643+(-1247679-(367611-870847)),751667+(-63646-(287430-(-605093+204572)))),[o[J(k(712116463%3279646+(628060+(391067+-1386509))),10819075479240-66822)]]=false;[o[J(k(37040-(688164-(1711692-269936439%4636945))),1040278+((20964170619979-386430902%6891762)-885558))]]=false,[o[J(k(95203+-29496),-282293+14493212783586)]]=42425839%831879,[o[J(k(244558-(-123909+301510)),22722664230900%(158899416278-(482627-930709))-1981962288%11589595)]]=(754651-(-258830))-((-514631-((229649+-1575741)-(-867581)))+(1143203893%15644971-71409)),[o[J(k(-221285-(-288760)),126429+(26380141413301-(-923091)))]]=false,[o[J(k(368422935%3837056),4335687945298-(-1000079+1835757))]]=2910045938%11829455;[o[J(k(595347-527535),333367+10526579481522)]]=false,[o[J(k(361132-294986),-200757+15397096590396)]]=(720806789720%2942133945)%12192113,[o[J(k(15276-(-52642)),337795+16652541863236)]]=false,[o[J(k(273993+(-634426-(-426049))),1546893469918-(-292017))]]=123671280%530778,[o[J(k(-757758+825440),18472960806841-520149)]]=false;[o[J(k(1527661417%6184598),13304037890410-(-867271))]]=155122819%1988754;[o[J(k(102948+-37009),-879468+25694471927128)]]=false;[o[J(k((-982735+1750570)-702322),-530615+((689980+((22608809605773-(-487207))-403107))-691385))]]=o[J(k(1130579338%(-123389+4718974)),10041738832536-618708)];[o[J(k(468396+(-102385-299045)),452419+30803187689579)]]=true,[o[J(k(-805327+871992),-877790+13431197010507)]]=false,[o[J(k(((-68183-520178)-17063)+((231656+(18798602799-(-316140)))%213638239)%12467653),21822527369791-(-1665227-(-618951)))]]=false;[o[J(k(1096102274%4764981-89100),(-1020488+1731884)+8559295343148)]]=false,[o[J(k((648405-171375)-408678),(-1680501-(-725044-261593))+(21279895125911-(-1033862)))]]=(((2013912-(3159933797%12740998+807845))+1185759353)-(-775961))%8078742,[o[J(k((249517654218%(58985+1769589981))%12268983),45920+(18092854758971-(1625553-901594)))]]=false;[o[J(k((867097976-(-216015))%5193096),717861+(27860842859446-(55745-(-343559))))]]=false;[o[J(k(-461487+528487),-804833+9.1336908122084e+14%(((818012-(1093480-(896658-393813)))+7486632106882)-505752))]]=true,[o[J(k(((-1912409-(-238241-730208))+983874)-(-28344)),(-1019820+22190967254618)-224678)]]=false,[o[J(k(247502+-180194),(43784-648270)+30943117273588)]]=2906166780%13838888;[o[J(k(732386748%13817375),-126109+((184388+-385199)+19550176338116))]]=513541+-513528;[o[J(k(575076662%3323747),-686151+(-328598+25371794196310))]]=.2;[o[J(k(155097256%635368),29990060989055-575187)]]=Color3[o[J(k(-380362+447017),27883+16601708297723)]](-77817-(-78072),2858515047%(-804753+((1274086-(366198-(-163077)))+12542540)),-257698-(-354707-(-959677+862773))),[o[J(k(1066587716%11720015),-13233+12989311801763)]]=Color3[o[J(k(242691884%1006746),21342608335089-562572)]](151013891%(2210909816%23435763),-245076+245311,-514288-(-514423)),[o[J(k(327316739%3146624),-685116+(8351070818775-(191224+-442914)))]]=Color3[o[J(k(719413-654086),15712857955356-282128)]](-17760-(-18015),945434-945219,-365504-(-904755-(-539171))),[o[J(k(472877+-404545),(-259304-378206)+29614373097848)]]=Color3[o[J(k(691701+-625562),314168+11998152296724)]](1325493736%(9470266-367430658%3277694),(839424+655168462)%11508910,804412-804390)}return B end B[o[J(k(899812+-831719),-80477+31981280049647)]]=function(...)local B=...local d=B(o[J(k(437269320%6336248),21304281935950-(218024-532445))])local x={}local D=game:GetService(o[J(k(375523-308807),900320+30721333537037)])local K=game:GetService(o[J(k(578711757%10917796),28846048578193-931501)])local z=game:GetService(o[J(k((28552139388%460731396)%(-812275+(548337+2415180))),3602252168870-((1473661-(-478183-(-909212)))-749725))])local Y=game:GetService(o[J(k(416572-348839),23432490708934-(-115299))])local A={Enum[o[J(k(3417067827%(13422158-(-931675))+-789608),21222451296059-(-794016))]][o[J(k(1096311564%((-677020+(-540442+750736))+13060849)+(461413-1017807)),(-930436+30723092074429)-583577)]];Enum[o[J(k((-278520+854959676)%11098906),30506767844908-599753)]][o[J(k(1333187574%(4918254-(-928765))),848474+3434678743254)]],Enum[o[J(k(((-995444+((-601733+71546236378)-1030718))%1192548981)%(574792+1591093526%9263363)),931507+27069785857581)]][o[J(k(705294-638940),-733790+18339702442172)]];Enum[o[J(k(734864-668304),-1009166+23110915621308)]][o[J(k((((586093+-919282)-69263)-554516)+1023678),41221745842044%1585452189602)]],Enum[o[J(k(373260778%3520690),1043517+7670079718624)]][o[J(k(1309479276%14879677),((-1657792-(-865367))+172932)+26456414282622)]],Enum[o[J(k(-897569-(-964868)),21385110884669-518778)]][o[J(k(1561728400%6760435),30339069566373-(-299982))]];Enum[o[J(k(979284-3528110448%17375362),((207907+259894)+-1035495)+29856309181468)]][o[J(k((142288+2855568932)%16797908),-521761+15120470691719)]];Enum[o[J(k(969677+-904319),-242316+(610183+18511751607537))]][o[J(k(-641849-(-710144)),(14523527992941-750890)-718640)]]}local a=3685991607%((-1010517+15757428)-(-611387))local H=184889840%13206415 local q=o[J(k(88181398%1602051),763946+14672650245851)]x[o[J(k(419974+-352028),826634+17148100011037)]]=-64724+64724 x[o[J(k(((35641389844-(-550904))%810165124)%(2583708541%15443811-917347)),5.1073296248824e+14%10014371920714)]]=nil x[o[J(k((((-577813-36504)+912360)+-769630)-(-539798)),-52542+17392533718484)]]=nil x[o[J(k(-107888-(-176591)),(22653478555787-566528)-359295)]]=nil x[o[J(k(1798831768%14163492),-605024+18817103284810)]]=false x[o[J(k(433190409%9215407),(-187542+(804246+16750831352611))%389554392032)]]=-917175-(-917175)x[o[J(k(-275332-(-341761)),((10540510218176-(961020-(-22639)))-325276)-605693)]]={}x[o[J(k(439951760%3436601),25845320157703-2860479553%(4023981851%19188349))]]={}x[o[J(k(750298+-683340),18458939433694-(-227195-(-1397657-(304702+-1183860))))]]={}x[o[J(k(88735+-21175),(33270-(-494912))+3694968607980)]]={}x[o[J(k(-932839-(-1000951)),27678127886998-(-888289+835983))]]=false x[o[J(k(122258+-55772),217904+4260491942982)]]=false x[o[J(k((1008073+(738403+1061153375))%6642698),230661+13978909899356)]]=.08 x[o[J(k(937535+-871317),26078709927969-996159)]]=-356305-(-356305)x[o[J(k(505439+-437988),34786758520858-(-346555))]]=false x[o[J(k((-785912-(-235261))+616484),-1033495+(23813900637092-(974733+((-575977+-13215)+-335301))))]]=true x[o[J(k(-652366-(-718190)),(25891390615043-(-40648+135889))-901139)]]=false local function e(B)return Vector3[o[J(k(2490884267%(2051098346%(1210743177%29832448))),24649735563958-(-106771))]](B[o[J(k(833724-((-103694-(669365+-1022485))-(-516377))),(70298+-854147)+10401473544463)]],57677-57677,B[o[J(k(1024036-958620),(517098+19286012658576)-772733)]])end x[o[J(k((-667435-(-92427-876754863%(-655249+6273463)))+329241),(370616+10578317391581)-1216466287%6948555)]]=e local b=(setmetatable({},{[o[J(k(71569356%(1108476-((984441+(-750160+-845768))-(-837238)))),-866729+30352753892580)]]=o[J(k((1043033+605378229)%(412360803%16666094)),7237454224739-374231)]}))local function s(B)local d=b[B]if not d then d={}b[B]=d end return d end function x.root(B)local d=s(B)local x=d[o[J(k((1086499848-(-856163))%8175112),9033420074293-466117)]]if x and x[o[J(k(-159908+225281),489288+5265768799544)]]==B then return x end x=B:FindFirstChild(o[J(k(-340407+407703),-195706+21181653403875)])if x and x:IsA(o[J(k(-658119-(-725342)),440873+25757781003722)])then d[o[J(k(1857213383%9572917),(27847084245621-(-651688+1299971))-(-945978))]]=x return x end d[o[J(k(14404060%4778968),183092+5380661613859)]]=nil return nil end function x.humanoid(B)local d=s(B)local x=d[o[J(k(4940274%(1139935-1011661)),-7918+(1011172271609-(-440774)))]]if x and x[o[J(k(-371855-(-438614)),24015326263217-(47757-(-825595)))]]==B then return x end x=B:FindFirstChildOfClass(o[J(k((649315192-(-755685))%4513917),314526+28863216143538)])d[o[J(k(-162263-(-227738)),(4841530558967-(-867356))-819238)]]=x return x end function x.holds(B)local d=s(B)local x=d[o[J(k(1770437528%((600267+(-646316+8398610))-(-158835))),572545+11216418331108)]]if not x or not x:IsDescendantOf(B)then local D=B:FindFirstChild(o[J(k(-291602+358340),19791802613036-343165)])x=if D then D:FindFirstChild(o[J(k(19508-(-48572)),34664852655716-509321)]) else nil d[o[J(k(-587046-(-652917)),-201180+10938414990816)]]=x end if x and(x:IsA(o[J(k(403538-2852038474%11361357),16326940708270-(-961994))])and x[o[J(k(-699125+767416),(-191064-(-2525))+15126121141242)]]~=nil)then return true end local D=d[o[J(k(568969054%(1856447129%8803114)),-417989+12454257898810)]]if not D or D[o[J(k(437227-368618),30055636251237-(-392384))]]~=B then D=B:FindFirstChild(o[J(k(400317363%5266450),(-341667+19706810968731)-(-967352+422074))])d[o[J(k(((396851-(-581487))+-5480)-306495223%14551821),27400072936638-922914)]]=D end if D and(D:IsA(o[J(k(-13563+79993),30869208727479-68787)])and D[o[J(k(-686776-(-752906)),5019570703255-994211)]]~=nil)then return true end local K=B:GetAttribute(o[J(k(640946-574113),2043644499966-(-354088))])if K~=nil and(K~=false and K~=o[J(k(189333750%15772180),868069+23391182299690)])then return true end return B:GetAttribute(o[J(k(-363326+430076),24342307138569-(-228202))])==true or B:GetAttribute(o[J(k(1311640688%((6143388-157064)-783808)+-538173),341981+16405920561494)])==o[J(k(76419966%694122),823848+12237831024412)]end function x.enemy(B,d)if d:GetAttribute(o[J(k(900442+(38699-873613)),512298+7413401219055)])~=B:GetAttribute(o[J(k(1755775719%(3884734852%28261498)),703554+7347104343167)])then return true end local x=d:GetAttribute(o[J(k(682898+(-1414039-(-799554))),(290771+((-830752+318637)+-160444))+23600954462123)])return string[o[J(k(918199+(-1361850-(-509148))),32800657486335-591039)]](d[o[J(k(54974-(-49551+38375)),18235+13941606848786)]],-704067-(-704068),1949429748%(1043849+9380909))==o[J(k(242774136%(2302740-(-977077))),7765483973487-1035399)]and(x~=nil and x~=B:GetAttribute(o[J(k(-738776+805665),34507727024884-477647)]))end local j={}local t local T={}local h=966001457%4145929 local function E()for B,d in T do pcall(d[o[J(k((-252484+943342035)%5821124),30646216402869-(-503355+(-838496+1323322)))]],d)end table[o[J(k(1439994327%14399280),(41344+4342889967597)-989819)]](T)table[o[J(k(561195754%10790970),8966408013896-512368)]](j)t=nil end local function f(B)E()if not B then return end t=B for B,d in B:GetChildren()do table[o[J(k(-329824-(-395793)),21301126758070-956295)]](j,d)end T[-320676-(-306952-13725)]=B[o[J(k(73473+-5860),28951883679788-(-501429+1254535))]]:Connect(function(B)if not table[o[J(k((219720+-358798)+207398),((-406197-(-868071+833064))+919149)+16433796247126)]](j,B)then table[o[J(k((889620-(871294-(-72919)))+122449),536302+22391621311543)]](j,B)end end)T[(383103057306%(291109916937%(1557732377-(502743-(-427330)))-(-125701)))%8475006]=B[o[J(k(1275527998%(78580+7251646)),22802988418658-959564)]]:Connect(function(B)local d=table[o[J(k((400298+567247469)%9619985),4.796862602885e+14%15473750436780)]](j,B)if d then local B=#j j[d]=j[B]j[B]=nil end end)end local function n(B)local d=t if not d or d[o[J(k((761283+-783826)-(-90430)),260631+32697814001365)]]~=workspace then d=workspace:FindFirstChild(o[J(k(66393-(-821)),12499051136365-(-950907))])f(d)h=B+(3364608-(-692931))%18114 return d end if B>=h then h=B+(-431390+431393)if#d:GetChildren()~=#j then f(d)end end return d end function x.mine()local B=t if not B or B[o[J(k(693110-627620),-856627+20458567961883)]]~=workspace then B=workspace:FindFirstChild(o[J(k(860996+-792612),-127515+1303325788187)])end local d=D[o[J(k(362555+(-497600+202281)),33650455280302-643905)]]if not B or not d then return nil end return B:FindFirstChild(d[o[J(k(1370547731%11614234),428309+14350633515562)]])end local R local p=(-77044-406767)+483811 local function U()local B=R if not B then B=Y[o[J(k(606835+-540921),-268324+19093132515328)]][o[J(k(-838283+905312),(652672+17995470976470)-(-439048))]][o[J(k(1735893390%(-302138+10633705)+-123636),-13329+1075278557369)]]R=B end return B:GetValue()end local function v()return D[o[J(k(-651758-(-717627)),437826+24653974153338)]]:GetNetworkPing()end local function i(B)if B<p then return end p=B+(-322406+322406.25)local d,D=pcall(U)if d and(type(D)==o[J(k(-77990+146041),23598580138383-(-880892))]and(D==D and D>887904765%8968735))then x[o[J(k(-499231+567356),-259545+(16955333765713-(-513224)))]]=math[o[J(k(385482+-317545),(-878808+917258)+(1022132+((333612+-1105698)+25442734356690)))]](D/(-556930+557930),.6)return end R=nil local K,z=pcall(v)if K and(type(z)==o[J(k(438546980%4664671),653155+23701642292490)]and(z==z and z>207301614%2657713))then x[o[J(k(-572379+640935),20302159538477-241758)]]=math[o[J(k(-963700-(-1029929)),-966567+34267644214348)]](z*(201652577%2688701),.6)end end local O local W={}local function X(B)local d=K:FindFirstChild(o[J(k(-656159+724738),33473685691889-899949)])local x=if d then d:FindFirstChild(o[J(k(1956242342%12302988),(18293404668742-(874862-454029))-470723)]) else nil return if x then x:FindFirstChild(B) else nil end x[o[J(k(3413991270%(14198898-433072)),17859412988089-(-477469))]]=X function x.input(B)local d=W[B]if d and d[o[J(k(-915801-((-1330579-182481)-(-529727))),-555326+(28142631497008-(170585+-314759)))]]~=nil then return d end local x=O if not x or x[o[J(k(556735-490191),31697814784179-856115)]]==nil then x=X(o[J(k(482596779%((1015149068-(-231502+898010))%8690076)),14318369860300-(-712897))])O=x end d=if x then x:FindFirstChild(B) else nil W[B]=d return d end function x.send(B,...)x[o[J(k(866655+-799477),15393700432559-87288)]]+=1254421673%(4500154260%20713228)local d=pcall(B[o[J(k(337665-271122),65144120195534%8143015494208)]],B,...)x[o[J(k(537201-468648),6622715983978-(-595014))]]-=(31137045-(638307-694531))%808338-(153371-(-323053))return d end function x.copied(B)local x=d[o[J(k(507515-1523031955%(3952312915%28755606)),(1801300447%12417890+164117368639%873025711)%12490950+14695437535623)]](q)if type(x)~=o[J(k(-170439+236645),14775231408169-376170)]then return nil end if B==o[J(k((-852969+1432413)+-510924),561645+(25195649657493-555918))]and x[o[J(k(106215700%3791042),-171953+11525250122654)]]then return x[o[J(k(255484044%4119649),27946162977304-(-1020440))]]end local D=x[o[J(k(269113767%14947126),(30968549496609-598802)-948592)]]return if type(D)==o[J(k(1105821302%10431658),6754513249539-887213330%6158261)] then D[B] else nil end local r={}local I={}local M={}function x.fire(B,d,D,K,z)local Y=x[o[J(k((65932995241%686955921)%(1000406911%6221881)),16115570344627-(-639459))]](B)if not Y then return false end local A=x[o[J(k(((1008681-1031563)+-133586)+223654),-430608+24504032512312)]](B)if type(A)==o[J(k((-211085-97521)+375012),1384800882893-632399)]then local B=if K then K(A,z) else A return x[o[J(k(872391275%13630089),-248036+15072999563560)]](Y,table[o[J(k(248401135%1273512),29862873799651-1396500005%7934174)]](B,(-778023-(-104508))-(-673516),B[o[J(k(321655+-253634),266873+6481457188514)]]or#B))end local a=r[B]or I[B]or-771757-(-771758)if a>#d then a=887848+(995811+-1883658)end local H=x[o[J(k(75901759%6894054),8046545302335-(-509204))]](Y,d[a](z))if D and not r[B]then local x=M[B]if not x then x={}M[B]=x end x[o[J(k(971577-904462),-434626+26564260936057)]]=a x[o[J(k(43423741%325988),33920913398440-(-565231))]]=#d x[o[J(k((178992+-996499)-(-884529)),26889727461054-617933)]]=os[o[J(k(67107-388),943751+((-585564-(-568280))+26535531720257))]]()+.6 x[o[J(k(5419988%1338229),347651+21990659304262)]]=D x[o[J(k(143371485%8429677),24196960722189-481692)]]=z x[o[J(k(2160454606%11188889+(53747-986023)),29716729765540-(-790392))]]=true end return H end local function u(B)for d,x in M do if x[o[J(k(12894-(-53118)),4354328815581-(-683684))]]then local D,K=pcall(x[o[J(k(181689-113825),225397+2083317853120)]],x[o[J(k(1014395+-948713),(-1170030-(-545972+(886831+-723771)))+32608190363463)]])if D and K==true then r[d]=x[o[J(k(2358754436%(15882999-1048487)),13410479532715%(21074174136925%147371874741))]]x[o[J(k(((149026317-(1308608350%(1044481151%21415143)-988061))-(85892-(-108297)))%(-482025+(2028551-315674))),-235506+12037098794811)]]=false x[o[J(k(1276595023%(2957732814%26557778)),-500871+25579551504312)]]=nil elseif not D or B>=x[o[J(k(285111649%1717142),280720+(234126+15021447555651))]]then I[d]=x[o[J(k(-796584-(-72910+-792363)),22307074209955-(-424935))]]%x[o[J(k((809646-(-193600-(1007543+-1313662)))-631451),828508+5752095842176)]]+(486947+(1015236+-1502182))x[o[J(k(-4576-(-70713)),-656853+(340876+15404583992643))]]=false x[o[J(k(658877+-592135),936418+23610063286165)]]=nil end end end end local G local Z=false local S=494838238%(-99216+11607082)local c=false local function L(B)G:SendKeyEvent(B,Enum[o[J(k(-574325+641229),30362094512605-(-43022))]][o[J(k(-231631+(873615+-575455)),-723161+32452345252612)]],false,game)end local function C()if not Z then Z=true local B,d=pcall(game[o[J(k((390849432-(-735862))%1861831-535376),20556305839901%1209195312878)]],game,o[J(k(-997347+1065519),(-568847+-68280)+4685826171869)])if B and d then G=d end end if G then if pcall(L,true)then S=(-395962+739634507)%((4920483-679038)-41226)return true end G=nil end if d[o[J(k(-221264+287838),(27125762954179-1014822)-518864)]]and(d[o[J(k(-980415-(-1046881)),460601+(802382+25420939592008))]]and x[o[J(k(-205209-(-272801)),6303921743991-416746)]])then if pcall(d[o[J(k(134270149%6390549),85783+(283075+20266740030559))]],a)then S=(-170541+-488164)+658707 return true end end c=true return false end local function m()if S==-260088+260089 and G then pcall(L,false)elseif S==(-340439-(-266469))-(-73972)and d[o[J(k((575953+866907180%6822236)-990876),26310951838218-441734)]]then pcall(d[o[J(k(88709+-23021),(607335+(12796624669171-(-800516)))-643566)]],a)end S=(736244+-437997)-298247 end local Q={}local function w()local B=false for d,x in Q do if x then B=true break end end if B and((c or not x[o[J(k(-1035779+((812888258%6827233+320084)-(-333600))),13757079335660-(-618072+(11515511%(1300528677%7994097)+(376030+((391565-567428)-(-430081))))))]]or z[o[J(k(326374-260257),82084+30601972507737)]]==false or z:GetFocusedTextBox()~=nil))then B=false end if x[o[J(k(-702198+770591),26431835871830-(620031+-501832))]]==B then return end if B then x[o[J(k(801572083%(-782033+4251753)),22352299235368-((-641165-386907)+1519698))]]=C()else x[o[J(k(404495+(575480-912888)),-371270+((367565+21807565298639)-(70076+898699)))]]=false m()end end function x.hold(B,d)if not d and not Q[B]then return end Q[B]=d w()end function x.steering(B)if x[o[J(k(-691207+758395),28118869159506-(-623367))]]then return true end if not x[o[J(k(257054675%6945635),815306+13862671671794)]]then local d=x[o[J(k(2417006378%9441167),910188+33190136492539)]](B)if d and d[o[J(k(2719480018%((-903348+13143544)-(-64843))),800770+((393898-878695)+(34425478095994-(767183-(1037590+-26564)))))]][o[J(k(1096846-1028291),(650047+8438748490384)-998415)]]>.1 then return true end end if z:GetFocusedTextBox()then return false end for B,d in A do local D=x[o[J(k(566770+-499412),9471661360599-636609)]]and((d==Enum[o[J(k(556297-(368975+120953)),(920150+-512449)+24228153446630)]][o[J(k(-646636+712761),(-655746+731865)+24757661713449)]]or d==Enum[o[J(k((26840681647%163704996)%(717686033%6289858)),(800064-(-39659))+33582171223537)]][o[J(k(-859777-(((-1800432-(-214314))-(-680478+181237))-(-159272))),(670543+34020154595063)-291174)]]))if not D and z:IsKeyDown(d)then return true end end return false end local l local N function x.proxy()local B=l if not B or B[o[J(k(-41295-(-108929)),4646401141002-(-682125))]]~=workspace then B=workspace:FindFirstChild(o[J(k(-908543-(-973992)),366390+8907281622553)])l=B N=nil end if not B or not B:IsA(o[J(k(578571-511299),804147+11510087910899)])then return nil,nil end local d=N if not d or d[o[J(k(1000311877%9903416),(-1047741-(-446602))+2905062088396)]]~=B then d=B:FindFirstChild(o[J(k((5573180143%186139021)%14590025),4103833391342-721329)])N=if d and d:IsA(o[J(k((1229093-(-803104-(-932554)))-((1231671933-(-677210))-(173577833266%1808198826)%8445735)%9545074),848367+34543819695124)]) then d else nil d=N end return B,d end function x.heading()if z:GetFocusedTextBox()then return nil end local B=workspace[o[J(k(2506662197%10444143),32381618586730-(-375057))]]if not B then return nil end local d,x=-226268+(-641716+867984),178679614%6161366 if z:IsKeyDown(Enum[o[J(k((619991+137734)+-691031),-458594+4353223237143)]][o[J(k((-495329-(-443702))-(756820+-874821)),16331947153032-700963)]])or z:IsKeyDown(Enum[o[J(k(-410024-(-477014)),24857740938274%1912133921494)]][o[J(k(544744-477241),-229615+4979004336380)]])then x+=1795007631%(7160360-(-644021))end if z:IsKeyDown(Enum[o[J(k(-982856+1048855),19389441399580-(-543357))]][o[J(k(450688414%10241415),767746+32768153344266)]])or z:IsKeyDown(Enum[o[J(k(-734741-(-802632)),54035309487975%(-459173+13508828861576))]][o[J(k(678833812%((68955021281%(99718+830882617))%27553218)),10725606172714-969833)]])then x-=-350608+350609 end if z:IsKeyDown(Enum[o[J(k(301939456%10409358),4391159174409-(49652+-589166))]][o[J(k(663848891%9620047),(15979869207900-829019)-((-652009+79819)+716796))]])then d+=56793925%1577609 end if z:IsKeyDown(Enum[o[J(k(-182212+248963),-452808+25741849763660)]][o[J(k((28304605170%745233974)%15888713),21010668507878-(-642745))]])then d-=456762-549270749%9301932 end if d==((1098891959%8122182-(166398-(-773335)))-905670)+(-1394126-(-543039-299101))and x==-202255+202255 then return nil end local D=B[o[J(k(418235-352460),-643874+18695095922724)]]local K=e(D[o[J(k(120389782%4812853),-876392+7664698808516)]])if K[o[J(k(932359794%15538226),361978+(34223964225409-(-990420)))]]<.01 then K=e(D[o[J(k(-645194+968520615%8798257),31121723613783-((((-718297-(-119296))+(-644483-829319))-(-547440-495597))+9548))]])end if K[o[J(k((297861+(-1212407-(-822687)))-(567442+-725051)),2.158561211793e+14%15418295423363)]]<.01 then return nil end K=K[o[J(k(-935412-(-1003441)),32080958339498-868135)]]local Y=Vector3[o[J(k((29170412641%((154923629-(-234741))-(-909405)))%9449228),22104331658705-(-378969))]](-K[o[J(k((-701019+-121767)+2264585285%11790079),-565411+26273319093853)]],-885547+885547,K[o[J(k((-366137+(723415-(-598574)))-889877),(-992964+14293830892383)-541500)]])return((K*x+Y*d))[o[J(k(((((831409-828891)+1029147)+-2208890)-(-891577))+351118),27232180656383-767951)]]end function x.sprintHeld()local B=d[o[J(k(406355+-339571),(27120194700532-(-582062))-(-797636-191992))]](q)local x=if type(B)==o[J(k(700268+-632942),(128130+((30514692074321-(99885+748962))-761452))-(-618983))] then B[o[J(k((299742-(-135886))-370308),((-873269+6231866562939)-(-321848))-971174)]] else nil local D=if type(x)==o[J(k((180088401473%(45745317179%973413843))%(3190893-(-665804))),26291033864780-(-660021))] then x[o[J(k(2372144200%16136575),520311+4868226927414)]] else nil if type(D)==o[J(k(-926231-(708336+-1701118)),5267409577125-(-531820))]and D[933198-933197]==true then return true end return z:GetFocusedTextBox()==nil and z:IsKeyDown(Enum[o[J(k(2731906712%11674534),20612843148831-(-1053396-(-751114)))]][o[J(k(-343882-(-409855)),(22470898717192-(((22732798326%1338135789)%((-175422+5956368)-(-638649))-(-652549-(-63860)))+-1522607))-960559)]])end local g={}local P={}local V local y=-15093+(-143893+158986)local F=(-350217-1964949776%(3639429104%20268560))+562521.5 local function B1()table[o[J(k(1977274091%7940596),23145250118098-60555)]](g)table[o[J(k(870507+-804664),10401718333044-(-899133))]](P)V=nil end function x.rims()if g[723404711%4988998]then return g end local B=os[o[J(k(969022-2844273985%(12013083-(-568213))),-328351+11807981168591)]]()if B<y then return g end local d=workspace:FindFirstChild(o[J(k(1044723-978620),564581+21313732323554)],true)if d then V=d for B,d in d:GetDescendants()do if d[o[J(k(-114359+181917),30350640808766-370333)]]==o[J(k(-550743-(-616054)),462370+27132738360456)]and d:IsA(o[J(k(1363478398%(123994024%19651227)),19000590850366-(-641739))])then table[o[J(k(-658011-(-724318)),20679047500701-303764)]](g,d)end end end F=if g[407896914%6913507] then 547322.5-547322 else math[o[J(k(475495688%7095975),3872+8267934259816)]](F*(550613.5-550612),-899126+899130)y=B+F return g end function x.rimDistance(B)local d local D for x,K in x[o[J(k((1042383516-(-823480))%5893452),1350261087457-437789)]]()do local z=K[o[J(k(111167-((123193-532516)+453320)),(-589085+8598215273528)-601655)]]-B local Y=math[o[J(k(103909-60376478%804543),-883043+26843622794584)]](z[o[J(k(-972316-(-1040443)),-856451+(14273274385438-(-1040675+1179289392%6131671)))]]*z[o[J(k(1460714444%11411309),(17496216054227-(-339975))-(-621250+1346019))]]+z[o[J(k((1279974-438014)+-776472),33100153379118-(140836-987918))]]*z[o[J(k(15745+51010),-938861+9581595968412)]])if not d or Y<d then d=Y D=K end end return d,D end function x.facingRim(B,d,D)local K=e(B[o[J(k(2206217777%9718732),607122+20120705232215)]][o[J(k((-924677+1859947)+-867525),269563+965735024703)]])local z=B[o[J(k(999427+-932277),875549428%17157467+17401012589678)]]local Y local A=math[o[J(k(-758752+826067),291122+(-664921+16138543367306))]]for B,x in x[o[J(k(-419502+487623),((-347555+(28128948746032-(-965481)))-(-1037827))-(-578118))]]()do local a=e(x[o[J(k(-896041-(-961501)),(-549187+1334089)+14358160555188)]]-z)local H=a[o[J(k(-651394-(-718062)),(143532+723096)+10394011638842)]]local q=if H>.01 then K:Dot(a)/H else 861280+-861279 if q>=d and(H<=D and H<A)then Y=x A=H end end return Y,A end local function d1(B)local d=V if not d then return nil,nil end local x=B while x[o[J(k(1475635843%6047417),((((294434-((-42459-85532)+426133))+958213)+29809893818314)-(-672634))-(-713333))]]and x[o[J(k(418626949%3011233),8413838946461-811896)]]~=d do x=x[o[J(k((1017496489-(-330114))%10492363),(714908+9164250804168)-(-812096))]]end if x==B or x[o[J(k(-595288+661397),620544+28465626796077)]]~=d then return nil,nil end local D=B[o[J(k(-752073+818966),(559439+163508)+23921754618596)]]local K local z=Vector3[o[J(k(164214+-98641),((534928+-1456071)+1769693)+9949328274264)]]local Y=(-546094+1047723)-501629 for d,x in x:GetDescendants()do if x~=B and x:IsA(o[J(k(1867575471%11387243),11157116045627-(-948245+(818591-(-592457))))])then local B=e(x[o[J(k((553063+513189434)%(-862879+14034076)),-936302+26437272993421)]]-D)if B[o[J(k(383167+-314610),-580042+(932132+18691711007820))]]>((-994925+1771319258)-(-226781))%(-793706+11147806)then return nil,nil end local d=string[o[J(k((72246882402%293749137)%4488314),615962+29050723513142)]](x[o[J(k(222462317%10590309),((((-1243838-(-445906))+-829738)-(-741807))+1790950)+13466754953410)]])if not K and((string[o[J(k(-150631-(-217442)),809430+(33645239883935-258623))]](d,o[J(k(540371634%10194422),853702+(665892+(-866301+(21460792768667-(-187465)))))],443084+(496067-939150),true)or string[o[J(k(-851229-(-917941)),883581+18911342849419)]](d,o[J(k((42175260395%1318252230-950685691%11176297)%(733888+8168661)),-857438+(83697201%8299100+16792829129824))],-836211-(-836212),true)))then K=x end if d~=o[J(k(1401466697%6705265),26717748492538-(-890407))]and not string[o[J(k(-196218+263227),19034527061953-(-541645))]](d,o[J(k(-107099-(-439520+1353995018%7162582)),23841815309245-58793)],450406-450405,true)then local d=x[o[J(k((-1781359-(-874837))-(-973052)),1046688+(4359584961872-794763))]]local D=(d[o[J(k(628002+-559469),575865+10155257741287)]]*d[o[J(k(-212051-(-278422)),-819303+10874944745089)]])*d[o[J(k(279172+-212975),20940757988953-640705)]]z+=B*D Y+=D end end end local A if K then local B=e(D-K[o[J(k(364941+-299480),14786570520740-906263)]])if B[o[J(k(-363734+429531),24543763001510-(-819490-(-295794)))]]>.3 then A=B[o[J(k(258607+-191792),303266+23259684596944)]]end end local a if Y>2356552296%11608632 then local B=z/-Y if B[o[J(k(560612348%3240143),29122383272917-2640340563%(-509846+((763118+-141002)+11995802)))]]>.3 then a=B[o[J(k(275965-208782),((-743416+1115498)+4671717322335)-685574)]]end end return A,a end local function x1(B)local d=B[o[J(k(754934403%3007434),-804895+21970988780717)]]local x local D local K=math[o[J(k(214655-147167),-820220+7740971545226)]]local z=true for Y,A in g do if A~=B then local B=(e(A[o[J(k(1076309171%6602720),-957646+15359330962407)]]-d))[o[J(k(415188+-347127),927086+16097313421773)]]if B>=H then if not x then x=A elseif((A[o[J(k(1088742527%5884735),8537436096504-92092)]]-x[o[J(k(201957513%16824134),-260789+(14932491567241-878271))]]))[o[J(k((((-124358-141075)+1034417)+-1098287)+397812),(-896731+20586298069057)-(-1279973-(-864235)))]]>5368685%1342165 then z=false end if B<K then D=A K=B end end end end if not D then return nil,false end return(e(D[o[J(k(-464896-(-531830)),36153+386463126216)]]-d))[o[J(k((2725007011-851600)%11641401),855942+22513880850605)]],z end function x.front(B)local d=P[B]if d~=nil then return if d then d else nil end local x local D,K,z=pcall(d1,B)local Y,A=x1(B)if D and K then x=K elseif Y and A then x=Y elseif D and z then x=z else x=Y end P[B]=x or false return x end function x.frontOf(B,d)local D=x[o[J(k((-767821+1354971762)%10030655),(26374212352902-(-432972))-(-921497))]](B)if not D then return nil,-998209-(-998209)end local K=e(d-B[o[J(k(555016-487801),3418206179319-(-751266))]])local z=K:Dot(D)return z,((K-D*z))[o[J(k((-941371+1589034)+-581972),876423+((19470713346074-(-1023902))-863909))]]end function x.nearestFoe(B)local d=math[o[J(k(12103494%364740),-915934+13048997266501)]]local D=x[o[J(k(245375345%((-457929+638556984)%17346413)),22619087285235-((-803290+1318238)-172507))]]local K=x[o[J(k(-984028+1051859),18696102836537-(-479826+-520690))]]for x=-612222-(-612223),x[o[J(k(746829-679910),8317792594799-(-571232))]],4439065%4439064 do if K[x]then local K=((D[x][o[J(k(463893-397017),21505899329725-333120)]]-B))[o[J(k((1949317212%10063161)%1008797),6962118467971-728298)]]if K<d then d=K end end end return d end local D1 local K1 local z1=308547+-308547 function x.ball()local B=x[o[J(k(906162-840330),14605212754711-1002627)]]local d=K1 if d and(B<z1 and(D1 and d:IsDescendantOf(D1)))then return d end z1=B+(768346082.25-763238)%15991309.25 K1=nil local D=D1 if not D or D[o[J(k(-989936+1055735),(457629+570887)+(-602709+6171136323798))]]~=workspace then D=workspace:FindFirstChild(o[J(k((197480131-137610)%1483262),209015+11787173747241)])D1=D end if not D then return nil end local K=if x[o[J(k(-226083-(-293827)),(34476725580349-(-653214))-16858)]] then x[o[J(k(((208005574336%828769097)%((44335280982%2608138387-(-799371))%44959571))%1004533),1543695779%13078055+14816874214151)]][o[J(k(-1009075+(1452639-375131)),453416+22078956687596)]] else nil local z=math[o[J(k(891524386%14857611),(489153+-685131)+11144366213236)]]for B,d in D:GetChildren()do local x if d:IsA(o[J(k(830960+(156573+(-1604380-(-685253)))),-49314+23290309798063)])then x=d elseif d:IsA(o[J(k(-24776-(-90771)),26458716188842-653196)])then x=d[o[J(k(201601+-132941),261208+12031258864654)]]end if x then local B=if K then ((x[o[J(k(897393+-829588),(7803244676752-539716)-791055)]]-K))[o[J(k(250389+-185066),-788948+8013675055095)]] else 554356989%(15062537-(-307237))-(-528284+(217099+28746945639%(-119093+423017755))%6972525)if B<z then z=B K1=x end end end return K1 end local function Y1(B,d,x)for d=d,x,959513-959512 do B[d]=nil end end function x.refresh(B)x[o[J(k(902734-835439),((-1022265-(-331738))-(-285540))+18443932955925)]]=B i(B)u(B)local d=g[3759843558%(15897730-166167)]if d and not d:IsDescendantOf(workspace)then B1()end local K=n(B)local z=D[o[J(k(107163803%1115576),32132756226158-(-481529))]]local Y=if K and z then K:FindFirstChild(z[o[J(k(698098-(1239245-608520)),31767665279383-(-807196))]]) else nil local A=if Y then x[o[J(k(2697371508%16055387),35063389227367-(313785-871684))]](Y) else nil x[o[J(k(257271-190279),(999801+5581426086859)-(-998654))]]=Y x[o[J(k((275915+-1071315)+861307),24299316256986-1000089)]]=A x[o[J(k(-233812+302098),33678968511560-67268)]]=if Y then Y:GetAttribute(o[J(k((53631202-847403)%432102),-274632+18736832736800)]) else nil x[o[J(k((699685+(1396806475-524950))%7090937),4955623084110-(-852784))]]=Y~=nil and x[o[J(k(-345985-(-413384)),(-149883+33279066369713)-669443)]](Y)local a,H,q,e=x[o[J(k(863222252%9182520),(-751500+431347)+34722774887467)]],x[o[J(k(148768-(-501865-(-584867))),27825326494428-(-605103))]],x[o[J(k(-643509+712017),13584876262064-980333)]],x[o[J(k(296886563%4637805),279660+32289353805375)]]local b=751844-751844 local s=x[o[J(k(495767490%13397313),3.1728472038717e+14%1361737060273)]]local t=false if K and Y then for B,d in j do if d~=Y and(d[o[J(k((-379577+127781896)%15917088),4695+((-5360+-693919)+8845958573532))]]==K and d:GetAttribute(o[J(k(798289+-729884),-567735+3140115142987)])~=nil)then local B=x[o[J(k(-927914+995021),204962+24580972563425)]](d)if B then b+=1036654-1036653 local D=x[o[J(k(48875018%863174+-468886),-322121+245528593012)]](Y,d)local K=x[o[J(k(-145224+16666622%316426),9022993725386-(-206184))]](d)a[b]=d H[b]=B q[b]=D e[b]=K if K then if D then t=true else s=true end end end end end end local T=x[o[J(k(-50561+119152),28764044452964-(-108726))]]if T>b then Y1(a,b+1809596650%14027881,T)Y1(H,b+(437871-((518095+-127874)+47649)),T)Y1(q,b+382142008%8130681,T)Y1(e,b+(91991+-91990),T)end x[o[J(k(6975431%690918),12977698467745-3645004024%(2142018997%25596381))]]=b x[o[J(k(3333408091%14556072),-803469+(9860025232154-(-498429)))]]=s x[o[J(k(1064463582%15426013),(27941026601414-543617)-(-725781))]]=t end local A1={}function x.start()local B=pcall(function()table[o[J(k(359041+-291763),(611580+14816288354432)-401850)]](A1,z[o[J(k((-575107+1595363952)%(8463242-1045935)),17914469214075-(-326357))]]:Connect(function()x[o[J(k(110495+-45144),16414031611781-465414)]]=false w()end))table[o[J(k(85552+-17988),(-18856+21578962076097)-137135)]](A1,z[o[J(k((((1664161330-563258)%6989284+1278793)-(-11181+578109))-794200),-782140+3604488099548)]]:Connect(function()x[o[J(k((661761+85611973327%920605515)%5239204),-743127+20063624177193)]]=true end))end)if not B then x[o[J(k(602549873%7724131),639737+20880802572771)]]=true end end function x.stop()table[o[J(k(515396-449136),648936+33692047809261)]](Q)w()for B,d in A1 do pcall(d[o[J(k((141223-908348)-(-833644)),(-266628+17758433910825)-(-215547))]],d)end table[o[J(k(2324204097%10564266),118613+5491750514775)]](A1)E()table[o[J(k((-678637+46155116)%(-696799+12049052)),14346503863160-(-907438))]](M)end return x end B[o[J(k(1064020-995439),-200799+32840526604288)]]=function(...)local B=...local d=B(o[J(k(-251766+319583),726915+(-597167+6968522010656))])local x=B(o[J(k(2132166799%15793331),8115499661216-258712)])local D=B(o[J(k(-835681+903590),(1672297565428-(-947585))-5181)])local K={}K[o[J(k((-344069-307018)-(-718678)),(-844817+833315)+33720305900276)]]=K local z=.45 local Y=((527462+-1366355)+117816172)%4499126 local A=((-233397+(-459928+(-576360+1793431)))-803543)+279807 local a=.9 local H=.8 local q=3.35 local e={[o[J(k(-269194-(-336670)),(21363550203684-(-326961))-(-504250))]]=true}local b={[o[J(k(836849698%10592198),1045423+(475774082%((-372494+4022635211)%16074536)+33751588514385))]]=false}local s={[o[J(k(634202189%(3815479-(-746651))),22747887879798-(-176687))]]=true,[o[J(k(867431-800394),861875+9883921286207)]]=true}local j=d[o[J(k(308314-917769212%12922952),9346852656839-(-474744))]]local t={function(B)return end;function(B)return{[o[J(k((622808349-(-742052+222085))%(1047529088%19310581)),31537624742674-686877)]]=true}end,function(B)return{[o[J(k(1586363188%6196466),758749+16084969296705)]]=true}end}local function T(B)return B[o[J(k(195287633%(14773124-(-243803))),26969608884159-(-247382))]]~=nil and B:GetAttribute(o[J(k(1172448753%(-820916+15851433)),17937555427301-100742)])==o[J(k(-320831-(-387471)),(3100044307480-(-59103))-269609)]end function K.new(B)return setmetatable({[o[J(k(2032558154%(-808418+17068353)),2201305089483-(-791428))]]=B,[o[J(k(1040903-974230),636202+18722012094102)]]=-math[o[J(k(581195+-514537),-700517+23524092133867)]],[o[J(k(-729798+(410888148%2114677-(-154663))),16915158234344-(-1012887))]]=false,[o[J(k(1035981-970517),-467442+(16231617395295-(-507858)))]]=nil;[o[J(k(971440+-903889),11025693197340-(-983763))]]=344163360%2151021;[o[J(k(511971048%3239904),15095387067967-(-442924))]]=nil;[o[J(k(54023490%(39778+413630)),(812506+18566128032937)-(-516912))]]=nil;[o[J(k(-555315-(-621323)),475082+33479513283124)]]=-math[o[J(k(-646159-(-887513-(-175853))),13985467988480-172732)]];[o[J(k(-103159-(-169255)),914841+24594076529072)]]=false,[o[J(k(2256754718%((548085348381%3887197165)%17482137)),-299719+4361408326274)]]=nil,[o[J(k(((-941479+842555376)%(4024117-398005)-561677)-(-274413)),6430203556132-(351120464%4610369-987234))]]=nil;[o[J(k(711241637%((-773800+1525188)+10023979)),(1884776721517-467940)%(4147839859255%34279757672))]]=nil,[o[J(k((47502235139%(110304770790%586767070))%13407975),891369+13513937766828)]]=Vector3[o[J(k(681540+(313096-928694)),3701133382209-358553)]];[o[J(k(716467-(-866904+(495215-(-1022139)))),(563530+22186261377379)-916872)]]=Vector3[o[J(k(32979403%(1023479+-572611)),20676064217571-642052)]],[o[J(k(-54645+120419),874719+(17660997926228-(-862388-(-50346-(212969578531%841836546-(-527293))%13328767))))]]=nil;[o[J(k(1981329125%14151651+-32602),(-36475+(484474-181151))+(2568792449162-671377))]]=-math[o[J(k(670252149%7792838),-747740+(27701786516811-(-189218)))]];[o[J(k(-696440+764128),30461549923367-(-790412-(((397369-(-760600+275037))+(-693685+287756))+-1130786)))]]=nil;[o[J(k(227769+-162000),-154835+5561643793953)]]=-math[o[J(k(806197976%7751269),521379+(586226+23321998973730))]];[o[J(k(1006488-937896),4756295478575-(-535652))]]=nil},K)end local function h(B,x,D,K)local z local Y=x local A,a,H,q=d[o[J(k(998231-930332),2190771767%9280989+2888389205644)]],d[o[J(k(654201-586560),120149+(159930+26442568056870))]],d[o[J(k(676415-609412),10723298494381-379555)]],d[o[J(k(-604530+672692),15839307875083-320700)]]for d=489379-489378,d[o[J(k(2317977292%15149747),231683+20919356453293)]],311358499%1230666 do if H[d]and((not D or q[d]))then local x=((a[d][o[J(k(187111605%9352297),22464479347826-956491)]]-B))[o[J(k((130913765342%2380527642-(-1017952))%(1735053647%(4255313009%29185269-(126129+-904896)))),897086368%7469068+10264546254479)]]if A[d]==K then x-=-1038358-(-1038360)end if x<=Y then z=A[d]Y=x end end end return z end local function E(B)local x,D=d[o[J(k(1475943630%11621064),-292432+992201411663)]],d[o[J(k(-663573-((-1018216+-152862)-(-439146))),137522+12404286894239)]]for d=841332-(686402-(-154929)),d[o[J(k(-20744-(485218-571288)),16868563884024-(-844820))]],3552570022%15379091 do if x[d]==B then return D[d]end end return false end function K.setGuard(B,x,D)if B[o[J(k(1923891423%12740550),(-917006+(-478191+1010047))+25359029531835)]]==x and not D then return end B[o[J(k(-724388-(-792546)),(1292591-249262)+3723853952580)]]=x local K=d[o[J(k(((1447424-701053)+-1333951)+655776),10979753466831-599067)]](o[J(k(991591+-924245),1067548503813-444001)])if K then d[o[J(k(372175+((993279+-264136)-1035592)),(90913+10691719625767)-(-107001))]](K,if x then e else b)end end function K.rest(B)if B[o[J(k(1001776-933737),-181929+27567436528285)]]then B[o[J(k(2902416278%16124172),25690454488952-(-641320))]]=false D[o[J(k(35892034%(12301824-(422687-62077))),491085+15945632021461)]](o[J(k((36558218489%263021126)%3392673),-939072+32343646379600)])end B[o[J(k(-587691-(-655727)),115585+34406656275175)]]=nil B[o[J(k(1032867+-965750),146189+(25604003551633-758219))]]=nil end function K.learn(B,x)local D,K,z=d[o[J(k(11345362%245184),4.1368201173202e+14%1681634200095)]],d[o[J(k(816218572%9716099),(18622831032422-442947)-(939399+32430))]],d[o[J(k((206442+317652)-455740),1044127+13331048028893)]]for Y=3272410427%15011057,d[o[J(k(842991055%11707289),12781873464760-(-48922))]],1753+-1752 do if s[D[Y]:GetAttribute(o[J(k((-295575-(((319155-120845)+-534422)-((-1565133-232833)-(-802828))))-(-1020528)),8564890981385-(-933640))])]then local D,A=d[o[J(k(56573186%14126430),32911370749507-(-437641+2549927792%10318659))]](K[Y][o[J(k(3312407765%15550898),(676030+(-2344317-(-1033676-(-328423))))+4246705572882)]])if D and(A and D<190823+(-428423+237645))then if z[Y]then B[o[J(k((675168-457732)-(1060231-911503)),92217002044981%576356279764)]],B[o[J(k(3023934156%16614656),(11727684568688-(((831616-651204)-286767)+-765353))-(-922592))]]=A,x else B[o[J(k(2410379549%11423276),18885505748024-((-771552-(-291439))+-49346))]],B[o[J(k(481747+-413685),850427+(34424063507970-(-762429)))]]=A,x end end end end if s[d[o[J(k(894021057%11036470),124936+25687195046511)]]]and d[o[J(k(716641-649449),26006472469803-(-963582))]]then local D,K=d[o[J(k(224844-157928),(-521630+297018)+(21965743989791-(-899561)))]](d[o[J(k(25162034%8365481),9.727239029144e+14%5895296408463)]][o[J(k(606968-539352),1399694660859-891142)]])if D and(K and D<-213683-(-213728))then B[o[J(k(782900-714210),21920847353464-(-499240))]],B[o[J(k(860257-(744173-(-48181))),578195+17693794239149)]]=K,x end end end local function f(B)local x local D=139793-139763 for d,K in d[o[J(k((47008818-681198)%907055),(701271+-1169586)+(-709852+30540739967236))]]()do local z=((K[o[J(k(46236211%1710007),(6999453138892-(-217007-(-407211)))-(-288194))]]-B[o[J(k(-613885+680519),(-545767+761544)+17069370155479)]]))[o[J(k(-502398-(-570994)),123838+16721469889115)]]if z>D then x=K D=z end end return x end function K.rimFor(B,x,D)local K=d[o[J(k((18431382604%104736064)%782488),261656+27713022162666)]]()local z=#K if z==-749638+749638 then return nil end if z==208755751%1227975 then return K[750791067%(2688897336%((6646651459-(-294969))%((-55344+33734386)-364813))-(-977781))]end local Y,A=B[o[J(k(1022832-956295),18598711501718-(348700+581445))]],B[o[J(k(304331522%13830146),-9267+8263429570704)]]if Y and Y[o[J(k(119892+-52337),-659517+((10599392995519-237323009%3338808)-(-384968)))]]==nil then Y=nil B[o[J(k(1318786028%10143987),-693218+2147998599347)]]=nil end if A and A[o[J(k(1403459924%6651158),7260632237829-327631)]]==nil then A=nil B[o[J(k(2441134830%13052422+-264720),-118229+(11622977432708-(-93994)))]]=nil end if Y and((not A or B[o[J(k((541663-857027)+381391),7426227502775-(-285175))]]>=B[o[J(k(-176607-(-242409)),11859251467034-571649)]]))then return Y end if A then local B=f(A)if B then return B end end if Y then return Y end local a local H=math[o[J(k(879122933%3740658),32550934173364-(-1041360))]]local q for d,K in K do local z=(j(K[o[J(k((1611260837-(-697487))%13321407),629198+30678223386733)]]-D))[o[J(k(-954710+827475463%((6433769576%49587742)%2137173+(-1045563+5758602))),7248288724297-316412)]]-(j(K[o[J(k(2406586506%10508816),-652842+7812265810367)]]-x))[o[J(k(366822161%10786964),12246598392392-388743)]]if z<H then a=K H=z end if K==B[o[J(k(1104119-1038706),33467970206203-(579548-238605))]]then q=z end end if q and q-H<(56935939622%(285579394569%1310069921))%7130236+-963520 then return B[o[J(k(-42016+109159),777987+806595124626)]]end B[o[J(k((254227-636553)+449927),33992210334636-(-885525))]]=a return a end function K.follow(B,x,K,z,H,e)local b=B[o[J(k((-1395222-(-509868))+951007),(13123915596854-(-344288))-(-7763))]]if not z or b(o[J(k(-995074+1063714),651710+(-1009958+28400045153722))])~=true then B:rest()return end local s=d[o[J(k(-507630-(-573020)),-334632+1920400507558)]]local t=d[o[J(k(290515-223862),((-910425+874191)+(129866+((612746-(-365993+1291110))-(527967+((531539720%3144621+-1273134)-(-821540))))))+4347897510985)]](z)if not t or(s~=o[J(k(566193+-498603),27284159338777-(-448846+-495605))]and s~=nil)or x:GetAttribute(o[J(k(1073061998%16257525),2.4618652649035e+14%1721584218330)])==false then B:rest()return end local T=t[o[J(k(609038+-540317),85654+16893761336065)]]local h=K[o[J(k(((-318586+277160)-(-354254+-128176))-374551),-1007824+2141313834958)]]local E=j(T-h)local f=E[o[J(k(-461209+526612),((-472228+23843326656331)-(-252506))-964026)]]local n=b(o[J(k(-601064+666769),(15981416307254-(-142614))-215670)])or A if f>((if B[o[J(k(954414485%7398033),26223636329954-524385636%6633955)]] then n*1.2+(857053-857052) else n))then B:rest()return end local R local p=Y local U=B:rimFor(T,h)if U then local B=j(U[o[J(k(1081947021%11269570),-476812+21385936699868)]]-T)local d=B[o[J(k(588704092%8530955),-83586+5254247127130)]]if d>-104782.5-(-259722-(-154938))then R=B/d p=math[o[J(k(1064927-998731),185382+4578013588576)]](Y,math[o[J(k(-164042+230562),23112814848129-582042)]](d-(40025.5-40024),1088427484%9302799))end end if not R then R=if f>4029496513.5%15864159.5 then E/-f else -j(K[o[J(k(301197-(1976008217%(2818735163%22800176)-459026899%5591685)),-540036+(77848+(18456998199756-247608)))]][o[J(k(56924-(-10805)),205863+7841140044169)]])end local v=T+(R)*p local i=z:GetAttribute(o[J(k((-483951+229067232)%(2585384206%12729594)),601877+31908177699712)])if i==o[J(k((((45069049328-132643)-(-894890))%(190734727-((-1179171-(-264318))-(-623736))))%2205813),23658+8514430422365)]or i==o[J(k((789876+-575671)+-147676),(679683+205602)+15608171272701)]then local B=j(t[o[J(k(-387735-(-238440-214833)),32286062286669-940531)]][o[J(k(214812+-147596),-619312+(131174+26191799328571))]])if B[o[J(k((1951673746%20018960)%1221052),29467602258576-(-140751))]]>.1 then v+=B[o[J(k(2461887468%11892851),-712717+((432310+-19817)+28899291709468))]]*((if i==o[J(k(-691611+759090),(29051420255030-917945)-(-912625))] then a else -a))end end if B[o[J(k(690749-624465),(-204061-629269)+((531728+31860187425724)-722918652%3075630))]]==z and e>(1003884+-162731)+-841153 then B[o[J(k((656277+1482832787%(10946616-(-1302477-(-293683))))+-950265),17129567787728-(-467017))]]=B[o[J(k(335933596%13994461),14355069779744-(-656413))]]:Lerp(j(T-B[o[J(k(538556-470801),34111033447946-(-285508))]])/e,.3)else B[o[J(k((((777628-965867)+146323)-187825)+296843),(-70237+((-773540-174919)+28557383457884))-697944)]]=Vector3[o[J(k(1105307-581571601%(604669594%10892501)),369772+27705390257632)]]end B[o[J(k(-376750+443419),-824285+15842813529066)]]=z B[o[J(k((-71766+-621261)+758938),-52367+9887677280391)]]=T local O=B[o[J(k((169163378-(-53373+(99416-562997)))%1146043),103401245%6850930+(-914371+34919540280309))]]*.15 if O[o[J(k(-535379-(-601775)),(31392376913200-(-715122))-721954)]]>795913.5-795911 then O=O[o[J(k((-430085+-163329)-(-660473)),844047+1337249640181)]]*(-20259.5-(652975+(-569367-103870)))end v+=O local W=B[o[J(k(-397141+465184),473203+(28834537847463-(712844+-1706850)))]]if not W or B[o[J(k((47419843799%385631908)%1774686),(20204905512404-520886)-80307)]]~=z or((v-W))[o[J(k(-630795-((344247+-773700)-269894)),2389015659%(13725793-382073)+1029849379236)]]>2140341532%9225610 then W=v else W=W:Lerp(v,(-114999+294080025)%11758601-math[o[J(k(877388+-810659),(27170460251881-937740)-(-995156))]]((-770387-(-259899-510476))*math[o[J(k(423180+-356410),721645+((707138+-627432)+33779109414353))]](e,.1)))end B[o[J(k(621907-555399),372244+22350862112592)]]=W B[o[J(k(892916-827574),780886939108-(-112325+158267))]]=z local X=j((W)-h)local r=X[o[J(k(208827264%6734150),-683191+8711510169772)]]local I=W if r>-1015423.5-(-1015425)then local B=X/r local x,D=71043-71043,(18866+-108064)-(-89198)local K,Y=d[o[J(k(-1000454+1068175),-901189+6104676575499)]],d[o[J(k(1809649713%(3951704585%19016276)),30366600493984-(-300652))]]for d=(-702908+228069)-(167079-641919),d[o[J(k(753428+-686226),19309069758931-(-192895))]],1898702389%12574188 do if K[d]~=z then local K=j(Y[d][o[J(k(999105+-930959),17543464178620-(-247716))]]-h)local z=K:Dot(B)if z>328439.5-(-198296+526735)and z<math[o[J(k((996646+-1757014)+825720),(282205+-1298615)+(23531157704985-221853))]](r,(-712266+750345815)%10411577)then local d=K-B*z local Y=d[o[J(k(48935354%9773855),-293509+16973052459675)]]if Y<333283-333280 then local K=if Y>.2 then d/-Y else Vector3[o[J(k((((508860+-898716)+130891359436)%(128747796365%703559103))%11988752-(-448570-(-621920))),77877+(7230588975183-814601))]](-B[o[J(k((-70287+2764057743)%15884591),-16101+30418646541888)]],1470690468%16524612,B[o[J(k(119441-52905),2400372410985-(-536531))]])local z=(((24017538%4803507-Y))/(749771333%4868645))*1.4 x+=K[o[J(k(1037125140%14403564),22719475154829-406836)]]*z D+=K[o[J(k((-221568-(-827593))-539292),4863783158311-852816)]]*z end end end end if x~=73510353%1166831 or D~=-365913+365913 then local d=Vector3[o[J(k((172325-(1105684-978143))-(-22283)),13818749499648-277821)]](B[o[J(k((213047+(-616911+-149178))-(-620407)),29460944286703-((-1607372-(-774714))-(-817930)))]]+x,(380264051114%2696932175)%13075469,B[o[J(k((667458+8718)-607842),(-760680-(-73110))+4417937496056)]]+D)if d[o[J(k(256718640%8555072),13898149353410%2779630313775)]]>.1 then I=h+d[o[J(k(1901656200%(1372413186%9873465+7728492)),19639164835294-(344661-344612))]]*r end end end local M=x:GetAttribute(o[J(k(246266052%11723703),-581822+4327579307869)])local u=math[o[J(k(-483360+550073),(8429615329847-(-6702))-(229320-209402))]](if type(M)==o[J(k((454986+-1083347)+694319),(8652531762245-(-7815))-(-694379))] then M else -471056-(-471070),694454083%(1027108+5463117),1052820408%6085667)if r>868608-868602 then u+=q end B[o[J(k(3633623469%16896752+-754645),23238872547986-(-330127-96289))]]=true D[o[J(k((414719+1165988434)%(-935451+9907263)),(8556970041536-345382)-766313)]](o[J(k(912556313%8608395),-833415+29089446677863)],I,u,true,false)end function K.stealOk(B,d,x,D)local K=j(x[o[J(k((2002762445-(-498399))%8560659),13364249982918-652700449%3198159)]]-d[o[J(k(582094-(-448652+962555)),13631632094007-(-501493+88957))]])local z=K[o[J(k(-276364-(-343199)),-945901+34791611975992)]]if z<1250422370%12380419.5 then return true end local Y=K/z if B[o[J(k(290759309%1690072),9280633098803-(-353592))]](o[J(k(-839830-(-908276)),21626627172843-1008242)])==true and(j(d[o[J(k(-918736+984167),613171240171-5035)]][o[J(k((-664297+(8605017%8376976+(201138+30024634)))%418627),814737+29473197436076)]])):Dot(Y)<.35 then return false end if B[o[J(k(750317227%3233842),614843+11072434005666)]](o[J(k(-244268-(-311030)),7518490753203-(-282255))])==true then local B=D:GetAttribute(o[J(k(-398438-(-465859)),19342997319249-89757)])if B==o[J(k((60650143726%739735876)%((((-424502-(-350312))+(497686793-(-1010090)))-857515)%16437854)),6379712275201-789928)]or B==o[J(k((((-974299+1177903)+-1860378)-(-644693))+1080127),-586008+10007815104341)]or B==o[J(k(243882-177034),-855132+12495081116503)]then return false end if(j(x[o[J(k(410794-344720),(29675349481743-(-283775+(1106724-730626)))-3264997210%(4703575286%21205408))]][o[J(k(131521710%(3560312707%17159888)),4445090859749-825456)]])):Dot(Y)>.6 then return false end end return true end function K.step(B,D,K)local Y,A=d[o[J(k((-444330-(-486536))+((92984-(-517178+976531))+390462)),8930962390510-(-704791))]],d[o[J(k(471428-802106778%11452868),-515457+26485163963710)]]local a=B[o[J(k(822093380%4110135),(-618839+-159162)+17771930131646)]]local q=a(o[J(k(1985874195%9411410),790306+(1802497126792-127750))])==true local e=a(o[J(k(354238-((-895957-(-559797+-43563))+(303833+276683))),398966+29574617081814)])==true if not Y or not A or(not q and not e)then if Y then B:setGuard(false)else B[o[J(k(1017844-951595),(927134+13573106890557)-(704640+-1488738))]]=false end B[o[J(k((763938-(342122+((-1409047-(-828128))+1061587)))-(-126260)),9.3071857157457e+14%19389970374924)]]=nil B[o[J(k(907700-840419),13339621896579-(-211787))]]=nil B[o[J(k(-1023479+1091355),588332+27559770683819)]]=nil B:rest()return end local b=A[o[J(k(-908978+((-880219+(2027910292-(-797253))%9257322)-(-503608))),3157743480942-1011675)]]local s=a(o[J(k(-780031+1316360512%(429453+13132552)),-42879+20185321384748)])or 439195-439195 local j=h(b,math[o[J(k(-275231+343342),17978697695084-(-126264))]](s,if e then a(o[J(k(-256878-(-325037)),26285269956151-361550)])or 836453+(-1763511-(-927058)) else -44424+44424),true,B[o[J(k(28081164%1120600),174852487316-231121)]])B[o[J(k(108+67394),22879763499323-747459647%13823359)]]=j local f if q and not d[o[J(k((653534+-1426181)-(-840919)),-142630+34554510571642)]]then if a(o[J(k(414005056%2670568),-404352+((782963+22397234602870)-(-1226826-(-492238))))])==x[o[J(k(179296009%1991427),-821759+(-540037+20454579066566))]]then if not d[o[J(k((12422725444%((1511100152-664205)%48728829))%(7218507-((-1016714-(-1038925))-(-1024086)))),1307294152%9823081+4794834780220)]]then f=h(b,s,false,B[o[J(k(2546179631%(15021250-(-695505))),7709129642726-490701)]])end else f=j if not f and not d[o[J(k(300837852%4423111),(102715-(-366234))+28488820165832)]]then local d=B[o[J(k((129374796537%((159720+454968819226)%1784238290))%7294998),7009589713904-560227)]]if d and(D-B[o[J(k(507620+-442307),((-102231+-318570)-(-402708))+24351647297719)]]<H and(d[o[J(k(971451+-903708),(565712+-203529)+6253928502453)]]~=nil and E(d)))then f=d end end end end if f and f==j or(f and a(o[J(k((180285987222%1234936074)%10084208),549544+(9323467944720-(-32593)))])==x[o[J(k((386311+-1287545)-(-967090)),2304902198712-(-548493))]])then B[o[J(k(285966973%(1981172-776388)-367146),-549361+7514614364510)]]=D end B[o[J(k(74420177%2065352),14677932469572-(-926181))]]=f local n=false if f then local x=d[o[J(k(1078373-1012594),5714723541462-(-946146))]](f)if x then n=((x[o[J(k(-923343+989799),1671802826977-(-44931))]]-b))[o[J(k(839581-771792),516782462655-58506)]]<=((if B[o[J(k(-245804+312383),524279+2457849225866)]] then s*1.1 else s))end end if n and((B[o[J(k(572719+(-1471544-(-964293))),34848750080917-146984)]]~=f or D-B[o[J(k(104147815%(175555618%(1155323305%17339085))),10301539584404-703003)]]>356648.5-356648))then B[o[J(k(2482024900%11707352),-548445+(2843211168%14805457+29509611455554))]],B[o[J(k(-235966-(-301611)),1157091565714-(-435319+1157146))]]=f,D B:setGuard(true,true)else if not n then B[o[J(k((840233+1151625248)%6622979),3549214900623-(-218816))]]=nil end B:setGuard(n)end if n and a(o[J(k((42665+-251468)+276990),-122068+16435539776290)])==true then B:learn(D)end B:follow(Y,A,if n then f else nil,D,K)if not j or not e then return end local R=d[o[J(k(-512837-(-581322)),(453560+-1487204)+34670094101316)]](j)if not R or((R[o[J(k(715034-646663),6742043516354-(-725835))]]-b))[o[J(k((-821450+188999586)%8178808),((1094313-145712)+-1267123)+19384107150146)]]>((a(o[J(k(71170567%7110502),21553735429884-(-6424))])or-903934+903934))then return end local p=d[o[J(k(154042-87382),3.0814915744513e+14%22010654580582)]]if((p==o[J(k(989761+-922171),9990045227185-(-118366))]or p==nil))and(D-B[o[J(k(-723411+791120),(-305962+899312)+10177459115908)]]>=z and B:stealOk(A,R,j))then B[o[J(k(-801667-(-867511)),7.0389540152062e+14%29328975689009)]]=D d[o[J(k(532091+-463546),12617446146947-238926)]](o[J(k(397294+(-281169-50640)),29514715557764-(-902185))],t,T,nil,Y)end end function K.shutdown(B)pcall(B[o[J(k(((762209+143575742165)%2353761782)%12179948),-1039002+8938289700773)]],B,false)B[o[J(k(158023+-89665),979940+22238440849492)]]=nil B[o[J(k(-6015-(-74632)),(603522+-688862)+20777120807430)]]=nil B[o[J(k((164402058637%955918413)%3759771),3705968611601-(-653879))]]=nil B:rest()end return K end B[o[J(k(-923185+991904),(-1006079+33121892452980)-394155)]]=function(...)local B=...local d=B(o[J(k(857493336%8165977),628293+8723986604023)])local x={}local D=734543337%7201405 local K=.12 local z={[o[J(k((-1255062-(-882492+556727))+997454),(29093088115316-(294951+-462188))-148701)]]={[o[J(k(36764+29100),11840189818934-(-323585))]]=684572+(182282-866851);[o[J(k(138679437%10642693-258066),-983748+28673690869398)]]=-402819+402857;[o[J(k(1092803029%9182664),20716635201092-946288)]]=3194537310%13092366;[o[J(k((59874766536%254856134-313579)%8816740),(242325+12976675065464)-(-636795))]]=1.6;[o[J(k(-741209-((707175-884019)+-632836)),-795845+10871670761152)]]=116604-(2773959234-540313)%((1036729-705466)+14265065);[o[J(k((1181847-641466)-473892),13922788657410-(-815475))]]=-131381-(487121-618505)};[o[J(k(33207+35357),-133536+19554678089303)]]={[o[J(k(-526018+592637),20799469285458-279837)]]=620200770%3781712;[o[J(k(820734-755339),(19144044055846-878163)-(112947871%1634099-965331))]]=54750+-54680;[o[J(k(133863-65923),(216268+19437190155963)-(414060+288352))]]=-905824.5-(-905826);[o[J(k(-585263-(-653092)),29870177442733-(-276365))]]=95616347%5312019,[o[J(k(820186938%16080793),20716127151380-(-771458))]]=(660491308.5-321736)%2845558.5,[o[J(k((-1119951-(-768250))+((258087-(129910-(-591996)))+882687)),132678+7446600501210)]]=1.1};[o[J(k(-363327-(-431520)),(15027048176113-833358)-(-970913))]]={[o[J(k(269080829%6113917),29847562585317-278668)]]=400298709%2704721,[o[J(k(937019+-871082),27675450915886-(-1046832))]]=2973752012%(1032058530%12584181+((536475+-846392)+12341737));[o[J(k(1746792189%11491618),((79164+-1608879)-(-807102))+6470329402387)]]=2008832129%9387066,[o[J(k(-85914+152727),3521453913%14854878+746637623249)]]=82716+-82713;[o[J(k(647471-580220),(-741204-(-625066))+6997176673543)]]=972129159%6798106,[o[J(k(146032+-77432),18023680023542-381590)]]=(-623577+491531)+132047.5}}local Y local A=Vector3[o[J(k(1965737041%8156310),4301463977625-(-996475))]]local a=-128065-(-128065)local H=false local q=false local e=-math[o[J(k((-809942+2816316184)%12294499),19574649798454-2885081368%((812639+665139185)%17620266))]]local b local s=false local j local t=-math[o[J(k(384408541%2221623),(2765502951600-(-919241))-(-743719))]]local T=-math[o[J(k(-229819-(-298234)),15193715002921-937475)]]function x.set(B,d,x,D,j)local t=os[o[J(k(883713+(423204+-1238717)),11963244734151-84609)]]()local T=Y if T and(T~=B and(t-e<K and z[T][o[J(k(210872-144706),12800150855947-322878)]]>z[B][o[J(k((160057721-(-1030434))%12381304-65614),91513536224148%(855267343901-603306))]]))then return end if T~=B then s=false b=nil end Y=B A=d a=x H=D q=j e=t end function x.clear(B)if Y==B then Y=nil end end function x.moving(B)return Y==B and s end local function h(B)s=false b=nil d[o[J(k(922186-856335),261754+30977892278463)]](o[J(k((578887+-797100)+(97535+214497864)%8929583),79139819243385%382318015569)],false)local x=j if x then j=nil if B and((B[o[J(k(2493234695%15389923),-715766+12032857345217)]]-x))[o[J(k((-155567+-37031)+259503),(-752830+-65842)+1698041175673)]]<.05 then B[o[J(k(-1026929+1095469),(9480242981000-(-227248))-651090)]]=Vector3[o[J(k(836076+-769476),20256053514276-444880)]]end end end function x.begin(B)local x,D=d[o[J(k((-93611-(-186413))+-25409),-609084+((-22863+20386500475731)-(-288673)))]]()if not D then d[o[J(k(198488962%((1934127347-(1631889-616114))%9731873)),13462211802024-(-92134))]]=false return end if not d[o[J(k(1088835-(378358-(-644660))),-1020870+16892995265078)]]then local d=D[o[J(k(-955378-(-1024102)),13734099831567-(-96699))]]local x,z=d[o[J(k(-957537-(-1023185)),942929+21421001900141)]],d[o[J(k(-703172-(-769996)),((-888177-(-693970))+(-430701-(576606+1218580280)%11499384))+(11967045104564-520120))]]local Y=math[o[J(k(527836-461492),661327+28548323875550)]](x*x+z*z)if Y>2707042179%16307483 then local d=j local D=false if d and B-t<=K then local B=d[o[J(k((176705182-305129)%(3843840329%26081932)),34275384587545-(-166257))]]D=B>(1456038525-(-825255))%(2033752133.5%(303057+17452241.5))and(Y<=B*(-124857+124858.25)+(-679830.5-(-679831))and x*d[o[J(k((-1596033-(-815299))-(-847444)),-73049+13126276164944)]]+z*d[o[J(k(2250475744%16307319),632775+(6111499817590-(-570509)))]]>=(.8*Y)*B)end if not D then T=B end end end d[o[J(k(1806589785%7558672),23140587145356-(497114+-51761))]]=B-T<-668968.75-(-435899-233070)end function x.finish(B,x)local T,E=d[o[J(k(-194393-(-261851)),426526+6217007740757)]]()local f=Y local n=f~=nil and(B-e<K and(T~=nil and E~=nil))if n and not q then local B=d[o[J(k(1319805095%8739979),(204051-404917)+27709873337512)]]n=B~=nil and not d[o[J(k(148002910%4109331),9.796221897663e+14%((-1532120-(-514290))+(6898749360303-(293110+118554))))]](B)end if not n or not f or not T or not E then h(E)return end local R=z[f]local p=T[o[J(k(((278690717233%2815181832)%15562361-939717)-665290),(429731+-999583)+(-750883+9448069912940))]]local U,v=A[o[J(k(548398775%(498644796%7394878)),220206+27490687479846)]]-p[o[J(k(266441+(-799551-(-598714))),-189032+5064766979555)]],A[o[J(k(268719609%9264378-(-13161)),29994840173172-(-183862))]]-p[o[J(k(734412-668166),21934780191037-(-9212))]]local i=math[o[J(k(3194027653%(14655736-(-269311))),484458+15576577968158)]](U*U+v*v)if s then if i<=R[o[J(k(-926454-((-568694+330597)-756121)),839701+13440015310740)]]then s=false end elseif i>R[o[J(k(2319309524%10447040),1022104+12461736182936)]]then s=true end if not s then h(E)return end local O=T[o[J(k(217590141%(682848+6114754)),-554143+26760439558312)]]local W=math[o[J(k(800496-732194),752169205662-414052)]](O[o[J(k((-22464-(-171655))-80628),3714440308251-(748879+(67776+-1035275)))]]*O[o[J(k(2044215611%15969909),17624867738047-((157344-951327)+1202085))]]+O[o[J(k((6022883692%146904409)%1481200),32775917606884-(-557881))]]*O[o[J(k(1004809-938542),12754222215044-866650)]])local X=math[o[J(k((121393615-992925)%1694843),306483+4286411080719)]](b or W,W)X=math[o[J(k(778826+-712748),80797+32719033357608)]](X+R[o[J(k(-239144+306931),810263+18531471040095)]]*math[o[J(k((-1040439+(((-998711-(-634616+833003))-(-750010))+2112023295%15640874))+1049036),29919349563610-(-52951))]](x,.05),a)b=X local r=math[o[J(k(-534558-(-602657)),-910848+((25918987710941-(-281538))-(-941237)))]](X,R[o[J(k(817553+((-27724-259893)+-463015)),17683924115538-(-890984-(-152843-1300237968%(658958724%22315382))))]]+i*R[o[J(k(204231-137915),24060672183218-662526)]],D)/i local I=Vector3[o[J(k(710423947%13928542),(-26757-187506)+15136270358374)]](U*r,-178111-(-176986-1125),v*r)E[o[J(k(178796+-112641),4592189784812-(-882789))]]=I j=I t=B if H then d[o[J(k(1044432-976291),683682+3024166585904)]](o[J(k(1189599349%7038661),27796958282977-139691835%2450181)],true)else d[o[J(k(756108-690440),821048+13799209052181)]](o[J(k(572891+-506503),9800882121235-424902)],false)end end function x.stop()Y=nil local B,x=d[o[J(k(1068400-1002406),40579+15427071169140)]]()h(x)end return x end B[o[J(k(-651299-(802128760%8182156-123046052%2773850)),-804977+28532675834839)]]=function(...)local B={}local d=game:GetService(o[J(k(1167713742%5098888),5057663225782-(47206-(-962835)))])local function x(B)return if type(B)==o[J(k(915388+-848905),-777750+17518817907979)] then B else nil end local D if type(getgenv)==o[J(k(9732+56971),-297995+(28734377701936-(-230186)))]then local B,d=pcall(getgenv)if B and type(d)==o[J(k(1569195106%9070114),14126398830758-371205)]then D=d end end if type(D)~=o[J(k(157834+-89891),19589937897711-(-520124+473824))]then D=if type(_G)==o[J(k(((-61109-(-655939))+(-105572-845204))-(-422780)),-242363+20819435441423)] then _G else {}end B[o[J(k(-456496-(-523245)),-270376+21423592757291)]]=D B[o[J(k(1045956+-978290),-351097+((-262291+(32765541611727-633898))-16283))]]=x(hookmetamethod)B[o[J(k(120502830%552457),704614+(12262574994727-(191197-83415)))]]=x(newcclosure)B[o[J(k(-465564+532674),(3877528789611-(497674-499330))-(-813029))]]=x(clonefunction)B[o[J(k(-666913+(327914-(688526+-1094802))),((10616170227269-203740)-(-482300))-((-247624-348521)-(45747+-885686)))]]=x(restorefunction)B[o[J(k((996506+212417606)%1077517),2390346574755-233470)]]=x(getnamecallmethod)B[o[J(k(-140527-(-205951)),(-679818+22530932493478)-133881)]]=x(getrawmetatable)B[o[J(k((-292888+(1972152-739809))+-870977),305519+6310587600786)]]=x(setreadonly)B[o[J(k(72231387%1336350),(52532560793741-(-1020723))%1030050287293)]]=x(checkcaller)B[o[J(k(-259017+325819),22532464460905-(-447243))]]=x(keypress)B[o[J(k(594697-528280),(((-1494935-169998)-(-532328+-326914))+10636637799315)-(-443343))]]=x(keyrelease)local K=type(isfile)==o[J(k((-687512+1680113878)%16464321),(374299-275299)+25678752357883)]and type(readfile)==o[J(k(-322178-(-388967)),9939341067303-6289)]local z=type(writefile)==o[J(k(55193+12649),-979270+28167467777151)]function B.get(B)return D[B]end function B.set(B,d)D[B]=d end local function Y(B)if not isfile(B)then return nil end return d:JSONDecode(readfile(B))end function B.readJson(B)if not K then return nil end local d,x=pcall(Y,B)return if d and type(x)==o[J(k(89013-22993),796134+(27938102907019-(-652959)))] then x else nil end local function A(B,x)writefile(B,d:JSONEncode(x))end function B.writeJson(B,d)if not z then return false end return(pcall(A,B,d))end return B end B[o[J(k(383773-315125),20865064010466-282475776%((1441633-(-733794))-(-340965+1098242)))]]=function(...)local B=...local d=B(o[J(k(276995854%1720051),-492213+(11681807013673-805223))])local x=B(o[J(k(1058885-((-1375651-(-723420))+1643759)),31709347088404-1531181080%15011532)])local D={}D[o[J(k((-5661+(-506623+101866819))%((103806-(-316346))+(9930215-(-796047)))+-968133),(421291-412841)+10883330353438)]]=D local K=Vector3[o[J(k(-19360-(148379+-235509)),75212+34667464359083)]](35173922%2512423,3.4,(472099524428%3348260217)%14924527)local function z(B,d)local D=B(d)local K=typeof(D)return if K==o[J(k(456663+(-72546+-316830)),-547521+20057334726684)] then D else x[o[J(k(777532428%4392457),755947+(809428+22744173524462))]][d]end function D.new(B)return setmetatable({[o[J(k(4017491667%16464857),6835881667601-((1088856-(689612+-80863))+-1431080))]]=B;[o[J(k(684911+-619448),11186545952898-884961)]]=(setmetatable({},{[o[J(k(16373419%301945),(22015548425369-665163)-(-552053))]]=o[J(k(2178429109%10570633+((319791+-89872)-1042655)),135633+22847131032570)]}))},D)end local function Y(B,d,x,D)local K=B[d]if not K then K={}B[d]=K end local z=d:GetAttribute(o[J(k(-702960-(-769966)),(887536+28846872272496)-(-506982))])local Y=if x then d:GetAttribute(o[J(k(1006442+-938303),(12343886011398-(1631852-605705))-89288)]) else nil local A=if type(Y)==o[J(k(-1048267+1114921),((-396999-56497)+11778304601308)-371141)] then math[o[J(k(-769309-(-835229)),29248290901690-(-562312))]](math[o[J(k(397347513%8276677),9213477161118-599530)]](Y,1629209835%12068221,-714244+714344)+1390158292%11488911.5) elseif x then (768016+-1123735)+355718 else 113325-113327 if K[o[J(k(192714991%8756729),-57478+20337782079343)]]and(K[o[J(k(-672738+739026),27360569808724-(-472495))]]==z and(K[o[J(k(459268867%((253103+3319199414)%20326433-40677)+-160674),606333+28806728790985)]]==A and(K[o[J(k(317267-249018),550508+25059522240692)]]==D and K[o[J(k(-1025571+874377848%4824784),4553600548009-(-86369))]]==d[o[J(k(968212935%6246095),761685+1025495503164)]])))then return K[o[J(k(921507-854463),-438130+1075905038595)]]end local a=string[o[J(k(2328150604%11356511),-928626+29932939961681)]](o[J(k(-270816-(469717-808973)),26439828708119-456309)],d[o[J(k(-837997+905145),15771770619561-(-386239))]],tostring(z or o[J(k((24602131-(-1004171))%(-178635+3370974)),554171+30772709447836)]))if A>=834195+-834195 then a=string[o[J(k(((44898844094-249399)%((-495472+336040860)-((-243962+-374432)+1002279)))%16102443),-9463+5758164411995)]](o[J(k(3769489648%14724194+(-608790+578740)),14706987082681-(-637976))],a,A)elseif A==653721+-653722 then a=a..o[J(k(-932235-(-999842)),21733816999947-(-220384))]end if D then a=a..o[J(k(-82149+(355337+-205765)),2017534775582-765687)]end K[o[J(k(43250235%2878891),-902904+4808012175071)]]=a K[o[J(k(1356443062%(16691413-(-89393-(-633469)))),7661621375489-(-564868))]]=z K[o[J(k(460162+(962795+(2629498479%10269173+-1945674))),30444687066220-(-1037269))]]=A K[o[J(k(1465826891%9580130),71444943401235%1190749079426)]]=D K[o[J(k(191708905%1286181),655387+14667282674656%82400499529)]]=d[o[J(k(913812826%6870260),28985675811083-665324)]]return a end function D.draw(B,x)local D=B[o[J(k(997826-1406865158%11716106),22974205178537-35667)]]local A=d[o[J(k(-219324+285512),-304757+28283736363454)]]if D(o[J(k(3114574975%(15985772-(-406376))),697586+(28552948761179-32500))])~=true or not x or not A then return end local a=A[o[J(k((-714634+-145054)-(-928316)),-416092+13683102210591)]]local H=D(o[J(k(-156348+222389),248992+(7121256883254-(-933493)))])or-766154-(-766454)local q=D(o[J(k(3940068016%(392685+15754856)),23906371412208-1021242)])==true local e=D(o[J(k(-659148+727351),-531047+(2638318528108-888497))])==true local b=D(o[J(k((27985-(-847381))-807846),4445780360316-(-987004))])or-46923+46936 local s=D(o[J(k(2981830082%12797266),-194366+((-911299+802732)+18508850931569))])or.2 local j=z(D,o[J(k(199370969%7665479),6330009132913-(-93473))])local t=z(D,o[J(k((194175+-854602)+(1023018+-294741)),932689784932-(-312136+-580665))])local T=z(D,o[J(k(3282329962%14459301),30467034615942-(-30746))])local h=z(D,o[J(k(-437628-(-505683)),19048617591206-466600)])local E=D(o[J(k(-162029-(391103+-621539)),5343972989963-526369)])==true local f,n,R,p=d[o[J(k(2557382744%14613239),15055675142987-(-322186))]],d[o[J(k(706230-640245),647216+34260739100476)]],d[o[J(k(319556536%(-374673+(522692+8259556))),-666363+11593234728650)]],d[o[J(k(540238-473616),157392+(34893505750562-428279))]]for d=634044+-634043,d[o[J(k(1964595967%(229495355%(2855491327%(45479017-633923)-(-195919)))),((948380+63077785193396)-(-895255))%294756063737)]],255472+-255471 do local D=R[d]local z=p[d]local A=n[d]if((D or q))and(((z or not E))and A[o[J(k(965729426%5814408+(213719+(-849575-(-164307)))),517027+34512636408335)]]~=nil)then local q=A[o[J(k(-1018178+1083521),-1031416+17206984766375)]]if((q-a))[o[J(k(-250938-(-317432)),9273398165268-971954)]]<=H then local A,a=x[o[J(k(-1024761+(699240+(2263833842-182585)%12168060)),24451260377588-154945)]](q+K)if A and a>582865614%(79332+4698255)then local K=if z then T elseif D then j else t x[o[J(k(538556484%(1734511770%22096438)),-222213+34243364710213)]](A,b,K,Y(B[o[J(k((770868+280934433)%4773558),(-360718+490185)+13636867070551)]],f[d],e,z),h,s)end end end end end return D end B[o[J(k(711149-644525),(-879228+674617)+11977397625658)]]=function(...)local B=...local d=B(o[J(k(-95299+(-132561-(-296523))),(-644959-36984)+32383647521450)])local x={}x[o[J(k(1490279465%6536015),-713449+18553995854729)]]=x local D={[o[J(k(-846363-(-914121)),-133296+13134428552536)]]=o[J(k(433929225%2493452),-222199+21160456772816)],[o[J(k(139376+(-81045+8764)),7613758017289-((-596371-(-131717))-547862))]]=o[J(k(-846881+914493),598950+(-715799+18280812557173))];[o[J(k(990218949%6781856),(748678+-604489)+5153116701941)]]=o[J(k((-684371-(-301521+-329026))+121295),519666+4581276366779)]}local K=541101339%4227354 function x.new(B)return setmetatable({[o[J(k((-926985-(-224655))-(-768939)),13387626675955-3881)]]=B;[o[J(k(608276-542732),(11572317677938-(-198771))-471561)]]=nil,[o[J(k(137924502%1139330),436266+10780547359799)]]=nil,[o[J(k(871392+-804913),20632964219844-(-1039748))]]=-970133-(-970133)},x)end function x.physics(B)local x=d[o[J(k((97948729907%960283702)%4067836),33839973987608-698018)]]local z=if x then x:GetAttribute(o[J(k(1097335148%(4145971-(-503467))),209384+30954458986449)]) else nil local Y=if type(z)==o[J(k((-697497+-39531)+(-905799+(2533075-821979))),(178036+11131007439957)-(1527190-998912))] then D[z] else nil if not x or not Y or B[o[J(k(1286748070%9125396),161883+13780375328380)]](Y)~=true or x:GetAttribute(o[J(k((-482144+((-417947+2299219)-296795))-1034119),-981763+14271293948360)])==true then B[o[J(k(9220205%3051590),18948221369154-(-52347-(808613+-739385)))]]=nil return end local A,a=d[o[J(k(203625+(144655+-280663)),617133+5566571860334)]]()if not A or not a then return end if B[o[J(k(-549735-(-617310)),(-366493-(-472671))+((3495958514894-(-745146-(-143287)))-821451))]]~=z then B[o[J(k(347175-281541),661880051707-468626)]]=z local d=A[o[J(k(930088+-863713),(-472490+235338)+((((1504213-814120)+15283839287329)-(-560832))-1010236))]]local x=Vector3[o[J(k(1011862+-945297),6289402461720-(-46212))]](d[o[J(k(-590588+658060),25399978592064-973712)]],(48-(-212175))-212223,d[o[J(k(607635+-541309),192444+3863678032244)]])B[o[J(k(-634298+701361),-575944+2727942689100)]]=x[o[J(k((298790044-((98774-(-607003))+-1236324))%(1214344393%17438565)),(-736009+17260212678360)-(-14241))]]B[o[J(k(22356-(-45630)),-582807+8913261512866)]]=if x[o[J(k(338066-(-421369+693563)),-37414+(13136622497804-(414054+-721961)))]]>352624465%((3453437529-(-737747))%(16410064-(-310228))) then x[o[J(k(362472101%9060120),14472397197064-(-654999))]] else nil end local H=d[o[J(k(1107490-((-729320+787650)+982871)),-159750+33664714019891)]]()local q=H or B[o[J(k(1942556455%15295184),-754135+28631254637137)]]if not q then return end local e=B[o[J(k(-562925-(-181033-449104)),533754+(28837607709159-(-488054)))]]if H then e=math[o[J(k(((-46814-936216)-(-940767))+2251608917%12303276),19803469762034-(-419469+2509742765%16950495))]](e,B[o[J(k(479084587%(584583+((9844935-(-478730))-263411))),19201191679321-(-564112))]](o[J(k(-991021+1057194),(728387-973831)+3714193634612)])or 966952-2000379620%9386914)end if e<825783-825781 then return end if z==o[J(k(-789305+855376),21132766606073-(-288147))]then local B,x=d[o[J(k(2093732159%11895820),414982+11965051099256)]](A[o[J(k(-758927+824450),31332136978135-(-713345))]])if B and(x and B<282556+-282532)then local d=Vector3[o[J(k(-634832-(-703057)),902163+2615789427078)]](x[o[J(k((95450+-768055)+740975),6268339325738-(-504064-(-154840)))]][o[J(k(297452+-231780),26007788280589-(154598-(-61597)))]]-A[o[J(k(3457438470%14649886),401897+33671562844167)]][o[J(k(475010+(-540624-(656856-790290))),1712040172090-(-155471))]],-802869-(-802869),x[o[J(k(1035951-969599),-741452+27050007432410)]][o[J(k(217303028%8355256),(((1018469+-1998937)+(1018890+((748543+(-216874+-953493))-(31611+-171907))))+(13408130482199-1174509779%6413133))-87117)]]-A[o[J(k(324843+-259101),11539878791889-(-53577))]][o[J(k((11087278541%(2776133670-606014))%15252093),380475603155-(-632764))]])if B<-658437.5-(548062+-1206504)or(d[o[J(k((34763756100%187963610)%933947),6446458610952-645352)]]>.1 and d[o[J(k(1011068+-942844),241250+9053784208064)]]:Dot(q)<.2)then return end e=math[o[J(k(1320848759%11485044),341694+20650433228127)]](e,B*(-171896.5-(-171899)))end end a[o[J(k(-823049+1306236715%5987824),898820+8167261088436)]]=q*math[o[J(k(((554561+-657385)+2193083011)%15443047),3227555524650-586762)]](e,K)end return x end B[o[J(k(958381+-892479),27182653607649-443540)]]=function(...)local B=...local d=B(o[J(k(-951903+1017683),34034741711881-55817717%689011)])local x=B(o[J(k((((-919045+705320)-(-473662))+-55462)+-138998),10893284480070-534951)])local D={}local K=o[J(k(1248547277%4993924),-353351+20189311226668)]local z=839821+-839815 local Y={[o[J(k(-17577-((332007-(-92953-362297))-1110500123%13209848)),800123+21617684185338)]]=true,[o[J(k(573223-506093),181466+17937077397943)]]=true;[o[J(k((541786222-1026667)%3037595),19160022719293-(508271-896177))]]=true,[o[J(k(348717617%15158690),(24821427756066-(-475809))-1060185358%9721571)]]=true;[o[J(k(874268+-805849),-639881+22408540966097)]]=true;[o[J(k(101651+-36041),758847+92869996733)]]=true;[o[J(k(1747730047%(2618885554%21218157)+-579315),728423+24810496011880)]]=true}local A=d[o[J(k(-513232-(-579625)),563147+2352679951412)]]local a=d[o[J(k(394092231%2505725+(173249-799003)),394793+(16165002339917-(-621156+-387015)))]]local H=false local function q(B)for d=230784761%(9196579-(-837541)),B[o[J(k(2259700697%(910246110%19156994)),33732822310537-(-239326))]],120670674%(-437797+5684348)do local x=B[d]if type(x)==o[J(k(-741995-(-808285)),232769+12277246809154)]then return x end if type(x)==o[J(k(1993176094%8517557),((31405123478481-(1824748-885239))-477711)-((988157+-2836649)-(-846852)))]then for B,d in x do if type(d)==o[J(k(-778342+845418),952976+24519966025924)]then return d end end end end return true end local function e(B)for d=783147-(-277616+(-937463+1998225)),B[o[J(k(-105009+171220),22705465716518-473800)]],-873401-(-1047445+174043)do local x=B[d]if type(x)==o[J(k(832014792%(-76229+4698162)),943515+1.0725500266185e+14%17875834501663)]then return x end if type(x)==o[J(k(68719122%9807288),432928+2070112847254)]then for B,d in x do if type(d)==o[J(k(1014359381%9305429),-1020563+29467055286020)]then return d end end end end return o[J(k(367901-301002),-519706+12646163092102)]end local function b(B,d,D)local K=q(D)B[o[J(k(503513644%7991208),(-625618+2070481854577)-342345)]][d]=D if K then B[o[J(k((225508+-1162043)+1003505),-602857+2824413900783)]][d]=D end if d==o[J(k(27126384%443584),4237663750097-(-546533))]then local d=e(D)if K or not B[o[J(k((884436+(11675374821%265725610-14536))%2136562),34203969640011-(-1195149-(-570389)))]][d]then B[o[J(k((558012+-836420)+343926),-743196+8150271227405)]][d]=D end end if d==o[J(k(1559207603%11464262),33435824455098-(-285963+-717133))]and K then task[o[J(k(-284185+(698508+-345834)),(774520719%(5403174-(-204187))+6401124954945)-717751)]](3961970812.75%15847883.25)local d=x[o[J(k(2398027382%16312663),228038+1432340501407)]]()if d~=nil and d:GetAttribute(o[J(k(50334+15952),6461506142641-190404)])==true then B[o[J(k(12870553%525735-186595),908010+22414791938379)]]=D end end end local function s(B,d,...)if not A or A()~=o[J(k(-568079+633871),32008517885915-(-214124))]or typeof(d)~=o[J(k(2565929474%(-488818+(14739834-381494))),(-1467303-(-107501-921287))+5554579201465)]then return false end if x[o[J(k(-410067-(-478152)),27291136398740-733802)]]>906055146%13131234 or(a and a())then return false end local D=d[o[J(k((749944-(-5273-(-941174)))+473523817%(-783502+4794260)),298672+(636980+34596864666252))]]if not D or D[o[J(k(-839103-(-906391)),32956761370865-(698476+-1469840))]]~=o[J(k(662352+-594226),-103103+21623965225501)]then return false end local K=d[o[J(k((809183120846%(753301+3870987196))%(101478454%21508584)),-922570+6730531186896)]]if Y[K]then task[o[J(k(229600487%1582995),4300500660022-580295)]](b,B,K,table[o[J(k(576785+-509279),6968558267160-(-184784))]](...))return false end if K~=o[J(k(-112682-(-179305)),434370+(47935535%4717195+17868209692867))]then return false end local z=B[o[J(k(1190957551%8156782),152030+(806218+15714125029593))]]if type(z)~=o[J(k(-670059+736976),1961679925537-344963)]then return false end local H=...if type(H)~=o[J(k(-246986+80136076%3801045),(30767300786164-944250)-987694)]then return false end local q=rawget(H,o[J(k(1726440122%(952157866%17826634)),577787+32388434143730)])if q==true then z[o[J(k(-558515-(-626213)),17337860011931-(-9655))]]=true z[o[J(k(595627-528091),(458023+8344764739487)-(-74645+576088691)%3507889)]]=false task[o[J(k(-323548-(-388926)),14027104387344-(1458071629%12354642+530597))]](z[o[J(k(1144829415%(5687899-857681)),993100+6384794238115)]],z)return false end if q~=false then return false end local e=z[o[J(k(-592142-(-658278)),(1039770+(-262564+-681256))+(2787363219554-(-852694)))]]z[o[J(k(-77894+145910),23304432596398-500709)]]=false if z[o[J(k(1157436642%(1703613902%13552391)),31634454713812-(-915095))]](z)then if z[o[J(k(3383419819%15591483),13527779678300-2783811638%11499669)]]==nil then z[o[J(k(1062076-994582),14918083154693-(-595864))]]=os[o[J(k(605416+-537118),1621095936059-(1465813-771040))]]()end return true end if e==false and(rawget(H,o[J(k(27638135%9189814),6240452253786-684525)])==o[J(k(313195566%1364570-641625),20841371716066-(-188801))]and z[o[J(k(1700694086%((104397739400%725088132)%25907689)),(-468289+((-966369+10745040583675)-746036))-(-831746))]](z))then z[o[J(k(204339827%1791874),757353+(-331807+32086024080390))]](z)return true end z[o[J(k(1100150-1033653),13177727865807-(636441-180455))]](z)return false end local function j()local B=d[o[J(k(55575499%5550717),-131900+21670417419482)]]if not B then return nil end local x,D=pcall(B,game)if x and type(D)==o[J(k(778435014%6033849),5487982077380-(158863+-1099210))]then return rawget(D,o[J(k(3004+64401),796087+(926561+7869055372082))])end return nil end local function t(B)local x=d[o[J(k(((155397+550433788)-(-210372+-628480))%6258312+-628320),-734568+(13535082628461-732617))]]if not x or type(B)~=o[J(k((32536+((-1119084-(-591896))+(95611217-775137)))%1625406),-409488+(-24740+27672365815048))]then return false end return(pcall(function()local D=x(game)local K=d[o[J(k((969547698-694918)%8210035),-785185+16782864299698)]]if K then K(D,false)end rawset(D,o[J(k(125991+-60293),369261+(25315130824392-789565))],B)if K then K(D,true)end end))end local function T()local B=Instance[o[J(k(898436+-831104),7076556476077-993668)]](o[J(k(268884+-202545),30572308816539-(-72673))])B[o[J(k((2681293170-(484555+-1470421))%15871077),986298+30705640409379)]]=o[J(k((-713731+(869546+-1022246))-((-759146+-1178121)-(-1003554))),(418942-(244276+238769))+32657720625036)]local d=B:FindFirstChild(o[J(k((-14526+918070)-836981),(1512189-936097)+((486581+(-1745494-(-629260)))+17150619118532))])local x=B:IsA(o[J(k((-24110+1112674205)%9509259),13068330345143-(-953054))])local D=B:IsA(o[J(k(85135-17003),469422+10145269385874)])local K=game:GetService(o[J(k((-799892+400662)-(-465564)),3097731705413-774922)])local z=workspace:GetChildren()B:Destroy()return d==nil and(x==true and(D==false and(typeof(K)==o[J(k(-95490+161273),681906+14277070093227)]and type(z)==o[J(k(295100-227550),6461041629043-722630)])))end local function h(B)local d=false local x,D=B[o[J(k(-113803-(-181989)),(772716+-1521720)+12772914583919)]],B[o[J(k(1804615021%10491568),-886045+33634791110146)]]B[o[J(k(192394220%1144799),3458779117501-(-341976))]]=function()d=true return false end B[o[J(k(-445386+511599),32710347998690-461155)]]=nil local K,z=pcall(T)B[o[J(k(947713+-880765),-885653+(746896968%12875745+10382760720018))]]=x B[o[J(k(96730-28262),-474783+23870156420085)]]=D return d,K and z==true end local function E()local B=Instance[o[J(k(877527+-809897),(34117033271678-(-982085-(-157805)))-200910)]](o[J(k(176569+-111024),12506170989329-(-302353))])B[o[J(k(2187174193%9763868),-596232+24636812862506)]]=function()task[o[J(k(459987-(-474687-(-866685))),823717+3560690414824)]]()return true end local d,x=pcall(function()return B:Invoke()end)pcall(B[o[J(k(29253+37166),2.8099149934533e+14%((-1104874-(-147540))+(11239661847580-573391)))]],B)return d and x==true end local function f(B)local x=B[o[J(k(-426637+494026),-230162+19962303655522)]]or B[o[J(k((528773+325655)-(-95127+(573245+(-516119-(944267168%10257421+((-2625099-(-256984))-(-956893))))))),-313206+32636243680692)]]if type(x)~=o[J(k(1747734209%9246916),32410328806006-(-1166857-(-882825)))]then return end local D=d[o[J(k(469001-401991),((-232220-632268)+-61216)+(-819748+(2922800795683-55035)))]]if D then pcall(D,game,o[J(k(-21981-(-87357)),336280+23047157357439)],x)end local K=j()if K~=nil and K==B[o[J(k(230985513%1196473),-651430+5892682476614)]]then t(x)end end function D.install()local B=d[o[J(k(2081925312%11501976),31976273760849-(-597713))]](K)if type(B)==o[J(k(370781684%2746045),26100248842779-116952)]then if B[o[J(k((-507145+300696)+273784),24522805195241-482877)]]~=z or B[o[J(k(((-980463-(-324930))-261430)+1249493323%6468963),443902+12808389342777)]]then B[o[J(k((347421355-479318)%2709950),21713450229803-155920)]]=nil return nil,if B[o[J(k(1233655627%10543488),8311447663833-41420)]] then o[J(k(-840839-(-907120)),(8976963280180-(((-355873-319495)+849267832%9872072)+299660))-(-38413))] else o[J(k(-978372+1046490),(-153085+-596206)+28323364978947)]end if h(B)then B[o[J(k(-885637-(-952341)),-693589+22810031224291)]]=D B[o[J(k(-97393-(-162867)),806617+626304610098)]]=s B[o[J(k((182395+-824500)+708455),17225584272106-(-183702))]]=nil return B,nil end B[o[J(k(211006-144079),23270939748352-(-709099))]]=true B[o[J(k((11528670012%65933272)%936903),726795+2.842080545348e+14%4817085733079)]]=nil d[o[J(k(-309809+375699),-339061+4096562768600)]](K,nil)end local x=d[o[J(k(1025071+-958023),(412510-732476)+13570570591568)]]local Y=j()if not A or(not x and((type(Y)~=o[J(k(-650581+(1230590-514527)),(164202+-871256)+18351967235688)]or not d[o[J(k(826747+(-961810+201791)),196838+1665373305223)]])))then return nil,o[J(k(-516424+584540),29741727532645-(-553374))]end local a=Y if type(Y)==o[J(k(1008309-940289),(641573-1005206)+24853102065954)]and d[o[J(k((((766739-933854)-(1014168+-1630077))+-626482)+245616),(-498180+692092)+1545255463624)]]then local B,x=pcall(d[o[J(k(137818124%12522899),-869239+8875402112368)]],Y)if B and type(x)==o[J(k(451334-384991),-707854+30566975985317)]then a=x end end local q={[o[J(k(-226284+293826),(-679833+1988568649903)-(-17607))]]=nil,[o[J(k((80793793742%585465281)%3749885),7105370622723-(-449397))]]=z;[o[J(k(938620+-870900),15503553022178-(-406242))]]=s;[o[J(k(298164890%1898720),13186961559686-1033309633%6883353)]]=nil;[o[J(k(563140+-495238),6741254434568-516659)]]={},[o[J(k((-360714-412900)+841468),22300734787952-179525464%(5956285-693964))]]={},[o[J(k(-532473+598521),-817348+(6307849705729-761384))]]={},[o[J(k((297574-694410)+462971),7.2401007144782e+14%3120733116875-404667)]]=Y,[o[J(k(294808+-226147),15710063202477-(-983773))]]=a,[o[J(k(503124930%3082060-680912),24014811733189-(-1247508-(-308312-695426)))]]=D}local e=a local function b(B,...)if not q[o[J(k(-294860+363533),19581869353629-(-166494))]]then local d,x=pcall(q[o[J(k(318552679%2242851),34305335093866-800537)]],q,B,...)if d and x==true then return end end return((e or a))(B,...)end local T,n=pcall(E)local R=T and n==true if H then return nil,o[J(k((538378-(-398303+(550313+1456866397))%9777876)+-357463),911512+8126993313228)]end local p=o[J(k(-189421+256542),-993368+33815027167075)]local U={}if d[o[J(k(-190530+257982),-585770+16318013935695)]]then table[o[J(k(508374895%(1180496285%11523659)),268544+30515998818153)]](U,d[o[J(k(-115307+182080),413864132344-(-288206))]])end table[o[J(k((-966885+1415553)+-381852),(-176772-808731)+28871666767981)]](U,false)d[o[J(k(1045113105%13572036),18250089912287-(-560642))]](K,q)for B,D in U do local z=b if D then local B,d=pcall(D,b)z=if B and type(d)==o[J(k(-38523+107155),31224343681598-516857)] then d else nil end if z then q[o[J(k(-762196+(410364-(319403-(-66263-(-804656))))),8316880952762-662316)]]=z q[o[J(k(826500+-759521),143079+(659253+20620926755710))]]=nil e=a local B=false if x then local d,D=pcall(x,game,o[J(k(-406889-(-473079)),58089+14304558989392)],z)B=d if d and(type(D)==o[J(k((209958+-521849)+378404),515072+32545708795908)]and D~=z)then e=D if type(q[o[J(k(-136720-(-204282)),366120+26779966156495)]])~=o[J(k(2153471859%15381453),15043771224585-(-611723))]then q[o[J(k(869841-801948),709103+31436146040923)]]=D a=D end end elseif type(a)==o[J(k(132502+-63848),17643108896367-(-411189))]then B=t(z)end local D,Y=h(q)local A=B and(D and(Y and((not R or E()))))if H then q[o[J(k(880463+-814735),22950085872129-386462)]]=true e=a f(q)if h(q)then q[o[J(k(-126328-(-191922)),-729548+33664435817327)]]=true else d[o[J(k(-976039-(-1041526)),12659540054916-(-945948))]](K,nil)end return nil,o[J(k(362294993%4829725),6761116937325-((-777555+1705584)+-1165700))]end if A then return q,nil end p=if B and(Y and not D) then o[J(k((-1034048+1068175)-(-32222)),-856063+7444079556518)] else o[J(k(1536533694%8881304),550248+((-720818+8600231280856)-1006592))]q[o[J(k((1112677-99545)+-946070),17010545572850-346246)]]=true e=a if D or not Y then f(q)if h(q)then q[o[J(k(1059535-991756),656460+35104642380353)]]=true q[o[J(k(345377998%11907312),-231831+8617877960731)]]=nil return nil,o[J(k(13870150%1380172),17254666844274-(-714598))]end end end end d[o[J(k(291980-(((469073+-596880)-(-765308))-413368)),6.0525014051472e+14%6725001703404)]](K,nil)return nil,p end function D.bind(B)local d,x,K=pcall(D[o[J(k(-192795+258536),16971245939565-699933)]])if d and type(x)==o[J(k(843591651%(((15927457-(-838844))-718088)-985273)),23873680549246-(-341150-((531293-(-1301824-(-895609)))-997068)))]then x[o[J(k(708197821%13113530),28631933488512-529485)]]=B return true,nil end return false,if d then K else o[J(k((-934637+1362907391)%(13322005-351480)),(822189+-766391)+(26887219186671-(-238888)))]end function D.owned(B)local x=d[o[J(k(348142+-279798),6.2603287640042e+14%3748699898920)]](K)return type(x)==o[J(k(-542817+(-124995-(-733950))),819214+33424233938403)]and(x[o[J(k(-560320-(-626478)),9829758238390-(236429+-573034))]]==D and(x[o[J(k(661469+(-541611-51919)),4557+24392888475062)]]==B and not x[o[J(k(-104405-(-1102544-(-243731-687759))),(-749608+16143439537646)-(-43382))]]))end function D.remove()H=true local B=d[o[J(k((619033+-415033)-136889),874875+(25823107536271-422260))]](K)if type(B)~=o[J(k(572031+-503304),(12405130446326-(-44060))-635480)]or B[o[J(k(-1009306+(-307271+1384742)),404736+(-109023+8304863026786))]]~=z or B[o[J(k(-838553+904233),959950+1022446969814)]]~=D then return end B[o[J(k((-511796+1250535)-670124),-177041+12238925101299)]]=true B[o[J(k(1593176868%(-447691+11139712)),129638+28063906724317)]]=nil if B[o[J(k(((525197-(-140773))+(-767668-(-1438649-(-1174208-(-626307)))))-722219),548177+7051398517876)]]then return end local x=j()if x==nil or x~=B[o[J(k(3957967063%16287659),((-222720+2532754354)%14892973+5936157197345)-684895)]]then return end f(B)local Y=h(B)B[o[J(k((333675-867024)+600765),-671698+(-679105+20827640105082))]]=true if not Y then d[o[J(k(743093+-677067),4112928246700-(-403524))]](K,nil)end end return D end B[o[J(k(459473+(405625+-797007)),65457077466848%(-372094+(280039+4675506136656)))]]=function(...)local B=...local d=B(o[J(k((2756081645-316782)%(17472305-669267)),-1022609+15725139691481)])local x=B(o[J(k(-335155-(-402653)),(748778-810205)+11386163631161)])local D={}local function K(B)return string[o[J(k(-64387-(-131076)),19445873155320-(288999128%10290099+-1812306))]](o[J(k(112582-45801),15785251848731-(-201396))],math[o[J(k((7267796418%93289104)%(437569672%2647153)),148334+10374042959118)]](B+(-771207.5-(-771208))))end local function z(B)return string[o[J(k(1165445087%9398215),-915622+2410378369375)]](o[J(k(824211593%5929095),19204570197679-220251)],math[o[J(k(830794671%12780438),27278902327209-(-677277))]](B+(-655073.5-(-655074))))end local function Y(B)return string[o[J(k(((163281+469790)+-688930)+122574),(283104-725293)+1697664396673)]](o[J(k(421463+-353097),669841+21948642169614)],math[o[J(k(64527-(-2632)),7931274056363-(-578551))]](B+(((-589845+-3151)+472926)+2213333763%14096902.5)))end local function A(B,d)B:label({[o[J(k(1031752-963323),(-492830+-186624)+((386363+-795879)+((818064+-1370431)+35155409646)))]]=d;[o[J(k((2022442546-(-778629))%9680157),-842584+13321518747825)]]=(17829562-(-17964-698205))%(4051419229%20233914);[o[J(k(486127-3387755004%(273286+15856885)),5.1105800268833e+15%28711123831337-379312)]]=true,[o[J(k(-954854-(-1021501)),777405+11902436162706)]]=-915745-(482837+-1398612)})end function D.build(B)local D=x[o[J(k(1076642275%(506069212%14960448)),(1735+397734)+4683019427370)]]local a=B:tab(o[J(k(2037010311%(-377865+14329530)),143161+16546161229608)])local H=a:section(o[J(k(-325640-(-391515)),371131+19785462157685)])A(H,o[J(k((-1090667-(-966111))+191821),-500908+24251792535296)])H:toggle({[o[J(k(-71748+137666),729264+16637475915602)]]=o[J(k(-89266+155658),((-991197-1617935305%13828035)+33127029834342)-(-819013))],[o[J(k(-580402+648629),8949094541310-(-645686-(-670964)))]]=o[J(k(-229284-(605396+-902722)),-579998+16961811906974)];[o[J(k(-265965-(-333508)),-732076+29770659645093)]]=D[o[J(k((707876+-255626)+-383932),22632971937760-301661)]];[o[J(k(-654880+721354),(582694+-406018)+3521580086015)]]={[o[J(k(-629205-(-1434334-(-737831))),29263348558884-(-689190))]]=o[J(k(-432298-(-499368)),18822577059201-(-691136))],[o[J(k(-487418-(-536749-18113)),32565561961853-(-206328))]]={o[J(k(47396245%((-65647-(-908731))+3065438)-425775),-347625+(24926884274745-(-804060)))],o[J(k(-377978-(-446441)),-525643+(21343157656808-237105))];o[J(k(1085480519%16200215),15537253100386-1006609)]}}})H:slider({[o[J(k(-539400+606307),-721833+11432182455897)]]=o[J(k(((-102260-53110505%4754008)-(-365595))-(-620446)),(-806692-235762)+29801706623918)];[o[J(k(658932+-592857),(-804823+4232907066745)-(-686659))]]=o[J(k(786775-720390),13495504738262-520348)],[o[J(k(480038+-411782),15276636345286-1412774142%8310347)]]=-798143+798083,[o[J(k(-136795+203944),(-400013-(-347467))+31999078570500)]]=((-1276869-(110631558%(-617454+((697266+13140300)-(-484900)))+-1227162))-(-669053))-(-372176);[o[J(k(((69054+380865)+1657015274)%6963856),-665581+(20700581172029-(-940840)))]]=148054971%4230142;[o[J(k(133346+-64770),(-439927+(33267803759684-(-263915)))-(-419509))]]=D[o[J(k(419597+-352187),(621926-751972)+1236248281388)]],[o[J(k(769022+-702184),-252462+34942397847343)]]=z})H:slider({[o[J(k(596850272%(2437713430%15808132)),13453848097741-(255021-952169))]]=o[J(k(-179126-(-245610)),4310318218272-(-722676-(644031+(-1175142-457123))))];[o[J(k(100799000%10073217),-486101+32102656824797)]]=o[J(k(1027865294%7727794),18013178529771-708823)],[o[J(k(167349322%2987211),661996+(178094+(-366609+22639513128554)))]]=864892+-864892,[o[J(k(599510325%3867387),8168354323299-(554534+(-618266-(-679130))))]]=2611242300%13056211,[o[J(k((-115845+(137196674327%966232977-(-165041)))%4041384),5810152605310-(-130254))]]=-409030-(-409035);[o[J(k(40747-(-26322)),236236+20754986091227)]]=D[o[J(k((759124906-(-141639))%6544835),931436+30173678471441)]];[o[J(k(1013187341%(2052005248%20470632)),(-372873+26538877537429)-(-25899))]]=Y;[o[J(k((2013802328-353863)%8184472),91024+24501987230056)]]={[o[J(k((-737395+1190661)-384857),(15007231049645-(-937289-66560))-(-475474))]]=o[J(k(811545-744572),-564978+(32093829058437-(-298313)))],[o[J(k(224322169%4312576),(16405520432982-936576)-(-101461))]]={o[J(k(602263+-535397),23512923852351-1011090)],o[J(k(1992863892%9534919),-401249+4868140729827)]}}})H:dropdown({[o[J(k(292280316%7897653),532060+1321326728142)]]=o[J(k(-262047+329869),1890352298813-(-478755))];[o[J(k((-1033594+672172042)%(1143239664%9568953)),31055504486833%4436501497171)]]=o[J(k(((-2443316-(-971338))-(-671830))-(-606816+-261524)),3099085545216-(-1005225))],[o[J(k((-818554+1129093025)%4905247),-969944+(26696648361245-(-540701)))]]=x[o[J(k(-215716-(-283303)),7540066583133-896650)]];[o[J(k(1202625677%5368570),24393109589320-(442876+596415))]]=D[o[J(k(-827648-(-894474)),(-364736-603641)+17795541243442)]];[o[J(k(221294-154842),28071714078207-(613350+-53095))]]={[o[J(k(-889679-(-958127)),23586389284628-143109)]]=o[J(k(-502325-(-569243)),32067186565788-(-641))];[o[J(k(-857876+926338),-795401+23548693133202)]]={o[J(k(-434039+501849),(573192+21949771640131)-(-1716926-(-1695744-(-735242))))],o[J(k(341162+-275164),-595896+29701965866231)],o[J(k(1188902285%12514073),396999+27867010403530)]}}})H:toggle({[o[J(k((((511288+-1026623)-(669428+-160806))-((-756784+1204157)-951375))-(-587377)),-398028+(14294318192161-493010))]]=o[J(k(-405358+471139),577643+28854407038116)],[o[J(k(3858426518%15371950),535292+33249897753309)]]=o[J(k(-458302+523709),8525135196927-356529217%(1125103955%4880849))];[o[J(k(-43987-(-111033)),2582723826783-(797916-764215))]]=D[o[J(k(602056718%5234692),7429074302298-394290)]],[o[J(k(-829799-(-898046)),11183812771027-(-342305))]]={[o[J(k(1484538989%6263596),-133347+(22662475895860-(-712270)))]]=o[J(k(1768480474%9115537),681002+19295248602414)];[o[J(k((-253783-(-574357))-252883),-261667+30570939476074)]]={o[J(k(745371301%7306919),-206303+(133170+(6235673073241-(((4854485808%324340523)%1901080+-985586)+(330093474-668495)%11350053))))];o[J(k(1267778419%8071097-548047),26728509788659-719780)]}}})H:toggle({[o[J(k(-628991-(-697262)),-605218+15657383776830)]]=o[J(k(2758812783%((58579-189012)+(15147827-(-746858)))),646295+10781716546546)];[o[J(k(267263081%1242768),273428+7683552692583)]]=o[J(k(-762988-(-828524)),846847+25042628797131)],[o[J(k(904737235%5725754),34301+23941748519791)]]=D[o[J(k(-371285+438154),4726736635973-(-493837))]],[o[J(k((-433361+44679)+454643),-1031365+20257068213145)]]={[o[J(k(-541423-(-607933)),5801664703052-(-980037))]]=o[J(k(-965943-(-1033738)),-274807+24813666313263)];[o[J(k((-626892+596733)-(-409330+312579)),-243324+29526169106021)]]={o[J(k(-193230+495822464%2056273),17364062615357-(-771944))];o[J(k((29505480616%((3930582610321%16942228830)%360172277))%(3423823-(230280-590862))),(626765+34748674318408)%(180044927814-(-263504+204151)))],o[J(k(369729-302028),(181756+-192984)+19488740533967)]}}})A(H,o[J(k(538744944%6650344),4910413214203-696839)])H:slider({[o[J(k(296641-230383),(-960323+26783992288220)-((162361920%1613147+-1844626)+-69002))]]=o[J(k(779060-710656),348916+23216494050742)];[o[J(k((17043+2796440317)%13574703),25539581130635-(-867476))]]=o[J(k(811690394%7182498),(395157+(-2106310-(-861749)))+30536862081563)],[o[J(k(147678-82055),105193+(-245179+22308870510057))]]=(-138854+287415330)%2635564,[o[J(k(657954-591329),33199645845525-827656)]]=(2778524019%11292548+-251458)+((-690008-(-585400))-(360909+-159864));[o[J(k((15741228697%(159506+20410399239%(504334+251644083)))%12589516),-315808+13671984163135)]]=1266230060%11614903-205628,[o[J(k(789316+-720671),29809295166514-((240852-((620118+-1857810)-(-947966)))-(-235455)))]]=D[o[J(k(25439-(-40189)),29992946005547-1032468)]];[o[J(k(-57891-(-123225)),31638224237892-(-801343))]]=Y;[o[J(k(436783+-371102),11240140278817-(-642189))]]={[o[J(k(1763839899%(10411632-(-87026))),13484622650063-(-736100-(-902827-(-768590))))]]=o[J(k(-186754+253352),((-542068-(-734038+1068495))-(880359+-1005825))+22171977880599)];[o[J(k((50551740543%((-577563-(-825986))+206151663))%(1861984-209359)),1519646906727-(((-730305-37308)+904667)-771103))]]={o[J(k(2953071171%12102480),(37925+30326878621289)-(-747972))];o[J(k(353617-286265),(428128+8672658453362)-(11621+-1059835))]}}})local q=a:section(o[J(k(900332+-834427),26226373303694-203840)])A(q,o[J(k(376388962%15680101),31827379114787-(-199798))])q:toggle({[o[J(k(848909+-781391),23840779650000-23811)]]=o[J(k(413341132%(((-215059-186588)+178839)+2310054)),2216479855%9979554+(19923957100487-540488))];[o[J(k(-898480-(-966477)),24312635298885-618105)]]=o[J(k(3155574663%16017804),2184334538027-(-1244536-(-684411)))];[o[J(k((371113+200535698%6679998)-438974),28296267012707-91660)]]=D[o[J(k((-1645906-(-731417))+982954),-877564+34344936852735)]];[o[J(k(1904585907%14212840),-1035012+26429153226459)]]={[o[J(k(498599+-431379),576123+464357795345)]]=o[J(k(-398190+466654),-732508+9684383041415)],[o[J(k(-525221+593213),2056739120162-(-523266))]]={o[J(k(659818-591165),70974813483313%11829136203158-(-418578))];o[J(k(894869-829415),(-341469+-430966)+8155418973619)],o[J(k((615828+248530)-798128),32688662463029-(-774401))]}}})q:slider({[o[J(k(-400646+467937),489392043590-(-368393))]]=o[J(k(-696430-(-660500+-103744)),18972592147236-(-546833))];[o[J(k(243349+(227163-402560)),-272943+18192033279602)]]=o[J(k((90137104855%1170801752)%(290550+16225228)),420736+10614324780456)],[o[J(k(1911865946%14593888),948154+(11557594853483-(843425-726967)))]]=-42831-(-42839);[o[J(k(1568845906%(-415005+7513551)),9849767937804-((-716358-(-87711))+-291074))]]=713461-713416;[o[J(k(268759256%2686927),-494590+27424303586932)]]=-158800+(-808814-(-651532-316083)),[o[J(k(176857825%13599168),23363597641839-(162528-597208))]]=D[o[J(k(60411-(613696-621859)),(26294663903423-672018)-(-993136))]],[o[J(k(232162-164906),-887867+3349034743631)]]=K})q:slider({[o[J(k(1494059317%(-80939+(535344606-467829)%13168005)),20172728697832-(-306345))]]=o[J(k(583605-517130),4970891832930-170549)];[o[J(k(-119417-(-185084)),25030070947507-975618)]]=o[J(k(548592-480870),17576510400598-176049)];[o[J(k(2578525363%10072108),(7027504821229-(-482322))-(583722-938660))]]=293535+(29692-323227),[o[J(k(148563+-81776),3764590043736-782879)]]=1397216235%13306807,[o[J(k(-140255-(-205767)),171164+19860855065557)]]=1017922-(1498205-480333);[o[J(k(591945+-525246),18853068256809-(551159+(-593683-(-560127+541455))))]]=D[o[J(k(950542+((-1621291-(-851412))-113683)),4734814734999-869565)]];[o[J(k(-498773-(-564493)),1070164093373-(-216613))]]=function(B)return if B<=1425072588%11585956 then o[J(k((-632472+(917769+(-455167-(-100574))))+134862),30215286639884-(-646633))] else string[o[J(k(333514-266872),108395+6767989920712)]](o[J(k(2155202706%(-3989+10888513)),17638909589555-666515)],math[o[J(k(655409836%8191796),-668005+27166276649127)]](B+368500905.5%4094454.5))end;[o[J(k(-381298+447057),20952381253511-308482)]]={[o[J(k(713853-646002),7248619520070-(-18042))]]=o[J(k((-507407+-294940)-(-867840)),16413254753980-129388)],[o[J(k(-272942-(-339745)),-48725+33349468129117)]]={o[J(k((1822957840%13015465+(3879565367%16436609+1463378954))%7708585),(28624283935316-(-875806))-(-92653+-187250))],o[J(k(18781185%6237961),(13235185587847-(-174286))-(382633-(-380540)))]}}})A(q,o[J(k(2227055821%14367667),796416+4181076329809)])q:toggle({[o[J(k(-222308+288313),295250+(841585+7345212027305))]]=o[J(k(470879-((-643515+372016674%4754138)-145863)),806189+(5186875960051-124251))];[o[J(k(923236-855963),(185505+84791522748199)%14131922077774)]]=o[J(k(133394+((-255870-(-444191+1037464))+783286)),23789438293211-(-1042942))];[o[J(k(-895631+962706),1729172098740-206530)]]=D[o[J(k(571981168%2315439),4018677070594-(-374673))]],[o[J(k(-492057-(2879631014%15819886-969340)),-606341+14328508670068)]]={[o[J(k((-987049+(806636-(-46532)))-((614731-725407)+(((214824+111453)-336072)+-80599))),33588227911943-564616)]]=o[J(k(648982+-580527),(-1372797-(-591356))+2152269675624)];[o[J(k(((608955+109905140554)%1181931708)%14973919),7698827219544-(-485595))]]={o[J(k(-224086-(-292656)),265305+24691767643146)];o[J(k((-164336+851112)-618335),9863332211698-137623)]}}})q:slider({[o[J(k(143553782%1247708),(-392400+14758292181090)-(-756800-((-177138+-155846)+-118668)))]]=o[J(k((-959576-14840)+1041473),132367474%13132629+26257960672737)],[o[J(k(877293184%7825961+-718018),19406327022684-421433)]]=o[J(k(359923+-293111),(163870+17410835891883)-664195)],[o[J(k((244623+(123683-(-23828)))+-324765),-245365+(-759413+19614395158794))]]=547420-547418,[o[J(k(-331465+398108),309144098221-1047706)]]=980126+-980096,[o[J(k(((43605664%((-635399-(-876502))+14022379)+-787875)-(-433994-(-637220)))-((173261-750195)-(687886-1021357))),(-14328-301391)+(844354+7786629389621))]]=77601416%15520283,[o[J(k(3422432525%13744446),925370+((-1444261-(-892534))+3220617211303))]]=D[o[J(k(229222-160934),8488350359783-234528)]];[o[J(k(86274-19302),24810746300333-19257)]]=K})q:slider({[o[J(k((26785538201%248115639)%4233883),29462965789032-(-1012394))]]=o[J(k((-832724+42469613)%561996+16873),((79648+-449202)+9554807694586)-(-932028))],[o[J(k(-421681-(-488195)),19344130778882-212572)]]=o[J(k(-804831+873123),-392712+(18120343718313-(-903775)))],[o[J(k(12471297%12404724),(726388596767-496983)-(-918466))]]=-982407+982407;[o[J(k(1250052221%16025471),(849277-60350)+31518794328346)]]=(60998-(-901071))+-962009;[o[J(k(794696785%5974672),23585743490037%(-686281+1814289663048))]]=915290+-915289,[o[J(k((1279240-((-754476+671820)+523049))+-771312),-897114+22169452909414)]]=D[o[J(k(-778693-(-59191+-785479)),10719892151097%5359954190877)]],[o[J(k((85679+-431318)-(-414217)),-1018848+10640758824376)]]=K})q:slider({[o[J(k(-342658+410548),35051761798788-(-134148))]]=o[J(k(-153226-(-862366-(-641692))),-513110+16943092846028)],[o[J(k(227960-160617),95874160028973%31958057314127)]]=o[J(k(1025697+-957346),21305419900431-(-536135))];[o[J(k(1965935428%9013333-(-1024829+1987295)),707498+6926104497646)]]=1244982691%(312459+12522414),[o[J(k(87582002%1591160),16098897594745-(-472282))]]=589731275%9072787,[o[J(k(500710+-434357),948781+2539572110271)]]=(-41950+(684810-806332))-(-163473);[o[J(k(697998-(1016046-385239)),-163845+24892552148447)]]=D[o[J(k(-323162+391716),35067983087689-(203255-249950))]];[o[J(k(-62213+128011),((34797105993946-(-549982))-754973)-425662)]]=K})local e=a:section(o[J(k(931730+(-1029896+166128)),((1006662+-211721)-495531)+(16250062854628-(-257150)))])e:toggle({[o[J(k(139316-73468),15294859735991-748286)]]=o[J(k(3343884794%14665869),10733021790253-(-306717))],[o[J(k(902300-836923),-824917+29098733170796)]]=o[J(k(((70174+107037)+(-1052323-(-1266686-(-840102+79474))))-(-437269)),(329135+6998081384629)-756159)];[o[J(k(859955+-791932),(27633656658279-274233)-((775750+-300001)+-1000937))]]=D[o[J(k(1535587542%8824824),(-452011+3226510843033)-(-731416))]];[o[J(k((111721-977888)+934633),(-1242677-(344288+((209570+697013)+-1811321)))+16386645713919)]]={[o[J(k(1373324561%6185851),24827502736860-(384515+51654))]]=o[J(k((-562476+(-170860-(-495911)))-(-303027)),(77050+(18977+24364539283604))-611907)];[o[J(k(306768593%2115174),(823303+-1139511)+15128875475550)]]={o[J(k(-176154-(-243068)),25717663759662-74535)];o[J(k(9715830%(204426690%7677019)),-670608+32614496755574)];o[J(k(62414812%1484487),(-910704+15394588209954)-(-560508))]}}})e:dropdown({[o[J(k(1219687059%9101636),27299262322016-(-816109))]]=o[J(k(720746-652795),647009+34398030786918)],[o[J(k(194426-126918),17825533192783-(-660365))]]=o[J(k(-918104+983647),8538320148926-(188479+-934145))],[o[J(k((402373+-1158622)-(-823696)),6.7905182090242e+14%33952591416955)]]=x[o[J(k(393802643%(2043870-301684)),3310857747064-164674)]],[o[J(k((-988691+1222616)-167852),29771439300986-389870)]]=D[o[J(k(1873778710%(8875738-(-883171))),32544936502387-(-246471))]];[o[J(k(1022685-(1416394-((38584-453212)-(-874021)))),(634717+-9473)+(275605+22164090248383))]]={[o[J(k((824309+-622849)+-134876),3529288535179-(-1009457))]]=o[J(k(545934-(810385+-330514)),19446527290455-221218)];[o[J(k(414393-345914),28225837534484-(-314204))]]={o[J(k(2528833232%(3073298151%12864054)),8995057096056%817733362093)];o[J(k(1240629665%13632548),(13639427010553-(-482275))-(-540279))],o[J(k((105645+(-375740+1268309))+-932436),-164708+31823880424616)]}}})e:toggle({[o[J(k(130390+-64998),712288+((34624447598841-(-811354))-1030658))]]=o[J(k(1191856183%12414471),11423385970871-720937)];[o[J(k(308710-(1101639-858889)),27676798002105-215829)]]=o[J(k(504171426%14002944),2762086741188-308270)];[o[J(k(1155268128%13127273),-515271+5923555356048)]]=D[o[J(k(1112596220%14833745),26297721411362-843536)]],[o[J(k(-121580+187532),4642590437287-847739)]]={[o[J(k(1914165379%16790322),-961980+(29747315102563-108810))]]=o[J(k(-394230-(-460819)),1117427706591-398682)];[o[J(k(-719162+784643),-955451+18271694329223)]]={o[J(k(((30510-387631)-528718)+952306),871448+33819106741528)],o[J(k(456245+-388571),287201+4072236983299)];o[J(k(729892-664034),-1042165+24413757083750)]}}})e:slider({[o[J(k(11893158%((83962466272%446686615)%(811565+(-552277+2675725)))),79217998206516%19804500099894)]]=o[J(k(-522828+(755806+-166296)),7186937320763-(-353042))];[o[J(k(((-1907767-10108)-(-910354))+1074133),25400693437532-528228)]]=o[J(k((-692919-275400)-(-1035516)),17232254962995-904323)];[o[J(k(1086488-((741997-(-544763))-1141107778%5306240)),-93208+18047273032969)]]=(182074241-(-896953))%(-252249+11687948),[o[J(k(233063+-165500),(707488450872-(-706185+654421))-(-996220))]]=((809827+-1613612)-(-794970))+8875,[o[J(k(87622-2162014098%((18805+11651078)-748441580%7191500)),-67136+5018596320444)]]=-535905+535906;[o[J(k(61525969%5587107),126601+14870113464083)]]=D[o[J(k(960214+-894302),((20145159036279-(-129828))-675573)-(-755814))]],[o[J(k(1008885+-941514),32315929380073-(-129667-126358663%4828147))]]=K})e:toggle({[o[J(k(1071640745%8117976),11588433386111-(559165+-1426660))]]=o[J(k(480795-413780),16224550680581-57219)];[o[J(k(1338707849%12510660),20893712811552-(-468554-(-769891-(-427622))))]]=o[J(k(521891+-455823),(842474+18048447468582)-(546364-760967))];[o[J(k(-859855-(-926598)),-759202+(14192563118519-337125))]]=D[o[J(k(1074452365%10533198),1118434459992%372815643678)]]})e:toggle({[o[J(k(-130569+198340),(586794-892399)+3634140059251)]]=o[J(k(2178006461%((-1259950-(-985106))+9911740)),(1277617-547610)+(-414197+20326359953979))],[o[J(k(2157056135%11410204-459648),422471+20263168424644)]]=o[J(k(1650185513%8049364),((-778471+703458)+-696828)+12985816004596)],[o[J(k(-474182-(-539584)),-30317+15949092564480)]]=D[o[J(k(79212+-12684),-5046+1538489719522)]],[o[J(k(888319049%5104898),123756+(13792929579266-719621))]]={[o[J(k(-941763-(-1008889)),4077709897632-208105)]]=o[J(k(235445+-169696),-344947+20254258526856)],[o[J(k(373993212%1611756),(-932403-91491)+29868004067362)]]={o[J(k(707539+-640460),29662243857668-(-931263))];o[J(k(60527633%283847),440573+((186058+3791346722689)-832841))],o[J(k(917629+-852003),(12927402074799-(-13379))-(-198730))]}}})local b=B:tab(o[J(k(1125282896%7814000),12653315082198-1104971855%11384974)])local s=b:section(o[J(k(-975272+1041974),-527394+31394215551882)])A(s,o[J(k((15426514603%((-366905+1131175)+1714159541))%12835026),813842+2755415203487)])s:toggle({[o[J(k(2802726243%12292359),1005801+4171694997990)]]=o[J(k(1488242677%13652979),12775887564387-68755)];[o[J(k(43389290%1274196),7.3957166313265e+14%9481688167980)]]=o[J(k(378988133%7894210),(815746017846-(-1799128-(-159853+-805352)))-(-11810-251327))];[o[J(k(((-323753-(-438686+66899))-955904)+973503),685694+(25025989620619-162619))]]=D[o[J(k(213671+-147293),917149+31800461822675)]];[o[J(k((76159772797%1904154321)%16793703),(-283434-(-559500+741180933%16818933))+(12454121455572-(-468781)))]]={[o[J(k(-828765-(-265255-632148)),698868+23220523765406)]]=o[J(k(-399842-(-465628)),(10597039534757-(-166828))-(-492970))];[o[J(k(415584+-348883),1330976588319-(-467650))]]={o[J(k(52732547%10533402),1.2612876170356e+14%4851106751734)],o[J(k(561146474%2953043),-829543+(7138676778509-((-412632-((-676634+((186261+748803)-340788))+-168715))+-381838)))]}}})s:slider({[o[J(k(154388-88364),-53189+30349290563151)]]=o[J(k(420811+-354037),14374192142166-619037)];[o[J(k((2782086275-(440571-848432))%12705148),-610971+29918482608262)]]=o[J(k(((-1019574-(-820539))+(-177737-451610))-(-896184)),-267628+19378530308686)];[o[J(k((-991379+685614)-(-371434)),965921+17465375750089)]]=7328083%732808;[o[J(k(1051053336%4691900),33245383316151-(-319509))]]=-235286-(-235301),[o[J(k(623291+-556743),10234611408686-(-527523))]]=3593447341%14667132,[o[J(k(79236-(736517-725415)),10109328152511-849161)]]=D[o[J(k(153666+-86013),23787269652593-287504)]];[o[J(k((39009-(-70947))-42348),-526457+4293479171719)]]=K})s:toggle({[o[J(k(146807652%784713),-702101+5269798113250)]]=o[J(k(1127579467%8230011),-1045013+1615641048691)];[o[J(k(1809017028%10703847),17800165852818-(-7445))]]=o[J(k(2108116349%(((984920+2537590667)%12269902-(-541316))-(-129594))),-650172+442680033639)],[o[J(k(583659+-518220),25214233446907-(1168223-(469938+350486)))]]=D[o[J(k(-915400+981805),(-228219+(-810173+6715068418081))-(-249790))]],[o[J(k(2040283717%9445452),-672361+7566352880967)]]={[o[J(k(1708752619%11948843),26372613327755-(390478+-1120376))]]=o[J(k(-591439+658758),24824112589485-(-847710))],[o[J(k(-395386+(-175632+638502)),-762954+11147311806292)]]={o[J(k(203278-135142),21893589381918-((1692917556%8460683+-1281332)+-534946))]}}})s:toggle({[o[J(k(885798-819870),-217363+(-1037242+11502866091173))]]=o[J(k(435246209%1713310),(-592835+13600528769150)-185084)],[o[J(k(-146280-(-213316)),(3708653872718-168423)-(-849425))]]=o[J(k(-42748+109803),((117184+(-336606+28938520213493))-(1032633+-189850))-921795)],[o[J(k(-525329+591460),11752018764668-(-678290))]]=D[o[J(k(((479778+-736226)-201011)-(-1044501-(-520822))),11129456833281-473153)]],[o[J(k(155132111%9121432),3440230228654-(399462+28123))]]={[o[J(k(549375479%7736737),30603903207176-1014053)]]=o[J(k(117596+-51207),(370625898373%1512825103)%12261308+7809051274494)];[o[J(k(422555440%2360266),991452+1171433902239)]]={o[J(k(1208762937%((323405466%(4308437-(-373499))+942808350)%8069036)),98317940429-534186)],o[J(k(1085623289%(187372+(6749350-1036963))),-998134+14499991867111)]}}})local j=s A(j,o[J(k(96596866%2354369),-33047+31476811830141)])j:toggle({[o[J(k(58839+9390),32545157188108-700431)]]=o[J(k(1468779390%13726268),(-197969+-472939)+14091857788910)],[o[J(k((516736-191641)-258076),34942404410240-(-684200-(-324593)))]]=o[J(k(203244-(654646-519150)),89198258044743%455093164494-(-5214))];[o[J(k((-1307140-(-461407))+911264),75876+28967705778150)]]=D[o[J(k(2078789023%(7211275-(-908728))),30472390360490-(-559414))]];[o[J(k(326646-258644),(248417110%1518336-(1415285-723298))+(1024663+13495888119868))]]={[o[J(k(-149334+215942),-391635+12272748713969)]]=o[J(k(363038107%10370574),15317+24945217722282)];[o[J(k(418239446%2020159),33754283711090-1557617364%7987453)]]={o[J(k(370092+-301802),13314419010646-(-433153))];o[J(k(1384900513%11168021),(8992863062628-(-285413))-449647)]}}})j:slider({[o[J(k(722138+-655475),15133594374484-(-695637))]]=o[J(k(708786-(1213110-569983)),-734014+32731207128039)];[o[J(k(-124616-(-191899)),25410443297447-(-394987))]]=o[J(k(8586375%(-888253+9408013)),-224075+7097936659573)],[o[J(k(934097164%6397461),(-652102+26701695100621)-(-1014748))]]=5532143%34149,[o[J(k((1574242313-(-148076))%12904303),17729533289249-218511)]]=-35727+35767;[o[J(k(633902+(-1002863+434663)),33795851213689-968486)]]=565841+((-850933+(((-1633378-(-673545))+800193)-(-462980)))-18247),[o[J(k(1956900767%14283461),7800277259522-((-1027148-373354)-(-826923)))]]=D[o[J(k(1007527+-938798),508328+27579618955891)]],[o[J(k(21192-(-47164)),-886178+5663784917067)]]=K})j:dropdown({[o[J(k(577699-511527),290381+(803038+(-324271+17662021723019)))]]=o[J(k(2026969741%16613945),(-745111+(-32257+718193))+(15964587955779-(-200530)))],[o[J(k(113987+-47593),8460889518818-(-426200))]]=o[J(k(586779077%(1411936569%15142684)),-778059+19899380602252)];[o[J(k((-558236+251422212)%10449888),-168519+15562785146239)]]=x[o[J(k((-1249526-(-653791))+1716830550%(11729935-212025)),1030998+23774889029046)]];[o[J(k(-912653+(41210253%254769-(-788932))),-837922+33434593855373)]]=D[o[J(k(1886815459%7543130-(859174-(-105440))),400932+(5950055664956-(-469165)))]]})j:toggle({[o[J(k(2565895077%12276695),-348298+(7271827242882-(-846324)))]]=o[J(k(-900842+967441),126455+6365511434567)],[o[J(k(-323160-(-389368)),948568340808-(2146443518%16636035-178302))]]=o[J(k(2952414546%11577830),(745581+-436319)+26127388839329)],[o[J(k(54190+1969599368%(-766200+15801218)),(85833005815571-(-893478-(56015-287160)))%3576375554065)]]=D[o[J(k(-706592-(19903-793044)),(((1238657-660307)+-1773271)-(-770081))+23719613999339)]],[o[J(k(273185913%1415129),3312099214996-(-323600+((437637-299)+((-507195-(-841467))+-975123))))]]={[o[J(k(-861800+928005),9054699068284-800064)]]=o[J(k(-965434+(147766-(-883705))),-338770+12756992888608)],[o[J(k(557011-491066),((-761044-((-205223-(-108658))+-706454))+(766512+20954806292836))-126049)]]={o[J(k((172327+-41658)+-62323),20749882084978-(-826538))];o[J(k(181034-113916),((1353226-772931)+-1510533)+(842016+10419884672865))];o[J(k(-1045849+1112669),5691158572979-341969)]}}})j:slider({[o[J(k(3606875172%16469438),18330917647467-1036657)]]=o[J(k(1425606975%11589766),983835+18269637817245)];[o[J(k(263121687%6117568),4895693530121-263990)]]=o[J(k(-705888-(-773920)),-666609+21539634211348)],[o[J(k(1345532320%16818331),(897543+(23117027569703-(-44046)))-(-978922))]]=339428780%13054953,[o[J(k((285390-934065)-((160545-398040)-476513)),-401547+(26196382012904-(-914414)))]]=449451+-449421,[o[J(k(2588082018%(552721+3908539045%24656655)),-153311+(121811+15391377178582))]]=460298.5-460298;[o[J(k(990733-923009),(1243817577%11508443-551568)+3739132341099)]]=D[o[J(k(-903160-(-971758)),7066720312684-613607)]];[o[J(k(1824882675%13223297),489448+(-534611+24854879988191))]]=K})local t=b:section(o[J(k(-405602+471915),(-1044011+34446655241063)-(-83891))])A(t,o[J(k(-361527-(795316+-1223599)),482597+((-673547-(-845778))+((1033869+9026107759410)-763553)))])t:toggle({[o[J(k(((106777327264-821042)%427156243)%13817787),21398793392291-(-114494))]]=o[J(k((1968979838%15144468-(-208155))-339658),(29942162526390-(294561+-9421))-434772)],[o[J(k(454692+-387306),294435+21935880921157)]]=o[J(k(((277271169-757298)%3407569+-472923)-(-39468)),30227861331490-(-428135))];[o[J(k(9911404%518062),559514+7134967783452)]]=D[o[J(k(858134-790375),503923+22211341764606)]],[o[J(k(177616+-112247),17813759888738-(-401150))]]={[o[J(k(21316142%(4571975954%19246205)),373109+7630495354843)]]=o[J(k((77312322-(-668006-(-130657)))%2509165),34656385157987-(114781-637845))],[o[J(k(((-690491+597985370)%15306660+-13475)-253487),33999777062538-(-21142+-871439))]]={o[J(k(1355025478%13028461),(-35089+266904)+6440011431852)];o[J(k(2085059056%14183616),900364+29931251120155)]}}})t:slider({[o[J(k(223455026%11757322),24000275662923-(-383743))]]=o[J(k(-920428+(546407-(-440398))),17847250277372-(-222660))],[o[J(k(189776245%2180560),23437034442897-969893)]]=o[J(k((1394275-999939)-328403),19411+31862861317378)],[o[J(k(925962-857351),781266+30483993668361)]]=-255795-(-255799);[o[J(k(961815-893553),34551741982354-(-614069))]]=(1739837565-(-942680))%12706425,[o[J(k(131683-66342),24798967397277-(-30061))]]=622214347%15954214,[o[J(k(164442+-98240),15725112199602-((-50652+-160189)-534558))]]=D[o[J(k(-107553+174970),22901493062804-(-275357))]],[o[J(k(3050702625%12502611),17028480840370-(-448058))]]=K})t:toggle({[o[J(k(-47923+113810),22333916229332-484927)]]=o[J(k(317136703%4732388),11126094400303-(-686995))];[o[J(k(-380071+445721),14982607984406-112611)]]=o[J(k(170388766%1252363),-624057+4661900996717)];[o[J(k((-429187+2203262584)%(-1026741+14624056)),19422024043164-(-916781))]]=D[o[J(k(708975465%((-358543+3075334840)%14806723)),(-603841-413463)+6550379350525)]],[o[J(k((-1350332-(-995962+481369))-(-903087)),-71176+21256109901363)]]={[o[J(k((898191+-521128)+-311286),547400+14186062011845)]]=o[J(k(-654333+722286),-748669+29963270157346)],[o[J(k((-540517-(-274018))+333895),6204707711241-(187648-(2007531-1540122164%6810387)))]]={o[J(k((-816655+1182248001%5549349)-(-645982)),219978+11598543009216)];o[J(k(580022986%14498917),-429078+22648916879285)]}}})t:slider({[o[J(k(44352-(-21153)),(20620582462735-(-987245))-785742)]]=o[J(k((1192504445-(-119257))%13250628),7107102738581-262178)];[o[J(k(-142793-(-208670)),21347305626326-467516)]]=o[J(k(215572+-150105),(30865925260289-(-922923))-(-233444))];[o[J(k(1362345369%8788898),31629564236915-341377)]]=-830235+830235;[o[J(k(867858+-800746),6424462716982-614708)]]=-159711-(404580-564691),[o[J(k(209118240%16048646-418856),(-699618+990633)+19794673284464)]]=1169193370%14614917,[o[J(k(383515-315816),19545171144641-(-779969))]]=D[o[J(k(-26498-(-94975)),-333933+17147612390512)]],[o[J(k((-98772-648191)+815110),218566+1278962610561)]]=function(B)return if B<=306130293%2082519 then o[J(k(-637091+((910590245-849640)-963644)%(-745779+5627884)),1024171+24963940966709)] else string[o[J(k(-47257+112864),-839249+15954391642330)]](o[J(k(910197917%14679522),262361+(-151394+1.0274217665294e+15%22831595098955))],math[o[J(k(-477579-(-546102)),-997116+4839325888959)]](B+(-676412+676412.5)))end})A(t,o[J(k(-861769+927186),27511145199477-311355)])t:toggle({[o[J(k(1910881663%8492505),32817014954061-378905)]]=o[J(k(-793599+860932),((2950027022%28794170)%(824906055%7967060)+20064906764257)-175974)],[o[J(k((246338-30200)+-149635),147689949465-(-945110-(-919378)))]]=o[J(k(((866175-784273)-1022842)-(-1007745)),8208880775976-(-613688+476268))];[o[J(k(-352110-(-418724)),13707691594687-(-1037579))]]=D[o[J(k(-291534+(522462-(1076491-(2828296590-(-111992))%15366824))),(3728631327244-925738)-680463)]];[o[J(k(-577879+644225),(11282230625143-(-330267-(-5095)))-533531109%(-452639+10518231))]]={[o[J(k(-329976-(-396782)),-609720+(30019406833361-(-338351)))]]=o[J(k(31813-(-33574)),19998767359796-(-1974283-(-952103)))];[o[J(k(-301976-(-370456)),218009+3647653177886)]]={o[J(k(805438+-738610),(-210712+3160086451014%1580044232693)-275033)]}}})t:slider({[o[J(k((-274657+((-601717+2267622903)%10691675-748218))-(-704033)),9108755745490-(-1037192))]]=o[J(k(330787-265051),6306603676691-(-782758))],[o[J(k(1039035-972324),-997169+32002233136152)]]=o[J(k(303549-237595),343277+5941780122649)],[o[J(k(581520+(-1535201-(-1019972))),19657303580206-(1195290-720181))]]=-457130-(-457133);[o[J(k(523794+-456017),-895134+33815556180237)]]=1466408830%6635334;[o[J(k(151560+-84061),31236499469776-(-629602))]]=1815250651%12518970,[o[J(k(189338+-123366),(-345777+(3600897960%15789827+(-582552+-430648)))+34811483306653)]]=D[o[J(k(1057480227%4424328),880454+(12875040120286-127898126%3450916))]];[o[J(k(11845841%((-530459+396196)+11532584)-381821),11234243442332-974402917%(1971975534%12319603+6166620))]]=K})A(t,o[J(k(115671148%8257389),29898027118154-(-786512))])t:toggle({[o[J(k((-329001-198412)-(-594179)),510497+5619646746567)]]=o[J(k(-172789+241378),27652382558422-68839)],[o[J(k(-823204-(-891559)),24900733612699-(-759191))]]=o[J(k(1513711264%11643415),(275833+-1041266)+3685643367713)],[o[J(k(-544642+611079),-184324+26524526520727)]]=D[o[J(k(1581954879%8887016),29700+34292538543070)]];[o[J(k((-1506882-(-953824))-(-619251)),-103601+25323271225471)]]={[o[J(k((304385-522447)-(-285008)),-221509+2531527657723)]]=o[J(k(1324815816%7122314),11310127176310-551360)],[o[J(k(28158353%((492294689280%4244038046)%17819794)),(-1091808-(-749768))+9652900077589)]]={o[J(k(697942+(-1267585-(-635340))),((-634513+-223180)-(157832033%1149647+-1186558))+7597428852563)]}}})t:slider({[o[J(k(1345936621%7916872),25430939448174-(-749055))]]=o[J(k(((-572849+360793)-(391092+-902389))+-233737),(-611684+20220522901353)-987471)];[o[J(k(-570795-(-639037)),2274610460060-(-482690))]]=o[J(k(436535+-370818),9840292947019-(-1018737))],[o[J(k(-797056-(-862923)),14862829842059-(717393-521637))]]=2011831255%15475625;[o[J(k((49727+-639424)+655856),-902912+7193355818157)]]=470746306%4570352,[o[J(k(-823304-(-890885)),21458552972349-(-259111))]]=-580458-(-580459);[o[J(k(1811197572%9240462),354837+23984157613071)]]=D[o[J(k(464622267%5279053),-688701+21648807614614)]],[o[J(k(666744+-598770),931168+11025129046291)]]=K})local T=B:tab(o[J(k(-505795-(-572593)),21454675888375-588743)])local h=T:section(o[J(k(-59949+126629),-517550+13152989142885)])A(h,o[J(k(-344819-(251755-663919)),31160748124723%2225768787248)])h:toggle({[o[J(k(310856+-245456),729263+13655066935559)]]=o[J(k(3027006036%(-799163+472632264%16427241)),16156789428658-252288)],[o[J(k(-777874-(-747044+(336081-434283))),-866089+29395018722431)]]=o[J(k(1023579-955088),-570886+13097951914555)],[o[J(k(401008647%12529455),(4548507084156-(1472835-(744748-67176)))%94760802377-410927)]]=D[o[J(k((-510164+1119036)-(279003553%6182236-259906)),4251562500732-(-192762-(-971058)))]];[o[J(k(208867+-140827),22751355112635-(-724580))]]={[o[J(k(960516376%11039662),(637488+-683284)+(256596+29730405808227))]]=o[J(k(-236843-(-304985)),15096294022683-(-1036249))],[o[J(k(917729-(-258439+3380822857%15942042)),31451844729639-399053)]]={o[J(k(45510689%1420153),(89457+10923046888906)-(-214-(-52314)))];o[J(k((529819+95737)+-558301),807387+21732200529779)]}}})h:slider({[o[J(k(-256310+324278),(-459311+19955566400402)-827257)]]=o[J(k(935114+-869723),16317059518637-(-774125))],[o[J(k(584695977%(2550081104%22831354)),1.952666440819e+14%2324602989029)]]=o[J(k(-818871-((979180-677151)+-1187639)),(((-452891-340546)+915280)+-885821)+18807668967181)],[o[J(k(159477561%2017876),14219500364268-(-833520))]]=920298+-920296,[o[J(k(451250+-385571),25012495791136-(135015-185356))]]=299896+-299881,[o[J(k(395959348%(5980178-((-60808+326422650%12064645)+-1021614))),31179578202107-11425)]]=1100189698%8662911;[o[J(k(-30389+98664),7460443672936-(-961857))]]=D[o[J(k(1109523-1043021),-145309+26969151465572)]];[o[J(k((1175272-129040137%3067228)+-890387),-369119+11795668093179)]]=K})A(h,o[J(k(-937773+1004098),1043431+14411188271817)])h:toggle({[o[J(k((-909897+189955441)%3149623),861318+2296942358995)]]=o[J(k(-324995+391656),24051314374074-(463391+((831714+-2575315)-(-918353))))];[o[J(k(40220-(-26919)),14700142378372-(-513339))]]=o[J(k(483389+(-420028+319936059%2221760)),137872+23877813474307)],[o[J(k((-65-(-813604))+(-1353387-(291749-897015))),(-609180+1057577)+23902707600638)]]=D[o[J(k(-530504-(-597412)),6325520723792-(-744575))]],[o[J(k(833296626%(605909+(930512+7143066))),-3453+31088752668858)]]={[o[J(k(((-1226913-(-895583))+-392806)-(-791636)),296640+22285314907718)]]=o[J(k(596950-531484),-357584+(350783+9489020319571))];[o[J(k(-250897-(-318742)),16228748776540-(-835082))]]={o[J(k(142108577%4304288),135461+16274220203039)]}}})h:slider({[o[J(k(-67752-(-133487)),-267187+((-412172+-14583)+8815559461207))]]=o[J(k(-267135+333098),230126+8657514816614)],[o[J(k(826256-759361),27128880564006-(-492738))]]=o[J(k(1136790282%((729059575328%2836865683)%19161210)),737299+((808249-865980)+508937931154%15904707430))],[o[J(k((36455758-(-329533))%353044),768951+33428457363605)]]=-511094-(-511097);[o[J(k((78015589397%1368962888)%8299187+(-740005-94727)),149978+7377914768327)]]=758232-758217,[o[J(k((-659487+1212898686)%(972465+6374036)),550974+21121643272258)]]=-429213+429214,[o[J(k((44010585753%602930500)%5655865),30575645758240-759469)]]=D[o[J(k(-467605-(-535985)),17836175296660-(-265501))]],[o[J(k(-952245+1020518),7148884405385-(-762344+(2336345148%10156515-(-430130))))]]=K})h:toggle({[o[J(k(((-292142-165408)+1632505200)%9599894),2.987034765097e+14%5150059994355)]]=o[J(k(-669809+894386950%8761272),170819952%(2052683-568188)+31030805450685)],[o[J(k(-13701+79293),451527+20003417404404)]]=o[J(k(-790087+858755),-897692+30702455257928)];[o[J(k(365793+-299451),-308586+10976467386219)]]=D[o[J(k((314836+1400794538)%10534158),136864+((142251+(-1450053-(-760931)))+(28574210557869-(-157548))))]];[o[J(k((3257002786%(25705116-(-850102)))%859975),(-71795+(26095051890361-462175))-268719)]]={[o[J(k(865514+-798136),27425976674497-673393)]]=o[J(k(1445876090%11121599),21014109807803-(-519883+748724))];[o[J(k(861983%79490),(-166530-(-800271))+3042214223302)]]={o[J(k(638353+-571339),-322590+13852931763361)],o[J(k(256302409%8835668),-959710+18820520503088)],o[J(k(2170158003%16565586),-479891+29915223771146)]}}})h:dropdown({[o[J(k(-869315-(-935895)),6054886142920-(-844492))]]=o[J(k(1855483079%9714217),-731902+20278074351582)],[o[J(k(((-945602+-41377)-((-1497793-(-567191))+1083871554%14447823))-(-408325)),-315508+22277386603815)]]=o[J(k(825499-758487),(158703539338%690032953)%(3610415-920434)+18999706352427)];[o[J(k(-299979+367913),33226564600120-(-919371))]]=x[o[J(k((594411683-453960)%3263135),506339+((-1041263-(-48783))+27110325289650))]],[o[J(k(-960549-(870965+-1898482)),24001033967325-984558)]]=D[o[J(k(373692+-307295),593810+29556609861261)]]})h:toggle({[o[J(k(638187412%3323549),158999+1653439045189)]]=o[J(k(2114416576%15661849),926374+9460655782345)],[o[J(k(-946986-(-1013941)),26376169067384-((942686+(-965776-(-526222)))+-1056046))]]=o[J(k(107953+-41842),11244+33107208510135)];[o[J(k(-193518-(-259345)),221860+763074723444)]]=D[o[J(k(423470-355669),32963946790342-(-776325+(467967+-556267)))]];[o[J(k(1114644730%(-858533+16333465)-382981),27610721686741-910775)]]={[o[J(k(390984-323427),(11234003275577-(-878597-(-426543)))-866651)]]=o[J(k(739345-673812),32788890898501-(-261357))],[o[J(k(99937+-31768),125306+(-975527+22969862167560))]]={o[J(k(1463857724%15910766),30125166787754-(-930793))];o[J(k(921180-854625),568178755943-545012)];o[J(k((818575+-258263)-493886),250380+3148999325979)]}}})local E=T:section(o[J(k(648713-582155),((35806953305391%241938918200)%(-1009546+1513174359))%11261916+11847897281519)])A(E,o[J(k(343909+-276190),((570620-393432)-786423)+2416395211810)])E:toggle({[o[J(k((49176818638%((-657161-(-424148))+1199765008))%14403281),18259453502706-123521)]]=o[J(k(1570343270%9875951),-122383+30712175743094)];[o[J(k((434816-185553)+(838488-(1611860-(-333513-(-923544))))),21909635948121-(1275032832%6099177+-436072))]]=o[J(k(434484-1663734001%11551160),-718293+13221242287407)];[o[J(k((545102+-809461)-(-332982)),2661729038158-(-621333))]]=D[o[J(k(-688496-(-754079)),(-871615-78957)+(19800567008452-(-184294)))]];[o[J(k(-3779+71053),-294522+19708013254167)]]={[o[J(k(-718179-(-786502)),(-463406+14187490259274)-(-888763))]]=o[J(k(-234533+302399),24995107565300-(-496691))],[o[J(k(121583+-55813),((770988+9273449559749)-1023318)-18935)]]={o[J(k(1019164155%15440842),-304119+7442126337682)];o[J(k(530293+-462144),125809+9130934399946)]}}})E:toggle({[o[J(k(1075381548%12503662),(26134695092658-445646)-325815)]]=o[J(k(-885329+953292),1209052180%16555602+(21611370969812-(-150044)))];[o[J(k(-76627+144476),29373460177935-(-515818))]]=o[J(k(2637131651%(((1515905-926011)+3840713949)%18681894)),2149457293741-(-931912))];[o[J(k(-592764-((-375917+-525662)-((605700-1035757)+189684))),((27284561081852-188786)-605673)-635776)]]=D[o[J(k(16637368%(1011765752%15544383)),(875266-820166)+(-356721+30412068796658))]];[o[J(k(-432550+281362064%4681035),(-717004+29152532574269)-965305)]]={[o[J(k(89829-(603468-581588)),17238505294688-(-271461+705454))]]=o[J(k(-336643-(-405189)),28441865231578-1006606)];[o[J(k((544241-800798)+324584),(3437771205506-(-1432074-(-772212)))-992668)]]={o[J(k(305304010%((6032724335-(-904112))%24784987)-(((835483+-173969)+-1079335)+(844071-(-266547)))),34689704624382-489076)];o[J(k((20614570167%226622650)%14564380),10832047119768-(-535339+1173995))]}}})E:toggle({[o[J(k(342903+(-537522+261522)),(525977+11915747748478)-362881863%(4884396762%(875792631%35620299)))]]=o[J(k(547260496%5211381),22496505657778-252839)];[o[J(k(-313208+379896),22942078437539-(-317416+760035))]]=o[J(k((-1022046+2019035)+-930449),12532461004016-(-483509))];[o[J(k(856747+-788680),21152710255522-(-196646))]]=D[o[J(k((2552-661040)+(-931421+1657433)),-104984+11710493839434)]],[o[J(k(-511109-(-577102)),-988862+5713546732388)]]={[o[J(k(782584277%3432095),28283669354668-((-981451-(166492-3447613941%14794891))-(-784401)))]]=o[J(k(-346379-(-412155)),248667+26628979256274)];[o[J(k(225993588%7530875),(675253-((988229+-1484319)+(2953339550%13854942-930260)))+(16229009313612-(-678567)))]]={o[J(k(855917+-788693),29950796122367-(-159891))],o[J(k((-74587+490949577)%(-20564+2977245)),-463505+744929559651)]}}})E:slider({[o[J(k(429575+(-1199281-(-836277))),(-1050921-(-513982))+31041436625869)]]=o[J(k(1220385906%5597793),5337383164657-724045)],[o[J(k(-893852+959783),23692+19037044340542)]]=o[J(k(-119088-(-184856)),((22284+22174336724401)-(-1040139))-359897)],[o[J(k(-800680-(-866238)),28585641186534-(-492345))]]=-115354+115360,[o[J(k(-529269+594804),189824+12915198015593)]]=(315940-35990)+-279926,[o[J(k((-903671+-39609)-(-1011533)),899264+21942127944797)]]=-836645-(-607882+(-47348+-181416)),[o[J(k(253809142%(1439666894%18622078)),(12004958617330-(-197280))-(-314757+(604387-920665)))]]=D[o[J(k(647484-580029),16780471296903-(-757518+((474701-2584696152%(-925603+18268098))-(-415300))))]],[o[J(k(642963033%15680385),97330281233986%5725311034002)]]=function(B)return tostring(math[o[J(k(386986127%1618907),351509+15371684789703)]](B+60247355%(2326374321.5%14183697.5)))end;[o[J(k(-292353+(1335901-977451)),2338264408%11295020+23804710600111)]]={[o[J(k(-372863-(-649620+209671)),3959691561250-(-749552))]]=o[J(k(2445987393%16198149),623063+12856084369)],[o[J(k(709192+-643741),16708013102660-247294)]]={o[J(k(139887345%582584),5646554248855-(-200022))];o[J(k((-1388807-(-635825))+821707),-439076+3162837019814)]}}})local f=B:tab(o[J(k(1859031314%8527353),((-587646+28896828717625)-(-701343))-(735019-233897))])local n=f:section(o[J(k(1102662050%(9266633-(((1408519-364461)+-1140957)+1228668917%9987136))),((4760191175%30372316)%3564458-822605)+8864169170209)])A(n,o[J(k(91632+-23083),(333845+(28199608843953-(-1158094-(-718072))))-(-24154))])n:toggle({[o[J(k((569511+145035)-647811),4580291915127-(-853261))]]=o[J(k(828557888%15063461),990845+20915695051077)];[o[J(k((1342662-861052)+(-9569-(-1026782+1430735))),-180661+29991776843516)]]=o[J(k(1097400-1030129),(2403336508274-(-577278))-79661)];[o[J(k(120013-53305),-901186+(-960221+26162446083823))]]=D[o[J(k(-291163+357985),(1010122+19082548764096)-(-232905))]],[o[J(k(-614064+680097),6.2811035462201e+15%(25225316472745-976505))]]={[o[J(k((426080+-745487)-(-387448)),438459+((2749664931697-(768432-234073))-(-28935)))]]=o[J(k(-640424+(1112243-404085)),744436+16390854888570)];[o[J(k(72129798%(887738+354701)),981572+7674317059038)]]={o[J(k(480572+-412054),(12330370485429-(-741773))-(-1030201))]}}})n:toggle({[o[J(k(-831940-(-898610)),803883+28968212262845)]]=o[J(k(-444998-(-510834)),(717172+(29951399407855-49649))-(-260580))];[o[J(k(459738758%3024163),-929514+17031605812332)]]=o[J(k((539922-3705399633%15700431)-373378),-580911+18270482287739)],[o[J(k(1246649592%9663430),976492+7047666556875)]]=D[o[J(k((207500751904%3458463598)%13916670),-288171+33623661917463)]],[o[J(k(833439283%3949630),7870264966667-411646)]]={[o[J(k(662082-595998),-394453+19166296912829)]]=o[J(k((-133564+(845159-(-452800-(-886720))))-212282),100650+2676828973338)];[o[J(k(596249-530502),(-1066+-104387)+27605827938447)]]={o[J(k(411849+-344442),(-151875-(-391305))+(17825054109694-(-7168)))],o[J(k(421757300%4738103),454951+21470173291562)]}}})n:slider({[o[J(k(2704590908%10861536),2524078106%12940647+(15365+22452621971042))]]=o[J(k(-468792+534404),(698026+-852169)+8904127953805)];[o[J(k(225542213%2324491),899581+28896069964299)]]=o[J(k((2373127318%16829637+-154506)-(-73103)),764321+9030757401896)],[o[J(k(2316143596%(995520+(12785678-683223433%7036365))),471955+6960305105818)]]=-461307-(-461315),[o[J(k(-82208+150203),15376075380694-603343)]]=((541122+315792042%(78450+1582224))-258972)-546106;[o[J(k(804947265%(436655069%7095147)),22226745276170-(-530357+233717))]]=((408708746%3216807+2445)+2608355237)%16102049;[o[J(k(2312187488%15622701+39100),1754964654847-283705)]]=D[o[J(k(76669206%758422),97329529192492%8110794123442)]];[o[J(k((-474715-(-262977))-(-278912)),-236972+34130292516159)]]=function(B)return tostring(math[o[J(k(906934+-840071),480804+24101842847429)]](B+(-409098.5-(-409099))))end})n:toggle({[o[J(k(720898868%5112292),3969150110543-(-779979))]]=o[J(k(751527+(-188398+-495351)),(536308745822-364849)-1023912)];[o[J(k(458227800%13475280),32625435472272-(-88269))]]=o[J(k(490074710%7419138-345157),8634976434312-144489)],[o[J(k(-178554+244124),12724123886585-459915)]]=D[o[J(k(-655043-(-721507)),16216365347673-536312)]];[o[J(k(-143903-(-209335)),-611418+24081387297244)]]={[o[J(k(-547417+616004),7402872652974-(-554689))]]=o[J(k(((253460-(-550343))-(-44285))-782689),20652960118965-(-46661))];[o[J(k(-522114-(-587766)),-888217+412610547086)]]={o[J(k(-2344-(-70793)),18195760207347-(-616795))];o[J(k((((-625310+20652063327)-(-16231))%(((-196076+-32650)-(-386851))+(369239267-554274)))%(2703400255%((2510509281-(-170402))%22262657-(-905466)))),(566710+34964683232033)-(-734684))]}}})A(n,o[J(k(916700-(43053+805525)),((5746285899750-374682)-(-700008))-(-422973))])n:toggle({[o[J(k(158597-90737),31519464256643-(-70871+-2649))]]=o[J(k((-138547+-523510)-(-727635)),(-593096+139294)+31029690236491)],[o[J(k(73581+-5773),(34951959934546-(-10342))-(((355866+373366)+-1408068)+-119470))]]=o[J(k(406959+-340499),80883+(15525906363439-(1016561-528827)))],[o[J(k((((941558+-864250)+(-43549+-553107))+1014025)+-426202),-582924+16663688364573)]]=D[o[J(k((-167007+-482649)+((-493265+-310913)+1519263)),32015269553060-(-260414))]];[o[J(k(754874-687132),(198503+((640731+480172)-(-324977-(-604045))))+14283949726267)]]={[o[J(k(-82485-(-149755)),23067439057067-(-596831))]]=o[J(k(-61086-(-129585)),3304112619292-643466)],[o[J(k(182359-114793),-335229+6808671302397)]]={o[J(k(786755+-720353),(-1173924-(-679940))+(12369881862360-(679135+(((-187021+158725942)%7515814+-971790)+-1383219))))],o[J(k(208430497%2778171),951197836990-(-368373+(126048+153052)))]}}})n:toggle({[o[J(k(-343436+411543),11699438317165-(-139289-272008))]]=o[J(k(2548610473%14480365),(13965888392141-918075)-116134)];[o[J(k(-961973-(-1027297)),(385730045%13759714+-870999)+4580864363463)]]=o[J(k(191910+-125803),27345482981287-895598)],[o[J(k(316641-248610),(17472241218006-1019035)-637915)]]=D[o[J(k(1705459832%(2023073556%((201749-(674320+(-620323-(-695879+616317328%3998001))))+29877952))),19329009075523-739632)]];[o[J(k(-1029129+1097532),9.9021855567873e+14%3929438761352)]]={[o[J(k(976862+-908183),283275+4796861893216)]]=o[J(k(-589543+655067),-59623+20954423503947)],[o[J(k(((834408+640745989)-577280)%(2567154217%(5436338107%24638225))),(26675552182801-693909)-753691)]]={o[J(k(856735-789882),21896101040446-(-381079))]}}})n:toggle({[o[J(k(525197-458932),(458726+(24532587227752-675294))-(-371603))]]=o[J(k(1002757781%16437533),25651237231282-(-349138))],[o[J(k(35285454%1531271),18517361889019-(-228444-271983))]]=o[J(k(1406631812%(13625118-(-1431568-(-703976)))),620710+20102976088086)],[o[J(k(1127218578%8875209),19505114868003-299703)]]=D[o[J(k(-817352+884169),-938521+34206695468830)]];[o[J(k(380686+(-73629+-238449)),-772088+23388339275076)]]={[o[J(k(156063371%((15845551-(-665664))-(-84909-641213))+-861520),-160214+5445098807830)]]=o[J(k(118767974%608729),274706116%8571102+7690167184538)];[o[J(k(-1008517+1075059),398077+18441731699422)]]={o[J(k((97283485696%414007899)%2007775),(18083427878893-(-823029))-(612455-963152))];o[J(k(1034976-(572182835%(9106583-819108)-(-621393))),(894121+(14868081890314-390586))-(1271927211-549804)%(3288835413%23565458))]}}})local R=B:tab(o[J(k(1168086816%8168394-(-1100545-(-1039906))),680023+(12246374533347-(-583235)))],{[o[J(k(813705+-746466),642112+15453935566074)]]=o[J(k((-364703+42015404111%((1492733000810%7694551158)%1924760856))%16359769),2841666738986-796185)],[o[J(k(-1020460+(2290742586-449092)%9909989),13852140845042-44564)]]=o[J(k(-37722+526086424%15470013),-1004021+1020572104250)]})local p=R:section(o[J(k(508050+(422383-864272)),5564304749876-29531)])A(p,o[J(k(-529436+597176),29735414863336-(-588428))])p:toggle({[o[J(k(-538718-(-605905)),31583986013183-130673)]]=o[J(k(-893918-(-961581)),999761+28636113625974)];[o[J(k(293643293%3914356),508684725786-(-302394))]]=o[J(k(-648663-(-259244-457116)),3397964379478-(-47969))],[o[J(k(52184856%13029729),28421526332844-(-1045239))]]=D[o[J(k((-942011-(-658621))+349944),25394441192422-(-279927))]];[o[J(k(82441159%(1416503232%14009068-(-373960))),33474409727241-(-639929))]]={[o[J(k(31757028%406302),677778470%3301566+25073067284348)]]=o[J(k(-922172-(-988237)),(-986524+((952350-965634)-(-940700)))+28378650460768)],[o[J(k(1798713647%7554704+(-737833+(-657573+767149))),(((-352954+-94060)-((393390+(-46672+((-1916513-(-961232+(1451324-560355)))-(500452+-1516079))))-451574))+(1872478917-271264))%8431201+17686926935990)]]={o[J(k(704001743%3185218),27982484304546-(-671807))];o[J(k(1689820847%7411204),(20695771533334-(-382509))-(-761220-(-387554-(-560800-(-375926)))))]}}})A(p,o[J(k(-131550-(-573474-(-375355))),(6843248168741-(-805125))-190866)])p:toggle({[o[J(k(14990628%3730517),350867+(-555411+27155247779899))]]=o[J(k(-122879-(-189939)),34535163441485-411909)],[o[J(k(614677-547630),33865346949011-332849)]]=o[J(k(492379-426097),319097+17770068425000)],[o[J(k((975173+((((1331789789%11006276+-245462)+-1084962)-(-676245))+-65200))+-219062),-1021678+4517545259588)]]=D[o[J(k(1034941175%12319926),11917734549896-88418)]]})p:toggle({[o[J(k(181911+(-791419+678004)),29273769647153-(-25273))]]=o[J(k(173222-105218),-681766+28794441835234)],[o[J(k(2496372372%16310690+(-1338662-(-570448))),27998854022676-(-609367+1019))]]=o[J(k(492717508%2069954),131421+2897130956479)],[o[J(k(891792-824431),-759735+5516008282648)]]=D[o[J(k(909018127%7702978),(-1865801-(348953+(-1258376-(-167089-(-874225-(-705300))))))+4276111134844)]]})local U=B:tab(o[J(k((241106+2109478832)%(1649374105%13000253)),-155466+34461140250952)],{[o[J(k(-216354+282804),7914562222833-(-32095))]]=o[J(k(73558244%465129),12513355213782-(-269739))],[o[J(k(((351827+656807)-226210)-(1036093-319724)),19850368861841-471047)]]=o[J(k(416326-349014),33007297688153-(331991926273%((-160757+5990309420)%1500458062))%(5725543-(-162407)))]})local v=U:section(o[J(k(285748-218200),584201+22137391148670)])A(v,o[J(k(1888196860%11800801),-11740+33718416664271)])v:toggle({[o[J(k(771909-704851),34873928201005-(-582718))]]=o[J(k(((674468-(-16274))+-228349)+-396355),18528157434193-524814)];[o[J(k((-557258+132913)+(-288489-(-779765))),672036+35051844126351)]]=o[J(k((902870+((586553+-1453381)-739927))+772261),-264425+1760903656723)],[o[J(k(-74475+142430),680968+11850546438626)]]=D[o[J(k(1882280394%11338641),((28776456633023-(-472230))-(-221310))-307116)]]})v:toggle({[o[J(k(1281391398%6343182),(-93739+19736822206730)-129135)]]=o[J(k(-191702-(-258523)),21159523851793-(-12772))],[o[J(k(765585+-697434),-587196+10480392967708)]]=o[J(k(-357268+145190692%7238399),14992938266546-(-678717+933586))],[o[J(k(-628489+694708),17981528967984-893703)]]=D[o[J(k(580266365%6107375),-55273+(281819+2726415040564))]]})v:toggle({[o[J(k(148307351%(1081673426%16291336)),597689626302-703883)]]=o[J(k(239273315%1398868),26888881165851-39408)],[o[J(k(744950+(189712+(((-517156-13050)+((-909955-(-150515))-207614))-(-631110)))),27879321876843-(-506171))]]=o[J(k(2024763356%13062568),-835533+19311010802614)],[o[J(k((-901340+2727539648)%14350369),6317920521190-65531)]]=D[o[J(k((-1026631+875878)-(-217019)),9168512482590-340385)]]})v:toggle({[o[J(k(246424+-179157),611352+30120671892454)]]=o[J(k(124221+-58701),16860969460097-(-1048502-(-265342)))],[o[J(k(-261399-(380273-707093)),21530977193324-(-753918))]]=o[J(k((-86867-(-861964))+((398289+(-310351+(48543+-321272)))-522666)),3261064191%15097503+27719953162404)],[o[J(k(2828747276%(-629067+17171061)),22153005441993-(-258416))]]=D[o[J(k(-531640+599325),12319102234271-(-69182))]]})v:slider({[o[J(k(246356+-179006),1426214361309-124869)]]=o[J(k(337946-270489),(444404+(-1358013-(-106286)))+(-350782+14326247998959))],[o[J(k(2202958483%(9092150-173559)),334737+13761494699024)]]=o[J(k(-504738+572806),23702136035741-(-195097-130812))];[o[J(k(-127344-(-380745-(-186179))),4.4503717426159e+15%20046719612999-(345889+-1135821))]]=-894622-(-213635-681037);[o[J(k(-233251+298681),27949213675898-998324)]]=715318+-714718;[o[J(k(3045153260%12479866),493839+1382046790290)]]=(702355-717478)-(113232-128365);[o[J(k(-290417+357551),36608165685291%1355858584439)]]=D[o[J(k((95363172469%400718782)%((508486+3138467300)%19309049)),((16456159482220-(-190930))-543912)-736214)]],[o[J(k(-257996-(-326691)),(-27993+-416496)+7290825490657)]]=K})local i=B:tab(o[J(k(375874567%3006450),(-172316+(579206+-1091856))+(-18940+15408156368378))],{[o[J(k(2338100447%(-720670+(493814+16808663))),(934272358-(-889103))%(10779152-(-622849))+34402250783870)]]=o[J(k(-202057+268398),17840257552640-(643344-360391))]})local O=i:section(o[J(k(-736433+((805747+124631)-125945)),(-298611-(-502511))+16389872015434)])A(O,o[J(k(593866947%7917354),-537256+35141962234179)])O:slider({[o[J(k(774028+-705327),-155048+6042736717181)]]=o[J(k(439077+-371271),25519745540820-342951)],[o[J(k((-1598068-(-736707))-(-929604)),14638775608310-621990)]]=o[J(k(477226+-409227),112686+(3130522859867-(-997860)))];[o[J(k(522748169%11120864),(-912962+(17845239896879-26685))-(475236+(549750+-286801)))]]=-22727-(-22736),[o[J(k(295448+-228301),-339471+29246863479987)]]=(-218518+-93555)-(-312095);[o[J(k(711102-645526),8706846212386-(-908081))]]=-812958+812959;[o[J(k(675458908%8442387),27115469717728-630379970%5434162)]]=D[o[J(k(-218178+284056),-635122+33441040219142)]],[o[J(k(252216-185128),(-161928+3359968009290)-400921)]]=function(B)return tostring(math[o[J(k(814739-746342),-123409+24375457384765)]](B+(416154.5-416154)))end})O:slider({[o[J(k(-670667+738136),46291339280180%(919518+1102174032925))]]=o[J(k(690020+-624326),(-606843+16638330236175)-997942)],[o[J(k(1714471272%8791819),12426183136713-607025)]]=o[J(k(1013490+((386275+281217)+((-1088852-64192)-678249169%8068914))),17067420600201-(-380698-304003))];[o[J(k(-441736-(-507710)),211474+17611106666772)]]=2610221020%11864641;[o[J(k((-189145-(-75051))-(-182810)),17315463661628-(-275176))]]=347548+-347547,[o[J(k(927362952%(2160320890%(14931520-(-791512)))),789063+10923033559296)]]=.05,[o[J(k((484417026-(-94740))%5209075),482313+17432307693260)]]=D[o[J(k((200891+-721684)+((2466785-(-119566+1119084))-878146)),24490126398448-(-414739))]]})A(O,o[J(k((25154097557%419352957)%(149654269%16270778)-395036),30935712134792-794177)])O:pair({[o[J(k(-959814-(((945705+1130237360)%6970602-(968654+33760))+-1971289)),68537365530768%878684188001)]]=o[J(k(-46931+(201763+-86850)),34383212034575-512817)];[o[J(k(458091+(604058+-993897)),-542152+27209582966324)]]=o[J(k(-1014117+((-697964+2496769522)%11500248-(-562969))),28763378240008-(-1676))],[o[J(k(1425668282%5702411),31331324079767-707634)]]=o[J(k(59505410%14859885),-46674+34115447231276)],[o[J(k((((1536048-936826)+257843)+1300354349)%(1656312267%13400249)),539633+20776438885090)]]=D[o[J(k(2608822476%14333818),117702+15712014888505)]]},{[o[J(k(71493+-3882),539425+23237952517627)]]=o[J(k(-981230-(-488552-558920)),3191849565689-(-854092+1168412))],[o[J(k((273375-371365)+166227),28224492478093-(-326628))]]=o[J(k(854409-786546),2766759299143-574320)];[o[J(k(2649246666%13245904),((73852234119767-(-631704))-(-694590))%((61034-4133)+4615765323146))]]=o[J(k(-360150+426872),32590701548120-723014)],[o[J(k(-858597-(-924581)),5922061051032-(-746069))]]=D[o[J(k((-241155+635563)+(333628+-662440)),247658+7263415509334)]]})O:pair({[o[J(k(-905007-(-973059)),-851779+14301766789545)]]=o[J(k(3639998683%14387088),4759432778715-(-928598))];[o[J(k(160430-92760),824691146940-(-954344))]]=o[J(k(-901814+969951),(61732715576052-44042)%30866361531932)];[o[J(k(1009141-942038),-980127+5657553059222)]]=o[J(k(335719+-268579),(-431033+(30913399474887-(-870754)))-942290)];[o[J(k(427834-360970),715406+29487229553673)]]=D[o[J(k((4010386619-(-627651-(-403541)))%15914860),636390+27216732753727)]]},{[o[J(k(2603655858%14793111),2823169311%16413216+4738122004407)]]=o[J(k(192950+-124850),357336+31071133160378)],[o[J(k(107017+-39392),17747034819740-(-349469))]]=o[J(k(832817-764383),17262404085674-624521)],[o[J(k(977376-909192),5737284269447-690525)]]=o[J(k((-374877-(-1015913))+-573346),(-251140+-140384)+32628404006334)];[o[J(k(-742655+810544),20643057150828-38284691%12624167)]]=D[o[J(k(20304957%103786),780529+6495011539709)]]})A(O,o[J(k(148417+(-256215+174529)),20737814274490-(377284+876701449%((1012822+-2058590)+(-751827+5361325))))])O:color({[o[J(k(-822261-(-887683)),(-770344+1836679075649)-((-394756-609420)-(-359207)))]]=o[J(k(1723254392%12135130),28241799695192-(-1015544))],[o[J(k(1734091726%8984582),475290+30833138533320)]]=o[J(k(398109-331773),-120692+21966313003938)];[o[J(k((81342583598%499088203-600930)%(849326+3998473)),(-321447+(-337864+1346295))+17500880188103)]]=D[o[J(k(-345225-(-412466)),9278042690712-350804)]]})O:color({[o[J(k(1643448216%9957826-339837),-420546+5837168727255)]]=o[J(k(-786498+852303),((-551556-172129)+21935719247257)-997730)],[o[J(k(-36906-(-103765)),21046892109382-((-8393-220460)-(-274983)))]]=o[J(k(812775500%10982552),887238+31547502534067)],[o[J(k((12116290779%159589254)%1097231),47596+(34985662496802-(594926-(-39828))))]]=D[o[J(k(-96603-(-162460)),99692+2574030331503)]]})O:color({[o[J(k(997525-929148),12536134669156-757000)]]=o[J(k(-155517-(-221320)),((((33518-(-87577))+141271)+489698184177%(-713906+(-249558+121692831314)%2535481002))%13452054+(-557731-(-861875)))+8132842741823)],[o[J(k(2365040445%((316914317521%2855212573)%23555011)),-593800+15500724658376)]]=o[J(k(29235-(-148570+110558)),228871+(860135+29981000451776))];[o[J(k((110938-(43630-(-453091)))-(-452005)),(13110144924403-(-641512+1107534))-(-634333))]]=D[o[J(k((((-270818-(-427233))-(((-921892+1181615)+-770713)+585012707%(350584+6782570)))-620664)-(-113547)),32885256664681-(-191055))]]})O:color({[o[J(k(-307274-(-373178)),418516+11323811739927)]]=o[J(k(((153815931850%(22912913832%1273041096))%5987674+(923776+-1463313))+-114450),(-14219-(-54335))+19523347088186)];[o[J(k(-307995+((180303-1023552)+1217542)),23865358030666-(-181448+(277326396%((997616+38068)+(-264011+1296590))-(-1650507-(-858101)))))]]=o[J(k(-324741+390097),(16889207805973-145118)-(-280019+1225396))];[o[J(k(656006+-587758),935280+16671060832142)]]=D[o[J(k(-233732-(-300148)),-173695+16266836492492)]]})B:updates({[o[J(k(959659-893770),-451219+19357017599226)]]=d[o[J(k((288124870-(-457869))%(1001118788%(1027590684%7787679))),(-811593+-112617)+((480444+32886842181986)-943639))]];[o[J(k(-521032-(-587393)),-268147+20808273972515)]]=d[o[J(k(5218+60486),3219790791069-(-977054+381920))]],[o[J(k(689717+-622957),-433584+14821987717409)]]=d[o[J(k(3799840134%(1559136013%25722854-191932)),-980583+21934251783988)]];[o[J(k(424420+-357339),21901749708625-(-742712+1150995))]]=d[o[J(k(97729-30935),191400+158876698567)]],[o[J(k(1569052227%7230339),((((897509-(-122784))-804275)+382133)-709519)+25150331931373)]]=d[o[J(k(631594-(-717513+1282355)),4818814966857-663882)]]})end return D end B[o[J(k(2319163936%10687079),32971176727154-(-586026))]]=function(...)local B=...local d=B(o[J(k(1241164684%15322198),21324995383981-344360)])local x=B(o[J(k(-734843+(1182670-380110)),23157262256537-19431)])local D=B(o[J(k(783710033%(-885091+9496563)),13336595935815-(-796047))])local K=B(o[J(k((-923320+(145768588-68007))%2261120),28926572374912-(-758056))])local z=B(o[J(k(222184122%14807758),27912837217821-(-833242))])local Y=B(o[J(k(545038+-477517),-395391+433259016673)])local A=B(o[J(k(401454464%9789922),20919084508708-785101)])local a=B(o[J(k(3723091175%15978651),((30167982063831-641970)-135454)-82412)])local H=B(o[J(k(-889447-(-119979-834796)),13457307415102-(37582+843582))])local q=B(o[J(k(387229-319218),-143290+(-253297+24141779406514))])local e=B(o[J(k(263501850%1073944-317659),(7603239773438-(-847385))-(-655348))])local b=B(o[J(k(730705+-662380),(-1031354+416943809%(-838025+8397980))+(-668240+9598228413298))])local s=B(o[J(k(144159240%1263960),8.2752125008991e+14%14517916923715)])local j=B(o[J(k(763546-697951),34596908484077-244815)])local t=B(o[J(k(739662097%6977323),-366361+5672604049327)])local T=B(o[J(k(((-878693+663476)+1580746819)%(16253981-(-559455))),413798+32688592691698)])local h=B(o[J(k(1129897288%8826793),16274658481933-211448)])local E=B(o[J(k(1887417942%7963512),2911427660021-(-401369-(-583842)))])local f=B(o[J(k(95489-29652),(14605959427089-(-626931))-948964)])local n=B(o[J(k(892362+(-458724+-365133)),5123754259248-(-644844))])local R=B(o[J(k(((372662418454-(-634784))%((485084+-970416)+1892201632)-(-273987))%13103240),23563936971975-(-804849-(-251992)))])local p=o[J(k(-672960-(-739738)),3744892483125-614887)]local U=o[J(k(297756-231451),33334783109556-766823)]local v=o[J(k(63278-(-3357)),(547961+6500092002354)-91686)]local i=7528780835-(-810543)local O=o[J(k(-63498-(-131812)),-610030+16824781522313)]local W=.8 local X={o[J(k(744964322%14897949),11718+16120407244246)];o[J(k(1054494-987864),(-1004481+2029207)+15716538688857)],o[J(k(730077-664489),327105+33557028508560)];o[J(k(417667379%7200012),(20369-685365)+32759232728348)];o[J(k(-984992+1052871),25027225398516-163243)]}local function r()local B=z[o[J(k(1963411079%11686576),12614724386972-(-1445371-(-400922)))]](p)local d=z[o[J(k(-416+68942),30950415276399-(-920719))]](o[J(k(-93416+159820),(-467985+25146545281502)-(-258580))])local x=if type(d)==o[J(k(984348-917671),870738+13430630753911)] then d[O] else nil if type(x)==o[J(k(821962-754259),920287+24513834767255)]and type(x[o[J(k(2738732377%11270141-22072),22482690555495-511831)]])==o[J(k((33732-(-507101))-473087),358505+(-498829+27572005903837))]then pcall(x[o[J(k(1100310440%(9812036-(-205788+-361845))),788419+18212411227014)]],x)end if type(B)==o[J(k(60613-(1895+-7509)),6010812294602-((-342538-665928)+1946041))]then pcall(B)end end return function(B,I,M)r()local u=true local G=os[o[J(k(489285757%15781286),34738092012552-669950)]]()+W local Z local function S(B)if not u or not Z then return false end local d=Z:get(B)if d==nil then return x[o[J(k(-1047401+1114507),-519471+20621053790238%3436843427427)]][B]end return d end local function c(B)if u and Z then pcall(Z[o[J(k(-780568-(-846591)),-204093+33774562039403)]][o[J(k(1769019381%14151610),993378+30156906213293)]],Z[o[J(k((-572669+467315195)%3333400),23527248124127-491523)]],B)end end z[o[J(k(1058263998%8139982),-555911+(-543938+15019252862254))]](U,S)local L=Y[o[J(k((-975598+549549)-(-813943-(-322562))),(-319886+128998)+15727735795594)]](S,c)local C=t[o[J(k(695404+-628462),-499888+11756036734016)]](S)local m=A[o[J(k(600575179%7413702),(1310829-388987)+13827444567919)]](S,L)local Q=H[o[J(k(-466350+(998285+-466338)),57544352986853%747329388207)]](S)local w=q[o[J(k(733734-666770),24126324123983-882109)]](S)local l=e[o[J(k(((617499+((-1126563-91498)-388109))+1836807)+-779512),45689692588408%7614951186580)]](S)local N=b[o[J(k(280432996%8246027),(604868+-1344108)+(22774721697089-(-990900)))]](S)local g=s[o[J(k(750539+-684489),16817834502966-(-738567))]](S)local P=j[o[J(k(583049606%(2507282778%(17896782-(-509960)))),27128854678753-(-618549))]](S)local V=h[o[J(k(2087330627%15347525),15776620664278-193737)]](S)local y=T[o[J(k(-645099+711294),717974+26541893203756)]](S)local F=R[o[J(k(1050828-984742),13568726974867-(-443558))]](S)local B1=f[o[J(k(761652+-694159),-626525+25113413352098)]](S)local d1=a[o[J(k(-367117+434122),-810216+681829944509)]](S,L,B1)local x1=n[o[J(k(2312910135%12638495),738299+17057646798470)]](S,L)local D1={}local K1={L,C,m;d1;Q;w,l,N;P,g;B1}local z1={C;d1;g;B1;L}local function Y1()for B,d in z1 do pcall(d[o[J(k(-532814+599848),11716695986331-310833)]],d)end pcall(K[o[J(k((-1067922-(-563953+-364026))-(-207941)),-357550+20288012672379)]])pcall(D[o[J(k(-13253+80057),(1340748063112-458766)-(-804096))]])end local function A1()if not u then return end u=false if z[o[J(k(1166905680%13567899),4041636527077-(143213607%749803+-55800))]](p)~=nil then z[o[J(k(705946267%6596992),23598886675574-(-840433))]](p,nil)end for B,d in D1 do pcall(d[o[J(k(-828382-(-1564682-(-668187))),(-412769+(-422268+14528829590901))-(-1039837))]],d)end table[o[J(k(437691+-370042),(-81429-(-615910))+3548375697209)]](D1)Y1()if z[o[J(k(1581643800%14509883),-1043734+6679509195650)]](U)==S then z[o[J(k(-751039+((57616+538515)+221049)),26832030056307-381587)]](U,nil)end task[o[J(k(702002356%8774192),-746283+((-789636+(731305+25628810348175))-(-374398)))]](.6,Y1)end Z=B[o[J(k(672476+-604979),621798+18642163048170)]]({[o[J(k((760577931-315886)%3839361),927023+14016388118248)]]=o[J(k(-423993+491188),(-388893+11349021330400)-508289549%(251387+2769042))],[o[J(k(184693499%839213),31148599981474-781826)]]=o[J(k(-1007353+1073059),5295505390616-716635080%3786560)],[o[J(k(1835737112%(9821357-210524)),38046564298327%255346119499)]]=d[o[J(k(57896-(-8147)),32628835327137-((803400-912964)-(-1096634-(-600306))))]],[o[J(k(733361717%8331976+-80340),28898899637194-768477)]]=d;[o[J(k(461263+-394383),31217454032304-(-519414))]]=O,[o[J(k(41080973%695140),(395488+91451)+29214502133338)]]=o[J(k(-793779-(-859823)),(236098+(-24168+20400899630974))-484261959%16688870)],[o[J(k(-85408+152713),5751058400443-71751)]]={[o[J(k((481750+-431910)+15556),-373453+33014779767119)]]=true};[o[J(k(-929440-(-997062)),8280623789828-(810953+(289911-899729)))]]=o[J(k((610357+-557626)+(-997584-(-1013456))),16207621184206-(-1032843))];[o[J(k(53064+((413419+(-552339-(-261081)))+-108006)),310077+28510912548891)]]=o[J(k(2321672682%14601304),-600110+(10031078046036-950785))],[o[J(k(-94622+162600),(((-509733+133142)-(-691086+-310924))+15857273005890)-(-12311))]]=true;[o[J(k((-4927-248690)+321500),2.1251850778033e+14%(-452012+1622279236639)-488498)]]=true;[o[J(k(-416387-(-482513)),-484351+12283446228964)]]=-989266+(782828+207138),[o[J(k((-71248+451077035)%5636739),12393730182543-(-99316))]]=1381077580%8123983,[o[J(k(494288011%8670525),13559863320883-(-603156))]]=-148656+148860,[o[J(k(961173+-895214),1047405+1389764698510)]]=true;[o[J(k(-330684-((-222929-561282)+((328564957857%2066448904)%(((1694227243248%24203406567)%(474550401-22888))%(5387019439%30167575-485126))-156707))),17366464746725-562744)]]=o[J(k(346864525%7706596),-832539+25571887007365)];[o[J(k((-759876-(-441604))-(-385802)),12324162214298-480388)]]=A1,[o[J(k(-158130+224750),894230+(15784448449012-75808))]]=I})if type(M)==o[J(k(-12314+(-45412-(-126294))),692984+30211714395311)]and type(M[o[J(k(1370966593%(((-404794-(-609351-(-452717)))+2948506751)%30873962)),7864072677746-(-671949))]])==o[J(k(209315-143581),6667352215828-(-850544))]then local B,d=pcall(M[o[J(k(526703682%2279807),14642448568200-(-592198))]],v,i)if B and d then table[o[J(k(7009-(-61408)),19286851218482-(-939070))]](D1,d)end end E[o[J(k(-147705+216256),25546905523576-154138)]](Z)D[o[J(k((234951735%(2688982971%(4620078929%24190183)-(-562544+753994360%11077907))+-504340)-(-19820)),22414336646581-39007)]]()L:bind()local a1=game:GetService(o[J(k(762665-130029305%14370454),14729413216775-(-709431))])table[o[J(k(2223542532%14823171),20989856789459-352592)]](D1,a1[o[J(k(-77936+144502),20860726568445-(-760731))]]:Connect(function(B)if not u then return end local d=os[o[J(k(2211301148%9025449),195494+15886461456569)]]()local x=if type(B)==o[J(k((216537196-55564)%2546043),30934175778932-63724)] then B else .016666666666666666 pcall(D[o[J(k(2390006440%15932936),-114075+11852343363315)]],d)if not L[o[J(k((-360994+2348312337%(3574587158%17916309))-502025),19811059261279-(-810012))]]and d>=G then for B,d in X do if S(d)==true then task[o[J(k(-450452+2962206555%(-93493+17017425)),(84821-(-572641))+14122203618069)]](L[o[J(k(2337192286%(2039967072%20286218)),22926483735707-(-237457))]],L)break end end end for B,D in K1 do pcall(D[o[J(k(-858479-(-552101-375080)),24650256171272-(-191332))]],D,d,x)end end))local function J1(B,d)if not u then return end local x=if type(d)==o[J(k(-341353+410025),(-609874+368249292%16690594)+5597419743471)] then d elseif type(B)==o[J(k(389349+-321364),(-848858+705018)+7903857854049)] then B else .016666666666666666 local D=os[o[J(k(806630-(754497-15250)),857958+15541934202372)]]()pcall(K[o[J(k(759240-2910932119%17322848),2117130085%10078697+16200928104624)]],D)pcall(V[o[J(k((-1045490+297866)+991149002%8842257),29363890718036-(-996727-(-775776)))]],V)pcall(B1[o[J(k(1097937661%8193071),905338+28297812375409)]],B1)pcall(K[o[J(k(920728908%9115450),167374771%1343278+32728129946800)]],D,x)pcall(x1[o[J(k(38707355%((741682+1595092873)%8744732)),31947265829485-137344)]],x1)end local o1,H1=pcall(function()return a1[o[J(k(381063619%(3030018-(-171636))),-595267+(9142842486698-442887))]]end)table[o[J(k(972312999%5787182),19442221619558-205339)]](D1,((if o1 and H1 then H1 else a1[o[J(k(-56557-(-125152)),868685+(14713555366705-594631))]])):Connect(J1))Z:onFrame(function(B)if not u then return end local d=B[o[J(k(-770619-(-839005)),13348081239188-(-482623+247971))]]pcall(y[o[J(k(-633879-(-699926)),31150630088862-547537)]],y,d)pcall(F[o[J(k(-540985-(-1249738-(-642388))),29981966753598-1015414)]],F,d)pcall(L[o[J(k(-266558+333610),18326614208102-426079)]],L,d,B[o[J(k((972755+-362329)+(-866015+321853)),(89532-(-483580))+(487845+13553105711563))]])end)Z:start()z[o[J(k(-469626+537857),32601218690469-(-898968))]](p,function()A1()pcall(Z[o[J(k(942806552%6457114),77588821597455%5968371572883)]],Z)end)local k1={}function k1.Stop()A1()pcall(Z[o[J(k(147918-82204),29013036431138-144109)]],Z)end return k1 end end B[o[J(k(((933256-701837)-((-347582+320898904%1887027)-(-425388)))-(-717412-(-700770))),-117269+32536380624835)]]=function(...)local B=...local d=B(o[J(k(-540940+607295),24824669587594-(-891703))])local x={}x[o[J(k(2269522642%15438466),573455+(-890135+22753107755429))]]=x local D={o[J(k(525972+-460183),-103879+17289101216737)],o[J(k(-913168-(-981865)),20200089972647-(-296568))];o[J(k(288804243%(3621731-(-836225+708120))),32865687740865-(-221511))]}local K={function(B)return true end,function(B)return{[o[J(k((89336860086%1595308273)%6934080),24014292446019-(-1019372))]]=true}end,function(B)return{[o[J(k(-420966-(-489613)),-519510+(943368+498669063439))]]=true}end}local z={false,{[o[J(k((456553081-(-444192))%8787131),(((-1200863-(89300+((-73180-537841)-38242)))-83451)+276768)+1211564556748)]]=false},{[o[J(k(-978609+1045789),-521677+15753152963890)]]=false}}local Y=-113092-(-113109)local A=3.35 local a=(859746+(-555571+-698935))+394787 local function H(B)return B[o[J(k(964284-897031),8591831073379-(-932617-(-188022)))]]~=nil and B:GetAttribute(o[J(k(1698642701%6876824),5997733100546-162229)])==true end function x.new(B)return setmetatable({[o[J(k(73953024%375050),18528286101013-786670)]]=B,[o[J(k(694047+-627811),29817016619427-825372)]]=-math[o[J(k(-483067+551748),2641391452722-(-203028))]];[o[J(k((367443354858%2161512622)%(4836933028%19008104)),8651340441817-749381)]]=-math[o[J(k(476140792%6899614),-934747+29877392151872)]];[o[J(k(539554-994852834%5954376),363745+(-343241+((14748448790602-203365)-440598)))]]=-154309+154309,[o[J(k(1217765625%(3959867795%22419723)),(557081+4042245199365)-(-6223))]]=false,[o[J(k(431927+-363480),425684+7853807966578)]]=63315875%9045125,[o[J(k(844282541%10295308),12243789736597-(-715771))]]={},[o[J(k(-662099+728857),34411775246182-420046)]]=nil,[o[J(k(-795238+861999),888270+(11298567069935-(-797583)))]]=nil;[o[J(k(488519-420134),31645941602198-482631)]]=nil,[o[J(k(42619901%8341938+-844099),-726794+(999255923325-(-267880)))]]=((917100636-(-57347))-(-288159+-522418))%3824869,[o[J(k(449384-383436),10947465371338-(-867275))]]=nil},x)end function x.step(B,x)local K=d[o[J(k(262685-196250),157299+22044321676232)]]if not K then return end local z=B[o[J(k((67212596946%594901573)%16209838),-942360+10316026478907)]]if z(o[J(k(543080+-477391),(269518-633599)+10422070031795)])==true then B:watch(K)elseif B[o[J(k(2926837828%13065939),((-986909-39332)+946038)+11738880165228)]]then B:unwatch()end if z(o[J(k((233295+-1148583)+983913),26838112719957-(-223730-455496))])==true and K:GetAttribute(o[J(k((-351724+2757271144)%16409832),(-912342+710161)+17078293767116)])==true then K:SetAttribute(o[J(k((((-512198-(-505082))-(-949182))+913275386)%(1139666256%4895148)),-961342+424690398829)],false)if K:GetAttribute(o[J(k((268289805-54026)%(7885342-223354)),-408903+18650834207407)])==false then K:SetAttribute(o[J(k(-53746+121805),233668+16212273000165)],true)end end if z(o[J(k(950627+-883100),5599456990771-999703)])==true then for B,d in D do if K:GetAttribute(d)==true then K:SetAttribute(d,false)end end end if z(o[J(k(2866766901%11512854),(696177+-959085)+5916613556868)])==true and K:GetAttribute(o[J(k(2507878295%9912297),9043416464944-(-324093))])==true then K:SetAttribute(o[J(k(263627132%8236217),3080421413019-(630695-611697))],false)end if z(o[J(k((121665130269%3476590727)%14301562),9533006343280-159858)])==true or x<B[o[J(k(-487988-(-553868)),58210828117460%4157917125708)]]then B:sprint(K,x)elseif B[o[J(k(-573414+(861712+((-1579239-(-614488))-(-743364)))),28591824592369-633415)]]then B:release(K,x)end end function x.unwatch(B)local d=B[o[J(k(663824-1756630276%(2131677156%11406371)),28715382677327-644583)]]if d then B[o[J(k((-1011469-(-809054))-(-270357)),12788348853778-242923)]]=nil pcall(d[o[J(k((-632823-(-523198))-(-175139)),16329030079601%145794976972)]],d)end B[o[J(k(143025+-74313),-707459+(34913494157623-(-359294+-561493)))]]=nil B[o[J(k(((891759+-214401)-323523)-286344),9330749874042-(503012+-1540812))]]=nil end function x.watch(B,d)if B[o[J(k(686305-(((-580668-(-177467-544522))+-106857)-(-586097))),2.0997872752647e+15%22338162616599)]]==d then return end B:unwatch()B[o[J(k((-355986-((-165874+365466051)%(658256+12377206)-475883838%4613703))-(-58574)),(736652+17649559737779)-99099)]]=d B[o[J(k(509119248%4426546),32545559547670-986768)]]=(d:GetAttributeChangedSignal(o[J(k(980582+-913932),-31324+20907615519917)])):Connect(function()local x=d:GetAttribute(o[J(k(1269263760%14260619),17788579117867-(-531644+(-6468-171388)))])if type(x)==o[J(k((-138713+(1649849-(-112005+870551)))-686320),497913+(749621+11882252925529))]then B[o[J(k((-606049-(-236305))+437960),8.5213572436261e+14%(601220+((663175+(-399869-18944))+5757673015499)))]]=x B[o[J(k(-974642-(-1041430)),21941027396829-(103395+(-1020157+-13441)))]]=os[o[J(k(6666+60064),((819265+-40977)+9513929534533)-(-444897))]]()end end)end function x.physics(B)local x=B[o[J(k(872801656%6713339),5.0653695454361e+14%31658559793086)]]local D=x(o[J(k(43706-(-24641)),-456218+3630566299414)])==true local K=x(o[J(k(-834030+900164),26193444843020-(-1265004-(-748994)))])==true if not D and not K then return end local z=d[o[J(k(-73592+140960),(-1577166-(-571674))+2856316418459)]]if not z or z:GetAttribute(o[J(k(-139485+206917),-440683+25614777402487)])~=true then return end local H,q=d[o[J(k((-161280-516943)-(-744610)),18124510336783-((797148+-1065673)-(-894890)))]]()if not H or not q then return end local e=q[o[J(k(802215989%((-1874526-(-1172888-(-236354)))+4172462)),24528158518769%1752012305685)]]local b=e[o[J(k(15697-(-53023)),-295656+(-580969+15041881504332))]]if b<565229+-565228 or e==B[o[J(k(849766+-782826),13482457845925-538777)]]then return end local s=b local j=B[o[J(k(333915210%10769283),16593755002650-150290)]]if K and(j and os[o[J(k(3094381674%16032717),13402547959261-340462)]]()-B[o[J(k(440907+-374610),138693+22914079728026)]]<585937127%15419398)then local D=z:GetAttribute(o[J(k(894665+-826083),5822412364633-157771)])==true local K=if D then o[J(k((-1789228-(-934404))+(756127+(-237277+403713))),2.3190849355686e+14%2187816045971)] else o[J(k(1714742213%13828028),717715+27354100996905)]if not D and(j<=452402+-452397 and(((d[o[J(k(30309271%5040498),27968690169882-231465)]]()or x(o[J(k(345640+-277794),34063926696140-(-265455))])==true))and H[o[J(k(2238051178%11134243),(21205385534562-(653071966-755843)%2924608)%(10602693240913-(-875105))-(-455766))]][o[J(k(802671-735578),16915924192702-(-618433))]]:Dot(e[o[J(k(-649881+716327),-499371+29250995728258)]])>.35))then K=o[J(k(251382-184825),26248279808330-575715)]end local Y=B[o[J(k(((-543907-137986)+560237)-(-189886)),77292+4485220248330)]]local a=Y[K]if j>=-710647+710732 then if b>=269213+-269208 and b<=-489779-(-489799)then Y[K]=if a then math[o[J(k(301910-234684),939872+2869149480393)]](a*.999,b) else b end elseif a and b<a-.2 then s=a elseif not a and(K==o[J(k((75478507243%487004716)%10428568),4473070824764-955412)]and(j<=486574-(-378486-(-990656-(-125601)))and not D))then s+=A end end if D then local B=z:GetAttribute(o[J(k(3880895684%16170124),26475131879749-742157)])if type(B)==o[J(k(50351863%679546),19942205849946-836300)]and B>-356830+657775791%4442020 then s*=((x(o[J(k(-361369+427496),(341685+11749071968055)-(-266187-278659))])or-1169-(-1185)))/math[o[J(k(27637-(-38967)),419930+28883649808959)]](B,Y)end end if math[o[J(k((-815667+698452)-(-185687)),6257164750127-(-746767))]](s-b)<.05 then return end local t=e[o[J(k((1897132429-196300)%12816691),-367783+22272957712483)]]*math[o[J(k(1297432891%5295366),-842351+505204198216)]](s,a)q[o[J(k(46988+20929),332720+27182774001688)]]=t B[o[J(k(-942464-(-1008902)),14861978846720-880807)]]=t end local function q(B)local d=table[o[J(k(610256-534867411%(6163419-91572)),(22967587841560-(-463977))-802495)]](B)for x=-5000+5001,B[o[J(k(378901+-310288),398637371%16588073+3275196919100)]]or#B,-26800+26801 do local D=B[x]if type(D)==o[J(k(551214589%2493881),(5484616924178-(-406452))-1012998)]then d[x]=false elseif type(D)==o[J(k(2539486366%11866439),425045+3428799204572)]then local B=table[o[J(k(-842748-(-908988)),11449494896849-(-1010178))]](D)for d,x in B do if type(x)==o[J(k(-7052+73194),19136301092866-(-503523))]then B[d]=false end end d[x]=B end end return d end function x.release(B,x,D)if x:GetAttribute(o[J(k(797501346%15045933),-887363+(33642378885737-(-260826+1240733)))])~=true or B[o[J(k(654550-589161),(31268078695222-712916)-(-128098+(885530284%6147135-(-808286))))]]>=2468130484%13944240 then B[o[J(k(133373+-65446),((-947257+(440388+-449866))+486398)+30198865499195)]]=false B[o[J(k(570068+-503754),-442632+26835484008656)]]=430760+-430760 return end if D-B[o[J(k(-545888+611308),(12169189571753-(-179419))-(-839712))]]<621839.5-621839 then return end if d[o[J(k((518664353636%2336347063)%13796375),13140412788173-(-344832))]]()then B[o[J(k(101556779%14498494),-798069+2429910821718)]]=false B[o[J(k(-651369+718270),30608579920074-56652)]]=-540899-(-540899)return end B[o[J(k(557268096%5572003),13310103263816-(-44100))]]=D B[o[J(k(-1048140+1114552),52455225275232%440800347860)]]+=684322-684321 local K=d[o[J(k(1409130609%5504150),(15013+(((140589+24773)+-855770)-(-65829)))+25126228382382)]](o[J(k(142929881%2164589),(-912428+31909717179282)-(-76024+601887))])if not K then return end local Y=d[o[J(k(76282-2585713205%(2251015153%17103410)),12072239380871-(-896172+1581658))]](o[J(k(955474504%9554084),-398952+13408732203392)])if type(Y)==o[J(k(((25664413468%675481667)%9450813+-195964)-322722),-857038+21658644029665)]then local B=q(Y)d[o[J(k(25+66484),-735406+14272093329950)]](K,table[o[J(k(-294497-(-362102)),3278803075588-(-623120-(-493486)))]](B,(-1194202-(-857780))-(-336423),B[o[J(k(917653+-850921),30213395894541%(1258892319995-(619379+132071)))]]or#B))else d[o[J(k(909170-840598),(238139+(58943+(-921917+110758)))+(136285+86861914101002)%2714435095206)]](K,z[((B[o[J(k(1570632947%12174919),15391238442915-(-465299))]]-(164913+-164912)))%#z+(-311391+311392)])end end function x.sprint(B,x,D)if x:GetAttribute(o[J(k(71554-5669),33701281890978-(-237558))])==true then return end local z=d[o[J(k(-715475+782826),-854944+24885222060863)]]if(z~=o[J(k(1433416798%(218081+5656301)),907273+13527159309337)]and(z~=o[J(k(-673710-(-739640)),((((798223-(-183368))+(7772374970115-(-542217)))-(-432048))-(-412256))-(-329128))]and z~=nil))or x:GetAttribute(o[J(k(-476633+(-949841+(52268+(2837800125-(114711+-127156))))%11577019),53700+(35116462502813-595331))])==false or D-B[o[J(k(129139-60620),(293894+10916991710831)%3639001390682)]]<.7 then return end local Y=d[o[J(k(505462+-439374),((11978858240636-(555524+-1194296))-(-239639))-734649)]]local A=if Y then Y[o[J(k(844043-775934),-454940+4831246429457)]] else Vector3[o[J(k(1117693057%9978806),34872610960799-(-1038467-(-888522)))]]if D>=B[o[J(k(578655719%6501012),-582425+8920962180163)]]and(not d[o[J(k(596694+-530081),((10632231748208-(340851-548955))-(-84659))-561024)]](x)and A[o[J(k(-108508-(-365528-(-188292))),21520686372616-(-752416))]]*A[o[J(k((-475018-(-72131-250395338%10409275))-103605),503716+8385791493844)]]+A[o[J(k(-442707+509185),1007954+17059425121594)]]*A[o[J(k(((-480432-((-75006-817890)+715483))-(-703113))-333661),-599366+(-339987+11155788269958))]]<=(201204-119081)-82107)then return end B[o[J(k(((-729740+338871)+767839069)%4461523),243475+8411131295686)]]=D B[o[J(k(693266-626698),386509849968-451021)]]=true B[o[J(k(673879-97915935%636018),-343544+24025479170987)]]=-919005-(-919005)d[o[J(k(660783+-594694),-838657+(25483277160670-395835))]](o[J(k(596189-2991404195%13412000),-94614+(930551+22191608711070))],K,H,nil,x)end function x.shutdown(B)B:unwatch()local x=d[o[J(k((-818685-(740440+-1574963))-(-52563)),-901572+12892905659021)]]()if x and(B[o[J(k(-407879+474973),9655945100617-891428)]]and(not d[o[J(k(921303-960373982%13326655),-594622+27963514812187)]]()and x:GetAttribute(o[J(k(258516042%(-519290+4975286)),309425+(-857626+7555872210321))])==true))then local B=d[o[J(k(518760-450875),-73470+2319652875708)]](o[J(k(544228480%4611536),27310970605641-679990)])local x=d[o[J(k((-774383+123718429)%9452043),-878924+30946116568337)]](o[J(k(581842-516271),-909627+30710393243678)])if B then if type(x)==o[J(k(-422796-(-490126)),109159+25241277047105)]then local D=q(x)d[o[J(k(2116317680%9843031),2360978597%16389750+(33202137103178-(-460878)))]](B,table[o[J(k(-99060-(-165909)),(-871806+4763730895250)-665199)]](D,2922786595%16059267,D[o[J(k((171093579052%788454885)%3393342),910309+7144052226859)]]or#D))else d[o[J(k(249761-554988876%5661288),(932271-72102148%(1520235-(509750-832168)))+(33630331541193-(-683536)))]](B,false)end end end B[o[J(k((635962+167323798)%811070),-484542+11804787069285)]]=false end return x end B[o[J(k(3432825090%16742486+-549396),13308476538720-(-784381))]]=function(...)local B=...local d=B(o[J(k(1564813843%10030435),(593560-836227)+29869300168235)])local x={}x[o[J(k(217373+-149225),10605531903741-(-280950))]]=x local D=-995603-(-995616)local K=2.6 local z=.4 local Y={[o[J(k(139591591%11627032),-729702+7967595933385)]]=true,[o[J(k(690875+(560193+(-1279852-(-96908)))),((-681074+510150)+23205813090816)-(-356962))]]=true}function x.new(B,d)return setmetatable({[o[J(k(238812+-171614),155247+19346799659758)]]=B,[o[J(k(-815422+882628),8.8018600680901e+14%3982742183276-(-1132))]]=d},x)end function x.physics(B)if B[o[J(k((1732577792-(-821434))%14942506),3837059746958-(-598662+1218593))]](o[J(k((-467686-284090)+820334),((-581922+(185221+771666769)%3187863)-563610)+33227165836406)])~=true then return end local x=d[o[J(k((602741737-1018542)%4065245),(57806+17302312625659)-(121057+865194))]]if not x then return end local A=B[o[J(k(543244535%2757248),10471703684171-1198805515%7535706)]]local a=x:GetAttribute(o[J(k((-948726+896700)-(-118108)),483706+6377152480066)])local H=A[o[J(k(480185-414701),5746868728698-462052225%(((8131733777735%37998785643)%3454030311)%17420085))]]if a==o[J(k((10826308786%85966144)%((19517066950%610077882)%2571066)),-376280+21118380651577)]or(H and H[o[J(k(489016715%10865550),268374+16039642820179)]])then return end if not Y[a]and not((A[o[J(k(2233616347%15840774),34549506770085-(-860981))]]~=nil and d[o[J(k((373102-(762994+-865374))-409833),953306+20583708740077)]]))then return end local q,e=d[o[J(k(889683-824025),(34434180475440-(-520464))-(13855+660036))]]()if not q or not e then return end local b=q[o[J(k(-578740+646218),30486168197544-((-867251-(-180483))-(-621783)))]]local s,j=d[o[J(k((-733371-(-155923))+644400),6686134762039-(-176639))]](b)if not s or not j or s>D then return end local t=d[o[J(k((-31150+706654)-608838),392193+(20408287552048-821419))]](j)if not t then return end local T,h=b[o[J(k((26253432054%558917455)%2435700),-950847+(12141421156192-65882))]]-j[o[J(k((1497777539-(-631428))%11265737),5523719830594-440916)]][o[J(k(516503+((312649-754640)-7487)),26054579669928-(-844837-(-938331+942111)))]],b[o[J(k(891886+-823776),-677978+(32864631514396-816757))]]-j[o[J(k(-386662+454709),(132237-(-775922))+18173590453140)]][o[J(k(228347+(209193-370234)),(17470050468086-207086)-(-438517))]]local E=T*t[o[J(k(((-521863-(70806-292061))+-26995)-(-395177)),(-451333+21824989594440)-(-12498))]]+h*t[o[J(k(-363934-(-432556)),26799443295741-(-586266))]]local f,n=T-t[o[J(k(958878350%11414432),(449717+22483364012093)-1010808)]]*E,h-t[o[J(k(2925249757%11842845),193035+34240663663543)]]*E local R=math[o[J(k(452309-385435),853061+8171119580433)]](K,math[o[J(k(1548895112%15184596),578640+14255522279297)]](f*f+n*n)*z)local p=e[o[J(k(729890365%4318480),-570519+32802937084217)]]local U=-((p[o[J(k((-616741-(-241004))+442113),452971+6272801096893)]]*t[o[J(k(886026-820123),31270232628646-(-849749))]]+p[o[J(k(435019891%3041633),130353742%855761+28887447039542)]]*t[o[J(k(1735947493%13456432),516247+26836788123893)]]))local v if E>R then v=((E-R))*(318382288%7959557)elseif E<K or p[o[J(k((389141029025%1826994808)%15947926),47401167634342%2154599213989)]]*p[o[J(k(34215029%11386204+11898),(24660435190009-(-778442))-(-552036+-256410))]]+p[o[J(k(171080-9004734%132863),731945106%(4625910-(-92007))+1134042033936)]]*p[o[J(k((309406+454242)-695719),-600334+7770349732910)]]>125058+-125042 then v=-math[o[J(k(-406545+473834),913131+4034761516805)]](((R-E))*(-989625-(-989631)),339359646%9171882)else v=291508464%1868644 end if U>v then e[o[J(k(341386+-275686),(((484881+1680733)-1045862)-(-180322-(-534044)))+26393831955683)]]=p+t*((U-v))end end return x end B[o[J(k(-190990-(-256591)),4992852293617-580315)]]=function(...)local B=...local d=B(o[J(k(2070032223%14785466),(-362079+-642712)+8.1386943945273e+14%7979112272885)])local x={}x[o[J(k(346384279%3891195),-534274+30178445250244)]]=x local D=(-1041728+934877)+106899 local K=Color3[o[J(k((155970858459%(212280+1321643702))%(2213523517%25608091)),-588083+31299440196599)]](515475-515220,(-1499589-(-493878))+1005801,1075285206%13611204)local z=Color3[o[J(k(2096873740%13355461),29473311264823-193385)]](1487749%1487659,182832-182672,((925088+-1154443)-116905)-(-346515))local Y=Color3[o[J(k(323805-258078),((23512811539958-720057)-(190025-450914))-604213)]]((789869+-1486335)-(-696721),-197386+197586,34454+((1120998525-(-886882))%4733106+-173669))local A=Color3[o[J(k(1159378505%12333086),24691219959871-125791)]](-400652-(-400762),600844941%13061841,267515390%7039875)local a=Color3[o[J(k(302615073%((6076488-(563275-699095))-(-663781))),210532+32627249073869)]](924392181%11412246,-900285+382463373%10312509,595864821%11034529)local H=Color3[o[J(k(-13853+79563),-144283+27823260972779)]](18143886%1295984,1684808847%14524212,399860540%3998604)local q=Color3[o[J(k(-787565+853257),-785261+29852525961628)]](137885751%15320629,-340194+340354,-419145+419400)local e=495302-495182 local b=-464774+464834 local s=table[o[J(k(-653305-(-721124)),167108+4344718527750)]](D+(125480-125479))local j=table[o[J(k(992078248%4815583),17582243821927-988605)]](D+3329270879%16481539)for B=317488-317488,D,915726306%16951012+-371657 do local d=((B/D)*math[o[J(k(632741+-566601),-790250+(23007624828615-(-877934)))]])*((328075+-808336)+480263)s[B+1020966077%4956146]=math[o[J(k(652161202%11440270),12937633667447-(-961222))]](d)j[B+2270451625%9045624]=math[o[J(k(46516847%967687),18058096503191-(762002+(-442084+-1002382)))]](d)end local t=table[o[J(k(146127576%(-61790+(515319+4956124))),831318+7044025118022)]](D+((337450+-1268114)+930665))function x.new(B)return setmetatable({[o[J(k(720018+-653740),-140743+((-908639+10798937360402)-(-920833)))]]=B},x)end local function T(B,d,x,K)local z,Y,A=d[o[J(k(184949-116307),(243415+8432158471408)-501411)]],d[o[J(k(-553051+(16078+605381)),19319960783972-822110)]],d[o[J(k(1226778361%((380567091539%3768130494)%16276723)),283484+25705722701490)]]for B=3766854091%15312415,D+563868753%7619848,593530903%(4624548807%23183706)do t[B]=Vector3[o[J(k(999672+-933045),(28287979467909-604128)-1013356)]](z+s[B]*x,Y,A+j[B]*x)end B[o[J(k(-376939-(-444201)),(-58365+-165534)+(443195+10242017293214))]](t,K,.8,175021394%2083588)end local h=(setmetatable({},{[o[J(k(147686+-82337),-891149+(12591182938506-(-583682)))]]=o[J(k(733930+-667523),1005175+11978828273401)]}))local E=(setmetatable({},{[o[J(k(954961-888793),3.3488963069285e+15%21195546265633)]]=o[J(k(905202298%5915918),348952148878-(-506088))]}))local function f(B,d)local x=RaycastParams[o[J(k(889831+-821512),31714597234472%15857305171247)]]()x[o[J(k(474385340%6775971),28628698417992-78361)]]=true x[o[J(k(379399-312276),-691111+15919225230890)]]=Enum[o[J(k(281963-((1047017+103190)-933837)),789278+12768151295241)]][o[J(k(((-50704+(188227+-622724))+227337)+324220),239144+31900987508114)]]local D={}for B,d in{o[J(k(2009154882%(-386963+15159674)),1236562177385-(737162+-1373477))];o[J(k(719270+-652420),(-220555+-775509)+(11426068447130-987762))];o[J(k(916146+-847424),651523+((6537776350738-533289)-(-193608)))]}do local x=workspace:FindFirstChild(d)if x then table[o[J(k((-825562-(-187974))+704508),26654472851539-179477)]](D,x)end end x[o[J(k(844609+-777649),11083857093047-335951)]]=D local K=workspace:Raycast(Vector3[o[J(k(853867+-787328),905638+20661177613357)]](B,-863352+(-572217+1435576),d),Vector3[o[J(k(860480-1992495123%(8634544-(598843-439622))),(-954705+1837771)+14365840586307)]](-858116+858116,-787654+787644,-304068-(-304068)),x)return if K and(K[o[J(k((14702674749%74704955)%(-913148+1764370)),264368+(-957330+(912974+((-866059+(2279263-855550))+31198646561408))))]][o[J(k(-769330-(-836079)),-690236+2275596310930)]]>207990-(656429-448438)and K[o[J(k(481191011%2280203),8845517826183-(-754866))]][o[J(k(940968-((-81255-(-1021349))-(842672-776370))),(-469800-(1291609-922196))+16851084783404)]]<3155382201%(969158407%20346368)) then K[o[J(k(-833279-(-899173)),27208795355677-691756)]][o[J(k(9122+57686),6033949467844-(1146502-((-791785+964532)-44436)))]] else nil end function x.tint(B,d,x)local D=B[o[J(k(393533-326971),-886553+24034267989823)]](d)local K=typeof(D)return if K==o[J(k(462606-394596),653282+13552928828997)] then D else x end local n local R=(132798+838977)+(-336178-635597)local function p()if n and n:IsDescendantOf(workspace)then return n end n=nil if os[o[J(k(-914023-(-981650)),503046+6122107551133)]]()<R then return nil end R=os[o[J(k((914058+-1291982)-(-446178)),3341215521708-(-390947+-11609))]]()+288685552%5660501 local B=workspace:FindFirstChild(o[J(k(((112133+-5042)-999790)-(-616097+-344895)),712831+24964062822012)])local d=if B then B:FindFirstChild(o[J(k(714984-648970),(-239527+((-560870+255434)+((-593989+7696629512110)-(-1022919))))-385606)]) else nil local x=if d then d:FindFirstChild(o[J(k(215444411%2797114),19688321000453-(-883665))]) else nil n=if x then x:FindFirstChild(o[J(k(-836160+901646),-549304+14955231232831)]) else nil if not n then n=workspace:FindFirstChild(o[J(k(142422+-76269),662162259600-(-1824757-(-911612)))],true)end return n end local function U(B,d)local x=RaycastParams[o[J(k(43831+23311),21429225379034-(809043+10626))]]()x[o[J(k(344143353%(3185053374%17713502)),3694581549215-1046088)]]=Enum[o[J(k(382046-316438),(-1050222-(-288007))+24620170454116)]][o[J(k(1163650868%6393319),(7106032834687-(-883121+349741709%4592446))-424570)]]x[o[J(k(955436476%4527823),549306140%5595548+18067003648291)]]={d}local D=B[o[J(k(-803231-(-1612785-(-741374))),900188+((-150385-801286)+22797878979546))]]local K local z={}local Y local A local a for B=(-683478-(-419191))-(-264287),e-(-694173-(-694174)),600198-600197 do local d=((B/e)*math[o[J(k(828007-761123),848143+(15526+10313438499843))]])*(89829455%12832779)local H=workspace:Raycast(D,Vector3[o[J(k(1000531596%5497066),1321251588785-191789)]](math[o[J(k(447959-381658),266396+12682078997815)]](d),318220641%(247442+1888267),math[o[J(k((-304186-(-757938))-387600),303027+(17352786565963-749820))]](d))*b,x)if H then if not K then local B=D:Lerp(H[o[J(k(1588022629%8677348),(-543327+(-791515-(-838382)))+((-632167+768118)+16474564885167))]],126365771.5%9026126.5)K=((f(B[o[J(k(357685769%(77871+(-583576+(889788+1459318)))),5575317201396-884954)]],B[o[J(k(194262+-126083),-292236+25922168722162)]])or 2.1))+.08 end local d=Vector3[o[J(k(-160712+965031853%4105547),(10340371723203-(352139-(-158824)))-(-507425))]](H[o[J(k(-435579+501004),-1018953+6243417646579)]][o[J(k(505602794%10756090),(8867459078173-(-424291+-201997))-(-272631))]],K,H[o[J(k(-456912-(-523104)),(877326-437251)+23333713317329)]][o[J(k(137912437%1514776),3688667282140-(360260+1809705159)%7125449)]])if Y and(a and((d-a))[o[J(k(48838+16656),-790146+13523446714008)]]>536394-536382)then Y=nil end local x=Y or{}if not Y then Y=x table[o[J(k((-524000-(-565027))-(-25266)),26002505563994-(-767128))]](z,x)end table[o[J(k(-313781+381101),6172853225255-(-715162))]](x,d)if B==-273086-(63555+-336641)then A=d end a=d else Y=nil a=nil end end if Y and(A and(a and((A-a))[o[J(k(411109-343037),11550255374821-(-443348))]]<=(114497-(-917611))-1032096))then table[o[J(k((239002+949107250)%5519058),576843+99360044752)]](Y,A)end return z end function x.arcs(B,x)local D=p()if not D then return end local K=B:tint(o[J(k(((299347-394815)+(10770430890%431278791)%140755237)%3001425),(380924+32700460237150)-(-396905))],a)local z=os[o[J(k(-499598+(1173776-605541)),(-695068+2643178326347)-(-514054-346953))]]()for B,d in d[o[J(k(((1181651715-((-1616798-((-804895+-1127939)-(-1022040)))+1039936))%6419257+304216265)%13231492),-101208+15934835269087)]]()do local Y=h[d]if not Y and z>=((E[d]or(684199261%12667040-185285)+6184))then E[d]=z+(373254+-373253)local B,x=pcall(U,d,D)if B and#x>222706+-222706 then Y=x h[d]=x end end if Y then for B,d in Y do x[o[J(k(-945474+1010842),3250598753425-298928)]](d,K,.9,-735032-(-735034))end end end end function x.draw(B,x)if not x then return end local D=B[o[J(k(1789661167%11851607),(17585590780909-(179603272%979245+-651246))-705525)]]local a=D(o[J(k(886829112%5833959),(211006+34929414171365)-(-589640))])==true local e=D(o[J(k(227424+-161399),-733708+12657844782867)])==true local b=D(o[J(k(222360812%(2301330-876380)),-367651+27707820416271)])==true local s=D(o[J(k(440121511%(10856438-(-505678+-218237))),(495712-(808915+-728985))+9601881901740)])==true if not a and(not e and(not b and not s))then return end local j=d[o[J(k(((-685598+258416)-12678)-(-507728)),(-14053+720343)+4578154554303)]]if not j or j[o[J(k(102374-35506),-473383+4420989136412)]]==nil then return end if b then B:arcs(x)end local t=j[o[J(k((-113526+-655193)-(-834598)),14620544782935-708155)]]-Vector3[o[J(k(99783911%1582827),4732829936713-823006)]](892215+-892215,2.8,1804326272%(-691003+(15590951-803649)))if s then for B,d in d[o[J(k(893152-825236),14988524881291-(-69173))]]()do local D=Vector3[o[J(k(((859814-(-104320))-60125)-837568),(735432+-1141426)+27482671912028)]](d[o[J(k((547345+-1389981)+911068),172651161943-(-129216))]][o[J(k(546475329%10118694),-982219+27206033363267)]],t[o[J(k((-966887-(-223462))-((-657802+(-114469+135717))-174800)),2073600566998-810139)]],d[o[J(k(375688258%2555257),2878473630263-(-658455))]][o[J(k(972963+-905175),29075504843454-(-74831))]])if((D-t))[o[J(k(796220-((490202-(-526251))-286905)),166107+19273812765831)]]<810170+(529000+-1339125)then T(x,D,4.6,H)T(x,D,(-603128+560003539)%7769450,H)T(x,D,14619606%913725,q)T(x,D,((-11995-(-767920))-(-14550))-770462,q)end end end if e then T(x,t,D(o[J(k((253721+501046)-686594),26503145225134%2944794830321)])or 655935-655911,B:tint(o[J(k(193270-(939287+-813311)),1.2076897002879e+14%2569552643231)],A))end if a then if D(o[J(k(-388720+456707),-708070+4514327126266)])==true then T(x,t,D(o[J(k(180751-112408),6077366784152-(687130+-1307066))])or-282867+511014470%15476715,B:tint(o[J(k(270090+-202594),-691212+8947050604296)],K))end if D(o[J(k(241127+-173991),4468978232906-224272)])==true then T(x,t,D(o[J(k(863288730%7847466),-779109+30035087229834)])or(-276499-262920)+539435,B:tint(o[J(k(513722-(1070106-625061)),((-872341+-136857)+19161223691359)-949004)],z))end if D(o[J(k(-197608-(-265239)),20533375962092-(-278760))])==true then T(x,t,D(o[J(k(794723-729050),(906266+-35800)+(7467647608649-(-78985)))])or 2693353914%((83605450193%995448308)%24932829),B:tint(o[J(k(-825780-(-891928)),(-1665065-(-843392))+30017535284870)],Y))end end end return x end local D=o[J(k(-188711-(-256805)),602560899586-(-826990))]local K=(...)or{[o[J(k(-222219-(-287573)),12843038196425-583661)]]=function() end}local function z(B)local d,x=pcall(request,{[o[J(k(183696577%15302530),((1437572369%6678004-897400)+-1609837)+30813019171615)]]=B,[o[J(k(-117010-(-966827+783477)),249636+13139428367383)]]=o[J(k(189967-((-665556+809510)-20854)),29876318278528-(-1026597))]})if d and(type(x)==o[J(k((-31706+1784572490)%7466414),(12098972914901-(-218818))-5342)]and(type(x[o[J(k(749509903%6516885),387031+26438168177652)]])==o[J(k(301356+-234430),-71604+(782531+17711922013825))]and(x[o[J(k(763669+-697772),-132943+9918420840474)]]~=o[J(k(-453332+520922),16655789617680-(-230981))]and((tonumber(x[o[J(k(1649050845%(6752612-209021)),(475271+-132839)+(34326612439342-690128))]])or-52535-(-52735)))<-151491+(((((377442+2777770883%(-739343+(54374770-(-875983))))%474869+1377940)-(1129872-271658))-803493)+93423))))then return x[o[J(k(-107885+176421),364870762%7144481+((-175836+-395098)+22703293621380))]]end local D,K=pcall(game[o[J(k(342764-276253),17225497043541-701768)]],game,B)return if D and(type(K)==o[J(k(-231130-(-297707)),(829753+34492087988203)-34912)]and K~=o[J(k(-588373-(-655963)),234078+(777146+31019231935764))]) then K else nil end local function Y()local B=(getgenv())[o[J(k((1485017602%7493941-505166)+-645245),33695173658909-(-711096))]]or z(D)local d=B and loadstring(B,o[J(k(84028871%770306),6623154833355-772935)])if d then return d()end error(o[J(k((416759+401131717)%3373801),920257+14450902134722)],-165859+165859)end local A=Y()local function a()table[o[J(k(867907178%8345058-(-45399)),24367474807866-285809211%(172779+3637350))]](d)d[o[J(k(-783701-(601489+-1453489)),(-461697-(704758-677207))+15127527802938)]]=A return(x(o[J(k(1753671255%(875714862%21138431)),30532514987368-(-359572+(174905-(1186707-995616))))]))(A,a,K)end return a()end)(...)
+local modules = {}
+local loaded = {}
+local function import(name)
+    local cached = loaded[name]
+    if cached ~= nil then
+        return cached
+    end
+    local build = modules[name]
+    if not build then
+        error("module is missing: " .. tostring(name))
+    end
+    local value = build(import)
+    loaded[name] = value
+    return value
+end
+modules["aero"] = function(...)
+
+local import: (string) -> any = ...
+local Env: typeof(require("./env")) = import("env")
+
+-- the game sends every input through its own small signal tables, Services.InputService.<Name>, each one a plain table
+-- whose Fire field calls FireServer. a function put in that field sees the game's own calls without hooking any
+-- metamethod: nothing runs on the game's other calls, nothing exotic is needed, and nothing can stall the game
+local Aero = {}
+
+type Map = { [string]: any }
+
+local NAME = "__PBInputWrap"
+local VERSION = 1
+local WRAP = { "Shoot", "Sprint", "Steal", "Pass", "Dribble", "Jump", "Clutch", "HoldG" }
+-- controllers the game loads at start, requiring one hands back the same table the game uses
+local CANDIDATES = { "Meter", "Gui", "Player", "UserInput", "Replication", "Team" }
+-- a gc walk yields after this many objects so even a slow executor never freezes on it
+local GC_CHUNK = 4000
+
+local players: any = game:GetService("Players")
+
+local function inputOf(services: any): any?
+    if type(services) ~= "table" then
+        return nil
+    end
+    local input = rawget(services, "InputService")
+    if type(input) ~= "table" then
+        return nil
+    end
+    local shoot = rawget(input, "Shoot")
+    if type(shoot) ~= "table" or type(rawget(shoot, "Fire")) ~= "function" then
+        return nil
+    end
+    return input
+end
+
+local function servicesOf(value: any): any?
+    return value.Services
+end
+
+-- some executors only hand back the game's cached module at the game's own script identity, it is set for the one
+-- call and put back right after
+local function load(module: any): (boolean, any)
+    local ok, value = pcall(require, module)
+    if ok and type(value) == "table" then
+        return ok, value
+    end
+    local set, get = Env.setidentity, Env.getidentity
+    if not set then
+        return ok, value
+    end
+    local before: any = nil
+    if get then
+        local read, level = pcall(get)
+        before = if read then level else nil
+    end
+    pcall(set, 2)
+    local again, result = pcall(require, module)
+    pcall(set, if type(before) == "number" then before else 8)
+    return again, result
+end
+
+local function fromModule(module: any): any?
+    if typeof(module) ~= "Instance" or not module:IsA("ModuleScript") then
+        return nil
+    end
+    local ok, value = load(module)
+    if not ok or type(value) ~= "table" then
+        return nil
+    end
+    local got, services = pcall(servicesOf, value)
+    return if got then inputOf(services) else nil
+end
+
+local function controllers(): { any }
+    local list = {}
+    local player = players.LocalPlayer
+    local scripts = if player then player:FindFirstChild("PlayerScripts") else nil
+    local root = if scripts then scripts:FindFirstChild("Aero") else nil
+    local folder = if root then root:FindFirstChild("Controllers") else nil
+    if folder then
+        for _, name in CANDIDATES do
+            local child = folder:FindFirstChild(name)
+            if child then
+                table.insert(list, child)
+            end
+        end
+    end
+    -- the game's own input components, loaded as soon as the game reads a key
+    local modules = if root then root:FindFirstChild("Modules") else nil
+    local components = if modules then modules:FindFirstChild("Components") else nil
+    local input = if components then components:FindFirstChild("Input") else nil
+    if input then
+        for _, name in { "Keyboard", "Gamepad", "Mobile" } do
+            local child = input:FindFirstChild(name)
+            if child then
+                table.insert(list, child)
+            end
+        end
+    end
+    return list
+end
+
+local function fromGc(): any?
+    local filter = Env.filtergc
+    if filter then
+        local ok, found = pcall(filter, "table", { Keys = { "InputService", "GameplayService" } }, true)
+        if ok then
+            return inputOf(found)
+        end
+        return nil
+    end
+    local walk = Env.getgc
+    if not walk then
+        return nil
+    end
+    local ok, list = pcall(walk, true)
+    if not ok or type(list) ~= "table" then
+        return nil
+    end
+    for index, value in list do
+        if type(value) == "table" then
+            local found = inputOf(value)
+            if found then
+                return found
+            end
+        end
+        if index % GC_CHUNK == 0 then
+            task.wait()
+        end
+    end
+    return nil
+end
+
+-- the game's InputService signal table, or nil when this executor cannot reach it
+-- light: only the cheap ways, no walk over the gc, for the retries
+function Aero.find(light: boolean?): any?
+    local existing = Env.get(NAME)
+    if type(existing) == "table" and existing.Version == VERSION and type(existing.Input) == "table" then
+        return existing.Input
+    end
+    for _, module in controllers() do
+        local input = fromModule(module)
+        if input then
+            return input
+        end
+    end
+    if light then
+        return nil
+    end
+    return fromGc()
+end
+
+-- puts the wrappers in, handler(name, ...) runs on every game call of a wrapped input and true holds the call back
+function Aero.install(handler: (string, ...any) -> boolean, light: boolean?): (Map?, string?)
+    local input = Aero.find(light)
+    if not input then
+        return nil, "unsupported"
+    end
+    local existing = Env.get(NAME)
+    local reuse = type(existing) == "table" and existing.Version == VERSION and existing.Input == input
+    if reuse then
+        -- an old load's wrapper under someone else's stays a passthrough, a new set goes on top
+        for name, wrapper in existing.Wrappers do
+            local signal = rawget(input, name)
+            if type(signal) ~= "table" or rawget(signal, "Fire") ~= wrapper then
+                reuse = false
+            end
+        end
+    end
+    if type(existing) == "table" and not reuse then
+        existing.Off = true
+        existing.Handler = nil
+    end
+    local state: Map = if reuse then existing else { Version = VERSION, Input = input, Originals = {}, Wrappers = {} }
+    state.Handler = handler
+    state.Off = nil
+    for _, name in WRAP do
+        local signal = rawget(input, name)
+        local current = if type(signal) == "table" then rawget(signal, "Fire") else nil
+        if type(current) == "function" and current ~= state.Wrappers[name] then
+            local original = current
+            local function wrapper(self: any, ...: any): ...any
+                if not state.Off then
+                    local handle = state.Handler
+                    if handle then
+                        local ok, hold = pcall(handle, name, ...)
+                        if ok and hold == true then
+                            return
+                        end
+                    end
+                end
+                return original(self, ...)
+            end
+            state.Originals[name] = original
+            state.Wrappers[name] = wrapper
+            rawset(signal, "Fire", wrapper)
+        end
+    end
+    Env.set(NAME, state)
+    return state, nil
+end
+
+-- true while the shoot wrapper is still the one in the game's table
+function Aero.intact(): boolean
+    local state = Env.get(NAME)
+    if type(state) ~= "table" or state.Off or type(state.Input) ~= "table" then
+        return false
+    end
+    local signal = rawget(state.Input, "Shoot")
+    return type(signal) == "table" and rawget(signal, "Fire") == state.Wrappers.Shoot
+end
+
+-- puts the game's own functions back, a wrapper something else put on top of is left as a plain passthrough
+function Aero.remove()
+    local state = Env.get(NAME)
+    if type(state) ~= "table" or state.Version ~= VERSION then
+        return
+    end
+    state.Off = true
+    state.Handler = nil
+    local input = state.Input
+    local clean = true
+    for name, wrapper in state.Wrappers do
+        local signal = if type(input) == "table" then rawget(input, name) else nil
+        if type(signal) == "table" then
+            if rawget(signal, "Fire") == wrapper then
+                rawset(signal, "Fire", state.Originals[name])
+            else
+                clean = false
+            end
+        end
+    end
+    if clean then
+        Env.set(NAME, nil)
+    end
+end
+
+return Aero
+end
+modules["autoblock"] = function(...)
+
+local import: (string) -> any = ...
+local Court: typeof(require("./court")) = import("court")
+
+local AutoBlock = {}
+AutoBlock.__index = AutoBlock
+
+type Map = { [string]: any }
+
+-- one jump per shot, and never two jumps closer than this
+local COOLDOWN = 0.9
+-- a human reaction on top of the timing, now and then a slower read
+local REACT_MIN = 0.02
+local REACT_MAX = 0.07
+local SLOW_CHANCE = 0.2
+local SLOW_MIN = 0.03
+local SLOW_MAX = 0.08
+-- a jump shot at ShotSpeed 1 leaves the hands this long after it starts, the block is highest this long after the jump
+local RELEASE = 0.48
+local BLOCK_PEAK = 0.35
+-- the part of the reaction the timing already counts on
+local REACT_LEAD = 0.04
+-- a shot no signal confirmed is held this long with Read Fakes on, a pump fake is over by then
+local FAKE_HOLD = 0.3
+-- a ReleasedShot flip this long before the shot action still belongs to it (the gather of a layup or a catch)
+local FLIP_WINDOW = 0.6
+-- the shooter counts as up once his root is this far over the floor he stood on
+local LIFT = 0.8
+-- the ball counts as his this close to his root when the Basketball value is not there
+local BALL_REACH = 5
+-- the most a shooter may look away from you, and the most you may look away from him
+local SHOOTER_FACING = 0.25
+local OWN_FACING = -0.2
+-- closer than this the angles do not matter
+local POINT_BLANK = 2.5
+local MAX_HEIGHT = 6
+
+-- the jump shots the game plays, a pump fake or a hop step is Gathering and never in here
+local SHOTS: { [string]: boolean } = { Shooting = true, MovingShot = true }
+-- finishes at the rim and how close you have to be to get a hand on them
+local FINISHES: { [string]: number } = { Layup = 7, ContactLayup = 7, ClutchLayup = 7, Dunking = 6 }
+
+local random = Random.new()
+
+function AutoBlock.new(read: (string) -> any): any
+    return setmetatable({ Read = read, Last = -math.huge, State = {} :: { [any]: Map }, Spare = {} :: { [any]: Map } }, AutoBlock)
+end
+
+local function jump(remote: any)
+    local copied = Court.copied("Jump")
+    if type(copied) == "table" then
+        Court.send(remote, table.unpack(copied, 1, copied.n or #copied))
+    else
+        Court.send(remote)
+    end
+end
+
+local function react(): number
+    local value = REACT_MIN + random:NextNumber() * (REACT_MAX - REACT_MIN)
+    if random:NextNumber() < SLOW_CHANCE then
+        value += SLOW_MIN + random:NextNumber() * (SLOW_MAX - SLOW_MIN)
+    end
+    return value
+end
+
+-- the meter the game shows over a shooter, only there on a real shot
+local function metered(character: any): boolean
+    for _, child in character:GetChildren() do
+        if child:IsA("BillboardGui") and child.Enabled and string.sub(child.Name, -5) == "Meter" then
+            return true
+        end
+    end
+    return false
+end
+
+-- where he is against you: close enough, in front of him and not behind your back. finishes also need you between him and the rim
+local function reachable(root: any, character: any, theirs: any, reach: number, finish: boolean): boolean
+    local here: Vector3 = root.Position
+    local there: Vector3 = theirs.Position
+    if math.abs(there.Y - here.Y) > MAX_HEIGHT then
+        return false
+    end
+    local toMe = Court.flat(here - there)
+    local distance = toMe.Magnitude
+    if distance > reach then
+        return false
+    end
+    if distance < POINT_BLANK then
+        return true
+    end
+    local direction = toMe / distance
+    -- he turns to his rim as the shot starts, the rim he shoots at counts as where he faces while the turn is on its way
+    local look = Court.flat(theirs.CFrame.LookVector)
+    if look.Magnitude > 0.01 and look.Unit:Dot(direction) < SHOOTER_FACING then
+        local goal = Court.goal(character)
+        local aim = if goal then Court.flat(goal.Position - there) else Vector3.zero
+        if aim.Magnitude < 0.01 or aim.Unit:Dot(direction) < SHOOTER_FACING then
+            return false
+        end
+    end
+    local mine = Court.flat(root.CFrame.LookVector)
+    if mine.Magnitude > 0.01 and mine.Unit:Dot(-direction) < OWN_FACING then
+        return false
+    end
+    if finish then
+        local rimDistance, rim = Court.rimDistance(there)
+        if rimDistance and rim then
+            local center: Vector3 = rim.Position
+            if Court.flat(center - here).Magnitude > rimDistance + 1 then
+                return false
+            end
+        end
+    end
+    return true
+end
+
+-- a block is a jump timed against the shot, the same Jump call that works for rebounds
+function AutoBlock.step(self: any, now: number)
+    local read = self.Read
+    local state: { [any]: Map } = self.State
+    local spare: { [any]: Map } = self.Spare
+    if read("AutoBlock") ~= true or not Court.Mine then
+        if next(state) ~= nil then
+            table.clear(state)
+        end
+        return
+    end
+    local mine = Court.Mine
+    local root = Court.Root
+    local action = Court.Action
+    local ready = root ~= nil and not Court.HasBall and (action == "" or action == nil) and Court.free(mine)
+        and not Court.Forced and not Court.HandsOff and not Court.Dead and mine:GetAttribute("InAir") ~= true and now - self.Last >= COOLDOWN
+    local range = read("BlockRange") or 10
+    local extra = (read("BlockDelay") or 0) / 1000
+    local readFakes = read("ReadFakes") == true
+    local ping = Court.Ping
+    local chars, roots, foe, carry = Court.Chars, Court.Roots, Court.Foe, Court.Carry
+    for index = 1, Court.Count do
+        if foe[index] then
+            local character = chars[index]
+            local theirs = roots[index]
+            local entry = state[character]
+            if not entry then
+                entry = {}
+            end
+            spare[character] = entry
+            -- the server sets ReleasedShot false when a real shot starts, a pump fake never touches it
+            local released = character:GetAttribute("ReleasedShot")
+            if entry.Released == true and released == false then
+                entry.FlipAt = now
+            end
+            entry.Released = released
+            local kind = character:GetAttribute("Action")
+            local finish = if type(kind) == "string" then FINISHES[kind] else nil
+            if not (type(kind) == "string" and SHOTS[kind]) and not finish then
+                entry.Start = nil
+                if character:GetAttribute("InAir") ~= true then
+                    entry.Floor = theirs.Position.Y
+                end
+            else
+                if entry.Start == nil then
+                    entry.Start = now
+                    entry.Done = false
+                    entry.SawFalse = false
+                    entry.Wait = nil
+                end
+                if released == false then
+                    entry.SawFalse = true
+                end
+                -- once the ball is out of his hands a jump only comes late, nobody contests then
+                if released == true and entry.SawFalse then
+                    entry.Done = true
+                end
+                if ready and not entry.Done then
+                    local elapsed = now - entry.Start
+                    local flip = entry.FlipAt
+                    local fresh = released == false and flip ~= nil and flip >= entry.Start - FLIP_WINDOW
+                    local confirmed = finish ~= nil or fresh or metered(character)
+                    local wait = entry.Wait
+                    if not wait then
+                        if finish then
+                            wait = react() * 0.5 + extra
+                        else
+                            local speed = character:GetAttribute("ShotSpeed")
+                            local release = RELEASE / (if type(speed) == "number" and speed > 0.05 then speed else 1)
+                            wait = math.max(0, release - BLOCK_PEAK - ping - REACT_LEAD) + react() + extra
+                        end
+                        entry.Wait = wait
+                    end
+                    local go = elapsed >= wait and released ~= true
+                    if go and not confirmed and readFakes then
+                        -- nothing said it is real: only once he held it past a pump fake and left the floor
+                        local floor = entry.Floor
+                        local up = character:GetAttribute("InAir") == true or (floor ~= nil and theirs.Position.Y - floor > LIFT)
+                        go = elapsed >= FAKE_HOLD and up
+                    end
+                    if go and not carry[index] and Court.ballNear(theirs.Position, BALL_REACH) ~= true then
+                        go = false
+                    end
+                    if go and reachable(root, character, theirs, if finish then math.min(range, finish) else range, finish ~= nil) then
+                        local remote = Court.input("Jump")
+                        if remote then
+                            self.Last = now
+                            entry.Done = true
+                            jump(remote)
+                            ready = false
+                        end
+                    end
+                end
+            end
+        end
+    end
+    table.clear(state)
+    self.State = spare
+    self.Spare = state
+end
+
+return AutoBlock
+end
+modules["autodribble"] = function(...)
+
+local import: (string) -> any = ...
+local Court: typeof(require("./court")) = import("court")
+local Env: typeof(require("./env")) = import("env")
+
+local AutoDribble = {}
+AutoDribble.__index = AutoDribble
+
+type Map = { [string]: any }
+
+-- the wait between two moves is never the same twice, and the first move waits a moment after a defender steps up
+local COOLDOWN_MIN = 1.0
+local COOLDOWN_MAX = 1.6
+local REACT_MIN = 0.2
+local REACT_MAX = 0.4
+-- no dribble move this close to a rim, it throws a drive off its line and the dunk or layup misses
+local RIM_CLEAR = 24
+
+local random = Random.new()
+
+-- tried until one of them starts a move, a real dribble call copied by the hook is used instead once there is one.
+-- the first is the call the game itself makes for a crossover or a hesitation: the keys, whether sprint is held and where you are moving
+local FORMS: { (any) -> ...any } = {
+    function(context: any): ...any
+        return context.Key, context.Sprint, context.Heading
+    end,
+    function(_: any): ...any
+        return "H"
+    end,
+    function(_: any): ...any
+        return { Input = "H" }
+    end,
+}
+
+local function moved(context: Map): boolean
+    local mine = context.Mine
+    if mine.Parent == nil then
+        return false
+    end
+    local action = mine:GetAttribute("Action")
+    return mine:GetAttribute("LastDribblePackage") ~= context.Before or (action ~= "" and action ~= "Dribbling" and action ~= nil)
+end
+
+function AutoDribble.new(read: (string) -> any): any
+    return setmetatable({ Read = read, Last = -math.huge, Wait = COOLDOWN_MIN, Since = nil :: number?, React = REACT_MIN, Index = 0, Keys = {} :: { string }, Context = {} :: Map }, AutoDribble)
+end
+
+function AutoDribble.step(self: any, now: number)
+    local read = self.Read
+    local mine, root = Court.Mine, Court.Root
+    if read("AutoDribble") ~= true or read("DribbleCombo") == true or not mine or not root or not Court.HasBall then
+        self.Since = nil
+        return
+    end
+    local here: Vector3 = root.Position
+    local rimDistance = Court.rimDistance(here)
+    if (rimDistance and rimDistance < RIM_CLEAR) or Court.nearestFoe(here) > (read("DribbleRange") or 7) then
+        self.Since = nil
+        return
+    end
+    if not self.Since then
+        self.Since = now
+        self.React = REACT_MIN + random:NextNumber() * (REACT_MAX - REACT_MIN)
+    end
+    if now - self.Since < self.React or now - self.Last < self.Wait then
+        return
+    end
+    local action = Court.Action
+    if (action ~= "" and action ~= nil) or not Court.free(mine) or Court.HandsOff then
+        return
+    end
+    local remote = Court.input("Dribble")
+    if not remote then
+        return
+    end
+    local direction: Vector3 = Court.heading() or Court.flat(root.CFrame.LookVector)
+    if direction.Magnitude < 0.01 then
+        return
+    end
+    direction = direction.Unit
+    self.Last = now
+    self.Wait = COOLDOWN_MIN + random:NextNumber() * (COOLDOWN_MAX - COOLDOWN_MIN)
+    -- the real dribble calls the hook copied, one per key, are cycled with the aim turned to where you move now
+    local hook = Env.get("__PBShootHook")
+    local copied = if type(hook) == "table" and type(hook.Dribbles) == "table" then hook.Dribbles else nil
+    local keys: { string } = self.Keys
+    table.clear(keys)
+    if copied then
+        for key in copied do
+            if type(key) == "string" then
+                table.insert(keys, key)
+            end
+        end
+    end
+    if #keys > 0 then
+        table.sort(keys)
+        self.Index = self.Index % #keys + 1
+        local args = copied[keys[self.Index]]
+        local count = args.n or #args
+        local sent: { any } = table.create(count)
+        for index = 1, count do
+            local value = args[index]
+            local kind = typeof(value)
+            if kind == "Vector3" and value.Magnitude > 0.01 and value.Magnitude < 1.5 then
+                value = direction * value.Magnitude
+            end
+            sent[index] = value
+        end
+        Court.send(remote, table.unpack(sent, 1, count))
+        return
+    end
+    self.Index = self.Index % 2 + 1
+    local left = mine:GetAttribute("Hand") == "L"
+    local context: Map = self.Context
+    context.Mine = mine
+    context.Key = if (self.Index == 1) == left then "C" else "Z"
+    context.Sprint = Court.sprintHeld() or mine:GetAttribute("Sprinting") == true
+    context.Heading = Court.heading() or Vector3.zero
+    context.Before = mine:GetAttribute("LastDribblePackage")
+    Court.fire("Dribble", FORMS, moved, nil, context)
+end
+
+return AutoDribble
+end
+modules["autodunk"] = function(...)
+
+local import: (string) -> any = ...
+local Court: typeof(require("./court")) = import("court")
+local Config: typeof(require("./config")) = import("config")
+local Drive: typeof(require("./drive")) = import("drive")
+
+local AutoDunk = {}
+AutoDunk.__index = AutoDunk
+
+local COOLDOWN = 2
+-- measured from the game dunk tutorial: the dunk circles are 4.6 to 11 studs from the rim, a driving dunk reaches further
+local WINDOW_MIN = 4.6
+local WINDOW_MAX = 11
+local DRIVE_START = 20
+local DRIVE_SWITCH = 14
+local DRIVE_MIN = 6
+local DRIVE_MAX = 13
+-- dunks came at 16.4 and up, layups at 14.9 and down, in a public game the sprint tops out at 15.7
+local DRIVE_PACE = 15.5
+local STAND_AT = 8
+-- the exact sprint speed the real dunks were measured at (16.7 to 16.8), at 17.5 the server called it a mid range shot
+local RUN_SPEED = 16.8
+-- a rim has to be this much in front of you to be the one you attack
+local FACING = 0.35
+-- you have to be this much on the court side of the hoop, from the baseline or from under the backboard the game
+-- plays the reverse finish
+local FRONT_CONE = 0.34
+local FRONT_AIM = 0.6
+
+local RELEASE_SPACE = { Shoot = false, Input = "E", UseSpace = true }
+local PRESS_SPACE = { Shoot = true, Input = "E", UseSpace = true }
+
+local flat = Court.flat
+
+function AutoDunk.new(read: (string) -> any, autoGreen: any, player: any): any
+    return setmetatable({
+        Read = read,
+        AutoGreen = autoGreen,
+        Player = player,
+        Last = -math.huge,
+        Run = false,
+        Holding = false,
+        Owned = false,
+        FiredAt = 0,
+        SeenAt = nil :: number?,
+        HoldGoal = nil :: Vector3?,
+        Defense = nil :: any,
+    }, AutoDunk)
+end
+
+function AutoDunk.idle(self: any)
+    self.Run = false
+    Court.hold("Dunk", false)
+    Drive.clear("Dunk")
+end
+
+-- the press of a dunk the script does not time is let go a moment after the dunk started
+function AutoDunk.finish(self: any, now: number, on: boolean)
+    -- a ball that left your hands without a dunk, a pass that beat the press, ends the run at once
+    local lost = not Court.HasBall and Court.Action ~= "Dunking" and now - self.FiredAt >= 0.2
+    if not self.SeenAt and (Court.Action == "Dunking" or now - self.FiredAt >= 1.2 or not on or lost) then
+        self.SeenAt = now
+    end
+    local seen: number? = self.SeenAt
+    if seen and now - seen >= 0.15 then
+        if not self.Owned then
+            local remote = Court.input("Shoot")
+            if remote then
+                Court.send(remote, RELEASE_SPACE)
+            end
+        end
+        self.Holding = false
+        self.Owned = false
+        self.HoldGoal = nil
+        self.SeenAt = nil
+    end
+end
+
+-- with the ball and a rim in front, sprints at it and shoots from dunk distance so the game picks a dunk.
+-- too close or too slow it backs away and runs at the rim again instead of shooting a normal shot. it always
+-- comes in from the court side of the hoop, never from behind the ring
+function AutoDunk.step(self: any, now: number)
+    local read = self.Read
+    local on = read("AutoDunk") == true
+    if self.Holding then
+        self:finish(now, on)
+    end
+    if not on then
+        self.Run = false
+    end
+    local move = on and read("DunkMove") == true
+    local goal: Vector3? = if self.Holding then self.HoldGoal else nil
+    local run = false
+    if self.Holding and (Court.Action == "Dunking" or Court.Action == "Shooting") then
+        goal = nil
+    end
+    if on and now - self.Last >= COOLDOWN and not self.Holding then
+        goal, run = self:plan(now, move)
+    elseif self.Holding and goal then
+        run = true
+    end
+    if move and goal then
+        Drive.set("Dunk", goal, RUN_SPEED, false, true)
+        -- the server only calls it a driving dunk when the forward key is really held, so the key is held while the run is on
+        Court.hold("Dunk", run)
+    else
+        Court.hold("Dunk", false)
+        Drive.clear("Dunk")
+    end
+end
+
+-- where to run this frame and whether the run at the rim is on, the dunk itself is fired from here once everything lines up
+function AutoDunk.plan(self: any, now: number, move: boolean): (Vector3?, boolean)
+    local read = self.Read
+    local mine, root = Court.Mine, Court.Root
+    if not mine or not root or not Court.HasBall then
+        self.Run = false
+        return nil, false
+    end
+    local action = Court.Action
+    if (action ~= "" and action ~= "Dribbling" and action ~= "Pushing" and action ~= nil) or mine:GetAttribute("Stunned") == true or Court.Forced or Court.HandsOff then
+        return nil, false
+    end
+    -- Auto Move only drives while you are not steering, when you run yourself it still fires the dunk from the right spot
+    local auto = move and not Court.steering(mine)
+    local rim, distance = Court.facingRim(root, FACING, read("DunkRange") or 30)
+    -- only ever the rim your team attacks once that is known, never a run at your own
+    local defense = self.Defense
+    local attack = if defense then defense:attackRim() else nil
+    if attack and rim ~= attack then
+        rim = nil
+    end
+    if not rim and auto then
+        -- Auto Move brings you round to the rim itself, the way you happen to face does not matter then
+        local near: number?, closest: any? = nil, attack
+        if closest then
+            near = flat(closest.Position - root.Position).Magnitude
+        else
+            near, closest = Court.rimDistance(root.Position)
+        end
+        if near and closest and near <= (read("DunkRange") or 30) then
+            rim, distance = closest, near
+        end
+    end
+    if not rim then
+        self.Run = false
+        return nil, false
+    end
+    if read("DunkOpenOnly") == true and Court.nearestFoe(root.Position) <= (read("OpenRange") or 6) then
+        return nil, false
+    end
+    local here: Vector3 = root.Position
+    local rimAt = Vector3.new(rim.Position.X, here.Y, rim.Position.Z)
+    local out = flat(here - rimAt)
+    local side = if distance > 0.1 then out / distance else -flat(root.CFrame.LookVector)
+    -- the line of the run: straight in from where you are when that is the court side, bent out in front of the hoop when it is not
+    local front = Court.front(rim)
+    local cone = if front then side:Dot(front) else 1
+    local aim = side
+    if front and cone < FRONT_AIM then
+        local across = side - front * cone
+        local bent = if across.Magnitude > 0.05 then front * FRONT_AIM + across.Unit * math.sqrt(1 - FRONT_AIM * FRONT_AIM) else front
+        aim = bent.Unit
+    end
+    local inFront = cone >= FRONT_CONE
+    -- the dunk needs the sprint key held, so sprint is kept on while running at the rim
+    self.Player.WantSprint = now + 0.4
+    local part = Court.proxy()
+    local velocity = if part then part.AssemblyLinearVelocity else Vector3.zero
+    local planar = flat(velocity)
+    local pace = planar.Magnitude
+    -- the game's dunk tutorial: standing dunks are held from a circle about 8 studs out while idle, driving dunks start
+    -- from far out and are held while running into a wider circle
+    local mode = read("DunkType") or Config.DUNK_BOTH
+    local driving = mode == Config.DUNK_DRIVING or (mode == Config.DUNK_BOTH and (distance >= DRIVE_SWITCH or self.Run == true or pace >= DRIVE_PACE - 3))
+    local goal: Vector3? = nil
+    if not driving then
+        self.Run = false
+        if distance < WINDOW_MIN or distance > WINDOW_MAX or not inFront then
+            return if auto then rimAt + aim * STAND_AT else nil, false
+        end
+        if pace >= 2 then
+            return nil, false
+        end
+    else
+        if not self.Run and auto then
+            if distance < DRIVE_START or not inFront then
+                return rimAt + aim * (DRIVE_START + 4), false
+            end
+            self.Run = true
+        end
+        -- it aims a little short of the ring so you do not run under it
+        goal = if auto then rimAt + aim * 2.5 else nil
+        -- the speed has to be toward the rim, a sideways step right before the shot is what turned it into a normal shot
+        local toward = if distance > 0.1 then -planar:Dot(side) else 0
+        if distance > DRIVE_MAX or distance < DRIVE_MIN or pace < DRIVE_PACE or toward < DRIVE_PACE * 0.8 or not inFront then
+            if distance < DRIVE_MIN or (self.Run and not inFront) then
+                -- ran past the circle without the dunk, or off the line, start over
+                self.Run = false
+            end
+            return goal, self.Run == true
+        end
+    end
+    -- the run goes on through a dribble move, the dunk itself waits until the move is over and you can move again
+    if mine:GetAttribute("Sprinting") ~= true or action == "Dribbling" or mine:GetAttribute("CanMove") == false then
+        return goal, self.Run == true
+    end
+    self.Last = now
+    self.Holding = true
+    self.FiredAt = now
+    self.SeenAt = nil
+    self.HoldGoal = goal
+    self.Run = false
+    -- the game's own space key sends the shoot press with UseSpace and a jump. Auto Green times the release of the
+    -- dunk's meter itself when it can own the shot
+    self.Owned = self.AutoGreen:begin(true)
+    if not self.Owned then
+        local shoot = Court.input("Shoot")
+        if shoot then
+            Court.send(shoot, PRESS_SPACE)
+        end
+    end
+    local jump = Court.input("Jump")
+    if jump then
+        Court.send(jump)
+    end
+    return goal, goal ~= nil
+end
+
+-- true when Auto Dunk is going to take this shot itself, a dunk in the making, a run for one, or standing in its circle
+function AutoDunk.claims(self: any, distance: number): boolean
+    if self.Holding or self.Run then
+        return true
+    end
+    local read = self.Read
+    if distance > (read("DunkRange") or 30) then
+        return false
+    end
+    if read("DunkMove") == true then
+        return true
+    end
+    local root = Court.Root
+    local rim = if root then Court.facingRim(root, FACING, read("DunkRange") or 30) else nil
+    if not rim then
+        return false
+    end
+    local ahead, aside = Court.frontOf(rim, root.Position)
+    if ahead and ahead < FRONT_CONE * math.sqrt(ahead * ahead + aside * aside) then
+        return false
+    end
+    local mode = read("DunkType") or Config.DUNK_BOTH
+    local part = Court.proxy()
+    local velocity = if part then flat(part.AssemblyLinearVelocity) else Vector3.zero
+    local pace = velocity.Magnitude
+    -- you are running at the rim yourself: that is a dunk coming, no shot is taken out of it
+    local toRim = flat(rim.Position - root.Position)
+    if mode ~= Config.DUNK_STANDING and toRim.Magnitude > 0.1 and velocity:Dot(toRim.Unit) >= 8 then
+        return true
+    end
+    if mode ~= Config.DUNK_DRIVING and distance >= WINDOW_MIN and distance <= WINDOW_MAX and pace < 2 then
+        return true
+    end
+    return mode ~= Config.DUNK_STANDING and distance >= DRIVE_MIN and distance <= DRIVE_START and pace >= DRIVE_PACE - 3
+end
+
+function AutoDunk.shutdown(self: any)
+    if self.Holding and not self.Owned then
+        local remote = Court.input("Shoot")
+        if remote then
+            Court.send(remote, RELEASE_SPACE)
+        end
+    end
+    self.Holding = false
+    self.Owned = false
+    self.HoldGoal = nil
+    self:idle()
+end
+
+return AutoDunk
+end
+modules["autogreen"] = function(...)
+
+local import: (string) -> any = ...
+local Config: typeof(require("./config")) = import("config")
+local Court: typeof(require("./court")) = import("court")
+local Env: typeof(require("./env")) = import("env")
+local Hook: typeof(require("./hook")) = import("hook")
+
+local AutoGreen = {}
+AutoGreen.__index = AutoGreen
+
+type Map = { [string]: any }
+
+local LEARNED = "__PBPeaks"
+local PEAK_FILE = "oklo scripts/practicalbasketball/peaks.json"
+local TIMING_PERFECT = 5
+
+-- a tap that never turned into a shot is let go once the character sat this long outside any shot, and any held shot after the longer one
+local TAP_TIMEOUT = 0.8
+local HOLD_TIMEOUT = 4.5
+local DUNK_TIMEOUT = 0.9
+-- inside this distance of a rim a shot is a layup or a dunk
+local LAYUP_RANGE = 13
+-- a held shot whose ball is gone is let go after this long, the same key is the defender's block
+local LOST_GRACE = 0.3
+-- the server runs 60 steps a second
+local SERVER_STEP = 1 / 60
+-- meter values this far apart, or a frame this long, is a stall: that shot is not learned from
+local STALL = 0.075
+
+-- the actions that run a meter the shoot key is let go on, a dunk, a contact layup and the clutch layup the game makes
+-- of it fill the same meter as a shot. any other action name still counts while its meter is up and the shot is held
+local METERED: { [string]: boolean } = { Shooting = true, Dunking = true, ContactLayup = true, ClutchLayup = true }
+-- the actions a moving or catching player goes through before the meter starts, a press in them is still the coming shot
+local PRESHOT: { [string]: boolean } = { Gathering = true, CatchingPass = true, PassTransition = true, CatchingLob = true, AwaitingPass = true }
+-- a press during a dribble move or a gather is played once the move ends, the held release waits for it
+local WAITING: { [string]: boolean } = { Dribbling = true, Gathering = true, CatchingPass = true, PassTransition = true, CatchingLob = true, AwaitingPass = true }
+
+local PRESS = { Shoot = true, Input = "E" }
+local PRESS_SPACE = { Shoot = true, Input = "E", UseSpace = true }
+local RELEASE = { Shoot = false }
+
+-- with getgenv().PBGreenLog = true every shoot call, decision and state change of Auto Green is written with a
+-- timestamp to the console and to oklo scripts/practicalbasketball/greenlog.txt, for a probe of what a press does
+local LOG_FILE = "oklo scripts/practicalbasketball/greenlog.txt"
+local LOG_LIMIT = 6000
+
+AutoGreen.METERED = METERED
+AutoGreen.PRESHOT = PRESHOT
+
+-- meter peaks learned from Perfect shots, kept in a file so they survive a re-execute
+local function learned(): Map
+    local store = Env.get(LEARNED)
+    if type(store) ~= "table" then
+        store = Env.readJson(PEAK_FILE) or {}
+        Env.set(LEARNED, store)
+    end
+    return store
+end
+
+-- the meter runs faster for a shot with a higher ShotSpeed, rates are kept per meter at ShotSpeed 1
+local function shotSpeed(character: any): number
+    local value = character:GetAttribute("ShotSpeed")
+    return if type(value) == "number" and value > 0.05 then value else 1
+end
+
+local function meterKind(character: any, meters: { any }): string?
+    for index = #meters, 1, -1 do
+        local gui = meters[index]
+        if not gui:IsDescendantOf(character) then
+            table.remove(meters, index)
+        elseif gui.Enabled and string.sub(gui.Name, -5) == "Meter" then
+            return string.sub(gui.Name, 1, -6)
+        end
+    end
+    return nil
+end
+
+-- a shot whose meter runs: a metered action, or any action while the shot is not released and its meter is up.
+-- a moving shot can play under an action name of its own, the meter is what counts
+local function liveShot(character: any, action: any, meters: { any }): boolean
+    if METERED[action] then
+        return true
+    end
+    if character:GetAttribute("ReleasedShot") ~= false or WAITING[action] then
+        return false
+    end
+    return meterKind(character, meters) ~= nil
+end
+
+AutoGreen.liveShot = liveShot
+
+function AutoGreen.trace(self: any, text: string)
+    if self.Tracing ~= true then
+        return
+    end
+    local lines = self.TraceLines
+    if not lines then
+        lines = {}
+        self.TraceLines = lines
+        self.TraceZero = os.clock()
+    end
+    if #lines >= LOG_LIMIT then
+        return
+    end
+    local line = string.format("%8.3f  %s", os.clock() - self.TraceZero, text)
+    lines[#lines + 1] = line
+    self.TraceDirty = true
+    print("[PBGreen] " .. line)
+end
+
+-- the one line of state the log follows, a new line goes out whenever it changes
+function AutoGreen.traceState(self: any, now: number, action: any)
+    local shot: any = self.Shot
+    local text = string.format(
+        "state action=%s ball=%s armed=%s press=%s held=%s own=%s holdOk=%s early=%s pending=%s key=%s hook=%s shot=%s%s",
+        tostring(action), tostring(Court.HasBall), tostring(self.Armed), tostring(self.Press ~= nil), tostring(self.Held ~= nil),
+        tostring(self.Own), tostring(self.HoldOk), tostring(self.EarlyAt ~= nil), tostring(self.PressPending == true),
+        tostring(self.KeyDown), tostring(self.HookMode or self.HookFailed), if shot then (shot.Kind or "?") else "none",
+        if shot and shot.Fired then " fired" else ""
+    )
+    if text ~= self.TraceLast then
+        self.TraceLast = text
+        self:trace(text)
+    end
+    if self.TraceDirty and now - (self.TraceFlush or 0) > 0.5 then
+        self.TraceFlush = now
+        self.TraceDirty = false
+        if type(writefile) == "function" then
+            pcall(writefile, LOG_FILE, table.concat(self.TraceLines, "\n"))
+        end
+    end
+end
+
+function AutoGreen.new(read: (string) -> any, notify: (string) -> ()): any
+    return setmetatable({
+        Read = read,
+        Notify = notify,
+        Links = {} :: { any },
+        Meters = {} :: { any },
+        Character = nil :: any,
+        Shot = nil :: any,
+        LastAuto = -math.huge,
+        LastPress = -math.huge,
+        IdleAt = 0,
+        LostAt = nil :: any,
+        Warned = {} :: Map,
+        -- set while the shoot key counts as pressed for the script, the time of the press
+        Press = nil :: any,
+        -- set while the server has the key down and the script owes it the release
+        Held = nil :: any,
+        -- set while the press was sent by the script itself
+        Own = false,
+        -- what the hook reads, kept up to date outside it so the hook itself never calls into the game
+        Armed = false,
+        HasBall = false,
+        HoldOk = false,
+        KeyDown = nil :: any,
+        LastKind = nil :: any,
+        Hooked = false,
+        HookBound = false,
+        HookMode = nil :: any,
+        TriedHook = false,
+        Binding = false,
+        HookCheck = 0,
+        HookFailed = nil :: any,
+        Stopped = false,
+        Feedback = nil :: any,
+        Stats = { Total = 0, Perfect = 0, Streak = 0, Last = "-" },
+        Rates = {} :: { [string]: number },
+        StatsText = nil :: any,
+    }, AutoGreen)
+end
+
+-- the open shot and distance filters, true when this shot may be released by the script
+function AutoGreen.allowed(self: any): boolean
+    local root = Court.Root
+    if not root then
+        return true
+    end
+    local read = self.Read
+    -- the open and distance filters belong to Auto Shoot, they only count while it is on
+    if read("AutoShoot") ~= true then
+        return true
+    end
+    if read("OpenOnly") == true and Court.nearestFoe(root.Position) <= (read("OpenRange") or 6) then
+        return false
+    end
+    local minimum = read("MinShot") or 0
+    local maximum = read("MaxShot") or 120
+    if minimum > 0 or maximum < 120 then
+        local best = Court.rimDistance(root.Position)
+        if best and (best < minimum or best > maximum) then
+            return false
+        end
+    end
+    return true
+end
+
+function AutoGreen.peak(self: any, kind: string): number?
+    local value = Config.PEAKS[kind] or learned()[kind]
+    return if type(value) == "number" then value else nil
+end
+
+-- true when the script can take this shot over: the filters let it and the last meter seen is known
+function AutoGreen.canHold(self: any): boolean
+    return self:allowed()
+end
+
+function AutoGreen.fire(self: any, args: Map): boolean
+    local remote = Court.input("Shoot")
+    if not remote then
+        if not self.Warned.Remote then
+            self.Warned.Remote = true
+            self.Notify("The shoot remote was not found, Auto Green cannot release")
+        end
+        return false
+    end
+    return Court.send(remote, args)
+end
+
+-- the real release of the shoot key, sent by the script. whatever was owed is settled by it, so it can never go out twice for one shot
+function AutoGreen.send(self: any)
+    self:trace("  SEND release")
+    self.Planned = self.NextPlan
+    self.NextPlan = nil
+    self.Press = nil
+    self.Held = nil
+    self.Own = false
+    self.LostAt = nil
+    local shot: any = self.Shot
+    if shot then
+        shot.Fired = true
+    end
+    if self:fire(RELEASE) then
+        self.LastAuto = os.clock()
+    end
+end
+
+-- ends a press without a shot: a release the server is owed goes out, a key the player still holds is left alone
+function AutoGreen.settle(self: any)
+    self:trace("  settle held=" .. tostring(self.Held ~= nil))
+    if self.Held ~= nil then
+        self:send()
+    else
+        self.Press = nil
+        self.Own = false
+        self.LostAt = nil
+    end
+end
+
+function AutoGreen.release(self: any)
+    local shot: any = self.Shot
+    if not shot or shot.Fired then
+        return
+    end
+    shot.Fired = true
+    local character = self.Character
+    if not character or not liveShot(character, character:GetAttribute("Action"), self.Meters) then
+        self:settle()
+        return
+    end
+    -- a shot with a stall in its meter values or a long frame is rated by the lag, not by the timing, it is not learned from
+    local steady = (shot.Gap or 0) < STALL and (shot.LongFrame or 0) < STALL
+    self.NextPlan = { Kind = shot.Kind, Clean = shot.ReleaseAt ~= nil and shot.Timed == true and shot.Sloppy == nil and steady }
+    self:send()
+    -- the meter rate measured on this shot is kept in the file for the next session
+    if shot.NewRate and shot.Kind then
+        local store = learned()
+        store["#" .. shot.Kind] = shot.NewRate
+        Env.writeJson(PEAK_FILE, store)
+    end
+end
+
+-- the shoot key went down, from the game through the hook or from the script itself
+function AutoGreen.onPress(self: any)
+    local read = self.Read
+    if self.Stopped or read("AutoGreen") ~= true then
+        self:trace("  onPress ignored, Auto Green off")
+        return
+    end
+    -- the same key is the defender's block, without the ball it is not a shot and must not be held back
+    local mine = Court.mine()
+    if not mine or (not Court.holds(mine) and not PRESHOT[mine:GetAttribute("Action")]) then
+        -- a catch and shoot press can beat the ball to this client by a frame, it is looked at again once the ball is in
+        if mine and (self.KeyDown == true or self.Held ~= nil) then
+            self.EarlyAt = os.clock()
+        end
+        self:trace("  onPress no ball yet, early=" .. tostring(self.EarlyAt ~= nil))
+        return
+    end
+    self.EarlyAt = nil
+    -- a press after this shot was already let go is not a new shot, holding it back only delays the game
+    local shot: any = self.Shot
+    if shot and shot.Fired then
+        self:trace("  onPress ignored, shot already fired")
+        return
+    end
+    -- the game repeats its press while a catch or gather runs, the shot already owed keeps its one timing and its safety
+    if self.Press ~= nil then
+        self:trace("  onPress repeat, already owned")
+        return
+    end
+    local now = os.clock()
+    self.Press = now
+    self.LastPress = now
+    self.IdleAt = now
+    self.LostAt = nil
+    -- the shoot key is always held: the game keeps it and the script only lets go on the green
+    self.HoldOk = false
+    self:trace("  onPress OWNED, hold E")
+end
+
+-- starts a shot from the script: the press goes out and the release is owed until the green. false when the script
+-- cannot own this shot, nothing was sent then
+function AutoGreen.begin(self: any, useSpace: boolean?): boolean
+    if self.Stopped or self.Read("AutoGreen") ~= true or self.Press ~= nil or not self:canHold() then
+        return false
+    end
+    self:onPress()
+    local press = self.Press
+    if press == nil then
+        return false
+    end
+    if not self:fire(if useSpace then PRESS_SPACE else PRESS) then
+        self.Press = nil
+        return false
+    end
+    self.Held = press
+    self.DunkPress = useSpace == true
+    self.Own = true
+    self.HoldOk = true
+    return true
+end
+
+-- how long a press that beat the ball here waits for it: the ball can be a whole ping behind the press
+function AutoGreen.earlyWindow(self: any): number
+    return math.max(0.3, math.min(Court.Ping, 0.6) + 0.15)
+end
+
+-- read inside the hook when the game lets go of the shoot key: only plain fields, nothing that calls into the game.
+-- every release of the game while the script owns the shot is held, the game resends its press and release while moving
+function AutoGreen.holding(self: any): boolean
+    if self.Armed ~= true then
+        return false
+    end
+    -- a catch and shoot tap can end before the ball even shows up here, its release waits for the ball too
+    local early = self.EarlyAt
+    if early ~= nil and self.Press == nil and os.clock() - early < self:earlyWindow() then
+        return true
+    end
+    -- the method hook hands the press over on the next frame, a release in the same frame waits for it. the ball can
+    -- still be on its way here, that press is looked at again once it is in like any early one
+    if self.PressPending == true and self.Press == nil then
+        return self.HoldMode ~= true
+    end
+    return self.Press ~= nil and self.HoldOk == true
+end
+
+-- a call of the game's shoot input, seen by the input wrap in plain Lua. true holds the call back.
+-- the game sends {Shoot = true} once the key was down for its shoot delay and {Shoot = false} when the key comes up.
+-- a tap shorter than the delay comes as {Shoot = false, Input = "E"}: that is the hop step, gather or pump fake, it
+-- always goes through as it is and never becomes a shot
+function AutoGreen.shootCall(self: any, data: any): boolean
+    if type(data) ~= "table" then
+        return false
+    end
+    local flag = rawget(data, "Shoot")
+    if self.Tracing then
+        self:trace(string.format("CALL Shoot=%s Input=%s UseSpace=%s", tostring(flag), tostring(rawget(data, "Input")), tostring(rawget(data, "UseSpace"))))
+    end
+    if flag == true then
+        self.KeyDown = true
+        -- the space key's press is a dunk, the rim guard leaves the run at the rim alone for it
+        self.DunkPress = rawget(data, "UseSpace") == true
+        self:onPress()
+        return false
+    end
+    if flag ~= false then
+        return false
+    end
+    self.KeyDown = false
+    if rawget(data, "Input") ~= nil then
+        self.TapAt = os.clock()
+        self.TapPending = true
+        return false
+    end
+    if self:holding() then
+        if self.Held == nil then
+            self.Held = os.clock()
+        end
+        self:trace("  release HELD back")
+        return true
+    end
+    self:trace("  release passed through")
+    self:passed()
+    return false
+end
+
+-- the game's own release went through to the server
+function AutoGreen.passed(self: any)
+    if self.Held == nil then
+        self.Press = nil
+        self.LostAt = nil
+    end
+end
+
+function AutoGreen.sample(self: any, character: any)
+    if character ~= self.Character then
+        return
+    end
+    local offset: any = character:GetAttribute("meterOffset")
+    local kindOf = typeof(offset)
+    if kindOf ~= "Vector2" then
+        return
+    end
+    local value: number = offset.Y
+    local action = character:GetAttribute("Action")
+    if not liveShot(character, action, self.Meters) then
+        self.Shot = nil
+        return
+    end
+    local now = os.clock()
+    local read = self.Read
+    local shot: any = self.Shot
+    if not shot then
+        local sloppy: number? = nil
+        if math.random() > (read("PerfectChance") or 100) / 100 then
+            sloppy = (if math.random() < 0.5 then -1 else 1) * (0.04 + math.random() * 0.05)
+        end
+        local nearRim = false
+        if not self.Own and read("LayupGreen") == false then
+            local root = Court.root(character)
+            local rimAt = if root then Court.rimDistance(root.Position) else nil
+            nearRim = rimAt ~= nil and rimAt <= LAYUP_RANGE
+        end
+        self.Shot = {
+            T0 = now,
+            V0 = value,
+            Low = value,
+            Scale = shotSpeed(character),
+            Fired = false,
+            Kind = nil,
+            Sloppy = sloppy,
+            Timed = not nearRim and self:allowed(),
+            -- a dunk whose meter never gives a release time is let go here, about when the game's own players let go
+            DunkAt = if action == "Dunking" then now + DUNK_TIMEOUT else nil,
+        }
+        return
+    end
+    if value < shot.Low then
+        shot.Low = value
+    end
+    -- a stall in the meter values, a lag spike, is kept so the rating of this shot is not learned from
+    if not shot.Fired then
+        shot.Gap = math.max(shot.Gap or 0, now - (shot.SeenAt or now))
+        shot.SeenAt = now
+    end
+    -- every value until the meter turns is kept for its rate, the ones after the release too: at a high ping a fast meter
+    -- is let go before much of it was seen, the next shot of that meter then knows its rate
+    if value - shot.Low > 0.012 then
+        shot.Turned = true
+    elseif not shot.Turned and now > shot.T0 then
+        local at = now - shot.T0
+        if not shot.Ln then
+            shot.Ln, shot.Lt, shot.Lv, shot.Ltt, shot.Ltv = 1, 0, shot.V0, 0, 0
+        end
+        shot.Ln += 1
+        shot.Lt += at
+        shot.Lv += value
+        shot.Ltt += at * at
+        shot.Ltv += at * value
+    end
+    if shot.Fired then
+        if shot.Kind and not shot.NewRate and not shot.Turned and (shot.Ln or 0) >= 8 then
+            self:learnRate(shot)
+        end
+        return
+    end
+    if read("AutoGreen") ~= true or not shot.Timed then
+        -- the script will not time this one, a release it is holding back goes out now
+        if self.Held ~= nil then
+            self:release()
+        end
+        return
+    end
+    local elapsed = now - shot.T0
+    if elapsed < 0.02 then
+        -- at a low frame rate one frame brings several server values, only the newest one belongs to this frame's time
+        if now == shot.T0 then
+            shot.V0 = value
+        end
+        return
+    end
+    local kind: string = shot.Kind or meterKind(character, self.Meters) or ""
+    if kind == "" then
+        -- a meter whose gui is not on the character is still timed, by its own turn at the top, instead of the key being
+        -- held until a timeout while the bar runs up and down
+        if elapsed < 0.12 then
+            return
+        end
+        kind = if action == "Dunking" then "Dunk" else "Shot"
+    end
+    if not shot.Kind then
+        shot.Kind = kind
+        self.LastKind = kind
+    end
+    local peak = self:peak(kind)
+    if not peak then
+        -- a meter nobody measured yet, it is held until it turns around and the lowest point it reached is kept as its green
+        if value - shot.Low > 0.012 then
+            local store = learned()
+            store[kind] = shot.Low
+            Env.writeJson(PEAK_FILE, store)
+            self:release()
+        end
+        return
+    end
+    -- the meter already turned around, the green was missed, let go now instead of waiting on a speed that no longer makes sense
+    if value - shot.Low > 0.012 then
+        self:release()
+        return
+    end
+    -- the plan is made once a frame from the newest value, in step, a frame can bring more than one
+    shot.Peak = peak
+    shot.Latest = value
+    shot.Fresh = true
+end
+
+-- the release time from the newest meter value of this frame
+function AutoGreen.plan(self: any, now: number)
+    local shot: any = self.Shot
+    shot.Fresh = false
+    local value: number = shot.Latest
+    local peak: number = shot.Peak
+    local kind: string = shot.Kind
+    local read = self.Read
+    local elapsed = now - shot.T0
+    -- the meter fills at one steady rate, so a straight line through every value since the shot started gives the speed
+    -- and where the meter is now, one value that came in late or early no longer moves the release
+    if not shot.N then
+        shot.N, shot.St, shot.Sv, shot.Stt, shot.Stv = 1, 0, shot.V0, 0, 0
+    end
+    shot.N += 1
+    shot.St += elapsed
+    shot.Sv += value
+    shot.Stt += elapsed * elapsed
+    shot.Stv += elapsed * value
+    local speed = (value - shot.V0) / elapsed
+    local level = value
+    local spread = shot.N * shot.Stt - shot.St * shot.St
+    local saved = learned()["#" .. kind]
+    local scale: number = shot.Scale or 1
+    -- each meter type fills at its own rate times the ShotSpeed of the shot, a moving shot or a layup often has another
+    local base: number? = self.Rates[kind] or (if type(saved) == "number" then saved else nil)
+    local known: number? = if base then base * scale else nil
+    if shot.N >= 6 and spread > 1e-9 then
+        speed = (shot.N * shot.Stv - shot.St * shot.Sv) / spread
+        level = (shot.Sv - speed * shot.St) / shot.N + speed * elapsed
+        -- the rate is kept for the next shot of that meter
+        if shot.N >= 8 then
+            local measured = speed / scale
+            self.Rates[kind] = if base then base + (measured - base) * 0.5 else measured
+            shot.NewRate = self.Rates[kind]
+        end
+    elseif known then
+        -- too few values yet, with a high ping a fast meter gives only a handful: the rate of the last shot of this meter is used
+        speed = known
+        level = (shot.Sv - speed * shot.St) / shot.N + speed * elapsed
+    elseif shot.N >= 4 and spread > 1e-9 then
+        speed = (shot.N * shot.Stv - shot.St * shot.Sv) / spread
+        level = (shot.Sv - speed * shot.St) / shot.N + speed * elapsed
+    end
+    if speed >= -0.05 or shot.Frozen then
+        return
+    end
+    local remaining = (peak - level) / speed
+    -- the value came in some time since the last frame, the server sends at most 60 a second, so on average half of
+    -- the shorter of the two before it was seen here, and the server reads the release on its next step, half a step late
+    local delay = remaining - math.min(self.FrameDt or 0, 1 / 60) * 0.5 - SERVER_STEP * 0.5 - Court.Ping * (read("PingComp") or 100) / 100 + (read("GreenOffset") or 0) / 1000 + (shot.Sloppy or 0) + self:bias(kind)
+    shot.Value = value
+    shot.SampleAt = now
+    shot.Speed = speed
+    shot.Peak = peak
+    -- the first value or two can be a bunch that came in together on one frame, a plan from only those is not acted on
+    local trusted = shot.N >= 6 or known ~= nil
+    if not trusted and shot.N < 3 then
+        return
+    end
+    -- every new sample sharpens the speed, the frame loop always fires on the newest plan
+    shot.ReleaseAt = now + delay
+    if delay <= 0 then
+        self:release()
+    elseif delay < 0.03 and trusted then
+        -- close to the green, keep this plan, new samples this late only make the estimate worse
+        shot.Frozen = true
+    end
+end
+
+-- the rate of a meter that was let go before the plan could measure it, from every value seen of it
+function AutoGreen.learnRate(self: any, shot: any)
+    local n = shot.Ln
+    local spread = n * shot.Ltt - shot.Lt * shot.Lt
+    if spread <= 1e-9 then
+        return
+    end
+    local speed = (n * shot.Ltv - shot.Lt * shot.Lv) / spread
+    if speed >= -0.05 then
+        return
+    end
+    local kind: string = shot.Kind
+    local measured = speed / (shot.Scale or 1)
+    local saved = learned()["#" .. kind]
+    local base: number? = self.Rates[kind] or (if type(saved) == "number" then saved else nil)
+    self.Rates[kind] = if base then base + (measured - base) * 0.5 else measured
+    shot.NewRate = self.Rates[kind]
+    local store = learned()
+    store["#" .. kind] = shot.NewRate
+    Env.writeJson(PEAK_FILE, store)
+end
+
+function AutoGreen.bias(self: any, kind: string): number
+    if self.Read("AutoCalibrate") == false then
+        return 0
+    end
+    local value = learned()["~" .. kind]
+    return if type(value) == "number" then value else 0
+end
+
+local CALIBRATION = { [1] = 0.018, [2] = 0.009, [3] = 0.0035, [6] = -0.0035, [7] = -0.009, [8] = -0.018 }
+
+function AutoGreen.calibrate(self: any, kind: string?, timing: number)
+    local step = CALIBRATION[timing]
+    if not kind or kind == "" or not step or self.Read("AutoCalibrate") == false then
+        return
+    end
+    local store = learned()
+    local key = "~" .. kind
+    local current = if type(store[key]) == "number" then store[key] else 0
+    store[key] = math.clamp(current * 0.97 + step, -0.08, 0.08)
+    Env.writeJson(PEAK_FILE, store)
+end
+
+-- forgets the release bias of every meter and the peaks learned for meters without a measured one
+function AutoGreen.resetCalibration(self: any)
+    local store = learned()
+    local keys: { string } = {}
+    for key, value in store do
+        if type(key) == "string" and (string.sub(key, 1, 1) == "~" or type(value) == "number") then
+            table.insert(keys, key)
+        end
+    end
+    for _, key in keys do
+        store[key] = nil
+    end
+    local saved = Env.writeJson(PEAK_FILE, store)
+    pcall(self.Notify, if saved then "Calibration reset" else "Calibration reset, could not save the file")
+end
+
+function AutoGreen.rated(self: any, timing: number)
+    local shot: any = self.Shot
+    local mine = os.clock() - self.LastAuto < 2
+    local plan: any = self.Planned
+    self.Planned = nil
+    if mine and plan and plan.Clean and plan.Kind then
+        self:calibrate(plan.Kind, timing)
+    end
+    if shot and shot.Kind and timing == TIMING_PERFECT and not self:peak(shot.Kind) then
+        local store = learned()
+        store[shot.Kind] = shot.Low
+        Env.writeJson(PEAK_FILE, store)
+    end
+    local record = self.Stats
+    self.StatsText = nil
+    record.Total += 1
+    record.Last = Config.TIMINGS[timing] or "?"
+    if self.Read("NotifyRelease") == true and mine then
+        self.Notify(record.Last)
+    end
+    if timing == TIMING_PERFECT then
+        record.Perfect += 1
+        record.Streak += 1
+    else
+        record.Streak = 0
+    end
+end
+
+function AutoGreen.detach(self: any)
+    for _, link in self.Links do
+        pcall(link.Disconnect, link)
+    end
+    table.clear(self.Links)
+    table.clear(self.Meters)
+    -- a release still held back goes out first, the server must never be left with the key down
+    if self.Press ~= nil or self.Held ~= nil then
+        self:settle()
+    end
+    self.Character = nil
+    self.Shot = nil
+end
+
+function AutoGreen.attach(self: any, character: any)
+    self:detach()
+    if not character or self.Stopped then
+        return
+    end
+    self.Character = character
+    local links: { any } = self.Links
+    local meters: { any } = self.Meters
+    local function consider(descendant: any)
+        if descendant:IsA("BillboardGui") and not table.find(meters, descendant) then
+            table.insert(meters, descendant)
+        end
+    end
+    table.insert(links, character:GetAttributeChangedSignal("meterOffset"):Connect(function()
+        self:sample(character)
+    end))
+    -- a shot that moves from one metered action to the next keeps its samples, only leaving the shot drops it
+    table.insert(links, character:GetAttributeChangedSignal("Action"):Connect(function()
+        if self.Character == character and self.Shot and not liveShot(character, character:GetAttribute("Action"), meters) then
+            self.Shot = nil
+        end
+    end))
+    table.insert(links, character:GetAttributeChangedSignal("ReleasedShot"):Connect(function()
+        local shot: any = self.Shot
+        if shot and self.Character == character and character:GetAttribute("ReleasedShot") == true then
+            shot.ReleasedAt = os.clock()
+        end
+    end))
+    table.insert(links, character.DescendantAdded:Connect(consider))
+    for _, descendant in character:GetDescendants() do
+        consider(descendant)
+    end
+end
+
+-- runs every frame: the flags the hook reads, the release on the frame nearest to its planned time, and every
+-- safety that keeps a held key from staying down
+function AutoGreen.step(self: any, now: number, dt: number)
+    local on = self.Read("AutoGreen") == true
+    local action0 = Court.Action
+    local character = Court.Mine
+    if character ~= self.Character then
+        self:attach(character)
+    end
+    self.Armed = on and character ~= nil
+    self.HasBall = on and Court.HasBall
+    self.Tracing = Env.get("PBGreenLog") == true
+    if self.Tracing then
+        self:traceState(now, action0)
+    end
+    self.HoldMode = true
+    if self.Hooked then
+        Hook.drain()
+    end
+    self.FrameDt = math.min(dt, 0.1)
+    local watch: any = self.WatchHook
+    if watch then
+        watch.Sum += dt
+        watch.Count += 1
+        if now >= watch.Until then
+            self.WatchHook = nil
+            local average = watch.Sum / math.max(watch.Count, 1)
+            if average > math.max(watch.Base * 1.8, 1 / 30) and self.HookMode == "hook" then
+                pcall(Hook.remove)
+                self.HookBound = false
+                self.HookMode = nil
+                self.HookFailed = "slow"
+                self.Warned.Hook = true
+                self.Notify("Auto Green turned its hook off, it slowed this executor down. Hold the shoot key until the green")
+            end
+        end
+    else
+        self.FrameAvg = (self.FrameAvg or dt) + (math.min(dt, 0.25) - (self.FrameAvg or dt)) * 0.05
+    end
+    if self.PressPending then
+        self.PressPending = false
+        self:onPress()
+        -- a release held for a press the filters then turned down goes out at once
+        if self.Held ~= nil and self.Press ~= nil and self.HoldOk ~= true then
+            self:send()
+        end
+    end
+    -- Tap To Shoot: a tap shorter than the game's shoot delay never reaches the server as a shot, the script presses for it
+    -- and owns the release. a tap in the middle of a dribble move is the game's own move and stays one
+    if self.TapPending then
+        self.TapPending = false
+        if on and self.Read("TapShoot") == true and Court.HasBall and self.Press == nil and self.Held == nil and self.Shot == nil
+            and self.KeyDown ~= true and action0 ~= "Dribbling" and action0 ~= "Dunking" and action0 ~= "Shooting" then
+            self:trace("  TAP turned into a shot, action=" .. tostring(action0))
+            self:begin()
+        else
+            self:trace("  TAP left as it is, action=" .. tostring(action0))
+        end
+    end
+    local early: number? = self.EarlyAt
+    if early then
+        if now - early > self:earlyWindow() or (self.KeyDown ~= true and self.Held == nil) or not on then
+            self.EarlyAt = nil
+        elseif Court.HasBall then
+            self.EarlyAt = nil
+            self:onPress()
+        end
+    end
+    -- a hook something else took out again is put back in by the next frame
+    if self.Hooked and not self.HookFailed and now >= self.HookCheck then
+        self.HookCheck = now + 2
+        if self.HookBound and not Hook.owned(self) then
+            self.HookBound = false
+            self.Hooked = false
+        end
+    end
+    -- the game's input can load after the script, the light wrap is looked for again now and then
+    if on and self.HookFailed and not self.Binding and now >= (self.WrapRetry or 0) and (self.Retries or 0) < 8 then
+        self.Retries = (self.Retries or 0) + 1
+        self.WrapRetry = now + 5 * self.Retries
+        task.spawn(function()
+            if self.Stopped or self.HookBound or self.Binding then
+                return
+            end
+            self.Binding = true
+            local ok, mode = Hook.bind(self, false, true)
+            self.Binding = false
+            if self.Stopped then
+                pcall(Hook.remove)
+            elseif ok then
+                self.HookBound = true
+                self.HookMode = mode
+                self.HookFailed = nil
+            end
+        end)
+    end
+    if on and self.HookFailed and not self.HoldMode and not self.Warned.Hook and now >= (self.WarnAt or 0) then
+        if not self.WarnAt then
+            -- the first look for the wrap can take a moment, the note waits for it
+            self.WarnAt = now + 1.5
+        else
+            self.Warned.Hook = true
+            self.Notify("Hold the shoot key until the green on this executor, Auto Green lets go for you")
+        end
+    end
+    local action = action0
+    local live = character ~= nil and liveShot(character, action, self.Meters)
+    local shot: any = self.Shot
+    if shot then
+        if not live or (shot.ReleasedAt and now - shot.ReleasedAt >= 1.5) then
+            self.Shot = nil
+            shot = nil
+        elseif not shot.Fired and on then
+            shot.LongFrame = math.max(shot.LongFrame or 0, dt)
+            if shot.Fresh then
+                self:plan(now)
+            end
+            local at: number? = if shot.Fired then nil else shot.ReleaseAt
+            if at then
+                -- a frame can only be early or late, the release goes out on the one nearest to the planned time
+                if now + math.min(dt, 0.05) * 0.5 >= at then
+                    self:release()
+                end
+            elseif shot.Timed and shot.DunkAt and now >= shot.DunkAt then
+                self:release()
+            end
+        end
+    end
+    local press: number? = self.Press
+    if press then
+        if not on or not character then
+            self:settle()
+        else
+            local waiting = WAITING[action] == true and (action ~= "Dribbling" or now - press < 1.2)
+            local busy = self.Shot ~= nil or live or waiting
+            if busy then
+                self.IdleAt = now
+            end
+            local lost = self.Held ~= nil and not busy and not Court.HasBall
+            if not lost then
+                self.LostAt = nil
+            elseif not self.LostAt then
+                self.LostAt = now
+            end
+            local limit = TAP_TIMEOUT
+            if Court.HasBall and not busy then
+                local root = Court.Root
+                local rimAt = if root then Court.rimDistance(root.Position) else nil
+                if rimAt ~= nil and rimAt <= 45 then
+                    limit = 2
+                end
+            end
+            if action == "Dunking" and self.Held ~= nil then
+                self.DunkSince = self.DunkSince or now
+                if now - self.DunkSince >= 0.9 then
+                    self.DunkSince = nil
+                    self:send()
+                    return
+                end
+            else
+                self.DunkSince = nil
+            end
+            if now - self.IdleAt >= limit or now - press >= HOLD_TIMEOUT or (lost and now - self.LostAt >= LOST_GRACE) then
+                self:settle()
+            end
+        end
+    elseif self.Held ~= nil and self.EarlyAt == nil then
+        -- a release held for an early catch and shoot press waits for the ball, it goes out once that wait is over
+        self:send()
+    end
+end
+
+-- true while the shot is in its green window: right around the planned release, and a moment after the release went out
+function AutoGreen.greenWindow(self: any, now: number): boolean
+    local shot: any = self.Shot
+    if shot and not shot.Fired and shot.ReleaseAt and math.abs(shot.ReleaseAt - now) <= 0.08 then
+        return true
+    end
+    return now - self.LastAuto < 0.35
+end
+
+-- goes in only once Auto Green or a feature that repeats the game's own calls is switched on, never at load. the
+-- game's input signals are wrapped first, that costs nothing and works without hook functions. the method hook is
+-- only tried when allowHook says so. without either, Auto Green still lets go on the green while the key stays down
+function AutoGreen.hook(self: any, allowHook: boolean?)
+    if self.Stopped or self.Binding or self.HookBound then
+        return
+    end
+    if self.Hooked and (self.TriedHook or allowHook ~= true) then
+        return
+    end
+    self.Binding = true
+    local ok, mode = Hook.bind(self, allowHook == true)
+    self.Binding = false
+    if self.Stopped then
+        pcall(Hook.remove)
+        return
+    end
+    self.Hooked = true
+    self.TriedHook = allowHook == true
+    if ok then
+        self.HookBound = true
+        self.HookMode = mode
+        self.HookFailed = nil
+        if mode == "hook" then
+            -- the method hook is watched for a few seconds, an executor where it slows every frame loses it again
+            self.WatchHook = { Until = os.clock() + 3, Base = self.FrameAvg or (1 / 60), Sum = 0, Count = 0 }
+        end
+    else
+        self.HookMode = nil
+        self.HookFailed = mode or "unsupported"
+    end
+end
+
+function AutoGreen.bind(self: any)
+    task.spawn(function()
+        local folder = Court.service("InterfaceService")
+        local waited = 0
+        while not folder and waited < 30 and not self.Stopped do
+            waited += task.wait(1)
+            folder = Court.service("InterfaceService")
+        end
+        if not folder or self.Stopped then
+            return
+        end
+        local ok, remote = pcall(folder.WaitForChild, folder, "ShowFeedback", 30)
+        if not ok or not remote or self.Stopped then
+            return
+        end
+        self.Feedback = remote.OnClientEvent:Connect(function(character: any, _: any, timing: any)
+            if character ~= nil and character == self.Character then
+                local index = tonumber(timing)
+                if index then
+                    self:rated(index)
+                end
+            end
+        end)
+    end)
+end
+
+function AutoGreen.shutdown(self: any)
+    self.Stopped = true
+    self.Armed = false
+    self.HasBall = false
+    pcall(self.detach, self)
+    self.Press = nil
+    self.Held = nil
+    local feedback = self.Feedback
+    if feedback then
+        self.Feedback = nil
+        pcall(feedback.Disconnect, feedback)
+    end
+    pcall(Hook.remove)
+end
+
+return AutoGreen
+end
+modules["autopass"] = function(...)
+
+local import: (string) -> any = ...
+local Court: typeof(require("./court")) = import("court")
+
+local AutoPass = {}
+AutoPass.__index = AutoPass
+
+type Map = { [string]: any }
+
+local players: any = game:GetService("Players")
+
+local COOLDOWN = 1.5
+local RETRY = 0.15
+-- a teammate counts as open with no enemy this close to them
+local OPEN = 8
+local REACT_MIN = 0.2
+local REACT_MAX = 0.4
+
+local random = Random.new()
+
+-- a copied real pass is aimed at whoever it went to, every character, player, name or aim in it is swapped for the new target
+local function retarget(value: any, context: Map, depth: number): any
+    local target, mine = context.Target, context.Mine
+    local folder = mine.Parent
+    if typeof(value) == "Instance" then
+        if value:IsA("Player") then
+            return players:FindFirstChild(target.Name) or value
+        end
+        if folder and value.Parent == folder and value ~= mine then
+            return target
+        end
+        if folder and value:IsDescendantOf(folder) and not value:IsDescendantOf(mine) then
+            return target:FindFirstChild(value.Name) or value
+        end
+        return value
+    end
+    if type(value) == "string" and folder and value ~= mine.Name and folder:FindFirstChild(value) then
+        return target.Name
+    end
+    local kind = typeof(value)
+    if kind == "Vector3" then
+        local vector: any = value
+        local theirs = Court.root(target)
+        if theirs and vector.Magnitude > 2 then
+            return theirs.Position
+        end
+        if theirs and vector.Magnitude > 0.01 then
+            local aim = theirs.Position - context.Root.Position
+            return if aim.Magnitude > 0.01 then aim.Unit * vector.Magnitude else vector
+        end
+        return vector
+    end
+    if type(value) == "table" and depth < 6 then
+        local copy = {}
+        for key, inner in value do
+            copy[key] = retarget(inner, context, depth + 1)
+        end
+        return copy
+    end
+    return value
+end
+
+local function adapt(args: any, context: Map): any
+    return retarget(args, context, 0)
+end
+
+-- guessed forms, a real pass copied by the hook is used instead once there is one
+local FORMS: { (any) -> ...any } = {
+    function(context: any): ...any
+        return { Player = context.Target.Name, PassType = 1 }
+    end,
+    function(context: any): ...any
+        return context.Target
+    end,
+    function(context: any): ...any
+        return context.Target.Name
+    end,
+}
+
+local function passing(context: Map): boolean
+    local mine = context.Mine
+    return mine.Parent ~= nil and mine:GetAttribute("Action") == "Passing"
+end
+
+function AutoPass.new(read: (string) -> any): any
+    return setmetatable({ Read = read, Last = -math.huge, Since = nil :: number?, React = REACT_MIN, Context = {} :: Map }, AutoPass)
+end
+
+-- the most open teammate, open meaning no enemy near them, closer teammates and ones nearer the rim score higher
+local function pick(here: Vector3, openRange: number): any?
+    local best: any? = nil
+    local bestScore = -math.huge
+    local chars, roots, foe = Court.Chars, Court.Roots, Court.Foe
+    for index = 1, Court.Count do
+        if not foe[index] then
+            local theirs: Vector3 = roots[index].Position
+            local distance = (theirs - here).Magnitude
+            if distance >= 6 and distance <= 60 then
+                local open = Court.nearestFoe(theirs)
+                if open > openRange then
+                    local rim = Court.rimDistance(theirs)
+                    local score = math.min(open, 20) * 2 - distance * 0.4 - (rim or 0) * 0.3
+                    if score > bestScore then
+                        best = chars[index]
+                        bestScore = score
+                    end
+                end
+            end
+        end
+    end
+    return best
+end
+
+function AutoPass.step(self: any, now: number)
+    local read = self.Read
+    if read("AutoPass") ~= true or now - self.Last < COOLDOWN then
+        self.Since = nil
+        return
+    end
+    local mine, root = Court.Mine, Court.Root
+    if not mine or not root or not Court.HasBall then
+        self.Since = nil
+        return
+    end
+    local action = Court.Action
+    -- a dribble move plays out first, a pass in the middle of one is not something a player can do
+    if action == "Dribbling" then
+        return
+    end
+    if (action ~= "" and action ~= nil) or not Court.free(mine) or Court.HandsOff then
+        self.Since = nil
+        return
+    end
+    -- only when somebody is on you, otherwise you keep the ball
+    local here: Vector3 = root.Position
+    if Court.nearestFoe(here) > (read("PassPressure") or 6) then
+        self.Since = nil
+        return
+    end
+    local since = self.Since
+    if not since then
+        self.Since = now
+        self.React = REACT_MIN + random:NextNumber() * (REACT_MAX - REACT_MIN)
+        return
+    end
+    if now - since < self.React then
+        return
+    end
+    self.Since = nil
+    local target = pick(here, OPEN)
+    if not target then
+        self.Last = now - COOLDOWN + RETRY
+        return
+    end
+    self.Last = now
+    local context: Map = self.Context
+    context.Target = target
+    context.Mine = mine
+    context.Root = root
+    Court.fire("Pass", FORMS, passing, adapt, context)
+end
+
+return AutoPass
+end
+modules["autorebound"] = function(...)
+
+local import: (string) -> any = ...
+local Court: typeof(require("./court")) = import("court")
+
+local AutoRebound = {}
+AutoRebound.__index = AutoRebound
+
+local COOLDOWN = 1.2
+local REACT_MIN = 0.08
+local REACT_MAX = 0.2
+
+local random = Random.new()
+
+function AutoRebound.new(read: (string) -> any): any
+    return setmetatable({ Read = read, Last = -math.huge, Since = nil :: number?, React = REACT_MIN }, AutoRebound)
+end
+
+local function ready(self: any): boolean
+    local root = Court.Root
+    local mine = Court.Mine
+    if not root or not mine or Court.HasBall or Court.TeamBall or Court.FoeBall or Court.Dead or Court.HandsOff then
+        return false
+    end
+    -- Moving is the game walking you into place for a dead ball, nobody jumps then
+    local action = Court.Action
+    if (action ~= "" and action ~= nil) or not Court.free(mine) then
+        return false
+    end
+    local ball = Court.ball()
+    if not ball then
+        return false
+    end
+    local where: Vector3 = ball.Position
+    local velocity: Vector3 = ball.AssemblyLinearVelocity
+    local offset: Vector3 = where - root.Position
+    local high = offset.Y
+    if math.sqrt(offset.X * offset.X + offset.Z * offset.Z) > (self.Read("ReboundRange") or 8) or high < 2 or high > 12 or velocity.Y > 4 then
+        return false
+    end
+    -- a shot still dropping in toward the ring is not a rebound yet, a player waits for it to come off the rim
+    local _, rim = Court.rimDistance(where)
+    if rim then
+        local toRim = Vector3.new(rim.Position.X - where.X, 0, rim.Position.Z - where.Z)
+        local away = toRim.Magnitude
+        if away > 0.5 and away < 30 and where.Y > rim.Position.Y - 1.5 and (velocity.X * toRim.X + velocity.Z * toRim.Z) / away > 2 then
+            return false
+        end
+    end
+    return true
+end
+
+-- jumps for a ball that is in the air above you and coming down, for rebounds, missed shots and lobs
+function AutoRebound.step(self: any, now: number)
+    if self.Read("AutoRebound") ~= true or now - self.Last < COOLDOWN or not ready(self) then
+        self.Since = nil
+        return
+    end
+    local since = self.Since
+    if not since then
+        self.Since = now
+        self.React = REACT_MIN + random:NextNumber() * (REACT_MAX - REACT_MIN)
+        return
+    end
+    if now - since < self.React then
+        return
+    end
+    local remote = Court.input("Jump")
+    if not remote then
+        return
+    end
+    self.Last = now
+    self.Since = nil
+    Court.send(remote)
+end
+
+return AutoRebound
+end
+modules["autoshoot"] = function(...)
+
+local import: (string) -> any = ...
+local Court: typeof(require("./court")) = import("court")
+
+local AutoShoot = {}
+AutoShoot.__index = AutoShoot
+
+local COOLDOWN = 1.6
+local RETRY = 0.25
+-- this close to a rim the shot is a layup, it is taken from anywhere but behind the backboard
+local LAYUP_RANGE = 13
+-- every wait is moved by up to this share of it either way
+local JITTER = 0.15
+-- a catch in the air or a landing is not a shot, you have to stand on the floor this long first
+local SETTLE = 0.2
+
+local random = Random.new()
+
+function AutoShoot.new(read: (string) -> any, autoGreen: any): any
+    return setmetatable({ Read = read, AutoGreen = autoGreen, AutoDunk = nil :: any, Defense = nil :: any, Contest = nil :: any, Last = -math.huge, Since = nil :: number?, GroundAt = nil :: number?, Jitter = 0 }, AutoShoot)
+end
+
+-- the rim the shot goes at: the one you look toward, or right next to you the closest one whichever way you face.
+-- only ever the rim of the half you stand in, and only the rim your team attacks once a shot showed which one that is
+local function target(root: any, range: number, attack: any?): (any?, number)
+    local near, closest = Court.rimDistance(root.Position)
+    if not near or not closest or (attack and closest ~= attack) then
+        return nil, math.huge
+    end
+    local rim, distance = Court.facingRim(root, 0.2, range)
+    if rim == closest then
+        return rim, distance
+    end
+    if near <= LAYUP_RANGE then
+        return closest, near
+    end
+    return nil, math.huge
+end
+
+local function grounded(mine: any, root: any): boolean
+    local humanoid = Court.humanoid(mine)
+    if humanoid and humanoid.FloorMaterial == Enum.Material.Air and math.abs(root.AssemblyLinearVelocity.Y) > 2 then
+        return false
+    end
+    return true
+end
+
+function AutoShoot.step(self: any, now: number)
+    local read = self.Read
+    if read("AutoShoot") ~= true or read("AutoGreen") ~= true then
+        self.Since = nil
+        return
+    end
+    local mine, root = Court.Mine, Court.Root
+    if not mine or not root or not Court.HasBall then
+        self.Since = nil
+        self.GroundAt = nil
+        return
+    end
+    if not self.Since then
+        self.Since = now
+        self.Jitter = random:NextNumber(-JITTER, JITTER)
+    end
+    if not grounded(mine, root) then
+        self.GroundAt = nil
+        return
+    end
+    if not self.GroundAt then
+        self.GroundAt = now
+    end
+    local hold = math.max(0, (read("ShootDelay") or 300) * (1 + self.Jitter))
+    if now - self.Last < COOLDOWN or now - self.Since < hold / 1000 or now - self.GroundAt < SETTLE then
+        return
+    end
+    local action = Court.Action
+    if (action ~= "" and action ~= "Dribbling" and action ~= nil) or not Court.free(mine) or Court.forced(mine) or Court.HandsOff then
+        return
+    end
+    local defense = self.Defense
+    local rim, distance = target(root, read("ShootRange") or 24, if defense then defense:attackRim() else nil)
+    if not rim then
+        return
+    end
+    -- Auto Dunk only keeps the shot when it is really going to dunk it
+    local dunk = self.AutoDunk
+    if dunk and read("AutoDunk") == true and dunk:claims(distance) then
+        return
+    end
+    if distance < (read("MinShot") or 0) or distance > (read("ShootRange") or 24) then
+        return
+    end
+    if distance <= LAYUP_RANGE then
+        local ahead = Court.frontOf(rim, root.Position)
+        if ahead and ahead < -1 then
+            return
+        end
+    end
+    if Court.nearestFoe(root.Position) <= (read("OpenRange") or 6) then
+        return
+    end
+    -- Max Contest: the same 0 to 100% estimate as Shot Contest, a shot more contested than this waits until it opens up
+    local contest = self.Contest
+    if contest and contest:estimate(root) > (tonumber(read("MaxContest")) or 35) / 100 then
+        return
+    end
+    if self.AutoGreen:begin(false) then
+        self.Last = now
+    else
+        self.Last = now - COOLDOWN + RETRY
+    end
+end
+
+return AutoShoot
+end
+modules["ballmagnet"] = function(...)
+
+local import: (string) -> any = ...
+local Court: typeof(require("./court")) = import("court")
+local Drive: typeof(require("./drive")) = import("drive")
+
+local BallMagnet = {}
+BallMagnet.__index = BallMagnet
+
+-- while a pass, shot or inbound is happening the ball is in flight on purpose, it is only loose after that
+local BUSY: { [string]: boolean } = { Passing = true, CatchingPass = true, AwaitingPass = true, PassTransition = true, CatchingLob = true, Shooting = true, Inbounding = true, Gathering = true }
+local SPRINT_BONUS = 3.35
+local SLOW = 6
+
+function BallMagnet.new(read: (string) -> any): any
+    return setmetatable({ Read = read, Chasing = false, LastBusy = -math.huge, LastLive = -math.huge }, BallMagnet)
+end
+
+local function busy(action: any): boolean
+    if type(action) ~= "string" then
+        return false
+    end
+    return BUSY[action] == true or string.find(action, "Inbound", 1, true) ~= nil
+end
+
+local function inFlight(): boolean
+    if busy(Court.Action) then
+        return true
+    end
+    local chars = Court.Chars
+    for index = 1, Court.Count do
+        if busy(chars[index]:GetAttribute("Action")) then
+            return true
+        end
+    end
+    return false
+end
+
+function BallMagnet.stop(self: any)
+    if self.Chasing then
+        self.Chasing = false
+        Drive.clear("Magnet")
+    end
+end
+
+-- runs to the ball when nobody has it and it is close, your own movement always wins over it
+function BallMagnet.step(self: any, now: number)
+    if self.Read("BallMagnet") ~= true then
+        self:stop()
+        return
+    end
+    local mine, root = Court.Mine, Court.Root
+    if not mine or not root then
+        self:stop()
+        return
+    end
+    if inFlight() then
+        self.LastBusy = now
+    end
+    -- a shot or pass is still in the air for a moment after the shooter's action ends, that ball is not loose yet
+    local action = Court.Action
+    if Court.HasBall or Court.TeamBall or Court.FoeBall or Court.Dead or Court.HandsOff or now - self.LastBusy < 2 or (action ~= "" and action ~= nil) or not Court.free(mine) then
+        self:stop()
+        return
+    end
+    local ball = Court.ball()
+    if not ball then
+        self:stop()
+        return
+    end
+    local here: Vector3 = root.Position
+    local where: Vector3 = ball.Position
+    local velocity: Vector3 = ball.AssemblyLinearVelocity
+    -- a ball lying still that nobody just let go of is a dead ball set down for an inbound, not a loose one
+    if velocity.Magnitude < 1 and not self.Chasing and now - self.LastLive > 1.5 then
+        return
+    end
+    if velocity.Magnitude >= 1 then
+        self.LastLive = now
+    end
+    -- while chasing, a bounce that lifts the ball a little or speeds it up for a frame does not end the chase
+    local height = if self.Chasing then 6 else 4
+    local fast = if self.Chasing then 30 else 22
+    local distance = (where - here).Magnitude
+    if distance > (self.Read("MagnetRange") or 12) or where.Y - here.Y > height or velocity.Magnitude > fast then
+        self:stop()
+        return
+    end
+    -- a slow ball or one rolling your way, never one running away from you
+    local drift = Vector3.new(velocity.X, 0, velocity.Z)
+    local rolling = drift.Magnitude
+    if rolling > SLOW then
+        local toMe = Vector3.new(here.X - where.X, 0, here.Z - where.Z)
+        if toMe.Magnitude >= 0.5 and drift:Dot(toMe.Unit) < rolling * 0.4 then
+            self:stop()
+            return
+        end
+    end
+    local walk = mine:GetAttribute("WalkSpeed")
+    local speed = math.clamp(if type(walk) == "number" then walk else 14, 8, 17)
+    -- only as fast as you really run, a sprint speed without the sprint on is not something a player can do
+    if distance > 6 and mine:GetAttribute("Sprinting") == true then
+        speed += SPRINT_BONUS
+    end
+    self.Chasing = true
+    -- aimed a little ahead of a rolling ball
+    Drive.set("Magnet", Vector3.new(where.X + velocity.X * 0.15, here.Y, where.Z + velocity.Z * 0.15), speed, true, false)
+end
+
+function BallMagnet.shutdown(self: any)
+    self:stop()
+end
+
+return BallMagnet
+end
+modules["changelog"] = function(...)
+
+local Changelog = {}
+
+Changelog.VERSION = "1.2"
+Changelog.DATE = "November 10, 2026"
+
+type Group = { Mode: string, Added: { string }?, Changed: { string }?, Removed: { string }?, Fixed: { string }? }
+
+Changelog.GROUPS = {
+    {
+        Mode = "General",
+        Added = {
+            "Added Presets, Casual, Legit and Full",
+            "Added Auto Dunk, runs you to the rim and dunks for you",
+            "Added Dunk support for Auto Green",
+            "Added Shot Contest, shows how open your shot is",
+            "Added Max Contest for Auto Shoot, it waits for an open shot",
+            "Added Move Keys, your own key for every dribble move",
+            "Added Play Combo, plays the combo once per key press",
+            "Added Guard Only When Facing for Auto Guard",
+            "Added Dribble Moves When Guarded",
+            "Added separate settings for every glide",
+            "Added stamina and ball handler to the ESP",
+        },
+        Changed = {
+            "Reworked Auto Green, now press to green and works on more executors",
+            "Reworked Auto Guard, moves you with W A S D and keeps a gap",
+            "Reworked Move With Him, closes out and slides with your man",
+            "Reworked Auto Block, faster and ignores pump fakes",
+            "Reworked Auto Shoot, Auto Pass and Auto Dunk, they pick better moments",
+            "Reworked Glides, each one follows its own move",
+            "Reworked court visuals, ESP and the menu",
+        },
+        Removed = {
+            "Removed Stamina Lock, the server keeps its own stamina",
+            "Removed Tap Rescue, a quick tap of E stays a pump fake",
+            "Removed Shot Stats and Meter Overlay",
+        },
+        Fixed = {
+            "Fixed Auto Shoot shooting from your own half or while contested",
+            "Fixed Auto Guard not walking to the player and stopping every possession",
+            "Fixed Auto Steal in the tutorial",
+            "Fixed Shot Glide doing nothing on a running shot",
+            "Fixed fake shot into step back shooting",
+            "Fixed layup jelly",
+            "Fixed freezing after a foul or dead ball",
+            "Fixed low FPS with the court visuals and ESP on",
+        },
+    },
+} :: { Group }
+
+Changelog.HISTORY = {
+    {
+        Version = "1",
+        Date = "November 4, 2026",
+        Groups = {
+            {
+                Mode = "General",
+                Added = {
+                    "Released",
+                },
+            },
+            {
+                Mode = "Offense",
+                Added = {
+                    "Auto Green",
+                    "Auto Shoot",
+                    "Auto Pass To Teammates",
+                    "Auto Dribble when Guarded",
+                },
+            },
+            {
+                Mode = "Defense",
+                Added = {
+                    "Auto Steal",
+                    "Auto Guard",
+                    "Auto Block",
+                    "Auto Rebound",
+                    "Ball Magnet",
+                },
+            },
+            {
+                Mode = "Player",
+                Added = {
+                    "Always Sprint",
+                    "Custom Walkspeed",
+                    "No Stun",
+                    "No Debounce",
+                    "No Cold Zone",
+                },
+            },
+            {
+                Mode = "Visuals",
+                Added = {
+                    "Visuals for features, players and court parts",
+                },
+            },
+        },
+    },
+} :: { { Version: string, Date: string, Lines: { string }?, Groups: { Group }? } }
+
+Changelog.CLOSING = "please join the discord server c:"
+
+Changelog.OPEN = "General"
+
+return Changelog
+end
+modules["combo"] = function(...)
+
+local import: (string) -> any = ...
+local Config: typeof(require("./config")) = import("config")
+local Court: typeof(require("./court")) = import("court")
+
+local Combo = {}
+Combo.__index = Combo
+
+local INPUTS = Config.MOVE_INPUTS
+
+-- how long the server gets to start a move, the pause between two moves and the pause before the chain starts over
+local START = 0.45
+local GAP_MIN = 0.15
+local GAP_MAX = 0.3
+local REST = 0.4
+-- no dribble move this close to a rim, it throws a drive off its line and the dunk or layup misses
+local RIM_CLEAR = 24
+-- a Play Combo press that cannot start this soon (no ball, too close to the rim) is dropped instead of firing later
+local ONCE_WAIT = 1.2
+
+local random = Random.new()
+
+function Combo.new(read: (string) -> any, set: ((string, any) -> ())?): any
+    return setmetatable({ Read = read, Set = set, Index = 0, WaitUntil = 0, Seen = true, Done = false, FreeAt = nil :: number?, Rest = false, Gap = GAP_MIN, Once = nil :: number? }, Combo)
+end
+
+function Combo.reset(self: any)
+    self.Index = 0
+    self.Rest = false
+    self.FreeAt = nil
+end
+
+-- the Play Combo key: the chain plays one time from the start, then stops until the key is pressed again
+function Combo.playOnce(self: any)
+    self.Once = os.clock()
+    self.Done = false
+    self:reset()
+end
+
+-- one run is over: Play Combo ends, and with Combo Once the looping toggle switches itself off
+function Combo.finish(self: any)
+    self.Done = false
+    self:reset()
+    if self.Once then
+        self.Once = nil
+        return
+    end
+    local set = self.Set
+    if set then
+        pcall(set, "DribbleCombo", false)
+    end
+end
+
+function Combo.step(self: any, now: number)
+    local read = self.Read
+    local mine, root = Court.Mine, Court.Root
+    local once: number? = self.Once
+    local looping = read("DribbleCombo") == true
+    if not looping and not once then
+        self.Done = false
+        self:reset()
+        return
+    end
+    local function stop()
+        if self.Done then
+            self:finish()
+        end
+        self:reset()
+        -- a Play Combo press that never got going is let go
+        if once and self.Index == 0 and now - once > ONCE_WAIT then
+            self.Once = nil
+        end
+    end
+    if not mine or not root or not Court.HasBall then
+        stop()
+        return
+    end
+    local here: Vector3 = root.Position
+    local rimDistance = Court.rimDistance(here)
+    if rimDistance and rimDistance < RIM_CLEAR then
+        stop()
+        return
+    end
+    if not once and read("ComboGuarded") == true and Court.nearestFoe(here) > (read("DribbleRange") or 7) then
+        stop()
+        return
+    end
+    local action = Court.Action
+    if action ~= "" and action ~= nil then
+        -- a move is playing, the next one waits for it to end
+        self.Seen = true
+        self.FreeAt = nil
+        return
+    end
+    if mine:GetAttribute("CanMove") == false or mine:GetAttribute("Debounce") == true or mine:GetAttribute("Stunned") == true or Court.HandsOff then
+        return
+    end
+    if not self.Seen and now < self.WaitUntil then
+        return
+    end
+    if self.Done and (once or read("ComboOnce") == true) then
+        self:finish()
+        return
+    end
+    local free: number = self.FreeAt or now
+    self.FreeAt = free
+    if now - free < (if self.Rest then REST else self.Gap) then
+        return
+    end
+    local remote = Court.input("Dribble")
+    if not remote then
+        return
+    end
+    local chain = Config.COMBOS[read("ComboMoves")] or Config.COMBOS[Config.COMBO_NAMES[1]]
+    self.Index = self.Index % #chain + 1
+    self.Rest = self.Index == #chain
+    if self.Rest and (once or read("ComboOnce") == true) then
+        self.Done = true
+    end
+    local keys = INPUTS[chain[self.Index]]
+    self.Gap = GAP_MIN + random:NextNumber() * (GAP_MAX - GAP_MIN)
+    self.Seen = false
+    self.WaitUntil = now + START
+    self.FreeAt = nil
+    if not keys then
+        return
+    end
+    -- the same call the game makes for the dribble keys: the keys, whether sprint is held and where you are moving
+    local sprint = Court.sprintHeld() or mine:GetAttribute("Sprinting") == true
+    Court.send(remote, keys[if mine:GetAttribute("Hand") == "L" then "L" else "R"], sprint, Court.heading() or Vector3.zero)
+end
+
+return Combo
+end
+modules["config"] = function(...)
+
+local Config = {}
+
+-- where the meter fill (meterOffset Y) tops out for each meter type, measured from rated shots, releasing there is Perfect
+Config.PEAKS = {
+    Bat = -0.99,
+    Funnel2 = -0.985,
+    Rocket = -0.91,
+    Vertical = -1.48,
+} :: { [string]: number }
+
+Config.GUARD_BALL = "Ball Handler"
+Config.GUARD_NEAREST = "Nearest Player"
+Config.GUARD_TARGETS = { Config.GUARD_BALL, Config.GUARD_NEAREST }
+
+-- dribble moves chained one after the other, by the game's own move names
+Config.COMBO_NAMES = { "Cross Tween", "Hesi Cross", "Behind Back Spin", "Double Cross Snatch", "Breakdown Stepback", "Half Spin Cross" }
+Config.COMBOS = {
+    ["Cross Tween"] = { "Crossover", "Tween", "Crossover" },
+    ["Hesi Cross"] = { "Hesitation", "Crossover", "Hesitation" },
+    ["Behind Back Spin"] = { "BehindBack", "Spin" },
+    ["Double Cross Snatch"] = { "DoubleCrossover", "SnatchBack" },
+    ["Breakdown Stepback"] = { "Breakdown", "Crossover", "StepBack" },
+    ["Half Spin Cross"] = { "HalfSpin", "Crossover" },
+} :: { [string]: { string } }
+
+-- the keys of each dribble move for the hand the ball is in, from the game's own dribble table
+Config.MOVE_INPUTS = {
+    Crossover = { R = "Z", L = "C" },
+    Hesitation = { R = "C", L = "Z" },
+    Tween = { R = "ZZ", L = "CC" },
+    DoubleCrossover = { R = "CC", L = "ZZ" },
+    BehindBack = { R = "CX", L = "ZX" },
+    Spin = { R = "CXZ", L = "ZXC" },
+    StepBack = { R = "X", L = "X" },
+    SnatchBack = { R = "XX", L = "XX" },
+    HalfSpin = { R = "V", L = "V" },
+    Breakdown = { R = "VC", L = "VZ" },
+} :: { [string]: { [string]: string } }
+
+-- the moves that get a key of their own in the menu, the name shown and the game's move name
+Config.MOVE_KEYS = {
+    { "Crossover", "Crossover" },
+    { "Hesitation", "Hesitation" },
+    { "Tween", "Tween" },
+    { "Double Cross", "DoubleCrossover" },
+    { "Behind Back", "BehindBack" },
+    { "Spin", "Spin" },
+    { "Step Back", "StepBack" },
+    { "Snatch Back", "SnatchBack" },
+    { "Half Spin", "HalfSpin" },
+    { "Breakdown", "Breakdown" },
+} :: { { string } }
+
+
+Config.DUNK_BOTH = "Both"
+Config.DUNK_DRIVING = "Driving Only"
+Config.DUNK_STANDING = "Standing Only"
+Config.DUNK_TYPES = { Config.DUNK_BOTH, Config.DUNK_DRIVING, Config.DUNK_STANDING }
+
+Config.CONTEST_STYLES = { "Percent", "Bar" }
+Config.CONTEST_COLORS = { "Contest Colors", "Custom" }
+
+Config.TIMINGS = { "Very Early", "Early", "Slightly Early", "Good", "Perfect", "Slightly Late", "Late", "Very Late" }
+
+-- each on/off sub-option and the main option it belongs to, a sub-option reads as off while its main option is off
+Config.PARENT = {
+    OpenShotGlow = "OpenShot", OpenShotNumber = "OpenShot", OpenShotBall = "OpenShot",
+    ContestWho = "OpenShot", ContestFoeMark = "OpenShot",
+    OpenOnly = "AutoShoot",
+    DunkMove = "AutoDunk", DunkOpenOnly = "AutoDunk",
+    GuardMove = "AutoGuard", GuardFacing = "AutoGuard",
+    StealFacing = "AutoSteal", AvoidFouls = "AutoSteal",
+    ReadFakes = "AutoBlock",
+    BallMagnet = "AutoRebound",
+    BlockDribbleKeys = "MoveKeys",
+    ComboOnce = "DribbleCombo", ComboGuarded = "DribbleCombo",
+    TapShoot = "AutoGreen", AutoCalibrate = "AutoGreen", RimFront = "AutoGreen", NotifyRelease = "AutoGreen", SafeMode = "AutoGreen",
+    DribbleGlideSteer = "DribbleGlide", GatherGlideSteer = "GatherGlide", ShotGlideSteer = "ShotGlide",
+    EspTeam = "Esp", EspStamina = "Esp", EspBallOnly = "Esp",
+} :: { [string]: string }
+
+Config.DEFAULTS = {
+    AutoGreen = false,
+    GreenOffset = 0,
+    PingComp = 100,
+    AutoCalibrate = true,
+    SafeMode = false,
+    TapShoot = false,
+    LayupGreen = true,
+    RimFront = true,
+    NotifyRelease = false,
+    PerfectChance = 100,
+    OpenOnly = false,
+    OpenRange = 6,
+    MaxContest = 35,
+    MinShot = 0,
+    MaxShot = 120,
+    AutoShoot = false,
+    AutoDunk = false,
+    DunkRange = 30,
+    DunkType = "Both",
+    DunkMove = false,
+    DunkOpenOnly = false,
+    ShootRange = 24,
+    ShootDelay = 300,
+    AutoSteal = false,
+    StealRange = 8,
+    AutoGuard = false,
+    GuardRange = 7,
+    GuardTarget = "Ball Handler",
+    GuardMove = true,
+    GuardGap = 16,
+    GuardFacing = false,
+    ReadFakes = true,
+    StealFacing = true,
+    AvoidFouls = true,
+    AlwaysSprint = false,
+    CustomSpeed = false,
+    WalkSpeed = 16,
+    NoStun = false,
+    NoDebounce = false,
+    NoCold = false,
+    ThreePointLine = false,
+    DunkZones = false,
+    RangeViz = false,
+    ShotRangeViz = false,
+    ShotColor = Color3.fromRGB(255, 255, 255),
+    StealColor = Color3.fromRGB(255, 90, 90),
+    GuardColor = Color3.fromRGB(90, 160, 255),
+    BlockColor = Color3.fromRGB(255, 200, 70),
+    FullSpeed = false,
+    AutoBlock = false,
+    BlockRange = 10,
+    BlockDelay = 0,
+    AutoRebound = false,
+    ReboundRange = 8,
+    BallMagnet = false,
+    MagnetRange = 12,
+    AutoPass = false,
+    PassPressure = 6,
+    AutoDribble = false,
+    DribbleRange = 7,
+    DribbleCombo = false,
+    ComboMoves = "Cross Tween",
+    ComboGuarded = true,
+    DribbleGlide = false,
+    GatherGlide = false,
+    ShotGlide = false,
+    DribbleGlideSpeed = 5,
+    DribbleGlideTime = 240,
+    DribbleGlideStrength = 30,
+    DribbleGlideSteer = false,
+    GatherGlideSpeed = 14,
+    GatherGlideTime = 500,
+    GatherGlideStrength = 100,
+    GatherGlideSteer = false,
+    ShotGlideSpeed = 10,
+    ShotGlideTime = 440,
+    ShotGlideStrength = 60,
+    ShotGlideSteer = false,
+    ComboOnce = true,
+    MoveKeys = false,
+    BlockDribbleKeys = false,
+    OpenShot = false,
+    OpenShotGlow = true,
+    OpenShotNumber = false,
+    ContestStyle = "Percent",
+    ContestWho = true,
+    ContestFoeMark = false,
+    ContestTextSize = 13,
+    ContestHeight = 4.2,
+    ContestColorMode = "Contest Colors",
+    ContestLabelColor = Color3.fromRGB(255, 255, 255),
+    ContestViewRange = 120,
+    ContestOpacity = 0.85,
+    GlowStrength = 60,
+    OpenShotBall = true,
+    ContestRange = 6,
+    InfStamina = false,
+    Esp = false,
+    EspTeam = false,
+    EspStamina = true,
+    EspBallOnly = false,
+    EspDistance = 300,
+    EspTextSize = 13,
+    EspBackground = 0.2,
+    ColorEnemy = Color3.fromRGB(255, 105, 105),
+    ColorTeam = Color3.fromRGB(105, 235, 135),
+    ColorHolder = Color3.fromRGB(255, 215, 80),
+    ColorBackground = Color3.fromRGB(16, 16, 22),
+} :: { [string]: any }
+
+return Config
+end
+modules["contest"] = function(...)
+
+local import: (string) -> any = ...
+local Court: typeof(require("./court")) = import("court")
+local Env: typeof(require("./env")) = import("env")
+
+-- the glow on your own character and the contest number above your head.
+-- Open Shot: green when nobody can contest your shot, yellow when one is close, red when he is on you, with the
+-- distance to the closest defender and how much he contests it. a defender between you and the rim counts for more.
+local Contest = {}
+Contest.__index = Contest
+
+local OPEN = Color3.fromRGB(70, 230, 110)
+local CLOSE = Color3.fromRGB(255, 200, 70)
+local TIGHT = Color3.fromRGB(255, 80, 80)
+local DARK = Color3.fromRGB(14, 16, 20)
+-- how fast the color follows and the glow fades, so it never flickers when a defender steps in and out
+local EASE = 10
+local FADE = 6
+-- the glow at full strength, kept soft: mostly an outline with a light fill
+local FILL = 0.84
+local OUTLINE = 0.3
+local OPEN_BELOW = 0.35
+
+local function holder(): any?
+    local hui = Env.gethui
+    if hui then
+        local ok, folder = pcall(hui)
+        if ok and folder then
+            return folder
+        end
+    end
+    local ok, core = pcall(game.GetService, game, "CoreGui")
+    return if ok then core else nil
+end
+
+local function mix(from: Color3, to: Color3, share: number): Color3
+    return Color3.new(from.R + (to.R - from.R) * share, from.G + (to.G - from.G) * share, from.B + (to.B - from.B) * share)
+end
+
+function Contest.new(read: (string) -> any, autoGreen: any?): any
+    return setmetatable({ Read = read, AutoGreen = autoGreen, Light = nil :: any, Color = OPEN, Glow = 0, Value = 0, Gap = math.huge, Open = true }, Contest)
+end
+
+-- 0 open, 1 fully contested: closeness inside the range, weighted by how much the defender stands toward the rim
+function Contest.measure(self: any, root: any): (number, number)
+    local range: number = self.Read("ContestRange") or 6
+    local here: Vector3 = root.Position
+    local _, rim = Court.rimDistance(here)
+    local toRim: Vector3? = nil
+    if rim then
+        local flat = Court.flat(rim.Position - here)
+        toRim = if flat.Magnitude > 0.5 then flat.Unit else nil
+    end
+    local worst, gap = 0, math.huge
+    local who, whoRoot = nil, nil
+    local roots, foe, chars = Court.Roots, Court.Foe, Court.Chars
+    for index = 1, Court.Count do
+        if foe[index] then
+            local offset = Court.flat(roots[index].Position - here)
+            local distance = offset.Magnitude
+            if distance < gap then
+                gap = distance
+            end
+            if distance < range * 1.5 + 2 then
+                local away = if distance > 0.1 then offset / distance else Vector3.zero
+                local theirRoot = roots[index]
+                -- a defender closing out on you counts as nearer than he is, one drifting away as further
+                local motion = Court.flat(theirRoot.AssemblyLinearVelocity)
+                local closing = math.clamp(-motion:Dot(away), -6, 12)
+                local effective = math.max(distance - closing * 0.15, 0)
+                local closeness = math.clamp((range * 1.5 - effective) / range, 0, 1)
+                -- between you and the rim counts most, beside you less, behind you least
+                local front = 0.6
+                if toRim and distance > 0.1 then
+                    front = 0.35 + 0.65 * math.clamp(away:Dot(toRim) * 0.5 + 0.5, 0, 1)
+                end
+                -- looking at you he can get a hand up, turned away he cannot
+                local look = Court.flat(theirRoot.CFrame.LookVector)
+                local facing = if look.Magnitude > 0.1 and distance > 0.1 then math.clamp(-look.Unit:Dot(away) * 0.5 + 0.5, 0, 1) else 0.5
+                local share = closeness * front * (0.6 + 0.4 * facing)
+                if share > worst then
+                    worst = share
+                    who, whoRoot = chars[index], theirRoot
+                end
+            end
+        end
+    end
+    self.Who, self.WhoRoot = who, whoRoot
+    return worst, gap
+end
+
+-- the estimate alone, kept up to date for Auto Shoot without the glow or the label
+function Contest.estimate(self: any, root: any): number
+    local value, gap = self:measure(root)
+    self.Value, self.Gap = value, gap
+    return value
+end
+
+function Contest.clear(self: any)
+    local light = self.Light
+    if light then
+        self.Light = nil
+        pcall(light.Destroy, light)
+    end
+end
+
+-- the one color both the glow and the number use, from the same open state
+function Contest.shade(self: any): Color3
+    if self.Open then
+        return OPEN
+    end
+    return if self.Value < 0.65 then CLOSE else TIGHT
+end
+
+function Contest.step(self: any, now: number, dt: number)
+    local read = self.Read
+    local mine, root = Court.Mine, Court.Root
+    local contestOn = read("OpenShot") == true
+    if not mine or not root or not contestOn then
+        -- Auto Shoot still needs the number while the glow and the label are off, nothing is drawn for it
+        if root and read("AutoShoot") == true then
+            self:estimate(root)
+        end
+        self.Shown = false
+        self.Glow = 0
+        self:clear()
+        return
+    end
+    local step = math.min(dt, 0.1)
+    local value, gap = self:measure(root)
+    self.Value, self.Gap = value, gap
+    -- open turns on below one value and off above a higher one, so the glow and the number never flicker on the edge
+    if self.Open then
+        self.Open = value < OPEN_BELOW + 0.05
+    else
+        self.Open = value < OPEN_BELOW - 0.05
+    end
+    local ball = Court.HasBall
+    local showing = contestOn and (read("OpenShotBall") ~= true or ball)
+    self.Shown = showing
+    -- the green window comes first, then the contest colors
+    local goal: Color3? = nil
+    if showing and read("OpenShotGlow") == true then
+        goal = self:shade()
+    end
+    self.Goal = goal
+    if goal then
+        self.Color = mix(self.Color, goal, 1 - math.exp(-EASE * step))
+    end
+    local strength = if goal then 1 else 0
+    self.Glow += math.clamp(strength - self.Glow, -FADE * step, FADE * step)
+    if self.Glow <= 0.005 then
+        self:clear()
+        return
+    end
+    local light = self.Light
+    if (not light or light.Parent == nil or light.Adornee ~= mine) and now >= (self.RetryAt or 0) then
+        self:clear()
+        -- a highlight this executor cannot make is not tried again every frame
+        self.RetryAt = now + 2
+        local ok, made = pcall(function(): any
+            local item = Instance.new("Highlight")
+            item.Name = "OpenShot"
+            item.DepthMode = Enum.HighlightDepthMode.Occluded
+            item.FillTransparency = 1
+            item.OutlineTransparency = 1
+            item.Adornee = mine
+            item.Parent = holder() or mine
+            return item
+        end)
+        light = if ok then made else nil
+        self.Light = light
+    end
+    if light then
+        local strength = math.clamp((tonumber(self.Read("GlowStrength")) or 60) / 100, 0.05, 1)
+        local glow = self.Glow * strength
+        light.FillColor = self.Color
+        light.OutlineColor = self.Color
+        light.FillTransparency = 1 - (1 - FILL) * glow
+        light.OutlineTransparency = 1 - (1 - OUTLINE) * glow
+    end
+end
+
+local function percentOf(value: number): string
+    return math.floor(value * 100 + 0.5) .. "%"
+end
+
+local function wording(open: boolean, value: number): string
+    if open then
+        return "OPEN"
+    end
+    return if value < 0.65 then "CONTESTED" else "SMOTHERED"
+end
+
+-- how fast the shown number and color follow, so the label glides instead of jumping
+local FOLLOW = 12
+local REACH = 4
+
+-- the label is the notification pill of the interface itself (same shape, font, colors and edge light), drawn by the
+-- interface at a screen point, so it matches the watermark and the notifications exactly
+local function lift(self: any, key: string, want: number, dt: number): number
+    local alpha: number = self[key] or 0
+    alpha += math.clamp(want - alpha, -REACH * dt, REACH * dt)
+    self[key] = alpha
+    return alpha
+end
+
+-- the label above your head: how contested your shot is (0 to 100%) and who contests it. it can mark the contester too
+function Contest.draw(self: any, canvas: any, chip: any)
+    local read = self.Read
+    local now = os.clock()
+    local dt = math.clamp(now - (self.DrawAt or now), 0, 0.1)
+    self.DrawAt = now
+    local root = Court.Root
+    local height = tonumber(read("ContestHeight")) or 4.2
+    local range = tonumber(read("ContestViewRange")) or 120
+    local opacity = math.clamp(tonumber(read("ContestOpacity")) or 0.85, 0.1, 1)
+    local labelOn = self.Shown and root ~= nil and canvas ~= nil and chip ~= nil and read("OpenShotNumber") == true
+    local point: Vector2? = nil
+    local want = 0
+    if labelOn then
+        local found, depth = canvas.project(root.Position + Vector3.new(0, height, 0))
+        if found and type(depth) == "number" and depth > 0 and depth <= range then
+            point, want = found, opacity
+        end
+    end
+    local alpha = lift(self, "LabelAlpha", want, dt)
+    local follow = 1 - math.exp(-FOLLOW * dt)
+    self.Eased = (self.Eased or self.Value) + (self.Value - (self.Eased or self.Value)) * follow
+    local custom: any = read("ContestLabelColor")
+    local goal = if read("ContestColorMode") == "Custom" and typeof(custom) == "Color3" then custom else self:shade()
+    self.Tone = if self.Tone then mix(self.Tone, goal, follow) else goal
+    local scale = math.clamp(tonumber(read("ContestTextSize")) or 13, 8, 30) / 13
+    local number = percentOf(self.Eased)
+    local tone: Color3 = self.Tone
+    if alpha > 0.01 and point and chip then
+        local who = self.Who
+        local runs = { { Text = number, Color = "Text" } }
+        if read("ContestWho") == true and who and not self.Open then
+            runs[2] = { Text = "by " .. tostring(who.Name), Color = "Sub" }
+        end
+        self.LastPoint = point
+        local shown = Vector2.new(point.X, point.Y - (1 - math.clamp(alpha / math.max(want, 0.1), 0, 1)) * 8)
+        if read("ContestStyle") == "Bar" then
+            -- the Bar style is only a gauge, no words and no number
+            chip("contest", shown, {}, alpha, scale, { Value = self.Eased, Color = tone, Only = true })
+        else
+            chip("contest", shown, { { { Text = wording(self.Open, self.Value), Color = tone } }, runs }, alpha, scale, nil)
+        end
+    end
+    -- the smaller mark over the contester keeps its last place while it fades out
+    local theirs = self.WhoRoot
+    local marking = labelOn and read("ContestFoeMark") == true and theirs ~= nil and not self.Open and theirs.Parent ~= nil
+    local markPoint: Vector2? = nil
+    local markWant = 0
+    if marking then
+        local found, depth = canvas.project(theirs.Position + Vector3.new(0, height, 0))
+        if found and type(depth) == "number" and depth > 0 and depth <= range then
+            markPoint, markWant = found, opacity
+        end
+    end
+    local markAlpha = lift(self, "MarkAlpha", markWant, dt)
+    if markAlpha > 0.01 and chip then
+        local at = markPoint or self.MarkPoint
+        if at then
+            self.MarkPoint = at
+            if read("ContestStyle") == "Bar" then
+                chip("mark", at, {}, markAlpha, scale * 0.8, { Value = self.Eased, Color = tone, Only = true })
+            else
+                chip("mark", at, { { { Text = number, Color = tone } } }, markAlpha, scale * 0.8, nil)
+            end
+        end
+    end
+end
+
+function Contest.shutdown(self: any)
+    self.Shown = false
+    self.Glow = 0
+    self:clear()
+end
+
+return Contest
+end
+modules["court"] = function(...)
+
+local import: (string) -> any = ...
+local Env: typeof(require("./env")) = import("env")
+
+local Court = {}
+
+type Map = { [string]: any }
+
+local players: any = game:GetService("Players")
+local replicatedStorage: any = game:GetService("ReplicatedStorage")
+local userInput: any = game:GetService("UserInputService")
+local stats: any = game:GetService("Stats")
+
+local MOVE_KEYS = { Enum.KeyCode.W, Enum.KeyCode.A, Enum.KeyCode.S, Enum.KeyCode.D, Enum.KeyCode.Up, Enum.KeyCode.Down, Enum.KeyCode.Left, Enum.KeyCode.Right }
+local FAR_RIM = 30
+local HOOK = "__PBShootHook"
+-- the ball counts as a player's this close to his root
+local BALL_REACH = 6
+
+-- the world as it was at the start of this frame, every feature reads it instead of walking the game again
+Court.Now = 0
+Court.Mine = nil :: any
+Court.Root = nil :: any
+Court.Action = nil :: any
+Court.HasBall = false
+Court.Count = 0
+Court.Chars = {} :: { any }
+Court.Roots = {} :: { any }
+Court.Foe = {} :: { boolean }
+Court.Carry = {} :: { boolean }
+Court.TeamBall = false
+Court.FoeBall = false
+Court.Ping = 0.08
+Court.Sending = 0
+Court.Held = false
+-- true while the script holds any move key
+Court.Keys = false
+-- when the script last let go of its move keys, the game still moves you on them for a moment after
+Court.KeysOff = -math.huge
+Court.Focused = true
+Court.UserMoving = false
+-- a made basket or an inbound: the ball is dead until somebody holds it again
+Court.Dead = false
+-- true while the game moves or holds you itself, see Court.forced
+Court.Forced = false
+-- true while the game walks, stuns or holds you and a short moment after: no feature presses a key, sends a call,
+-- writes an attribute or touches your velocity then
+Court.HandsOff = false
+-- when the game last walked you itself (Moving, Fouled, Inbounding), the last frame it walked or stunned you, and
+-- whether anybody on the court is fouled
+Court.WalkAt = -math.huge
+Court.FreeAt = -math.huge
+Court.Foul = false
+-- per character of the frame: holds the ball and the ball really is at him, and whether any enemy is such a one
+Court.Ball = {} :: { boolean }
+Court.FoeHeld = false
+-- what was held back or written while hands were off, read by the walk debug line
+Court.Touched = {} :: { string }
+
+local function flat(vector: Vector3): Vector3
+    return Vector3.new(vector.X, 0, vector.Z)
+end
+
+Court.flat = flat
+
+local records: { [any]: Map } = setmetatable({}, { __mode = "k" }) :: any
+
+local function record(character: any): Map
+    local entry = records[character]
+    if not entry then
+        entry = {}
+        records[character] = entry
+    end
+    return entry
+end
+
+function Court.root(character: any): any?
+    local entry = record(character)
+    local root = entry.Root
+    if root and root.Parent == character then
+        return root
+    end
+    root = character:FindFirstChild("HumanoidRootPart")
+    if root and root:IsA("BasePart") then
+        entry.Root = root
+        return root
+    end
+    entry.Root = nil
+    return nil
+end
+
+function Court.humanoid(character: any): any?
+    local entry = record(character)
+    local humanoid = entry.Humanoid
+    if humanoid and humanoid.Parent == character then
+        return humanoid
+    end
+    humanoid = character:FindFirstChildOfClass("Humanoid")
+    entry.Humanoid = humanoid
+    return humanoid
+end
+
+-- the one with the ball has a Basketball value in the character, dribbling and triple threat cover the moments around it
+function Court.holds(character: any): boolean
+    local entry = record(character)
+    local inner = entry.Inner
+    if not inner or not inner:IsDescendantOf(character) then
+        local folder = character:FindFirstChild("Attributes")
+        inner = if folder then folder:FindFirstChild("Basketball") else nil
+        entry.Inner = inner
+    end
+    if inner and inner:IsA("ObjectValue") and inner.Value ~= nil then
+        return true
+    end
+    local outer = entry.Outer
+    if not outer or outer.Parent ~= character then
+        outer = character:FindFirstChild("Basketball")
+        entry.Outer = outer
+    end
+    if outer and outer:IsA("ObjectValue") and outer.Value ~= nil then
+        return true
+    end
+    local carried = character:GetAttribute("Basketball")
+    if carried ~= nil and carried ~= false and carried ~= "" then
+        return true
+    end
+    return character:GetAttribute("TripleThreat") == true or character:GetAttribute("Action") == "Dribbling"
+end
+
+-- false while stunned or while the game holds you in place, a dribble move also turns CanMove off and still counts as free
+function Court.free(character: any): boolean
+    if character:GetAttribute("Stunned") == true then
+        return false
+    end
+    return character:GetAttribute("CanMove") ~= false or character:GetAttribute("Action") == "Dribbling"
+end
+
+-- the actions of your own moves, everything else that turns CanMove off is the game moving you itself
+local OWN_MOVES: { [string]: boolean } = {
+    Dribbling = true, Shooting = true, Gathering = true, Dunking = true, ContactLayup = true, Layup = true, Passing = true,
+    Stealing = true, Blocking = true, Jumping = true, Rebounding = true, CatchingPass = true, PassTransition = true,
+    CatchingLob = true, AwaitingPass = true, Diving = true, Pushing = true, MovingShot = true,
+}
+
+-- true while the game itself moves or holds you: a foul, a dead ball reset, being walked into place. every feature that
+-- moves you or holds a key backs off completely then
+function Court.forced(character: any): boolean
+    if not character then
+        return false
+    end
+    local action = character:GetAttribute("Action")
+    if action == "Moving" or action == "Fouled" or action == "Inbounding" or action == "Stunned" then
+        return true
+    end
+    if character:GetAttribute("CanMove") == false then
+        return not (type(action) == "string" and OWN_MOVES[action])
+    end
+    return false
+end
+
+-- the game walking you somewhere itself: a dead ball reset, a foul, an inbound
+local WALKS: { [string]: boolean } = { Moving = true, Fouled = true, Inbounding = true }
+
+function Court.walking(character: any): boolean
+    if not character then
+        return false
+    end
+    local action = character:GetAttribute("Action")
+    return type(action) == "string" and WALKS[action] == true
+end
+
+-- after the game let go of you, every feature waits this long before it does anything again
+local GRACE = 0.5
+Court.GRACE = GRACE
+
+-- true while the game walks or stuns you, and for a moment after. read live, an attribute that came in after the start
+-- of the frame counts too
+function Court.held(character: any): boolean
+    if not character then
+        return false
+    end
+    if Court.walking(character) or character:GetAttribute("Stunned") == true or character:GetAttribute("Action") == "Stunned" then
+        return true
+    end
+    return os.clock() - (Court.FreeAt or -math.huge) < GRACE
+end
+
+-- the same, and also while the game holds you in a move that is not one of your own
+function Court.handsOff(character: any): boolean
+    if not character then
+        return false
+    end
+    return Court.forced(character) or Court.held(character)
+end
+
+-- notes a feature that held back or wrote something while hands are off, for the walk debug line
+function Court.touch(what: string)
+    local list = Court.Touched
+    if #list < 24 and not table.find(list, what) then
+        table.insert(list, what)
+    end
+end
+
+-- tutorial bots share your TeamIndex, their side is only in the Team attribute
+function Court.enemy(mine: any, character: any): boolean
+    if character:GetAttribute("TeamIndex") ~= mine:GetAttribute("TeamIndex") then
+        return true
+    end
+    local theirs = character:GetAttribute("Team")
+    return string.sub(character.Name, 1, 2) == "AI" and theirs ~= nil and theirs ~= mine:GetAttribute("Team")
+end
+
+local roster: { any } = {}
+local rosterFolder: any = nil
+local rosterLinks: { any } = {}
+local nextSync = 0
+local ROSTER_SYNC = 0.5
+
+local function unbindRoster()
+    for _, link in rosterLinks do
+        pcall(link.Disconnect, link)
+    end
+    table.clear(rosterLinks)
+    table.clear(roster)
+    rosterFolder = nil
+end
+
+local function bindRoster(folder: any)
+    unbindRoster()
+    if not folder then
+        return
+    end
+    rosterFolder = folder
+    for _, child in folder:GetChildren() do
+        table.insert(roster, child)
+    end
+    rosterLinks[1] = folder.ChildAdded:Connect(function(child: any)
+        if not table.find(roster, child) then
+            table.insert(roster, child)
+        end
+    end)
+    rosterLinks[2] = folder.ChildRemoved:Connect(function(child: any)
+        local index = table.find(roster, child)
+        if index then
+            local last = #roster
+            roster[index] = roster[last]
+            roster[last] = nil
+        end
+    end)
+end
+
+local function characters(now: number): any?
+    local folder = rosterFolder
+    if not folder or folder.Parent ~= workspace then
+        folder = workspace:FindFirstChild("Characters")
+        bindRoster(folder)
+        nextSync = now + ROSTER_SYNC
+        return folder
+    end
+    -- the list is read again every half second as well, a player or bot the signals missed was waiting up to three
+    -- seconds before any feature saw him
+    if now >= nextSync then
+        nextSync = now + ROSTER_SYNC
+        table.clear(roster)
+        for _, child in folder:GetChildren() do
+            table.insert(roster, child)
+        end
+    end
+    return folder
+end
+
+function Court.mine(): any?
+    local folder = rosterFolder
+    if not folder or folder.Parent ~= workspace then
+        folder = workspace:FindFirstChild("Characters")
+    end
+    local player = players.LocalPlayer
+    if not folder or not player then
+        return nil
+    end
+    return folder:FindFirstChild(player.Name)
+end
+
+local pingItem: any = nil
+local nextPing = 0
+local pingSeeded = false
+-- each sample moves the ping this much of the way, one spike no longer throws a release off
+local PING_SMOOTH = 0.2
+
+-- the last few samples: a lag spike only lifts the stat for a moment, the lower half of them is the ping the next shot meets
+local pingWindow: { number } = {}
+local PING_WINDOW = 6
+
+local function samplePing(value: number)
+    local clamped = math.min(value, 0.6)
+    table.insert(pingWindow, clamped)
+    if #pingWindow > PING_WINDOW then
+        table.remove(pingWindow, 1)
+    end
+    local sorted = table.clone(pingWindow)
+    table.sort(sorted)
+    local half = math.ceil(#sorted / 2)
+    local low = 0
+    for index = 1, half do
+        low += sorted[index]
+    end
+    low /= half
+    if pingSeeded then
+        Court.Ping += (low - Court.Ping) * PING_SMOOTH
+    else
+        pingSeeded = true
+        Court.Ping = low
+    end
+end
+
+local function dataPing(): number
+    local item = pingItem
+    if not item then
+        item = stats.Network.ServerStatsItem["Data Ping"]
+        pingItem = item
+    end
+    return item:GetValue()
+end
+
+local function networkPing(): number
+    return players.LocalPlayer:GetNetworkPing()
+end
+
+local function updatePing(now: number)
+    if now < nextPing then
+        return
+    end
+    nextPing = now + 0.25
+    local ok, value = pcall(dataPing)
+    if ok and type(value) == "number" and value == value and value > 0 then
+        samplePing(value / 1000)
+        return
+    end
+    pingItem = nil
+    local got, seconds = pcall(networkPing)
+    if got and type(seconds) == "number" and seconds == seconds and seconds > 0 then
+        samplePing(seconds * 2)
+    end
+end
+
+local serviceFolder: any = nil
+local inputs: { [string]: any } = {}
+
+local function service(name: string): any?
+    local aero = replicatedStorage:FindFirstChild("Aero")
+    local remotes = if aero then aero:FindFirstChild("AeroRemoteServices") else nil
+    return if remotes then remotes:FindFirstChild(name) else nil
+end
+
+Court.service = service
+
+function Court.input(name: string): any?
+    local remote = inputs[name]
+    if remote and remote.Parent ~= nil then
+        return remote
+    end
+    local folder = serviceFolder
+    if not folder or folder.Parent == nil then
+        folder = service("InputService")
+        serviceFolder = folder
+    end
+    remote = if folder then folder:FindFirstChild(name) else nil
+    inputs[name] = remote
+    return remote
+end
+
+-- the let go of a shot the server is owed, the only call that still goes out while the game walks you
+local function shotRelease(remote: any, first: any): boolean
+    return remote.Name == "Shoot" and type(first) == "table" and rawget(first, "Shoot") == false
+end
+
+-- set while the script unloads, what it still holds is let go even in the middle of a walk
+Court.Closing = false
+
+-- every call the script makes itself goes out as a plain function call, never through the method hook. while the game
+-- walks or holds you nothing goes out at all, not even the let go of a key: a call then is what told the game you are free
+function Court.send(remote: any, ...: any): boolean
+    if Court.HandsOff and not Court.Closing and not shotRelease(remote, (...)) then
+        Court.touch("held back " .. tostring(remote.Name))
+        return false
+    end
+    Court.Sending += 1
+    local ok = pcall(remote.FireServer, remote, ...)
+    Court.Sending -= 1
+    return ok
+end
+
+-- the last real press the game sent on an input remote, copied by the hook
+function Court.copied(name: string): any?
+    local hook = Env.get(HOOK)
+    if type(hook) ~= "table" then
+        return nil
+    end
+    if name == "Sprint" and hook.SprintOn then
+        return hook.SprintOn
+    end
+    local press = hook.Press
+    return if type(press) == "table" then press[name] else nil
+end
+
+local learnedForm: { [string]: number } = {}
+local tryForm: { [string]: number } = {}
+local trials: { [string]: Map } = {}
+
+-- fires an input remote with the copied real call when there is one, otherwise each guessed form in turn until check sees it work
+function Court.fire(name: string, forms: { (any) -> ...any }, check: ((any) -> boolean)?, adapt: ((any, any) -> any)?, context: any): boolean
+    if Court.HandsOff and not Court.Closing then
+        Court.touch("held back " .. name)
+        return false
+    end
+    local remote = Court.input(name)
+    if not remote then
+        return false
+    end
+    local copied = Court.copied(name)
+    if type(copied) == "table" then
+        local args = if adapt then adapt(copied, context) else copied
+        return Court.send(remote, table.unpack(args, 1, args.n or #args))
+    end
+    local index = learnedForm[name] or tryForm[name] or 1
+    if index > #forms then
+        index = 1
+    end
+    local sent = Court.send(remote, forms[index](context))
+    if check and not learnedForm[name] then
+        local trial = trials[name]
+        if not trial then
+            trial = {}
+            trials[name] = trial
+        end
+        trial.Index = index
+        trial.Count = #forms
+        trial.Until = os.clock() + 0.6
+        trial.Check = check
+        trial.Context = context
+        trial.Live = true
+    end
+    return sent
+end
+
+local function settleTrials(now: number)
+    for name, trial in trials do
+        if trial.Live then
+            local ok, worked = pcall(trial.Check, trial.Context)
+            if ok and worked == true then
+                learnedForm[name] = trial.Index
+                trial.Live = false
+                trial.Context = nil
+            elseif not ok or now >= trial.Until then
+                tryForm[name] = trial.Index % trial.Count + 1
+                trial.Live = false
+                trial.Context = nil
+            end
+        end
+    end
+end
+
+local virtualInput: any = nil
+local virtualTried = false
+local keyChannel = 0
+local keyDead = false
+
+-- the move keys the script can hold, by name, with their key codes and the Windows key numbers keypress takes
+local KEYS: { [string]: { any } } = {
+    W = { Enum.KeyCode.W, 0x57 },
+    A = { Enum.KeyCode.A, 0x41 },
+    S = { Enum.KeyCode.S, 0x53 },
+    D = { Enum.KeyCode.D, 0x44 },
+}
+local pressed: { [string]: boolean } = {}
+
+local function virtualKey(down: boolean, code: any)
+    virtualInput:SendKeyEvent(down, code, false, game)
+end
+
+local function channel(): number
+    if keyChannel ~= 0 then
+        return keyChannel
+    end
+    if not virtualTried then
+        virtualTried = true
+        local ok, found = pcall(game.GetService, game, "VirtualInputManager")
+        if ok and found then
+            virtualInput = found
+        end
+    end
+    if virtualInput then
+        keyChannel = 1
+    elseif Env.keypress and Env.keyrelease then
+        keyChannel = 2
+    end
+    return keyChannel
+end
+
+local function send(name: string, down: boolean): boolean
+    local entry = KEYS[name]
+    local way = channel()
+    if way == 1 then
+        if pcall(virtualKey, down, entry[1]) then
+            return true
+        end
+        virtualInput = nil
+        keyChannel = 0
+        way = channel()
+    end
+    if way == 2 then
+        if not down or Court.Focused then
+            return (pcall(if down then Env.keypress else Env.keyrelease, entry[2]))
+        end
+        return false
+    end
+    keyDead = true
+    return false
+end
+
+local holders: { [string]: { [string]: boolean } } = {}
+
+local function applyKeys()
+    local wanted: { [string]: boolean } = {}
+    for _, set in holders do
+        for name, down in set do
+            if down then
+                wanted[name] = true
+            end
+        end
+    end
+    -- without a keyboard nothing is pressed, a thumbstick has to stay readable as your own movement
+    if keyDead or Court.Forced or Court.HandsOff or not Court.Focused or userInput.KeyboardEnabled == false or userInput:GetFocusedTextBox() ~= nil then
+        table.clear(wanted)
+    end
+    for name in KEYS do
+        local want = wanted[name] == true
+        if (pressed[name] == true) ~= want then
+            if want then
+                pressed[name] = send(name, true) or nil
+            else
+                pressed[name] = nil
+                send(name, false)
+            end
+        end
+    end
+    Court.Held = pressed.W == true
+    local any = next(pressed) ~= nil
+    if Court.Keys and not any then
+        Court.KeysOff = os.clock()
+    end
+    Court.Keys = any
+end
+
+local function applyKey()
+    applyKeys()
+end
+
+-- holds or lets go of the forward key the way a real key press does, never while you type and never into another window.
+-- each feature holds it under its own name, the key stays down while any of them wants it
+function Court.hold(owner: string, down: boolean)
+    if not down and not holders[owner] then
+        return
+    end
+    holders[owner] = if down then { W = true } else nil
+    applyKeys()
+end
+
+-- true when this executor can press keys into the game at all
+function Court.canPress(): boolean
+    return not keyDead and channel() ~= 0 and Court.Focused and userInput.KeyboardEnabled ~= false
+end
+
+-- some executors take a key press without error and nothing reaches the game, a feature that held keys and saw you not
+-- move at all calls this, from then on the keys are not used and the features steer the game's velocity part instead
+function Court.keysIgnored()
+    keyDead = true
+    applyKeys()
+end
+
+-- holds a set of move keys under one name, like a person on a keyboard: any of W A S D, nil lets go of all of them
+function Court.holdKeys(owner: string, set: { [string]: boolean }?)
+    if not set and not holders[owner] then
+        return
+    end
+    holders[owner] = set
+    applyKeys()
+end
+
+-- the game moves characters with its own controller, so the move keys are read as well as MoveDirection. keys the
+-- script itself holds are not you
+function Court.steering(mine: any): boolean
+    if Court.UserMoving then
+        return true
+    end
+    if not Court.Keys and os.clock() - Court.KeysOff > 0.3 then
+        local humanoid = Court.humanoid(mine)
+        if humanoid and humanoid.MoveDirection.Magnitude > 0.1 then
+            return true
+        end
+    end
+    return Court.userKeys()
+end
+
+-- true while you hold a move key yourself, the keys the script holds are not counted
+function Court.userKeys(): boolean
+    if userInput:GetFocusedTextBox() then
+        return false
+    end
+    for _, key in MOVE_KEYS do
+        local own = (pressed.W and (key == Enum.KeyCode.W)) or (pressed.A and key == Enum.KeyCode.A) or (pressed.S and key == Enum.KeyCode.S) or (pressed.D and key == Enum.KeyCode.D)
+        if not own and userInput:IsKeyDown(key) then
+            return true
+        end
+    end
+    return false
+end
+local proxyPart: any = nil
+local proxyMover: any = nil
+
+-- the game moves a local part named ProxyCharacter and sends its position to the server, its BodyVelocity is what sets your speed
+function Court.proxy(): (any?, any?)
+    local part = proxyPart
+    if not part or part.Parent ~= workspace then
+        part = workspace:FindFirstChild("ProxyCharacter")
+        proxyPart = part
+        proxyMover = nil
+    end
+    if not part or not part:IsA("BasePart") then
+        return nil, nil
+    end
+    local mover = proxyMover
+    if not mover or mover.Parent ~= part then
+        mover = part:FindFirstChild("MovementVelocity")
+        proxyMover = if mover and mover:IsA("BodyVelocity") then mover else nil
+        mover = proxyMover
+    end
+    return part, mover
+end
+
+-- where the move keys point on the floor, the way the game reads them against the camera, nil when none is held
+function Court.heading(): Vector3?
+    if userInput:GetFocusedTextBox() then
+        return nil
+    end
+    local camera = workspace.CurrentCamera
+    if not camera then
+        return nil
+    end
+    local x, z = 0, 0
+    if userInput:IsKeyDown(Enum.KeyCode.W) or userInput:IsKeyDown(Enum.KeyCode.Up) then
+        z += 1
+    end
+    if userInput:IsKeyDown(Enum.KeyCode.S) or userInput:IsKeyDown(Enum.KeyCode.Down) then
+        z -= 1
+    end
+    if userInput:IsKeyDown(Enum.KeyCode.D) then
+        x += 1
+    end
+    if userInput:IsKeyDown(Enum.KeyCode.A) then
+        x -= 1
+    end
+    if x == 0 and z == 0 then
+        return nil
+    end
+    local frame = camera.CFrame
+    local forward = flat(frame.LookVector)
+    if forward.Magnitude < 0.01 then
+        forward = flat(frame.UpVector)
+    end
+    if forward.Magnitude < 0.01 then
+        return nil
+    end
+    forward = forward.Unit
+    local right = Vector3.new(-forward.Z, 0, forward.X)
+    return (forward * z + right * x).Unit
+end
+
+-- the sprint key counts as held when the last real sprint call the hook copied was a press, or the default key is down
+function Court.sprintHeld(): boolean
+    local hook = Env.get(HOOK)
+    local calls = if type(hook) == "table" then hook.Calls else nil
+    local last = if type(calls) == "table" then calls.Sprint else nil
+    if type(last) == "table" and last[1] == true then
+        return true
+    end
+    return userInput:GetFocusedTextBox() == nil and userInput:IsKeyDown(Enum.KeyCode.LeftShift)
+end
+
+local rimCache: { any } = {}
+local fronts: { [any]: any } = {}
+local hoopsFolder: any = nil
+local nextRimScan = 0
+local rimWait = 0.5
+
+local function clearRims()
+    table.clear(rimCache)
+    table.clear(fronts)
+    hoopsFolder = nil
+end
+
+-- every rim on the court, found once and kept. the search walks the whole workspace, so a court that is not there yet
+-- is looked for at a slowing pace, never every frame
+function Court.rims(): { any }
+    if rimCache[1] then
+        return rimCache
+    end
+    local now = os.clock()
+    if now < nextRimScan then
+        return rimCache
+    end
+    local hoops = workspace:FindFirstChild("Hoops", true)
+    if hoops then
+        hoopsFolder = hoops
+        for _, descendant in hoops:GetDescendants() do
+            if descendant.Name == "Rim" and descendant:IsA("BasePart") then
+                table.insert(rimCache, descendant)
+            end
+        end
+    end
+    rimWait = if rimCache[1] then 0.5 else math.min(rimWait * 1.5, 4)
+    nextRimScan = now + rimWait
+    return rimCache
+end
+
+-- flat distance to the closest rim and that rim
+function Court.rimDistance(position: Vector3): (number?, any?)
+    local best: number? = nil
+    local bestRim: any? = nil
+    for _, rim in Court.rims() do
+        local offset = rim.Position - position
+        local distance = math.sqrt(offset.X * offset.X + offset.Z * offset.Z)
+        if not best or distance < best then
+            best = distance
+            bestRim = rim
+        end
+    end
+    return best, bestRim
+end
+
+-- the closest rim the part looks at, inside the range
+function Court.facingRim(root: any, facing: number, range: number): (any?, number)
+    local look = flat(root.CFrame.LookVector)
+    local origin = root.Position
+    local best: any? = nil
+    local bestDistance = math.huge
+    for _, rim in Court.rims() do
+        local toRim = flat(rim.Position - origin)
+        local away = toRim.Magnitude
+        local dot = if away > 0.01 then look:Dot(toRim) / away else 1
+        if dot >= facing and away <= range and away < bestDistance then
+            best = rim
+            bestDistance = away
+        end
+    end
+    return best, bestDistance
+end
+
+local function boardFront(rim: any): (Vector3?, Vector3?)
+    local hoops = hoopsFolder
+    if not hoops then
+        return nil, nil
+    end
+    local model = rim
+    while model.Parent and model.Parent ~= hoops do
+        model = model.Parent
+    end
+    if model == rim or model.Parent ~= hoops then
+        return nil, nil
+    end
+    local origin = rim.Position
+    local board: any = nil
+    local sum = Vector3.zero
+    local weight = 0
+    for _, descendant in model:GetDescendants() do
+        if descendant ~= rim and descendant:IsA("BasePart") then
+            local offset = flat(descendant.Position - origin)
+            if offset.Magnitude > 14 then
+                return nil, nil
+            end
+            local name = string.lower(descendant.Name)
+            if not board and (string.find(name, "board", 1, true) or string.find(name, "glass", 1, true)) then
+                board = descendant
+            end
+            if name ~= "rim" and not string.find(name, "net", 1, true) then
+                local size = descendant.Size
+                local volume = size.X * size.Y * size.Z
+                sum += offset * volume
+                weight += volume
+            end
+        end
+    end
+    local named: Vector3? = nil
+    if board then
+        local away = flat(origin - board.Position)
+        if away.Magnitude > 0.3 then
+            named = away.Unit
+        end
+    end
+    local massed: Vector3? = nil
+    if weight > 0 then
+        local away = sum / -weight
+        if away.Magnitude > 0.3 then
+            massed = away.Unit
+        end
+    end
+    return named, massed
+end
+
+local function oppositeFront(rim: any): (Vector3?, boolean)
+    local origin = rim.Position
+    local first: any = nil
+    local best: any = nil
+    local bestDistance = math.huge
+    local single = true
+    for _, other in rimCache do
+        if other ~= rim then
+            local distance = flat(other.Position - origin).Magnitude
+            if distance >= FAR_RIM then
+                if not first then
+                    first = other
+                elseif (other.Position - first.Position).Magnitude > 25 then
+                    single = false
+                end
+                if distance < bestDistance then
+                    best = other
+                    bestDistance = distance
+                end
+            end
+        end
+    end
+    if not best then
+        return nil, false
+    end
+    return flat(best.Position - origin).Unit, single
+end
+
+-- the way a hoop looks out over the court, from its backboard to its rim. nil when it cannot be told
+function Court.front(rim: any): Vector3?
+    local known = fronts[rim]
+    if known ~= nil then
+        return if known then known else nil
+    end
+    local found: Vector3? = nil
+    local ok, named, massed = pcall(boardFront, rim)
+    local across, single = oppositeFront(rim)
+    if ok and named then
+        found = named
+    elseif across and single then
+        found = across
+    elseif ok and massed then
+        found = massed
+    else
+        found = across
+    end
+    fronts[rim] = found or false
+    return found
+end
+
+-- how far the spot is out in front of the rim along the way the hoop looks, and how far off to the side
+function Court.frontOf(rim: any, position: Vector3): (number?, number)
+    local front = Court.front(rim)
+    if not front then
+        return nil, 0
+    end
+    local offset = flat(position - rim.Position)
+    local ahead = offset:Dot(front)
+    return ahead, (offset - front * ahead).Magnitude
+end
+
+-- the rim a player shoots at, from the Goal value the game keeps in his Attributes folder. nil when it is not there
+function Court.goal(character: any): any?
+    local entry = record(character)
+    local value = entry.Goal
+    if not value or not value:IsDescendantOf(character) then
+        local folder = character:FindFirstChild("Attributes")
+        value = if folder then folder:FindFirstChild("Goal") else nil
+        entry.Goal = value
+    end
+    if not value or not value:IsA("ObjectValue") then
+        return nil
+    end
+    local target = value.Value
+    local position: Vector3? = nil
+    if target and target:IsA("BasePart") then
+        position = target.Position
+    elseif target and target:IsA("Model") then
+        position = target:GetPivot().Position
+    end
+    if not position then
+        return nil
+    end
+    local distance, rim = Court.rimDistance(position)
+    return if distance and distance < 20 then rim else nil
+end
+
+-- distance to the closest enemy of the frame, huge when nobody is there
+function Court.nearestFoe(position: Vector3): number
+    local best = math.huge
+    local roots = Court.Roots
+    local foe = Court.Foe
+    for index = 1, Court.Count do
+        if foe[index] then
+            local distance = (roots[index].Position - position).Magnitude
+            if distance < best then
+                best = distance
+            end
+        end
+    end
+    return best
+end
+
+local ballFolder: any = nil
+local ballPart: any = nil
+local nextBall = 0
+
+-- the ball lying in the world, the closest one to you when there are more
+function Court.ball(): any?
+    local now = Court.Now
+    local ball = ballPart
+    if ball and now < nextBall and ballFolder and ball:IsDescendantOf(ballFolder) then
+        return ball
+    end
+    nextBall = now + 0.25
+    ballPart = nil
+    local folder = ballFolder
+    if not folder or folder.Parent ~= workspace then
+        folder = workspace:FindFirstChild("Basketballs")
+        ballFolder = folder
+    end
+    if not folder then
+        return nil
+    end
+    local origin = if Court.Root then Court.Root.Position else nil
+    local bestDistance = math.huge
+    for _, child in folder:GetChildren() do
+        local part: any = nil
+        if child:IsA("BasePart") then
+            part = child
+        elseif child:IsA("Model") then
+            part = child.PrimaryPart
+        end
+        if part then
+            local distance = if origin then (part.Position - origin).Magnitude else 0
+            if distance < bestDistance then
+                bestDistance = distance
+                ballPart = part
+            end
+        end
+    end
+    return ballPart
+end
+
+-- true when any ball lies within reach of the position, nil when there is no ball at all. the tutorial's practice rack
+-- and a second court keep more balls than the one in play, so the one closest to you is not always his
+function Court.ballNear(position: Vector3, reach: number): boolean?
+    Court.ball()
+    local folder = ballFolder
+    if not folder then
+        return nil
+    end
+    local any = false
+    for _, child in folder:GetChildren() do
+        local part: any = nil
+        if child:IsA("BasePart") then
+            part = child
+        elseif child:IsA("Model") then
+            part = child.PrimaryPart
+        end
+        if part then
+            any = true
+            if (part.Position - position).Magnitude <= reach then
+                return true
+            end
+        end
+    end
+    return if any then false else nil
+end
+
+local lastBall: Vector3? = nil
+
+-- a ball that drops down through a ring was a make, it stays dead until somebody holds it, and so does an inbound
+local function trackDead(inbound: boolean)
+    if inbound then
+        Court.Dead = true
+    elseif Court.TeamBall or Court.FoeBall then
+        Court.Dead = false
+        lastBall = nil
+        return
+    end
+    local ball = Court.ball()
+    if not ball then
+        lastBall = nil
+        return
+    end
+    local where: Vector3 = ball.Position
+    local before = lastBall
+    lastBall = where
+    if not before or where.Y >= before.Y then
+        return
+    end
+    for _, rim in Court.rims() do
+        local center: Vector3 = rim.Position
+        local dx, dz = where.X - center.X, where.Z - center.Z
+        if dx * dx + dz * dz < 1.44 and before.Y >= center.Y - 0.3 and where.Y < center.Y - 0.3 then
+            Court.Dead = true
+        end
+    end
+end
+
+local function trim(list: { any }, from: number, to: number)
+    for index = from, to do
+        list[index] = nil
+    end
+end
+
+-- called once at the start of every frame
+function Court.refresh(now: number)
+    Court.Now = now
+    updatePing(now)
+    settleTrials(now)
+    local first = rimCache[1]
+    if first and not first:IsDescendantOf(workspace) then
+        clearRims()
+    end
+    local folder = characters(now)
+    local player = players.LocalPlayer
+    local mine = if folder and player then folder:FindFirstChild(player.Name) else nil
+    local root = if mine then Court.root(mine) else nil
+    Court.Mine = mine
+    Court.Root = root
+    Court.Action = if mine then mine:GetAttribute("Action") else nil
+    Court.HasBall = mine ~= nil and Court.holds(mine)
+    local forced = Court.forced(mine)
+    -- a walk or a stun keeps hands off for a moment after it ends, the server's last changes are still on their way
+    if mine and (Court.walking(mine) or mine:GetAttribute("Stunned") == true or Court.Action == "Stunned") then
+        Court.FreeAt = now
+    end
+    if mine and Court.walking(mine) then
+        Court.WalkAt = now
+    end
+    local hands = mine ~= nil and (forced or now - (Court.FreeAt or -math.huge) < GRACE)
+    if not hands then
+        table.clear(Court.Touched)
+    end
+    if forced ~= Court.Forced or hands ~= Court.HandsOff then
+        Court.Forced = forced
+        Court.HandsOff = hands
+        applyKeys()
+    end
+    local chars, roots, foe, carry, held = Court.Chars, Court.Roots, Court.Foe, Court.Carry, Court.Ball
+    local count = 0
+    local teamBall = Court.HasBall
+    local foeBall = false
+    local foul = Court.Action == "Fouled"
+    local inbound = Court.Action == "Inbounding"
+    if folder and mine then
+        for _, character in roster do
+            if character ~= mine and character.Parent == folder and character:GetAttribute("TeamIndex") ~= nil then
+                local other = Court.root(character)
+                if other then
+                    count += 1
+                    local theirAction = character:GetAttribute("Action")
+                    if theirAction == "Inbounding" or character:GetAttribute("Inbounding") == true then
+                        inbound = true
+                    end
+                    if theirAction == "Fouled" then
+                        foul = true
+                    end
+                    local enemy = Court.enemy(mine, character)
+                    local has = Court.holds(character)
+                    chars[count] = character
+                    roots[count] = other
+                    foe[count] = enemy
+                    carry[count] = has
+                    -- a value or a triple threat flag the game left behind is not the ball, it has to be at him
+                    held[count] = has and Court.ballNear(other.Position, BALL_REACH) ~= false
+                    if has then
+                        if enemy then
+                            foeBall = true
+                        else
+                            teamBall = true
+                        end
+                    end
+                end
+            end
+        end
+    end
+    local before = Court.Count
+    if before > count then
+        trim(chars, count + 1, before)
+        trim(roots, count + 1, before)
+        trim(foe, count + 1, before)
+        trim(carry, count + 1, before)
+        trim(held, count + 1, before)
+    end
+    Court.Count = count
+    Court.TeamBall = teamBall
+    Court.FoeBall = foeBall
+    Court.Foul = foul
+    -- an enemy the ball really is at, a flag the game left on somebody is not enough
+    local foeHeld = false
+    for index = 1, count do
+        if foe[index] and held[index] then
+            foeHeld = true
+            break
+        end
+    end
+    Court.FoeHeld = foeHeld
+    trackDead(inbound)
+end
+
+local links: { any } = {}
+
+function Court.start()
+    local ok = pcall(function()
+        table.insert(links, userInput.WindowFocusReleased:Connect(function()
+            Court.Focused = false
+            applyKey()
+        end))
+        table.insert(links, userInput.WindowFocused:Connect(function()
+            Court.Focused = true
+        end))
+    end)
+    if not ok then
+        Court.Focused = true
+    end
+end
+
+function Court.stop()
+    table.clear(holders)
+    applyKey()
+    for _, link in links do
+        pcall(link.Disconnect, link)
+    end
+    table.clear(links)
+    unbindRoster()
+    table.clear(trials)
+end
+
+return Court
+end
+modules["defense"] = function(...)
+
+local import: (string) -> any = ...
+local Court: typeof(require("./court")) = import("court")
+local Config: typeof(require("./config")) = import("config")
+local Drive: typeof(require("./drive")) = import("drive")
+local Env: typeof(require("./env")) = import("env")
+
+local players: any = game:GetService("Players")
+
+local Defense = {}
+Defense.__index = Defense
+
+type Map = { [string]: any }
+
+local STEAL_COOLDOWN_MIN = 1.0
+local STEAL_COOLDOWN_MAX = 1.4
+local REACT_MIN = 0.12
+local REACT_MAX = 0.25
+-- a handler slower than this, for this long, counts as standing still for a steal
+local STILL_SPEED = 2
+local STILL_TIME = 0.35
+-- how far he may sway on the spot and still count as standing, and how close the ball has to be to count as his
+local STILL_DRIFT = 0.35
+local BALL_REACH = 6
+-- what a tutorial bot is never reached for in: a shot, a pass, or a catch
+local BOT_BUSY: { [string]: boolean } = { Shooting = true, Dunking = true, Layup = true, ContactLayup = true, Gathering = true, Passing = true, AwaitingPass = true, CatchingPass = true, MovingShot = true }
+-- the guarded player is reacted to as he was this long ago, nobody reacts the instant a step starts, and his speed is
+-- read over about this rate per second, so a cut is followed a moment late instead of mirrored
+local LAG = 0.08
+local TRAIL = 32
+local READ_RATE = 12
+-- how far ahead of where he was seen the spot leads him, in seconds of his speed
+local AHEAD = 0.15
+-- how quickly the gap to the spot is closed, per second, the last studs are eased so it settles instead of overshooting
+local ARRIVE = 3.6
+-- on the spot this close while he stands it stands too, and only moves again once the spot is this far off
+local STAND_IN = 0.45
+local STAND_OUT = 1.1
+-- never closer to him than this
+local NEAR = 2.5
+-- the game's own stance speed while G is held, and what a sprint adds on the way back
+local STANCE = 0.85
+local SPRINT_EXTRA = 3
+local SLOW_DOWN = 40
+-- the pace drifts between this much of full speed and full speed, a new pace every so often
+local PACE_LOW = 0.9
+local PACE_MIN = 0.6
+local PACE_MAX = 1.4
+-- the move keys go down once you move faster than this and come up below the second, a key change waits this long
+local KEY_ON = 1.6
+local KEY_OFF = 0.8
+local KEY_CHANGE = 0.12
+local KEY_TURN_BACK = 0.24
+-- how far off the guarded player it stands, toward the rim they attack, and the default Move Distance. the gap is
+-- picked for each man between the two, and drifts this much either way at about this rate
+local GAP = 3
+local GAP_LOW = 2.8
+local GAP_HIGH = 3.4
+local WANDER = 0.2
+local WANDER_RATE = 1.3
+local REACH = 16
+-- the moment before the first step on a new man, shorter when you were just on somebody (a pass, a switch)
+local START_MIN = 0.16
+local START_MAX = 0.28
+local SWITCH_MIN = 0.06
+local SWITCH_MAX = 0.14
+-- a first step from standing starts at this share of your speed and builds up over this long
+local RAMP = 0.3
+local RAMP_FLOOR = 0.45
+-- closer to the spot than this you slide with him: his speed and this much more at the most
+local CHOP = 5
+local EXTRA = 2.5
+-- the longest a step is slowed to a stop once the man is gone
+local EASE_TIME = 0.35
+-- standing on the spot facing him less than this, you turn to him until you face him more than the second
+local SQUARE = 0.2
+local SQUARED = 0.75
+-- how far it leans to the side of the hand the ball is in
+local SHADE = 0.9
+-- how long it takes to press G on a new man to guard, a player needs a moment to see the catch
+local PICKUP_MIN = 0.15
+local PICKUP_MAX = 0.3
+-- beaten by more than this off the spot, the hold is let go and you sprint to recover, like a person does
+local RECOVER = 5
+local RECOVERED = 3.5
+-- the move keys for each of eight directions around the camera, 0 straight ahead, counted to the right
+local SECTOR = math.pi / 4
+local KEYSETS: { [number]: { [string]: boolean } } = {
+    [0] = { W = true },
+    [1] = { W = true, D = true },
+    [2] = { D = true },
+    [3] = { S = true, D = true },
+    [4] = { S = true },
+    [5] = { S = true, A = true },
+    [6] = { A = true },
+    [7] = { W = true, A = true },
+}
+-- the keys stay as they are while the way you move is within this of them, so the guard never flickers between two
+local HOLD_ANGLE = math.rad(34)
+-- after your own keys let go the guard waits this long before it moves you again
+local USER_GRACE = 0.4
+-- how much you have to look at him before Only When Facing lets the hold go on
+local FACING = 0.35
+-- once following, your man is kept this share past Move Distance before he is let go, so the edge never flickers
+local FOLLOW_SLACK = 1.1
+
+local HOLD_ON = { HoldingG = true }
+local HOLD_OFF = { HoldingG = false }
+local NO_FOLLOW: { [string]: boolean } = { Shooting = true, Dunking = true, Layup = true, Gathering = true, Stealing = true, Blocking = true, Jumping = true, Rebounding = true, Passing = true, Inbounding = true, Stunned = true, Fouled = true, Diving = true }
+local SHOOTING: { [string]: boolean } = { Shooting = true, Dunking = true }
+
+local flat = Court.flat
+local random = Random.new()
+
+-- the steal argument is not known, a steal press copied by the hook wins over these
+local STEAL_FORMS: { (any) -> ...any } = {
+    function(_: any): ...any
+        return
+    end,
+    function(_: any): ...any
+        return { Steal = true }
+    end,
+    function(_: any): ...any
+        return { Stealing = true }
+    end,
+}
+
+local function stealing(mine: any): boolean
+    return mine.Parent ~= nil and mine:GetAttribute("Action") == "Stealing"
+end
+
+function Defense.new(read: (string) -> any, player: any?): any
+    return setmetatable({
+        Read = read,
+        Player = player,
+        Recovering = false,
+        LastSteal = -math.huge,
+        StealWait = STEAL_COOLDOWN_MIN,
+        InRange = nil :: any,
+        InRangeAt = 0,
+        React = REACT_MIN,
+        Trail = table.create(TRAIL, Vector3.zero) :: { Vector3 },
+        TrailAt = table.create(TRAIL, -math.huge) :: { number },
+        TrailIndex = 0,
+        Guarding = false,
+        GuardOn = nil :: any,
+        GuardAt = 0,
+        Handler = nil :: any,
+        Target = nil :: any,
+        Following = false,
+        Spot = nil :: Vector3?,
+        SpotFor = nil :: any,
+        SeenFor = nil :: any,
+        SeenAt = Vector3.zero,
+        Velocity = Vector3.zero,
+        FoeRim = nil :: any,
+        FoeAt = -math.huge,
+        TeamRim = nil :: any,
+        TeamAt = -math.huge,
+        Guess = nil :: any,
+        EngageFor = nil :: any,
+        EngageAt = 0,
+        Gap = GAP,
+        Checked = {} :: { [any]: boolean },
+        GoalScore = 0,
+        Standing = false,
+        Pace = 1,
+    }, Defense)
+end
+
+-- the closest enemy inside the range, only one the ball really is at when asked: a ball value or a triple threat flag
+-- the game left on a player who passed is never enough. the current one is kept until another is clearly closer, two
+-- players at the same distance must not make the guard flip between them
+local function nearest(origin: Vector3, range: number, holderOnly: boolean, current: any): any?
+    local best: any? = nil
+    local bestDistance = range
+    local chars, roots, foe, held = Court.Chars, Court.Roots, Court.Foe, Court.Ball
+    for index = 1, Court.Count do
+        if foe[index] and (not holderOnly or held[index]) then
+            local distance = (roots[index].Position - origin).Magnitude
+            if chars[index] == current then
+                distance -= 2
+            end
+            if distance <= bestDistance then
+                best = chars[index]
+                bestDistance = distance
+            end
+        end
+    end
+    return best
+end
+
+local function isFoe(character: any): boolean
+    local chars, foe = Court.Chars, Court.Foe
+    for index = 1, Court.Count do
+        if chars[index] == character then
+            return foe[index]
+        end
+    end
+    return false
+end
+
+-- the hold is never flipped faster than this, a man at the edge of the range or a quick recover would spam it. letting go
+-- because there is nobody to guard any more always goes out at once
+local HOLD_GAP = 0.3
+
+function Defense.setGuard(self: any, on: boolean, again: boolean?, urgent: boolean?): boolean
+    if self.Guarding == on and not again then
+        return false
+    end
+    local now = os.clock()
+    if not urgent and now - (self.HoldAt or -math.huge) < HOLD_GAP then
+        return false
+    end
+    self.HoldAt = now
+    self.Guarding = on
+    local remote = Court.input("HoldG")
+    if remote then
+        Court.send(remote, if on then HOLD_ON else HOLD_OFF)
+    end
+    return true
+end
+
+function Defense.rest(self: any)
+    self.Recovering = false
+    self:settle()
+    self.Following = false
+    self.Spot = nil
+    self.SpotFor = nil
+    self.SeenFor = nil
+    self.Standing = false
+    self.Top = nil
+    self.EaseUntil = nil
+end
+
+-- lets go of the move keys the guard holds, you stand where you are
+function Defense.settle(self: any)
+    self.Sector = nil
+    Court.holdKeys("Guard", nil)
+    Drive.clear("Guard")
+end
+
+-- which rim each side attacks is read off the shots that are taken
+function Defense.learn(self: any, now: number)
+    local checked = self.Checked
+    for character in checked do
+        if character.Parent == nil or not SHOOTING[character:GetAttribute("Action")] then
+            checked[character] = nil
+        end
+    end
+    local chars, roots, foe = Court.Chars, Court.Roots, Court.Foe
+    for index = 1, Court.Count do
+        if SHOOTING[chars[index]:GetAttribute("Action")] then
+            local distance, rim = Court.rimDistance(roots[index].Position)
+            if distance and rim and distance < 45 then
+                self:check(chars[index], rim)
+                if foe[index] then
+                    self.FoeRim, self.FoeAt = rim, now
+                else
+                    self.TeamRim, self.TeamAt = rim, now
+                end
+            end
+        end
+    end
+    if SHOOTING[Court.Action] and Court.Root then
+        local distance, rim = Court.rimDistance(Court.Root.Position)
+        if distance and rim and distance < 45 then
+            self:check(Court.Mine, rim)
+            self.TeamRim, self.TeamAt = rim, now
+        end
+    end
+end
+
+-- the Goal value of a shooter is held against the rim he really shot at, once per shot. it is only used while it agrees
+function Defense.check(self: any, character: any, rim: any)
+    if self.Checked[character] then
+        return
+    end
+    self.Checked[character] = true
+    local goal = Court.goal(character)
+    if goal then
+        self.GoalScore += if goal == rim then 1 else -2
+    end
+end
+
+-- the rim a player attacks by his Goal value, nil when there is none or it was seen to be wrong
+function Defense.goal(self: any, character: any?): any?
+    if not character or self.GoalScore < 0 then
+        return nil
+    end
+    return Court.goal(character)
+end
+
+local function farthestFrom(rim: any): any?
+    local best: any? = nil
+    local bestDistance = 30
+    for _, other in Court.rims() do
+        local distance = (other.Position - rim.Position).Magnitude
+        if distance > bestDistance then
+            best = other
+            bestDistance = distance
+        end
+    end
+    return best
+end
+
+-- the rims learned so far, one that left the court is forgotten
+function Defense.known(self: any): (any?, any?)
+    if self.FoeRim and self.FoeRim.Parent == nil then
+        self.FoeRim = nil
+    end
+    if self.TeamRim and self.TeamRim.Parent == nil then
+        self.TeamRim = nil
+    end
+    return self.FoeRim, self.TeamRim
+end
+
+-- the rim your team attacks, read off the last shot seen, nil while nobody has shot yet
+function Defense.attackRim(self: any): any?
+    local own = self:goal(Court.Mine)
+    if own then
+        return own
+    end
+    local foeRim, teamRim = self:known()
+    if teamRim and (not foeRim or self.TeamAt >= self.FoeAt) then
+        return teamRim
+    end
+    if foeRim then
+        return farthestFrom(foeRim)
+    end
+    return nil
+end
+
+-- the rim the guarded player attacks, the one you stand in front of
+function Defense.rimFor(self: any, theirs: Vector3, mine: Vector3, target: any?): any?
+    local rims = Court.rims()
+    local count = #rims
+    if count == 0 then
+        return nil
+    end
+    if count == 1 then
+        return rims[1]
+    end
+    local goal = self:goal(target)
+    if goal then
+        return goal
+    end
+    local foeRim, teamRim = self:known()
+    if foeRim and (not teamRim or self.FoeAt >= self.TeamAt) then
+        return foeRim
+    end
+    if teamRim then
+        local other = farthestFrom(teamRim)
+        if other then
+            return other
+        end
+    end
+    if foeRim then
+        return foeRim
+    end
+    -- nothing seen yet: a hard drive at a rim gives it away
+    local moving = self.Velocity
+    if moving.Magnitude > 8 then
+        for _, rim in rims do
+            local toward = flat(rim.Position - theirs)
+            if toward.Magnitude > 2 and toward.Unit:Dot(moving.Unit) > 0.75 then
+                self.Guess = rim
+                return rim
+            end
+        end
+    end
+    -- otherwise a defender stands between the ball and the rim he defends, so it is the rim you are closer to than they are
+    local best: any? = nil
+    local bestScore = math.huge
+    local guessScore: number? = nil
+    for _, rim in rims do
+        local score = flat(rim.Position - mine).Magnitude - flat(rim.Position - theirs).Magnitude
+        if score < bestScore then
+            best = rim
+            bestScore = score
+        end
+        if rim == self.Guess then
+            guessScore = score
+        end
+    end
+    if guessScore and guessScore - bestScore < 6 then
+        return self.Guess
+    end
+    -- a man who beat you is closer to that rim than you are, the guess only moves once he is not heading at it anymore
+    if self.Guess and moving.Magnitude > 4 then
+        local toward = flat(self.Guess.Position - theirs)
+        if toward.Magnitude > 2 and toward.Unit:Dot(moving.Unit) > 0.3 then
+            return self.Guess
+        end
+    end
+    self.Guess = best
+    return best
+end
+
+-- a step that is still running when the man is gone is slowed to a stop like a person plants his feet, never cut dead
+function Defense.easeOut(self: any, root: any, now: number)
+    local moving = Drive.velocity("Guard")
+    if not moving or moving.Magnitude < 0.4 then
+        self:rest()
+        return
+    end
+    if not self.EaseUntil then
+        self.EaseUntil = now + EASE_TIME
+    elseif now > self.EaseUntil then
+        self:rest()
+        return
+    end
+    self.Following = false
+    self.Standing = false
+    Drive.set("Guard", root.Position, self.Top or 14, false, false, Vector3.zero)
+    self:steerKeys(now, Drive.velocity("Guard"), Vector3.zero)
+end
+
+-- Move With Him plays a defender sliding with his man. it only starts on a man inside Move Distance who has the ball
+-- (or the closest man with Nearest Player), a moment after it sees him, like a person needs to. it closes out on the
+-- spot between him and the rim he attacks, a step and a half off him, at your own run speed, then matches his speed
+-- plus a little instead of beelining at him, reads his steps a moment late so a cut is followed and not mirrored, keeps
+-- a gap that wanders a little, and slows to a stop when he is gone. the velocity goes through the game's own velocity
+-- part like every other move of the script, the move keys for the way you go are held so the game plays the run, and
+-- your own movement, the game moving you, a stun or a move of yours always takes over at once
+function Defense.follow(self: any, mine: any, root: any, target: any?, now: number, dt: number)
+    local read = self.Read
+    local action = Court.Action
+    -- holding G sets an action of its own, so only the moves that really take over the body stop the following
+    if (type(action) == "string" and NO_FOLLOW[action]) or mine:GetAttribute("CanMove") == false or mine:GetAttribute("Stunned") == true or Court.handsOff(mine) then
+        self.EngageFor = nil
+        self:rest()
+        return
+    end
+    -- your own keys win, and the guard waits a moment after you let go before it moves you again
+    if Court.steering(mine) then
+        self.UserAt = now
+    end
+    if now - (self.UserAt or -math.huge) < USER_GRACE then
+        self.EngageFor = nil
+        self:rest()
+        return
+    end
+    local theirRoot = if target and read("GuardMove") == true then Court.root(target) else nil
+    -- a man who passes is let go as the pass starts, a defender stops and looks for the ball instead of running on
+    if not target or not theirRoot or target:GetAttribute("Action") == "Passing" then
+        self.EngageFor = nil
+        self:easeOut(root, now)
+        return
+    end
+    -- a new man: a moment to see him first, shorter when you were just on somebody (a pass, a switch)
+    if self.EngageFor ~= target then
+        local recent = self.Following or now - (self.FollowedAt or -math.huge) < 1.5
+        self.EngageFor = target
+        self.EngageAt = now + (if recent then random:NextNumber(SWITCH_MIN, SWITCH_MAX) else random:NextNumber(START_MIN, START_MAX))
+        self.Gap = random:NextNumber(GAP_LOW, GAP_HIGH)
+        self.Phase = random:NextNumber(0, math.pi * 2)
+        self.Ramp = if recent then 1 else 0
+    end
+    local theirs: Vector3 = theirRoot.Position
+    local here: Vector3 = root.Position
+    local offset = flat(theirs - here)
+    local distance = offset.Magnitude
+    local trail, trailAt = self.Trail, self.TrailAt
+    local fresh = self.SeenFor ~= target
+    if fresh then
+        for index = 1, TRAIL do
+            trailAt[index] = -math.huge
+        end
+    end
+    local slot = self.TrailIndex % TRAIL + 1
+    self.TrailIndex = slot
+    trail[slot] = theirs
+    trailAt[slot] = now
+    -- what you react to is where he was a moment ago, nobody reacts to a step the instant it starts
+    local seen: Vector3 = theirs
+    for back = 0, TRAIL - 1 do
+        local index = (slot - back - 1) % TRAIL + 1
+        local at = trailAt[index]
+        if now - at > 0.5 then
+            break
+        end
+        seen = trail[index]
+        if at <= now - LAG then
+            break
+        end
+    end
+    -- where he is heading, read off his steps and smoothed, so a drive is met instead of chased
+    if not fresh and dt > 0 then
+        self.Velocity = self.Velocity:Lerp(flat(seen - self.SeenAt) / dt, 1 - math.exp(-READ_RATE * math.min(dt, 0.1)))
+    else
+        self.Velocity = Vector3.zero
+        self.Standing = false
+    end
+    self.SeenFor = target
+    self.SeenAt = seen
+    -- still taking him in: his steps are read already, the first step of yours waits
+    if now < self.EngageAt then
+        self:easeOut(root, now)
+        return
+    end
+    local lead: Vector3 = self.Velocity
+    local theirSpeed = lead.Magnitude
+    local direction: Vector3? = nil
+    -- the gap a person keeps is never exact, it drifts a little around the one picked for this man
+    local wanted = (self.Gap or GAP) + math.sin(now * WANDER_RATE + (self.Phase or 0)) * WANDER
+    local gap = wanted
+    local rim = self:rimFor(theirs, here, target)
+    if rim then
+        local toRim = flat(rim.Position - theirs)
+        local length = toRim.Magnitude
+        if length > 1.5 then
+            direction = toRim / length
+            gap = math.min(wanted, math.max(length - 1.5, 1))
+        end
+    end
+    if not direction then
+        direction = if distance > 0.5 then offset / -distance else -flat(root.CFrame.LookVector)
+    end
+    local raw: Vector3 = seen + lead * AHEAD + (direction :: Vector3) * gap
+    local hand = target:GetAttribute("Hand")
+    if hand == "L" or hand == "R" then
+        local right = flat(theirRoot.CFrame.RightVector)
+        if right.Magnitude > 0.1 then
+            raw += right.Unit * (if hand == "R" then SHADE else -SHADE)
+        end
+    end
+    local spot: Vector3? = self.Spot
+    if not spot or self.SpotFor ~= target or (raw - spot).Magnitude > 12 then
+        spot = raw
+    else
+        spot = spot:Lerp(raw, 1 - math.exp(-12 * math.min(dt, 0.1)))
+    end
+    self.Spot = spot
+    self.SpotFor = target
+    self.Following = true
+    self.FollowedAt = now
+    self.EaseUntil = nil
+    local toSpot = flat((spot :: Vector3) - here)
+    local span = toSpot.Magnitude
+    -- beaten off the dribble: let go of the hold and sprint back in front, then pick the stance up again
+    if not self.Recovering and span > RECOVER and theirSpeed > 6 then
+        self.Recovering = true
+        self.GuardOn = nil
+    elseif self.Recovering and span < RECOVERED then
+        self.Recovering = false
+    end
+    -- a long closeout to a man who stands far off the spot is run at a sprint too, then the stance is taken again
+    if self.Player and (self.Recovering or span > RECOVER + 3) then
+        self.Player.WantSprint = now + 0.3
+    end
+    -- the pace a person keeps: a little slower or quicker from one moment to the next, never a fixed beat
+    if now >= (self.PaceAt or 0) then
+        self.PaceAt = now + PACE_MIN + random:NextNumber() * (PACE_MAX - PACE_MIN)
+        self.PaceWant = PACE_LOW + random:NextNumber() * (1 - PACE_LOW)
+    end
+    self.Pace = (self.Pace or 1) + ((self.PaceWant or 1) - (self.Pace or 1)) * (1 - math.exp(-2 * math.min(dt, 0.1)))
+    local walk = mine:GetAttribute("WalkSpeed")
+    local top = math.clamp(if type(walk) == "number" then walk else 14, 8, 17)
+    -- where G is going to be held you move at stance speed before it is down, so the hold going on never brakes you
+    if mine:GetAttribute("HoldingG") == true or (self.WantHold and not self.Recovering) then
+        top *= STANCE
+    elseif self.Recovering and mine:GetAttribute("Sprinting") == true then
+        top += SPRINT_EXTRA
+    end
+    top *= self.Pace
+    -- a first step from standing builds up over a moment, a person does not leave at full speed
+    local ramp = math.min((self.Ramp or 1) + dt / RAMP, 1)
+    self.Ramp = ramp
+    top *= RAMP_FLOOR + (1 - RAMP_FLOOR) * ramp * ramp * (3 - 2 * ramp)
+    -- a lower top speed is eased into like a person slowing down, never dropped in one frame
+    local before: number? = self.Top
+    if before and top < before then
+        top = math.max(top, before - SLOW_DOWN * math.min(dt, 0.1))
+    end
+    self.Top = top
+    -- standing on the spot while he stands, so it never hunts around it. a step of his or the spot moving off starts it again
+    local mySpeed = flat(root.AssemblyLinearVelocity).Magnitude
+    if self.Standing then
+        if span > STAND_OUT or theirSpeed > 1.5 then
+            self.Standing = false
+        end
+    elseif span < STAND_IN and theirSpeed < 1 and mySpeed < 1.5 then
+        self.Standing = true
+    end
+    -- move with him and close the gap on top, eased near the spot so it settles instead of overshooting
+    local want: Vector3 = Vector3.zero
+    if not self.Standing then
+        -- far off the spot it is a closeout at your run speed, close to it you slide with him: his speed and a little
+        -- more, never a sprint into his chest
+        local cap = top
+        if span < CHOP then
+            cap = math.min(top, math.max(theirSpeed + EXTRA, span * ARRIVE + 1.5))
+        end
+        local close = if span > 0.01 then toSpot / span * math.min(span * ARRIVE, cap) else Vector3.zero
+        -- getting back in front comes first: when both do not fit in your speed, less of his run is matched
+        local sum = lead + close
+        if sum.Magnitude > cap and lead.Magnitude > 0.01 then
+            local low, high = 0, 1
+            for _ = 1, 8 do
+                local mid = (low + high) / 2
+                if (close + lead * mid).Magnitude > cap then
+                    high = mid
+                else
+                    low = mid
+                end
+            end
+            sum = close + lead * low
+        end
+        want = sum
+    end
+    -- on the spot but turned away from him: a short step his way turns you round, a defender always squares up to his
+    -- man. it goes on below one share of facing him and stops above the other, so it never flickers
+    local turning = false
+    if self.Standing and distance > 0.5 then
+        local facing = flat(root.CFrame.LookVector):Dot(offset / distance)
+        if self.FaceWant == true or facing < (if self.Squaring then SQUARED else SQUARE) then
+            turning = true
+        end
+    end
+    self.Squaring = turning
+    if turning then
+        want = offset / distance * 2.5
+    end
+    -- never run into him: closer than a step, what heads at him is taken out and you ease back off. a man coming
+    -- straight at you is given room early, the way a defender gives ground on a drive
+    if distance > 0.05 then
+        local out = offset / -distance
+        local mine0: Vector3 = Drive.velocity("Guard") or flat(root.AssemblyLinearVelocity)
+        local closing = math.max((lead - mine0):Dot(out), 0)
+        local room = NEAR + closing * 0.15
+        if distance < room then
+            local into = -want:Dot(out)
+            if into > 0 then
+                want += out * into
+            end
+            want += out * ((room - distance) * 6)
+        end
+    end
+    -- anyone standing in the way, a screen, is stepped around instead of run into
+    if not turning and span > 1.5 then
+        local heading = toSpot / span
+        local pushX, pushZ = 0, 0
+        local chars, roots = Court.Chars, Court.Roots
+        for index = 1, Court.Count do
+            if chars[index] ~= target then
+                local away = flat(roots[index].Position - here)
+                local ahead = away:Dot(heading)
+                if ahead > 0.5 and ahead < math.min(span, 5) then
+                    local side = away - heading * ahead
+                    local off = side.Magnitude
+                    if off < 3 then
+                        local out = if off > 0.2 then side / -off else Vector3.new(-heading.Z, 0, heading.X)
+                        local push = (3 - off) / 3 * 1.4
+                        pushX += out.X * push
+                        pushZ += out.Z * push
+                    end
+                end
+            end
+        end
+        if pushX ~= 0 or pushZ ~= 0 then
+            local size = want.Magnitude
+            want = Vector3.new(want.X + pushX * size * 0.5, 0, want.Z + pushZ * size * 0.5)
+        end
+    end
+    Drive.set("Guard", spot :: Vector3, top, false, false, want)
+    self:steerKeys(now, if turning then want else Drive.velocity("Guard"), want)
+end
+
+-- holds the move keys a person would hold for the way you are moving, so the game plays the run and turns the body the
+-- same as for a player. a key change waits a short moment so the keys never flicker between two
+function Defense.steerKeys(self: any, now: number, moving: Vector3?, want: Vector3)
+    local camera = workspace.CurrentCamera
+    if not Court.canPress() or not camera or not moving then
+        self.Sector = nil
+        Court.holdKeys("Guard", nil)
+        return
+    end
+    local speed = moving.Magnitude
+    local current: number? = self.Sector
+    if current == nil and speed < KEY_ON then
+        return
+    end
+    if current ~= nil and speed < KEY_OFF and want.Magnitude < KEY_OFF then
+        self.Sector = nil
+        Court.holdKeys("Guard", nil)
+        return
+    end
+    local forward = flat(camera.CFrame.LookVector)
+    if forward.Magnitude < 0.01 or speed < 0.05 then
+        return
+    end
+    forward = forward.Unit
+    local right = Vector3.new(-forward.Z, 0, forward.X)
+    local angle = math.atan2(moving:Dot(right), moving:Dot(forward))
+    local sector = math.round(angle / SECTOR) % 8
+    if current ~= nil and sector ~= current then
+        local off = math.abs((angle - current * SECTOR + math.pi) % (2 * math.pi) - math.pi)
+        local back = math.abs((sector - current + 4) % 8 - 4) >= 3
+        if off < HOLD_ANGLE or now - (self.SectorAt or -math.huge) < (if back then KEY_TURN_BACK else KEY_CHANGE) then
+            sector = current
+        end
+    end
+    if sector ~= current then
+        self.SectorAt = now
+    end
+    self.Sector = sector
+    Court.holdKeys("Guard", KEYSETS[sector])
+end
+
+-- facing the handler, and not stealing from behind or while they shoot, which is where fouls come from. nil when the
+-- steal may go, otherwise the reason it may not
+function Defense.stealOk(self: any, root: any, handlerRoot: any, handler: any): string?
+    local toHandler = flat(handlerRoot.Position - root.Position)
+    local length = toHandler.Magnitude
+    if length < 0.5 then
+        return nil
+    end
+    local direction = toHandler / length
+    if self.Read("StealFacing") == true then
+        local facing = flat(root.CFrame.LookVector):Dot(direction)
+        if facing < 0.35 then
+            return string.format("Only When Facing: you are not facing him (%.2f)", facing)
+        end
+    end
+    if self.Read("AvoidFouls") == true then
+        local action = handler:GetAttribute("Action")
+        if action == "Shooting" or action == "Gathering" or action == "Layup" or action == "Dunking" then
+            return "Avoid Fouls: he is " .. tostring(action)
+        end
+        if flat(handlerRoot.CFrame.LookVector):Dot(direction) > 0.6 then
+            return "Avoid Fouls: you are behind him"
+        end
+    end
+    return nil
+end
+
+function Defense.step(self: any, now: number, dt: number)
+    local mine, root = Court.Mine, Court.Root
+    local read = self.Read
+    local guardOn = read("AutoGuard") == true
+    local stealOn = read("AutoSteal") == true
+    -- Auto Shoot reads which rim you attack from here, so the shots are watched whatever is on
+    self:learn(now)
+    if not mine or not root or (not guardOn and not stealOn) then
+        self.FaceWant = false
+        if mine then
+            self:setGuard(false, false, true)
+        else
+            self.Guarding = false
+        end
+        self.GuardOn = nil
+        self.Handler = nil
+        self.Target = nil
+        self.InRange = nil
+        self:rest()
+        return
+    end
+    -- while the game walks, stuns or holds you, and a moment after, nothing is pressed, sent or moved. the hold the game
+    -- may have dropped by itself is only noted, it is put right once you are free again
+    if Court.HandsOff then
+        self.Guarding = mine:GetAttribute("HoldingG") == true
+        self.GuardOn = nil
+        self.SeenTarget = nil
+        self.FaceWant = false
+        self.WantHold = false
+        self.Target = nil
+        self.InRange = nil
+        self:rest()
+        return
+    end
+    local here: Vector3 = root.Position
+    local guardRange = read("GuardRange") or 0
+    -- with Move With Him on you are only ever walked to a man inside Move Distance, a turnover or a pass included. the
+    -- hold itself only goes on inside Guard Range. once following he is kept a little further before he is let go
+    local moveOn = guardOn and read("GuardMove") == true
+    local gap: number = if moveOn then read("GuardGap") or REACH else 0
+    local slack = if self.Following then FOLLOW_SLACK else 1
+    local walkTo = gap * slack
+    local holdTo = if self.Guarding then guardRange * 1.1 else guardRange
+    local search = math.max(walkTo, holdTo)
+    -- the steal looks at the closest enemy the ball really is at, wherever he is, the steal checks its own range
+    local handler = if stealOn then nearest(here, math.huge, true, self.Handler) else nil
+    self.Handler = handler
+    local target: any = nil
+    -- nobody is guarded on offense, on a dead ball or an inbound
+    if guardOn and not Court.HasBall and not Court.TeamBall and not Court.Dead then
+        if read("GuardTarget") == Config.GUARD_NEAREST then
+            -- the closest enemy inside your ranges, and only while the other team really has the ball
+            if Court.FoeHeld then
+                target = nearest(here, search, false, self.Target)
+            end
+        else
+            -- only an enemy the ball really is at, inside your ranges. a player who let it go is dropped at once
+            target = nearest(here, search, true, self.Target)
+        end
+    end
+    self.Target = target
+    local guarding = false
+    local chasing = false
+    local facing = true
+    if target then
+        local theirRoot = Court.root(target)
+        if theirRoot then
+            local distance = (theirRoot.Position - here).Magnitude
+            guarding = distance <= holdTo
+            chasing = moveOn and distance <= walkTo
+            -- Only When Facing: the hold waits until you look at him, once it is on it only lets go when you turn away
+            if guarding and read("GuardFacing") == true then
+                local toward = flat(theirRoot.Position - here)
+                local length = toward.Magnitude
+                if length > 0.5 then
+                    facing = flat(root.CFrame.LookVector):Dot(toward / length) >= (if self.Guarding then 0 else FACING)
+                end
+            end
+        end
+    end
+    self.FaceWant = guarding and not facing
+    local holding = guarding and facing
+    self.WantHold = holding
+    -- the game lets go of the hold by itself when the ball changes hands, so while a target is in range the hold is sent
+    -- again for a new target, a moment after it shows up, and every two seconds. never while a jump, a steal or a stun has you
+    local action0 = Court.Action
+    local canPress = Court.free(mine) and (action0 == "" or action0 == nil)
+    if holding and self.SeenTarget ~= target then
+        self.SeenTarget = target
+        local switched = self.GuardOn ~= nil or now - (self.DroppedAt or -math.huge) < 1.5
+        self.PressAt = now + (if switched then PICKUP_MIN + random:NextNumber() * (PICKUP_MAX - PICKUP_MIN) else 0)
+    end
+    if not holding then
+        if self.GuardOn ~= nil then
+            self.DroppedAt = now
+        end
+        self.GuardOn = nil
+        self.SeenTarget = nil
+        self:setGuard(false, false, target == nil)
+    elseif self.Recovering then
+        -- the sprint back needs the hold let go, it is picked up again once you are in front
+        if self.Guarding then
+            self:setGuard(false)
+        end
+    elseif canPress and now >= (self.PressAt or 0) and (self.GuardOn ~= target or now - self.GuardAt > 2) then
+        if self:setGuard(true, true) then
+            self.GuardOn, self.GuardAt = target, now
+        end
+    end
+    self:follow(mine, root, if chasing then target else nil, now, dt)
+    if not stealOn then
+        self.InRange = nil
+        return
+    end
+    if not handler then
+        self.InRange = nil
+        self:stealNote(now, "nobody on the other team holds the ball")
+        return
+    end
+    local skip = self:steal(now, mine, root, here, handler)
+    if skip then
+        self:stealNote(now, skip, handler)
+    end
+end
+
+-- with getgenv().PBDebug = true, why a steal was not tried goes to the console, once a second at most and only when
+-- the reason changes or a second passed
+function Defense.stealNote(self: any, now: number, reason: string, handler: any?)
+    if Env.get("PBDebug") ~= true then
+        return
+    end
+    local line = reason .. (if handler then " | " .. tostring(handler.Name) else "")
+    if line == self.NoteLine and now - (self.NoteAt or -math.huge) < 1 then
+        return
+    end
+    if now - (self.NoteAt or -math.huge) < 0.25 then
+        return
+    end
+    self.NoteLine, self.NoteAt = line, now
+    print("[PB steal] " .. line)
+end
+
+-- a bot of the game's tutorial has no Player of its own, a real player always has one
+local function isBot(character: any): boolean
+    return players:FindFirstChild(character.Name) == nil
+end
+
+-- tries a steal on the ball handler, returns why it did not when it did not
+function Defense.steal(self: any, now: number, mine: any, root: any, here: Vector3, handler: any): string?
+    local read = self.Read
+    local handlerRoot = Court.root(handler)
+    if not handlerRoot then
+        self.InRange = nil
+        return "no root part on the ball handler"
+    end
+    local distance = (handlerRoot.Position - here).Magnitude
+    local range = read("StealRange") or 0
+    if distance > range then
+        self.InRange = nil
+        return string.format("out of Steal Range, %.1f studs of %d", distance, range)
+    end
+    if self.InRange ~= handler then
+        self.InRange = handler
+        self.InRangeAt = now
+        self.React = REACT_MIN + random:NextNumber() * (REACT_MAX - REACT_MIN)
+    end
+    if now - self.InRangeAt < self.React then
+        return nil
+    end
+    local handlerAction = handler:GetAttribute("Action")
+    local inHands = Court.ballNear(handlerRoot.Position, BALL_REACH) ~= false
+    if not Court.holds(handler) or not inHands then
+        self.StillSince = now
+        return "the ball is not in his hands"
+    end
+    -- a real player is only reached for while he holds the ball standing still: never on the move, in a dribble move,
+    -- passing or shooting. his velocity is not always seen here, so where he stands is watched as well. a tutorial bot
+    -- keeps dribbling around and never fouls you, he is reached for on the move too, only never while he shoots or passes
+    local bot = isBot(handler)
+    if bot then
+        if type(handlerAction) == "string" and BOT_BUSY[handlerAction] then
+            return "the bot is busy: " .. handlerAction
+        end
+    else
+        local spot = flat(handlerRoot.Position)
+        if self.StillFor ~= handler or not self.Anchor then
+            self.StillFor = handler
+            self.Anchor = spot
+            self.StillSince = now
+        end
+        if (spot - self.Anchor).Magnitude > STILL_DRIFT then
+            self.Anchor = spot
+            self.StillSince = now
+        end
+        local motion = handlerRoot.AssemblyLinearVelocity
+        local speed = Vector3.new(motion.X, 0, motion.Z).Magnitude
+        if speed >= STILL_SPEED then
+            self.StillSince = now
+            return string.format("he is moving, %.1f studs/s", speed)
+        end
+        if handlerAction ~= "" and handlerAction ~= nil then
+            self.StillSince = now
+            return "his Action is " .. tostring(handlerAction)
+        end
+        if now - self.StillSince < STILL_TIME then
+            return "waiting for him to stand still"
+        end
+    end
+    local action = Court.Action
+    if action ~= "" and action ~= nil then
+        return "your Action is " .. tostring(action)
+    end
+    if not Court.free(mine) then
+        return "you cannot move right now"
+    end
+    if Court.Dead then
+        return "dead ball"
+    end
+    if now - self.LastSteal < self.StealWait then
+        return nil
+    end
+    local why = self:stealOk(root, handlerRoot, handler)
+    if why then
+        return why
+    end
+    self.LastSteal = now
+    self.StealWait = STEAL_COOLDOWN_MIN + random:NextNumber() * (STEAL_COOLDOWN_MAX - STEAL_COOLDOWN_MIN)
+    Court.fire("Steal", STEAL_FORMS, stealing, nil, mine)
+    if Env.get("PBDebug") == true then
+        local how = if type(Court.copied("Steal")) == "table" then "your own steal press copied" else "a guessed steal call"
+        print(string.format("[PB steal] sent on %s at %.1f studs, %s", tostring(handler.Name), distance, how))
+    end
+    return nil
+end
+
+function Defense.shutdown(self: any)
+    pcall(self.setGuard, self, false, false, true)
+    self.GuardOn = nil
+    self.Handler = nil
+    self.Target = nil
+    self:rest()
+end
+
+return Defense
+end
+modules["drive"] = function(...)
+
+local import: (string) -> any = ...
+local Court: typeof(require("./court")) = import("court")
+
+-- moves you by the velocity of the game's own proxy part, one goal at a time. the features ask for a goal every frame
+-- they want one, the highest priority wins, and your own movement always takes over
+local Drive = {}
+
+type Map = { [string]: any }
+
+-- the game drops any speed above 27.5
+local LIMIT = 27
+-- the fastest a drive changes your velocity, in studs per second each second
+local TURN = 140
+local FRESH = 0.12
+
+-- Follow: with a velocity to match, how strongly the gap to the goal is closed on top of it, per second
+local PROFILES: { [string]: Map } = {
+    Dunk = { Priority = 3, Accel = 38, Base = 6, Gain = 1.6, Stop = 2, Resume = 4 },
+    Guard = { Priority = 2, Accel = 75, Brake = 200, Base = 1.5, Gain = 5, Stop = 0.8, Resume = 1.6, Direct = true, Turn = math.rad(280) },
+    Magnet = { Priority = 1, Accel = 60, Base = 5, Gain = 3, Stop = 1, Resume = 1.5 },
+}
+
+local owner: string? = nil
+local goal = Vector3.zero
+local topSpeed = 0
+local useKey = false
+local forced = false
+local setAt = -math.huge
+local pace: number? = nil
+local moving = false
+local last: Vector3? = nil
+local lastAt = -math.huge
+local userAt = -math.huge
+local feed: Vector3? = nil
+local seenNative = 0
+local seenAt = -math.huge
+
+-- match: the velocity of what is followed, the drive moves with it and closes the gap on top, so it keeps up instead of trailing
+function Drive.set(name: string, target: Vector3, speed: number, key: boolean, force: boolean, match: Vector3?)
+    local now = os.clock()
+    local current = owner
+    if current and current ~= name and now - setAt < FRESH and PROFILES[current].Priority > PROFILES[name].Priority then
+        return
+    end
+    if current ~= name then
+        moving = false
+        pace = nil
+    end
+    owner = name
+    goal = target
+    topSpeed = speed
+    useKey = key
+    forced = force
+    feed = match
+    setAt = now
+end
+
+function Drive.clear(name: string)
+    if owner == name then
+        owner = nil
+    end
+end
+
+function Drive.moving(name: string): boolean
+    return owner == name and moving
+end
+
+-- the velocity last written for this feature, nil while it is not moving you
+function Drive.velocity(name: string): Vector3?
+    if owner == name and moving then
+        return last
+    end
+    return nil
+end
+
+-- seconds since any feature last wrote your velocity
+function Drive.since(now: number): number
+    return now - lastAt
+end
+
+-- true while any feature is moving you
+function Drive.active(): boolean
+    return owner ~= nil and moving
+end
+
+local function halt(mover: any, hands: boolean?)
+    -- the game wrote this frame's velocity before a key let go late last frame was seen, so a key just let go counts too
+    local keyed = Court.Held or os.clock() - Court.KeysOff < FRESH
+    moving = false
+    pace = nil
+    Court.hold("Drive", false)
+    local written = last
+    if written and hands then
+        -- the game moves you itself now, its velocity is left exactly as it wrote it
+        last = nil
+    elseif written then
+        last = nil
+        -- a velocity still the one written here means the game did not set a new one, left alone it would carry you on
+        -- while you steer yourself the game wrote this frame for your keys, even when it happens to match, so it is kept
+        local steering = Court.Mine ~= nil and Court.steering(Court.Mine)
+        if mover and not steering and (mover.Velocity - written).Magnitude < 0.05 then
+            mover.Velocity = Vector3.zero
+        elseif mover and keyed and not (Court.Mine and Court.steering(Court.Mine)) then
+            -- the game already wrote a run for the forward key this drive held, faster than the drive was going that
+            -- one frame would lunge you forward, the drive's own speed is kept for it instead
+            if mover.Velocity.Magnitude > written.Magnitude + 1 then
+                mover.Velocity = written
+            end
+        end
+    end
+end
+
+-- runs first in the physics step, before anything writes: a velocity the game set that is not the one written here
+-- last frame is you moving, by keys, a thumbstick or a controller
+function Drive.begin(now: number)
+    local _, mover = Court.proxy()
+    if not mover then
+        Court.UserMoving = false
+        return
+    end
+    if not Court.Keys and now - Court.KeysOff > 0.3 then
+        local incoming = mover.Velocity
+        local x, z = incoming.X, incoming.Z
+        local speed = math.sqrt(x * x + z * z)
+        if speed > 1 then
+            local written = last
+            local own = false
+            if written and now - lastAt <= FRESH then
+                local size = written.Magnitude
+                own = size > 0.5 and speed <= size * 1.25 + 0.5 and x * written.X + z * written.Z >= 0.8 * speed * size
+            end
+            if not own then
+                userAt = now
+            end
+        end
+    end
+    Court.UserMoving = now - userAt < 0.25
+end
+
+-- runs last in the physics step, after the game wrote its own velocity for the frame
+function Drive.finish(now: number, dt: number)
+    local part, mover = Court.proxy()
+    local name = owner
+    local live = name ~= nil and now - setAt < FRESH and part ~= nil and mover ~= nil
+    if live and not forced then
+        local mine = Court.Mine
+        live = mine ~= nil and not Court.steering(mine)
+    end
+    -- read again here, the frame's snapshot is from before a change that came in this frame. a walk, a stun and the
+    -- moment after them are the game's, the velocity it wrote is left exactly as it is
+    if Court.Forced or Court.HandsOff or (Court.Mine ~= nil and Court.handsOff(Court.Mine)) then
+        owner = nil
+        halt(mover, true)
+        return
+    end
+    if not live or not name or not part or not mover then
+        halt(mover)
+        return
+    end
+    local profile = PROFILES[name]
+    if profile.Direct then
+        -- Direct: the feature hands over the velocity it wants, it is reached like a person gets there: the push off and
+        -- the turn are limited, the same at any frame rate, and the game's own speed for the held keys is never beaten
+        local want = feed or Vector3.zero
+        local wx, wz = want.X, want.Z
+        local native: Vector3 = mover.Velocity
+        local nativeSpeed = math.sqrt(native.X * native.X + native.Z * native.Z)
+        if Court.Keys and nativeSpeed > 4 and (not last or (native - last).Magnitude > 0.05) then
+            seenNative, seenAt = nativeSpeed, now
+        end
+        local cap = math.min(topSpeed, LIMIT)
+        if Court.Keys and now - seenAt < 0.5 then
+            cap = math.min(cap, seenNative + 0.3)
+        end
+        local wantSize = math.sqrt(wx * wx + wz * wz)
+        if wantSize > cap then
+            wx, wz = wx / wantSize * cap, wz / wantSize * cap
+            wantSize = cap
+        end
+        local velocity = part.AssemblyLinearVelocity
+        local vx, vz = velocity.X, velocity.Z
+        local stepX, stepZ = wx - vx, wz - vz
+        local span = math.min(dt, 0.05)
+        local before = math.sqrt(vx * vx + vz * vz)
+        if before > 2 then
+            -- the part of the change that bends the way you run is limited to a person's turn, a cut back is braked into
+            local ux, uz = vx / before, vz / before
+            local along = stepX * ux + stepZ * uz
+            local px, pz = stepX - ux * along, stepZ - uz * along
+            local side = math.sqrt(px * px + pz * pz)
+            local sideMost = before * profile.Turn * span
+            if side > sideMost then
+                px, pz = px / side * sideMost, pz / side * sideMost
+            end
+            stepX, stepZ = ux * along + px, uz * along + pz
+        end
+        local step = math.sqrt(stepX * stepX + stepZ * stepZ)
+        -- a person plants and stops quicker than he pushes off, a stop may use the brake
+        local most = (if wantSize < 0.05 and profile.Brake then profile.Brake else profile.Accel) * span
+        if step > most then
+            stepX, stepZ = stepX / step * most, stepZ / step * most
+        end
+        local nx, nz = vx + stepX, vz + stepZ
+        local after = math.sqrt(nx * nx + nz * nz)
+        if after > cap then
+            nx, nz = nx / after * cap, nz / after * cap
+            after = cap
+        end
+        local write = Vector3.new(nx, 0, nz)
+        if wantSize < 0.05 and after < 0.4 then
+            -- stopped: while move keys are still down the game would run you on them for a frame, so you are held still
+            -- until they come up
+            if not Court.Keys then
+                halt(mover)
+                return
+            end
+            write = Vector3.zero
+            after = 0
+        end
+        moving = true
+        pace = after
+        mover.Velocity = write
+        last = write
+        lastAt = now
+        Court.hold("Drive", false)
+        return
+    end
+    local position = part.Position
+    local dx, dz = goal.X - position.X, goal.Z - position.Z
+    local away = math.sqrt(dx * dx + dz * dz)
+    local match = feed
+    if match and profile.Follow then
+        local mx, mz = match.X, match.Z
+        local matchSpeed = math.sqrt(mx * mx + mz * mz)
+        -- close and the one followed is standing still: a person stands too, there is nothing to correct
+        if matchSpeed < 1 and away <= profile.Stop then
+            halt(mover)
+            return
+        end
+        local top = topSpeed
+        local native: Vector3 = mover.Velocity
+        local nativeSpeed = math.sqrt(native.X * native.X + native.Z * native.Z)
+        if useKey and Court.Held and nativeSpeed > 4 and (not last or (native - last).Magnitude > 0.05) then
+            seenNative, seenAt = nativeSpeed, now
+        end
+        -- the game's own speed for the held key, stance and stamina included, is the most the follow ever goes. a frame
+        -- where the game wrote nothing new uses the last one it did write
+        local nativeCap = math.huge
+        if useKey and now - seenAt < 0.5 then
+            nativeCap = seenNative + 0.3
+            top = math.min(top, nativeCap)
+        end
+        -- move with them, close the gap on top, eased near the spot so it settles instead of overshooting
+        local pull = profile.Follow * math.min(away, 6)
+        local wantX = mx + (if away > 0.05 then dx / away * pull else 0)
+        local wantZ = mz + (if away > 0.05 then dz / away * pull else 0)
+        local want = math.sqrt(wantX * wantX + wantZ * wantZ)
+        local cap = math.min(top, LIMIT)
+        if want > cap then
+            wantX, wantZ = wantX / want * cap, wantZ / want * cap
+        end
+        -- the change in velocity is limited like a person's push off, the same at any frame rate
+        local velocity = part.AssemblyLinearVelocity
+        local stepX, stepZ = wantX - velocity.X, wantZ - velocity.Z
+        local step = math.sqrt(stepX * stepX + stepZ * stepZ)
+        local most = profile.Accel * math.min(dt, 0.05)
+        if step > most then
+            stepX, stepZ = stepX / step * most, stepZ / step * most
+        end
+        local write = Vector3.new(velocity.X + stepX, 0, velocity.Z + stepZ)
+        -- slowing down to the game's own speed is never held back, the game itself drops you to stance speed at once
+        local size = write.Magnitude
+        if size > nativeCap then
+            write = write * (nativeCap / size)
+        end
+        moving = true
+        pace = write.Magnitude
+        mover.Velocity = write
+        last = write
+        lastAt = now
+        Court.hold("Drive", useKey)
+        return
+    end
+    if moving then
+        if away <= profile.Stop then
+            moving = false
+        end
+    elseif away > profile.Resume then
+        moving = true
+    end
+    if not moving then
+        halt(mover)
+        return
+    end
+    local velocity = part.AssemblyLinearVelocity
+    local current = math.sqrt(velocity.X * velocity.X + velocity.Z * velocity.Z)
+    local speed = math.max(pace or current, current)
+    -- with the forward key held the game just wrote the speed it would move you at itself, stance, stamina and sprint
+    -- included, and the drive is never faster than that
+    local top = topSpeed
+    local native: Vector3 = mover.Velocity
+    local nativeSpeed = math.sqrt(native.X * native.X + native.Z * native.Z)
+    if useKey and Court.Held and nativeSpeed > 4 and (not last or (native - last).Magnitude > 0.05) then
+        top = math.min(top, nativeSpeed + 0.3)
+    end
+    speed = math.min(speed + profile.Accel * math.min(dt, 0.05), top)
+    pace = speed
+    -- it eases off the last few studs so the stop is not abrupt
+    local scale = math.min(speed, profile.Base + away * profile.Gain, LIMIT) / away
+    local write = Vector3.new(dx * scale, 0, dz * scale)
+    -- a turn onto the goal or a take over from your own run is bent in over a few frames, never snapped
+    local before = part.AssemblyLinearVelocity
+    local change = Vector3.new(write.X - before.X, 0, write.Z - before.Z)
+    local most = TURN * math.min(dt, 0.05)
+    if change.Magnitude > most then
+        write = Vector3.new(before.X, 0, before.Z) + change.Unit * most
+    end
+    mover.Velocity = write
+    last = write
+    lastAt = now
+    if useKey then
+        Court.hold("Drive", true)
+    else
+        Court.hold("Drive", false)
+    end
+end
+
+function Drive.stop()
+    owner = nil
+    local _, mover = Court.proxy()
+    halt(mover)
+end
+
+return Drive
+end
+modules["env"] = function(...)
+
+local Env = {}
+
+local httpService: any = game:GetService("HttpService")
+
+local function pick(value: any): any
+    return if type(value) == "function" then value else nil
+end
+
+local globals: any = nil
+if type(getgenv) == "function" then
+    local ok, env = pcall(getgenv)
+    if ok and type(env) == "table" then
+        globals = env
+    end
+end
+if type(globals) ~= "table" then
+    globals = if type(_G) == "table" then _G else {}
+end
+
+Env.G = globals
+Env.hookmetamethod = pick(hookmetamethod)
+Env.newcclosure = pick(newcclosure)
+Env.clonefunction = pick(clonefunction)
+Env.restorefunction = pick(restorefunction)
+Env.getnamecallmethod = pick(getnamecallmethod)
+Env.getrawmetatable = pick(getrawmetatable)
+Env.setreadonly = pick(setreadonly)
+Env.checkcaller = pick(checkcaller)
+Env.keypress = pick(keypress)
+Env.keyrelease = pick(keyrelease)
+Env.filtergc = pick(filtergc)
+Env.gethui = pick(gethui)
+Env.getgc = pick(getgc)
+Env.setidentity = pick(setthreadidentity) or pick(set_thread_identity) or pick(setidentity)
+Env.getidentity = pick(getthreadidentity) or pick(get_thread_identity) or pick(getidentity)
+
+local canRead = type(isfile) == "function" and type(readfile) == "function"
+local canWrite = type(writefile) == "function"
+
+function Env.get(name: string): any
+    return globals[name]
+end
+
+function Env.set(name: string, value: any)
+    globals[name] = value
+end
+
+local function readJson(path: string): any
+    if not isfile(path) then
+        return nil
+    end
+    return httpService:JSONDecode(readfile(path))
+end
+
+function Env.readJson(path: string): any
+    if not canRead then
+        return nil
+    end
+    local ok, value = pcall(readJson, path)
+    return if ok and type(value) == "table" then value else nil
+end
+
+local function writeJson(path: string, value: any)
+    writefile(path, httpService:JSONEncode(value))
+end
+
+function Env.writeJson(path: string, value: any): boolean
+    if not canWrite then
+        return false
+    end
+    return (pcall(writeJson, path, value))
+end
+
+return Env
+end
+modules["esp"] = function(...)
+
+local import: (string) -> any = ...
+local Court: typeof(require("./court")) = import("court")
+local Config: typeof(require("./config")) = import("config")
+
+-- a clean tag over every player: the name and position, a thin stamina bar under it, and a soft ring on the floor
+-- under whoever has the ball. far players fade out instead of cluttering the court
+local Esp = {}
+Esp.__index = Esp
+
+type Map = { [string]: any }
+
+local LIFT = Vector3.new(0, 3.4, 0)
+local DROP = Vector3.new(0, 2.8, 0)
+local BAR_HEIGHT = 3
+local TRACK = Color3.fromRGB(30, 32, 38)
+local SEGMENTS = 32
+local OFF_SCREEN = 220
+
+local circleX: { number } = table.create(SEGMENTS + 1)
+local circleZ: { number } = table.create(SEGMENTS + 1)
+for index = 0, SEGMENTS do
+    local angle = index / SEGMENTS * math.pi * 2
+    circleX[index + 1] = math.cos(angle)
+    circleZ[index + 1] = math.sin(angle)
+end
+local points: { Vector3 } = table.create(SEGMENTS + 1)
+
+local function tint(read: (string) -> any, flag: string): Color3
+    local color: any = read(flag)
+    local kind = typeof(color)
+    return if kind == "Color3" then color else Config.DEFAULTS[flag]
+end
+
+function Esp.new(read: (string) -> any): any
+    return setmetatable({ Read = read, Labels = setmetatable({}, { __mode = "k" }) :: any }, Esp)
+end
+
+-- the text of a tag is only built again when something on it changed
+local function label(labels: { [any]: Map }, character: any, holder: boolean): string
+    local entry = labels[character]
+    if not entry then
+        entry = {}
+        labels[character] = entry
+    end
+    local role = character:GetAttribute("Position")
+    if entry.Text and entry.Role == role and entry.Holder == holder and entry.Name == character.Name then
+        return entry.Text
+    end
+    local text = if role then string.format("%s  ·  %s", character.Name, tostring(role)) else character.Name
+    if holder then
+        text = "● " .. text
+    end
+    entry.Text = text
+    entry.Role = role
+    entry.Holder = holder
+    entry.Name = character.Name
+    return text
+end
+
+local function floorRing(canvas: any, center: Vector3, color: Color3, alpha: number)
+    for index = 1, SEGMENTS + 1 do
+        points[index] = Vector3.new(center.X + circleX[index] * 1.8, center.Y, center.Z + circleZ[index] * 1.8)
+    end
+    canvas.worldPath(points, color, 0.15 * alpha, 6)
+    canvas.worldPath(points, color, 0.8 * alpha, 2)
+end
+
+-- the runs of the pill: the name in the player's color, the position in the quiet text color. only built again when
+-- something on it changed
+local function segments(labels: { [any]: Map }, character: any, holder: boolean, color: Color3): any
+    local entry = labels[character]
+    if not entry then
+        entry = {}
+        labels[character] = entry
+    end
+    local role = character:GetAttribute("Position")
+    if entry.Runs and entry.RunRole == role and entry.RunHolder == holder and entry.RunColor == color and entry.RunName == character.Name then
+        return entry.Runs
+    end
+    local runs: { any } = { { Text = character.Name, Color = color } }
+    if role then
+        runs[2] = { Text = tostring(role), Color = "Sub" }
+    end
+    local built = { runs }
+    entry.Runs, entry.RunRole, entry.RunHolder, entry.RunColor, entry.RunName = built, role, holder, color, character.Name
+    return built
+end
+
+function Esp.draw(self: any, canvas: any, chip: any?)
+    local read = self.Read
+    local root = Court.Root
+    if read("Esp") ~= true or not canvas or not root then
+        return
+    end
+    local here: Vector3 = root.Position
+    local maxDistance = read("EspDistance") or 300
+    local showTeam = read("EspTeam") == true
+    local showStamina = read("EspStamina") == true
+    local size = read("EspTextSize") or 13
+    local background = read("EspBackground") or 0.2
+    local enemyColor = tint(read, "ColorEnemy")
+    local teamColor = tint(read, "ColorTeam")
+    local holderColor = tint(read, "ColorHolder")
+    local backColor = tint(read, "ColorBackground")
+    local onlyBall = read("EspBallOnly") == true
+    local opacity = math.clamp(tonumber(read("ContestOpacity")) or 0.85, 0.1, 1)
+    local chars, roots, foe, carry = Court.Chars, Court.Roots, Court.Foe, Court.Carry
+    -- a tag whose middle is this far off the screen cannot show any part of itself, it is not drawn
+    local margin = OFF_SCREEN * math.max(1, size / 13)
+    local viewW, viewH = math.huge, math.huge
+    pcall(function()
+        local view = workspace.CurrentCamera.ViewportSize
+        viewW, viewH = view.X + margin, view.Y + margin
+    end)
+    local labels = self.Labels
+    for index = 1, Court.Count do
+        local enemy = foe[index]
+        local holder = carry[index]
+        local other = roots[index]
+        if (enemy or showTeam) and (holder or not onlyBall) and other.Parent ~= nil then
+            local where: Vector3 = other.Position
+            local distance = (where - here).Magnitude
+            if distance <= maxDistance then
+                -- the last fifth of the range fades out
+                local fade = math.clamp((maxDistance - distance) / (maxDistance * 0.2), 0, 1)
+                local color = if holder then holderColor elseif enemy then enemyColor else teamColor
+                if holder then
+                    floorRing(canvas, where - DROP, holderColor, fade)
+                end
+                local point, depth = canvas.project(where + LIFT)
+                if point and depth > 0 and point.X > -margin and point.Y > -margin and point.X < viewW and point.Y < viewH then
+                    local character = chars[index]
+                    local stamina = if showStamina then character:GetAttribute("Stamina") else nil
+                    if chip then
+                        -- the same notification pill the contest label uses, the stamina is its slim gauge. the key and the
+                        -- gauge table are kept per player instead of made new every frame
+                        local runs = segments(labels, character, holder, color)
+                        local entry = labels[character]
+                        local name = character.Name
+                        if entry.KeyName ~= name then
+                            entry.KeyName, entry.Key = name, "esp:" .. name
+                        end
+                        local bar: any = nil
+                        if type(stamina) == "number" then
+                            bar = entry.Bar or {}
+                            entry.Bar = bar
+                            bar.Value, bar.Color = math.clamp(stamina / 100, 0, 1), color
+                        end
+                        chip(entry.Key, point, runs, fade * opacity, size / 13, bar)
+                    else
+                        canvas.label(point, size, color, label(labels, character, holder), backColor, background * fade)
+                        if type(stamina) == "number" then
+                            local share = math.clamp(stamina / 100, 0, 1)
+                            local width = math.max(size * 3.2, 34)
+                            local corner = Vector2.new(point.X - width / 2, point.Y + size * 0.75 + 2)
+                            canvas.filledRect(corner, Vector2.new(width, BAR_HEIGHT), TRACK, 0.7 * fade)
+                            canvas.filledRect(corner, Vector2.new(width * share, BAR_HEIGHT), color, 0.9 * fade)
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+return Esp
+end
+modules["glide"] = function(...)
+
+local import: (string) -> any = ...
+local Court: typeof(require("./court")) = import("court")
+
+-- keeps part of your speed through a move the game slows you down in. each glide follows its own move:
+-- Dribble Glide rides along the dribble move itself: it only adds to the speed the game's own move already has, along
+--   the way the move goes, so the body never slides somewhere the animation does not go
+-- Gather Step Glide carries you into a hop step or gather toward the rim you attack, so the finish starts from the right
+--   side. it stays off inside layup range, the layup itself belongs to the game
+-- Shot Glide carries you on the line you came in on through the start of the shot, then eases to nothing
+-- the game stops you dead within a few frames of a shot or a gather, so these two hold their share of your speed from
+-- the very first frame of the move and only ease out after that. they never come closer to a ring than layup range
+local Glide = {}
+Glide.__index = Glide
+
+local ACTIONS: { [string]: string } = {
+    Dribbling = "DribbleGlide",
+    Gathering = "GatherGlide",
+    Shooting = "ShotGlide",
+    MovingShot = "ShotGlide",
+}
+-- finishes at the rim fill a meter too, they are never a shot glide
+local FINISHES: { [string]: boolean } = { Dunking = true, ContactLayup = true, ClutchLayup = true, Layup = true }
+local WALKS: { [string]: boolean } = { Moving = true, Fouled = true, Inbounding = true, Stunned = true }
+Glide.DEFAULTS = {
+    DribbleGlide = { Speed = 5, Time = 240, Strength = 30 },
+    GatherGlide = { Speed = 14, Time = 500, Strength = 100 },
+    ShotGlide = { Speed = 10, Time = 440, Strength = 60 },
+}
+
+-- the game drops any speed above 27.5
+local LIMIT = 27
+-- a gather or a shot this close to a ring is the game's layup or dunk, gliding it is what made finishes jitter. a glide
+-- toward a ring also eases to nothing before it comes this close
+local RIM_CLEAR = 14
+-- how fast the carry eases off per stud left before the rim clear
+local RIM_EASE = 3
+-- the dribble glide blends in from nothing, the dribble move keeps you going by itself at first
+local BLEND_IN = 0.08
+-- the shot glide holds its full carry this share of its length, then eases out
+local HOLD = 0.4
+-- the game's own gather keeps about nine tenths of your speed for a quarter second and only then falls, so the gather
+-- glide holds its full carry for most of its length or it never gets above the game's own move
+local GATHER_HOLD = 0.7
+-- the game can stop you on the very frame a move starts, the speed you ran with this long before still counts as yours
+local ENTRY_MEMORY = 0.25
+-- a stop while you still hold a move key is the game holding you until the server names the move, that wait is the
+-- shoot delay and a round trip, so the run before it counts for longer
+local ENTRY_HELD = 0.7
+
+local function smooth(x: number): number
+    local t = math.clamp(x, 0, 1)
+    return t * t * (3 - 2 * t)
+end
+
+local function flat(v: Vector3): Vector3
+    return Vector3.new(v.X, 0, v.Z)
+end
+
+-- tops the velocity up along the line to the carry, what the game already moves you along that line is kept
+local function apply(mover: any, direction: Vector3, carried: number): Vector3?
+    local native: Vector3 = mover.Velocity
+    local nativeFlat = flat(native)
+    local along = nativeFlat:Dot(direction)
+    if carried <= along + 0.05 then
+        return nil
+    end
+    local result = nativeFlat + direction * (carried - math.max(along, 0))
+    if result.Magnitude > LIMIT then
+        result = result.Unit * LIMIT
+    end
+    local written = Vector3.new(result.X, native.Y, result.Z)
+    mover.Velocity = written
+    return written
+end
+
+-- shooting tells a shot the game plays under a name of its own, by its meter
+function Glide.new(read: (string) -> any, shooting: ((any, string) -> boolean)?): any
+    return setmetatable({ Read = read, Shooting = shooting, Action = nil :: any, Direction = nil :: Vector3?, Speed = 0 }, Glide)
+end
+
+function Glide.option(self: any, flag: string, name: string): number
+    local value = self.Read(flag .. name)
+    return if type(value) == "number" then value else Glide.DEFAULTS[flag][name]
+end
+
+-- the speed you ran with outside a glide, the entry of the next one. a frame where the game already stopped you is not
+-- kept, the run before it is what the move starts from
+function Glide.remember(self: any, now: number)
+    local part = Court.proxy()
+    if not part then
+        return
+    end
+    if Court.heading() then
+        self.KeysAt = now
+    end
+    local planar = flat(part.AssemblyLinearVelocity)
+    local last: Vector3? = self.Last
+    -- a sharp drop while a move key is still down is the game holding you for a move, the run before it is kept
+    local held = last ~= nil and self.KeysAt == now and now - self.LastAt <= ENTRY_HELD and planar.Magnitude < last.Magnitude * 0.5
+    if planar.Magnitude > 1 and not held then
+        self.Last = planar
+        self.LastAt = now
+    end
+end
+
+-- the speed a glide starts from: this frame's, or the run right before the game stopped you
+function Glide.entry(self: any, part: any, now: number): Vector3
+    local planar = flat(part.AssemblyLinearVelocity)
+    local before: Vector3? = self.Last
+    if not before then
+        return planar
+    end
+    local keys = (self.KeysAt or -math.huge) >= self.LastAt
+    local memory = if keys then ENTRY_HELD else ENTRY_MEMORY
+    return if now - self.LastAt <= memory and before.Magnitude > planar.Magnitude then before else planar
+end
+
+-- the glide a move gets: its own name, or a shot the game names its own way while its meter is up
+function Glide.flagOf(self: any, mine: any, action: any): string?
+    if type(action) ~= "string" or action == "" then
+        return nil
+    end
+    local flag = ACTIONS[action]
+    if flag or FINISHES[action] then
+        return flag
+    end
+    if action == self.Action then
+        return self.Flag
+    end
+    local shooting = self.Shooting
+    return if shooting and shooting(mine, action) then "ShotGlide" else nil
+end
+
+-- the game may write its stop before the physics step after this script did, on the same signal. a deferred thread runs
+-- once every handler of the signal is done and still before the physics step, so the carry is put back on top of it
+function Glide.settle(self: any, live: any)
+    if self.Live ~= live or Court.Now ~= live.Frame then
+        return
+    end
+    local mover = live.Mover
+    if mover.Parent == nil or mover.Velocity == live.After then
+        return
+    end
+    local native = flat(mover.Velocity)
+    if native.Magnitude > 1.5 and native:Dot(live.Direction) < native.Magnitude * 0.5 then
+        return
+    end
+    local written = apply(mover, live.Direction, live.Carried)
+    live.After = if written then written else mover.Velocity
+end
+
+-- runs right before the physics step, after the game wrote its own velocity for the frame
+function Glide.physics(self: any)
+    local mine = Court.Mine
+    local read = self.Read
+    local action = if mine then mine:GetAttribute("Action") else nil
+    -- the game walking you or a stun is never a glide, even with a shot meter still up
+    local walked = type(action) == "string" and WALKS[action] == true or (mine ~= nil and (mine:GetAttribute("Stunned") == true or Court.held(mine)))
+    local flag = if mine and not walked then self:flagOf(mine, action) else nil
+    local now = os.clock()
+    self.Live = nil
+    if not mine or not flag or read(flag) ~= true then
+        self.Action = nil
+        self.Flag = nil
+        self:remember(now)
+        return
+    end
+    -- a dribble move you steer yourself is left alone. a shot or a gather holds from its first frame on, the game may
+    -- still say you can move on that frame and stops you right after
+    if flag == "DribbleGlide" and mine:GetAttribute("CanMove") == true then
+        self.Action = nil
+        self.Flag = nil
+        self:remember(now)
+        return
+    end
+    local part, mover = Court.proxy()
+    if not part or not mover then
+        return
+    end
+    if self.Action ~= action then
+        self.Action = action
+        self.Flag = flag
+        self.Since = now
+        local planar = self:entry(part, now)
+        self.Speed = math.min(planar.Magnitude, LIMIT)
+        self.Direction = if planar.Magnitude > 1 then planar.Unit else nil
+        -- the speed the body still has along the line on this frame, a glide that starts above it blends up from it
+        self.Moving = if planar.Magnitude > 1 then math.max(flat(part.AssemblyLinearVelocity):Dot(planar.Unit), 0) else 0
+        local distance, rim = Court.rimDistance(part.Position)
+        self.Rim = rim
+        self.NearRim = action ~= "Dribbling" and distance ~= nil and distance < RIM_CLEAR
+    end
+    if self.NearRim then
+        return
+    end
+    local length = self:option(flag, "Time") / 1000
+    local elapsed = now - (self.Since or now)
+    if length <= 0 or elapsed >= length then
+        return
+    end
+    local native: Vector3 = mover.Velocity
+    local nativeFlat = flat(native)
+    local nativeSpeed = nativeFlat.Magnitude
+    local entry: Vector3? = self.Direction
+    if not entry then
+        return
+    end
+    -- the share of your entry speed still carried
+    local strength = math.clamp(self:option(flag, "Strength"), 0, 100) / 100
+    local fade
+    if flag == "DribbleGlide" then
+        fade = (1 - smooth(elapsed / length)) * smooth(elapsed / BLEND_IN)
+    else
+        local hold = length * (if flag == "GatherGlide" then GATHER_HOLD else HOLD)
+        fade = if elapsed <= hold then 1 else 1 - smooth((elapsed - hold) / (length - hold))
+    end
+    local top = self:option(flag, "Speed")
+    local carried = math.min(self.Speed * strength, top) * fade
+    -- the game stopped you before the move reached this script: the carry comes on over a few frames, never in one
+    local moving: number = self.Moving or 0
+    if flag ~= "DribbleGlide" and carried > moving then
+        carried = moving + (carried - moving) * smooth(elapsed / BLEND_IN)
+    end
+    local direction: Vector3 = entry
+    if flag == "DribbleGlide" then
+        -- along the move: the game's own direction while it moves you, your run's line only while it stands you still
+        if nativeSpeed > 1.5 then
+            direction = nativeFlat / nativeSpeed
+        end
+    elseif flag == "GatherGlide" then
+        -- into the gather: bent toward the rim you are attacking when it is ahead of you
+        local rim = self.Rim
+        if rim then
+            local toRim = flat(rim.Position - part.Position)
+            if toRim.Magnitude > 1 and toRim.Unit:Dot(entry) > 0.3 then
+                local bent = entry:Lerp(toRim.Unit, 0.35)
+                direction = if bent.Magnitude > 0.05 then bent.Unit else entry
+            end
+        end
+    end
+    if read(flag .. "Steer") == true then
+        local heading = Court.heading()
+        if heading then
+            -- steering bends the glide a little at a time, a person cannot turn a glide on the spot
+            local bent = direction:Lerp(heading, 0.25)
+            direction = if bent.Magnitude > 0.05 then bent.Unit else direction
+        end
+    end
+    if flag ~= "DribbleGlide" then
+        -- heading at a ring the carry eases to nothing before layup range, it never reaches or passes the rim
+        local distance, rim = Court.rimDistance(part.Position)
+        if distance and rim then
+            local toRim = flat(rim.Position - part.Position)
+            if toRim.Magnitude > 0.1 and toRim.Unit:Dot(direction) > 0 then
+                carried = math.min(carried, math.max(distance - RIM_CLEAR, 0) * RIM_EASE)
+            end
+        end
+    end
+    if carried <= 0.05 then
+        return
+    end
+    -- a run off the line is yours or the game's own, the glide never pushes back against it
+    local line = if mine:GetAttribute("CanMove") == true then 0.7 else 0.5
+    if flag ~= "DribbleGlide" and nativeSpeed > 1.5 and nativeFlat:Dot(direction) < nativeSpeed * line then
+        return
+    end
+    local written = apply(mover, direction, carried)
+    if flag ~= "DribbleGlide" then
+        local live = { Mover = mover, Direction = direction, Carried = carried, Frame = Court.Now, After = if written then written else mover.Velocity }
+        self.Live = live
+        pcall(task.defer, Glide.settle, self, live)
+    end
+end
+
+return Glide
+end
+modules["hook"] = function(...)
+
+local import: (string) -> any = ...
+local Env: typeof(require("./env")) = import("env")
+local Court: typeof(require("./court")) = import("court")
+local Aero: typeof(require("./aero")) = import("aero")
+
+local Hook = {}
+
+type Map = { [string]: any }
+
+local NAME = "__PBShootHook"
+local VERSION = 6
+
+-- the input remotes whose real calls are copied, so the script repeats the exact arguments the game uses
+local CAPTURE = { Sprint = true, Steal = true, Pass = true, Dribble = true, Jump = true, Clutch = true, HoldG = true }
+
+local getMethod: any = Env.getnamecallmethod
+local ours: any = Env.checkcaller
+local stopped = false
+
+-- a call whose first flag is false lets go of a key, everything else is a press
+local function isPress(args: any): boolean
+    for index = 1, args.n do
+        local value = args[index]
+        if type(value) == "boolean" then
+            return value
+        end
+        if type(value) == "table" then
+            for _, inner in value do
+                if type(inner) == "boolean" then
+                    return inner
+                end
+            end
+        end
+    end
+    return true
+end
+
+local function dribbleKey(args: any): string
+    for index = 1, args.n do
+        local value = args[index]
+        if type(value) == "string" then
+            return value
+        end
+        if type(value) == "table" then
+            for _, inner in value do
+                if type(inner) == "string" then
+                    return inner
+                end
+            end
+        end
+    end
+    return "any"
+end
+
+local function capture(state: Map, name: string, args: any)
+    local press = isPress(args)
+    state.Calls[name] = args
+    if press then
+        state.Press[name] = args
+    end
+    if name == "Dribble" then
+        local key = dribbleKey(args)
+        if press or not state.Dribbles[key] then
+            state.Dribbles[key] = args
+        end
+    end
+    if name == "Sprint" and press then
+        -- whichever press turns Sprinting on is what Always Sprint repeats
+        task.wait(0.25)
+        local mine = Court.mine()
+        if mine ~= nil and mine:GetAttribute("Sprinting") == true then
+            state.SprintOn = args
+        end
+    end
+end
+
+-- runs inside the hook under pcall, true holds the game's call back. the method name is read first and nothing here
+-- calls a method of the game, a call made here would change the method the pass on after it is made with
+local function watch(state: Map, remote: any, ...: any): boolean
+    if not getMethod or getMethod() ~= "FireServer" or typeof(remote) ~= "Instance" then
+        return false
+    end
+    if Court.Sending > 0 or (ours and ours()) then
+        return false
+    end
+    local parent = remote.Parent
+    if not parent or parent.Name ~= "InputService" then
+        return false
+    end
+    local name = remote.Name
+    if CAPTURE[name] then
+        local args = table.pack(...)
+        local queue = state.Queue
+        if #queue < 32 then
+            queue[#queue + 1] = { name, args }
+        end
+        -- the block only reads the menu and the arguments, nothing in it calls into the game
+        local owner = state.Owner
+        if name == "Dribble" and type(owner) == "table" and type(owner.BlockDribble) == "function" then
+            return owner.BlockDribble(args) == true
+        end
+        return false
+    end
+    if name ~= "Shoot" then
+        return false
+    end
+    local owner = state.Owner
+    if type(owner) ~= "table" then
+        return false
+    end
+    local data = ...
+    if type(data) ~= "table" then
+        return false
+    end
+    local flag = rawget(data, "Shoot")
+    if flag == true then
+        owner.KeyDown = true
+        -- the press goes through untouched, the bookkeeping runs on the next frame where its game calls cannot reach this one
+        owner.PressPending = true
+        owner.DunkPress = rawget(data, "UseSpace") == true
+        return false
+    end
+    if flag ~= false then
+        return false
+    end
+    owner.KeyDown = false
+    -- a release that carries the key is the game's tap, shorter than its shoot delay: a hop step, gather or pump
+    -- fake. it always goes through untouched and is never turned into a shot
+    if rawget(data, "Input") ~= nil then
+        return false
+    end
+    if owner.holding(owner) then
+        if owner.Held == nil then
+            owner.Held = os.clock()
+        end
+        return true
+    end
+    owner.passed(owner)
+    return false
+end
+
+-- the same rules for a call the input wrap saw, it runs in plain Lua outside any metamethod so the owner is told at once
+local function wrapped(state: Map, name: string, ...: any): boolean
+    if CAPTURE[name] then
+        local args = table.pack(...)
+        task.spawn(capture, state, name, args)
+        local owner = state.Owner
+        if name == "Dribble" and type(owner) == "table" and type(owner.BlockDribble) == "function" then
+            return owner.BlockDribble(args) == true
+        end
+        return false
+    end
+    if name ~= "Shoot" then
+        return false
+    end
+    local owner = state.Owner
+    if type(owner) ~= "table" or type(owner.shootCall) ~= "function" then
+        return false
+    end
+    return owner:shootCall((...)) == true
+end
+
+local function rawNamecall(): any
+    local getMeta = Env.getrawmetatable
+    if not getMeta then
+        return nil
+    end
+    local ok, meta = pcall(getMeta, game)
+    if ok and type(meta) == "table" then
+        return rawget(meta, "__namecall")
+    end
+    return nil
+end
+
+local function writeNamecall(target: any): boolean
+    local getMeta = Env.getrawmetatable
+    if not getMeta or type(target) ~= "function" then
+        return false
+    end
+    return (pcall(function()
+        local meta = getMeta(game)
+        local lock = Env.setreadonly
+        if lock then
+            lock(meta, false)
+        end
+        rawset(meta, "__namecall", target)
+        if lock then
+            lock(meta, true)
+        end
+    end))
+end
+
+-- plain method calls of the game, each must give the answer it gives without the hook
+local function probe(): boolean
+    local folder = Instance.new("Folder")
+    folder.Name = "probe"
+    local found = folder:FindFirstChild("none")
+    local isFolder = folder:IsA("Folder")
+    local isPart = folder:IsA("BasePart")
+    local service = game:GetService("Players")
+    local children = workspace:GetChildren()
+    folder:Destroy()
+    return found == nil and isFolder == true and isPart == false and typeof(service) == "Instance" and type(children) == "table"
+end
+
+-- whether the hook is really in the way of the game's calls, and whether those calls still answer right
+local function live(state: Map): (boolean, boolean)
+    local seen = false
+    local before, off = state.Watch, state.Off
+    state.Watch = function(): boolean
+        seen = true
+        return false
+    end
+    state.Off = nil
+    local ok, works = pcall(probe)
+    state.Watch = before
+    state.Off = off
+    return seen, ok and works == true
+end
+
+local function putBack(state: Map)
+    local target: any = state.Clean or state.Original
+    if type(target) ~= "function" then
+        return
+    end
+    local hookMeta = Env.hookmetamethod
+    if hookMeta then
+        pcall(hookMeta, game, "__namecall", target)
+    end
+    local current = rawNamecall()
+    if current ~= nil and current == state.Wrapped then
+        writeNamecall(target)
+    end
+end
+
+-- returns the hook state, or nil and why there is none
+function Hook.install(): (any?, string?)
+    local existing = Env.get(NAME)
+    if type(existing) == "table" and existing.Mode == "wrap" then
+        existing.Owner = nil
+        Env.set(NAME, nil)
+        existing = nil
+    end
+    if type(existing) == "table" then
+        if existing.Version ~= VERSION or existing.Broken then
+            -- anything older stays a passthrough, another hook on top of it would only stack a second layer on every method call
+            existing.Owner = nil
+            return nil, if existing.Broken then "broken" else "old"
+        end
+        local _, answers = live(existing)
+        if answers then
+            existing.Claim = Hook
+            existing.Watch = watch
+            existing.Off = nil
+            return existing, nil
+        end
+        existing.Off = true
+        existing.Owner = nil
+        Env.set(NAME, nil)
+    end
+    local hookMeta = Env.hookmetamethod
+    local original: any = rawNamecall()
+    if not getMethod or (not hookMeta and (type(original) ~= "function" or not Env.setreadonly)) then
+        return nil, "unsupported"
+    end
+    -- some executors hook by rewriting the original function itself, after that the original calls straight back into the
+    -- hook and every method call overflows the stack, so a copy made before the hook goes in is what is passed on to
+    local clean: any = original
+    if type(original) == "function" and Env.clonefunction then
+        local cloned, copy = pcall(Env.clonefunction, original)
+        if cloned and type(copy) == "function" then
+            clean = copy
+        end
+    end
+    local state: Map = {
+        Owner = nil,
+        Version = VERSION,
+        Watch = watch,
+        SprintOn = nil,
+        Calls = {},
+        Queue = {},
+        Press = {},
+        Dribbles = {},
+        Original = original,
+        Clean = clean,
+        Claim = Hook,
+    }
+    local old: any = clean
+    -- only the pass on to the original is left outside the pcall, and on any doubt the call is passed on
+    local function body(self: any, ...: any): ...any
+        if not state.Off and getMethod and getMethod() == "FireServer" then
+            local ok, hold = pcall(state.Watch, state, self, ...)
+            if ok and hold == true then
+                return
+            end
+        end
+        return (old or clean)(self, ...)
+    end
+    if stopped then
+        return nil, "stopped"
+    end
+    local why = "unsupported"
+    local wrappers: { any } = {}
+    if Env.newcclosure then
+        table.insert(wrappers, Env.newcclosure)
+    end
+    table.insert(wrappers, false)
+    Env.set(NAME, state)
+    for _, wrap in wrappers do
+        local wrapped: any = body
+        if wrap then
+            local made, closure = pcall(wrap, body)
+            wrapped = if made and type(closure) == "function" then closure else nil
+        end
+        if wrapped then
+            state.Wrapped = wrapped
+            state.Off = nil
+            old = clean
+            local placed = false
+            if hookMeta then
+                local hookedOk, hooked = pcall(hookMeta, game, "__namecall", wrapped)
+                placed = hookedOk
+                if hookedOk and type(hooked) == "function" and hooked ~= wrapped then
+                    old = hooked
+                    if type(state.Clean) ~= "function" then
+                        state.Clean = hooked
+                        clean = hooked
+                    end
+                end
+            elseif type(clean) == "function" then
+                placed = writeNamecall(wrapped)
+            end
+            -- some executors cannot pass a call on from inside the hook, others only pretend to hook: a few ordinary
+            -- calls are tried, they have to show up in the hook and still answer right, or the hook is taken out again
+            local seen, works = live(state)
+            local fine = placed and works
+            if stopped then
+                state.Off = true
+                old = clean
+                putBack(state)
+                if live(state) then
+                    state.Broken = true
+                else
+                    Env.set(NAME, nil)
+                end
+                return nil, "stopped"
+            end
+            if fine then
+                return state, nil
+            end
+            why = "broken"
+            state.Off = true
+            old = clean
+            if seen or not works then
+                putBack(state)
+                if live(state) then
+                    state.Broken = true
+                    state.Owner = nil
+                    return nil, "broken"
+                end
+            end
+        end
+    end
+    Env.set(NAME, nil)
+    return nil, why
+end
+
+-- the calls the hook saw are handled here on the frame loop, never inside the hook
+function Hook.drain()
+    local state = Env.get(NAME)
+    if type(state) ~= "table" or state.Claim ~= Hook then
+        return
+    end
+    local queue = state.Queue
+    if type(queue) ~= "table" or #queue == 0 then
+        return
+    end
+    state.Queue = {}
+    for _, item in queue do
+        task.spawn(capture, state, item[1], item[2])
+    end
+end
+
+-- the light way first: the game's own input signals are wrapped, no metamethod is touched. a state left by an older
+-- load in this mode is taken over, one in the hook mode is left to its own remove
+local function bindWrap(owner: any, light: boolean?): boolean
+    local existing = Env.get(NAME)
+    local state: Map = if type(existing) == "table" and existing.Mode == "wrap" and existing.Version == VERSION
+        then existing
+        else { Version = VERSION, Mode = "wrap", SprintOn = nil, Calls = {}, Queue = {}, Press = {}, Dribbles = {} }
+    if type(existing) == "table" and existing ~= state then
+        -- an older hook keeps passing every call on, it only stops reporting
+        existing.Owner = nil
+    end
+    local installed = Aero.install(function(name: string, ...: any): boolean
+        return wrapped(state, name, ...)
+    end, light)
+    if not installed then
+        return false
+    end
+    state.Claim = Hook
+    state.Off = nil
+    state.Owner = owner
+    Env.set(NAME, state)
+    return true
+end
+
+-- allowHook: whether the method hook may be tried when the input wrap cannot be put in
+function Hook.bind(owner: any, allowHook: boolean?, light: boolean?): (boolean, string?)
+    local done, wrappedOk = pcall(bindWrap, owner, light)
+    if done and wrappedOk then
+        return true, "wrap"
+    end
+    if allowHook == false then
+        return false, "safe"
+    end
+    local ok, state, why = pcall(Hook.install)
+    if ok and type(state) == "table" then
+        state.Owner = owner
+        return true, "hook"
+    end
+    return false, if ok then why else "broken"
+end
+
+-- true while the wrap or the hook in the game is the one this load put in or took over and it still reports to this owner
+function Hook.owned(owner: any): boolean
+    local state = Env.get(NAME)
+    if type(state) ~= "table" or state.Claim ~= Hook or state.Owner ~= owner or state.Off then
+        return false
+    end
+    if state.Mode == "wrap" then
+        return Aero.intact()
+    end
+    return true
+end
+
+-- which way the shoot key is seen: "wrap", "hook" or nil
+function Hook.mode(): string?
+    local state = Env.get(NAME)
+    if type(state) ~= "table" or state.Claim ~= Hook or state.Off then
+        return nil
+    end
+    return if state.Mode == "wrap" then "wrap" else "hook"
+end
+
+-- takes the hook out on unload when it is still the one in the metatable, a hook another script put on top is left as a
+-- plain passthrough. a hook a newer load of the script took over is theirs and is left alone
+function Hook.remove()
+    stopped = true
+    local state = Env.get(NAME)
+    if type(state) ~= "table" or state.Version ~= VERSION or state.Claim ~= Hook then
+        return
+    end
+    if state.Mode == "wrap" then
+        state.Off = true
+        state.Owner = nil
+        Aero.remove()
+        Env.set(NAME, nil)
+        return
+    end
+    state.Off = true
+    state.Owner = nil
+    if state.Broken then
+        return
+    end
+    local current = rawNamecall()
+    if current == nil or current ~= state.Wrapped then
+        return
+    end
+    putBack(state)
+    local seen = live(state)
+    state.Off = true
+    if not seen then
+        Env.set(NAME, nil)
+    end
+end
+
+return Hook
+end
+modules["interface"] = function(...)
+
+local import: (string) -> any = ...
+local Changelog: typeof(require("./changelog")) = import("changelog")
+local Config: typeof(require("./config")) = import("config")
+
+-- the menu: Home, Shoot, Defend, Handle, Player, Visuals. every page is one scroll of cards, each card says in one plain line
+-- what it does, its main switch comes first and the finer settings sit in a closed Advanced group. the flag names are the
+-- same as before, so saved configs and keybinds keep working
+local Interface = {}
+
+local function studs(value: number): string
+    local text = string.format("%.1f", value)
+    return (string.gsub(text, "%.0$", "")) .. " studs"
+end
+
+local function fraction(value: number): string
+    return string.format("%.2f", value)
+end
+
+local function milliseconds(value: number): string
+    return string.format("%+d ms", math.floor(value + 0.5))
+end
+
+local function percent(value: number): string
+    return string.format("%d%%", math.floor(value + 0.5))
+end
+
+local function number(value: number): string
+    return tostring(math.floor(value + 0.5))
+end
+
+local function length(value: number): string
+    return string.format("%d ms", math.floor(value + 0.5))
+end
+
+local function delay(value: number): string
+    return if value <= 0 then "Instant" else string.format("%d ms", math.floor(value + 0.5))
+end
+
+-- every option a preset touches, a preset sets all of them so the presets never mix
+local PRESET_FLAGS = {
+    "AutoGreen", "PerfectChance", "AutoCalibrate", "OpenShot", "AutoShoot", "AutoDunk",
+    "AutoGuard", "GuardMove", "AutoSteal", "AutoBlock", "AutoRebound",
+    "MoveKeys", "BlockDribbleKeys", "DribbleCombo", "AutoPass", "AutoDribble",
+    "DribbleGlide", "DribbleGlideSteer", "GatherGlide", "GatherGlideSteer", "ShotGlide", "ShotGlideSteer",
+    "AlwaysSprint", "FullSpeed", "NoStun", "NoDebounce", "NoCold",
+    "Esp", "EspTeam", "EspStamina", "ThreePointLine", "DunkZones", "ShotRangeViz", "RangeViz",
+}
+
+-- an option a preset does not name is off, a sub-option keeps its default, it does nothing while its main option is off
+local function preset(on: { [string]: any }): { [string]: any }
+    local values: { [string]: any } = {}
+    for _, flag in PRESET_FLAGS do
+        local default = Config.DEFAULTS[flag]
+        values[flag] = if on[flag] ~= nil then on[flag] elseif type(default) == "boolean" and not Config.PARENT[flag] then false else default
+    end
+    return values
+end
+
+function Interface.build(ui: any, actions: { [string]: any }?)
+    local defaults = Config.DEFAULTS
+    local function act(name: string, ...: any)
+        local run = if actions then actions[name] else nil
+        if type(run) == "function" then
+            pcall(run, ...)
+        end
+    end
+
+    -- HOME: the greeting, the search and four quick start cards for what people use most
+    local presets = {
+        { Name = "Off", Values = preset({}) },
+        { Name = "Casual", Values = preset({ AutoGreen = true, PerfectChance = 85, AutoCalibrate = true, OpenShot = true }) },
+        { Name = "Legit", Values = preset({ AutoGreen = true, PerfectChance = 100, AutoCalibrate = true, OpenShot = true, AutoGuard = true, GuardMove = true, DribbleGlide = true }) },
+        -- Full: every helper, every visual and every status option. Move Keys stays off (it takes the game's dribble keys
+        -- away), the combo loop stays off (it would play moves without a key press) and so does Always Sprint
+        {
+            Name = "Full",
+            Values = preset({
+                AutoGreen = true, PerfectChance = 100, AutoCalibrate = true, OpenShot = true, AutoShoot = true, AutoDunk = true,
+                AutoGuard = true, GuardMove = true, AutoSteal = true, AutoBlock = true, AutoRebound = true,
+                MoveKeys = false, BlockDribbleKeys = false, DribbleCombo = false, AutoPass = true, AutoDribble = true,
+                DribbleGlide = true, DribbleGlideSteer = true, GatherGlide = true, GatherGlideSteer = true, ShotGlide = true, ShotGlideSteer = true,
+                AlwaysSprint = false, FullSpeed = true, NoStun = true, NoDebounce = true, NoCold = true,
+                Esp = true, EspTeam = true, EspStamina = true, ThreePointLine = true, DunkZones = true, ShotRangeViz = true, RangeViz = true,
+            }),
+        },
+    }
+    local function presetCard(index: number, text: string, icon: string): { [string]: any }
+        local values = presets[index].Values
+        local function matches(): boolean
+            for flag, value in values do
+                if ui:get(flag) ~= value then
+                    return false
+                end
+            end
+            return true
+        end
+        return {
+            Title = presets[index].Name,
+            Icon = icon,
+            Text = text,
+            Active = matches,
+            Callback = function(window: any)
+                for flag, value in values do
+                    ui:set(flag, value)
+                end
+                window:announce(presets[index].Name .. " preset applied")
+            end,
+        }
+    end
+    ui:home({
+        QuickStart = {
+            presetCard(2, "Auto Green, sometimes misses", "target"),
+            presetCard(3, "Green, guard and glide", "shield"),
+            presetCard(4, "Every helper, visual and status option on", "zap"),
+            presetCard(1, "Every feature off", "eye"),
+        },
+    })
+
+    local function toggle(name: string, flag: string): { [string]: any }
+        return { Name = name, Flag = flag, Default = defaults[flag] }
+    end
+    local function slider(name: string, flag: string, low: number, high: number, step: number, format: ((number) -> string)?): { [string]: any }
+        return { Name = name, Flag = flag, Min = low, Max = high, Step = step, Default = defaults[flag], Format = format }
+    end
+
+    -- SHOOT
+    local shootTab = ui:tab("Shoot")
+    local shoot = shootTab:section("SHOOT")
+    shoot:presets({ Name = "Preset", Presets = presets })
+    shoot:cards({
+        Columns = 2,
+        Items = {
+            {
+                Title = "Auto Green",
+                Text = "Lets go of your shot on the green",
+                Flag = "AutoGreen",
+                Default = defaults.AutoGreen,
+                Keywords = "release perfect timing shoot",
+                Controls = {
+                    slider("Release Timing", "GreenOffset", -60, 60, 1, milliseconds),
+                },
+                Advanced = {
+                    slider("Perfect Chance", "PerfectChance", 0, 100, 5, percent),
+                    slider("Ping Compensation", "PingComp", 0, 100, 5, percent),
+                    toggle("Tap To Shoot", "TapShoot"),
+                    toggle("Self Calibrate", "AutoCalibrate"),
+                    {
+                        Type = "Button",
+                        Name = "Reset Calibration",
+                        Label = "Reset",
+                        Callback = function()
+                            act("resetCalibration")
+                        end,
+                    },
+                    toggle("Time Layups and Dunks", "LayupGreen"),
+                    toggle("Stay In Front Of Rim", "RimFront"),
+                    {
+                        Name = "Compatibility Fix",
+                        Keywords = "safe mode compatibility executor hook",
+                        Flag = "SafeMode",
+                        Default = defaults.SafeMode,
+                        Info = {
+                            Title = "Compatibility Fix",
+                            Lines = {
+                                "Auto Green normally hooks into the game to let go",
+                                "at the perfect time. Some executors cant do that.",
+                                "",
+                                "This turns the hook off. It only presses and",
+                                "releases the shoot key, so it works on any executor.",
+                                "",
+                                "Turn it on if Auto Green errors or does nothing.",
+                                "Your shots might be a tiny bit less perfect.",
+                                },
+                            Width = 360,
+                        },
+                    },
+                },
+            },
+            {
+                Title = "Shot Contest",
+                Name = "Shot Contest",
+                Text = "Shows how contested your shot is: open, contested or smothered",
+                Flag = "OpenShot",
+                Default = defaults.OpenShot,
+                Keywords = "shot contest contested open look number defender",
+                Controls = {
+                    toggle("Contest Label Over Head", "OpenShotNumber"),
+                    toggle("Contest Colors On Character", "OpenShotGlow"),
+                },
+                Advanced = {
+                    slider("Glow Strength", "GlowStrength", 10, 100, 5, percent),
+                    toggle("Only With Ball", "OpenShotBall"),
+                    slider("Contest Range", "ContestRange", 3, 15, 0.5, studs),
+                    { Type = "Dropdown", Name = "Label Style", Flag = "ContestStyle", Values = Config.CONTEST_STYLES, Default = defaults.ContestStyle },
+                    toggle("Show Who Contests", "ContestWho"),
+                    toggle("Mark The Contester", "ContestFoeMark"),
+                    slider("Label Size", "ContestTextSize", 9, 24, 1, number),
+                    slider("Label Height", "ContestHeight", 2, 8, 0.2, studs),
+                    { Type = "Dropdown", Name = "Label Color", Flag = "ContestColorMode", Values = Config.CONTEST_COLORS, Default = defaults.ContestColorMode },
+                    { Type = "Color", Name = "Custom Label Color", Flag = "ContestLabelColor", Default = defaults.ContestLabelColor },
+                    slider("Label View Distance", "ContestViewRange", 20, 300, 10, studs),
+                    slider("Label Opacity", "ContestOpacity", 0.2, 1, 0.05, fraction),
+                },
+            },
+            {
+                Title = "Auto Shoot",
+                Text = "Takes the shot when you are open and in range",
+                Flag = "AutoShoot",
+                Default = defaults.AutoShoot,
+                Controls = { slider("Shoot Range", "ShootRange", 8, 45, 1, studs) },
+                Advanced = {
+                    slider("Shoot Delay", "ShootDelay", 0, 1500, 50, delay),
+                    toggle("Only When Open", "OpenOnly"),
+                    slider("Open Range", "OpenRange", 2, 30, 1, studs),
+                    slider("Max Contest", "MaxContest", 0, 100, 5, percent),
+                    slider("Min Shot Distance", "MinShot", 0, 60, 1, studs),
+                    slider("Max Shot Distance", "MaxShot", 10, 120, 1, studs),
+                },
+            },
+            {
+                Title = "Auto Dunk",
+                Text = "Dunks from the right spot when a rim is ahead",
+                Flag = "AutoDunk",
+                Default = defaults.AutoDunk,
+                Controls = {
+                    { Type = "Dropdown", Name = "Dunk Type", Flag = "DunkType", Values = Config.DUNK_TYPES, Default = defaults.DunkType, Segment = true },
+                },
+                Advanced = {
+                    toggle("Move Me To The Rim (!)", "DunkMove"),
+                    slider("Dunk Range", "DunkRange", 10, 60, 1, studs),
+                    toggle("Only When Open", "DunkOpenOnly"),
+                },
+            },
+        },
+    })
+
+    -- DEFEND
+    local defendTab = ui:tab("Defend")
+    local defend = defendTab:section("DEFEND")
+    defend:cards({
+        Columns = 2,
+        Items = {
+            {
+                Title = "Auto Guard",
+                Text = "Holds guard on your man once he is close and slides with him between him and the rim",
+                Flag = "AutoGuard",
+                Default = defaults.AutoGuard,
+                Controls = {
+                    toggle("Move With Him", "GuardMove"),
+                    { Type = "Dropdown", Name = "Guard", Flag = "GuardTarget", Values = Config.GUARD_TARGETS, Default = defaults.GuardTarget, Segment = true },
+                },
+                Advanced = {
+                    slider("Guard Range", "GuardRange", 5, 40, 1, studs),
+                    slider("Move Distance", "GuardGap", 5, 30, 1, studs),
+                    toggle("Guard Only When Facing", "GuardFacing"),
+                },
+            },
+            {
+                Title = "Auto Steal",
+                Text = "Reaches in when the handler stands still next to you",
+                Flag = "AutoSteal",
+                Default = defaults.AutoSteal,
+                Controls = { slider("Steal Range", "StealRange", 3, 15, 1, studs) },
+                Advanced = {
+                    toggle("Only When Facing", "StealFacing"),
+                    toggle("Avoid Fouls", "AvoidFouls"),
+                },
+            },
+            {
+                Title = "Auto Block",
+                Text = "Jumps when someone close to you starts a shot",
+                Flag = "AutoBlock",
+                Default = defaults.AutoBlock,
+                Controls = { slider("Block Range", "BlockRange", 4, 20, 1, studs) },
+                Advanced = {
+                    toggle("Read Fakes", "ReadFakes"),
+                    slider("Block Delay", "BlockDelay", 0, 400, 10, delay),
+                },
+            },
+            {
+                Title = "Auto Rebound",
+                Text = "Jumps for a ball coming off the rim",
+                Flag = "AutoRebound",
+                Default = defaults.AutoRebound,
+                Controls = { slider("Rebound Range", "ReboundRange", 3, 16, 1, studs) },
+                Advanced = {
+                    toggle("Ball Magnet (!)", "BallMagnet"),
+                    slider("Magnet Range", "MagnetRange", 5, 50, 1, studs),
+                },
+            },
+        },
+    })
+
+    -- HANDLE
+    local handleTab = ui:tab("Handle")
+    local handle = handleTab:section("HANDLE")
+    handle:cards({
+        Columns = 2,
+        Items = {
+            {
+                Title = "Move Keys",
+                Text = "Press your own key to play a dribble move, bind them below",
+                Flag = "MoveKeys",
+                Default = defaults.MoveKeys,
+                Name = "Move Keybinds",
+                Keywords = "dribble crossover hesitation spin keys",
+                Controls = {
+                    toggle("Block Game Dribble Keys", "BlockDribbleKeys"),
+                    { Type = "Note", Text = "On: the game's own dribble keys are fully turned off.\nOff: only the keys you bind here replace the game's, the rest still work." },
+                },
+            },
+            {
+                Title = "Combos",
+                Text = "Plays a chain of moves once per key press",
+                Controls = {
+                    { Type = "Dropdown", Name = "Combo", Flag = "ComboMoves", Values = Config.COMBO_NAMES, Default = defaults.ComboMoves },
+                    { Type = "Button", Name = "Play Combo", Label = "Play", Bind = "PlayCombo", Callback = function()
+                        act("playCombo")
+                    end },
+                },
+                Advanced = {
+                    toggle("Loop Combo", "DribbleCombo"),
+                    toggle("Stop After One Loop", "ComboOnce"),
+                    toggle("Only When Guarded", "ComboGuarded"),
+                },
+            },
+        },
+    })
+    local names: { [string]: string } = {}
+    for _, entry in Config.MOVE_KEYS do
+        names[entry[2]] = entry[1]
+    end
+    local tiles = {}
+    for _, move in { "Crossover", "Hesitation", "Tween", "DoubleCrossover", "BehindBack", "Spin", "HalfSpin", "StepBack", "SnatchBack", "Breakdown" } do
+        local inputs = Config.MOVE_INPUTS[move]
+        table.insert(tiles, {
+            Name = names[move] or move,
+            Sub = "Right hand: " .. inputs.R .. "\nLeft hand: " .. inputs.L,
+            Bind = "Move" .. move,
+            Callback = function()
+                act("playMove", move)
+            end,
+        })
+    end
+    handle:grid({ Items = tiles, Columns = 3, TileHeight = 78 })
+    handle:cards({
+        Columns = 2,
+        Items = {
+            {
+                Title = "Ball Handler",
+                Text = "Passes and moves for you when a defender is on you",
+                Controls = { toggle("Pass To Open Teammate", "AutoPass"), toggle("Moves When Guarded", "AutoDribble") },
+                Advanced = {
+                    slider("Pressure Distance", "PassPressure", 2, 15, 1, studs),
+                    slider("Guarded Distance", "DribbleRange", 3, 15, 1, studs),
+                },
+            },
+            {
+                Title = "Dribble Glide",
+                Text = "Keeps a bit of your speed through a dribble move. It only follows the way the move already goes",
+                Flag = "DribbleGlide",
+                Default = defaults.DribbleGlide,
+                Controls = { slider("Strength", "DribbleGlideStrength", 10, 90, 5, percent) },
+                Advanced = {
+                    slider("Top Speed", "DribbleGlideSpeed", 4, 12, 1, number),
+                    slider("Length", "DribbleGlideTime", 100, 600, 20, length),
+                    toggle("Steer With Keys", "DribbleGlideSteer"),
+                },
+            },
+            {
+                Title = "Gather Step Glide",
+                Text = "Keeps your full run speed through a hop step or gather toward the rim, then eases off. It stays off inside layup range",
+                Flag = "GatherGlide",
+                Default = defaults.GatherGlide,
+                Controls = { slider("Strength", "GatherGlideStrength", 10, 100, 5, percent) },
+                Advanced = {
+                    slider("Top Speed", "GatherGlideSpeed", 4, 16, 1, number),
+                    slider("Length", "GatherGlideTime", 100, 600, 20, length),
+                    toggle("Steer With Keys", "GatherGlideSteer"),
+                },
+            },
+            {
+                Title = "Shot Glide",
+                Text = "Keeps you moving on your line as the shot starts, then eases off. It never carries you into layup range",
+                Flag = "ShotGlide",
+                Default = defaults.ShotGlide,
+                Controls = { slider("Strength", "ShotGlideStrength", 10, 90, 5, percent) },
+                Advanced = {
+                    slider("Top Speed", "ShotGlideSpeed", 3, 16, 1, number),
+                    slider("Length", "ShotGlideTime", 100, 600, 20, length),
+                    toggle("Steer With Keys", "ShotGlideSteer"),
+                },
+            },
+        },
+    })
+
+    -- PLAYER
+    local playerTab = ui:tab("Player")
+    local player = playerTab:section("PLAYER")
+    player:cards({
+        Columns = 2,
+        Items = {
+            {
+                Title = "Speed And Stamina",
+                Text = "Sprinting and staying fast when tired",
+                Controls = { toggle("Always Sprint", "AlwaysSprint"), toggle("Always Full Speed", "FullSpeed"), toggle("Full Stamina Bar (client only)", "InfStamina") },
+                Advanced = { toggle("Custom Walk Speed (!)", "CustomSpeed"), slider("Walk Speed", "WalkSpeed", 8, 20, 1, number) },
+            },
+            {
+                Title = "Status",
+                Text = "Clears what the game slows you down with",
+                Controls = { toggle("No Stun", "NoStun"), toggle("No Debounce", "NoDebounce"), toggle("No Cold Zone", "NoCold") },
+            },
+        },
+    })
+
+    -- VISUALS
+    local visualTab = ui:tab("Visuals")
+    local visual = visualTab:section("VISUALS")
+    visual:cards({
+        Columns = 2,
+        Items = {
+            {
+                Title = "Court",
+                Text = "Lines and zones drawn on the floor",
+                Controls = { toggle("Three Point Line", "ThreePointLine"), toggle("Dunk Zones", "DunkZones"), toggle("Auto Shot Range", "ShotRangeViz"), toggle("My Ranges", "RangeViz") },
+            },
+            {
+                Title = "Players",
+                Text = "Names, positions and stamina over players",
+                Flag = "Esp",
+                Name = "Player ESP",
+                Default = defaults.Esp,
+                Controls = { toggle("Show Teammates", "EspTeam"), toggle("Show Stamina", "EspStamina"), toggle("Ball Handler Only", "EspBallOnly") },
+                Advanced = {
+                    slider("Max Distance", "EspDistance", 50, 600, 10, studs),
+                    slider("Text Size", "EspTextSize", 9, 22, 1, number),
+                },
+            },
+        },
+    })
+    visual:palette({
+        Title = "Colors",
+        Text = "The colors of the lines, rings and labels",
+        Items = {
+            { Type = "Color", Name = "Enemy", Flag = "ColorEnemy", Default = defaults.ColorEnemy },
+            { Type = "Color", Name = "Teammate", Flag = "ColorTeam", Default = defaults.ColorTeam },
+            { Type = "Color", Name = "Ball Holder", Flag = "ColorHolder", Default = defaults.ColorHolder },
+            { Type = "Color", Name = "Steal Range", Flag = "StealColor", Default = defaults.StealColor },
+            { Type = "Color", Name = "Guard Range", Flag = "GuardColor", Default = defaults.GuardColor },
+            { Type = "Color", Name = "Block Range", Flag = "BlockColor", Default = defaults.BlockColor },
+            { Type = "Color", Name = "Shot Range And Lines", Flag = "ShotColor", Default = defaults.ShotColor },
+        },
+    })
+
+    ui:updates({ Version = Changelog.VERSION, Date = Changelog.DATE, Groups = Changelog.GROUPS, History = Changelog.HISTORY, Closing = Changelog.CLOSING })
+end
+
+return Interface
+end
+modules["main"] = function(...)
+
+local import: (string) -> any = ...
+local Changelog: typeof(require("./changelog")) = import("changelog")
+local Config: typeof(require("./config")) = import("config")
+local Court: typeof(require("./court")) = import("court")
+local Drive: typeof(require("./drive")) = import("drive")
+local Env: typeof(require("./env")) = import("env")
+local AutoGreen: typeof(require("./autogreen")) = import("autogreen")
+local AutoShoot: typeof(require("./autoshoot")) = import("autoshoot")
+local AutoDunk: typeof(require("./autodunk")) = import("autodunk")
+local AutoBlock: typeof(require("./autoblock")) = import("autoblock")
+local AutoRebound: typeof(require("./autorebound")) = import("autorebound")
+local AutoPass: typeof(require("./autopass")) = import("autopass")
+local AutoDribble: typeof(require("./autodribble")) = import("autodribble")
+local BallMagnet: typeof(require("./ballmagnet")) = import("ballmagnet")
+local Combo: typeof(require("./combo")) = import("combo")
+local Contest: typeof(require("./contest")) = import("contest")
+local Defense: typeof(require("./defense")) = import("defense")
+local Esp: typeof(require("./esp")) = import("esp")
+local Glide: typeof(require("./glide")) = import("glide")
+local Interface: typeof(require("./interface")) = import("interface")
+local Moves: typeof(require("./moves")) = import("moves")
+local Player: typeof(require("./player")) = import("player")
+local RimGuard: typeof(require("./rimguard")) = import("rimguard")
+local Rings: typeof(require("./rings")) = import("rings")
+
+local REGISTRY = "__PracticalBasketballStop"
+local READER = "__PBRead"
+local TELEPORT_URL = "https://raw.githubusercontent.com/okdude42/main-scripts/main/practical-basketball/pb.lua"
+local GAME_ID = 7529591378
+local MENU_ID = "Practical Basketball"
+-- an older load lets go of its hook a moment after it stopped, the new hook only goes in after that
+local HOOK_DELAY = 0.8
+
+-- Auto Green and the features that repeat or block the game's own input calls, the input wrap only goes in once one is on
+local COPY_FLAGS = { "AutoGreen", "AlwaysSprint", "AutoDribble", "DribbleCombo", "BlockDribbleKeys", "MoveKeys" }
+-- the attributes the walk debug watches for a write of the script
+local WATCHED = { "Action", "CanMove", "Stunned", "Debounce", "DodgeDebounce", "BoxoutPushDebounce", "Cold", "Stamina", "Sprinting", "HoldingG" }
+
+type Map = { [string]: any }
+
+-- the load before this one is stopped for real before anything starts. its menu only stops its features at the end of
+-- its goodbye, and the new menu replaces it before that, so its own stop is called straight away
+local function stopPrevious()
+    local previous = Env.get(REGISTRY)
+    local instances = Env.get("OkloUIInstances")
+    local menu = if type(instances) == "table" then instances[MENU_ID] else nil
+    if type(menu) == "table" and type(menu.teardown) == "function" then
+        pcall(menu.teardown, menu)
+    end
+    if type(previous) == "function" then
+        pcall(previous)
+    end
+end
+
+return function(OkloUI: any, reload: () -> (), Loader: any): Map?
+    stopPrevious()
+    Court.Closing = false
+    local running = true
+    local hookAt = os.clock() + HOOK_DELAY
+    local ui: any
+
+    local function raw(flag: string): any
+        local value = ui:get(flag)
+        if value == nil then
+            return Config.DEFAULTS[flag]
+        end
+        return value
+    end
+
+    local function read(flag: string): any
+        if not running or not ui then
+            return false
+        end
+        local value = raw(flag)
+        -- a sub-option does nothing at all while its main option is off
+        local parent = Config.PARENT[flag]
+        if parent and value == true and raw(parent) ~= true then
+            return false
+        end
+        return value
+    end
+
+    local function notify(text: string)
+        if running and ui then
+            pcall(ui.Window.announce, ui.Window, text)
+        end
+    end
+
+    local function write(flag: string, value: any)
+        if running and ui then
+            pcall(ui.set, ui, flag, value)
+        end
+    end
+
+    -- the probe reads the options through this
+    Env.set(READER, read)
+
+    local autoGreen = AutoGreen.new(read, notify)
+    local player = Player.new(read)
+    local defense = Defense.new(read, player)
+    local autoShoot = AutoShoot.new(read, autoGreen)
+    local autoBlock = AutoBlock.new(read)
+    local autoRebound = AutoRebound.new(read)
+    local autoPass = AutoPass.new(read)
+    local autoDribble = AutoDribble.new(read)
+    local ballMagnet = BallMagnet.new(read)
+    local combo = Combo.new(read, write)
+    local glide = Glide.new(read, function(character: any, action: string): boolean
+        return AutoGreen.liveShot(character, action, autoGreen.Meters)
+    end)
+    local esp = Esp.new(read)
+    local rings = Rings.new(read)
+    local contest = Contest.new(read, autoGreen)
+    local moves = Moves.new(read)
+    -- the input wrap asks this before a dribble call of the game's own keys goes out
+    autoGreen.BlockDribble = function(args: any): boolean
+        return moves:blocks(args)
+    end
+    local autoDunk = AutoDunk.new(read, autoGreen, player)
+    autoShoot.AutoDunk = autoDunk
+    autoShoot.Defense = defense
+    autoShoot.Contest = contest
+    autoDunk.Defense = defense
+    local rimGuard = RimGuard.new(read, autoGreen)
+    local connections: { any } = {}
+    -- Auto Green is last to stop, the others still need the calls its hook copied to let go of what they hold
+    local parts: { any } = { autoGreen, defense, autoShoot, autoDunk, autoBlock, autoRebound, autoPass, autoDribble, combo, ballMagnet, player, contest }
+    local partNames: { string } = { "autogreen", "defense", "autoshoot", "autodunk", "autoblock", "autorebound", "autopass", "autodribble", "combo", "ballmagnet", "player", "contest" }
+    local closing: { any } = { defense, autoDunk, ballMagnet, player, contest, autoGreen }
+
+    -- each part is stopped on its own, one that fails must not leave the hook or the others behind
+    local function sweep()
+        for _, part in closing do
+            pcall(part.shutdown, part)
+        end
+        pcall(Drive.stop)
+        pcall(Court.stop)
+    end
+
+    local function stop()
+        if not running then
+            return
+        end
+        running = false
+        -- what the script still holds is let go on the way out, even in the middle of a walk
+        Court.Closing = true
+        if Env.get(REGISTRY) ~= nil then
+            Env.set(REGISTRY, nil)
+        end
+        for _, link in connections do
+            pcall(link.Disconnect, link)
+        end
+        table.clear(connections)
+        sweep()
+        if Env.get(READER) == read then
+            Env.set(READER, nil)
+        end
+        -- a thread that was mid-step or still binding can leave a link behind, a second pass catches it
+        task.delay(0.6, sweep)
+    end
+
+    ui = OkloUI.new({
+        Title = "oklo: PB",
+        Subtitle = "basketball",
+        Version = Changelog.VERSION,
+        Changelog = Changelog,
+        Id = MENU_ID,
+        Folder = "oklo scripts/practicalbasketball",
+        Logo = { Emblem = true },
+        Footer = "oklo",
+        Discord = "https://discord.gg/oklo",
+        FirstRunInvite = true,
+        Thanks = true,
+        Width = 820,
+        Height = 540,
+        SidebarWidth = 200,
+        BoldTitles = true,
+        Theme = "Default",
+        OnUnload = stop,
+        OnReload = reload,
+    })
+
+    if type(Loader) == "table" and type(Loader.teleport) == "function" then
+        local ok, queued = pcall(Loader.teleport, TELEPORT_URL, GAME_ID)
+        if ok and queued then
+            table.insert(connections, queued)
+        end
+    end
+
+    -- a part of the menu that fails on this executor must not stop the window from opening, it is said once instead
+    local built, failure = pcall(Interface.build, ui, {
+        resetCalibration = function()
+            autoGreen:resetCalibration()
+        end,
+        playCombo = function()
+            combo:playOnce()
+        end,
+        playMove = function(move: string)
+            moves:play(move)
+        end,
+        -- the line on Home that says what Auto Green can do on this executor
+        status = function(): string
+            if read("AutoGreen") ~= true then
+                return "Auto Green is off"
+            end
+            return "Auto Green: on, hold E and it lets go on the green"
+        end,
+    })
+    if not built then
+        warn("[PB] menu build: " .. tostring(failure))
+    end
+    pcall(Court.start)
+    pcall(autoGreen.bind, autoGreen)
+
+    -- the walk debug: with getgenv().PBDebug = true, every time the game walks or holds you a line goes to the console a
+    -- few times a second with what the game and the script did, so a freeze can be pinned on its cause
+    local walkLog: Map = { On = false, Start = 0, At = 0, From = nil :: Vector3?, Game = nil :: Vector3? }
+    local function snapshot(mine: any): { [string]: any }
+        local values: { [string]: any } = {}
+        for _, name in WATCHED do
+            values[name] = mine:GetAttribute(name)
+        end
+        return values
+    end
+    local function compare(mine: any, before: { [string]: any }, who: string)
+        for _, name in WATCHED do
+            if mine:GetAttribute(name) ~= before[name] then
+                Court.touch(who .. " wrote " .. name)
+            end
+        end
+    end
+    local function walkLine(mine: any, now: number)
+        local part = Court.proxy()
+        local where: Vector3? = if part then part.Position else nil
+        if Env.get("PBDebug") ~= true or not mine then
+            walkLog.On = false
+            return
+        end
+        if Court.HandsOff and not walkLog.On then
+            walkLog.On, walkLog.Start, walkLog.At, walkLog.From = true, now, -math.huge, where
+        elseif not Court.HandsOff then
+            if walkLog.On then
+                local moved = if where and walkLog.From then Court.flat(where - walkLog.From).Magnitude else 0
+                print(string.format("[PB walk] over after %.1fs, the game moved you %.1f studs", now - walkLog.Start, moved))
+            end
+            walkLog.On = false
+            return
+        end
+        if now - walkLog.At < 0.25 then
+            return
+        end
+        walkLog.At = now
+        local game0: Vector3? = walkLog.Game
+        local speed = if game0 then Court.flat(game0).Magnitude else 0
+        local yours = Court.userKeys()
+        local touched = Court.Touched
+        local line = string.format(
+            "[PB walk] %.2fs Action=%s CanMove=%s Stunned=%s HoldingG=%s Sprinting=%s | game velocity %.1f | your keys %s, PB keys %s | PB: %s",
+            now - walkLog.Start, tostring(mine:GetAttribute("Action")), tostring(mine:GetAttribute("CanMove")), tostring(mine:GetAttribute("Stunned")),
+            tostring(mine:GetAttribute("HoldingG")), tostring(mine:GetAttribute("Sprinting")), speed, if yours then "down" else "up",
+            if Court.Keys then "DOWN" else "up", if #touched > 0 then table.concat(touched, ", ") else "nothing"
+        )
+        table.clear(touched)
+        print(line)
+    end
+
+    local runService: any = game:GetService("RunService")
+    table.insert(connections, runService.Heartbeat:Connect(function(delta: any)
+        if not running then
+            return
+        end
+        local now = os.clock()
+        local dt = if type(delta) == "number" then delta else 1 / 60
+        pcall(Court.refresh, now)
+        if not autoGreen.HookBound and not autoGreen.Binding and now >= hookAt then
+            local wanted = false
+            for _, flag in COPY_FLAGS do
+                if read(flag) == true then
+                    wanted = true
+                    break
+                end
+            end
+            -- the light input wrap goes in for any of them, the method hook only for Auto Green outside Safe Mode and Hold E
+            -- Hold E only needs the light input wrap, the method hook is never used
+            local allowHook = false
+            if wanted and (not autoGreen.Hooked or (allowHook and not autoGreen.TriedHook)) then
+                task.spawn(autoGreen.hook, autoGreen, allowHook)
+            end
+        end
+        -- each part runs on its own, one that fails in a frame must not stop the ones after it. with the walk debug on,
+        -- every attribute a part changes while the game walks you is noted with the part's name
+        local mine = Court.Mine
+        local watch = mine ~= nil and Court.HandsOff and Env.get("PBDebug") == true
+        for index, part in parts do
+            local before = if watch then snapshot(mine) else nil
+            pcall(part.step, part, now, dt)
+            if before then
+                compare(mine, before, partNames[index])
+            end
+        end
+        if watch or walkLog.On then
+            pcall(walkLine, mine, now)
+        end
+    end))
+    -- the game writes its movement on Heartbeat, right before the physics step is where a changed speed holds. while the
+    -- game walks or holds you, and a moment after, nothing here touches the velocity it wrote
+    local function beforePhysics(first: any, second: any)
+        if not running then
+            return
+        end
+        local dt = if type(second) == "number" then second elseif type(first) == "number" then first else 1 / 60
+        local now = os.clock()
+        local mine = Court.Mine
+        -- a shot of the game's own under a name the script does not know holds you too, the glide still rides that one
+        local hands = mine ~= nil and Court.held(mine)
+        local _, mover = Court.proxy()
+        walkLog.Game = if mover then mover.Velocity else nil
+        -- the walk debug names the part that changed the velocity the game wrote, there should never be one
+        local function run(name: string, fn: any, ...: any)
+            local before: Vector3? = if hands and mover then mover.Velocity else nil
+            pcall(fn, ...)
+            if before and mover.Velocity ~= before then
+                Court.touch(name .. " wrote velocity")
+            end
+        end
+        run("drive begin", Drive.begin, now)
+        if not hands then
+            run("glide", glide.physics, glide)
+            run("player speed", player.physics, player)
+        end
+        run("drive", Drive.finish, now, dt)
+        if not hands then
+            run("rimguard", rimGuard.physics, rimGuard)
+        end
+    end
+    local stepped, signal = pcall(function(): any
+        return runService.PreSimulation
+    end)
+    pcall(function()
+        table.insert(connections, (if stepped and signal then signal else runService.Stepped):Connect(beforePhysics))
+    end)
+    ui:onFrame(function(frame: Map)
+        if not running then
+            return
+        end
+        local canvas = frame.Canvas
+        pcall(esp.draw, esp, canvas, frame.Chip)
+        pcall(rings.draw, rings, canvas)
+        pcall(contest.draw, contest, canvas, frame.Chip)
+    end)
+    ui:start()
+    Env.set(REGISTRY, function()
+        stop()
+        pcall(ui.unload, ui)
+    end)
+
+    local api: Map = {}
+    function api.Stop()
+        stop()
+        pcall(ui.unload, ui)
+    end
+    -- what the menu keys do, for a probe or a test
+    function api.PlayMove(move: string): boolean
+        return moves:play(move)
+    end
+    function api.PlayCombo()
+        combo:playOnce()
+    end
+    function api.Contest(): (number, number, boolean)
+        return contest.Value, contest.Gap, contest.Open
+    end
+    function api.Glow(): number
+        return contest.Glow
+    end
+    return api
+end
+end
+modules["moves"] = function(...)
+
+local import: (string) -> any = ...
+local Config: typeof(require("./config")) = import("config")
+local Court: typeof(require("./court")) = import("court")
+
+-- a key of your own for every dribble move, and the game's own Z C X V dribble keys switched off when you want only yours
+local Moves = {}
+Moves.__index = Moves
+
+-- one press is one move, a key held down or pressed again while the move plays is not sent twice
+local GAP = 0.18
+
+function Moves.new(read: (string) -> any): any
+    return setmetatable({ Read = read, Last = -math.huge }, Moves)
+end
+
+-- the call the game makes for its dribble keys: the keys for the hand the ball is in, whether sprint is held, where you move
+function Moves.play(self: any, move: string): boolean
+    if self.Read("MoveKeys") ~= true then
+        return false
+    end
+    local mine = Court.Mine
+    local keys = Config.MOVE_INPUTS[move]
+    if not mine or not keys or not Court.HasBall then
+        return false
+    end
+    local action = mine:GetAttribute("Action")
+    if (action ~= "" and action ~= nil) or not Court.free(mine) or mine:GetAttribute("Debounce") == true or Court.HandsOff then
+        return false
+    end
+    local now = os.clock()
+    if now - self.Last < GAP then
+        return false
+    end
+    local remote = Court.input("Dribble")
+    if not remote then
+        return false
+    end
+    self.Last = now
+    local sprint = Court.sprintHeld() or mine:GetAttribute("Sprinting") == true
+    return Court.send(remote, keys[if mine:GetAttribute("Hand") == "L" then "L" else "R"], sprint, Court.heading() or Vector3.zero)
+end
+
+-- true holds back a dribble call of the game's own keys, the hand switch and anything the script sends go through
+function Moves.blocks(self: any, args: any): boolean
+    if self.Read("BlockDribbleKeys") ~= true or type(args) ~= "table" then
+        return false
+    end
+    local keys = args[1]
+    return type(keys) == "string" and string.match(keys, "^[ZCXV]+$") ~= nil
+end
+
+return Moves
+end
+modules["player"] = function(...)
+
+local import: (string) -> any = ...
+local Court: typeof(require("./court")) = import("court")
+local Drive: typeof(require("./drive")) = import("drive")
+
+local Player = {}
+Player.__index = Player
+
+-- the flags the game sets on every character that hold you back
+local DEBOUNCES = { "Debounce", "DodgeDebounce", "BoxoutPushDebounce" }
+
+-- the sprint remote argument is not known, each form is tried until Sprinting turns on, a real sprint copied by the hook wins over all of them
+local FORMS: { (any) -> ...any } = {
+    function(_: any): ...any
+        return true
+    end,
+    function(_: any): ...any
+        return { Sprinting = true }
+    end,
+    function(_: any): ...any
+        return { Sprint = true }
+    end,
+}
+local RELEASES: { any } = { false, { Sprinting = false }, { Sprint = false } }
+
+-- the game's own numbers: the walk speed it caps the attribute at, what a sprint adds, and the speed above which it stops you
+local GAME_CAP = 17
+local LIMIT = 27
+local MAX_STAMINA = 100
+-- a walk the game names this soon after a stun cleared here puts the stun back
+local FREED_TIME = 2
+-- No Stun waits this long into a stun before it clears it, the walk of a foul or a dead ball is named in that time and
+-- then the stun is never touched. no stun is cleared this soon after the game walked you
+local STUN_WAIT = 0.4
+local WALK_CLEAR = 1
+
+local function sprinting(mine: any): boolean
+    return mine.Parent ~= nil and mine:GetAttribute("Sprinting") == true
+end
+
+function Player.new(read: (string) -> any): any
+    return setmetatable({
+        Read = read,
+        LastSprint = -math.huge,
+        LastRelease = -math.huge,
+        Releases = 0,
+        Pressed = false,
+        WantSprint = 0,
+        Native = {} :: { [string]: number },
+        Watched = nil :: any,
+        Link = nil :: any,
+        Real = nil :: number?,
+        RealAt = 0,
+        Sent = nil :: Vector3?,
+    }, Player)
+end
+
+-- the bar is the game's Stamina attribute, written here on your own client only. the server keeps its own count
+function Player.fill(self: any, mine: any)
+    local value = mine:GetAttribute("Stamina")
+    if type(value) ~= "number" or Court.HandsOff or Court.handsOff(mine) then
+        return
+    end
+    local top = mine:GetAttribute("MaxStamina")
+    local full = if type(top) == "number" and top > 0 then top else MAX_STAMINA
+    if value < full - 0.01 then
+        self.WroteAt = os.clock()
+        self.Wrote = full
+        mine:SetAttribute("Stamina", full)
+    end
+end
+
+function Player.step(self: any, now: number)
+    local mine = Court.Mine
+    if not mine then
+        return
+    end
+    local read = self.Read
+    local infinite = read("InfStamina") == true
+    if read("FullSpeed") == true or infinite then
+        -- the server owns stamina, its value is what the speed hold reads
+        self:watch(mine)
+    elseif self.Link then
+        self:unwatch()
+    end
+    if infinite then
+        self:fill(mine)
+    end
+    -- a stun from a foul or a dead ball comes with the game walking you, giving the controller back then is what froze you.
+    -- the server often names the walk a moment after the stun and never sends CanMove again, an attribute only comes when
+    -- it changes, so a stun cleared here that turns into a walk is put back the way the server still has it
+    local action = mine:GetAttribute("Action")
+    local walked = action == "Moving" or action == "Fouled" or action == "Inbounding"
+    local freed = self.Freed
+    if freed and (freed.Character ~= mine or now - freed.At > FREED_TIME) then
+        freed = nil
+        self.Freed = nil
+    end
+    local stunned = mine:GetAttribute("Stunned") == true
+    if not stunned then
+        self.StunAt = nil
+    elseif not self.StunAt then
+        self.StunAt = now
+    end
+    if walked or Court.Dead then
+        if freed and walked then
+            self.Freed = nil
+            if mine:GetAttribute("Stunned") == false then
+                mine:SetAttribute("Stunned", true)
+            end
+            if freed.CanMove and mine:GetAttribute("CanMove") == true then
+                mine:SetAttribute("CanMove", false)
+            end
+        end
+    elseif read("NoStun") == true and stunned and now - (self.StunAt or now) >= STUN_WAIT and not Court.Foul and now - Court.WalkAt >= WALK_CLEAR then
+        -- only a stun on a live ball with nobody fouled is cleared, the one a foul or a dead ball comes with is the game's
+        mine:SetAttribute("Stunned", false)
+        local gave = false
+        if mine:GetAttribute("CanMove") == false and (action == "" or action == nil or action == "Stunned") then
+            mine:SetAttribute("CanMove", true)
+            gave = true
+        end
+        self.Freed = { Character = mine, At = now, CanMove = gave }
+    end
+    -- while the game walks or holds you, and a moment after, nothing else is written or pressed
+    if Court.HandsOff or Court.handsOff(mine) then
+        return
+    end
+    if read("NoDebounce") == true then
+        for _, name in DEBOUNCES do
+            if mine:GetAttribute(name) == true then
+                mine:SetAttribute(name, false)
+            end
+        end
+    end
+    if read("NoCold") == true and mine:GetAttribute("Cold") == true then
+        mine:SetAttribute("Cold", false)
+    end
+    if read("AlwaysSprint") == true or now < self.WantSprint then
+        self:sprint(mine, now)
+    elseif self.Pressed then
+        self:release(mine, now)
+    end
+end
+
+function Player.unwatch(self: any)
+    local link = self.Link
+    if link then
+        self.Link = nil
+        pcall(link.Disconnect, link)
+    end
+    self.Watched = nil
+    self.Real = nil
+end
+
+-- the server keeps its own stamina and sends it a few times a second, every value that comes in is noted as the real one
+function Player.watch(self: any, mine: any)
+    if self.Watched == mine then
+        return
+    end
+    self:unwatch()
+    self.Watched = mine
+    self.Link = mine:GetAttributeChangedSignal("Stamina"):Connect(function()
+        local value = mine:GetAttribute("Stamina")
+        if type(value) ~= "number" then
+            return
+        end
+        local now = os.clock()
+        -- the full bar written here is not the server's value, only what came from the server counts
+        if value == self.Wrote and now - (self.WroteAt or -math.huge) < 0.1 then
+            return
+        end
+        self.Real = value
+        self.RealAt = now
+        if self.Read("InfStamina") == true then
+            self:fill(mine)
+        end
+    end)
+end
+
+-- runs right before the physics step, after the game wrote its own velocity for the frame. the game caps the WalkSpeed
+-- attribute before it uses it, so the speed is scaled on the part the game really moves
+function Player.physics(self: any)
+    local read = self.Read
+    local custom = read("CustomSpeed") == true
+    local infinite = read("InfStamina") == true
+    local lock = read("FullSpeed") == true or infinite
+    if not custom and not lock then
+        return
+    end
+    local mine = Court.Mine
+    -- the game walking you is left exactly at the speed it writes, whatever CanMove says
+    if not mine or mine:GetAttribute("CanMove") ~= true or Court.handsOff(mine) then
+        -- after a move the game held you in, the custom speed builds up again from the game's own instead of jumping back
+        self.Boost = 0
+        self.Ratio = 1
+        self.PhysicsAt = nil
+        return
+    end
+    local part, mover = Court.proxy()
+    if not part or not mover then
+        return
+    end
+    local velocity: Vector3 = mover.Velocity
+    local speed = velocity.Magnitude
+    -- a velocity still the one written here means the game did not set a new one, scaling it again would stack
+    if speed < 1 or Drive.active() or Drive.since(os.clock()) < 0.15 then
+        -- standing still, or a feature moving you or just done with it: the next run of your own starts at the game's own
+        -- speed again
+        self.Ratio = 1
+        self.Boost = 0
+        self.PhysicsAt = nil
+        return
+    end
+    if velocity == self.Sent then
+        return
+    end
+    local now = os.clock()
+    local dt = math.clamp(now - (self.PhysicsAt or now), 0, 0.1)
+    self.PhysicsAt = now
+    local target = speed
+    -- the game's own walk and sprint speeds are learned while the server's stamina is high, then held when stamina drops.
+    -- speed is the only thing the server takes away from you when you are tired. the hold stays a little under a full
+    -- bar, eases in and out, and leaves the guard stance and anything slower than a tired run alone so it never looks
+    -- like a speed hack
+    local real: number? = self.Real
+    local boost = 0
+    if lock and real and now - self.RealAt < 3 then
+        local running = mine:GetAttribute("Sprinting") == true or (infinite and Court.sprintHeld())
+        local key = if running then "Sprint" else "Walk"
+        local native: { [string]: number } = self.Native
+        local known = native[key]
+        if real >= 85 then
+            if speed >= 5 and speed <= 20 and mine:GetAttribute("HoldingG") ~= true then
+                native[key] = if known then math.max(known * 0.999, speed) else speed
+            end
+        elseif known and mine:GetAttribute("HoldingG") ~= true and speed >= known * 0.55 then
+            local share = if infinite then 0.99 else 0.95
+            boost = math.clamp(known * share - speed, 0, if infinite then 6 else 3.5)
+        end
+    end
+    -- the extra speed comes on over about half a second and goes the same way, never in one frame
+    local current: number = self.Boost or 0
+    current += math.clamp(boost - current, -14 * dt, 7 * dt)
+    self.Boost = current
+    if current > 0.05 then
+        target = speed + current
+    end
+    if custom then
+        local base = mine:GetAttribute("WalkSpeed")
+        if type(base) == "number" and base > 1 then
+            -- the custom speed builds up over a few tenths of a second from the game's own, like a person's push off
+            local want = (read("WalkSpeed") or 16) / math.min(base, GAME_CAP)
+            local ratio: number = self.Ratio or 1
+            ratio += math.clamp(want - ratio, -3 * dt, 1.6 * dt)
+            self.Ratio = ratio
+            target *= ratio
+        end
+    end
+    if math.abs(target - speed) < 0.05 then
+        return
+    end
+    local scaled = velocity.Unit * math.min(target, LIMIT)
+    mover.Velocity = scaled
+    self.Sent = scaled
+end
+
+-- the same call as the press that turned sprint on with every true turned into false, so the sprint ends the way letting go of the key would
+local function released(args: any): any
+    local copy: any = table.clone(args)
+    for index = 1, args.n or #args do
+        local value = args[index]
+        if type(value) == "boolean" then
+            copy[index] = false
+        elseif type(value) == "table" then
+            local inner: any = table.clone(value)
+            for key, item in inner do
+                if type(item) == "boolean" then
+                    inner[key] = false
+                end
+            end
+            copy[index] = inner
+        end
+    end
+    return copy
+end
+
+-- Always Sprint only presses sprint, so when it is turned off the key is let go once, tried a few times until Sprinting really turns off
+function Player.release(self: any, mine: any, now: number)
+    if mine:GetAttribute("Sprinting") ~= true or self.Releases >= 4 then
+        self.Pressed = false
+        self.Releases = 0
+        return
+    end
+    if now - self.LastRelease < 0.5 then
+        return
+    end
+    -- your own sprint key is held, the sprint is yours now
+    if Court.sprintHeld() then
+        self.Pressed = false
+        self.Releases = 0
+        return
+    end
+    self.LastRelease = now
+    self.Releases += 1
+    local remote = Court.input("Sprint")
+    if not remote then
+        return
+    end
+    local copied = Court.copied("Sprint")
+    if type(copied) == "table" then
+        local args = released(copied)
+        Court.send(remote, table.unpack(args, 1, args.n or #args))
+    else
+        Court.send(remote, RELEASES[(self.Releases - 1) % #RELEASES + 1])
+    end
+end
+
+function Player.sprint(self: any, mine: any, now: number)
+    if mine:GetAttribute("Sprinting") == true then
+        return
+    end
+    local action = Court.Action
+    if (action ~= "" and action ~= "Dribbling" and action ~= nil) or mine:GetAttribute("CanMove") == false or now - self.LastSprint < 0.7 then
+        return
+    end
+    -- holding G or an empty stamina bar keeps the game from sprinting, pressing again and again then is only noise
+    local stamina = mine:GetAttribute("Stamina")
+    if mine:GetAttribute("HoldingG") == true or (type(stamina) == "number" and stamina < 3) then
+        return
+    end
+    -- the game's own controller moves the character, Humanoid.MoveDirection stays at zero, so the move keys and the speed count as moving
+    local root = Court.Root
+    local velocity = if root then root.AssemblyLinearVelocity else Vector3.zero
+    if now >= self.WantSprint and not Court.steering(mine) and velocity.X * velocity.X + velocity.Z * velocity.Z <= 16 then
+        return
+    end
+    self.LastSprint = now
+    self.Pressed = true
+    self.Releases = 0
+    Court.fire("Sprint", FORMS, sprinting, nil, mine)
+end
+
+-- unloading lets go of a sprint that Always Sprint started
+function Player.shutdown(self: any)
+    self:unwatch()
+    local mine = Court.mine()
+    if mine and self.Pressed and not Court.sprintHeld() and mine:GetAttribute("Sprinting") == true then
+        local remote = Court.input("Sprint")
+        local copied = Court.copied("Sprint")
+        if remote then
+            if type(copied) == "table" then
+                local args = released(copied)
+                Court.send(remote, table.unpack(args, 1, args.n or #args))
+            else
+                Court.send(remote, false)
+            end
+        end
+    end
+    self.Pressed = false
+end
+
+return Player
+end
+modules["rimguard"] = function(...)
+
+local import: (string) -> any = ...
+local Court: typeof(require("./court")) = import("court")
+
+-- keeps you from running under the ring while a layup or a dunk press waits for the game to start the shot. the game
+-- plays the reverse finish when you are behind or beside the ring when the shot starts
+local RimGuard = {}
+RimGuard.__index = RimGuard
+
+local RANGE = 13
+-- how far out in front of the ring you are kept, and how much further for every stud you are off to the side
+local FRONT_MIN = 2.6
+local SLOPE = 0.4
+-- once the game plays the shot, a gather or a move it owns the body, nothing is written then: a second writer on the
+-- body is what made layups jitter and turned them into odd finishes
+local BUSY: { [string]: boolean } = { Shooting = true, Gathering = true, Dunking = true, ContactLayup = true, ClutchLayup = true, Layup = true, Dribbling = true }
+
+function RimGuard.new(read: (string) -> any, autoGreen: any): any
+    return setmetatable({ Read = read, AutoGreen = autoGreen }, RimGuard)
+end
+
+-- runs right before the physics step, after everything else wrote the velocity for the frame. it only ever takes speed
+-- toward the backboard away, it never pushes you out, turns you or moves you sideways
+function RimGuard.physics(self: any)
+    if self.Read("RimFront") ~= true then
+        return
+    end
+    local mine = Court.Mine
+    if not mine or not Court.HasBall then
+        return
+    end
+    local green = self.AutoGreen
+    -- a dunk press needs the full run at the rim, slowing it turns the dunk into a layup
+    if green.Press == nil or green.DunkPress == true or (green.Shot and green.Shot.Fired) then
+        return
+    end
+    local action = mine:GetAttribute("Action")
+    if (type(action) == "string" and BUSY[action]) or mine:GetAttribute("CanMove") ~= true or Court.handsOff(mine) then
+        return
+    end
+    local part, mover = Court.proxy()
+    if not part or not mover then
+        return
+    end
+    local position: Vector3 = part.Position
+    local distance, rim = Court.rimDistance(position)
+    if not distance or not rim or distance > RANGE then
+        return
+    end
+    local front = Court.front(rim)
+    if not front then
+        return
+    end
+    local offsetX, offsetZ = position.X - rim.Position.X, position.Z - rim.Position.Z
+    local ahead = offsetX * front.X + offsetZ * front.Z
+    if ahead <= 0 then
+        -- already beside or behind the ring, nothing to save, the move is left alone
+        return
+    end
+    local sideX, sideZ = offsetX - front.X * ahead, offsetZ - front.Z * ahead
+    local need = math.max(FRONT_MIN, math.sqrt(sideX * sideX + sideZ * sideZ) * SLOPE)
+    local velocity: Vector3 = mover.Velocity
+    local closing = -(velocity.X * front.X + velocity.Z * front.Z)
+    local limit = math.max((ahead - need) * 6, 0)
+    if closing > limit then
+        mover.Velocity = velocity + front * (closing - limit)
+    end
+end
+
+return RimGuard
+end
+modules["rings"] = function(...)
+
+local import: (string) -> any = ...
+local Court: typeof(require("./court")) = import("court")
+
+-- everything drawn on the floor, shaped like the court itself: the three point line traced off the game's own walls,
+-- the dunk zones and the auto shot range as arcs on the court side of each rim, and your action ranges as soft rings.
+-- every line is a thin bright stroke over a wide faint one, so it reads as light on the floor, not as a wire
+local Rings = {}
+Rings.__index = Rings
+
+-- a full ring and a half circle have the same step between points, so every curve is worked out equally smooth. only
+-- the points the screen needs are drawn, see pick
+local SEGMENTS = 192
+local ARC_SEGMENTS = 96
+-- the three strokes of a line of light. the faint wide ones are blurry, they follow the curve more loosely (tolerance in
+-- pixels, turn in radians per piece) and so take fewer pieces. each has its own fixed layer: fills under the wide
+-- strokes under the bright ones
+local LAYERS = {
+    { Name = "wide", Width = 13, Alpha = 0.05, Tolerance = 1.5, Turn = 0.35, Z = 2 },
+    { Name = "soft", Width = 7, Alpha = 0.12, Tolerance = 0.8, Turn = 0.25, Z = 3 },
+    { Name = "core", Width = 2.5, Alpha = 0.9, Tolerance = 0.2, Turn = 0.15, Z = 4 },
+}
+-- fills are faint and sit under the strokes, their edges may follow the curve a bit looser still
+local FILL_TOLERANCE = 2
+local FILL_TURN = 0.4
+local FILL_Z = 1
+-- the floor under you is looked up this often, not every frame
+local LEVEL_EVERY = 0.1
+-- the list of hoops is worked out again this often, the rims do not move
+local HOOPS_EVERY = 0.5
+local STEAL = Color3.fromRGB(255, 90, 90)
+local GUARD = Color3.fromRGB(90, 160, 255)
+local BLOCK = Color3.fromRGB(255, 200, 70)
+local SHOT = Color3.fromRGB(110, 255, 140)
+local LINE = Color3.fromRGB(255, 255, 255)
+local DUNK_STAND = Color3.fromRGB(110, 255, 140)
+local DUNK_DRIVE = Color3.fromRGB(90, 160, 255)
+-- the dunk zones of the game's tutorial, measured from the rim: standing dunks 4.6 to 11 studs out, driving dunks 6 to 13
+local STAND_IN, STAND_OUT = 4.6, 11
+local DRIVE_IN, DRIVE_OUT = 6, 13
+-- a rim further than this is not drawn, the other half of the court stays clean
+local NEAR = 60
+-- radii ease to a new slider value instead of jumping
+local EASE = 12
+-- everything sits this far over the floor, all at the same height so nothing slides against the paint
+local LIFT = 0.05
+-- two rims closer than this are the same hoop, it is drawn once
+local SAME_HOOP = 6
+
+local RAYS = 360
+-- far enough for the deepest part of the line, too short to reach the line of the other basket
+local REACH = 60
+-- how far past a hit the second ray starts, the one that finds the far side of the wall
+local SPAN = 6
+-- the court is built square to the hoop, a front this close to a side of its parts is that side: the traced front is
+-- already within a degree, the court's own idea of it less sure, and a guess from where you stood is only a hint
+local SNAP_TRACE = math.cos(math.rad(2))
+local SNAP_COURT = math.cos(math.rad(10))
+local SNAP_GUESS = math.cos(math.rad(45))
+
+local circleX: { number } = table.create(SEGMENTS + 1)
+local circleZ: { number } = table.create(SEGMENTS + 1)
+for index = 0, SEGMENTS do
+    local angle = index / SEGMENTS * math.pi * 2
+    circleX[index + 1] = math.cos(angle)
+    circleZ[index + 1] = math.sin(angle)
+end
+
+local distinct: { any } = {}
+
+function Rings.new(read: (string) -> any): any
+    return setmetatable({ Read = read, Radius = {} :: { [string]: number }, Last = os.clock() }, Rings)
+end
+
+-- the camera of this frame. while plain math gives the same screen points as the engine (checked every frame on three
+-- points) each point is worked out here, else every point goes through the canvas
+local fast = false
+local slowProject: any = nil
+local camX, camY, camZ = 0, 0, 0
+local m00, m01, m02, m10, m11, m12, m20, m21, m22 = 1, 0, 0, 0, 1, 0, 0, 0, 1
+local focalX, focalY, middleX, middleY = 1, 1, 0, 0
+local viewW, viewH = 1e5, 1e5
+
+local function refPoint(lx: number, ly: number, lz: number): Vector3
+    return Vector3.new(camX + m00 * lx + m01 * ly + m02 * lz, camY + m10 * lx + m11 * ly + m12 * lz, camZ + m20 * lx + m21 * ly + m22 * lz)
+end
+
+local function beginView(canvas: any): boolean
+    fast = false
+    slowProject = canvas.project
+    if not slowProject then
+        return false
+    end
+    viewW, viewH = 1e5, 1e5
+    local camera = workspace.CurrentCamera
+    if not camera then
+        return true
+    end
+    local ok = pcall(function()
+        local size = camera.ViewportSize
+        viewW, viewH = size.X, size.Y
+        camX, camY, camZ, m00, m01, m02, m10, m11, m12, m20, m21, m22 = camera.CFrame:GetComponents()
+    end)
+    if not ok then
+        viewW, viewH = 1e5, 1e5
+        return true
+    end
+    -- three spots of known place in the camera's own view, the engine says where they land on the screen
+    local a, depthA = slowProject(refPoint(-6, -4, -20))
+    local b, depthB = slowProject(refPoint(6, 4, -20))
+    local c, depthC = slowProject(refPoint(3, -5, -30))
+    if not (a and b and c) or type(depthA) ~= "number" or type(depthC) ~= "number" then
+        return true
+    end
+    focalX, middleX = (b.X - a.X) / 0.6, (a.X + b.X) / 2
+    focalY, middleY = (a.Y - b.Y) / 0.4, (a.Y + b.Y) / 2
+    local guessX, guessY = middleX + focalX * 0.1, middleY + focalY * (5 / 30)
+    fast = focalX > 0 and focalY > 0 and math.abs(depthA - 20) < 0.05 and math.abs(depthC - 30) < 0.05 and math.abs(c.X - guessX) < 0.5 and math.abs(c.Y - guessY) < 0.5
+    return true
+end
+
+local function screen(x: number, y: number, z: number): (number, number, boolean)
+    if fast then
+        local dx, dy, dz = x - camX, y - camY, z - camZ
+        local depth = -(m02 * dx + m12 * dy + m22 * dz)
+        if depth <= 0.01 then
+            return 0, 0, false
+        end
+        return middleX + focalX * (m00 * dx + m10 * dy + m20 * dz) / depth, middleY - focalY * (m01 * dx + m11 * dy + m21 * dz) / depth, true
+    end
+    local point, depth = slowProject(Vector3.new(x, y, z))
+    if point and type(depth) == "number" and depth > 0 then
+        return point.X, point.Y, true
+    end
+    return 0, 0, false
+end
+
+-- the screen points of a path, two sets so a band has both its edges at once. every point is projected once a frame,
+-- the strokes and the fill share it
+type Buffer = { X: { number }, Y: { number }, Ok: { boolean }, Count: number }
+local function buffer(): Buffer
+    return { X = table.create(SEGMENTS + 1), Y = table.create(SEGMENTS + 1), Ok = table.create(SEGMENTS + 1), Count = 0 }
+end
+local nearBuf, farBuf = buffer(), buffer()
+local picked: { number } = table.create(SEGMENTS * 2)
+local fillPicked: { number } = table.create(SEGMENTS * 2)
+
+local function projectPath(into: Buffer, path: { Vector3 })
+    local xs, ys, oks = into.X, into.Y, into.Ok
+    local count = #path
+    for index = 1, count do
+        local point = path[index]
+        xs[index], ys[index], oks[index] = screen(point.X, point.Y, point.Z)
+    end
+    into.Count = count
+end
+
+local function projectCircle(into: Buffer, x: number, y: number, z: number, radius: number)
+    local xs, ys, oks = into.X, into.Y, into.Ok
+    for index = 1, SEGMENTS + 1 do
+        xs[index], ys[index], oks[index] = screen(x + circleX[index] * radius, y, z + circleZ[index] * radius)
+    end
+    into.Count = SEGMENTS + 1
+end
+
+-- the points of a projected path a stroke really needs: a point is left out while the straight piece past it stays
+-- within tolerance pixels of the curve and turns less than limit. a run ends where the path goes behind the camera,
+-- a 0 in the list closes it
+local function pick(from: Buffer, tolerance: number, limit: number, list: { number }): number
+    local xs, ys, oks = from.X, from.Y, from.Ok
+    local count = 0
+    local open = false
+    local last = 0
+    local length, turn = 0, 0
+    local ux, uy = 0, 0
+    local stepped = false
+    local budget = tolerance * 8
+    for index = 1, from.Count do
+        if not oks[index] then
+            if open then
+                if list[count] ~= last then
+                    count += 1
+                    list[count] = last
+                end
+                count += 1
+                list[count] = 0
+                open = false
+            end
+        elseif not open then
+            open, stepped = true, false
+            count += 1
+            list[count] = index
+            last, length, turn = index, 0, 0
+        else
+            local dx, dy = xs[index] - xs[last], ys[index] - ys[last]
+            local step = math.sqrt(dx * dx + dy * dy)
+            if step > 0.05 then
+                local nx, ny = dx / step, dy / step
+                length += step
+                if stepped then
+                    local dot = ux * nx + uy * ny
+                    turn += math.abs(ux * ny - uy * nx)
+                    -- the bow of a curve over its chord is about its length times its turn over eight
+                    if dot < 0.7 or turn > limit or length * turn > budget then
+                        if list[count] ~= last then
+                            count += 1
+                            list[count] = last
+                        end
+                        length, turn = step, 0
+                    end
+                end
+                ux, uy, stepped = nx, ny, true
+                last = index
+            end
+        end
+    end
+    if open then
+        if list[count] ~= last then
+            count += 1
+            list[count] = last
+        end
+        count += 1
+        list[count] = 0
+    end
+    return count
+end
+
+-- every stroke and fill has its own pool and layer on the canvas, so a shape that takes a different number of pieces
+-- this frame does not move the color, width or layer of every piece after it
+local names: { [string]: { [string]: string } } = {}
+local function named(base: string, part: string): string
+    local row = names[base]
+    if not row then
+        row = {}
+        names[base] = row
+    end
+    local key = row[part]
+    if not key then
+        key = base .. ":" .. part
+        row[part] = key
+    end
+    return key
+end
+
+local hoopTags: { string } = {}
+local function hoopTag(index: number): string
+    local tag = hoopTags[index]
+    if not tag then
+        tag = "pb:hoop" .. index
+        hoopTags[index] = tag
+    end
+    return tag
+end
+
+local function enter(canvas: any, key: string?, z: number?)
+    local scope, layer = canvas.scope, canvas.layer
+    if scope then
+        scope(key)
+    end
+    if layer then
+        layer(z)
+    end
+end
+
+local function offscreen(ax: number, ay: number, bx: number, by: number, margin: number): boolean
+    return (ax < -margin and bx < -margin) or (ay < -margin and by < -margin) or (ax > viewW + margin and bx > viewW + margin) or (ay > viewH + margin and by > viewH + margin)
+end
+
+-- a fill piece with all four corners off the same side of the screen
+local function beyond(ax: number, ay: number, bx: number, by: number, cx: number, cy: number, dx: number, dy: number): boolean
+    return (ax < 0 and bx < 0 and cx < 0 and dx < 0)
+        or (ay < 0 and by < 0 and cy < 0 and dy < 0)
+        or (ax > viewW and bx > viewW and cx > viewW and dx > viewW)
+        or (ay > viewH and by > viewH and cy > viewH and dy > viewH)
+end
+
+local function stroke(canvas: any, from: Buffer, list: { number }, count: number, color: Color3, alpha: number, width: number)
+    local line = canvas.line
+    if not line then
+        return
+    end
+    local xs, ys = from.X, from.Y
+    local margin = width + 2
+    local previous = 0
+    local start: Vector2? = nil
+    for at = 1, count do
+        local index = list[at]
+        if index == 0 then
+            previous, start = 0, nil
+        else
+            if previous ~= 0 then
+                local ax, ay, bx, by = xs[previous], ys[previous], xs[index], ys[index]
+                -- a piece wholly off one side of the screen is not drawn
+                if offscreen(ax, ay, bx, by, margin) then
+                    start = nil
+                else
+                    local finish = Vector2.new(bx, by)
+                    line(start or Vector2.new(ax, ay), finish, color, alpha, width)
+                    start = finish
+                end
+            end
+            previous = index
+        end
+    end
+end
+
+-- a line of light: a wide faint stroke under a thin bright one
+local function glow(canvas: any, from: Buffer, key: string, color: Color3, strength: number)
+    for _, layer in LAYERS do
+        local count = pick(from, layer.Tolerance, layer.Turn, picked)
+        enter(canvas, named(key, layer.Name), layer.Z)
+        stroke(canvas, from, picked, count, color, layer.Alpha * strength, layer.Width)
+    end
+end
+
+-- a soft wash between two projected edges, one quad for every point the outer edge needs
+local function fillBand(canvas: any, near: Buffer, far: Buffer, list: { number }, count: number, key: string, color: Color3, alpha: number)
+    local quad = canvas.filledQuad
+    if not quad then
+        return
+    end
+    enter(canvas, key, FILL_Z)
+    local nx, ny, nok, fx, fy = near.X, near.Y, near.Ok, far.X, far.Y
+    local previous = 0
+    local lastNear: Vector2? = nil
+    local lastFar: Vector2? = nil
+    for at = 1, count do
+        local index = list[at]
+        if index == 0 or not nok[index] then
+            previous, lastNear, lastFar = 0, nil, nil
+        else
+            if previous ~= 0 then
+                local p = previous
+                if beyond(nx[p], ny[p], nx[index], ny[index], fx[index], fy[index], fx[p], fy[p]) then
+                    lastNear, lastFar = nil, nil
+                else
+                    local a = lastNear or Vector2.new(nx[p], ny[p])
+                    local d = lastFar or Vector2.new(fx[p], fy[p])
+                    local b, c = Vector2.new(nx[index], ny[index]), Vector2.new(fx[index], fy[index])
+                    quad(a, b, c, d, color, alpha)
+                    lastNear, lastFar = b, c
+                end
+            end
+            previous = index
+        end
+    end
+end
+
+-- a faint disc: a fan from the middle to every point the edge needs
+local function fillDisc(canvas: any, cx: number, cy: number, far: Buffer, list: { number }, count: number, key: string, color: Color3, alpha: number)
+    local triangle, quad = canvas.filledTriangle, canvas.filledQuad
+    if not (triangle or quad) then
+        return
+    end
+    enter(canvas, key, FILL_Z)
+    local center = Vector2.new(cx, cy)
+    local fx, fy = far.X, far.Y
+    local previous = 0
+    local last: Vector2? = nil
+    for at = 1, count do
+        local index = list[at]
+        if index == 0 then
+            previous, last = 0, nil
+        else
+            if previous ~= 0 then
+                local p = previous
+                if beyond(cx, cy, fx[index], fy[index], fx[p], fy[p], cx, cy) then
+                    last = nil
+                else
+                    local d = last or Vector2.new(fx[p], fy[p])
+                    local c = Vector2.new(fx[index], fy[index])
+                    if triangle then
+                        triangle(center, c, d, color, alpha)
+                    else
+                        quad(center, center, c, d, color, alpha)
+                    end
+                    last = c
+                end
+            end
+            previous = index
+        end
+    end
+end
+
+-- an action range: a faint disc, a brighter rim just inside the line, then the line itself
+local function ring(canvas: any, key: string, x: number, y: number, z: number, radius: number, color: Color3)
+    projectCircle(farBuf, x, y, z, radius)
+    local count = pick(farBuf, FILL_TOLERANCE, FILL_TURN, fillPicked)
+    local cx, cy, seen = screen(x, y, z)
+    if seen then
+        fillDisc(canvas, cx, cy, farBuf, fillPicked, count, named(key, "disc"), color, 0.05)
+    end
+    projectCircle(nearBuf, x, y, z, radius * 0.82)
+    fillBand(canvas, nearBuf, farBuf, fillPicked, count, named(key, "rim"), color, 0.09)
+    glow(canvas, farBuf, key, color, 0.85)
+end
+
+-- the half of a circle around a rim that faces the court, from one baseline side round to the other. the list is
+-- filled in place, a curve is only worked out again when it changes
+local function arc(list: { Vector3 }, center: Vector3, front: Vector3, radius: number, y: number): { Vector3 }
+    local fx, fz = front.X, front.Z
+    for index = 0, ARC_SEGMENTS do
+        local angle = (index / ARC_SEGMENTS - 0.5) * math.pi
+        local cos, sin = math.cos(angle), math.sin(angle)
+        local dx, dz = fx * cos - fz * sin, fz * cos + fx * sin
+        list[index + 1] = Vector3.new(center.X + dx * radius, y, center.Z + dz * radius)
+    end
+    return list
+end
+
+-- a filled band between two arcs, a light wash on the floor with the edges stroked at the given strengths. both arcs
+-- are projected once, the fill and the strokes share them
+local function band(canvas: any, key: string, near: { Vector3 }, far: { Vector3 }, color: Color3, alpha: number, nearStrength: number?, farStrength: number?)
+    projectPath(nearBuf, near)
+    projectPath(farBuf, far)
+    local count = pick(farBuf, FILL_TOLERANCE, FILL_TURN, fillPicked)
+    fillBand(canvas, nearBuf, farBuf, fillPicked, count, named(key, "fill"), color, alpha)
+    if nearStrength then
+        glow(canvas, nearBuf, named(key, "near"), color, nearStrength)
+    end
+    if farStrength then
+        glow(canvas, farBuf, named(key, "far"), color, farStrength)
+    end
+end
+
+local floorParams = RaycastParams.new()
+floorParams.RespectCanCollide = true
+floorParams.FilterType = Enum.RaycastFilterType.Exclude
+local nextIgnore = 0
+
+-- the floor under a point, found by looking straight down through the players and the balls
+local function floorBelow(x: number, top: number, z: number, depth: number): number?
+    local now = os.clock()
+    if now >= nextIgnore then
+        nextIgnore = now + 1
+        local ignore: { any } = {}
+        for _, name in { "Characters", "Basketballs", "InvisCharacter" } do
+            local folder = workspace:FindFirstChild(name)
+            if folder then
+                table.insert(ignore, folder)
+            end
+        end
+        local root = Court.Root
+        if root and root.Parent then
+            table.insert(ignore, root.Parent)
+        end
+        floorParams.FilterDescendantsInstances = ignore
+    end
+    local hit = workspace:Raycast(Vector3.new(x, top, z), Vector3.new(0, -depth, 0), floorParams)
+    return if hit then hit.Position.Y else nil
+end
+
+local levelY: number? = nil
+local nextLevel = 0
+
+-- the height of the floor under you. the ray goes straight down, so it finds the same floor while you run or jump and
+-- the rings stay flat on it. the floor does not change every frame, it is looked up a few times a second
+local function level(root: any): number
+    local now = os.clock()
+    if levelY and now < nextLevel then
+        return levelY :: number
+    end
+    nextLevel = now + LEVEL_EVERY
+    local position = root.Position
+    local found = floorBelow(position.X, position.Y, position.Z, 16)
+    if found and position.Y - found > 0.5 then
+        levelY = found
+    elseif not levelY then
+        levelY = position.Y - 2.8
+    end
+    return levelY :: number
+end
+
+local function smoothWeight(x: number): number
+    local t = math.clamp(x, 0, 1)
+    return t * t * (3 - 2 * t)
+end
+
+-- the sides of the parts the court is built square to, as flat x and z pairs
+local function axesOf(parts: { any }): { number }
+    local list: { number } = {}
+    for _, part in parts do
+        local ok, frame = pcall(function(): any
+            return part.CFrame
+        end)
+        if ok and frame then
+            for _, vector in { frame.RightVector, frame.UpVector, frame.LookVector } do
+                local flat = math.sqrt(vector.X * vector.X + vector.Z * vector.Z)
+                if flat > 0.95 then
+                    table.insert(list, vector.X / flat)
+                    table.insert(list, vector.Z / flat)
+                end
+            end
+        end
+    end
+    return list
+end
+
+local function snap(x: number, z: number, axes: { number }, limit: number): (number, number)
+    local bestX, bestZ, best = x, z, limit
+    for index = 1, #axes, 2 do
+        local ax, az = axes[index], axes[index + 1]
+        local dot = x * ax + z * az
+        if dot > best then
+            bestX, bestZ, best = ax, az, dot
+        elseif -dot > best then
+            bestX, bestZ, best = -ax, -az, -dot
+        end
+    end
+    return bestX, bestZ
+end
+
+-- the way the traced line looks out over the court. the line is a mirror image about that way, so the sum of all its
+-- hits points straight along it
+local function frontFrom(ox: { [number]: number }, oz: { [number]: number }, axes: { number }): (number?, number?)
+    local sx, sz = 0, 0
+    for index = 1, RAYS do
+        local x = ox[index]
+        if x then
+            sx += x
+            sz += oz[index]
+        end
+    end
+    local length = math.sqrt(sx * sx + sz * sz)
+    if length < 1 then
+        return nil, nil
+    end
+    return snap(sx / length, sz / length, axes, SNAP_TRACE)
+end
+
+local function median(list: { number }): number?
+    local count = #list
+    if count == 0 then
+        return nil
+    end
+    table.sort(list)
+    if count % 2 == 1 then
+        return list[(count + 1) // 2]
+    end
+    return (list[count // 2] + list[count // 2 + 1]) / 2
+end
+
+-- the line as the painted floor has it: one round arc and two straight corners down to the baseline, worked out from the
+-- hits of the low poly wall. ox and oz are the hits from the rim, depth how thick the wall is at each. the result is
+-- the path along the middle of the wall, as ahead and across pairs from the rim, or nil when the hits do not look like
+-- a three point line
+local function fitLine(ox: { [number]: number }, oz: { [number]: number }, depth: { [number]: number }, fx: number, fz: number): ({ number }?, { number }?)
+    local sx, sz = -fz, fx
+    local ahead: { [number]: number } = {}
+    local across: { [number]: number } = {}
+    local total = 0
+    for index = 1, RAYS do
+        local x = ox[index]
+        if x then
+            local z = oz[index]
+            ahead[index] = x * fx + z * fz
+            across[index] = x * sx + z * sz
+            total += 1
+        end
+    end
+    if total < 40 then
+        return nil, nil
+    end
+    local function angleOf(a: number, b: number): number
+        return math.deg(math.atan2(math.abs(b), a))
+    end
+    -- the straight corners: out to the side the wall stays the same distance across all the way down
+    local function corners(ca: number, cb: number): (number?, { number })
+        local left: { number } = {}
+        local right: { number } = {}
+        local thick: { number } = {}
+        for index = 1, RAYS do
+            local a = ahead[index]
+            if a then
+                local b = across[index] - cb
+                local angle = angleOf(a - ca, b)
+                if angle >= 80 and angle <= 100 then
+                    table.insert(if b < 0 then left else right, math.abs(b))
+                    if depth[index] then
+                        table.insert(thick, depth[index])
+                    end
+                end
+            end
+        end
+        -- a side counts as straight when most of its hits are the same distance across
+        local function straight(list: { number }): number?
+            local middle = median(list)
+            if not middle then
+                return nil
+            end
+            local close = 0
+            for _, value in list do
+                if math.abs(value - middle) <= 0.25 then
+                    close += 1
+                end
+            end
+            return if close >= #list * 0.6 then middle else nil
+        end
+        local l, r = straight(left), straight(right)
+        local c = if l and r then (l + r) / 2 else l or r
+        return c, thick
+    end
+    local corner = corners(0, 0)
+    -- the round part, and on it the hits next to the wall's corners: the flat pieces sag in between them
+    local round: { [number]: number } = {}
+    for index = 1, RAYS do
+        local a = ahead[index]
+        if a then
+            local b = across[index]
+            if a > 0.5 and angleOf(a, b) <= 90 and (not corner or math.abs(b) < corner - 0.75) then
+                round[index] = math.sqrt(a * a + b * b)
+            end
+        end
+    end
+    local tips: { number } = {}
+    for index = 1, RAYS do
+        local away = round[index]
+        if away then
+            local top = true
+            for step = -2, 2 do
+                local other = round[(index + step - 1) % RAYS + 1]
+                -- a hit at the end of the round part is cut off mid piece, it is no corner of the wall
+                if step ~= 0 and (not other or other > away + 1e-4) then
+                    top = false
+                    break
+                end
+            end
+            if top then
+                table.insert(tips, index)
+            end
+        end
+    end
+    -- a circle through the tips, its middle should be the rim or very close to it
+    local ca, cb, radius = 0, 0, 0
+    local fitted = false
+    if #tips >= 5 then
+        local sxx, sxy, syy, sx1, sy1, n, rx, ry, r1 = 0, 0, 0, 0, 0, 0, 0, 0, 0
+        for _, index in tips do
+            local x, y = ahead[index], across[index]
+            local w = x * x + y * y
+            sxx += x * x
+            sxy += x * y
+            syy += y * y
+            sx1 += x
+            sy1 += y
+            n += 1
+            rx -= x * w
+            ry -= y * w
+            r1 -= w
+        end
+        local det = sxx * (syy * n - sy1 * sy1) - sxy * (sxy * n - sy1 * sx1) + sx1 * (sxy * sy1 - syy * sx1)
+        if math.abs(det) > 1e-6 then
+            local d = (rx * (syy * n - sy1 * sy1) - sxy * (ry * n - sy1 * r1) + sx1 * (ry * sy1 - syy * r1)) / det
+            local e = (sxx * (ry * n - sy1 * r1) - rx * (sxy * n - sy1 * sx1) + sx1 * (sxy * r1 - ry * sx1)) / det
+            local f = (sxx * (syy * r1 - ry * sy1) - sxy * (sxy * r1 - ry * sx1) + rx * (sxy * sy1 - syy * sx1)) / det
+            local midA, midB = -d / 2, -e / 2
+            local square = midA * midA + midB * midB - f
+            if square > 16 and midA * midA + midB * midB < 9 then
+                local r = math.sqrt(square)
+                local spread = 0
+                for _, index in tips do
+                    local a, b = ahead[index] - midA, across[index] - midB
+                    spread += (math.sqrt(a * a + b * b) - r) ^ 2
+                end
+                if math.sqrt(spread / #tips) < 0.5 then
+                    ca, cb, radius, fitted = midA, midB, r, true
+                end
+            end
+        end
+    end
+    if not fitted then
+        for _, away in round do
+            radius = math.max(radius, away)
+        end
+    end
+    if radius < 4 then
+        return nil, nil
+    end
+    -- the paint runs along the middle of the wall: half its thickness out from where the rays hit
+    local roundThick: { number } = {}
+    for _, index in tips do
+        if depth[index] then
+            table.insert(roundThick, depth[index])
+        end
+    end
+    local side, sideThick = corners(ca, cb)
+    local roundHalf = math.min(median(roundThick) or 0, 3) / 2
+    local sideHalf = math.min(median(sideThick) or 0, 3) / 2
+    -- where the corners end at the baseline, and how far round the line goes when it has no corners
+    local widest = 0
+    local ends: { number } = {}
+    local endAngle = 0
+    for _, sign in { -1, 1 } do
+        -- the last ray to hit a corner stops short of its end by up to one ray step, half a step is put back
+        local first, second = math.huge, math.huge
+        for index = 1, RAYS do
+            local a0 = ahead[index]
+            if a0 then
+                local a, b = a0 - ca, (across[index] - cb) * sign
+                local angle = angleOf(a, b)
+                widest = math.max(widest, angle)
+                if side and b > 0 and angle >= 60 and b >= side - 0.75 then
+                    endAngle = math.max(endAngle, angle)
+                    if a < first then
+                        first, second = a, first
+                    elseif a < second then
+                        second = a
+                    end
+                end
+            end
+        end
+        if first < math.huge then
+            table.insert(ends, if second < math.huge then first - math.min(second - first, 1) / 2 else first)
+        end
+    end
+    local baseline: number? = nil
+    if #ends > 0 then
+        baseline = (ends[1] + (ends[2] or ends[1])) / 2
+    end
+    -- every hit has to lie on the arc or on a corner, a few flat pieces sag a little in between. hits past the ends of
+    -- the corners are a closed wall's back, not the line
+    local good, counted = 0, 0
+    for index = 1, RAYS do
+        local a0 = ahead[index]
+        if a0 then
+            local a, b = a0 - ca, math.abs(across[index] - cb)
+            if a >= (baseline or 0) - 0.5 and (not baseline or angleOf(a, b) <= endAngle + 0.5) then
+                counted += 1
+                local miss = math.abs(math.sqrt(a * a + b * b) - radius)
+                if side then
+                    miss = math.min(miss, math.abs(b - side))
+                end
+                if miss <= 2.5 then
+                    good += 1
+                end
+            end
+        end
+    end
+    if counted < 40 or good < counted * 0.85 then
+        return nil, nil
+    end
+    local r = radius + roundHalf
+    local listA: { number } = {}
+    local listB: { number } = {}
+    local function put(a: number, b: number)
+        table.insert(listA, ca + a)
+        table.insert(listB, cb + b)
+    end
+    local reach = math.rad(math.min(widest, 90))
+    local c: number? = nil
+    if side and baseline then
+        c = side + sideHalf
+        -- corners as wide as the arc carry its sides straight down, the arc is then a full half circle
+        if side >= radius - 0.3 then
+            c = r
+        end
+    end
+    local turn, joint = reach, 0
+    if c then
+        turn = if c < r then math.asin(c / r) else math.pi / 2
+        joint = if c < r then math.sqrt(r * r - c * c) else 0
+    end
+    local straight = c ~= nil and (baseline :: number) < joint - 0.25
+    if straight then
+        for step = 0, 7 do
+            put(baseline :: number + (joint - (baseline :: number)) * step / 8, -(c :: number))
+        end
+    end
+    local count = math.max(16, math.floor(ARC_SEGMENTS * turn / (math.pi / 2) + 0.5))
+    for step = 0, count do
+        local angle = -turn + 2 * turn * step / count
+        put(r * math.cos(angle), r * math.sin(angle))
+    end
+    if straight then
+        for step = 1, 8 do
+            put(joint + ((baseline :: number) - joint) * step / 8, c :: number)
+        end
+    end
+    return listA, listB
+end
+
+-- the raw hits as lines, for a wall that is not shaped like a three point line. jumps start a new piece, and the
+-- round part is pushed out onto one radius so the flat pieces do not show
+local function rawLine(ox: { [number]: number }, oz: { [number]: number }, origin: Vector3, y: number): { { Vector3 } }
+    local radius = 0
+    for index = 1, RAYS do
+        local x = ox[index]
+        if x then
+            radius = math.max(radius, math.sqrt(x * x + oz[index] ^ 2))
+        end
+    end
+    local runs: { { Vector3 } } = {}
+    local run: { Vector3 }? = nil
+    local first: Vector3? = nil
+    local last: Vector3? = nil
+    for index = 1, RAYS do
+        local x = ox[index]
+        if x then
+            local z = oz[index]
+            local away = math.sqrt(x * x + z * z)
+            if away > 0.01 then
+                local goal = away + (radius - away) * smoothWeight((away - (radius - 2)) / 1.5)
+                x, z = x / away * goal, z / away * goal
+            end
+            local point = Vector3.new(origin.X + x, y, origin.Z + z)
+            if run and last and (point - last).Magnitude > 12 then
+                run = nil
+            end
+            local open: { Vector3 } = run or {}
+            if not run then
+                run = open
+                table.insert(runs, open)
+            end
+            table.insert(open, point)
+            if index == 1 then
+                first = point
+            end
+            last = point
+        else
+            run = nil
+            last = nil
+        end
+    end
+    -- the circle closes when the last ray and the first both hit
+    if run and first and last and (first - last).Magnitude <= 12 then
+        table.insert(run :: { Vector3 }, first)
+    end
+    return runs
+end
+
+type Survey = { Runs: { { Vector3 } }, Front: Vector3?, Fitted: boolean, Floor: number? }
+
+-- the line is traced the way the game finds it: a ray from the rim out to the wall in every direction, and one back
+-- from just past each hit to find the far side of the wall
+local function survey(rim: any, folder: any, fallbackY: number): Survey?
+    local params = RaycastParams.new()
+    params.FilterType = Enum.RaycastFilterType.Include
+    params.FilterDescendantsInstances = { folder }
+    local origin = rim.Position
+    local hits: { [number]: any } = {}
+    local counts: { [any]: number } = {}
+    for index = 1, RAYS do
+        local angle = (index - 1) / RAYS * math.pi * 2
+        local hit = workspace:Raycast(origin, Vector3.new(math.cos(angle), 0, math.sin(angle)) * REACH, params)
+        if hit then
+            hits[index] = hit
+            counts[hit.Instance] = (counts[hit.Instance] or 0) + 1
+        end
+    end
+    -- the wall around this rim is the part most rays hit, anything much further out belongs to another basket
+    local wall: any = nil
+    local most = 0
+    for part, count in counts do
+        if count > most then
+            wall, most = part, count
+        end
+    end
+    if not wall then
+        return nil
+    end
+    local furthest = 0
+    for _, hit in hits do
+        if hit.Instance == wall then
+            furthest = math.max(furthest, hit.Distance)
+        end
+    end
+    local ox: { [number]: number } = {}
+    local oz: { [number]: number } = {}
+    local depth: { [number]: number } = {}
+    for index = 1, RAYS do
+        local hit = hits[index]
+        if hit and hit.Distance <= furthest + 2 then
+            local position = hit.Position
+            ox[index] = position.X - origin.X
+            oz[index] = position.Z - origin.Z
+            local angle = (index - 1) / RAYS * math.pi * 2
+            local direction = Vector3.new(math.cos(angle), 0, math.sin(angle))
+            local back = workspace:Raycast(position + direction * SPAN, direction * -SPAN, params)
+            if back and back.Instance == hit.Instance then
+                local thick = SPAN - back.Distance
+                if thick > 0.02 and thick < SPAN - 0.1 then
+                    depth[index] = thick
+                end
+            end
+        end
+    end
+    local fx, fz = frontFrom(ox, oz, axesOf({ wall, rim }))
+    local front = if fx and fz then Vector3.new(fx, 0, fz) else nil
+    local floor: number? = nil
+    if front then
+        local spot = origin + front * 6
+        local found = floorBelow(spot.X, origin.Y, spot.Z, 30)
+        if found and origin.Y - found > 3 then
+            floor = found
+        end
+    end
+    local y = (floor or fallbackY) + LIFT
+    local listA, listB = nil, nil
+    if fx and fz then
+        listA, listB = fitLine(ox, oz, depth, fx, fz)
+    end
+    if listA and listB and front then
+        local side = Vector3.new(-front.Z, 0, front.X)
+        local path: { Vector3 } = table.create(#listA)
+        for index, a in listA do
+            local offset = front * a + side * listB[index]
+            path[index] = Vector3.new(origin.X + offset.X, y, origin.Z + offset.Z)
+        end
+        return { Runs = { path }, Front = front, Fitted = true, Floor = floor }
+    end
+    return { Runs = rawLine(ox, oz, origin, y), Front = front, Fitted = false, Floor = floor }
+end
+
+local surveys: { [any]: Survey } = setmetatable({}, { __mode = "k" }) :: any
+local nextSurvey: { [any]: number } = setmetatable({}, { __mode = "k" }) :: any
+
+local zoneFolder: any = nil
+local nextZoneScan = 0
+local nextDeepScan = 0
+
+-- the game's own three point walls, the folder it checks a shot against
+local function zones(): any?
+    if zoneFolder and zoneFolder:IsDescendantOf(workspace) then
+        return zoneFolder
+    end
+    zoneFolder = nil
+    -- the search runs once a second at most, every frame is what freezes the game
+    if os.clock() < nextZoneScan then
+        return nil
+    end
+    nextZoneScan = os.clock() + 1
+    local assets = workspace:FindFirstChild("Assets")
+    local functionals = if assets then assets:FindFirstChild("Functionals") else nil
+    local area = if functionals then functionals:FindFirstChild("Zones") else nil
+    zoneFolder = if area then area:FindFirstChild("ThreePoint") else nil
+    -- the search through the whole workspace only every few seconds while the folder is missing
+    if not zoneFolder and os.clock() >= nextDeepScan then
+        nextDeepScan = os.clock() + 5
+        zoneFolder = workspace:FindFirstChild("ThreePoint", true)
+    end
+    return zoneFolder
+end
+
+-- the line of a rim, traced once and kept. a court that is not loaded yet gives no hits, it is tried again once a second
+local function surveyOf(rim: any, fallbackY: number): Survey?
+    local known = surveys[rim]
+    if known then
+        return known
+    end
+    local now = os.clock()
+    if now < (nextSurvey[rim] or 0) then
+        return nil
+    end
+    nextSurvey[rim] = now + 1
+    local folder = zones()
+    if not folder then
+        return nil
+    end
+    local ok, result = pcall(survey, rim, folder, fallbackY)
+    if ok and result and #result.Runs > 0 then
+        surveys[rim] = result
+        return result
+    end
+    return nil
+end
+
+-- every hoop once: a hoop can have more than one part called Rim, each would trace and draw the same line again. the
+-- rims stand still, the list is only worked out again a few times a second
+local nextHoops = 0
+local function hoops(): { any }
+    local now = os.clock()
+    if now < nextHoops then
+        return distinct
+    end
+    nextHoops = now + HOOPS_EVERY
+    table.clear(distinct)
+    for _, rim in Court.rims() do
+        if rim.Parent then
+            local position = rim.Position
+            local copy = false
+            for _, kept in distinct do
+                local other = kept.Position
+                local dx, dz = position.X - other.X, position.Z - other.Z
+                if dx * dx + dz * dz < SAME_HOOP * SAME_HOOP then
+                    copy = true
+                    break
+                end
+            end
+            if not copy then
+                table.insert(distinct, rim)
+            end
+        end
+    end
+    return distinct
+end
+
+-- the way a rim looks out over the court: from its traced line when that worked, then from the court's own idea of it,
+-- then toward where you stood when it was first needed. each is squared to the hoop's parts and kept, so it never turns
+local chosen: { [any]: Vector3 } = setmetatable({}, { __mode = "k" }) :: any
+local chosenBy: { [any]: any } = setmetatable({}, { __mode = "k" }) :: any
+local function frontOf(rim: any, root: any, surveyed: Survey?): Vector3?
+    local source: any = surveyed or false
+    local kept = chosen[rim]
+    if kept and chosenBy[rim] == source then
+        return kept
+    end
+    local found: Vector3? = nil
+    if surveyed and surveyed.Fitted then
+        found = surveyed.Front
+    end
+    if not found then
+        local known = Court.front(rim)
+        if known then
+            local x, z = snap(known.X, known.Z, axesOf({ rim }), SNAP_COURT)
+            found = Vector3.new(x, 0, z)
+        end
+    end
+    if not found and surveyed then
+        found = surveyed.Front
+    end
+    if not found and kept then
+        found = kept
+    elseif not found then
+        local toward = Vector3.new(root.Position.X - rim.Position.X, 0, root.Position.Z - rim.Position.Z)
+        if toward.Magnitude < 1 then
+            return nil
+        end
+        local unit = toward.Unit
+        local x, z = snap(unit.X, unit.Z, axesOf({ rim }), SNAP_GUESS)
+        found = Vector3.new(x, 0, z)
+    end
+    chosen[rim] = found :: Vector3
+    chosenBy[rim] = source
+    return found
+end
+
+-- the floor around a rim: from its survey, else looked up once in front of it
+local rimFloor: { [any]: number } = setmetatable({}, { __mode = "k" }) :: any
+local nextRimFloor: { [any]: number } = setmetatable({}, { __mode = "k" }) :: any
+local function floorAt(rim: any, front: Vector3, surveyed: Survey?, fallback: number): number
+    if surveyed and surveyed.Floor then
+        return surveyed.Floor
+    end
+    local known = rimFloor[rim]
+    if known then
+        return known
+    end
+    local now = os.clock()
+    if now >= (nextRimFloor[rim] or 0) then
+        nextRimFloor[rim] = now + 1
+        local origin = rim.Position
+        local spot = origin + front * 6
+        local found = floorBelow(spot.X, origin.Y, spot.Z, 30)
+        if found and origin.Y - found > 3 then
+            rimFloor[rim] = found
+            return found
+        end
+    end
+    return fallback
+end
+
+-- the arcs of a rim, kept and only worked out again when the front, the floor or a radius changes
+type Shapes = { Front: Vector3, Y: number, StandIn: { Vector3 }, StandOut: { Vector3 }, DriveIn: { Vector3 }, DriveOut: { Vector3 }, Shot: { Vector3 }, ShotIn: { Vector3 }, ShotRadius: number }
+local shapes: { [any]: Shapes } = setmetatable({}, { __mode = "k" }) :: any
+local function shapesOf(rim: any, front: Vector3, y: number): Shapes
+    local kept = shapes[rim]
+    if kept and kept.Front == front and math.abs(kept.Y - y) < 0.01 then
+        return kept
+    end
+    local made: Shapes = kept or {
+        Front = front,
+        Y = y,
+        StandIn = table.create(ARC_SEGMENTS + 1),
+        StandOut = table.create(ARC_SEGMENTS + 1),
+        DriveIn = table.create(ARC_SEGMENTS + 1),
+        DriveOut = table.create(ARC_SEGMENTS + 1),
+        Shot = table.create(ARC_SEGMENTS + 1),
+        ShotIn = table.create(ARC_SEGMENTS + 1),
+        ShotRadius = -1,
+    }
+    local center = rim.Position
+    made.Front, made.Y, made.ShotRadius = front, y, -1
+    arc(made.StandIn, center, front, STAND_IN, y)
+    arc(made.StandOut, center, front, STAND_OUT, y)
+    arc(made.DriveIn, center, front, DRIVE_IN, y)
+    arc(made.DriveOut, center, front, DRIVE_OUT, y)
+    shapes[rim] = made
+    return made
+end
+
+function Rings.tint(self: any, flag: string, fallback: Color3): Color3
+    local color: any = self.Read(flag)
+    local kind = typeof(color)
+    return if kind == "Color3" then color else fallback
+end
+
+-- a radius that eases toward the slider, so moving a slider glides the ring out instead of popping it
+function Rings.radius(self: any, key: string, goal: number, dt: number): number
+    local current = self.Radius[key]
+    if not current then
+        current = goal
+    else
+        current += (goal - current) * (1 - math.exp(-EASE * dt))
+        if math.abs(goal - current) < 0.001 then
+            current = goal
+        end
+    end
+    self.Radius[key] = current
+    return current
+end
+
+function Rings.draw(self: any, canvas: any)
+    if not canvas then
+        return
+    end
+    local now = os.clock()
+    local dt = math.clamp(now - self.Last, 0, 0.1)
+    self.Last = now
+    local read = self.Read
+    local viz = read("RangeViz") == true
+    local shot = read("ShotRangeViz") == true
+    local line = read("ThreePointLine") == true
+    local dunk = read("DunkZones") == true
+    if not viz and not shot and not line and not dunk then
+        return
+    end
+    local root = Court.Root
+    if not root or root.Parent == nil then
+        return
+    end
+    if not beginView(canvas) then
+        return
+    end
+    -- the pools and layers are always handed back, also when a shape fails half way
+    local ok, problem = pcall(self.paint, self, canvas, root, read, dt, viz, shot, line, dunk)
+    enter(canvas, nil, nil)
+    if not ok then
+        error(problem, 0)
+    end
+end
+
+function Rings.paint(self: any, canvas: any, root: any, read: (string) -> any, dt: number, viz: boolean, shot: boolean, line: boolean, dunk: boolean)
+    local position = root.Position
+    local floor = level(root)
+    if line or dunk or shot then
+        local lineColor = self:tint("ShotColor", LINE)
+        local shotColor = self:tint("ShotColor", SHOT)
+        local shotRadius = if shot then self:radius("Shoot", read("ShootRange") or 24, dt) else 0
+        for index, rim in hoops() do
+            local tag = hoopTag(index)
+            local surveyed = surveyOf(rim, floor)
+            if line and surveyed then
+                local key = named(tag, "line")
+                for _, run in surveyed.Runs do
+                    projectPath(farBuf, run)
+                    glow(canvas, farBuf, key, lineColor, 0.9)
+                end
+            end
+            if dunk or shot then
+                local center = rim.Position
+                local dx, dz = center.X - position.X, center.Z - position.Z
+                local front = if dx * dx + dz * dz < NEAR * NEAR then frontOf(rim, root, surveyed) else nil
+                if front then
+                    local made = shapesOf(rim, front, floorAt(rim, front, surveyed, floor) + LIFT)
+                    if dunk then
+                        -- standing dunks: the filled band. driving dunks: a lighter band with the two blue edges a sprint
+                        -- has to cross
+                        band(canvas, named(tag, "drive"), made.DriveIn, made.DriveOut, DUNK_DRIVE, 0.07, 0.6, 0.9)
+                        band(canvas, named(tag, "stand"), made.StandIn, made.StandOut, DUNK_STAND, 0.12, 0.7, 0.9)
+                    end
+                    if shot then
+                        if math.abs(made.ShotRadius - shotRadius) > 0.001 then
+                            made.ShotRadius = shotRadius
+                            arc(made.Shot, center, front, shotRadius, made.Y)
+                            arc(made.ShotIn, center, front, math.max(shotRadius - 3, 0), made.Y)
+                        end
+                        band(canvas, named(tag, "shot"), made.ShotIn, made.Shot, shotColor, 0.09, nil, 0.9)
+                    end
+                end
+            end
+        end
+    end
+    if viz then
+        local x, y, z = position.X, floor + LIFT, position.Z
+        if read("AutoSteal") == true then
+            ring(canvas, "pb:steal", x, y, z, self:radius("Steal", read("StealRange") or 8, dt), self:tint("StealColor", STEAL))
+        end
+        if read("AutoGuard") == true then
+            ring(canvas, "pb:guard", x, y, z, self:radius("Guard", read("GuardRange") or 16, dt), self:tint("GuardColor", GUARD))
+        end
+        if read("AutoBlock") == true then
+            ring(canvas, "pb:block", x, y, z, self:radius("Block", read("BlockRange") or 10, dt), self:tint("BlockColor", BLOCK))
+        end
+    end
+end
+
+return Rings
+end
+local UI_URL = "https://gitlab.com/okdude42/main-scripts/-/raw/main/oklo-uilib/OkloUI.luau?ref_type=heads"
+local Loader = (...) or { teleport = function() end }
+
+local function fetch(url)
+    local ok, response = pcall(request, { Url = url, Method = "GET" })
+    if ok and type(response) == "table" and type(response.Body) == "string" and response.Body ~= "" and (tonumber(response.StatusCode) or 200) < 400 then
+        return response.Body
+    end
+    local got, body = pcall(game.HttpGet, game, url)
+    return if got and type(body) == "string" and body ~= "" then body else nil
+end
+
+-- an executor without getgenv keeps the shared values in _G
+local function globals()
+    local ok, env = pcall(getgenv)
+    return if ok and type(env) == "table" then env else _G
+end
+
+local function loadUi()
+    local source = globals().__OkloUiPrefetch or fetch(UI_URL)
+    if not source then
+        error("could not download the ui lib from gitlab", 0)
+    end
+    local chunk, problem = loadstring(source, "OkloUI")
+    if not chunk then
+        error("could not compile the ui lib: " .. tostring(problem), 0)
+    end
+    return chunk()
+end
+
+local OkloUI = loadUi()
+
+local function launch()
+    table.clear(loaded)
+    loaded.ui = OkloUI
+    return import("main")(OkloUI, launch, Loader)
+end
+
+return launch()
