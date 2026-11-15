@@ -994,13 +994,23 @@ end
 -- the one line of state the log follows, a new line goes out whenever it changes
 function AutoGreen.traceState(self: any, now: number, action: any)
     local shot: any = self.Shot
+    -- where he stands against the nearest ring, a finish that turns reverse is decided by this when the shot starts
+    local rimText = ""
+    local root = Court.Root
+    if root then
+        local distance, rim = Court.rimDistance(root.Position)
+        if distance and rim and distance <= 20 then
+            local ahead, aside = Court.frontOf(rim, root.Position)
+            rimText = string.format(" rim=%d ahead=%d side=%d", distance, ahead or -99, aside or -99)
+        end
+    end
     local text = string.format(
         "state action=%s ball=%s armed=%s press=%s held=%s own=%s holdOk=%s early=%s pending=%s key=%s hook=%s shot=%s%s",
         tostring(action), tostring(Court.HasBall), tostring(self.Armed), tostring(self.Press ~= nil), tostring(self.Held ~= nil),
         tostring(self.Own), tostring(self.HoldOk), tostring(self.EarlyAt ~= nil), tostring(self.PressPending == true),
         tostring(self.KeyDown), tostring(self.HookMode or self.HookFailed), if shot then (shot.Kind or "?") else "none",
         if shot and shot.Fired then " fired" else ""
-    )
+    ) .. rimText
     if text ~= self.TraceLast then
         self.TraceLast = text
         self:trace(text)
@@ -7863,6 +7873,7 @@ function RimGuard.physics(self: any)
     local closing = -(velocity.X * front.X + velocity.Z * front.Z)
     local limit = math.max((ahead - need) * 6, 0)
     if closing > limit then
+        if green.Tracing then green:trace(string.format("  RIMGUARD slows the run, ahead=%.1f closing=%.1f limit=%.1f", ahead, closing, limit)) end
         mover.Velocity = velocity + front * (closing - limit)
     end
 end
@@ -8264,7 +8275,6 @@ local function ring(canvas: any, key: string, x: number, y: number, z: number, r
     end
     projectCircle(nearBuf, x, y, z, radius * 0.82)
     fillBand(canvas, nearBuf, farBuf, fillPicked, count, named(key, "rim"), color, 0.09)
-    glow(canvas, farBuf, key, color, 0.85)
 end
 
 -- the half of a circle around a rim that faces the court, from one baseline side round to the other. the list is
@@ -8282,17 +8292,11 @@ end
 
 -- a filled band between two arcs, a light wash on the floor with the edges stroked at the given strengths. both arcs
 -- are projected once, the fill and the strokes share them
-local function band(canvas: any, key: string, near: { Vector3 }, far: { Vector3 }, color: Color3, alpha: number, nearStrength: number?, farStrength: number?)
+local function band(canvas: any, key: string, near: { Vector3 }, far: { Vector3 }, color: Color3, alpha: number)
     projectPath(nearBuf, near)
     projectPath(farBuf, far)
     local count = pick(farBuf, FILL_TOLERANCE, FILL_TURN, fillPicked)
     fillBand(canvas, nearBuf, farBuf, fillPicked, count, named(key, "fill"), color, alpha)
-    if nearStrength then
-        glow(canvas, nearBuf, named(key, "near"), color, nearStrength)
-    end
-    if farStrength then
-        glow(canvas, farBuf, named(key, "far"), color, farStrength)
-    end
 end
 
 local floorParams = RaycastParams.new()
@@ -9023,9 +9027,19 @@ function Rings.paint(self: any, canvas: any, root: any, read: (string) -> any, d
             local surveyed = surveyOf(rim, floor)
             if line and surveyed then
                 local key = named(tag, "line")
-                for _, run in surveyed.Runs do
-                    projectPath(farBuf, run)
-                    glow(canvas, farBuf, key, lineColor, 0.9)
+                -- the line is a thin filled strip, the same run pushed half a stud away from the rim
+                local rimPos = rim.Position
+                for number, run in surveyed.Runs do
+                    local outer = {}
+                    for index, point in run do
+                        local ox, oz = point.X - rimPos.X, point.Z - rimPos.Z
+                        local length = math.max(math.sqrt(ox * ox + oz * oz), 0.001)
+                        outer[index] = Vector3.new(point.X + ox / length * 0.6, point.Y, point.Z + oz / length * 0.6)
+                    end
+                    projectPath(nearBuf, run)
+                    projectPath(farBuf, outer)
+                    local count = pick(farBuf, FILL_TOLERANCE, FILL_TURN, fillPicked)
+                    fillBand(canvas, nearBuf, farBuf, fillPicked, count, named(key, "strip" .. number), lineColor, 0.4)
                 end
             end
             if dunk or shot then
@@ -9037,8 +9051,8 @@ function Rings.paint(self: any, canvas: any, root: any, read: (string) -> any, d
                     if dunk then
                         -- standing dunks: the filled band. driving dunks: a lighter band with the two blue edges a sprint
                         -- has to cross
-                        band(canvas, named(tag, "drive"), made.DriveIn, made.DriveOut, DUNK_DRIVE, 0.07, 0.6, 0.9)
-                        band(canvas, named(tag, "stand"), made.StandIn, made.StandOut, DUNK_STAND, 0.12, 0.7, 0.9)
+                        band(canvas, named(tag, "drive"), made.DriveIn, made.DriveOut, DUNK_DRIVE, 0.07)
+                        band(canvas, named(tag, "stand"), made.StandIn, made.StandOut, DUNK_STAND, 0.12)
                     end
                     if shot then
                         if math.abs(made.ShotRadius - shotRadius) > 0.001 then
@@ -9046,7 +9060,7 @@ function Rings.paint(self: any, canvas: any, root: any, read: (string) -> any, d
                             arc(made.Shot, center, front, shotRadius, made.Y)
                             arc(made.ShotIn, center, front, math.max(shotRadius - 3, 0), made.Y)
                         end
-                        band(canvas, named(tag, "shot"), made.ShotIn, made.Shot, shotColor, 0.09, nil, 0.9)
+                        band(canvas, named(tag, "shot"), made.ShotIn, made.Shot, shotColor, 0.09)
                     end
                 end
             end
