@@ -12253,7 +12253,6 @@ function Part.build(self: any, _ui: any, tab: any)
         return
     end
     local page = tab:section("PATH EDITOR")
-    -- the panel takes every unit the window has above its default height, so it follows the size of the window
     local height = { Value = Panel.PAGE_HEIGHT }
     page:custom({
         Height = height,
@@ -17141,7 +17140,6 @@ local function fetch(url)
     return if got and type(body) == "string" and body ~= "" then body else nil
 end
 
--- an executor without getgenv keeps the shared values in _G
 local function globals()
     local ok, env = pcall(getgenv)
     return if ok and type(env) == "table" then env else _G
@@ -17168,3 +17166,4 @@ local function launch()
 end
 
 return launch()
+

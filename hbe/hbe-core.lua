@@ -872,7 +872,6 @@ end
 local bindCount = 0
 
 function Expander.bindSync(expanders: { any }): () -> ()
-    -- every bind gets its own name, binding the same name twice made the unbind remove both functions and Roblox warned about it
     bindCount += 1
     local bindName = BIND_NAME .. bindCount .. "_" .. string.format("%x", math.floor(os.clock() * 1000))
     local function sync()
@@ -1466,7 +1465,6 @@ local function countLabel(prefix: string, list: any, empty: string): string
     return prefix .. ": " .. (if total == 0 then empty else tostring(total))
 end
 
--- a plain category caption, always shown, only to group the options below it
 local function header(section: any, text: string)
     section:label({ Text = text, Size = 12, Height = 28, Offset = 4 })
 end
@@ -1884,7 +1882,6 @@ local function tail(kit: any, text: string, limit: number): string
     return string.sub(text, cut)
 end
 
--- one player of the list: the picture, the names and a switch, the card is lit while the player is active
 local function card(kit: any, window: Map, entry: Map, active: boolean, x: number, y: number, width: number, toggle: () -> ())
     local pal = window.Pal
     local lit = kit:ease("playerlist:lit:" .. entry.Name, if active then 1 else 0, 14)
@@ -1904,7 +1901,6 @@ local function card(kit: any, window: Map, entry: Map, active: boolean, x: numbe
     kit:miniSwitch("playerlist:switch:" .. entry.Name, x + width - 12 - 36, y + (CARD_HEIGHT - 20) / 2, active, toggle)
 end
 
--- the players of the server and the ones that are not here any more but are on the list
 local function entries(active: { [string]: boolean }): ({ Map }, { Map })
     local online: { Map } = {}
     local known: { [string]: Map } = {}
@@ -1928,7 +1924,6 @@ local function entries(active: { [string]: boolean }): ({ Map }, { Map })
     return online, listed
 end
 
--- the target list and the whitelist share this popup, the argument says which one is open
 function Lists.register(ui: any)
     local views: { [string]: number } = { Targets = 1, Whitelist = 1 }
     local query = ""
@@ -1991,7 +1986,6 @@ function Lists.register(ui: any)
                 kit:text(text, WIDTH / 2, listTop + listHeight / 2, 12, pal.Sub, true, true)
                 return
             end
-            -- two cards in a row, the mouse wheel and the bar on the right move the list
             kit:scroll("playerlist:list:" .. flag .. ":" .. tostring(view), 16, listTop, WIDTH - 32, listHeight, CARD_HEIGHT + CARD_GAP, math.ceil(#list / COLUMNS), function(row: number, x: number, y: number, width: number)
                 local cardWidth = (width - (COLUMNS - 1) * COLUMN_GAP) / COLUMNS
                 for column = 1, COLUMNS do
@@ -3105,7 +3099,6 @@ local function fetch(url)
     return if got and type(body) == "string" and body ~= "" then body else nil
 end
 
--- an executor without getgenv keeps the shared values in _G
 local function globals()
     local ok, env = pcall(getgenv)
     return if ok and type(env) == "table" then env else _G
@@ -3132,3 +3125,4 @@ local function launch()
 end
 
 return launch()
+

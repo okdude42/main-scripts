@@ -24,7 +24,7 @@ local ui = OkloUI.new({
     Title = "my script",
     Subtitle = "universal",
     Version = "1.0.0",
-    Folder = "myscriptconfs", -- folder in workspace, your configs save in it
+    Folder = "myscriptconfs",
 })
 ```
 
@@ -169,8 +169,8 @@ label
 ```lua
 section:label("some text")
 section:label({ Text = "bigger text", Size = 14, Accent = true, Center = true, Height = 23 })
-section:label({ Text = "Category", Size = 15, Bold = true, Height = 28 }) -- Bold draws the text in Gotham Bold, good for headings
-section:label({ Label = function() return "status" end, Height = 26, Boxed = true }) -- Boxed puts the text on a thin background like the other rows
+section:label({ Text = "Category", Size = 15, Bold = true, Height = 28 })
+section:label({ Label = function() return "status" end, Height = 26, Boxed = true })
 ```
 
 Label = function(window) return "" end works on labels too
@@ -186,9 +186,9 @@ Type can be Toggle, Slider, Button, Dropdown, Color or Input
 ## reading and changing values
 
 ```lua
-ui:get("Toggle") -- gives the value
-ui:set("Toggle", true) -- changes it and runs the Callback if the value changed
-ui:flag("Hidden", 0) -- a value without a control, it saves in configs too. ui:flag(name, default, save)
+ui:get("Toggle")
+ui:set("Toggle", true)
+ui:flag("Hidden", 0)
 ```
 
 when a config is loaded the values change without running Callbacks, so read the flags in your loop with ui:get instead of keeping your own copy
@@ -208,9 +208,9 @@ ui:popup("mypopup", {
     end,
 })
 
-ui:openPopup("mypopup") -- MUST match the name exactly
+ui:openPopup("mypopup")
 ui:closePopup()
-ui:info("Title", { "line one", "line two" }) -- a popup with only text, no need to create it
+ui:info("Title", { "line one", "line two" })
 ```
 
 Locked = true stops the player from closing the popup by clicking outside of it, only your buttons close it. Title can be a function. Render runs every frame while the popup is open and draws everything in it. the position is in popup units, 0, 0 is the top left of the popup. every key you give (the first argument) must be different, use the popup name in it. `window.Pal` has the menu colors: Main, Panel, Off, Text, Sub, Accent, AccentText, Disabled
@@ -248,9 +248,9 @@ what the kit can draw, x and y are the top left, w and h the size
 local panel = ui:panel({
     Id = "players", Title = "Players",
     Width = 280, Height = 200, MinWidth = 220, MinHeight = 140,
-    Render = function(kit, window) end, -- drawn with the same kit as popups
+    Render = function(kit, window) end,
 })
-panel.toggle() -- panel.open(), panel.close(), panel.isOpen(), panel.setSize(w, h), panel.setPosition(Vector2)
+panel.toggle()
 ```
 
 a window the player can drag and resize. it hides with the main menu, Persistent = true keeps it on the screen while the main menu is closed
@@ -259,7 +259,7 @@ a window the player can drag and resize. it hides with the main menu, Persistent
 
 ```lua
 ui:sidebar({
-    MinHeight = 62, -- it hides when there is less room than this
+    MinHeight = 62,
     Render = function(kit, window)
         kit:text("PLAYERS", 2, 6, 10, window.Pal.Accent, false, true)
         kit:button("mylist:1", 0, 14, kit.Width, 22, function() end, { label = "a name", size = 11 })
@@ -277,11 +277,10 @@ Welcome = {
     Heading = "here is what is new",
     Lines = { "first thing", "second thing" },
     Footer = "report issues in the discord",
-    Width = 400, -- size of the card, 300 to 700 wide and 280 to 700 high, you can leave them out
+    Width = 400,
     Height = 404,
 },
 UpdateNotice = { "V1.0.1", "fixed a bug", "added a feature" },
--- or a changelog style popup, a bold title, one "+" line for each log on the left and a closing line
 UpdateNotice = { Title = "Updated to V1.0.1", Items = { "fixed a bug", "added a feature" }, Footer = "thanks for playing" },
 ```
 
@@ -300,7 +299,7 @@ every theme is in the Themes popup, the animated ones have a sky that flows with
 ```lua
 local ui = OkloUI.new({
     Title = "my script",
-    Theme = "GTA VI", -- the start theme, the name must be exactly like in the list below
+    Theme = "GTA VI",
 })
 ```
 
@@ -326,16 +325,16 @@ Custom is the theme of the colors the player picks in Customization, it can not 
 
 ```lua
 Theme = {
-    Name = "Cloud", -- the name in the Themes popup
-    Main = Color3.fromRGB(24, 28, 35), -- background of the window
-    Panel = Color3.fromRGB(37, 43, 53), -- buttons and rows
-    Off = Color3.fromRGB(62, 72, 88), -- switches that are off and lines
+    Name = "Cloud",
+    Main = Color3.fromRGB(24, 28, 35),
+    Panel = Color3.fromRGB(37, 43, 53),
+    Off = Color3.fromRGB(62, 72, 88),
     Text = Color3.fromRGB(226, 232, 240),
-    Sub = Color3.fromRGB(148, 163, 184), -- the lighter small text
+    Sub = Color3.fromRGB(148, 163, 184),
     Accent = Color3.fromRGB(125, 160, 215),
-    Disabled = Color3.fromRGB(85, 96, 112), -- dimmed text, you can leave this out
-    Sky = Color3.fromRGB(60, 80, 120), -- the window fades from Main to this color at the top, you can leave this out
-    Light = { Main = Color3, Panel = Color3, Off = Color3, Text = Color3, Sub = Color3 }, -- the colors of light mode, you can leave this out and they are made from Main
+    Disabled = Color3.fromRGB(85, 96, 112),
+    Sky = Color3.fromRGB(60, 80, 120),
+    Light = { Main = Color3, Panel = Color3, Off = Color3, Text = Color3, Sub = Color3 },
 },
 ```
 
@@ -385,12 +384,12 @@ note: drawing Transparency is the opposite of what you would think in the real e
 ## other calls
 
 ```lua
-ui:start() -- call this last, it adds the Customization, Keybinds and Config pages and shows the menu
-ui:setVisible(false) -- hide or show the menu
+ui:start()
+ui:setVisible(false)
 ui:isVisible()
-ui:setWidth(880) -- makes the window wider or narrower with a smooth animation, 360 to 1400. ui:setWidth(880, true) jumps there at once
-ui:unload() -- the same as the U button
-ui:destroy() -- removes the menu and everything it draws
+ui:setWidth(880)
+ui:unload()
+ui:destroy()
 ```
 
 ## what the player gets by itself

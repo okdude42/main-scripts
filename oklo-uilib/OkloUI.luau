@@ -187,8 +187,6 @@ return Storage
 end
 modules["core/theme"] = function(...)
 
--- one look in two modes: Dark (graphite with a warm glow) is the default, Light is the same window in warm paper colors.
--- the switch between them is the LightMode setting, there are no other themes
 local function rgb(r: number, g: number, b: number): Color3
     return Color3.fromRGB(r, g, b)
 end
@@ -257,7 +255,6 @@ local default: Preset = {
 ;(default :: any).Pure = true
 
 Theme.Presets = { Default = default } :: { [string]: Preset }
--- Light is a theme like the others: choosing it turns the paper colours on, any other theme turns them off
 local paper: Preset = table.clone(default)
 paper.Name = "Light"
 Theme.Presets.Light = paper
@@ -265,12 +262,6 @@ local function mix(a: Color3, b: Color3, amount: number): Color3
     return Color3.new(a.R + (b.R - a.R) * amount, a.G + (b.G - a.G) * amount, a.B + (b.B - a.B) * amount)
 end
 
--- Pace in a theme speeds its motion up or slows it down, Spread below 1 shows less of the ring at once so a ring of very different colors stays soft
--- how the sky of a theme moves:the ring of colors turns by Rate per second (negative turns the other way) while a slow swing pushes it forward and back,
--- Bend and Freq shape the waves that travel through it, Glow is a soft light that rolls over the height, Scale says how much of the ring one window height shows
--- Beat lets the whole sky breathe brighter and darker
--- every flowing sky picks its shape and direction at random each time it comes on screen,
--- Fx names the particles over it
 local MOTIONS: { [string]: { [string]: any } } = {
     Drift = { Rate = 0.012, Swing = 0.06, SwingSpeed = 0.05, Bend = 0.045, BendSpeed = 0.16, Freq = 0.8, Glow = 0.05, Scale = 0.6 },
     Tide = { Rate = -0.011, Swing = 0.07, SwingSpeed = 0.042, Bend = 0.055, BendSpeed = 0.13, Freq = 0.6, Glow = 0.04, Scale = 0.65 },
@@ -292,7 +283,6 @@ local MOTIONS: { [string]: { [string]: any } } = {
 
 local ORDER_ANIMATED: { string } = {}
 
--- a theme made from its main color, its accent and the six colors the sky passes through, the panel, the off color and the texts are mixed from them
 local function sky(spec: { [string]: any })
     local main: Color3 = spec.Main
     local accent: Color3 = spec.Accent
@@ -678,7 +668,6 @@ local ALIASES: { [string]: string } = {
     Nine = "9",
 }
 
--- the same few key names come in every frame, so each one is cleaned up once and remembered
 local normalized: { [string]: string } = {}
 local normalizedCount = 0
 
@@ -910,13 +899,10 @@ function Library.tab(self: Map, name: string, options: Map?): Map
     return Builder.newTab(self.Window, name, options)
 end
 
--- the Home page: Greeting (optional text after the greeting), QuickStart = up to four { Title, Text, Icon, Flag } or
--- { Title, Text, Icon, Callback(window), Active(window) -> bool } cards. without it Home shows the first four switches
 function Library.home(self: Map, spec: Map?)
     self.Window.HomeSpec = spec or {}
 end
 
--- Home is the first page of every window with a sidebar, a page the script named Home becomes it
 local function installHome(window: Map)
     if window.M.NoSidebar then
         return
@@ -1141,17 +1127,37 @@ end
 
 local fallback: Scope = newScope()
 
--- an executor without a working Drawing library gets objects that take every write and draw nothing, so a frame that
--- draws never errors and the window keeps working
 local blank = { __index = function(): any
     return function() end
 end }
+
+local function wipe(object: any)
+    pcall(function()
+        object:Remove()
+    end)
+    pcall(function()
+        object:Destroy()
+    end)
+end
+
+local made: { any } = {}
+pcall(function()
+    local environment = getgenv()
+    local old = environment.__OkloCanvasObjects
+    if type(old) == "table" then
+        for _, object in old do
+            wipe(object)
+        end
+    end
+    environment.__OkloCanvasObjects = made
+end)
 
 local function make(kind: string): any
     local ok, object = pcall(function(): any
         return Drawing.new(kind)
     end)
     if ok and object ~= nil then
+        made[#made + 1] = object
         return object
     end
     return setmetatable({}, blank)
@@ -1173,8 +1179,6 @@ function Canvas.setCamera(value: any)
     camera = value
 end
 
--- everything drawn after this sits on one fixed layer instead of each object over the one before, so a shape that takes
--- a different number of pieces each frame does not change the layer of every object after it. nil stacks again
 function Canvas.layer(z: number?)
     fixedZ = z
 end
@@ -1197,7 +1201,6 @@ local function write(object: any, key: string, value: any)
     object[key] = value
 end
 
--- a property a partial Drawing library does not know is skipped instead of failing the whole frame
 local function set(object: any, shadow: Map, key: string, value: any)
     if shadow[key] ~= value then
         shadow[key] = value
@@ -1347,17 +1350,17 @@ function Canvas.quad(a: Vector2, b: Vector2, c: Vector2, d: Vector2, color: Colo
     quad(a, b, c, d, color, alpha, false, thickness)
 end
 
-function Canvas.filledQuad(a: Vector2, b: Vector2, c: Vector2, d: Vector2, color: Color3, alpha: number)
-    quad(a, b, c, d, color, alpha, true, 1)
+function Canvas.filledQuad(a: Vector2, b: Vector2, c: Vector2, d: Vector2, color: Color3, alpha: number, edge: number?)
+    quad(a, b, c, d, color, alpha, true, edge or 1)
 end
 
-function Canvas.filledTriangle(a: Vector2, b: Vector2, c: Vector2, color: Color3, alpha: number)
+function Canvas.filledTriangle(a: Vector2, b: Vector2, c: Vector2, color: Color3, alpha: number, edge: number?)
     local object, shadow = acquire("Triangle")
     set(object, shadow, "Filled", true)
     set(object, shadow, "PointA", a)
     set(object, shadow, "PointB", b)
     set(object, shadow, "PointC", c)
-    set(object, shadow, "Thickness", 1)
+    set(object, shadow, "Thickness", edge or 1)
     style(object, shadow, color, alpha)
 end
 
@@ -1366,7 +1369,6 @@ local probe: any = nil
 local measured: { [string]: Vector2 } = {}
 local measuredCount = 0
 
--- reading the bounds goes through the engine three writes and a read, so a text seen before is answered from memory
 function Canvas.measure(text: string, size: number): Vector2
     local key = size .. "|" .. text
     local known = measured[key]
@@ -1531,9 +1533,7 @@ end
 local function destroyScope(scope: Scope)
     for _, pool in scope.pools do
         for _, item in pool.items do
-            pcall(function()
-                item.object:Destroy()
-            end)
+            wipe(item.object)
         end
         pool.items, pool.used, pool.shown = {}, 0, 0
     end
@@ -1598,7 +1598,6 @@ local function container(): any
     return game:GetService("CoreGui")
 end
 
--- some executors cannot put a gui in CoreGui, the player gui is the last place left so the window still opens
 local function place(gui: any)
     if pcall(function()
         gui.Parent = container()
@@ -1668,7 +1667,6 @@ local fine = false
 
 local function rounded(object: any, shadow: Map, rawRadius: number, half: number?)
     local radius = math.floor(rawRadius + 0.5)
-    -- a full circle in fine mode is rounded by scale, a corner of whole pixels would change in steps while the circle grows or shrinks slowly
     if fine and half and rawRadius > 0 and rawRadius >= half - 0.01 then
         radius = -1
     end
@@ -1688,7 +1686,6 @@ local function rounded(object: any, shadow: Map, rawRadius: number, half: number
     corner.CornerRadius = if radius < 0 then UDim.new(0.5, 0) else UDim.new(0, radius)
 end
 
--- while on, boxes keep their fractional position and size, so slow motion glides instead of stepping from pixel to pixel
 function Draw.fine(state: boolean)
     fine = state
 end
@@ -1701,7 +1698,6 @@ local clipFrame: any = nil
 local clipX, clipY = 0, 0
 local clipW, clipH = 0, 0
 
--- everything drawn while a clip is set is cut off at its edges instead of spilling over
 function Draw.setClip(x: number, y: number, width: number, height: number)
     local left, top = math.floor(x + 0.5), math.floor(y + 0.5)
     local wide, tall = math.max(0, math.floor(width + 0.5)), math.max(0, math.floor(height + 0.5))
@@ -1726,7 +1722,6 @@ function Draw.setClip(x: number, y: number, width: number, height: number)
     clipFrame, clipX, clipY, clipW, clipH = frame, left, top, wide, tall
 end
 
--- the box that cuts off what is drawn now, nil while nothing does
 function Draw.clipBox(): (number?, number?, number?, number?)
     if not clipFrame then
         return nil, nil, nil, nil
@@ -1767,7 +1762,6 @@ local function place(object: any, shadow: Map, rawX: number, rawY: number, rawWi
         rawY -= clipY
     end
     local x, y, width, height
-    -- text always sits on whole pixels, a label between pixels lets every letter round to a different pixel and the spacing goes uneven
     if fine and not whole then
         x, y, width, height = math.floor(rawX * 8 + 0.5) / 8, math.floor(rawY * 8 + 0.5) / 8, rawWidth, rawHeight
     else
@@ -1818,7 +1812,6 @@ function Draw.rect(): Node
         layer(object, shadow, z)
         rounded(object, shadow, radius, math.min(width, height) * 0.5)
     end
-    -- a color gradient over the whole box, the colors are spread evenly, rotation is in degrees
     function node.paint(self: Node, colors: { Color3 }, rotation: number)
         local shadow = self.shadow
         local gradient = shadow.gradient
@@ -1837,7 +1830,6 @@ function Draw.rect(): Node
         if not changed and previous then
             for index, color in colors do
                 local old = previous[index]
-                -- any change at all, a skipped small step lets a slow sky build up and then jump, on a soft gradient that moves its bands by many pixels at once
                 if old.R ~= color.R or old.G ~= color.G or old.B ~= color.B then
                     changed = true
                     break
@@ -1861,7 +1853,6 @@ function Draw.rect(): Node
             gradient.Enabled = true
         end
     end
-    -- the color of the box fades from the strength "from" to the strength "to" over its size, 0 is clear and 1 is solid, rotation is in degrees
     function node.fade(self: Node, from: number, to: number, rotation: number)
         local shadow = self.shadow
         local gradient = shadow.gradient
@@ -1899,7 +1890,6 @@ end
 
 local sequences: { [string]: any } = {}
 
--- weight is how much of the trail shows, 1 is the trail and 0 the flat line, in between the line eases from one to the other
 local function trailSequences(color: Color3, light: Color3, weight: number): (any, any)
     local key = (if weight >= 1 then "t" elseif weight <= 0 then "f" else "w" .. weight) .. tostring(color) .. tostring(light)
     local cached = sequences[key]
@@ -2302,7 +2292,6 @@ function Config.save(self: Self, name: string, state: Map, flags: Map, definitio
     return Storage.writeJson(self:path(name), collect(state, flags, definitions))
 end
 
--- base64 done here instead of asking the executor for it, not every executor has the functions and a code must open anywhere
 local B64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 local B64_INDEX: { [number]: number } = {}
 for index = 1, 64 do
@@ -2405,7 +2394,6 @@ function Config.load(self: Self, name: string, state: Map, flags: Map, definitio
 end
 
 function Config.loadCode(self: Self, text: string, state: Map, flags: Map, definitions: { [string]: Map }): Loaded?
-    -- a pasted code often carries line breaks, spaces or quotes around it, and may come from a version with another prefix
     local code = string.gsub(text, "[%s\"']", "")
     local prefix = self.ShareId
     if string.sub(code, 1, #prefix) == prefix then
@@ -2416,7 +2404,6 @@ function Config.loadCode(self: Self, text: string, state: Map, flags: Map, defin
     local json = fromBase64(code)
     local data = if json then Storage.decode(json) else nil
     if type(data) ~= "table" then
-        -- the plain settings text is taken too
         data = Storage.decode(text)
     end
     if type(data) ~= "table" or (data.Flags == nil and next(data) == nil) then
@@ -2501,7 +2488,6 @@ Settings.PERSISTED_KEYS = {
     "PremiumEffects", "AnimationIntensity", "ReduceMotion", "NavSide", "Roundness", "ToggleRoundness",
 } :: { string }
 
--- window behavior settings, saved in their own file so they apply before the first frame and do not depend on a config
 Settings.UI_KEYS = {
     "WatermarkEnabled", "RememberTab", "LastTab", "LockPosition", "ClickSound", "ToggleNotifications", "StartHidden", "FasterLoader", "CompactSidebar",
 } :: { string }
@@ -2581,8 +2567,6 @@ local import: (string) -> any = ...
 local Painter: typeof(require("./painter")) = import("ui/painter")
 local Storage: typeof(require("../core/storage")) = import("core/storage")
 
--- the bird that draws itself in on the loader, played from the same sheets the loader keeps. They are 16 frames to a sheet in a 4 by 4 grid.
--- the loader has usually saved them already, anything missing is downloaded into the same folder
 local BirdSheet = {}
 
 local COLS, ROWS = 4, 4
@@ -2617,7 +2601,6 @@ local function fetch(url: string): string?
     return nil
 end
 
--- starts getting the sheets in the background once, drawing waits until all of them are there
 function BirdSheet.start()
     if started or type(getcustomasset) ~= "function" or type(request) ~= "function" then
         return
@@ -2663,7 +2646,6 @@ function BirdSheet.ready(): boolean
     return not failed and #urls >= NEEDED
 end
 
--- draws one frame of the animation inside a square of the given size, each sheet keeps its own nodes so a frame never swaps the picture of a node that is showing
 function BirdSheet.draw(frame: number, position: Vector2, side: number, alpha: number, zIndex: number, tint: Color3?)
     local index = math.clamp(math.floor(frame), 0, DRAW_FRAMES - 1)
     local sheet = index // PER_SHEET + 1
@@ -2679,7 +2661,6 @@ function BirdSheet.draw(frame: number, position: Vector2, side: number, alpha: n
     end
     local inner = Painter.active()
     Painter.scope("bird:sheet:" .. sheet)
-    -- the square is cut out of the outer clip so the bird never shows outside the page either
     local left, top = position.X, position.Y
     local right, bottom = left + side, top + side
     if outerAt and outerSize then
@@ -2761,11 +2742,7 @@ local function mix(from: Color3, to: Color3, share: number): Color3
     return Color3.new(from.R + (to.R - from.R) * share, from.G + (to.G - from.G) * share, from.B + (to.B - from.B) * share)
 end
 
--- the controls added on top of the classic ones. each is built from the classic pieces, so search, configs and keybinds
--- keep working for them, and a script that never calls them looks and works as before
 
--- a card header: a bold title and one plain line under it saying what the card is for
--- the title sits low in its row and the line sits high in its own, so the two read as one heading with room above it and a 10 gap under it
 function Section.card(self: Map, options: Map): Map
     if options.Text then
         self:add({ Type = "Label", Text = tostring(options.Title or ""), Size = 14.5, Bold = true, Height = 30, Offset = 4 })
@@ -2776,7 +2753,6 @@ function Section.card(self: Map, options: Map): Map
     return self
 end
 
--- a status line whose text comes from a function every frame, for things like "Auto Green: ready"
 function Section.status(self: Map, options: Map): Map
     local read = options.Label
     return self:add({
@@ -2790,7 +2766,6 @@ function Section.status(self: Map, options: Map): Map
     })
 end
 
--- a choice of two to four short values as an iOS segmented control
 function Section.segment(self: Map, options: Map): Map
     local descriptor = describe("Dropdown", options)
     descriptor.Segment = true
@@ -2822,7 +2797,6 @@ for _, kind in CONTROL_TYPES do
     end
 end
 
--- two controls side by side inside the group, both come and go with it
 function Advanced.pair(self: Map, left: Map, right: Map): Map
     local group = self.Group
     local function inside(descriptor: Map): Map
@@ -2851,8 +2825,6 @@ function Advanced.segment(self: Map, options: Map): Map
     descriptor.Segment = true
     return self:add(descriptor)
 end
--- a closed group of the less used options under one "Advanced" row. the row opens and closes it with a spring, the search
--- still finds what is inside and opens it. returns a section to add the advanced controls to
 function Section.advanced(self: Map, title: string?): Map
     local group = { open = false, title = title or "Advanced" }
     self:add({
@@ -2863,7 +2835,6 @@ function Section.advanced(self: Map, title: string?): Map
             local turn = kit:ease("turn", if group.open then 1 else 0, 14)
             local hovered = kit:hovered("advanced")
             kit:text(group.title, 14, kit.Height / 2, 13, if hovered then pal.Text else pal.Sub, false, true)
-            -- a chevron that turns down as the group opens
             kit:chevron(kit:measure(group.title, 13) + 26, kit.Height / 2, turn, if hovered then pal.Text else pal.Sub)
             kit:region("advanced", 0, 0, kit.Width, kit.Height, function()
                 group.open = not group.open
@@ -2873,11 +2844,8 @@ function Section.advanced(self: Map, title: string?): Map
     return setmetatable({ Window = self.Window, TabSpec = self.TabSpec, Spec = self.Spec, Group = group }, Advanced) :: any
 end
 
--- the blocks of a home or feature page share one look: the same 12 corner, the same 14 padding inside, the same 10 gap under every block
--- and the same lifted well behind small controls, so a hero, a preset row, tiles and cards line up on both edges
 local BLOCK_PAD, BLOCK_GAP, BLOCK_ROUND = 16, 12, 18
 
--- cuts a text down until it fits, at the end of a word when one is close, with two dots at the end
 local function clip(kit: any, text: string, size: number, room: number, face: number?): string
     if room <= 0 then
         return ""
@@ -2897,7 +2865,6 @@ local function clip(kit: any, text: string, size: number, room: number, face: nu
     return head .. ".."
 end
 
--- fits a name into its room: a little smaller first, then cut
 local function fitName(kit: any, text: string, size: number, room: number, face: number?): (string, number)
     local wide = kit:measure(text, size, face)
     if wide <= room then
@@ -2910,7 +2877,6 @@ local function fitName(kit: any, text: string, size: number, room: number, face:
     return clip(kit, text, smaller, room, face), smaller
 end
 
--- breaks a text into at most `most` lines that fit the room, the last line is cut when words are left over
 local function wrapLines(kit: any, text: string, size: number, room: number, most: number): { string }
     local words: { string } = {}
     for word in string.gmatch(text, "%S+") do
@@ -2933,7 +2899,6 @@ local function wrapLines(kit: any, text: string, size: number, room: number, mos
         end
         table.insert(lines, line)
     end
-    -- a last line with one short word looks left behind, a word from the line above keeps it company when it fits
     local count = #lines
     if count >= 2 and not string.find(lines[count], "%.%.$") and kit:measure(lines[count], size) < room * 0.3 then
         local above, moved = string.match(lines[count - 1], "^(.*%S)%s+(%S+)$")
@@ -2945,13 +2910,11 @@ local function wrapLines(kit: any, text: string, size: number, room: number, mos
     return lines
 end
 
--- the lifted well behind a small control on a card: a pill a touch lighter than the card with a hairline
 local function well(kit: any, pal: any, bg: Color3, x: number, y: number, w: number, h: number, hot: number)
     kit:box(x, y, w, h, mix(bg, pal.Text, 0.075 + 0.05 * hot), 1, h / 2)
     kit:border(x, y, w, h, h / 2, pal.Text, 0.06 + 0.06 * hot, 1)
 end
 
--- the cursor is over this box of the block and over the part of the view it shows in, no popup or menu is open
 local function under(kit: any, x: number, y: number, w: number, h: number): boolean
     local app = kit.App
     if app.Modal or Hits.busy() and not Hits.isDragging(app.HoverKey) then
@@ -2970,8 +2933,6 @@ local SHADOW = Color3.new(0, 0, 0)
 local WHITE = Color3.new(1, 1, 1)
 local KNOB_WHITE = Color3.fromRGB(250, 250, 252)
 
--- one surface for every block: a soft two step shadow under it, the fill, a faint light along the top edge and a hairline rim that
--- brightens with hover and with lit (an on switch). returns the fill so the controls on it can be mixed from it
 local function surface(kit: any, pal: any, x: number, y: number, w: number, h: number, radius: number, hover: number, lit: number, seen: number): Color3
     local light: number = pal.Light or 0
     radius *= Painter.curve()
@@ -2984,9 +2945,6 @@ local function surface(kit: any, pal: any, x: number, y: number, w: number, h: n
     return bg
 end
 
--- a grid of tiles, each with a name, a small line and its own keycap. a tile runs its Callback when it is clicked or its key
--- is pressed, the keycap sets the key. the keys are ordinary option keybinds, so they save and show on the Keybinds page
--- options: Items = { { Name, Sub, Bind, Callback } }, Columns, Gate = flag that must be on for the tiles to act
 function Section.grid(self: Map, options: Map): Map
     local window = self.Window
     local items: { Map } = options.Items or {}
@@ -3028,8 +2986,6 @@ function Section.grid(self: Map, options: Map): Map
                 local tile = "tile:" .. index
                 local hover = kit:ease(tile, if kit:hovered(tile) then 1 else 0, 16)
                 local bg = surface(kit, pal, x, y, width, tileHeight, BLOCK_ROUND, hover, 0, 0)
-                -- the keycap sits on the name line at the right edge, the name keeps to the room left of it and the small line under
-                -- it has the whole width
                 local capW, capH = 42, 22
                 local nameY = y + BLOCK_PAD + capH / 2
                 local cx, cy = x + width - BLOCK_PAD - capW, nameY - capH / 2
@@ -3037,7 +2993,6 @@ function Section.grid(self: Map, options: Map): Map
                 local name, nameSize = fitName(kit, tostring(item.Name), 13.5, room, kit:boldFace())
                 kit:text(name, x + BLOCK_PAD, if item.Sub then nameY else y + tileHeight / 2, nameSize, pal.Text, false, true, kit:boldFace())
                 if item.Sub then
-                    -- a line break in the small text gives more lines, the last one sits at the bottom
                     local lines = string.split(tostring(item.Sub), "\n")
                     for number, line in lines do
                         local up = (#lines - number) * 14
@@ -3066,8 +3021,6 @@ function Section.grid(self: Map, options: Map): Map
     })
 end
 
--- a hero card for the top of a home page: a large card with a title, a status line read every frame and one plain line
--- options: Title, Label()->string, Text, Height
 function Section.hero(self: Map, options: Map): Map
     return self:add({
         Type = "Custom",
@@ -3079,7 +3032,6 @@ function Section.hero(self: Map, options: Map): Map
             local w, h = kit.Width, kit.Height - BLOCK_GAP
             local room = w - BLOCK_PAD * 2
             surface(kit, pal, 0, 0, w, h, BLOCK_ROUND, 0, 1, 0)
-            -- a wash of the accent from the top left corner, the hero is the one block that carries the theme color
             kit:fade(0, 0, w, h, pal.Accent, 0.07 * (1 - (pal.Light or 0)), 0, 35, BLOCK_ROUND)
             local title, titleSize = fitName(kit, tostring(options.Title or ""), 20, room, kit:boldFace())
             kit:text(title, BLOCK_PAD, BLOCK_PAD + 12, titleSize, pal.Text, false, true, kit:boldFace())
@@ -3097,8 +3049,6 @@ function Section.hero(self: Map, options: Map): Map
     })
 end
 
--- quick switch tiles: a grid of tiles, one per option, a tap turns the option on or off and the tile lights up
--- options: Items = { { Name, Flag, Text } }, Columns
 function Section.tiles(self: Map, options: Map): Map
     local window = self.Window
     local items: { Map } = options.Items or {}
@@ -3125,8 +3075,6 @@ function Section.tiles(self: Map, options: Map): Map
                 local lit = kit:ease(key .. ":on", if on then 1 else 0, 12)
                 local hover = kit:ease(key, if kit:hovered(key) or kit:hovered(key .. ":sw") then 1 else 0, 16)
                 surface(kit, pal, x, y, width, tileHeight, BLOCK_ROUND, hover, lit, 0)
-                -- the name has the whole top line, the state and the switch share the bottom line, so a long name never runs under the
-                -- switch. a name that is still too long gets a little smaller before it is cut
                 local inner = width - BLOCK_PAD * 2
                 local name, nameSize = fitName(kit, tostring(item.Name), 13.5, inner, kit:boldFace())
                 kit:text(name, x + BLOCK_PAD, y + BLOCK_PAD + 7, nameSize, pal.Text, false, true, kit:boldFace())
@@ -3146,7 +3094,6 @@ end
 
 local blockSerial = 0
 
--- a search result that points into a block lights its spot up and tells the page where it is, so the page scrolls to it
 local function markSpot(kit: any, app: any, finds: { Map }, key: string, x: number, y: number, w: number, h: number, radius: number)
     local mark = app.Highlight
     if not (mark and mark.Spec and mark.Spec.finds == finds and mark.Key == key) then
@@ -3159,7 +3106,6 @@ local function markSpot(kit: any, app: any, finds: { Map }, key: string, x: numb
     end
 end
 
--- a cell or a chip that needs another flag on first: Requires is one flag or a list, any of them on is enough
 local function blockedBy(window: any, requires: any): boolean
     if requires == nil then
         return false
@@ -3172,10 +3118,6 @@ local function blockedBy(window: any, requires: any): boolean
     return true
 end
 
--- a table of switches: one row per thing, one column per way of showing it, like an ESP for players, killers and NPCs.
--- every cell is a real toggle (flag, keybind, config, notification), the table only draws it. a cell with Requires stays dark
--- until that flag is on, a click on the name of a row flips its first cell. a missing cell shows a faint dash
--- options: Columns = { string }, Corner = small text over the names, Rows = { { Name, Cells = { [column] = { Flag, Name, Default, Requires, Keywords } } } }
 local MATRIX_HEAD, MATRIX_ROW, MATRIX_PAD = 30, 38, 4
 function Section.matrix(self: Map, options: Map): Map
     local window = self.Window
@@ -3215,7 +3157,6 @@ function Section.matrix(self: Map, options: Map): Map
             local pal = app.Pal
             local w = kit.Width
             surface(kit, pal, 0, 0, w, height, BLOCK_ROUND, 0, 0, 0)
-            -- the names keep a third of the width, the columns share the rest evenly
             local nameW = math.clamp(w * 0.32, 110, 220)
             local colW = (w - nameW - 6) / math.max(1, #columns)
             local boxW, boxH = kit.SWITCH_W or 34, kit.SWITCH_H or 20
@@ -3268,9 +3209,6 @@ function Section.matrix(self: Map, options: Map): Map
     })
 end
 
--- a wrap of chips, one per small on or off option, a lit chip is on. for many short options that need no settings of their own,
--- every chip is a real toggle so search, keybinds and configs keep working. a chip with Requires stays dark until that flag is on
--- options: Items = { { Name, Flag, Default, Requires, Keywords } }
 local CHIP_H, CHIP_GAP, CHIP_TEXT, CHIP_PAD = 30, 8, 12.5, 12
 function Section.chips(self: Map, options: Map): Map
     local window = self.Window
@@ -3295,7 +3233,6 @@ function Section.chips(self: Map, options: Map): Map
             local pal = app.Pal
             local w = kit.Width
             local inner = w - CHIP_PAD * 2
-            -- the chips flow left to right and wrap, the block grows to hold every line
             local places: { { number } } = {}
             local x, line = 0, 0
             for index, item in items do
@@ -3321,7 +3258,6 @@ function Section.chips(self: Map, options: Map): Map
                 local fill = mix(mix(bg, pal.Text, 0.06 + 0.05 * hot), pal.Accent, 0.32 * lit)
                 kit:box(cx, cy, cw, CHIP_H, fill, shown, CHIP_H / 2)
                 kit:border(cx, cy, cw, CHIP_H, CHIP_H / 2, mix(pal.Text, pal.Accent, lit), (0.08 + 0.06 * hot + 0.3 * lit) * shown, 1)
-                -- a ring while off, a check while on, both on the same spot so the label never moves
                 local mx, my = cx + 16, cy + CHIP_H / 2
                 if lit < 0.99 then
                     kit:border(mx - 5, my - 5, 10, 10, 5, pal.Sub, 0.7 * (1 - lit) * shown, 1.3)
@@ -3343,12 +3279,7 @@ function Section.chips(self: Map, options: Map): Map
     })
 end
 
--- feature cards: a grid of cards, two to a row. each card has a title, a short text, a master switch, the one or two controls that
--- matter shown on it and a closed Advanced row for the rest. the controls are real ones (flags, keybinds, configs, notifications),
--- they are only drawn inside the card. a card opens and closes with a spring, its siblings in the row keep their size
--- options: Columns, Items = { { Title, Text, Flag, Default, Callback, Key, Controls = { descriptor }, Advanced = { descriptor } } }
 local CARD_GAP, CARD_PAD = BLOCK_GAP, BLOCK_PAD
--- the title line, the text under it (up to two lines) and the Advanced row at the bottom of a card
 local CARD_TITLE_Y, CARD_TEXT_Y, CARD_LINE, CARD_ADV, CARD_BOTTOM = 28, 49, 16, 36, 8
 local CARD_ROUND = 18
 local cardSerial = 0
@@ -3359,18 +3290,15 @@ local function cardControl(window: any, tabSpec: Map, descriptor: Map, master: M
         kind = if descriptor.Min ~= nil then "Slider" elseif descriptor.Values ~= nil then "Dropdown" else "Toggle"
     end
     local copy = table.clone(descriptor)
-    -- a Note is plain explaining text between the options of a card
     copy.Type = if kind == "Note" then "Label" else kind
     local spec = Controls.compile(window, copy, tabSpec)
     spec.cardKind = string.lower(kind)
     spec.cardName = descriptor.Name
     spec.cardInfo = descriptor.Info
-    -- an option of a card does nothing, and is shown dimmed, until the master switch of its card is on
     spec.cardMaster = master
     return spec
 end
 
--- the header of a card ends this far down: under the title, or under the last line of its text
 local function cardHead(lines: number): number
     return if lines == 0 then CARD_TITLE_Y + 22 else CARD_TEXT_Y + (lines - 1) * CARD_LINE + 16
 end
@@ -3430,7 +3358,6 @@ function Section.cards(self: Map, options: Map): Map
         end
         items[index] = card
     end
-    -- what the search can find here: every card and every option on it, Key names the card or the row to light up
     local finds: { Map } = {}
     for _, card in items do
         table.insert(finds, { Text = card.Title, Words = tostring(card.Text or ""), Key = card.Key, Control = card.Master })
@@ -3443,7 +3370,6 @@ function Section.cards(self: Map, options: Map): Map
             end })
         end
     end
-    -- lets a test open every card at once
     local openers = window.CardOpeners or {}
     window.CardOpeners = openers
     table.insert(openers, function(open: boolean)
@@ -3467,7 +3393,6 @@ function Section.cards(self: Map, options: Map): Map
             local sky = app.SkyFrame
             local seen = if sky and (sky.Sky ~= nil or sky.Cycle ~= nil) then math.max(sky.Flow, sky.Clear) else 0
             local now = os.clock()
-            -- the cards rise in again each time their page is shown, the time comes from the page swap so a slow frame never replays it
             local shownAt: number = app.PageShownAt or 0
             if not drawn then
                 drawn = true
@@ -3483,7 +3408,6 @@ function Section.cards(self: Map, options: Map): Map
             local markKey: string? = if mark and mark.Spec and mark.Spec.finds == finds then mark.Key else nil
             local markLevel: number = if markKey then app.HighlightLevel or 0 else 0
 
-            -- a segment goes under its name when both do not fit on one line
             local function stacked(spec: Map): boolean
                 if spec.cardStackAt ~= inner then
                     local name = tostring(spec.cardName or spec.text or "")
@@ -3497,7 +3421,6 @@ function Section.cards(self: Map, options: Map): Map
                 if spec.noteAt ~= inner then
                     spec.noteAt = inner
                     local all: { string } = {}
-                    -- each line of the text starts a new line, a long one wraps
                     for paragraph in string.gmatch(tostring(spec.text or "") .. "\n", "([^\n]*)\n") do
                         for _, line in wrapLines(kit, paragraph, 11.5, inner - 4, 4) do
                             table.insert(all, line)
@@ -3518,8 +3441,6 @@ function Section.cards(self: Map, options: Map): Map
                 return 46
             end
 
-            -- first pass: the text lines and the closed height of every card. the cards of a row share one closed height, with the
-            -- Advanced row on the bottom edge of each, so the closed cards of a row end and open on the same line
             local heights: { number } = {}
             local heads: { number } = {}
             local bases: { number } = {}
@@ -3543,7 +3464,6 @@ function Section.cards(self: Map, options: Map): Map
                             end
                         end
                         if changed then
-                            -- new line breaks cross fade with the old ones instead of jumping
                             if card.Lines and animated then
                                 card.OldLines = card.Lines
                                 card.LineSwap = 0
@@ -3602,7 +3522,6 @@ function Section.cards(self: Map, options: Map): Map
                 local top = rowTop[rowIndex]
                 local h = heights[index]
                 local head = heads[index]
-                -- entrance: a short rise with a stagger down the page, no overshoot so nothing blinks past full strength
                 local t = if animated then clamp01((now - startedAt - 0.035 * (index - 1)) / 0.42) else 1
                 local entering = 1 - (1 - t) * (1 - t) * (1 - t)
                 if entering <= 0.001 then
@@ -3614,7 +3533,6 @@ function Section.cards(self: Map, options: Map): Map
                 local master = card.Master
                 local on = if master then master.get() == true else true
                 local lit = kit:ease(key .. ":on", if on and master then 1 else 0, 12)
-                -- how much the rows of a card are muted while its master switch is off
                 local muted = if master then 1 - lit else 0
                 local y = top + (1 - entering) * 10
                 local bg = surface(kit, pal, x, y, width, h, CARD_ROUND, hover, lit, seen)
@@ -3652,7 +3570,6 @@ function Section.cards(self: Map, options: Map): Map
 
                 local function drawRow(spec: Map, rowKey: string, ry: number, rh: number, fade: number)
                     Painter.scope(rowKey)
-                    -- a Disabled option of a card is dimmed and does nothing, same as in a plain section
                     local off = false
                     if type(spec.disabled) == "function" then
                         local ok, result = pcall(spec.disabled, window)
@@ -3706,7 +3623,6 @@ function Section.cards(self: Map, options: Map): Map
                         else
                             shownValue = math.floor(value + 0.5)
                         end
-                        -- the name and the value pill share one line, the track runs under them from the same left edge to the same right edge
                         local lineY = ry + 16
                         local valueText = tostring(shownValue)
                         local pill = kit:measure(valueText, 11.5) + 18
@@ -3761,7 +3677,6 @@ function Section.cards(self: Map, options: Map): Map
                             kit:text(clip(kit, name, 12.5, inner - labelWidth - 10 - (if spec.bindable then 60 else 0)), left, ry + rh / 2, 12.5, nameColor, false, true)
                             well(kit, pal, bg, right - labelWidth, ry + (rh - 24) / 2, labelWidth, 24, hot)
                             kit:text(label, right - labelWidth / 2 - 6, ry + rh / 2, 11.5, tone(pal.Text), true, true)
-                            -- a small up and down chevron at the right end of the pill, it cycles through the values
                             local cx, cy = right - 12, ry + rh / 2
                             local arrow = tone(mix(pal.Sub, pal.Text, hot))
                             kit:chevron(cx, cy - 3.2, -1, arrow, 3, 1.6)
@@ -3792,7 +3707,6 @@ function Section.cards(self: Map, options: Map): Map
                             kit:text(clip(kit, name, 12.5, inner - labelWidth - 10), left, ry + rh / 2, 12.5, nameColor, false, true)
                             well(kit, pal, bg, right - labelWidth, ry + (rh - 24) / 2, labelWidth, 24, hot)
                             kit:text(label, right - labelWidth / 2, ry + rh / 2, 11.5, tone(pal.Text), true, true)
-                            -- a button with a keybind shows its key box next to the button
                             if spec.bindable then
                                 local capKey = rowKey .. ":cap"
                                 local capture = app.Focus == app.CAPTURE_PREFIX .. spec.flag
@@ -3800,7 +3714,6 @@ function Section.cards(self: Map, options: Map): Map
                                 local empty = bound == "" or bound == "none" or bound == "None"
                                 local capW = 52
                                 local cx = right - labelWidth - 8 - capW
-                                -- the key box and the button each take their own clicks, the row only the name
                                 holeAt = cx - 4
                                 kit:region(rowKey .. ":run", right - labelWidth, ry + 2, labelWidth, rh - 4, function()
                                     app:rememberClick(kit:p(right - labelWidth, ry + 2), kit:s(labelWidth, rh - 4), rowKey)
@@ -3832,7 +3745,6 @@ function Section.cards(self: Map, options: Map): Map
                             setRow(not value)
                         end, muted)
                         if info then
-                            -- a small question mark that opens the explanation of the option
                             local infoKey = rowKey .. ":info"
                             local hotInfo = kit:ease(infoKey .. ":hot", if kit:hovered(infoKey) then 1 else 0, 16)
                             local ix = right - switchW - 10 - infoW
@@ -3847,7 +3759,6 @@ function Section.cards(self: Map, options: Map): Map
                     Painter.scope(key)
                 end
 
-                -- a card shorter than its neighbour shares the spare height between its rows, so no gap opens above the Advanced row
                 local cursorY = y + head
                 local pad = if #card.Inline > 0 then math.max(0, bases[index] - owns[index]) / #card.Inline else 0
                 for position, spec in card.Inline do
@@ -3857,13 +3768,11 @@ function Section.cards(self: Map, options: Map): Map
                 end
 
                 if #card.Extra > 0 then
-                    -- the Advanced row sits on the bottom edge of the closed card, so it lines up with the one of the card next to it
                     local ay = y + bases[index] - CARD_BOTTOM - CARD_ADV
                     local turn = opens[index]
                     local advKey = key .. ":adv"
                     local hotAdv = kit:ease(advKey .. ":hot", if kit:hovered(advKey) then 1 else 0, 16)
                     local midY = ay + CARD_ADV / 2
-                    -- a soft pill behind the row while it is hovered or open
                     kit:box(x + 8, ay + 3, width - 16, CARD_ADV - 6, tone(pal.Text), 0.035 * math.max(hotAdv, 0.6 * turn), (CARD_ADV - 6) / 2)
                     local advColor = tone(mix(pal.Sub, pal.Text, math.max(hotAdv, turn)))
                     kit:text("Advanced", x + CARD_PAD, midY, 12, advColor, false, true)
@@ -3872,11 +3781,9 @@ function Section.cards(self: Map, options: Map): Map
                     local countX = x + width - CARD_PAD - 16 - countW
                     local keepAlpha = kit.Alpha
                     kit.Alpha = keepAlpha * (1 - turn)
-                    -- the count bubble mutes with the rest of the row while the master switch is off
                     kit:box(countX, midY - 9, countW, 18, tone(pal.Text), 0.06, 9)
                     kit:text(count, countX + countW / 2, midY, 10.5, tone(pal.Sub), true, true)
                     kit.Alpha = keepAlpha
-                    -- a chevron on the right edge that turns down as the group opens
                     kit:chevron(x + width - CARD_PAD - 5, midY, turn, advColor, 4.5, 1.9)
                     kit:region(advKey, x, ay, width, CARD_ADV, function()
                         card.Open = not card.Open
@@ -3885,8 +3792,6 @@ function Section.cards(self: Map, options: Map): Map
                         local ey = ay + CARD_ADV
                         for position, spec in card.Extra do
                             local rh = rowHeight(spec)
-                            -- a row fades in over a short time once the card has grown past it, and out quickly as the card closes over it,
-                            -- timed and not tied to the growth so a fast spring never pops it in
                             local room = math.clamp((y + h - ey - 8) / rh, 0, 1)
                             local fade = kit:ease(card.ExtraFades[position], if card.Open and room > 0.45 then 1 else 0, if card.Open then 13 else 26)
                             local shown = fade * math.clamp(room * 3, 0, 1)
@@ -3897,7 +3802,6 @@ function Section.cards(self: Map, options: Map): Map
                         end
                     end
                 end
-                -- the card a search result points at: the light runs around the whole card
                 if markKey == key then
                     mark.Offset = top
                     if markLevel > 0.004 then
@@ -3911,7 +3815,6 @@ function Section.cards(self: Map, options: Map): Map
     })
 end
 
--- a full width card that holds colors in two columns, always open. options: Title, Text, Items = { color descriptor }
 function Section.palette(self: Map, options: Map): Map
     local window = self.Window
     local specs: { Map } = {}
@@ -3967,8 +3870,6 @@ function Section.palette(self: Map, options: Map): Map
     })
 end
 
--- presets: one tap sets a group of options. the control shows which preset the options match, Custom once any differs
--- options: Name, Presets = { { Name, Values = { [flag] = value } } }
 function Section.presets(self: Map, options: Map): Map
     local window = self.Window
     local presets: { Map } = options.Presets or {}
@@ -4000,7 +3901,6 @@ function Section.presets(self: Map, options: Map): Map
             end
             local w, h = kit.Width, kit.Height - BLOCK_GAP
             surface(kit, pal, 0, 0, w, h, BLOCK_ROUND, 0, 0, 0)
-            -- the track keeps the same gap to the top, the bottom and the right edge of the row
             local trackH = 28
             local inset = (h - trackH) / 2
             local boxWidth = math.min(w * 0.72, kit:segmentWidth(labels) + 16)
@@ -4068,7 +3968,6 @@ function Builder.newTab(window: Map, name: string, options: Map?): Map
     spec.gate = settings.Gate
     spec.meteors = settings.Meteors == true
     spec.late = settings.Late == true
-    -- a page that filters its own content: the toolbar search is handed to its custom block and the global option results stay away
     spec.ownSearch = settings.OwnSearch == true
     spec.noun = settings.Noun
     return setmetatable({ Window = window, Spec = spec }, Tab) :: any
@@ -4106,14 +4005,10 @@ local BADGE_COMPACT = 46
 local WINDOW_ROUNDING, CARD_ROUNDING, PANEL_ROUNDING = 36, 36, 34
 local CHIP_HEIGHT = 24
 local FOOTER_HEIGHT = 34
--- the content panel keeps the same 8 around its rows on every side, the section chips sit between the header and the panel
 local PANEL_PAD = 8
 local CHIPS_Y = 52
 local PANEL_GLIDE = 11
 
--- the plain default theme is drawn like a Finder window: a flush frosted sidebar with small grey headers over rows of an icon and a label,
--- a white content side with a toolbar of back and forward chevrons, the bold title and a search field, and a thin path bar at the bottom.
--- every gap in it comes from one scale of 4, 8, 12 and 16, and every move in it is a spring or an exponential ease so it runs the same at any frame rate
 local SPACE_XS, SPACE_S, SPACE_M, SPACE_L = 4, 8, 12, 16
 local ROW_HEIGHT = 28
 local ROW_GAP = 2
@@ -4127,7 +4022,6 @@ local SEARCH_KEY = "head:search"
 local SEARCH_WIDTH = 176
 local SEARCH_GLYPH = 4.6
 local FROST_GLOWS = 3
--- how much of the content well and the sidebar glass an animated or sky theme lets through
 local WELL_SEEN = 0.85
 local SIDE_SEEN = 0.5
 
@@ -4146,7 +4040,6 @@ function Chrome.metrics(options: { [string]: any }?): Metrics
     local width = pick(given.Width, 760, 360, 1400)
     local height = pick(given.Height, 460, 300, 900)
     local none = given.NoSidebar == true
-    -- the sidebar of the app window carries the player, it never gets narrower than it needs
     local sidebar = if none then 0 else math.max(168, pick(given.SidebarWidth, 188, 110, math.min(300, width / 2.5)))
     return { Width = width, Height = height, SidebarWidth = sidebar, NoSidebar = none }
 end
@@ -4165,7 +4058,6 @@ local function fitBrand(text: string, size: number, limit: number, face: number?
     if width <= limit then
         return text, size
     end
-    -- whole sizes only, text at a size with a fraction gets its letters on uneven gaps
     local smaller = math.max(math.ceil(size * 0.6), math.floor(size * limit / width))
     if Painter.textWidth(text, smaller, face) <= limit then
         return text, smaller
@@ -4207,7 +4099,6 @@ local function drawShadows(app: App, position: Vector2, size: Vector2)
         return
     end
     local rounding = math.max(12, math.round(WINDOW_ROUNDING * app.Scale))
-    -- the Finder look throws a wider and lower shadow, softer at every step so the window floats instead of sitting on a dark edge
     local pick = app.Pal.Pick
     for layer = 1, SHADOW_LAYERS do
         local spread = layer * (1.5 + 1.5 * pick)
@@ -4221,7 +4112,6 @@ local function drawShadows(app: App, position: Vector2, size: Vector2)
             rounding + spread * 2
         )
     end
-    -- the Finder look floats on one soft picture of light instead of stacked rings, so no ring edge shows at the corners
 end
 
 local function spring(app: App, key: string, goal: number, response: number, ratio: number): number
@@ -4233,7 +4123,6 @@ local function slidingPill(app: App, name: string, x: number, y: number, w: numb
         return
     end
     local pal = app.Pal
-    -- the caller keeps the pill on its row, lead is how far it still has to travel
     local py, speed = y, math.abs(lead) * 13
     local stretch = 1 + math.min(speed / 3200, 0.22)
     local ph = h * stretch
@@ -4241,17 +4130,14 @@ local function slidingPill(app: App, name: string, x: number, y: number, w: numb
     local size = app:size(w, ph)
     local outer = Painter.active()
     Painter.scope("pill:" .. name)
-    -- no glow under the selected row
     Painter.rect(pos, size, Color.lerp(pal.Panel, pal.Accent, math.max(0.20, pal.Pick)), app.Alpha.Btn * alpha, Z_NAV, 18 - 5 * pal.Pick)
     Painter.scope(outer)
 end
 
--- the bold face for the Finder titles and headers, only while the window uses its own font so a picked font is never replaced
 local function boldFace(): number?
     return Fonts.boldOf(Painter.font())
 end
 
--- the side of the window the Finder sidebar covers, flush with the window edges, eased with the side setting
 local function strip(app: App): (number, number)
     local right = app.NavAnim["navside"]
     if type(right) ~= "number" then
@@ -4260,8 +4146,6 @@ local function strip(app: App): (number, number)
     return (app.M.Width - app.M.SidebarWidth) * right, app.M.SidebarWidth
 end
 
--- the light of the search field for every small control of the chrome: a glow that rises with the level under it and a ring that pulses out once
--- when the control was clicked, drawn in the scope of the control so the pieces keep their place from frame to frame
 local function halo(app: App, key: string, position: Vector2, size: Vector2, rounding: number, level: number)
     local pal = app.Pal
     local pulse = ease(app, key .. ":halo", 0, 3.2 * Motion.speed(app.State))
@@ -4276,7 +4160,6 @@ local function haloKick(app: App, key: string)
     app.NavAnim[key .. ":halo"] = 1
 end
 
--- an arrow head drawn as a trail of small circles along both arms, the circles are smooth where a thin turned bar is jagged
 local function arrowHead(tip: Vector2, upper: Vector2, lower: Vector2, color: Color3, alpha: number, thickness: number)
     local half = Vector2.new(thickness / 2, thickness / 2)
     local size = Vector2.new(thickness, thickness)
@@ -4289,7 +4172,6 @@ local function arrowHead(tip: Vector2, upper: Vector2, lower: Vector2, color: Co
     end
 end
 
--- the same arrow as a smooth picture, turned by degrees around its middle, false while the picture is not ready yet
 local function arrowIcon(app: App, middle: Vector2, pixels: number, degrees: number, color: Color3, alpha: number): boolean
     local asset, size = Logo.icon(app, "chevron", pixels)
     if not asset then
@@ -4300,7 +4182,6 @@ local function arrowIcon(app: App, middle: Vector2, pixels: number, degrees: num
     return true
 end
 
--- a small folder made of a box and its tab, the icon of every row in the Finder sidebar
 local function folderGlyph(app: App, left: number, middle: number, color: Color3, alpha: number)
     local unit = app.Unit
     local width, height = math.floor(15 * unit + 0.5), math.floor(11 * unit + 0.5)
@@ -4310,7 +4191,6 @@ local function folderGlyph(app: App, left: number, middle: number, color: Color3
     Painter.rect(Vector2.new(x, y - math.floor(2 * unit + 0.5)), Vector2.new(math.floor(6 * unit + 0.5), math.floor(3 * unit + 0.5)), color, alpha, Z_NAV_TEXT, 1.5 * unit, true)
 end
 
--- the Settings folder wears sliders instead of a folder so it reads as the place for the script itself
 local function slidersGlyph(app: App, left: number, middle: number, color: Color3, alpha: number)
     local unit = app.Unit
     local width = math.floor(15 * unit + 0.5)
@@ -4325,7 +4205,6 @@ local function slidersGlyph(app: App, left: number, middle: number, color: Color
     end
 end
 
--- one row of the Finder sidebar: the folder icon, the label and a faint frosted tint while hovered, the selected row sits on the sliding pill
 local function fileGlyph(app: App, left: number, middle: number, color: Color3, alpha: number)
     local unit = app.Unit
     local width, height = math.floor(11 * unit + 0.5), math.floor(14 * unit + 0.5)
@@ -4337,7 +4216,6 @@ local function fileGlyph(app: App, left: number, middle: number, color: Color3, 
     end
 end
 
--- style "folder" is a group with its tabs below it: a chevron that turns down while it is open, "file" is one of those tabs
 local function finderRow(app: App, key: string, x: number, y: number, w: number, label: string, active: boolean, alpha: number, onClick: (() -> ())?, style: string?, open: number?)
     local pal = app.Pal
     local outer = Painter.active()
@@ -4347,10 +4225,8 @@ local function finderRow(app: App, key: string, x: number, y: number, w: number,
     local lit = ease(app, key .. ":lit", if active then 1 else 0, 12 * Motion.speed(app.State))
     local pillAt = app.NavAnim.pillScreenY
     if style ~= "folder" and pillAt then
-        -- the text takes its selected colour exactly as far as the sliding pill has reached the row
         lit = math.clamp(1 - math.abs(y - pillAt) / (ROW_HEIGHT * 0.85), 0, 1) * (app.NavAnim.pillAlpha or 1)
     end
-    -- a long row does not shrink while it is held, that would slide its icon and name, it only darkens a little
     local held = (1 - Press.scale(app, app.Springs, key .. ":press", key, hovered)) / Press.SHRINK
     local scale = 1
     local full = app:size(w, ROW_HEIGHT)
@@ -4368,7 +4244,6 @@ local function finderRow(app: App, key: string, x: number, y: number, w: number,
         lead = 14
     end
     if style == "folder" then
-        -- the same arrow as the back and forward buttons, it turns from pointing right to pointing down while the folder opens
         local turn = math.rad(90 * math.clamp(open or 0, 0, 1))
         local dir = Vector2.new(math.cos(turn), math.sin(turn))
         local side = Vector2.new(-dir.Y, dir.X)
@@ -4402,8 +4277,6 @@ local function finderRow(app: App, key: string, x: number, y: number, w: number,
     end
 end
 
--- the small grey header over a group of rows, when the sidebar is too short to hold every group the others fold under their header
--- and a click on one opens its first page
 local function finderHeader(app: App, key: string, x: number, y: number, w: number, label: string, alpha: number, onClick: (() -> ())?)
     local pal = app.Pal
     local outer = Painter.active()
@@ -4426,7 +4299,6 @@ local function finderNav(app: App, _sx: number, _sw: number, reveal: number, sid
     local left, width = strip(app)
     local x, w = left + SPACE_M, width - SPACE_M * 2
     local bottom = m.Height - MARGIN - 48 - (if Farm.available(app) then 32 else 0)
-    -- the old layout has no Home page
     local groups: { { [string]: any } } = {}
     for _, group in app.NavGroups do
         local only = if #group.Tabs == 1 then app.TabByName[group.Tabs[1]] else nil
@@ -4442,16 +4314,13 @@ local function finderNav(app: App, _sx: number, _sw: number, reveal: number, sid
             needed += ROW_HEIGHT + ROW_GAP
         end
     end
-    -- a window made too short for its tabs grows once to fit them (up to the largest size), the list only scrolls after that
     if not app.NavGrown and needed > bottom then
         app.NavGrown = true
         m.Height = math.min(900, m.Height + (needed - bottom + SPACE_XS))
         state.MenuSizeY = m.Height * state.UIScale
         bottom = m.Height - MARGIN - 48 - (if Farm.available(app) then 32 else 0)
     end
-    -- when the window is too short for every tab the list scrolls with the wheel and the rows fade out at both edges
     local reach = math.max(0, needed - bottom + SPACE_XS)
-    -- the list length follows the folders opening and closing smoothly, so a folding group never snaps the scroll position or lets rows through the bottom edge
     local overflow = ease(app, "nav:overflow", reach, 9 * Motion.speed(state))
     local nav = app.NavScroll
     if not nav then
@@ -4496,10 +4365,8 @@ local function finderNav(app: App, _sx: number, _sw: number, reveal: number, sid
                 fade = fade * fade * fade
                 local tree = 14
                 local span = #group.Tabs * (ROW_HEIGHT + ROW_GAP) * open
-                -- the tree lines are always a whole pixel thick, a line thinner than one pixel is dropped at small interface scales
                 local hair = math.max(1, math.floor(app.Unit + 0.5))
                 local spine = app:pos(x + shift + SPACE_S + 2, y - ROW_GAP - 2)
-                -- the spine is cut into one piece per row, each fading with its own row, so it fades out at the list edges like the rows do
                 local spineX = math.floor(spine.X + 0.5)
                 local spineFrom = math.floor(spine.Y + 0.5)
                 for number, name in group.Tabs do
@@ -4522,7 +4389,6 @@ local function finderNav(app: App, _sx: number, _sw: number, reveal: number, sid
                 y += span
             end
             if group.Name == "Settings" then
-                -- the settings group sits on its own soft panel so it stands apart from the pages above it
                 local shown = entry * math.min(edge(groupTop, ROW_HEIGHT), edge(y - ROW_HEIGHT, ROW_HEIGHT))
                 Painter.scope("nav:settings:panel")
                 Painter.rect(app:pos(x + shift - 3, groupTop - 3), app:size(w + 6, math.max(0, y - groupTop - ROW_GAP + 6)), pal.Text, app.Alpha.Btn * shown * 0.06, Z_CARD + 1, ROW_ROUND * app.Unit + 3, true)
@@ -4546,7 +4412,6 @@ local function finderNav(app: App, _sx: number, _sw: number, reveal: number, sid
     if pillY then
         local target = pillY + nav.Pos
         if app.NavAnim.pillTab ~= current2 and app.NavAnim.pillLast then
-            -- a new row was picked: the pill starts where it was drawn and glides the rest of the way, it never trails a moving row
             app.NavAnim.pillOff = app.NavAnim.pillLast - target
         end
         app.NavAnim.pillTab = current2
@@ -4565,7 +4430,6 @@ local function finderNav(app: App, _sx: number, _sw: number, reveal: number, sid
         app.NavAnim.finderIndent = if pillY then pillIndent else app.NavAnim.finderIndent
         slidingPill(app, "finder", x + indent, app.NavAnim.pillLast, w - indent, ROW_HEIGHT, math.clamp(pillShown, 0, 1) * reveal, nav.Pos, off)
     end
-    -- a slim scrollbar on the edge of the list, it shows while the list moves and fades out again
     local moving = if overflow > 0.5 and math.abs(nav.Target - nav.Pos) > 0.5 then 1 else 0
     local bar = ease(app, "nav:bar", moving, if moving == 1 then 20 else 3)
     if overflow > 0.5 then
@@ -4579,9 +4443,6 @@ local function finderNav(app: App, _sx: number, _sw: number, reveal: number, sid
     return y
 end
 
--- the frosted glass of the Finder look: the content side is laid white over the window and the sidebar gets a soft light from the top,
--- a few wide glows that drift very slowly like light through blurred glass and a hairline where it meets the content.
--- the same pieces are drawn every frame, only their place and strength move
 local function drawFrost(app: App, now: number, size: Vector2, rounding: number)
     local pal = app.Pal
     local alpha = app.Alpha.UI * pal.Pick
@@ -4597,7 +4458,6 @@ local function drawFrost(app: App, now: number, size: Vector2, rounding: number)
     Painter.scope("finder:frost")
     local white = Color.lerp(pal.Main, Color3.new(1, 1, 1), if pal.Main.R < 0.5 then 0.1 else 1)
     local glow = Skyfx.glow()
-    -- both sides are cut at the divider so their see through fills never overlap into a darker band
     Painter.clip(app:pos(left, 0), app:size(width, m.Height))
     Painter.gradient(app:pos(left - SPACE_L * right, 0), app:size(width + SPACE_L, m.Height), { Color.lerp(pal.Main, white, 0.9), Color.lerp(pal.Main, white, 0.4) }, 90, alpha * 0.72 * (1 - SIDE_SEEN * seen) * (if m.NoSidebar then 0 else 1), Z_CARD, radius)
     Painter.fine(true)
@@ -4613,7 +4473,6 @@ local function drawFrost(app: App, now: number, size: Vector2, rounding: number)
     Painter.fine(app.State.UIScaleAnim < 0.999)
     Painter.unclip()
     Painter.rect(app:pos(left + width * (1 - right) - right * 1, 0), Vector2.new(math.max(1, app.Scale * 0.8), size.Y), Color.lerp(pal.Off, pal.Sub, 0.18), alpha * 0.9 * (if m.NoSidebar then 0 else 1), Z_CARD + 1, 0)
-    -- an animated or sky theme shows through the content side, the well stays dark enough that the cards and text keep their depth
     local fill = alpha * (1 - WELL_SEEN * seen)
     local reach = if m.NoSidebar then 0 else SPACE_L * 2
     Painter.clip(app:pos(contentX, 0), app:size(contentW, m.Height))
@@ -4917,7 +4776,6 @@ local function drawHeaderButtons(app: App, right: number, alpha: number)
     end
 end
 
--- back and forward walk the pages opened before, like the arrows of a Finder window, a page opened another way cuts off what was ahead
 local function trackHistory(app: App)
     local current = app.State.NextTab or app.State.CurrentTab
     local history: { string } = app.NavHistory
@@ -4948,7 +4806,6 @@ local function stepHistory(app: App, step: number)
     end
 end
 
--- a toolbar chevron, it brightens while hovered and dims while there is nowhere to go
 local function chevron(app: App, key: string, x: number, direction: number, enabled: boolean, alpha: number, onClick: () -> ())
     local pal = app.Pal
     local hovered = app.HoverKey == key and not app.Modal and enabled
@@ -4987,7 +4844,6 @@ local function searchQuery(app: App): string
     return app.SearchQuery or ""
 end
 
--- what the search holds right now, lower case, for the page of results that stands in for the open page while something is typed
 function Chrome.query(app: App): string
     if app.Pal.Pick <= 0.5 then
         return ""
@@ -5012,11 +4868,6 @@ local function focusSearch(app: App, text: string)
     })
 end
 
--- the search of the Finder toolbar. closed it is a button with a magnifier, a click springs it open to the left into a field
--- while the magnifier rolls along with its left edge one full turn, a soft glow lifts the field like frosted glass,
--- a ring pulses out once when it takes focus and a focus ring stays while typing, every typed letter gives the magnifier a small kick,
--- the hint slides in behind the opening edge, the caret breathes instead of blinking and a clear button spins in once there is text.
--- it filters the rows of the open page by their names
 local function drawSearch(app: App, right: number, alpha: number)
     local pal = app.Pal
     local state = app.State
@@ -5132,7 +4983,6 @@ local function drawSearch(app: App, right: number, alpha: number)
     end
 end
 
--- a short label whose words change: the old words fade out, then the new ones fade in on the same spot
 local function swapLabel(app: App, key: string, text: string): (string, number)
     local store: { [string]: string } = app.SwapLabels
     if not store then
@@ -5202,7 +5052,6 @@ local function drawContent(app: App, tab: { [string]: any }, section: { [string]
     local steadyTitle = headerSteady(app, "title", title, upcomingTitle)
     local steadyDescription = headerSteady(app, "description", description, upcomingDescription)
     local still = Vector2.new(0, 0)
-    -- a script can ask for its logo at the left of the toolbar, the chevrons and the title then move over to make room
     local lead = 0
     if app.Options.HeaderLogo == true and app.LogoAsset then
         lead = (TOOLBAR_BUTTON + SPACE_S) * pick
@@ -5257,7 +5106,6 @@ local function drawContent(app: App, tab: { [string]: any }, section: { [string]
     Painter.rect(panelPos, panelSize, card, ui * cover * (1 - pick), 3, PANEL_ROUNDING)
     Painter.scope(nil)
 
-    -- when the search leaves the page without a row a quiet note takes the middle of the panel
     local query = app.SearchText or ""
     local empty = ease(app, "search:empty", if query ~= "" and not tab.ownSearch and Layout.sectionHeight(app, section) <= 0 then 1 else 0, 10 * Motion.speed(state))
     if query ~= "" then
@@ -5269,7 +5117,6 @@ local function drawContent(app: App, tab: { [string]: any }, section: { [string]
     Painter.text('Nothing here matches "' .. tostring(app.SearchShownQuery or "") .. '"', middle + Vector2.new(0, 10 * app.Unit), 11.5 * app.TextScale, pal.Sub, text * empty * pick * 0.8, 6, true, true)
     Painter.scope(nil)
 
-    -- the Finder path bar: a hairline over the full width of the content side and a small folder icon before the footer text
     local footerY = m.Height - FOOTER_HEIGHT / 2 - MARGIN + 6 + SPACE_XS * pick
     local footerX = cx + 4 + 21 * pick
     Painter.scope("content:pathbar")
@@ -5287,7 +5134,6 @@ local function drawContent(app: App, tab: { [string]: any }, section: { [string]
     end
     local statusShown = ease(app, "footer:status", if status then 1 else 0, 7 * Motion.speed(app.State))
     app.FooterStatus = status or app.FooterStatus
-    -- when the status changes the old text rises and fades out while the new one rises in from below
     if app.FooterStatus ~= app.FooterTarget then
         app.FooterOld = if app.FooterTarget ~= nil and app.FooterStatus ~= nil then app.FooterTarget else nil
         app.FooterTarget = app.FooterStatus
@@ -5329,16 +5175,9 @@ local function drawContent(app: App, tab: { [string]: any }, section: { [string]
             stepHistory(app, 1)
         end)
     end
-    -- the rows start at the edge of the page chips and end in line with the header buttons
     return cx + 1, rowsY, cw - 7, m.Height - FOOTER_HEIGHT - PANEL_PAD
 end
 
--- ============================================================================================================================
--- the app window: a flush sidebar (Home, Search and Customize, the settings pages, the options changed last and the player at the
--- bottom), the main sections of the script as a segmented pill at the top, a soft warm glow over the main side and the Home page
--- with the greeting, the search box and four quick start cards. every move is a time based spring or ease, so it runs the same
--- at any frame rate and follows Reduce Motion
--- ============================================================================================================================
 
 local SHELL_WINDOW = 20
 local SB_ROW = 30
@@ -5356,7 +5195,6 @@ local CARD_GAP = 12
 local MIN_TEXT = 10
 local Z_TIP = 14
 
--- a plain line icon for a page, from the small set of pictures the lib carries
 local SHELL_ICON_SET = {
     ["home"] = "house",
     ["shoot"] = "crosshair",
@@ -5437,7 +5275,6 @@ local SHELL_ICON_SET = {
 
 local ACRONYMS: { [string]: boolean } = { NPC = true, NPCS = true, FOV = true, ESP = true, HBE = true, HUD = true, HUDS = true, UI = true, FPS = true, AI = true, ID = true, PB = true, VIP = true, XP = true, API = true, GUI = true, PVP = true, PVE = true, HP = true, FX = true }
 
--- a title with every word capitalised and the known acronyms kept in capitals, words holding a digit (R15) stay as they are
 local function titleCase(text: string): string
     local result = string.gsub(text, "%S+", function(word: string): string
         local upper = string.upper(word)
@@ -5457,7 +5294,6 @@ local function rad(app: App, pixels: number): number
     return pixels * app.Unit * Painter.curve()
 end
 
--- a label cut with two dots at its own size when it is too long, a smaller font would look out of place next to its neighbors
 local function clipped(text: string, size: number, limit: number, face: number?): string
     if limit <= 0 or Painter.textWidth(text, size, face) <= limit then
         return text
@@ -5473,7 +5309,6 @@ local function isHome(tab: { [string]: any }?): boolean
     return tab ~= nil and tab.home == true
 end
 
--- a picture from the icon set, centered, tinted, on whole pixels. false when the set has no such picture
 local function lucide(app: App, name: string, center: Vector2, size: number, color: Color3, alpha: number, z: number): boolean
     local asset, pixels = Logo.icon(app, name, math.floor(size * app.Scale + 0.5))
     if not asset then
@@ -5484,7 +5319,6 @@ local function lucide(app: App, name: string, center: Vector2, size: number, col
     return true
 end
 
--- small glyphs drawn from lines and circles, for the ones the icon set has no picture of. bg is what the glyph sits on (the moon cuts into it)
 local function glyph(app: App, name: string, center: Vector2, size: number, color: Color3, alpha: number, z: number, bg: Color3?)
     local u = app.Unit
     local s = size * u
@@ -5555,8 +5389,6 @@ local function pageIcon(app: App, name: string, center: Vector2, size: number, c
     Painter.text(string.upper(string.sub(name, 1, 1)), whole(center), math.floor(9.5 * app.TextScale + 0.5), color, alpha, z, true, true, Painter.bold())
 end
 
--- the mark of the script: the logo picture, or the first letter of the title on an accent square. kept on its own so a new logo
--- only needs this one function changed
 local function brandMark(app: App, at: Vector2, size: Vector2, alpha: number, z: number)
     local options = app.Options
     local radius = size.X * 0.28
@@ -5573,7 +5405,6 @@ local function brandMark(app: App, at: Vector2, size: Vector2, alpha: number, z:
     end
 end
 
--- a soft fill that lifts on hover, for every small button of the window
 local function hoverFill(app: App, key: string, position: Vector2, size: Vector2, radius: number, alpha: number, lit: number?): number
     local pal = app.Pal
     local hovered = app.HoverKey == key and not app.Modal
@@ -5603,7 +5434,6 @@ local function drawTip(app: App)
     end
     local unit = app.Unit
     local size = math.floor(12 * app.TextScale + 0.5)
-    -- the text splits on new lines and long lines wrap on words, every line is centred in the card with the same room on both sides and above and below
     local room = 280 * unit
     local lines: { string } = {}
     for _, raw in string.split(last.Text, "\n") do
@@ -5626,7 +5456,6 @@ local function drawTip(app: App)
     local padX = math.floor(12 * unit + 0.5)
     local padY = math.floor(7 * unit + 0.5)
     local lineHeight = math.floor(size * 1.2 + 0.5)
-    -- whole even sizes keep the middle of the card on a whole pixel, so the centred text cannot round half a pixel to one side
     local width = 2 * math.ceil(widest / 2 + padX)
     local height = 2 * math.ceil((#lines * lineHeight) / 2 + padY)
     local round = math.min(9 * unit, height / 2)
@@ -5638,7 +5467,6 @@ local function drawTip(app: App)
         at = whole(last.At - Vector2.new(width / 2, height + 8 * unit + slide))
     end
     local size2 = Vector2.new(width, height)
-    -- a card in the colours of the window: its panel, a hairline of the accent, a soft shadow below and a small accent dot before the name
     Painter.scope("shell:tip")
     Painter.rect(at + Vector2.new(0, 3 * unit), size2, Color3.new(0, 0, 0), shown * 0.28, Z_TIP, round + 1, true)
     Painter.rect(at, size2, Color.lerp(pal.Panel, pal.Text, 0.07), shown, Z_TIP, round, true)
@@ -5650,7 +5478,6 @@ local function drawTip(app: App)
     Painter.scope(nil)
 end
 
--- a menu of the lib's own dropdown, anchored to a box of the window. values are labels, pick runs the chosen one
 local function openMenu(app: App, key: string, values: { string }, current: () -> string, pick: (string) -> ())
     local menus: { [string]: any } = app.ShellMenus
     if not menus then
@@ -5683,7 +5510,6 @@ local function goHome(app: App)
     end
 end
 
--- the main sections of the script for the top pill: every page of the plain group on its own, a named group as one entry
 local function mainItems(app: App): { { [string]: any } }
     local cached = app.ShellItems
     if cached and app.ShellItemsCount == #app.Tabs then
@@ -5720,8 +5546,6 @@ local function itemOf(app: App, name: string): ({ [string]: any }?, number)
     return nil, 0
 end
 
--- a segmented control: a soft track, a raised thumb that springs to the pick and labels that brighten when picked.
--- fill = true spreads the cells over the whole width, otherwise the control is as wide as its labels and centered on x
 local function segmented(app: App, key: string, x: number, y: number, width: number, height: number, labels: { string }, index: number, alpha: number, centered: boolean, onPick: (number) -> ())
     local pal = app.Pal
     local count = #labels
@@ -5731,7 +5555,6 @@ local function segmented(app: App, key: string, x: number, y: number, width: num
     local unit = math.max(0.01, app.Unit)
     local inset = 3
     local room = width - inset * 2
-    -- a crowded control first takes less padding, then one smaller size for every label, so the labels always match
     local textSize = math.floor(12.5 * app.TextScale + 0.5)
     local pad = 28
     local widths: { number } = {}
@@ -5752,7 +5575,6 @@ local function segmented(app: App, key: string, x: number, y: number, width: num
             break
         end
     end
-    -- every cell as wide as the widest label, so the control reads even and each label sits in the middle of its own cell
     local widest = 0
     for number in labels do
         widest = math.max(widest, widths[number])
@@ -5819,8 +5641,6 @@ local function segmented(app: App, key: string, x: number, y: number, width: num
     end
 end
 
--- widths for a row of labels that must fit a room: every label keeps its own width while they fit, else the long ones share
--- what the short ones leave, so a long label is cut before a short one
 local function fitShares(natural: { number }, room: number): { number }
     local count = #natural
     local total = 0
@@ -5852,9 +5672,6 @@ local function fitShares(natural: { number }, room: number): { number }
     return out
 end
 
--- the pages of a group as words on a hairline, the level above the section chips. every word has the same weight so nothing
--- moves when the pick changes, the picked one is bright with an accent bar that springs under it and hover lifts a faint bar.
--- the first word starts on x so it lines up with the page title and the rows below
 local function pageStrip(app: App, key: string, x: number, y: number, width: number, labels: { string }, index: number, alpha: number, onPick: (number) -> (), beside: boolean?)
     local pal = app.Pal
     local count = #labels
@@ -5862,9 +5679,7 @@ local function pageStrip(app: App, key: string, x: number, y: number, width: num
         return
     end
     local unit = math.max(0.01, app.Unit)
-    -- beside: the section chips share this line, so the words center on them and the hairline sits an even gap under both
     local rowH = if beside then CHIP_H + 4 else STRIP_H
-    -- the window font for every word, a bolder face would only change the widths when the font is switched
     local face = Painter.font()
     local textSize = math.floor(14 * app.TextScale + 0.5)
     local gap = 24
@@ -5923,7 +5738,6 @@ local function pageStrip(app: App, key: string, x: number, y: number, width: num
         local held = math.clamp(spring(app, cellKey .. ":held", if hovered and Hits.isPressed(cellKey) then 1 else 0, 0.14, 1), 0, 1)
         local left = px(starts[number])
         Painter.scope(cellKey)
-        -- a faint bar where the accent would go, so the word reads as something to press
         local ghost = hover * (1 - lit)
         Painter.rect(Vector2.new(left, lineY + 1 - thick), Vector2.new(math.max(thick, px(starts[number] + widths[number]) - left), thick), pal.Text, app.Alpha.Btn * alpha * ghost * (0.22 + 0.06 * light), Z_NAV - 1, thick / 2, true)
         local rest = Color.lerp(pal.Sub, pal.Text, 0.12 + 0.5 * hover)
@@ -5940,9 +5754,6 @@ local function pageStrip(app: App, key: string, x: number, y: number, width: num
     end
 end
 
--- the sections of a page as small separate chips, the level under the page strip. a tinted accent pill springs to the picked one,
--- the others rest on a soft fill that warms on hover and deepens on press. the chips are only as wide as their words, start on x and
--- never pass the right edge: a crowded row first takes less padding and gap, then a smaller size, then cuts the longest words
 local function chipRow(app: App, key: string, x: number, y: number, width: number, labels: { string }, index: number, alpha: number, onPick: (number) -> ())
     local pal = app.Pal
     local count = #labels
@@ -5984,7 +5795,6 @@ local function chipRow(app: App, key: string, x: number, y: number, width: numbe
     local function px(at: number): number
         return math.floor(app:pos(at, 0).X + 0.5)
     end
-    -- the accent pill under the picked chip, it travels between chips on a spring
     local slot = math.clamp(spring(app, key .. ":slot", index, 0.34, 0.86), 1, count)
     local low = math.floor(slot)
     local high = math.min(count, low + 1)
@@ -6023,11 +5833,7 @@ local function chipRow(app: App, key: string, x: number, y: number, width: numbe
     end
 end
 
--- ---------------------------------------------------------------------------------------------------------------- sidebar
 
--- a round window control: a quiet disc with one thin glyph. close turns a soft red with a white cross on hover, minimize gets a
--- light fill, a press only deepens the fill. the disc is sized so its middle is a whole pixel and every stroke is a whole number of
--- pixels around it, so the glyph sits exactly in the center and hovering or pressing never moves anything
 local CONTROL_RED, CONTROL_RED_DOWN = Color3.fromRGB(226, 80, 72), Color3.fromRGB(196, 58, 52)
 
 local function controlButton(app: App, key: string, topLeft: Vector2, units: number, kind: string, hovered: boolean, alpha: number, z: number, inkZ: number): (Vector2, Vector2)
@@ -6055,8 +5861,6 @@ local function controlButton(app: App, key: string, topLeft: Vector2, units: num
     local ink = Color.lerp(Color.lerp(pal.Sub, pal.Text, 0.45), if close then Color3.new(1, 1, 1) else pal.Text, hover)
     local inkAlpha = app.Alpha.Text * alpha * (0.9 + 0.1 * hover) * (1 - 0.12 * held)
     if close then
-        -- each bar is a whole number of pixels long with the same evenness as the disc, so the turned bar starts on a whole pixel
-        -- and its middle is the middle of the disc
         local long = math.max(3, math.floor(d * 0.5 + 0.5))
         if long % 2 ~= d % 2 then
             long -= 1
@@ -6099,7 +5903,6 @@ local function windowControls(app: App, alpha: number)
     end
 end
 
--- one row of the sidebar: an icon, a label and a hover fill. the selection is drawn once for the whole list
 local RAIL_BOX = 40
 
 local function sidebarRow(app: App, key: string, x: number, y: number, w: number, label: string, icon: (Vector2, Color3, number) -> (), active: boolean, alpha: number, onClick: () -> ())
@@ -6115,7 +5918,6 @@ local function sidebarRow(app: App, key: string, x: number, y: number, w: number
     local rowPos, rowSize = Press.box(app:pos(x + (w - boxW) / 2, y), app:size(boxW, SB_ROW), press)
     Painter.rect(rowPos, rowSize, pal.Text, app.Alpha.Btn * alpha * 0.045 * hover * (1 - lit), Z_NAV, rad(app, 9), true)
     local color = Color.lerp(Color.lerp(pal.Sub, pal.Text, 0.55 + 0.45 * hover), pal.Text, lit)
-    -- in the narrow rail the icons move to the middle of the rail and the names fade out
     local narrow: number = app.CompactT or 0
     icon(app:pos(x + 18 + (w / 2 - 18) * narrow, y + SB_ROW / 2), Color.lerp(pal.Sub, pal.Text, 0.4 + 0.6 * math.max(hover, lit)), app.Alpha.Text * alpha)
     if narrow < 0.95 then
@@ -6208,7 +6010,6 @@ local function profile(app: App, sx: number, sw: number, alpha: number)
 
     local bx = sx + sw - 10 - 24
     local by = top + 17
-    -- the settings button opens the settings window
     do
         local key = "shell:menu"
         local position, size = whole(app:pos(bx, by)), app:size(24, 24)
@@ -6258,7 +6059,6 @@ local function focusHomeSearch(app: App)
     end
 end
 
--- how much of the animated sky of a theme shows through the window, 0 for the plain themes
 local function skyShows(app: App): number
     local sky = app.SkyFrame
     if sky and (sky.Sky ~= nil or sky.Cycle ~= nil) then
@@ -6274,8 +6074,6 @@ local function shellSidebar(app: App, now: number)
     local reveal = Motion.glide(if state.AnimationsEnabled then math.clamp(state.NavReveal, 0, 1) else 1)
     local sw = m.SidebarWidth
     local sx = 0
-    -- the sidebar floats: its own rounded panel with a gap to the window edge and to the page, everything in it is drawn
-    -- from the panel corner, shellDraw moved the origin and shrank the metrics for this call
     Painter.scope("shell:side")
     local panelPos, panelSize = app.WindowPos, app:size(sw, m.Height)
     Painter.rect(panelPos, panelSize, pal.Panel, app.Alpha.UI * (1 - 0.5 * skyShows(app)), Z_CARD, rad(app, 16))
@@ -6290,11 +6088,9 @@ local function shellSidebar(app: App, now: number)
     if saved then
         app.WindowPos, m.Height = saved.Shifted, saved.Height - 2 * saved.Inset
     end
-    -- the brand: the mark and the title of the script at the top left, swapped for the new logo later through brandMark
     do
         local mark = 34
         local emblem = app.LogoAsset ~= nil and app.Options.Logo ~= nil and app.Options.Logo.Emblem == true
-        -- an emblem has air around it in its picture, so it is drawn larger than its box to read as big as a square logo
         local grow = if emblem then 1.3 else 1
         local drawn = mark * grow
         local top = 14
@@ -6320,7 +6116,6 @@ local function shellSidebar(app: App, now: number)
 
     local current = state.NextTab or state.CurrentTab
     if app.Options.Dock then
-        -- a dock: only the pages, big icon tiles floating in the middle of the rail, no Home, Search, Settings, collapse or profile
         local tiles: { { [string]: any } } = {}
         for _, tab in app.Tabs do
             if tab.group ~= "Settings" and not tab.home then
@@ -6358,10 +6153,8 @@ local function shellSidebar(app: App, now: number)
         return
     end
     local x, w = sx + SB_PAD, sw - SB_PAD * 2
-    -- the icon only rail starts closer to the logo
     local y = SB_TOP - 10 * (app.CompactT or 0)
     local pillY: number? = nil
-    -- the icon only rail spreads its rows when the window is tall enough, a short window keeps them tight
     local railGap = math.clamp((m.Height - 480) / 14, 0, 6)
     local function row(key: string, label: string, icon: (Vector2, Color3, number) -> (), tabName: string?, onClick: () -> (), index: number, edge: number?)
         local active = tabName ~= nil and current == tabName
@@ -6395,7 +6188,6 @@ local function shellSidebar(app: App, now: number)
     local toolCount = 1 + (if #app:settingsTabs() > 0 then 1 else 0) + (if Farm.available(app) then 1 else 0)
     local rail: number = app.CompactT or 0
     do
-        -- in the rail the pages float in the middle between the search and the tools, so both gaps are equal
         local mainCount = 0
         for _, tab in app.Tabs do
             if tab.group ~= "Settings" and not tab.home then
@@ -6406,7 +6198,6 @@ local function shellSidebar(app: App, now: number)
         local free = (m.Height - 62 - toolCount * pitch) - y - (mainCount * pitch + 32)
         y += math.max(0, free) / 2
     end
-    -- the pages scroll with the wheel when the window is too short for all of them, they never reach the tools below
     local pageTotal = 0
     for _, tab in app.Tabs do
         if tab.group ~= "Settings" and not tab.home then
@@ -6475,7 +6266,6 @@ local function shellSidebar(app: App, now: number)
         end
     end
     do
-        -- in the wide sidebar the divider and the tools sit at the bottom next to the avatar too
         local wideFloor = m.Height - 62 - toolCount * (SB_ROW + 2 + railGap) - 16
         y += math.max(0, wideFloor - y)
     end
@@ -6483,7 +6273,6 @@ local function shellSidebar(app: App, now: number)
     divider(app, "shell:div:1", x + 6, y, w - 12, reveal)
     y += 10
     do
-        -- in the narrow rail the tools sink to the bottom next to the avatar, so the rail has no hole in the middle
         local floorY = m.Height - 62 - toolCount * (SB_ROW + 2 + railGap)
         y += math.max(0, floorY - y) * (app.CompactT or 0)
     end
@@ -6502,7 +6291,6 @@ local function shellSidebar(app: App, now: number)
     do
         local folded = app.State.CompactSidebar == true
         row("shell:nav:compact", if folded then "Expand" else "Collapse", function(center: Vector2, color: Color3, alpha: number)
-            -- a little window with its sidebar: the left strip is filled while the sidebar is folded
             local unit = app.Unit
             local box = Vector2.new(15, 12) * unit
             local top = center - box / 2
@@ -6515,7 +6303,6 @@ local function shellSidebar(app: App, now: number)
         end, index)
         index += 1
     end
-    -- the selection: a soft fill that springs to the picked row
     if pillY then
         local at = spring(app, "shell:pill", pillY, 0.34, 0.86)
         local speed = math.abs(Motion.velocity(app.Springs, "shell:pill"))
@@ -6532,7 +6319,6 @@ local function shellSidebar(app: App, now: number)
     profile(app, sx, sw, reveal)
 end
 
--- ---------------------------------------------------------------------------------------------------------------- top pill
 
 local function topPill(app: App, x0: number, mw: number, alpha: number)
     local items = mainItems(app)
@@ -6547,7 +6333,6 @@ local function topPill(app: App, x0: number, mw: number, alpha: number)
     local _, index = itemOf(app, current)
     local picked = index
     if picked == 0 then
-        -- a settings page: the thumb rests where it was
         picked = app.ShellPillLast or 1
     else
         app.ShellPillLast = picked
@@ -6562,7 +6347,6 @@ local function topPill(app: App, x0: number, mw: number, alpha: number)
     end)
 end
 
--- ---------------------------------------------------------------------------------------------------------------- home
 
 local function greeting(): string
     local hour = tonumber(os.date("%H")) or 12
@@ -6596,7 +6380,6 @@ local function wrapText(text: string, size: number, room: number, most: number):
     return lines
 end
 
--- the four cards under the search: what the script gave, or its first four switches
 local function quickStart(app: App): { { [string]: any } }
     local cached = app.QuickCards
     if cached then
@@ -6662,7 +6445,6 @@ local function cardText(app: App, card: { [string]: any }, on: boolean?): string
     if type(text) == "string" and text ~= "" then
         return text
     end
-    -- no default line, a card with nothing to say keeps just its title
     return ""
 end
 
@@ -6715,8 +6497,6 @@ local function quickCard(app: App, number: number, card: { [string]: any }, x: n
     local bodySize = math.max(MIN_TEXT, math.floor(11.5 * app.TextScale + 0.5))
     local body = cardText(app, card, on)
     local lines = if body == "" then {} else wrapText(body, bodySize, (w - textX - 14) * unit, 2)
-    -- a card without a description keeps its title in line with the middle of the icon tile
-    -- the title and its lines sit as one block in the middle of the card, level with the icon
     local titleY = if #lines == 0 then CARD_H / 2 elseif #lines == 1 then CARD_H / 2 - 7 else CARD_H / 2 - 14
     Painter.text(title, whole(position + Vector2.new(textX * unit, titleY * unit)), titleSize, pal.Text, app.Alpha.Text * alpha, Z_NAV_TEXT, false, true, Painter.bold())
     for line, text in lines do
@@ -6780,7 +6560,6 @@ local function boxButton(app: App, key: string, label: string, center: Vector2, 
     end
 end
 
--- the search box of Home: the field, a row of quick tools under it, which pages to look in and a button that opens the first find
 local function searchBox(app: App, x: number, y: number, w: number, alpha: number)
     local pal = app.Pal
     local state = app.State
@@ -6830,7 +6609,6 @@ local function searchBox(app: App, x: number, y: number, w: number, alpha: numbe
         end })
     end
 
-    -- the tools under the field
     local rowY = y + BOX_H - 22
     local tools = {
         { "search:tool:keys", "Keybinds", function(center: Vector2, color: Color3)
@@ -6860,7 +6638,6 @@ local function searchBox(app: App, x: number, y: number, w: number, alpha: numbe
         boxButton(app, tool[1], tool[2], app:pos(x + 26 + (number - 1) * 32, rowY), alpha, tool[3], tool[4])
     end
 
-    -- the send button: opens the first find, or puts the cursor in the field while it is empty
     local sendKey = "search:send"
     local ready = ease(app, sendKey .. ":ready", if query ~= "" then 1 else 0, 14 * speed)
     local sendSize = app:size(30, 30)
@@ -6883,7 +6660,6 @@ local function searchBox(app: App, x: number, y: number, w: number, alpha: numbe
         end })
     end
 
-    -- where to look: every page, or one main section
     local scopeKey = "search:scope"
     local label = scopeLabel(app)
     local labelSize = math.floor(12 * app.TextScale + 0.5)
@@ -6918,7 +6694,6 @@ local function searchBox(app: App, x: number, y: number, w: number, alpha: numbe
     end
 end
 
--- the version as a slim pill above the greeting: what is new, the version and a way into the Updates page
 local function homeChip(app: App, centerX: number, y: number, alpha: number)
     local pal = app.Pal
     local options = app.Options
@@ -6962,8 +6737,6 @@ local function homeContent(app: App, x0: number, mw: number, alpha: number, boxA
     local state = app.State
     local pal = app.Pal
     local searching = app.ShowingResults == true or (searchQuery(app) ~= "" and not state.NextTab)
-    -- the move is one soft spring: the box glides up and settles with the faintest give, the greeting lifts away first and the cards
-    -- sink away one after another, going back they return in the reverse order
     local swing = spring(app, "home:morph", if searching then 1 else 0, 0.46, 0.86)
     if not state.AnimationsEnabled then
         swing = if searching then 1 else 0
@@ -6977,7 +6750,6 @@ local function homeContent(app: App, x0: number, mw: number, alpha: number, boxA
     local cardRows = math.ceil(#cards / 2)
     local chipH = 44
     local blockH = chipH + 40 + 24 + BOX_H + (if cardRows > 0 then 26 + 14 + cardRows * (CARD_H + CARD_GAP) - CARD_GAP else 0)
-    -- a short window leaves the chip out so the cards keep their room
     local roomy = m.Height - 44 - blockH >= 56
     if not roomy then
         blockH -= chipH
@@ -6988,7 +6760,6 @@ local function homeContent(app: App, x0: number, mw: number, alpha: number, boxA
     local boxY = boxRest + (56 - boxRest) * glide
     local rest = alpha * headFade
     local lift = (1 - headFade) * 16
-    -- greeting
     if rest > 0.004 then
         if roomy then
             homeChip(app, x0 + mw / 2, top - lift * 0.6, rest)
@@ -7033,7 +6804,6 @@ local function homeContent(app: App, x0: number, mw: number, alpha: number, boxA
     return x, rowsY, cw - 10, m.Height - 16
 end
 
--- ---------------------------------------------------------------------------------------------------------------- background
 
 local function shellBody(app: App)
     local pal = app.Pal
@@ -7041,7 +6811,6 @@ local function shellBody(app: App)
     local alpha = app.Alpha.UI * (1 - skyShows(app))
     Painter.scope("shell:body")
     Painter.rect(app.WindowPos, app.WindowSize, pal.Main, alpha, Z_FRAME, SHELL_WINDOW)
-    -- a soft warm glow: faint in the top left, stronger toward the bottom right, like light falling on the window
     local warm = pal.Accent
     local colors = {
         Color.lerp(pal.Main, warm, 0.05 + 0.06 * light),
@@ -7056,7 +6825,6 @@ local function shellBody(app: App)
         local m: Metrics = app.M
         Painter.scope("shell:glow")
         Painter.clip(app:pos(m.SidebarWidth, 0), app:size(m.Width - m.SidebarWidth, m.Height))
-        -- the light fades out before the window edge, so nothing is cut off by the edge or the round corners
         local spread = app:size(m.Width * 0.8, m.Height * 0.95)
         Painter.image(glow, app:pos(m.Width * 0.97 - m.Width * 0.8, m.Height * 0.97 - m.Height * 0.95), spread, alpha * (0.15 + 0.10 * light), Z_FRAME, 0, warm)
         Painter.image(glow, app:pos(m.SidebarWidth + 10, -m.Height * 0.25), app:size(m.Width * 0.6, m.Height * 0.6), alpha * (0.05 + 0.05 * light), Z_FRAME, 0, warm)
@@ -7065,7 +6833,6 @@ local function shellBody(app: App)
     end
 end
 
--- ---------------------------------------------------------------------------------------------------------------- pages
 
 local function shellContent(app: App, tab: { [string]: any }, section: { [string]: any }, index: number): (number, number, number, number)
     local m: Metrics = app.M
@@ -7081,7 +6848,6 @@ local function shellContent(app: App, tab: { [string]: any }, section: { [string
     trackHistory(app)
 
 
-    -- the line at the bottom: what was just switched, or the script's own status
     local status: string? = nil
     local notice = app.Notice
     local noticed = notice and os.clock() < notice.Expires
@@ -7103,11 +6869,9 @@ local function shellContent(app: App, tab: { [string]: any }, section: { [string
 
     local upcoming = if state.NextTab then app.TabByName[state.NextTab] else nil
     local homeNow = isHome(tab)
-    -- the content panel for the hit tests of the scripts
     local panelPos, panelSize = app:pos(x0, TOP_PILL_Y + TOP_PILL_H), app:size(mw, m.Height - TOP_PILL_Y - TOP_PILL_H)
     app.ContentBox = { panelPos.X, panelPos.Y, panelPos.X + panelSize.X, panelPos.Y + panelSize.Y }
     if homeNow then
-        -- the results come and go with a fade of the same page, the search box stays put through it so typing never flickers
         if state.NextTab == tab.name then
             app.HomeSteady = true
         elseif not state.NextTab and (state.TabReveal or 1) >= 1 then
@@ -7118,7 +6882,6 @@ local function shellContent(app: App, tab: { [string]: any }, section: { [string
     end
     local searching = app.ShowingResults == true and not tab.ownSearch
 
-    -- the page title, it slides and fades with the page
     local item = itemOf(app, tab.name)
     local title: string = if searching then "Search" elseif item and #item.Tabs > 1 then item.Label else tab.label
     local nextItem = if upcoming then itemOf(app, upcoming.name) else nil
@@ -7132,8 +6895,6 @@ local function shellContent(app: App, tab: { [string]: any }, section: { [string
     Painter.scope(nil)
     local y = PAGE_TITLE_Y + 20
     local segAlpha = if state.TabFading then state.TabAlpha elseif state.NextSection or state.SectionSwap then 1 else math.min(1, reveal * 1.4)
-    -- the pages of a group, then the sections of the page, each level one even gap under the one above. search results span
-    -- every page, so neither row shows while they are up
     local sideX, sideW = cx, cw - 6
     local stripShown = item and #item.Tabs > 1 and not searching
     if stripShown then
@@ -7151,7 +6912,6 @@ local function shellContent(app: App, tab: { [string]: any }, section: { [string
         pageStrip(app, "shell:grp:" .. item.Label, cx, y, cw - 6, labels, picked, segAlpha, function(number: number)
             app:switchTab(item.Tabs[number])
         end, #tab.sections > 1)
-        -- the sections sit on the same line, after the pages
         local used = 0
         for _, label in labels do
             used += Painter.textWidth(label, math.floor(14 * app.TextScale + 0.5), Painter.font()) / math.max(0.01, app.Unit) + 24
@@ -7185,7 +6945,6 @@ local function shellContent(app: App, tab: { [string]: any }, section: { [string
     end
     local bottom = m.Height - 10
 
-    -- nothing found: a quiet note in the middle
     local query = app.SearchText or ""
     local empty = ease(app, "search:empty", if query ~= "" and not tab.ownSearch and Layout.sectionHeight(app, section) <= 0 then 1 else 0, 10 * Motion.speed(state))
     if query ~= "" then
@@ -7204,7 +6963,6 @@ end
 local RAIL_WIDTH = 64
 
 local function shellDraw(app: App, now: number, tab: { [string]: any }, section: { [string]: any }, index: number): (number, number, number, number)
-    -- the sidebar slides between its full width and a narrow rail of icons, everything beside it follows the width
     local m: Metrics = app.M
     local full: number = (m :: any).FullSidebar or m.SidebarWidth
     ;(m :: any).FullSidebar = full
@@ -7225,13 +6983,10 @@ local function shellDraw(app: App, now: number, tab: { [string]: any }, section:
     return result[1], result[2], result[3], result[4]
 end
 
--- ---------------------------------------------------------------------------------------------------------------- settings window
 
 local SET_NAV = 176
 local SET_LIFT = 16
 
--- the Settings pages in a window of their own over the page: a dim, a rounded panel with the pages down its left side and the page
--- itself on the right. everything is lifted over the rest of the window and the page behind stops reacting while it is open
 function Chrome.drawSettings(app: App, now: number)
     local state = app.State
     local live = app.SettingsOpen == true
@@ -7254,13 +7009,11 @@ function Chrome.drawSettings(app: App, now: number)
     local priorModal = app.Modal
     app.Modal = overlay or not live
 
-    -- the page fades out, the next one fades in, the same as the pages of the window
     local speed = 14 * Motion.speed(state)
     if state.AnimationsEnabled then
         if set.Next or set.NextSection then
             set.Alpha = Motion.ease(state, set.Alpha, 0, app.Dt, speed * 2.2)
             if set.Alpha < 0.03 then
-                -- only the section changed: the chips stay up while the rows swap
                 set.SectionSwap = set.Next == nil and set.NextSection ~= nil
                 if set.Next then
                     set.Page, set.Next = set.Next, nil
@@ -7320,7 +7073,6 @@ function Chrome.drawSettings(app: App, now: number)
     Painter.border(position, size, radius, pal.Text, shown * 0.1, 1, 1)
     Painter.scope(nil)
 
-    -- the backdrop closes the window, the panel keeps its own clicks and wheel
     if live then
         Hits.add({ key = "set:backdrop", position = app.WindowPos, size = app.WindowSize, wheel = function() end, click = function()
             app:closeSettings()
@@ -7330,7 +7082,6 @@ function Chrome.drawSettings(app: App, now: number)
     end
     Hits.add({ key = "set:panel", position = position, size = size, wheel = function() end })
 
-    -- the pages down the left side
     local navX, navY, navW, navH = px + 8, py + 8, SET_NAV, ph - 16
     Painter.scope("set:nav")
     Painter.rect(app:pos(navX, navY), app:size(navW, navH), pal.Text, shown * (0.05 - 0.02 * pal.Light), 2, rad(app, 16), true)
@@ -7363,13 +7114,10 @@ function Chrome.drawSettings(app: App, now: number)
         Painter.rect(app:pos(navX + 8, at - SB_ROW * stretch / 2), app:size(navW - 16, SB_ROW * (1 + stretch)), pal.Text, app.Alpha.Btn * (0.085 - 0.03 * pal.Light), Z_NAV, rad(app, 9), true)
         Painter.scope(nil)
     end
-    -- the foot of the list: the Discord button with the version under it
     do
         local options = app.Options
         local invite = tostring(options.Discord or "")
         local address = if invite ~= "" then (string.gsub(string.gsub(invite, "^https?://", ""), "^www%.", "")) else tostring(options.Title or "")
-        -- it sits on the grid of the page rows above it: the same inset and width as a row, the logo in the icon column, the address
-        -- in the name column, and the version under it starts at the left edge of the logo, level with the Settings title
         local labelSize = math.max(MIN_TEXT, math.floor(11.5 * app.TextScale + 0.5))
         local tagSize = math.max(MIN_TEXT, math.floor(10 * app.TextScale + 0.5))
         local buttonH = 32
@@ -7419,7 +7167,6 @@ function Chrome.drawSettings(app: App, now: number)
         end
     end
 
-    -- the page: its title, the way out, the sections and the rows
     local cx = px + SET_NAV + 28
     local cw = pw - SET_NAV - 28 - 22
     local reveal = Motion.glide(if state.AnimationsEnabled then math.clamp(set.Reveal, 0, 1) else 1)
@@ -7482,7 +7229,6 @@ function Chrome.draw(app: App, now: number, tab: { [string]: any }, section: { [
     local position, size = app.WindowPos, app.WindowSize
     local rounding = math.max(12, math.round(WINDOW_ROUNDING * app.Scale))
     local frame = app.Alpha.Frame
-    -- right after the loader card is replaced the frame starts with the card's corners and strength and eases into its own
     local card = app.HandoffCard
     if card then
         local settle: number = card.Settle or 0
@@ -7501,7 +7247,6 @@ function Chrome.draw(app: App, now: number, tab: { [string]: any }, section: { [
     Painter.scope("frame:shadows")
     drawShadows(app, position, size)
     Sky.surface(app, position, size, rounding, frame)
-    -- the Finder look keeps only its hairline rim, the animated outline shows on it while the outline animation is turned on
     local quiet = if app.State.PremiumEffects == true then 0 else app.Pal.Pick * (if card then card.Settle or 0 else 1)
     Painter.scope("frame:body")
     Effects.outline(app.State, now, position, size, app.Scale, frame * (1 - quiet), "main", rounding * Painter.corner(), nil, card)
@@ -7598,7 +7343,6 @@ local function accessors(window: Window, descriptor: Map): (() -> any, (any) -> 
     end, set, flag
 end
 
--- a change made on the interface or by a keybind tells the notification, loading a config goes through the plain setter and stays silent
 local function announced(window: Window, descriptor: Map, get: () -> any, set: (any) -> (), describe: (any) -> string): (any) -> ()
     return function(value: any)
         local before = get()
@@ -7617,9 +7361,7 @@ local function common(descriptor: Map, spec: Map): Map
     spec.disabled = descriptor.Disabled
     spec.exempt = descriptor.Exempt
     spec.bottom = descriptor.Bottom
-    -- an option that belongs to the switch above it, drawn indented on a guide line like a tree
     spec.tree = descriptor.Tree == true
-    -- the search also finds an option by the words of its info and by Keywords, "stamina" finds Always Full Speed
     local words: { string } = {}
     if type(descriptor.Keywords) == "string" then
         table.insert(words, descriptor.Keywords)
@@ -7734,7 +7476,6 @@ BUILDERS.Button = function(window: Window, descriptor: Map, _tab: Map): Map
     return spec
 end
 
--- two or three short choices read better as a segmented control, a longer list stays a dropdown. Segment = false keeps the dropdown
 local function segmented(descriptor: Map): boolean
     if descriptor.Segment ~= nil then
         return descriptor.Segment == true
@@ -7930,7 +7671,6 @@ type State = { [string]: any }
 local SPIN_SPEED = 34
 local MAX_PHASE_STEP = 0.10
 
--- both edges are rounded, not the position and the size on their own, so a moving or growing window never makes a side jump by a pixel
 local function snapBox(position: Vector2, size: Vector2): (Vector2, Vector2)
     local left, top = math.floor(position.X + 0.5), math.floor(position.Y + 0.5)
     local right, bottom = math.floor(position.X + size.X + 0.5), math.floor(position.Y + size.Y + 0.5)
@@ -7953,8 +7693,6 @@ local function advancePhase(state: State, name: string, now: number, perimeter: 
     return phase.Phase * perimeter
 end
 
--- right after the loader card is replaced the outline starts as the card's: its color, its spin where the card left it and its trail,
--- then eases into the window's own over card.Settle
 local function cardPhase(state: State, name: string, now: number, card: { [string]: any }): number
     advancePhase(state, name, now, 360, SPIN_SPEED, 0)
     local phase = state.OutlinePhases[name]
@@ -7963,7 +7701,6 @@ local function cardPhase(state: State, name: string, now: number, card: { [strin
     if settle <= 0 then
         phase.Phase = ((os.clock() * cardRate) % 360) / 360
     else
-        -- advancePhase already moved it at the window's speed, the rest of the card's speed is added and fades out
         local step = math.clamp(now - (card.Last or now), 0, MAX_PHASE_STEP)
         phase.Phase = (phase.Phase + step * (cardRate - SPIN_SPEED * Motion.intensity(state)) * (1 - settle) / 360) % 1
     end
@@ -7988,7 +7725,6 @@ function Effects.outline(state: State, now: number, position: Vector2, size: Vec
             trail = 1 - settle
         end
     else
-        -- with the outline animation off the light stops where it is and the outline stays still, turning it on again moves it on from there
         rotation = advancePhase(state, name, now, 360, if state.PremiumEffects == true then SPIN_SPEED else 0, 0)
     end
     local radius = windowRadius or 6 * scale
@@ -8008,8 +7744,6 @@ function Effects.badge(state: State, now: number, position: Vector2, size: Vecto
     Painter.outline(snapPos, snapSize, if radius then math.max(2, radius - inset) else math.max(3, 5 * scale), accent, Color.lighten(accent, 0.9), alpha, 7, math.max(1, 1.2 * scale), rotation, trail)
 end
 
--- the light that runs around something the search found: a soft ring in the accent with the moving outline over it,
--- alpha is its strength (0 to 1), the caller fades it in and out
 function Effects.highlight(state: State, now: number, position: Vector2, size: Vector2, scale: number, alpha: number, radius: number, color: Color3, zIndex: number?)
     if alpha <= 0.004 or size.X <= 4 or size.Y <= 4 then
         return
@@ -8174,7 +7908,6 @@ end
 
 local RANDOM_EFFECTS = { "Bokeh", "Dust", "Silk" }
 
--- the effect the window shows: Random is one of the soft looks picked once when the window is made, the sky themes bring their own and show none of these
 local function chosen(state: State): string?
     local preset = state.ThemePreset
     if state.ThemeName ~= "Custom" and type(preset) == "table" and type(preset.Cycle) == "table" and #preset.Cycle >= 2 then
@@ -8193,7 +7926,6 @@ local function chosen(state: State): string?
     return effect
 end
 
--- the soft pictures looks (Bokeh, Dust, Silk) are drawn by the sky effects, nil for the others
 function Effects.ambient(state: State): string?
     local effect = chosen(state)
     if effect == "Bokeh" or effect == "Dust" or effect == "Silk" then
@@ -8204,7 +7936,6 @@ end
 
 function Effects.background(state: State, particles: { Particle }, now: number, dt: number, windowPos: Vector2, windowSize: Vector2, scale: number, panelAlpha: number, lightMix: number, intro: number, radius: number)
     local preset = state.ThemePreset
-    -- the dropdown shows None on a sky theme and Random on Default, both greyed out, and what the player picked comes back on any other theme
     local forced: string? = if state.ThemeName == "Default" then "Random" else nil
     if state.ThemeName ~= "Custom" and type(preset) == "table" and type(preset.Cycle) == "table" and #preset.Cycle >= 2 then
         forced = "None"
@@ -8411,7 +8142,6 @@ function Farm.leave(app: App)
     app.FarmOn = false
 end
 
--- true while the dashboard is on screen or still fading, the normal window is not drawn then
 function Farm.shown(app: App): boolean
     return app.FarmOn == true or (app.NavAnim["farm"] or 0) > 0.02
 end
@@ -8469,7 +8199,6 @@ local function cardHeight(card: any): number
     return CARD_HEAD + #card.Rows * ROW_HEIGHT + 12
 end
 
--- cards are stacked in two columns, each new card goes under the shorter one
 local function arrange(cards: { any }, width: number): ({ { card: any, x: number, y: number, w: number, h: number } }, number)
     local columnWidth = (width - CARD_GAP) / 2
     local heights = { 0, 0 }
@@ -8527,7 +8256,6 @@ function Farm.draw(app: App, now: number)
     end
     height += PAD + 14
 
-    -- widgets are as wide as their text needs and wrap into rows, each is placed at a design size position
     local listed = {}
     for _, widget in info.Widgets or {} do
         if #listed < WIDGET_LIMIT and (widget.Fade or 1) > 0.004 then
@@ -8567,7 +8295,6 @@ function Farm.draw(app: App, now: number)
         end
         return items, widest, math.max(0, top - WIDGET_GAP)
     end
-    -- the text has a smallest size, so a smaller screen needs wider boxes, which shrink the screen fit again: settle it
     local widgets, widgetsWidth, rawHeight = layout(1)
     local guess = 1
     for _ = 1, 4 do
@@ -8698,7 +8425,6 @@ function Farm.draw(app: App, now: number)
     for index, item in widgets do
         local widget = item.Data
         local fade = entry(6 + index) * (widget.Fade or 1)
-        -- two widgets can share a title, the count keeps their slide keys apart
         local title = tostring(widget.Title)
         seen[title] = (seen[title] or 0) + 1
         local key = "farm:w:" .. title .. ":" .. seen[title]
@@ -8782,7 +8508,6 @@ Fonts.COUNT = 55
 Fonts.DEFAULT = 54
 Fonts.BOLD = 54
 
--- the bold face of the same family, so a heading never mixes two families
 local BOLDS: { [number]: number } = {
     [0] = 2, [1] = 2, [2] = 2, [36] = 2,
     [4] = 5, [5] = 5, [6] = 5, [34] = 5, [35] = 5,
@@ -8791,7 +8516,6 @@ local BOLDS: { [number]: number } = {
     [53] = 54, [54] = 54,
 }
 
--- an older client without the Builder Sans faces gets the closest Gotham face instead of a different look
 local FALLBACKS: { [number]: string } = {
     [49] = "GothamMedium", [48] = "Gotham", [50] = "GothamBold", [51] = "GothamBlack", [52] = "RobotoMono",
 }
@@ -8807,8 +8531,6 @@ local SCALES: { [number]: number } = {
     0.97, 1.03,
 }
 
--- Inter, the open face closest to the Apple system font. it is fetched once, kept in a folder and made a font family at run time,
--- until it is there the Gotham face stands in. the advance widths below let the text be measured in it without asking Roblox
 local CUSTOM: { [number]: { Url: string, File: string, Name: string, Weight: number, Advances: { number } } } = {
     [53] = { Url = "https://raw.githubusercontent.com/rsms/inter/v3.19/docs/font-files/Inter-Medium.otf", File = "Inter-Medium.otf", Name = "Inter Medium", Weight = 500, Advances = { 746,827,1126,1794,1812,2332,1833,612,1064,1064,1469,1875,810,1304,797,1035,1819,1331,1727,1814,1842,1746,1790,1630,1778,1790,797,810,1875,1875,1875,1480,2725,1971,1842,2071,2032,1698,1650,2109,2090,759,1554,1871,1589,2528,2103,2163,1800,2164,1816,1812,1833,2077,1971,2754,1876,1928,1799,1064,1035,1064,1338,1295,1400,1603,1762,1599,1762,1654,1039,1738,1695,701,701,1567,701,2488,1682,1696,1738,1738,1082,1509,1047,1674,1595,2323,1552,1595,1553,1064,964,1064,1875 } },
     [54] = { Url = "https://raw.githubusercontent.com/rsms/inter/v3.19/docs/font-files/Inter-SemiBold.otf", File = "Inter-SemiBold.otf", Name = "Inter SemiBold", Weight = 600, Advances = { 699,870,1115,1811,1828,2376,1866,600,1108,1108,1530,1894,831,1312,818,1066,1878,1354,1750,1835,1875,1781,1825,1653,1819,1825,818,831,1894,1894,1894,1532,2814,2038,1851,2094,2040,1711,1649,2126,2095,774,1579,1906,1594,2552,2086,2182,1812,2184,1832,1828,1858,2066,2038,2835,1944,1984,1838,1108,1066,1108,1355,1318,1400,1618,1775,1626,1775,1669,1062,1761,1726,734,734,1602,734,2528,1717,1712,1759,1759,1117,1546,1070,1713,1622,2358,1584,1622,1582,1108,1008,1108,1894 } },
@@ -8868,7 +8590,6 @@ local function build(index: number)
     end
 end
 
--- the font family of a custom face once it is ready, asking for it the first time starts the download
 function Fonts.face(index: number): any
     local face = faces[index]
     if face ~= nil then
@@ -8883,8 +8604,6 @@ function Fonts.face(index: number): any
     return nil
 end
 
--- Roblox fits a custom face's whole line height into TextSize, not its em, so the drawn text is narrower than the advances
--- say. the real ratio is learned from the drawn labels themselves
 local ratios: { [number]: number } = {}
 
 local function advanceWidth(index: number, text: string, size: number): number?
@@ -8906,7 +8625,6 @@ local function advanceWidth(index: number, text: string, size: number): number?
     return total * size / UNITS
 end
 
--- the width of a text in a custom face that is ready, nil for the others
 function Fonts.measure(index: number, text: string, size: number): number?
     local width = advanceWidth(index, text, size)
     return if width then width * (ratios[index] or 1) else nil
@@ -9153,7 +8871,6 @@ function Hits.begin()
     table.clear(regions)
 end
 
--- regions added while a clip is set only react inside it
 function Hits.setClip(position: Vector2?, size: Vector2?)
     clipPosition, clipSize = position, size
 end
@@ -9258,7 +8975,6 @@ end
 
 function Hits.hold(point: Vector2)
     if dragging and dragging.drag then
-        -- a region that also clicks only starts to drag once the mouse has moved a little, a still press is a click
         if not dragging.moved and dragging.start and (point - dragging.start).Magnitude >= 5 then
             dragging.moved = true
         end
@@ -9684,10 +9400,8 @@ type Spec = { [string]: any }
 
 local COUNTED_KINDS = { toggle = true, slider = true, dropdown = true, button = true }
 
--- the toolbar search of the Finder look hides every row whose name does not hold what was typed
 local function matches(app: App, spec: Spec): boolean
     local query: string? = app.SearchText
-    -- a page is never filtered while it fades out for the results, and the results are already what was found
     if query == nil or query == "" or not app.ShowingResults or app.ShowingResults and type(spec.id) == "string" and string.sub(spec.id, 1, 7) == "result:" then
         return true
     end
@@ -9710,7 +9424,6 @@ local function rowVisible(app: App, row: Spec): boolean
     return visible(app, row)
 end
 
--- an option that only shows under a switch, it fades out and folds away when the switch goes off instead of vanishing
 local function gated(row: Spec): boolean
     if row.kind == "pair" then
         return row.left.show ~= nil or row.right.show ~= nil
@@ -9735,11 +9448,9 @@ function Layout.setSection(app: App, tab: Spec, index: number)
         state.NextSection, state.NextSectionTab = nil, nil
         return
     end
-    -- the section belongs to its own tab, a swap of the page in the same fade must not hand it to the page that fades out
     state.NextSection, state.NextSectionTab = target, tab.name
 end
 
--- the section a tab shows or is about to show
 function Layout.shownIndex(app: App, tab: Spec): number
     local state = app.State
     if state.NextSection and state.NextSectionTab == tab.name then
@@ -9748,17 +9459,13 @@ function Layout.shownIndex(app: App, tab: Spec): number
     return Layout.activeIndex(app, tab)
 end
 
--- picking a search result: the results stay on screen while they fade out, then the page of the result fades in, even when it is the
--- page that was open before the search, so the swap is one smooth fade and never a jump
 local function goTo(app: App, tab: Spec, sectionIndex: number, clear: (App) -> ())
     local state = app.State
-    -- a Settings page opens in the settings window and leaves the page behind as it is
     if app:usesSettingsWindow(tab.name) then
         clear(app)
         app:openSettings(tab.name, sectionIndex)
         return
     end
-    -- the results only stay on screen while they fade out when they were showing, a jump from elsewhere goes straight to the page
     app.ResultHold = if app.ShowingResults then app.ResultPage else nil
     clear(app)
     if not state.AnimationsEnabled then
@@ -9776,8 +9483,6 @@ local function goTo(app: App, tab: Spec, sectionIndex: number, clear: (App) -> (
     Layout.setSection(app, tab, sectionIndex)
 end
 
--- the page that stands in for the open one while something is typed in the search: every option of every tab whose name holds the text,
--- each as a row that opens its own page when it is clicked. the rows are kept between frames so they keep their motion and the page its scroll
 local RESULT_KINDS = { toggle = true, slider = true, dropdown = true, button = true, bindrow = true }
 
 function Layout.results(app: App, query: string, clear: (App) -> ()): Spec
@@ -9802,7 +9507,6 @@ function Layout.results(app: App, query: string, clear: (App) -> ()): Spec
     app.ResultSpecs = cache
     local rows: { Spec } = {}
     local function consider(tab: Spec, sectionIndex: number, section: Spec, entry: Spec, number: number)
-        -- a block of cards lists what it holds (card titles and their options), each opens its card
         if entry.kind == "custom" and type(entry.finds) == "table" then
             if entry.show and entry.show(app) ~= true then
                 return
@@ -9829,7 +9533,6 @@ function Layout.results(app: App, query: string, clear: (App) -> ()): Spec
                         if item.Open then
                             item.Open()
                         end
-                        -- the card or the option on it lights up with the moving outline once its page is in
                         app.Highlight = { Spec = entry, Key = item.Key, At = nil, Scrolled = false }
                     end
                     table.insert(rows, row)
@@ -9842,7 +9545,6 @@ function Layout.results(app: App, query: string, clear: (App) -> ()): Spec
         if not found or not RESULT_KINDS[entry.kind] then
             return
         end
-        -- an option inside a closed Advanced group is still found, picking it opens the group
         local base = if entry.advanced then entry.baseShow else entry.show
         if base and base(app) ~= true then
             return
@@ -9862,7 +9564,6 @@ function Layout.results(app: App, query: string, clear: (App) -> ()): Spec
             if entry.advanced then
                 entry.advanced.open = true
             end
-            -- the page scrolls the option into view and it lights up with the moving outline, so the eye lands on it
             app.Highlight = { Spec = entry, At = nil, Scrolled = false }
         end
         table.insert(rows, row)
@@ -9890,7 +9591,6 @@ function Layout.results(app: App, query: string, clear: (App) -> ()): Spec
     return page
 end
 
--- opens the page of an option by its name and lights the option up, like picking it from the search. false when nothing has that name
 function Layout.reveal(app: App, name: string, clear: (App) -> ()): boolean
     local scope = app.SearchScope
     app.SearchScope = nil
@@ -10005,7 +9705,6 @@ local function drawScrollbar(app: App, cell: { [string]: number }, x: number, y:
     local travel = viewport - thumbHeight
     local thumbY = y + travel * (cell.Pos / maxScroll)
     local thickness = 4
-    -- the bar runs 2 inside the edge of the content panel
     local right = x + width + 6
     local alpha = (0.30 + 0.60 * cell.Bar) * app.Alpha.Text * shown
     local trackAlpha = 0.14 * cell.Bar * app.Alpha.Text * shown
@@ -10046,7 +9745,6 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
     local lift = if state.HighPerformanceMode then 3 else 14
     local slide = if state.HighPerformanceMode then 12 else 16
     stacked = width < STACK_BELOW
-    -- the option a search result opened: it lights up once its page has faded in, holds and fades out again
     local mark = app.Highlight
     local swapped = not state.NextTab and not state.NextSection
     local level = 0
@@ -10077,8 +9775,6 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
         end
     end
     local lowerCursor = bottom - lower
-    -- the options between two text rows sit together on one lighter card with a hairline between them, the card follows the rows while they glide.
-    -- it is only drawn in the Finder look, the other themes keep a fill behind every row
     local run: { Top: number, Bottom: number, Alpha: number, X: number, Lines: { number }, Splits: { { number } } }? = nil
     local groups = 0
     local function flush(clipped: boolean, clipAt: Vector2, clipSize: Vector2)
@@ -10096,7 +9792,6 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
         else
             Painter.unclip()
         end
-        -- a card: the panel colour on a soft shadow with a faint edge, so the group floats a little over the window
         local cardPos = Vector2.new(app:pos(current.X, 0).X, current.Top)
         local cardSize = Vector2.new(app:size(width, 0).X, current.Bottom - current.Top)
         local radius = 18 * app.Unit * Painter.curve()
@@ -10109,7 +9804,6 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
         Painter.border(cardPos, cardSize, radius, pal.Text, shown * 0.07, 3, 1)
         for number, at in current.Lines do
             Painter.scope("group:" .. groups .. ":line:" .. number)
-            -- the hairline over a row that has folded away would hang below the card, it goes with the row
             local fits = at < current.Bottom - 1
             Painter.rect(Vector2.new(app:pos(current.X + 14, 0).X, at), Vector2.new(app:size(width - 28, 0).X, math.max(1, app.Scale * 0.8)), pal.Text, if fits then app.Alpha.Btn * current.Alpha * pal.Pick * 0.07 else 0, 3, 0)
         end
@@ -10123,7 +9817,6 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
 
     local viewBottom = bottom - lower
     local viewport = math.max(1, viewBottom - y)
-    -- rows that are still folding away keep the part of their height that is left, so the page and its scroll shrink with them instead of jumping
     local folding = 0
     local moving = section.Moving == true
     for _, row in section.rows do
@@ -10146,8 +9839,6 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
     end
     cell.Pos = math.clamp(cell.Pos, 0, maxScroll)
     local offset = cell.Pos
-    -- search results come and go while their rows glide into place, so that page is always held inside the view
-    -- rows that fold in or out, and the rows that glide after them, are held inside the view too, so nothing ever spills past the panel
     local held = maxScroll > 0 or section.Query ~= nil or moving
     local stillMoving = false
     if maxScroll > 0 then
@@ -10161,7 +9852,6 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
         })
     end
 
-    -- the last visible child of every tree branch ends its guide line with the elbow
     local treeLast: { [Spec]: boolean } = {}
     do
         local previous: Spec? = nil
@@ -10183,7 +9873,6 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
         end
     end
     local treeCount = 0
-    -- the switch a branch hangs under reads bold, so the main options stand out from their settings
     if not section.TreeMarked then
         section.TreeMarked = true
         local root: Spec? = nil
@@ -10205,7 +9894,6 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
         if live or leaving then
             local height = rowHeight(app, row)
             local advance = height
-            -- a row glides to its new place when rows above it come or go, so a search or a shown option never makes the page jump
             local target = if row.bottom then lowerCursor - bottom else cursor - y
             if not animated or row.Settled == nil or not row.Shown and (gated(row) or row.Filtered) then
                 row.Settled = target
@@ -10258,10 +9946,8 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
                 local clipAt, clipSize = app:pos(x - EDGE_SLACK, y), app:size(width + EDGE_SLACK * 2, viewport)
                 if grouped then
                     local top = app:pos(0, place + dy).Y
-                    -- a row that is folding away only claims the part of its height that is left, so the card never reaches past the page
                     local bottomEdge = app:pos(0, place + dy + math.max(advance - Widgets.GAP, 0)).Y
                     if not live then
-                        -- its share of the card shrinks back to the row above it, so the card ends where the rows below glide up to
                         bottomEdge = app:pos(0, place + advance - Widgets.GAP).Y
                         if not run then
                             bottomEdge = math.max(bottomEdge, top)
@@ -10282,7 +9968,6 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
                 end
                 local wasSuspended = Hits.isSuspended()
                 if not live then
-                    -- a row that folds away is cut to the part of its box that is left (and to the view), and it takes no clicks while it goes
                     local fromY = app:pos(0, place).Y
                     local toY = app:pos(0, place + advance).Y
                     local leftX, rightX = clipAt.X, clipAt.X + clipSize.X
@@ -10327,7 +10012,6 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
                         end
                     end
                 elseif row.kind == "pair" then
-                    -- the two halves keep the same gap between them as the rows keep between each other
                     local half = math.floor((width - pad - Widgets.GAP) / 2)
                     Widgets.draw(app, row.left, x + dx + pad, place + dy, half, fx)
                     Widgets.draw(app, row.right, x + width - half + dx, place + dy, half, fx)
@@ -10353,7 +10037,6 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
                 Hits.suspend(wasSuspended)
             end
             if mark and not mark.Scrolled and swapped and (row == mark.Spec or (row.kind == "pair" and (row.left == mark.Spec or row.right == mark.Spec))) then
-                -- the option (or the card in a block of cards) sits a third of the way down the view once the page has scrolled to it
                 local within = if mark.Key then mark.Offset else 0
                 if within or not inside then
                     mark.Scrolled = true
@@ -10361,7 +10044,6 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
                 end
             end
             if row.bottom or row.kind == "text" or row.bare then
-                -- a card that runs past the view is cut at the view like its rows are, rows below the view end it too
                 flush(held, app:pos(x - EDGE_SLACK, y), app:size(width + EDGE_SLACK * 2, viewport))
             end
             if row.bottom then
@@ -10378,7 +10060,6 @@ function Layout.draw(app: App, section: Spec, x: number, y: number, width: numbe
 
     flush(held, app:pos(x - EDGE_SLACK, y), app:size(width + EDGE_SLACK * 2, viewport))
     section.Moving = stillMoving
-    -- the bar fades in when the page grows past the panel and out when it fits again, it keeps its last length while it fades out
     cell.Need = Motion.ease(state, cell.Need or 0, if maxScroll > 0 then 1 else 0, app.Dt, 12)
     if maxScroll > 0 then
         cell.Need = if animated then cell.Need else 1
@@ -10569,7 +10250,6 @@ function Logo.icon(app: Map, name: string, wanted: number): (string?, number)
             end
         end)
     end
-    -- while the size asked for is still being written, the nearest size that is ready stands in, so an icon never blinks out
     local near, nearGap = nil, math.huge
     for size in set do
         local ready = cache[name .. size]
@@ -10622,7 +10302,6 @@ function Motion.ease(state: State, from: number, to: number, dt: number, speed: 
     local start = Util.finite(from, 0)
     local goal = Util.finite(to, 0)
     local step = Util.finite(dt, 0.01)
-    -- Reduce Motion: every ease settles about three times as fast
     if state.ReduceMotion then
         speed *= 3
     end
@@ -10641,7 +10320,6 @@ function Motion.spring(state: State, bag: { [string]: any }, key: string, goal: 
         cell.x, cell.v = target, 0
         return target
     end
-    -- Reduce Motion: a short, fully damped move with no bounce
     if state.ReduceMotion then
         response = math.min(response, 0.12)
         ratio = math.max(ratio, 1)
@@ -10668,7 +10346,6 @@ function Motion.out(t: number): number
     return 1 - u * u * u
 end
 
--- a long soft landing like the system sheets on a phone, fast at first and then it settles very slowly
 function Motion.glide(t: number): number
     local u = 1 - math.clamp(t, 0, 1)
     return 1 - u * u * u * u * u
@@ -10728,7 +10405,6 @@ modules["ui/opener"] = function(...)
 
 local import: (string) -> any = ...
 
--- a small round button for touch devices, shown only while the window is hidden, so the menu can always be opened again
 local Opener = {}
 
 local SIZE = 46
@@ -10763,8 +10439,6 @@ local function place(gui: any)
     end)
 end
 
--- builds the button, returns update(hidden) and destroy. both do nothing on a device with a keyboard
--- a square button with the logo only and an outline whose light runs around it
 function Opener.new(app: App): ((boolean) -> (), () -> ())
     if not touchOnly() then
         return function() end, function() end
@@ -10870,7 +10544,6 @@ local Discord: typeof(require("./discord")) = import("ui/discord")
 local Effects: typeof(require("./effects")) = import("ui/effects")
 local Logo: typeof(require("./logo")) = import("ui/logo")
 
--- things drawn on the screen outside of the window: the watermark with the fps and the notifications
 local Overlay = {}
 
 type App = { [string]: any }
@@ -10888,7 +10561,6 @@ local function stateOf(app: App): App
     return overlay :: App
 end
 
--- the corners follow the roundness of the rest of the interface
 local function pill(state: App, name: string, position: Vector2, size: Vector2, pal: any, alpha: number, unit: number)
     local radius = math.min(14 * unit * Painter.corner(), size.Y / 2)
     local dark = 1 - 0.6 * (pal.Light or 0)
@@ -10897,7 +10569,6 @@ local function pill(state: App, name: string, position: Vector2, size: Vector2, 
     Painter.rect(position, size, Color.lerp(pal.Main, pal.Panel, 0.35), alpha * 0.94, Z_BODY, radius, true)
     Painter.fade(position, size, Color.lerp(pal.Text, Color3.new(1, 1, 1), pal.Light or 0), 0.06, 0, 90, alpha, Z_BODY, radius, true)
     Painter.border(position, size, radius, pal.Text, alpha * 0.08, Z_BODY, 1)
-    -- the same light that travels around the main window, it runs along the edge of the pill
     Effects.outline(state, os.clock(), position, size, unit, alpha, name, radius, Z_BODY + 1)
 end
 
@@ -10916,7 +10587,6 @@ local function watermark(app: App, overlay: App, rawDt: number)
     if alpha < 0.01 then
         return
     end
-    -- two slow stages in a row, the number glides instead of jumping with every frame
     local live = 1 / math.max(rawDt, 0.001)
     overlay.Fps += (math.min(live, 999) - overlay.Fps) * (1 - math.exp(-3 * app.Dt))
     local goal = overlay.Fps
@@ -10948,7 +10618,6 @@ local function watermark(app: App, overlay: App, rawDt: number)
     local inset = (height - button) / 2
     local logoSize = button
     local logoSpace = if logo then logoSize + gap else 0
-    -- both ends hold a square of the same size at the same distance from the edge
     local padLeft = if logo then inset else pad
     local padRight = if invite then inset else pad
     local slotFps, slotMs = Painter.textWidth("000", size), Painter.textWidth("000", size)
@@ -10975,7 +10644,6 @@ local function watermark(app: App, overlay: App, rawDt: number)
             app:openPopup("discord")
             Overlay.click(app)
         else
-            -- the watermark can be dragged anywhere on the screen, it stays where it was dropped
             overlay.Grab = place - mouse
         end
     end
@@ -11059,12 +10727,10 @@ local function toast(app: App, overlay: App)
     local live = notice ~= nil and os.clock() < notice.Expires and state.ToggleNotifications == true
     if live and notice and notice.Text ~= overlay.ToastText then
         if overlay.Toast < 0.05 then
-            -- the pill is hidden, the message just appears
             overlay.PrevText = ""
             overlay.Swap = 1
             overlay.ToastWidth = 0
         else
-            -- the pill stays where it is, the old message lifts away while the new one rises in
             overlay.PrevText = overlay.ToastText
             overlay.Swap = 0
         end
@@ -11085,7 +10751,6 @@ local function toast(app: App, overlay: App)
     local height = 36 * unit
     local viewport: Vector2 = app.Viewport
     local at = Vector2.new(viewport.X / 2 - overlay.ToastWidth / 2, (22 - 10 * (1 - alpha)) * unit)
-    -- above the window, its settings page and every popup
     Painter.lift(100)
     Painter.scope("overlay:toast")
     pill(state, "toast", at, Vector2.new(overlay.ToastWidth, height), pal, alpha, unit)
@@ -11101,9 +10766,6 @@ local function toast(app: App, overlay: App)
     Painter.lift(0)
 end
 
--- a notification style pill at any point of the screen, built from the same pill, font and colors as the watermark and the
--- notifications. segments are runs of colored words, a thin line is drawn between two segments. bar is an optional slim gauge
--- under the pill { Value, Color }. scale sizes the whole pill, 1 is the size of the watermark
 function Overlay.chip(app: App, key: string, center: Vector2, segments: { { { Text: string, Color: any } } }, alpha: number, scale: number, bar: App?)
     local overlay = stateOf(app)
     local state, pal = app.State, app.Pal
@@ -11113,7 +10775,6 @@ function Overlay.chip(app: App, key: string, center: Vector2, segments: { { { Te
     local pad = 14 * unit
     local gap = 10 * unit
     if bar and bar.Only then
-        -- the whole pill is the gauge: a slim notification pill with a rounded fill inside it, no words
         local fullWidth, slim = 120 * unit, 20 * unit
         local from = Vector2.new(center.X - fullWidth / 2, center.Y - slim / 2)
         Painter.scope("overlay:chip:" .. key)
@@ -11286,11 +10947,8 @@ function Overlays.drawDropdown(app: App)
     local height = math.floor(fullHeight * math.max(0, swing))
     local width = shownBox.Size.X
     local grow = clamp01(swing)
-    -- a menu like the ones of macOS: it unfolds from the row with a soft spring, a rounded card with a hairline rim, a highlight
-    -- that slides to the row under the cursor and fills it with the accent, and a check before the value that is chosen now
     local position = shownBox.Position + Vector2.new(0, shownBox.Size.Y + 4 * unit - (1 - grow) * 6 * unit)
     if shown.above then
-        -- a menu at the bottom of the window opens upward, it grows from its anchor the same way
         position = shownBox.Position - Vector2.new(0, height + 4 * unit - (1 - grow) * 6 * unit)
     end
     local radius = 14 * unit * Painter.curve()
@@ -11366,8 +11024,6 @@ function Overlays.drawDropdown(app: App)
     end
 end
 
--- a popup that takes the place of another one: how long the whole change takes, when the old content is gone and when the new one starts to show,
--- the card eases from the old size to the new one in between, so no text is ever drawn on a card of the wrong size
 local SWAP_TIME = 0.5
 local SWAP_OUT, SWAP_IN = 0.3, 0.65
 
@@ -11380,7 +11036,6 @@ local function smoother(value: number): number
     return t * t * t * (t * (t * 6 - 15) + 10)
 end
 
--- only the Default theme gets the nearly black popup card, every other theme keeps its own tint
 function Overlays.isDefault(app: App): boolean
     local preset = app.State.ThemePreset
     return type(preset) == "table" and preset.Name == "Default" and app.State.ThemeName ~= "Custom"
@@ -11435,7 +11090,6 @@ function Overlays.drawPopup(app: App, now: number)
     if popup.Open and math.abs(grow - 1) <= 0.002 then
         grow = 1
     end
-    -- while the popup is still opening, closing or changing size everything sits on eighths of a pixel, whole pixels would make it jump from one to the next in the last frames
     local settling = morph < 0.999 or grow ~= 1 or from ~= nil
     Painter.fine(settling)
     local designPos = Util.lerpVector2(popup.SourcePos, finalPos, grow)
@@ -11448,7 +11102,6 @@ function Overlays.drawPopup(app: App, now: number)
     local outer = Painter.active()
     Painter.scope("popup:card")
     Painter.rect(app.WindowPos, app.WindowSize, Color.lerp(Color3.new(0, 0, 0), pal.Main, 0.18), popup.Alpha * 0.45 * intro, Z_DIM, 28)
-    -- the sheet floats on a wide soft shadow, with a faint light along its top edge and a hairline under the moving outline
     local lift = morph * intro * (1 - 0.5 * pal.Light)
     Painter.rect(position + app:size(-6, 12), size + app:size(12, 8), Color3.new(0, 0, 0), lift * 0.14, Z_POPUP, radius + 6 * app.Unit, true)
     Painter.rect(position + app:size(0, 3), size, Color3.new(0, 0, 0), lift * 0.22, Z_POPUP, radius, true)
@@ -11472,13 +11125,11 @@ function Overlays.drawPopup(app: App, now: number)
         })
     end
 
-    -- while a popup takes the place of another the old content is drawn on its own size until it has faded out, then the new one fades in on its size
     local shown, shownArg, shownWidth, shownHeight, fade = definition, popup.Arg, width, height, seg(swap, SWAP_IN, 1)
     popup.Leaving = from ~= nil and previous ~= nil and swap < SWAP_OUT
     if popup.Leaving and from and previous then
         shown, shownArg, shownWidth, shownHeight, fade = previous, from.Arg, from.Width, from.Height, 1 - seg(swap, 0, SWAP_OUT)
     end
-    -- the words only come in once the sheet has nearly reached its size, text is not scaled with the sheet and would spill out of a small one
     local roomy = smoother(clamp01((math.min(grow, 1) - 0.55) / 0.4))
     local textAlpha = math.clamp((popup.Alpha - 0.2) * 1.25, 0, 1) * app.Alpha.Text * fade * roomy
     local kit = Kit.new(app, shownWidth, shownHeight, position, size, textAlpha)
@@ -11496,7 +11147,6 @@ function Overlays.drawPopup(app: App, now: number)
                 end)
             end
         end
-        -- a broken script popup must not leave the hits suspended or the drawing on fine pixels
         pcall(shown.render, app, kit, shownArg)
         Hits.suspend(false)
     end
@@ -11526,8 +11176,6 @@ local function transparencyLocked(window: Window): boolean
     return performanceOff(window) or not window.State.Transparent
 end
 
--- every page of the Settings window is split into short sections, each one fits the window without scrolling
--- a small caps headline that starts each group of options so a page reads at a glance
 local function headline(section: Map, text: string)
     section:label({ Text = text, Size = 11, Bold = true, Height = 36, Offset = 0, Accent = true })
 end
@@ -11807,7 +11455,6 @@ local Z_SLOT = 100000
 local order = 0
 local warming = false
 
--- while the loader card still covers the window everything is drawn barely there, so every part is built and set up before it fades in
 function Painter.warm(state: boolean)
     warming = state
 end
@@ -11816,7 +11463,6 @@ local function lift(alpha: number): number
     return if warming and alpha <= 0.004 then 0.005 else alpha
 end
 
--- everything drawn while this is set sits that many layers higher, so a window can lift a whole page over the rest
 local zBase = 0
 
 function Painter.lift(layers: number)
@@ -11828,7 +11474,6 @@ local function depth(zIndex: number): number
     return (zIndex + zBase) * Z_SLOT + math.min(order, Z_SLOT - 1)
 end
 
--- every relative corner is drawn this much rounder than the Roundness setting says, the setting still scales them all
 local ROUND_BOOST = 1.3
 local DEFAULT_CORNER = 0.46
 
@@ -11836,7 +11481,6 @@ function Painter.setCorner(value: number)
     corner = math.clamp(value, 0, 0.6) * ROUND_BOOST
 end
 
--- 1 at the default Roundness, for corners given in pixels that should still follow the setting
 function Painter.curve(): number
     return corner / (DEFAULT_CORNER * ROUND_BOOST)
 end
@@ -11853,7 +11497,6 @@ function Painter.font(): number
     return font
 end
 
--- the bold face that belongs to the window font, the window's own bold when that font has none
 function Painter.bold(): number
     return Fonts.boldOf(font) or Fonts.BOLD
 end
@@ -11935,7 +11578,6 @@ function Painter.hideAll()
     Painter.finish()
 end
 
--- cuts everything drawn after this call off at the given screen box, until unclip
 function Painter.clip(position: Vector2, size: Vector2)
     Draw.setClip(position.X, position.Y, size.X, size.Y)
 end
@@ -11944,7 +11586,6 @@ function Painter.unclip()
     Draw.clearClip()
 end
 
--- the screen box of the clip that is set now, nil while nothing is cut off
 function Painter.clipBox(): (number?, number?, number?, number?)
     return Draw.clipBox()
 end
@@ -11973,7 +11614,6 @@ function Painter.rect(position: Vector2, size: Vector2, color: Color3, alpha: nu
     node:show(true)
 end
 
--- a box with a color gradient over its whole size, the colors are spread evenly along the direction of the angle in degrees
 function Painter.gradient(position: Vector2, size: Vector2, colors: { Color3 }, angle: number, alpha: number, zIndex: number, rounding: number?)
     local z = depth(zIndex)
     alpha = lift(alpha)
@@ -11993,7 +11633,6 @@ function Painter.gradient(position: Vector2, size: Vector2, colors: { Color3 }, 
     node:show(true)
 end
 
--- a box whose color fades from one strength to another along the angle in degrees
 function Painter.fade(position: Vector2, size: Vector2, color: Color3, from: number, to: number, angle: number, alpha: number, zIndex: number, rounding: number?, absolute: boolean?)
     local z = depth(zIndex)
     alpha = lift(alpha)
@@ -12014,8 +11653,6 @@ function Painter.fade(position: Vector2, size: Vector2, color: Color3, from: num
     node:show(true)
 end
 
--- a thin border drawn as a real stroke around the box, so every side has the same width and the corners stay round,
--- it sits on the outside of the box, the box itself is not changed
 function Painter.border(position: Vector2, size: Vector2, radius: number, color: Color3, alpha: number, zIndex: number, thickness: number)
     local z = depth(zIndex)
     alpha = lift(alpha)
@@ -12058,14 +11695,11 @@ function Painter.line(from: Vector2, to: Vector2, color: Color3, alpha: number, 
     local delta = to - from
     local length = delta.Magnitude
     if length < 0.5 then
-        -- a line too short to see still takes its slot, so the objects drawn after it keep theirs
         Painter.rect(from, Vector2.zero, color, 0, zIndex)
         return
     end
     local middle = (from + to) / 2
     local angle = math.deg(math.atan2(delta.Y, delta.X))
-    -- the box is turned around its own center, so it is sized in whole pixels first and placed from the middle, then the
-    -- rounding of its corner can never push the middle of the line off by a pixel
     local long = math.max(1, math.floor(length + 0.5))
     local thick = math.max(1, math.floor(thickness + 0.5))
     Painter.rect(middle - Vector2.new(long / 2, thick / 2), Vector2.new(long, thick), color, alpha, zIndex, thick / 2, true, angle)
@@ -12098,19 +11732,16 @@ function Painter.imageStats(): (number, number, number, number)
     return imagesReady, imagesLoading, 0, 1
 end
 
--- text is always drawn and measured on a whole font size, a size a hair over a whole number from float error stays on that number
 local function wholeSize(size: number): number
     return math.max(1, math.ceil(size - 0.02))
 end
 
--- the width the text takes on screen, measured in the face it is drawn with (the window font unless one is given)
 function Painter.textWidth(text: string, size: number, face: number?): number
     return Draw.measure(text, wholeSize(size), face or font)
 end
 
 local lastText: any = nil
 
--- the width the engine really drew the last Painter.text with, falls back to the measured width
 function Painter.drawnWidth(text: string, size: number, face: number?): number
     local node = lastText
     local drawn: number? = if node and node.drawnWidth then node:drawnWidth() else nil
@@ -12148,7 +11779,6 @@ function Painter.text(
     local width = Draw.measure(text, drawSize, face) + 2
     local y = if middle then position.Y - drawSize * 0.5 else position.Y
     if center then
-        -- an even box keeps its middle on the given point, an odd one would centre the text half a pixel to the right
         local box = 2 * math.ceil(width / 2) + 80
         node:update(text, math.floor(position.X - box * 0.5 + 0.5), y, box, drawSize, drawSize, color, math.clamp(alpha, 0, 1), z, face, true)
     else
@@ -12213,7 +11843,6 @@ local function lightSet(state: { [string]: any }, main: Color3): { [string]: Col
     }
 end
 
--- a white or pale grey accent disappears on a light window, there it turns into the text color as the light mode comes in
 local function readable(accent: Color3, text: Color3, light: number): Color3
     if light <= 0.001 then
         return accent
@@ -12288,11 +11917,10 @@ function Palette.compute(state: { [string]: any }, dt: number): Colors
     local dark = math.max(light, if bright then 1 else 0)
     local accentText = Color.lerp(Color.lighten(accent, 0.55), Color.lerp(accent, Color3.new(0, 0, 0), 0.4), dark)
     local presetOf = state.ThemePreset or Theme.Default
-    local pure = true -- the Finder look is the layout of every theme, a theme only brings its colours
+    local pure = true
     local pick = 0
     if pure then
         pick = 1
-        -- text and marks that sit on the accent follow how bright it is, so a white accent gets dark ink
         accentText = if (accent.R * 0.299 + accent.G * 0.587 + accent.B * 0.114) > 0.62 then Color3.fromRGB(20, 20, 24) else Color3.new(1, 1, 1)
     end
 
@@ -12472,7 +12100,6 @@ local function drawPanel(app: App, panel: Panel)
     end
     local alpha: number = math.clamp(panel.Anim, 0, 1)
     local full = Vector2.new(panel.Width * unit, panel.Height * unit)
-    -- opening and closing share one pop, the panel grows from 90% while fading in and shrinks back while fading out
     local pop = 0.9 + 0.1 * alpha
     local size = full * pop
     local pos: Vector2 = panel.Pos + (full - size) / 2
@@ -12487,7 +12114,6 @@ local function drawPanel(app: App, panel: Panel)
 
     local closeKey = "panel:" .. id .. ":close"
     local closeSize = Vector2.new(24 * unit, 24 * unit)
-    -- the X keeps the same room to the right edge as to the top and bottom of the bar
     local closePos = pos + Vector2.new(size.X - closeSize.X - (barHeight - closeSize.Y) / 2, (barHeight - closeSize.Y) / 2)
     panel.LockAnim = Motion.ease(app.State, panel.LockAnim, if panel.Locked then 1 else 0, app.Dt, 10)
     local dim = 1 - 0.65 * panel.LockAnim
@@ -12565,7 +12191,6 @@ function Panels.draw(app: App)
     for index, panel in list do
         local shown = panel.Open and (panel.Persistent or app.State.Visible ~= false)
         if shown and panel.Warm and not panel.Warmed then
-            -- one invisible pass so Render can size and place the panel before it fades in
             panel.Warmed = true
             Painter.scope("panel:" .. index)
             drawPanel(app, panel)
@@ -12743,7 +12368,6 @@ local function closer(app: App): () -> ()
     end
 end
 
--- every popup shares the spacing of the kit, body text is 13 high on rows of LINE and lined up on the left
 local EDGE, GAP, SECTION, BUTTON, TOP = Kit.EDGE, Kit.GAP, Kit.SECTION, Kit.BUTTON, Kit.TOP
 local LINE = 18
 local TEXT_SIZE = 13
@@ -12757,13 +12381,11 @@ local function widest(app: App, lines: { string }, size: number): number
     return width
 end
 
--- wide enough for the body and for the title next to the Close button
 local function fitWidth(app: App, title: string, lines: { string }, minimum: number): number
     local head = widest(app, { title }, TITLE_SIZE) + EDGE + GAP + Kit.CLOSE + EDGE
     return math.ceil(math.max(minimum, head, widest(app, lines, TEXT_SIZE) + EDGE * 2))
 end
 
--- the popup ends right below its lines, or right below the row of buttons under them
 local function fitHeight(lines: number, buttons: boolean): number
     return TOP + lines * LINE + (if buttons then SECTION + BUTTON else 0) + EDGE
 end
@@ -12779,7 +12401,6 @@ local function confirmRow(app: App, kit: any, onConfirm: () -> (), yes: string?,
     kit:button("confirm:no", EDGE + width + GAP, y, width, BUTTON, closer(app), { label = no or "Cancel" })
 end
 
--- the font grid packs its cells tighter than other rows, the same gap both ways
 local FONT_CELL = 24
 local FONT_GAP = 4
 local FONT_ROWS = FONTS_PER_PAGE // 2
@@ -12841,7 +12462,6 @@ local function themeEntries(): { { [string]: any } }
     return entries
 end
 
--- the sky of an animated theme drifts through its colors while the card is on screen
 local function themeSky(cycle: { Color3 }, offset: number): Color3
     local count = #cycle
     local at = ((os.clock() / THEME_CYCLE * count) + offset) % count
@@ -12849,7 +12469,6 @@ local function themeSky(cycle: { Color3 }, offset: number): Color3
     return Color.lerp(cycle[index + 1], cycle[(index + 1) % count + 1], at - index)
 end
 
--- a small copy of the window in the colors of the theme, its name, a tag and a marker when it is the one in use
 local function themeCard(app: App, kit: any, entry: { [string]: any }, x: number, y: number, width: number, number: number)
     local pal = app.Pal
     local name: string = entry.Name
@@ -13014,7 +12633,6 @@ Builtin.discord = {
 local LOG_ITEM = 12
 local LOG_STEP = 24
 local LOG_MARK = 18
--- text inside a row starts this far in from the row and keeps as much room on its right
 local LOG_INSET = 10
 local LOG_ROWS = 9
 local LOG_WIDTH = 340
@@ -13057,9 +12675,7 @@ local function logWrap(app: App, text: string, limit: number): { string }
     return rows
 end
 
--- the open group grows and the others shrink a little every frame, this runs once per frame from the size function
 local function logStep(app: App, notice: { [string]: any })
-    -- every time the popup is opened again it starts with the default group already open
     local now = os.clock()
     if not logSeen or now - logLast > 0.5 then
         logSeen = true
@@ -13079,8 +12695,6 @@ local function logStep(app: App, notice: { [string]: any })
     end
 end
 
--- every row knows where it sits in the content, the groups below a growing or shrinking group slide with it
--- a line is shown only above the Limit of its group, so a closing group is wiped away from the bottom instead of snapping
 local function logRows(app: App, notice: { [string]: any }): ({ { [string]: any } }, number)
     local rows: { { [string]: any } } = {}
     local at = 0
@@ -13119,13 +12733,10 @@ local function logRows(app: App, notice: { [string]: any }): ({ { [string]: any 
     return rows, at
 end
 
--- the title moves right of the script's logo, which is as high as the title row
 local function logTitleX(app: App): number
     return if app.LogoAsset then EDGE + Kit.ROW + GAP else EDGE
 end
 
--- the release sheet: the logo on the left with the title and the number of changes to its right, then one collapsible card per mode.
--- every change has a small glyph for its kind, all lines are wrapped to the same size they are drawn with so nothing leaves the popup
 local SHEET_WIDTH = 340
 local SHEET_LOGO = 40
 local SHEET_LINE = 16
@@ -13146,7 +12757,6 @@ local function sheetHead(app: App): number
     return if app.LogoAsset then 76 else 58
 end
 
--- a reopened popup starts with the first mode open and the others folded
 local function sheetStep(app: App, notice: { [string]: any })
     local now = os.clock()
     local groups: { any } = notice.Groups
@@ -13230,7 +12840,6 @@ local function sheetRender(app: App, kit: any, notice: { [string]: any })
         Painter.image(logo, kit:p(EDGE, 18), Vector2.new(SHEET_LOGO * factor, SHEET_LOGO * factor), kit.Alpha, kit.ZText, if emblem then 0 else 10 * factor, if emblem then pal.Accent else nil)
         left = EDGE + SHEET_LOGO + 12
     end
-    -- the title shrinks before it could reach the close button
     local room = kit.Width - left - Kit.CLOSE - EDGE * 2
     local title = tostring(notice.Title)
     local titleSize = 17
@@ -13373,7 +12982,6 @@ local function logRender(app: App, kit: any, notice: { [string]: any })
     end
     local pal = app.Pal
     kit:title(tostring(notice.Title), logTitleX(app))
-    -- the logo of the script in the top left corner
     local logo: string? = app.LogoAsset
     if logo then
         local factor = kit.ScreenSize.X / kit.Width
@@ -13424,7 +13032,6 @@ local function logRender(app: App, kit: any, notice: { [string]: any })
                 local grow = logGrow[name] or 0
                 local hover = Motion.ease(app.State, logHover[name] or 0, if kit:hovered(key) then 1 else 0, app.Dt, 14)
                 logHover[name] = hover
-                -- a card per group: an accent bar on its left grows while it is open, a drawn chevron turns down and a count sits on the right
                 kit:rect(x, top + 1, span, LOG_STEP - 2, Color.lerp(pal.Panel, pal.Off, 0.25 + 0.5 * hover), 1, 12)
                 kit:hit(key, x, top, span, LOG_STEP, function()
                     logOpen = if logOpen == name then nil else name
@@ -13466,7 +13073,6 @@ local function logRender(app: App, kit: any, notice: { [string]: any })
         end
     end
     kit.Alpha = base
-    -- Close sits in the top right corner, the bottom bar holds the invite
     kit:closeX(function()
         app:acknowledgeUpdate()
         app:closePopup()
@@ -13484,7 +13090,6 @@ local function logRender(app: App, kit: any, notice: { [string]: any })
             app:acknowledgeUpdate()
             app:openPopup("discord")
         end, { hoverColor = pal.Off, base = pal.Panel, rounding = 12 })
-        -- the icon and the text are one group, centered together in the button
         local label = tostring(footer)
         local iconSide = 14
         local gap = 6
@@ -13508,7 +13113,6 @@ Builtin.updateNotice = {
         if type(notice) == "table" and notice.Title ~= nil then
             return logSize(app, notice)
         end
-        -- a plain list of lines: the first is the title, the others are the body
         local lines: { string } = app.Options.UpdateNotice
         local rest = { table.unpack(lines, 2) }
         local height = if #rest > 0 then fitHeight(#rest, false) else Kit.HEAD + EDGE
@@ -13539,7 +13143,6 @@ local THANKS_LINES = { "Join the discord server if you need help", "or want to s
 
 Builtin.thanks = {
     size = function(app: App)
-        -- the two lines and the small note under them take three rows
         return fitWidth(app, THANKS_TITLE, THANKS_LINES, 340), fitHeight(#THANKS_LINES + 1, app.Options.Discord ~= nil)
     end,
     title = function()
@@ -13570,7 +13173,6 @@ local previewText: string? = nil
 local previewLimit = 0
 local previewResult = ""
 
--- a code can be thousands of characters long, so only a short head is ever measured and the result is kept until the text changes
 local function preview(kit: any, text: string, limit: number): string
     if text == "" then
         return ""
@@ -13595,7 +13197,6 @@ local CODE_BOX = 78
 
 Builtin.configCode = {
     size = function()
-        -- the code box, one row for the note under it and the buttons
         return 440, TOP + CODE_BOX + GAP + LINE + SECTION + BUTTON + EDGE
     end,
     title = function()
@@ -13669,13 +13270,11 @@ local ColorPopup = {}
 local Z_OUTLINE, Z_BASE, Z_WHITE, Z_BLACK, Z_EDGE, Z_DOT = 28, 25, 26, 27, 29, 31
 local BAND = 2
 
--- the mixer follows the spacing of the kit: board and hue bar, then the fields, then the buttons
 local EDGE, GAP, SECTION, BUTTON = Kit.EDGE, Kit.GAP, Kit.SECTION, Kit.BUTTON
 local WIDTH = 394
 local SPAN = WIDTH - EDGE * 2
 local BOARD_Y, BOARD_H = Kit.TOP, 142
 local HUE_Y, HUE_H = BOARD_Y + BOARD_H + GAP, 22
--- a field is a small label over its box
 local LABEL = 14
 local HEX_Y = HUE_Y + HUE_H + SECTION
 local RGB_Y = HEX_Y + LABEL + BUTTON + GAP
@@ -13830,7 +13429,6 @@ local HANDLE_SPEED, GROW_SPEED = 26, 16
 local glide: { [string]: number } = {}
 local grow: { [string]: number } = {}
 
--- the handle follows its value smoothly when the value is set from outside, and sticks to the cursor while it is dragged
 local function follow(app: App, key: string, goal: number, dragging: boolean): number
     local shown = glide[key]
     if shown == nil or dragging then
@@ -13845,7 +13443,6 @@ local function follow(app: App, key: string, goal: number, dragging: boolean): n
     return shown
 end
 
--- a soft shadow, a bright ring and a fill with the picked color, the ring grows while hovered and a little more while dragged
 local function handle(app: App, kit: any, key: string, center: Vector2, width: number, height: number, fill: Color3, active: number)
     local pal = app.Pal
     local alpha = kit.Alpha
@@ -14042,14 +13639,10 @@ type App = { [string]: any }
 local Z_BODY, Z_CONTROL, Z_TEXT = 22, 24, 26
 Kit.Z_BODY, Kit.Z_CONTROL, Kit.Z_TEXT = Z_BODY, Z_CONTROL, Z_TEXT
 
--- one spacing for every popup: the same edge on all four sides, a small gap between related items and a bigger one between sections
 local EDGE, GAP, SECTION = 16, 8, 14
--- every popup button is this high and this round, the title row and its Close button are a little lower so they read as one row with the title
 local BUTTON, ROUND, CLOSE, ROW = 28, 16, 62, 24
--- the capitals of the title are centered on the Close button (measured on a zoomed screenshot, the baseline of the title ends 6 zoomed px under the label baseline)
 local TITLE_Y = EDGE + ROW / 2 - 0.4
 local HEAD = EDGE + ROW
--- the body starts one section under Close, a header has its divider in that gap
 local TOP = HEAD + SECTION
 Kit.EDGE, Kit.GAP, Kit.SECTION, Kit.BUTTON, Kit.ROUND, Kit.CLOSE, Kit.ROW, Kit.HEAD, Kit.TOP = EDGE, GAP, SECTION, BUTTON, ROUND, CLOSE, ROW, HEAD, TOP
 
@@ -14082,13 +13675,11 @@ function Kit.rect(self: Self, x: number, y: number, w: number, h: number, color:
     Painter.rect(self:p(x, y), self:s(w, h), color, self.Alpha * (alpha or 1), self.ZControl, rounding or 10)
 end
 
--- a box with a corner radius in the same units as Kit.border, so a box and its outline always match
 function Kit.box(self: Self, x: number, y: number, w: number, h: number, color: Color3, alpha: number?, radius: number?)
     local factor = self.ScreenSize.X / self.Width
     Painter.rect(self:p(x, y), self:s(w, h), color, self.Alpha * (alpha or 1), self.ZControl, (radius or 0) * factor, true)
 end
 
--- a box whose strength runs from "from" to "to" along the angle in degrees (90 is top to bottom), same corner units as Kit.box
 function Kit.fade(self: Self, x: number, y: number, w: number, h: number, color: Color3, from: number, to: number, angle: number, radius: number?)
     local factor = self.ScreenSize.X / self.Width
     Painter.fade(self:p(x, y), self:s(w, h), color, from, to, angle, self.Alpha, self.ZControl, (radius or 0) * factor, true)
@@ -14121,7 +13712,6 @@ function Kit.text(self: Self, text: string, x: number, y: number, size: number, 
     Painter.text(text, self:p(x, y), scaled, color, self.Alpha, self.ZText, center, middle, font)
 end
 
--- the bold face of the window, for a small heading that has to stand out from the text around it
 function Kit.boldFace(_self: Self): number?
     return Painter.bold()
 end
@@ -14133,8 +13723,6 @@ local function easeKey(app: App, key: string, goal: number, speed: number): numb
     return value
 end
 
--- a line whose words change while the popup stays open, like a note under a button: the old words fade out first and the new ones fade in on the same spot,
--- so two texts are never drawn over each other
 function Kit.swapText(self: Self, key: string, text: string, x: number, y: number, size: number, color: Color3, center: boolean?, middle: boolean?, font: number?)
     local app = self.App
     local store = app.PopText
@@ -14163,9 +13751,6 @@ local function pressOf(app: App, key: string, enabled: boolean?): number
     return Press.scale(app, app.Springs, key .. ":press", key, enabled)
 end
 
--- the colors of a small square switch. they come from the text and accent colors and the panel the switch sits on, never from the window
--- color alone, so a switch reads the same on a dark, a light or a see through window. dim mutes both states the same amount, an on
--- switch on a muted card still looks on
 local DARK_KNOB = Color3.fromRGB(22, 22, 26)
 local LIGHT_KNOB = Color3.fromRGB(250, 250, 252)
 
@@ -14173,7 +13758,6 @@ local function luma(color: Color3): number
     return 0.299 * color.R + 0.587 * color.G + 0.114 * color.B
 end
 
--- the fill of an on switch: the accent, or the text color when the accent is a plain white or grey
 local function switchFill(pal: { [string]: any }): Color3
     local accent: Color3 = pal.Accent
     local high = math.max(accent.R, accent.G, accent.B)
@@ -14193,26 +13777,19 @@ function Kit.switchColors(pal: { [string]: any }, shown: number, hover: number, 
     local mute = 0.55 * dim
     track = Color.lerp(track, Color.lerp(base, pal.Text, 0.08), mute)
     knob = Color.lerp(knob, Color.lerp(base, pal.Text, 0.4), mute * (1 - 0.4 * shown))
-    -- a hairline keeps an off switch visible on any window, it fades out as the fill comes in
     local outline = (0.2 + 0.06 * hover) * (1 - shown) * (1 - 0.5 * dim)
     return track, knob, pal.Text, outline
 end
 
--- how round a switch is: the Toggle Roundness setting (0 to 0.5) mapped so that even its lowest step keeps soft corners and
--- the default is a full pill
 function Kit.switchRound(state: { [string]: any }): number
     local setting = math.clamp(tonumber(state.ToggleRoundness) or 0.5, 0, 0.5)
     return 0.4 + 0.6 * math.clamp(setting / 0.4, 0, 1)
 end
 
--- a checkbox: a rounded square that fills with the accent while a check mark draws itself in, the mark takes the ink that reads on
--- the fill. side is in screen pixels, pos is its top left corner, value goes 0 to 1 as it is switched
 function Kit.checkbox(pal: { [string]: any }, pos: Vector2, side: number, value: number, held: number, hover: number, dim: number, alpha: number, z: number, factor: number)
     local fill = Kit.switchFill(pal)
     local ink = if luma(fill) > 0.72 then DARK_KNOB else LIGHT_KNOB
     local mute = 0.55 * dim
-    -- everything is placed from one whole pixel center: a press sinks the box by whole pixels on every side and the mark keeps its
-    -- size and place, so holding and letting go never moves the check
     side = math.round(side)
     local origin = Vector2.new(math.round(pos.X), math.round(pos.Y))
     local center = origin + Vector2.new(side / 2, side / 2)
@@ -14224,8 +13801,6 @@ function Kit.checkbox(pal: { [string]: any }, pos: Vector2, side: number, value:
     local body = Color.lerp(Color.lerp(off, Color.lighten(fill, 0.08 * hover), value), Color.lerp(pal.Panel, pal.Text, 0.08), mute)
     Painter.rect(at + Vector2.new(0, math.max(1, factor) * 0.6), Vector2.new(size, size), Color3.new(0, 0, 0), alpha * 0.16 * value, z, radius, true)
     Painter.rect(at, Vector2.new(size, size), body, alpha, z, radius, true)
-    -- the edge and both strokes of the check are always drawn, clear while they are not shown, so the box takes the same draw
-    -- slots in every state and whatever is drawn after it in the same scope never trades objects with it mid animation
     local edge = (0.30 + 0.22 * hover) * (1 - value) * (1 - 0.5 * dim)
     Painter.border(at, Vector2.new(size, size), radius, pal.Text, if edge > 0.005 then edge * alpha else 0, z, math.max(1, math.round(1.2 * factor)))
     local a = center + Vector2.new(side * -0.23, side * 0.03)
@@ -14243,7 +13818,6 @@ end
 local function drawSwitch(self: Self, key: string, x: number, y: number, width: number, height: number, knob: number, on: boolean, hover: number, dim: number?)
     local app = self.App
     local pal = app.Pal
-    -- a plain slide without overshoot, and a small squash of the knob while it is held
     local value = math.clamp(Motion.spring(app.State, app.Springs, key .. ":on", if on then 1 else 0, app.Dt, 0.18, 1), 0, 1)
     local held = math.clamp(Motion.spring(app.State, app.Springs, key .. ":held", if Hits.isPressed(key) and app.HoverKey == key then 1 else 0, app.Dt, 0.16, 1), 0, 1)
     local factor = self.ScreenSize.X / self.Width
@@ -14270,7 +13844,6 @@ local function drawSwitch(self: Self, key: string, x: number, y: number, width: 
     local room = sizeW - pad * 2 - knobW
     local knobRadius = math.max(2 * factor, radius - pad)
     local knobPos = Vector2.new(pos.X + pad + math.round(room * value), pos.Y + (sizeH - knobH) / 2)
-    -- the knob floats over its track on a small soft shadow
     Painter.rect(knobPos + Vector2.new(0, math.max(1, factor)), Vector2.new(knobW, knobH), Color3.new(0, 0, 0), alpha * 0.22, self.ZControl, knobRadius, true)
     Painter.rect(knobPos, Vector2.new(knobW, knobH), knobColor, alpha, self.ZControl, knobRadius, true)
 end
@@ -14304,7 +13877,6 @@ function Kit.button(self: Self, key: string, x: number, y: number, w: number, h:
     if opts.rounding then
         Painter.rect(moved, shrunk, fill, self.Alpha, self.ZControl, opts.rounding)
     else
-        -- a pill, as round as the Roundness setting lets it be
         local radius = shrunk.Y / 2 * math.min(1, Painter.curve())
         Painter.rect(moved, shrunk, fill, self.Alpha, self.ZControl, radius, true)
         if not active then
@@ -14322,7 +13894,6 @@ function Kit.button(self: Self, key: string, x: number, y: number, w: number, h:
         if opts.font then
             labelSize = labelSize * Fonts.scale(opts.font) / Fonts.scale(Painter.font())
         end
-        -- a label sits in the middle of its button unless the caller lines it up on the left
         if opts.align ~= "left" then
             Painter.text(opts.label, moved + shrunk / 2, labelSize, textColor, self.Alpha, self.ZText, true, true, opts.font)
         else
@@ -14355,7 +13926,6 @@ function Kit.pager(self: Self, key: string, x: number, y: number, w: number, pag
     self:text(tostring(page) .. "/" .. tostring(maxPage), x + w / 2, y + BUTTON / 2, 13, pal.Sub, true, true)
 end
 
--- body text of a popup, lined up on the left edge like the title above it, y is the middle of the first line
 function Kit.lines(self: Self, lines: { string }, y: number, step: number, size: number?)
     local color = self.App.Pal.Sub
     local base = size or 13
@@ -14408,7 +13978,6 @@ function Kit.slider(self: Self, key: string, x: number, y: number, w: number, h:
     })
 end
 
--- an invisible drag area: the fraction 0 to 1 of the mouse across the bar is given to onDrag while it is held
 function Kit.dragBar(self: Self, key: string, x: number, y: number, w: number, h: number, barX: number, barW: number, onDrag: (number) -> ())
     local barPos, barSize = self:p(barX, y), self:s(barW, h)
     Hits.add({
@@ -14433,12 +14002,10 @@ function Kit.input(self: Self, key: string, x: number, y: number, w: number, h: 
     Hits.add({ key = key, position = self:p(x, y), size = self:s(w, h), click = onFocus })
 end
 
--- the Close button in the top right corner of a popup, its top is level with the top of the title
 function Kit.closeX(self: Self, onClose: () -> ())
     self:button("pop:close", self.Width - EDGE - CLOSE, EDGE, CLOSE, ROW, onClose, { label = "Close" })
 end
 
--- the accent title with its short line under it, x moves it right of a logo
 function Kit.title(self: Self, title: string, x: number?)
     local pal = self.App.Pal
     local left = x or EDGE
@@ -14452,7 +14019,6 @@ function Kit.header(self: Self, title: string, subtitle: string?, onClose: () ->
         self:button("pop:back", EDGE, EDGE, ROW, ROW, onBack, { label = "<", size = 14 })
         left = EDGE + ROW + GAP
     end
-    -- a title with a subtitle under it is centered on the row as one block, a title alone has its capitals on the middle of the row
     self:text(title, left, if subtitle then TITLE_Y - 2 else TITLE_Y + 3.5, 15, pal.Text, false, true)
     if subtitle then
         self:text(subtitle, left, TITLE_Y + 11, 10, pal.Sub, false, true)
@@ -14491,7 +14057,6 @@ function Kit.listRow(self: Self, key: string, x: number, y: number, w: number, h
     end
 end
 
--- a small square switch, 30 by 18 with a 12 knob, x and y are its top left corner. dim (0 to 1) mutes it without hiding its state
 Kit.SWITCH_W, Kit.SWITCH_H = 34, 20
 function Kit.miniSwitch(self: Self, key: string, x: number, y: number, on: boolean, onClick: () -> (), dim: number?)
     local app = self.App
@@ -14501,7 +14066,6 @@ function Kit.miniSwitch(self: Self, key: string, x: number, y: number, on: boole
     Hits.add({ key = key, position = self:p(x - 4, y - 4), size = self:s(width + 8, height + 8), click = onClick })
 end
 
--- the room each label of a segment wants: its text and the same padding on both sides
 local SEGMENT_TEXT, SEGMENT_PAD, SEGMENT_INSET = 11.5, 11, 2.5
 
 function Kit.segmentWidth(self: Self, labels: { string }, size: number?): number
@@ -14512,7 +14076,6 @@ function Kit.segmentWidth(self: Self, labels: { string }, size: number?): number
     return total
 end
 
--- cuts a label down until it fits, with two dots at the end
 local function clipLabel(self: Self, text: string, size: number, room: number): string
     if self:measure(text, size) <= room then
         return text
@@ -14524,9 +14087,6 @@ local function clipLabel(self: Self, text: string, size: number, room: number): 
     return string.sub(text, 1, cut) .. ".."
 end
 
--- a segmented control. every cell is as wide as its label and the room left over is shared out evenly, so a long label never leaves
--- its pill. when the labels do not fit the text gets a little smaller first and is cut only as a last step. the pill keeps the same inset
--- from the track on every side and springs in both place and width
 function Kit.segment(self: Self, key: string, x: number, y: number, w: number, h: number, labels: { string }, selected: number, onSelect: (number) -> (), dim: number?)
     local app = self.App
     local pal = app.Pal
@@ -14622,9 +14182,7 @@ end
 local WHEEL_STEP = 56
 local SCROLL_RATE = 8
 
--- a list fades its rows out over this many pixels at an edge that has more rows behind it
 local EDGE_FADE = 24
--- how far a row may reach over the edge of the list, it is invisible by then
 
 local function smooth(value: number): number
     local t = math.clamp(value, 0, 1)
@@ -14677,10 +14235,8 @@ function Kit.scroll(self: Self, key: string, x: number, y: number, w: number, h:
     local outer = Painter.active()
     local first = math.max(1, math.floor(cell.Pos / rowHeight) + 1)
     local last = math.min(count, math.ceil((cell.Pos + h) / rowHeight))
-    -- a list that moves one whole row at a time has room above it for the outline of its first row, which is drawn around the row
     local room = if contained then 4 else 0
     local clipAt, clipSize = self:p(x - 4, y - room), self:s(w + 8, h + room)
-    -- inside a scrolling page the list is also cut at the page edge
     local pageAt, pageSize = Hits.getClip()
     if pageAt and pageSize then
         local left, top = math.max(clipAt.X, pageAt.X), math.max(clipAt.Y, pageAt.Y)
@@ -14762,7 +14318,6 @@ function Kit.line(self: Self, x1: number, y1: number, x2: number, y2: number, co
     Painter.line(self:p(x1, y1), self:p(x2, y2), color, self.Alpha * (alpha or 1), self.ZControl, thickness * factor)
 end
 
--- a chevron made of a trail of round dots, so both arms are smooth at any angle. turn 0 points right, 1 down, -1 up
 function Kit.chevron(self: Self, cx: number, cy: number, turn: number, color: Color3, arm: number?, thickness: number?, alpha: number?)
     local reach = arm or 4.5
     local factor = self.ScreenSize.X / self.Width
@@ -14820,7 +14375,6 @@ function Press.scale(app: App, bag: { [string]: any }, name: string, key: any, e
     return 1 - Press.SHRINK * math.clamp(value, 0, 1)
 end
 
--- the box sinks by the same whole number of pixels on every side, so its center never moves while it is pressed or let go
 function Press.box(position: Vector2, size: Vector2, scale: number): (Vector2, Vector2)
     if scale == 1 then
         return position, size
@@ -14874,10 +14428,10 @@ local STARTUP_DELAY = 0.1
 local UI_SAVE_INTERVAL = 0.5
 local LEAN_EVERY = 3
 local MOTION_DT = 1 / 30
-local HALO_ALPHA = 0.23 -- how strong the loader card draws its halo
-local PRELOAD_LIMIT = 30 -- a window built while the loader plays shows by itself after this long if the loader never says so
-local HOLD_ANSWER = 1 -- an older loader never says its card is gone, the options start fading this long after the window was drawn
-local HOLD_LIMIT = 4 -- the options never wait longer than this for the loader card
+local HALO_ALPHA = 0.23
+local PRELOAD_LIMIT = 30
+local HOLD_ANSWER = 1
+local HOLD_LIMIT = 4
 
 local function clamp01(value: number): number
     return math.clamp(value, 0, 1)
@@ -14983,7 +14537,6 @@ local function updateGeometry(app: App, now: number, dt: number)
 
     local motion = math.min(dt, MOTION_DT)
     if app.RevealStart then
-        -- counted in capped frame steps, so a freeze while the script builds cannot skip the fade, and held at the start while the loader card still covers the window
         if not app.RevealHold then
             app.RevealTime = (app.RevealTime or 0) + motion * (app.RevealSpeed or 1)
         end
@@ -14994,7 +14547,6 @@ local function updateGeometry(app: App, now: number, dt: number)
         state.TabReveal = math.clamp((elapsed - 0.12) / 0.66, 0, 1)
         local visual = math.clamp((elapsed - 0.08) / 0.72, 0, 1)
         app.WelcomeVisual = visual * visual * (3 - 2 * visual)
-        -- after a loader handoff the frame eases from the card's look into the window's own once the card is gone
         local card = app.HandoffCard
         if card then
             local settle = math.clamp((elapsed - 0.08) / 0.9, 0, 1)
@@ -15018,7 +14570,6 @@ local function updateGeometry(app: App, now: number, dt: number)
     local previous = app.MenuPos
     local follow = 1 - math.exp(-22 * dt)
     app.MenuPos = Util.lerpVector2(app.MenuPos, app.TargetPos, follow)
-    -- the glide ends exactly on the target, a position that keeps creeping by fractions of a pixel makes the outline and the body round to different pixels for a frame
     if (app.TargetPos - app.MenuPos).Magnitude < 0.45 then
         app.MenuPos = app.TargetPos
     end
@@ -15027,7 +14578,6 @@ local function updateGeometry(app: App, now: number, dt: number)
 
     local animated = state.UIScaleAnim
     local current = app.MenuSize * animated
-    -- the frame always sits on whole pixels so every layer of it, the outline included, rounds the same way
     local origin = app.MenuPos + app.MenuSize / 2 - current / 2
     origin = Vector2.new(math.floor(origin.X + 0.5), math.floor(origin.Y + 0.5))
     current = Vector2.new(math.floor(current.X + 0.5), math.floor(current.Y + 0.5))
@@ -15053,7 +14603,6 @@ local function updateGeometry(app: App, now: number, dt: number)
                 app:finishFarewell()
             end
         else
-            -- the logo stays until the window is fully back at its default size and place, then it goes and the window hides
             if not farewell.ReadyAt and ((not app.Recentering and elapsed >= 0.9) or elapsed >= 3) then
                 farewell.ReadyAt = now
             end
@@ -15102,7 +14651,6 @@ local function updateTabs(app: App, dt: number)
                     state.CurrentTab = state.NextTab
                     state.NextTab = nil
                 end
-                -- the new page starts from nothing and fades in, so the swap never flashes a frame of it at full strength
                 state.TabReveal = 0
                 state.TabAlpha = 0
                 state.TabFading = false
@@ -15150,7 +14698,6 @@ local function handleKeys(app: App, now: number)
     end
     local captured = Keys.findNew(down, app.PreviousKeys)
     app.PreviousKeys = down
-    -- everything below only acts on a key pressed this frame, so frames without one skip the walk over every bind
     if next(fresh) == nil then
         return
     end
@@ -15169,7 +14716,6 @@ local function handleKeys(app: App, now: number)
     if blocked then
         return
     end
-    -- with no menu key bound the hidden window still opens on the default key, nobody gets locked out
     local menuKey = Keys.normalize(state.Keybind)
     if (menuKey == "" or menuKey == "None") and not state.Visible then
         menuKey = Keys.normalize(app:menuKey())
@@ -15216,7 +14762,6 @@ local function runFrameHooks(app: App)
         Now = app.Now,
         Visible = app.State.Visible,
         Canvas = Canvas,
-        -- a notification style pill, not drawn while the window is unfocused because that frame has no painter pass
         Chip = function(key: string, center: Vector2, segments: any, alpha: number, scale: number, bar: any?)
             if app.Lean ~= true then
                 Overlay.chip(app, key, center, segments, alpha, scale, bar)
@@ -15257,7 +14802,6 @@ local function updateWindowBlock(app: App)
     WindowBlock.setBlocked(block, blockAt, blockSize, enabled and (over or Hits.busy()))
 end
 
--- unload: while the content fades the logo shows in the middle of the empty window and stays until the window has hidden
 local function drawFarewellLogo(app: App, now: number)
     local farewell = app.Farewell
     if not farewell or farewell.Start == 0 then
@@ -15277,7 +14821,6 @@ local function drawFarewellLogo(app: App, now: number)
     local size: Vector2 = app.WindowSize
     local middle = app.WindowPos + size / 2
     local breathe = (0.82 + 0.18 * mix) * (1 + 0.02 * math.sin(elapsed * 3))
-    -- the loader card's halo behind the logo: the same soft picture at the same strength, it swells in a little after the logo and breathes with it
     local halo = Skyfx.halo()
     if halo then
         local swell = clamp01((elapsed - 0.25) / 0.8)
@@ -15304,7 +14847,6 @@ local function drawFarewellLogo(app: App, now: number)
     end
 end
 
--- the corner grip at the bottom right, dragging it resizes the window from its top left like a Windows 11 window
 local MIN_WIDTH, MIN_HEIGHT = 520, 360
 
 local function drawResizeGrip(app: App)
@@ -15384,8 +14926,6 @@ local function drawWindow(app: App, now: number)
     local index = Layout.activeIndex(app, tab)
     local section = tab.sections[index]
     local typed = Chrome.query(app)
-    -- the results stand in for the page while something is typed. going from the page to the results and back is the same fade as a
-    -- page change: the shown content fades out, the swap happens while nothing shows and the other content fades in
     local want = typed ~= "" and not tab.ownSearch
     if app.ResultsShown == nil or not state.AnimationsEnabled then
         app.ResultsShown = want
@@ -15405,7 +14945,6 @@ local function drawWindow(app: App, now: number)
     end
     app.ShowingResults = false
     if app.ResultHold then
-        -- a picked result keeps the results on screen until they have faded out
         section = app.ResultHold
         app.ShowingResults = true
     elseif app.ResultsShown and not tab.ownSearch then
@@ -15432,7 +14971,6 @@ local function drawWindow(app: App, now: number)
     app.Alpha.Text = baseText
     Painter.scope("overlay:settings")
     Chrome.drawSettings(app, now)
-    -- the dropdowns and popups of the settings window sit over it
     Painter.lift(if app.SettingsVisible then 16 else 0)
     app.Modal = overlay
     Painter.scope("overlay:dropdown")
@@ -15505,7 +15043,6 @@ local function snapColors(app: App)
     state.PaletteShown = nil
 end
 
--- a hidden start says once how to open the window
 local function hiddenNotice(app: App)
     if app.HiddenStart and not app.State.Visible then
         app.HiddenStart = nil
@@ -15535,7 +15072,6 @@ local function present(revealing: boolean)
     end
 end
 
--- a frame of an unfocused window: only the frame hooks run, so the ESP keeps drawing while the menu work waits for the next full frame
 local function leanStep(app: App, now: number)
     app.Dt, app.Now = math.min(now - app.LastNow, 0.05), now
     Canvas.begin()
@@ -15549,7 +15085,6 @@ end
 
 function Runner.step(app: App, now: number)
     local state = app.State
-    -- while the game window is in the background nobody uses the menu, so two of three frames only run the hooks
     if app.Unfocused and not app.Boot and not app.Welcome then
         app.LeanTick = (app.LeanTick + 1) % LEAN_EVERY
         if app.LeanTick ~= 0 then
@@ -15578,7 +15113,6 @@ function Runner.step(app: App, now: number)
     if app.Handoff and app.Viewport then
         app.Handoff = nil
         snapColors(app)
-        -- the window opens at the size the card grew to, a saved ui scale that differs is glided to once the card is gone
         local cardScale = if type(app.CardLook) == "table" then tonumber(app.CardLook.Scale) else nil
         local savedScale = state.UIScale
         local hidden = app.HiddenStart == true
@@ -15586,19 +15120,16 @@ function Runner.step(app: App, now: number)
         if cardScale and math.abs((tonumber(savedScale) or cardScale) - cardScale) > 0.002 then
             app.PendingScale = savedScale
         end
-        -- the loader still waits for its answer, a hidden start just has no window under the card
         app.RevealHold = { Since = now, Frames = 0, Signaled = nil }
         local look = app.CardLook
         app.CardLook = nil
         if hidden then
-            -- no reveal either, it would draw the window over a hidden start
             app.RevealStart = nil
             state.Visible = false
             state.VisibilityAnim, state.IntroAlpha = 0, 0
             app.Springs.open = { x = 0, v = 0 }
             hiddenNotice(app)
         else
-            -- the loader card sits above the window: the options wait at the start of their fade until the card is gone, then fade in like a normal open
             app.RevealStart = now
             app.RevealTime = 0
             app.RevealSpeed = 0.7
@@ -15689,7 +15220,6 @@ function Runner.step(app: App, now: number)
         end
     end
     present(revealing)
-    -- after two drawn frames the window is on screen under the card, the loader is told so and takes its card away
     local drawn = app.RevealHold
     if drawn and not waiting and not drawn.Signaled then
         drawn.Frames += 1
@@ -15734,17 +15264,14 @@ function Runner.start(app: App): () -> ()
     app.WasDown = false
     app.DragOffset = Vector2.new(0, 0)
     app.WelcomeVisual = 1
-    -- the loader intro asks for this when its card has grown to the window, then the window opens in place without boot or welcome
     app.Handoff = getgenv().__OkloHandoff == true
     getgenv().__OkloHandoff = nil
     getgenv().__OkloDrawn = nil
-    -- the loader can also start the script while its card still plays: the window is then built and drawn hidden, it answers "built" and shows when the loader sets __OkloReveal
     if not app.Handoff and getgenv().__OkloPreload == true then
         getgenv().__OkloPreload = "built"
         app.Handoff = true
         app.PreloadWait = os.clock()
     end
-    -- the loader leaves the look of its card, the window starts as that card and eases into its own
     local cardLook = getgenv().__OkloCard
     getgenv().__OkloCard = nil
     app.CardLook = if app.Handoff and type(cardLook) == "table" then cardLook else nil
@@ -15849,7 +15376,6 @@ local STOPS = 20
 
 local skyFx: string? = nil
 
--- the sky of the current frame, kept in plain values so the strips need no closures or tables
 local skyNow = 0
 local skyCycle: { Color3 }? = nil
 local skyFlow = 0
@@ -15868,7 +15394,6 @@ local skyTopR, skyTopG, skyTopB = 0, 0, 0
 
 local ringPoints: { [{ Color3 }]: { number } } = setmetatable({}, { __mode = "k" }) :: any
 
--- the points a smooth curve needs so that it passes through every color of the ring, worked out once for each ring
 local function ringControls(cycle: { Color3 }): { number }
     local known = ringPoints[cycle]
     if known then
@@ -15891,7 +15416,6 @@ local function ringControls(cycle: { Color3 }): { number }
     return points
 end
 
--- a smooth closed curve through the ring of colors, its bends are smooth too so no color stands out as a line where the curve passes it
 local function ringAt(cycle: { Color3 }, position: number): (number, number, number)
     local points = ringControls(cycle)
     local count = #cycle
@@ -15912,8 +15436,6 @@ local function ringAt(cycle: { Color3 }, position: number): (number, number, num
         math.clamp(a * points[i0 + 3] + b * points[i1 + 3] + c * points[i2 + 3] + d * points[i3 + 3], 0, 1)
 end
 
--- the ring keeps turning while its speed swings forward and back, two waves travel through it in opposite directions,
--- a soft glow rolls over the height and some skies breathe or let their middle wander, so the colors move in waves and never like a plain scroll
 local function skyPrepare(now: number)
     skyNow = now
     skyDrift = skyWay * skyRate * now + skySwing * math.sin(now * skySwingSpeed) + skySwing * 0.3 * math.sin(now * skySwingSpeed * 2.45 + 1.7) + skySwing * 0.13 * math.sin(now * skySwingSpeed * 4.8 + 0.4)
@@ -15921,8 +15443,6 @@ local function skyPrepare(now: number)
     skyPulse = skyBeat * math.sin(now * skyBeatSpeed)
 end
 
--- level is where on the shape the color is taken, shift moves the ring for that layer and tone says how far it is mixed from the box color to the sky color,
--- shade fades the plain gradient under the ring so every shape turns into the same flat box color while one sky hands over to the next
 local function skyColor(level: number, shift: number?, tone: number?): Color3
     level = math.clamp(level, 0, 1)
     local mixed = tone or level
@@ -15945,7 +15465,6 @@ local function skyColor(level: number, shift: number?, tone: number?): Color3
     return Color3.new(r, g, b)
 end
 
--- the ring is sampled along the gradient of the box, the gradient turns to the random angle of the sky
 local stops: { Color3 } = {}
 
 local function skyGradient(position: Vector2, size: Vector2, base: Color3, top: Color3, alpha: number, baseAlpha: number, z: number, rounding: number, cycle: { Color3 }?, flow: number, reach: number)
@@ -15967,9 +15486,6 @@ local function skyGradient(position: Vector2, size: Vector2, base: Color3, top: 
         stops[index] = color
         peak = math.max(peak, color.R, color.G, color.B)
     end
-    -- a gradient keeps its colors far coarser than the screen near black, a dark sky splits into hard tinted bands that jump as the colors drift,
-    -- so the stops are lifted until the brightest is near white and the gradient is laid faint over black instead, which shows the same colors.
-    -- the lift moves in small steps so it rarely changes, and the black under it makes both together cover exactly as much as the gradient alone
     local lift = math.clamp(math.ceil(peak * 50) / 50, 0.04, 1)
     if lift < 1 then
         for index = 1, STOPS do
@@ -15992,11 +15508,6 @@ end
 
 type Sky = { Sky: Color3?, Cycle: { Color3 }?, Flow: number, Glass: number, Clear: number, Veil: number }
 
--- the sky of the theme, eased so choosing or leaving a flowing or glass theme fades instead of jumping,
--- a flowing sky on screen keeps its colors, motion, shape and particles while it fades out, and the next one fades in after it,
--- a still gradient fades flat before a flowing sky comes in and only comes back once the flow is gone, so the shapes never swap while they show
--- every time a flowing sky comes on screen it starts from somewhere else: a random place on the ring of colors, a random side the colors come from,
--- a random way they travel and a random angle of the field
 local function rollSky(): { [string]: any }
     pcall(math.randomseed, math.floor(os.clock() * 100000) + os.time())
     return {
@@ -16079,7 +15590,6 @@ local function skyOf(app: App): Sky
     return result
 end
 
--- how strong a glass panel is drawn over the veil of the window, so both together cover as much as the panel alone would
 local function glassLeft(cover: number, veil: number): number
     if veil <= 0.004 then
         return cover
@@ -16087,7 +15597,6 @@ local function glassLeft(cover: number, veil: number): number
     return math.clamp((cover - veil) / (1 - veil), 0, 1)
 end
 
--- how much of a card is drawn over the glass veil of the window
 function Sky.cover(sky: Sky): number
     return glassLeft(1 - sky.Clear * (1 - sky.Glass), sky.Veil)
 end
@@ -16120,15 +15629,11 @@ function Sky.left(cover: number, veil: number): number
     return glassLeft(cover, veil)
 end
 
--- the frame of the window: the outline backing, the sky of the theme with its particles, the glass veil and the outline colors,
--- the welcome screen draws the same so it follows the theme exactly
 local function skipping(name: string): boolean
     return string.find(tostring(getgenv().OkloUISkip), name, 1, true) ~= nil
 end
 
 function Sky.surface(app: App, position: Vector2, size: Vector2, rounding: number, ui: number): Sky
-    -- right after the loader card is replaced the window is drawn as the card, a flat body with no backing under its outline,
-    -- and the backing, sky, lift and veil ease in under it
     local card = app.HandoffCard
     local settle: number = if card then card.Settle or 0 else 1
     Painter.scope("frame:rim")
@@ -16141,7 +15646,6 @@ function Sky.surface(app: App, position: Vector2, size: Vector2, rounding: numbe
         skyPrepare(os.clock())
         local dark = ui * (1 - pal.Light)
         local effect = if sky.Cycle then skyFx else nil
-        -- the orbs and glows fade in with the rest of the window instead of showing at full strength at once
         local fxIn = app.WelcomeVisual or 1
         fxIn = fxIn * fxIn * (3 - 2 * fxIn)
         if not skipping("skygradient") then
@@ -16154,7 +15658,6 @@ function Sky.surface(app: App, position: Vector2, size: Vector2, rounding: numbe
         if effect and not skipping("skyfx") then
             Skyfx.draw(effect, position, size, rounding * Painter.corner(), app.Scale, dark * sky.Flow * fxIn, Z_FRAME, skyNow, first, second)
         end
-        -- the glass panels share most of their tint with the whole window, so the frame around them is as calm as the glass itself
         if sky.Veil > 0.004 and not skipping("skyveil") then
             Painter.rect(position, size, Color.lerp(pal.Panel, pal.Main, 0.35), ui * sky.Veil, Z_FRAME, rounding)
         end
@@ -16219,8 +15722,6 @@ type Field = {
     Flow: number?,
 }
 
--- the particles every theme with a field of them picks from: count, direction (1 falls, -1 rises, 0 stays), speed range, sideways sway, size range, height per width, strength and twinkle,
--- flow slides the whole field sideways (part of the width per second, the larger ones faster so it has depth)
 local FIELDS: { [string]: Field } = {
     rain = { N = 26, Dir = 1, Speed = { 0.1, 0.16 }, Sway = 0, SwayFreq = 0, Size = { 1.3, 2 }, Aspect = 9, Alpha = 0.5, Twinkle = 0, Sharp = 1 },
     petals = { N = 16, Dir = 1, Speed = { 0.022, 0.04 }, Sway = 0.05, SwayFreq = 0.35, Size = { 5, 8 }, Aspect = 0.62, Alpha = 0.55, Twinkle = 0, Sharp = 1, Flow = 0.006 },
@@ -16300,7 +15801,6 @@ local function field(kind: string, left: number, top: number, width: number, hei
             local pulse = 0.5 + 0.5 * math.sin(now * spec.Twinkle * (0.6 + hash(index, 6)) + phase)
             shine *= pulse ^ spec.Sharp
         end
-        -- every particle always takes its own slot of the pool, a hidden one just draws with no strength, so the others never move to another object when one fades
         local w = size
         local h = size * spec.Aspect
         local px = left + (width - w) * math.clamp(x, 0, 1)
@@ -16310,7 +15810,6 @@ local function field(kind: string, left: number, top: number, width: number, hei
     Painter.fine(false)
 end
 
--- a straight piece of a bolt on whole pixels, so the pieces meet without seams or overlaps
 local function piece(x: number, y: number, w: number, h: number, color: Color3, alpha: number, z: number)
     if w >= 1 and h >= 1 then
         Painter.rect(Vector2.new(x, y), Vector2.new(w, h), color, alpha, z, 0)
@@ -16319,7 +15818,6 @@ local function piece(x: number, y: number, w: number, h: number, color: Color3, 
     end
 end
 
--- a side step of a bolt from the column at x to the column at goal on the row at y, the glow behind it only fills what the columns leave
 local function jog(x: number, goal: number, y: number, core: number, glow: number, coreColor: Color3, glowColor: Color3, coreAlpha: number, glowAlpha: number, z: number)
     if goal > x then
         piece(x + core + glow, y - glow, goal - x, core + glow * 2, glowColor, glowAlpha, z)
@@ -16330,7 +15828,6 @@ local function jog(x: number, goal: number, y: number, core: number, glow: numbe
     end
 end
 
--- a fork that leaves the bolt at x on the row at y and zig-zags down away from it, thinner and dimmer
 local function branch(slot: number, x: number, y: number, side: number, reach: number, core: number, glow: number, low: number, high: number, coreColor: Color3, glowColor: Color3, coreAlpha: number, glowAlpha: number, z: number)
     local thin, soft = math.max(core - 1, 1), glow
     local goal = math.clamp(x + side * math.floor(reach * (0.9 + 0.6 * hash(slot, 70))), low, high)
@@ -16360,8 +15857,6 @@ local function branch(slot: number, x: number, y: number, side: number, reach: n
     end
 end
 
--- a forked bolt every few seconds, each time slot decides from its number if it strikes, where and when, so nothing has to be remembered,
--- it flashes, fades out and often flickers once more, the whole sky lights up softly with it
 local function bolt(left: number, top: number, width: number, height: number, scale: number, alpha: number, z: number, now: number, first: Color3, second: Color3, position: Vector2, size: Vector2, radius: number)
     local slot = math.floor(now / BOLT_SLOT)
     if hash(slot, 31) > 0.82 then
@@ -16419,8 +15914,6 @@ local function bolt(left: number, top: number, width: number, height: number, sc
     end
 end
 
--- big soft balls of light on the black of the window that drift on their own slow paths and breathe, every ball is a stack of circles that get smaller and brighter towards its middle,
--- so the edge melts into the dark like a blur, the balls overlap and add up where they meet
 local ORBS = {
     { Tone = 0, Size = 0.46, AX = 0.34, AY = 0.30, WX = 0.113, WY = 0.083, Phase = 0.0, Breath = 0.17, Power = 1.0 },
     { Tone = 1, Size = 0.34, AX = 0.40, AY = 0.34, WX = 0.071, WY = 0.131, Phase = 1.9, Breath = 0.11, Power = 0.85 },
@@ -16429,8 +15922,6 @@ local ORBS = {
 }
 local ORB_LAYERS = 72
 
--- a bat seen from the front with its wings spread, the wing is a membrane between the arm, three long fingers and the body with a scalloped back edge,
--- the membrane is filled with a fan of thick lines from the wrist so it reads as one solid shape, the wing beats down fast and comes up slowly
 local function bat(x: number, y: number, unit: number, now: number, phase: number, _dir: number, color: Color3, alpha: number, z: number)
     local beat = math.sin(now * 7.5 + phase)
     local flap = beat + 0.28 * math.sin(now * 15 + phase * 2)
@@ -16448,7 +15939,6 @@ local function bat(x: number, y: number, unit: number, now: number, phase: numbe
             local angle = lean * 0.45 + drops[index] + 0.1 * flap
             tips[index] = wrist + Vector2.new(side * math.cos(angle) * reaches[index] * unit, math.sin(angle) * reaches[index] * unit)
         end
-        -- the edge the membrane hangs from, the dips between the fingertips are pulled in towards the wrist
         local edge = { tips[1] }
         for index = 1, 2 do
             local middle = (tips[index] + tips[index + 1]) / 2
@@ -16476,7 +15966,6 @@ local function bat(x: number, y: number, unit: number, now: number, phase: numbe
     end
 end
 
--- a web in a corner, spokes fan out over the quarter circle and the rings join them
 local function web(cornerX: number, cornerY: number, sx: number, sy: number, length: number, color: Color3, alpha: number, z: number, thick: number)
     local spokes = 6
     local rings = { 0.26, 0.48, 0.70, 0.94 }
@@ -16500,7 +15989,6 @@ local function web(cornerX: number, cornerY: number, sx: number, sy: number, len
     end
 end
 
--- two bones from the hip to the foot, the knee always bends upwards
 local function knee(hip: Vector2, foot: Vector2, first: number, second: number): (Vector2, Vector2)
     local delta = foot - hip
     local distance = math.clamp(delta.Magnitude, 0.001, first + second - 0.01)
@@ -16519,7 +16007,6 @@ local function limb(from: Vector2, joint: Vector2, to: Vector2, color: Color3, a
     Painter.line(joint, to, color, alpha, z, thick)
 end
 
--- a spider on its thread, it swings like a pendulum, lets itself down and pulls itself up again, the legs hang bent and twitch one by one
 local function spider(x: number, top: number, drop: number, unit: number, color: Color3, alpha: number, z: number, now: number, seed: number)
     local thick = math.max(1, 1.05 * unit)
     local swing = 0.16 * math.sin(now * 0.75 + seed) + 0.05 * math.sin(now * 1.9 + seed * 2.1)
@@ -16546,9 +16033,6 @@ local function spider(x: number, top: number, drop: number, unit: number, color:
     Painter.rect(center + Vector2.new(-2.8 * unit, -5.6 * unit), Vector2.new(5.6 * unit, 5.6 * unit), color, alpha, z, 2.8 * unit, true, tilt)
 end
 
--- a spider that walks along the floor of the window, seen from the side, the near legs are bright and the far ones dim,
--- every foot is planted on the floor until the body has moved a full stride past it and then it swings forward in an arc,
--- the legs of one tetrapod step together and the other four hold the body, the knees are worked out from hip and foot so they arch up like a real spider
 local function crawler(position: Vector2, size: Vector2, unit: number, color: Color3, alpha: number, z: number, now: number)
     local pace = 15 * unit
     local span = size.X - 110 * unit
@@ -16584,7 +16068,6 @@ local function crawler(position: Vector2, size: Vector2, unit: number, color: Co
             limb(hip, joint, tip, color, alpha * (if near then 1 else 0.5), z, thick * (if near then 1 else 0.85))
         end
         if not near then
-            -- the body goes over the far legs and under the near ones
             Painter.rect(body + Vector2.new(-9 * unit - forward * 6 * unit, -6.2 * unit), Vector2.new(18 * unit, 13 * unit), color, alpha, z, 6.5 * unit, true)
             Painter.rect(body + Vector2.new(-4.8 * unit + forward * 8.5 * unit, -3.6 * unit), Vector2.new(9.6 * unit, 8 * unit), color, alpha, z, 4 * unit, true)
             local eyes = Color3.fromRGB(255, 190, 90)
@@ -16619,19 +16102,12 @@ local function haunt(position: Vector2, size: Vector2, radius: number, scale: nu
     end
 end
 
--- one soft round glow picture (white, strongest in the middle and melting to nothing at the edge), a stack of hard circles shows every shade step of the dark as an edge that
--- moves with the ball, a picture melts smoothly, it is written into the workspace once and loaded from there, without file support the stack of circles is used
 local GLOW_PNG = "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"
--- the loader card's soft halo behind the bird, same falloff, white and full strength in the middle so the alpha it is drawn with sets how strong it is
 local HALO_PNG = "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"
 local pictures: { [string]: string | false } = {}
 
--- writes a picture into the workspace once and hands back its asset, nil when the executor cannot write files,
--- data is base64 unless raw says it is already the bytes of the file
 local tidied = false
 
--- the effect pictures used to be written straight into the oklo scripts folder, they now live in its loaders folder with the loader pictures.
--- the first picture of a run removes the old copies, the new ones are written below
 local function tidy()
     if tidied then
         return
@@ -16707,7 +16183,6 @@ local function glowImage(): string?
     return picture("orbglow", GLOW_PNG)
 end
 
--- the soft round glow the orbs are made of, the window uses it for its frosted glass, nil until the picture is written
 function Skyfx.glow(): string?
     return glowImage()
 end
@@ -16715,7 +16190,6 @@ end
 local function orbs(position: Vector2, size: Vector2, radius: number, scale: number, alpha: number, z: number, now: number, first: Color3, second: Color3, spooky: boolean)
     local reach = math.min(size.X, size.Y)
     Painter.clip(position, size)
-    -- the balls drift very slowly, on whole pixels their edges would step from one pixel to the next instead of gliding
     Painter.fine(true)
     for index, orb in ORBS do
         local cx = position.X + size.X * (0.5 + orb.AX * math.sin(now * orb.WX + orb.Phase) * math.cos(now * orb.WY * 0.6 + orb.Phase * 0.7))
@@ -16740,18 +16214,13 @@ local function orbs(position: Vector2, size: Vector2, radius: number, scale: num
     Painter.unclip()
 end
 
--- the soft halo of the loader card, nil when the executor cannot write files
 function Skyfx.halo(): string?
     return picture("oklohalo", HALO_PNG)
 end
 
--- a tall strip peaked in the middle for the veils, a small crisp dot for the motes and a thin bubble for the bokeh
 local BEAM_PNG = "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"
 local MOTE_PNG = "iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAACQElEQVR42u2Za27CMBCEgZYWQnkEFYKIUAGh0J+chFtwL67CVXKRqSLNqisrzgtQsUuk/YGzseZbj01itwC0XI7WE+AJ8HgA7ZJ4SIB2w/hTgDxBnYpxM5hbidfiXkqiCOTuADbhIu7ViC7DbDdhGoM0FZ8nXMS+lYSGKgK5KYBNvCn8ndFj9BnyW+7ngTSCaCLerPqbEp2JDQAMLBEoIA1ijkZliDoApnhTeCbwA8AQwMgSQ+YMckBsEFcB2Gwj4qXiInwMYAIgBDA1IuS9sQKRETEhOlUh6lrHFC9VH1FcJvQTwAzA3IgZ702ZOzJGIw+i1Ep1rCOe1+Kl6iHFZUIXAJYAYiOWvDdnbqhGQ0N0LRBXA8iE7SnbjFnRrLoRRa4AfAFYA9gw1mxbMSfiM1P2IXbqqYl9FUBZ9cU2IYUsWOVM5BbADkACYM9I2LZlTsxnZuxD7FR7FJpUX6wzoRUiJX5HwQcARwAnxpFte+YIRMQ+JspKtUahCEBWgrzqi3XmtISI/6bYM4AUv1fKtiNzBGLJPrSVzFHQK1IlgKKVJzCqv6Cvt6xuJvAC+3Vhzp7PrNiHHoWgZEVqDCD20d7X1T+wymXXmbl6FPRc0Da6G4DYJ+YKk7CyaQWAlLkJn42Vje4CIBO4bwHY0BInVL9OfGZjAehXncj/AsB5C3kziZ1ZRp3/I/PmVcLplznnX6e9+qBx9pPS+Y96L7ZVvNjYcn5r0YvNXS+217044PDmiMmLQz6vjlmfJ/VPAFfjB0B8b0Kp4MYmAAAAAElFTkSuQmCC"
 local BUBBLE_PNG = "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"
--- the background of the plain themes: three calm looks made of soft pictures, picked at random by the window. every piece is a stretched, tinted and faded picture,
--- the same number of pieces is drawn every frame and only their place and strength move, so nothing flashes and nothing has a hard edge.
--- Bokeh is a slow rise of soft discs and thin bubbles, Dust a parallax drift of crisp points over a few big lights, Silk wide slanted veils of light with a few motes
 local AMBIENT_BOKEH = 26
 local AMBIENT_DUST = 64
 local AMBIENT_LIGHTS = 6
@@ -16783,7 +16252,6 @@ local function ambient(name: string, position: Vector2, size: Vector2, scale: nu
     end
     ambientLast = now
     alpha *= smooth(math.clamp((now - ambientStart) / AMBIENT_INTRO, 0, 1))
-    -- a dark picture on a light window needs more strength to read as much
     alpha *= if light then 1.7 else 1
     local width, height = size.X, size.Y
     local left, top = position.X, position.Y
@@ -16869,7 +16337,6 @@ function Skyfx.ambient(name: string, position: Vector2, size: Vector2, scale: nu
     end
 end
 
--- how many rects a field draws at most, the sky leaves that many strips for them
 function Skyfx.count(name: string?): number
     local spec = if name then FIELDS[name] else nil
     if not spec then
@@ -16878,7 +16345,6 @@ function Skyfx.count(name: string?): number
     return if name == "lightning" then spec.N + BOLT_RECTS else spec.N
 end
 
--- the field of particles a theme draws over its flowing sky, kept between the rounded corners of the window
 function Skyfx.draw(name: string, position: Vector2, size: Vector2, radius: number, scale: number, alpha: number, z: number, now: number, first: Color3, second: Color3, pointer: Vector2?)
     if name == "orbs" or name == "orbshaunted" then
         if alpha > 0.004 and size.X >= 40 and size.Y >= 40 then
@@ -16899,7 +16365,6 @@ function Skyfx.draw(name: string, position: Vector2, size: Vector2, radius: numb
     field(name, left, top, width, height, scale, alpha, z, now, first, second)
 end
 
--- the bolts of a stormy theme, drawn over the glass of the window so they flash bright, only while one strikes
 function Skyfx.strike(name: string, position: Vector2, size: Vector2, radius: number, scale: number, alpha: number, z: number, now: number, first: Color3, second: Color3)
     if name ~= "lightning" or alpha <= 0.004 or size.X < 48 or size.Y < 40 + radius * 1.1 then
         return
@@ -16907,13 +16372,8 @@ function Skyfx.strike(name: string, position: Vector2, size: Vector2, radius: nu
     bolt(position.X + 4, position.Y + radius * 0.55, size.X - 8, size.Y - radius * 1.1, scale, alpha, z, now, first, second, position, size, radius)
 end
 
--- one breath of the second light behind the popups of the default theme, in seconds
 local PULSE_PERIOD = 8
 
--- the calm black and white motion behind the popups of the default theme, kept faint so the text on top reads as on a plain popup:
--- a light that slowly turns around the popup with a shade swaying against it and a second light turning the other way that swells and fades.
--- every layer is a soft fade shaped exactly like the popup, so nothing in it has an edge, a ring or a pixel it can jump to,
--- the same three are drawn every frame and only their angle and strength move, so nothing behind the text pops in or out
 function Skyfx.popup(position: Vector2, size: Vector2, rounding: number, alpha: number, z: number, now: number)
     local white, black = Color3.new(1, 1, 1), Color3.new(0, 0, 0)
     local turn = now * 5
@@ -17020,7 +16480,6 @@ local function createBox(self: Self): any
         local app = self.App
         local hover = app.HoverKey
         if not enterPressed and self.Bound == "head:search" and app.Focus == self.Bound and type(hover) == "string" and string.sub(hover, 1, 11) == "head:search" then
-            -- a click on the open search keeps it open, the box just takes the focus back
             task.defer(function()
                 if self.Bound == "head:search" and self.Box then
                     pcall(function()
@@ -17135,9 +16594,6 @@ local Painter: typeof(require("./painter")) = import("ui/painter")
 local Press: typeof(require("./press")) = import("ui/press")
 local Skyfx: typeof(require("./skyfx")) = import("ui/skyfx")
 
--- the Updates page every script shares, laid out like a system update sheet: the script logo on the left with the version, the script name and the date to its right,
--- one line saying what follows, then a small chip per mode that opens into plain bullet lines of changes.
--- every pill, row and the heading draw the same pieces in their own scope every frame, so nothing is handed to another piece while it moves
 local UpdatesPage = {}
 
 type Map = { [string]: any }
@@ -17164,7 +16620,6 @@ local TEXT_X = 38
 local TEXT_SIZE = 12
 local NAME_SIZE = 12.5
 local CLOSING = 34
--- a pill opens on the same kind of spring as the search field, a row fades in or out in these seconds and rises this far into place
 local RESPONSE, RATIO = 0.42, 1
 local FADE_IN = 0.3
 local FADE_OUT = 0.16
@@ -17172,7 +16627,6 @@ local RISE = 8
 
 local wrapped: { [string]: { string } } = {}
 
--- the words of a line spread over as many rows as the width needs, a word wider than a whole row is cut where it fills it
 local function wrap(kit: Map, text: string, limit: number): { string }
     local key = math.floor(limit) .. "|" .. tostring(kit.App.TextScale) .. "|" .. Painter.font() .. "|" .. text
     local cached = wrapped[key]
@@ -17207,7 +16661,6 @@ local function wrap(kit: Map, text: string, limit: number): { string }
     return rows
 end
 
--- the lines of one mode in kind order, wrapped, each with where it starts under the pill, and the height of all of them
 local function entries(kit: Map, group: Map, width: number): ({ Entry }, number)
     local list: { Entry } = {}
     local at = BODY_TOP
@@ -17229,12 +16682,10 @@ local function factor(kit: Map): number
     return kit.ScreenSize.X / kit.Width
 end
 
--- every change is a plain round bullet, like the lines of a system update
 local function mark(kit: Map, _kind: string, cx: number, cy: number, color: Color3)
     kit:solid(cx - 2, cy - 2, 4, 4, color, 2)
 end
 
--- the same smooth arrow picture as the sidebar folders, it turns from pointing right to pointing down while the pill opens
 local function chevron(kit: Map, cx: number, cy: number, turn: number, color: Color3)
     local asset, pixels = Logo.icon(kit.App, "chevron", 11 * factor(kit))
     if asset then
@@ -17251,7 +16702,6 @@ local function chevron(kit: Map, cx: number, cy: number, turn: number, color: Co
     end
 end
 
--- the script logo large on the right of the heading: it fades in once it is loaded, floats and breathes slowly over the soft halo of the loader card
 local function emblem(kit: Map, cx: number, cy: number, shown: number)
     local app = kit.App
     local logo: string? = app.LogoAsset
@@ -17272,7 +16722,6 @@ local function emblem(kit: Map, cx: number, cy: number, shown: number)
         Painter.image(halo, middle - Vector2.new(side, side) / 2, Vector2.new(side, side), kit.Alpha * shown * 0.5, kit.ZControl)
     end
     if bird then
-        -- the bird draws itself in, rests, fades out and draws itself in again. It stays on whole pixels so the picture never shimmers
         local play = app.BirdPlay
         if not play or now - play.Last > 0.4 then
             play = { Start = now, Last = now }
@@ -17297,8 +16746,6 @@ local function emblem(kit: Map, cx: number, cy: number, shown: number)
     Painter.fine(false)
 end
 
--- the rows of a mode are cut off where the opening ends while it moves, each one rises and fades in like a search result once the opening reaches it,
--- and they all fade out as soon as the mode starts to close. a closed mode draws no rows and one at rest is not cut off
 local function body(kit: Map, scope: string, list: { Entry }, top: number, edge: number, full: number, snap: (number) -> number, appear: { number }, opening: boolean)
     local app = kit.App
     local pal = app.Pal
@@ -17354,7 +16801,6 @@ local function body(kit: Map, scope: string, list: { Entry }, top: number, edge:
     end
 end
 
--- one mode as a card header: the name on the left, the count and a turning arrow on the right, the same padding on every side
 local function header(kit: Map, key: string, group: Map, count: number, top: number, open: number, hover: number, width: number)
     local app = kit.App
     local pal = app.Pal
@@ -17371,7 +16817,6 @@ local function header(kit: Map, key: string, group: Map, count: number, top: num
     kit:text(label, badgeX + badge / 2, middle, 10.5, Color.lerp(pal.Sub, pal.Text, grown), true, true)
 end
 
--- one version: a heading card with the version, the script and the date, then a card per mode that opens into its changes
 local function block(section: Map, version: string, date: string?, groups: { Map }?, lines: { string }?, closing: string?, openFirst: boolean, latest: boolean)
     local holder = { Value = HEAD }
     local goal: { [number]: number } = {}
@@ -17463,7 +16908,6 @@ local function block(section: Map, version: string, date: string?, groups: { Map
     })
 end
 
--- spec: Version, Date, Groups, History ({ Version, Date, Groups?, Lines? }), Closing, Name and Group of the tab
 function UpdatesPage.build(window: Map, spec: Map): Map
     local tab = Builder.newTab(window, spec.Name or "Updates", { Group = spec.Group or "Settings", Late = true })
     block(tab:section("V" .. tostring(spec.Version)), tostring(spec.Version), spec.Date, spec.Groups, spec.Lines, spec.Closing, true, true)
@@ -17491,14 +16935,12 @@ type App = { [string]: any }
 
 local DEFAULT_WIDTH = 400
 local Z_CARD, Z_TEXT = 30, 32
--- the card sits MARGIN inside the window and keeps the popup spacing inside it: EDGE on all sides, a section between the parts
 local MARGIN = 9
 local EDGE, SECTION = 16, 14
 local TITLE_Y = EDGE
 local HEADING_Y = TITLE_Y + 26
 local RULE_Y = HEADING_Y + 20
 local ROWS_Y = RULE_Y + SECTION
--- a line is a row like the window's rows, the same 4 between them and its text 12 in from its left
 local ROW_GAP, ROW_PAD, ROW_LINE, ROW_TEXT = 4, 5, 17, 12
 local BUTTON_WIDTH, BUTTON_HEIGHT = 84, 28
 
@@ -17555,7 +16997,6 @@ function Welcome.render(app: App, now: number): boolean
     end
 
     local viewport: Vector2 = app.Viewport
-    -- the lines are wrapped at about the size they are drawn, the card is exactly as high as its rows and the footer under them
     local popupWidth = math.clamp(tonumber(copy.Width) or DEFAULT_WIDTH, 300, 700)
     local wrapScale = math.max(0.10, math.min(state.UIScale, (viewport.X - 42) / popupWidth, 1.10))
     local textLimit = (popupWidth - MARGIN * 2 - EDGE * 2 - ROW_TEXT * 2) * wrapScale
@@ -17639,7 +17080,6 @@ function Welcome.render(app: App, now: number): boolean
         cursor += rowHeight + ROW_GAP
     end
 
-    -- the footer text and the Close button share one row at the bottom, the text on the middle of the button
     local barY = cardSize.Y / unit - EDGE - BUTTON_HEIGHT
     line(copy.Footer, EDGE, barY + BUTTON_HEIGHT / 2 - 6, 1.70, 0.50, pal.Sub, false, 12)
     local buttonReveal = reveal(elapsed, 1.90, 0.50) * content
@@ -17675,7 +17115,6 @@ function Welcome.render(app: App, now: number): boolean
     return true
 end
 
--- the loader intro card has already grown to the size of the window, the window opens right there without any opening animation
 function Welcome.handoff(app: App, scale: number?)
     local state = app.State
     local viewport: Vector2 = app.Viewport
@@ -17720,13 +17159,9 @@ local WHITE = Color3.new(1, 1, 1)
 local SHADOW = Color3.new(0, 0, 0)
 local KNOB_LIGHT = Color3.fromRGB(250, 250, 252)
 
--- a switch, a slider and a segment fill with Kit.switchFill: the theme accent, or the text color when the accent is a plain white or grey
--- text and controls keep the same inset from both ends of a row
 local INSET = 14
--- a toggle's keybind chip sits 8 left of its switch, a button's chip sits at the inset
 local TOGGLE_BIND_INSET = INSET + SWITCH_WIDTH + 8 + BIND_WIDTH
 local BUTTON_BIND_INSET = INSET + BIND_WIDTH
--- the value box of a slider is centered on the row, its track ends this far left of the box
 local VALUE_WIDTH, VALUE_HEIGHT, VALUE_GAP = 46, 22, 16
 
 local function anim(spec: Spec, name: string): number
@@ -17748,8 +17183,6 @@ local function clamp01(value: number): number
     return math.clamp(value, 0, 1)
 end
 
--- the soft light of the search field on every control: a wide glow under it that rises with the level, a ring that pulses out once
--- when kick() was called for it and a thin focus ring that stays while the ring level is up. the same three pieces are drawn every frame
 local function kick(spec: Spec, name: string)
     anim(spec, name)
     spec.Anim[name] = 1
@@ -17768,7 +17201,6 @@ local function aura(app: App, spec: Spec, name: string, position: Vector2, size:
     Painter.border(position - Vector2.new(pad, pad), size + Vector2.new(pad * 2, pad * 2), rounding + pad, pal.Accent, alpha * 0.22 * ringLevel * (1 - pal.Pick), Z_CONTROL_TEXT + 1, 2.5)
 end
 
--- in the Finder look the rows of a group share one card, so a row only shows its own fill while it is hovered
 local function rowShow(app: App, hover: number): number
     return 1 - app.Pal.Pick * (1 - clamp01(hover))
 end
@@ -17789,7 +17221,6 @@ local function pressScale(app: App, spec: Spec, name: string, key: any, enabled:
         spec.Spr = bag
     end
     local shrink = Press.scale(app, bag, name, key, enabled)
-    -- a row of the Finder look already sits on its group card, so it does not sink when it is pressed
     return if name == "press" then 1 + (shrink - 1) * (1 - app.Pal.Pick) else shrink
 end
 
@@ -17852,7 +17283,6 @@ end
 local function drawSwitch(app: App, spec: Spec, boxPos: Vector2, boxSize: Vector2, scale: number, fx: Fx, disabled: number, hover: number)
     local pal = app.Pal
     local on = spec.get() == true
-    -- a plain slide without overshoot, the same at any frame rate
     local value = clamp01(springTo(app, spec, "on", if on then 1 else 0, 0.18, 1))
     local raw = app:size(SWITCH_WIDTH, SWITCH_HEIGHT) * scale
     local size = Vector2.new(math.round(raw.X), math.round(raw.Y))
@@ -17871,7 +17301,6 @@ local function drawSwitch(app: App, spec: Spec, boxPos: Vector2, boxSize: Vector
         Painter.border(position, size, radius, line, outline * alpha, Z_CONTROL, 1)
     end
 
-    -- the knob keeps the same gap to the track on every side, a press squashes it a little wider and lower
     local base = math.round(KNOB * scale * app.Unit)
     if (size.Y - base) % 2 ~= 0 then
         base -= 1
@@ -17897,13 +17326,10 @@ local function drawBind(app: App, spec: Spec, boxPos: Vector2, boxSize: Vector2,
     local capture = app.Focus == app.CAPTURE_PREFIX .. spec.flag
     local bound = app:shortKey(app.State.OptionKeybinds[spec.flag])
     local empty = bound == "" or bound == "none" or bound == "None"
-    -- QuietBinds: an empty keycap only shows while its row is hovered, so a page of options reads as names and switches
     local quiet = if app.Options.QuietBinds and empty and not capture then clamp01(math.max(rowHover or 0, hover)) else 1
     if quiet < 1 then
         fx = { Alpha = fx.Alpha * quiet, Scale = fx.Scale }
     end
-    -- a keycap: a lifted well a touch lighter than the row with a hairline, an empty one shows a faint plus, capturing pulses an accent outline
-    -- the well is built on the row's own hovered colour, so the keycap keeps its look while the row lights up under it
     local base = Color.lerp(pal.Panel, pal.Accent, (0.15 - 0.10 * pal.Pick) * clamp01(rowHover or 0))
     local fill = Color.lerp(Color.lerp(base, pal.Text, 0.08 + 0.05 * clamp01(hover)), base, 0.6 * disabled)
     local round = pressedSize.Y / 2
@@ -17931,7 +17357,6 @@ local function drawSideButton(app: App, spec: Spec, boxPos: Vector2, width: numb
     local hover = easeTo(app, spec, "sideHover", if hovered then 1 else 0, 16)
     local p, s = position, size
     local fade = app:sourceFade(sideKey)
-    -- on the Finder cards the plate only shows on hover, a resting plate in the panel colour reads as a dark block on the card
     Painter.rect(p, s, Color.lerp(pal.Panel, pal.Accent, (0.15 - 0.10 * pal.Pick) * clamp01(hover)), app.Alpha.Btn * fx.Alpha * fade * (1 - pal.Pick * (1 - clamp01(hover))), Z_CONTROL, 10)
     local sideColor = Color.lerp(pal.Text, pal.Disabled, disabled)
     local labelAlpha = app.Alpha.Text * fx.Alpha * fade
@@ -17992,7 +17417,6 @@ function Widgets.toggle(app: App, spec: Spec, x: number, y: number, width: numbe
     local bg = Color.lerp(Color.lerp(pal.Panel, pal.Accent, (0.15 - 0.10 * pal.Pick) * clamp01(hover)), Color.lerp(pal.Main, pal.Panel, pal.Pick), disabled)
     Painter.rect(p, s, bg, app.Alpha.Btn * fx.Alpha * fade * rowShow(app, hover), Z_BG, 14)
     rowEdge(app, p, s, app.Alpha.Btn * fx.Alpha * fade)
-    -- a quiet empty keycap leaves its room to the name, it comes up over the end of a long name only while hovered
     local keyRoom = spec.bindable and not (app.Options.QuietBinds and app:shortKey(app.State.OptionKeybinds[spec.flag]) == "none")
     local title, titleSize = fitted(spec.text, 14 * app.TextScale, s.X - (INSET + (if keyRoom then 122 else 54)) * app.Unit)
     Painter.text(title, p + Vector2.new(INSET * app.Unit * press, s.Y / 2), titleSize, Color.lerp(pal.Text, pal.Disabled, disabled), app.Alpha.Text * fx.Alpha * fade, Z_TEXT, false, true, if spec.bold then Painter.bold() else nil)
@@ -18042,7 +17466,6 @@ local function sliderText(spec: Spec, value: number): string
     return tostring(value)
 end
 
--- the value box grows to fit its widest text, like "24 studs" or a typed number, and never gets narrower than the plain box
 local function valueWidth(spec: Spec, value: number): number
     local widest = 0
     for _, sample in { spec.min, spec.max, value } do
@@ -18093,7 +17516,6 @@ function Widgets.slider(app: App, spec: Spec, x: number, y: number, width: numbe
     local near = springTo(app, spec, "near", if hovered or held then 1 else 0, 0.28, 0.7)
     local grab = clamp01(springTo(app, spec, "grab", if held then 1 else 0, 0.22, 1))
     local tip = trackPos + Vector2.new(trackSize.X * clamp01(fraction), trackSize.Y / 2)
-    -- a round knob like the knob of a switch, hovering only lights its glow, it grows a little around its center while dragged
     local thumb = math.floor((15 + 2 * grab) * unit * scale / 2) * 2 + 1
     if held and not spec.WasHeld then
         kick(spec, "thumbPulse")
@@ -18181,7 +17603,6 @@ function Widgets.button(app: App, spec: Spec, x: number, y: number, width: numbe
         Painter.text(shown, p + s / 2, shownSize, textColor, app.Alpha.Text * fx.Alpha * fade, Z_TEXT, true, true)
     else
         local indent = if spec.fold then 22 else 0
-        -- a search result names where it lives on the right in the quieter color, with a chevron that brightens on hover
         local detailRoom = 0
         if spec.detail then
             local detailSize = 12 * app.TextScale
@@ -18199,7 +17620,6 @@ function Widgets.button(app: App, spec: Spec, x: number, y: number, width: numbe
         local shown, shownSize = fitted(label, 14 * app.TextScale, s.X - (INSET + indent + detailRoom + (if spec.bindable then 74 else 14)) * app.Unit)
         Painter.text(shown, p + Vector2.new((INSET + indent) * app.Unit * press, s.Y / 2), shownSize, textColor, app.Alpha.Text * fx.Alpha * fade, Z_TEXT, false, true)
         if spec.fold then
-            -- a drawn chevron that turns from pointing right to pointing down while the entry opens
             local turn = easeTo(app, spec, "fold", if spec.fold(app) == true then 1 else 0, 14)
             local angle = math.rad(90 * turn)
             local center = p + Vector2.new(17 * app.Unit * press, s.Y / 2)
@@ -18233,8 +17653,6 @@ function Widgets.button(app: App, spec: Spec, x: number, y: number, width: numbe
     end
 end
 
--- a dropdown with only a few choices, drawn as an iOS segmented control: the name on the left, the choices on the right
--- with a thumb that springs to the picked one
 local function segment(app: App, spec: Spec, x: number, y: number, width: number, fx: Fx)
     local pal = app.Pal
     local height = Widgets.HEIGHTS.dropdown
@@ -18259,7 +17677,6 @@ local function segment(app: App, spec: Spec, x: number, y: number, width: number
         end
     end
     local textColor = Color.lerp(pal.Text, pal.Disabled, disabled)
-    -- every cell is as wide as its label with the same padding, the room left over is shared out evenly
     local labelSize = 12.5 * app.TextScale
     local pad, inset = 12 * unit, 2 * unit
     local widths: { number } = {}
@@ -18282,7 +17699,6 @@ local function segment(app: App, spec: Spec, x: number, y: number, width: number
             end
         end
     end
-    -- equal cells, each as wide as the widest label, so the control is even and every label sits in the middle of its own cell
     local widest = 0
     for index in list do
         widest = math.max(widest, widths[index])
@@ -18412,7 +17828,6 @@ function Widgets.text(app: App, spec: Spec, x: number, y: number, width: number,
         Painter.rect(app:pos(x, y), app:size(width, spec.height or 23), box, app.Alpha.Btn * fx.Alpha * rowShow(app, 0), Z_BG, 14)
         rowEdge(app, app:pos(x, y), app:size(width, spec.height or 23), app.Alpha.Btn * fx.Alpha)
     end
-    -- offset moves the line down (or up) from the middle of its row, so a heading can sit closer to the line under it
     local middle = y + (spec.height or 23) / 2 + (tonumber(spec.offset) or 0)
     if spec.center then
         local center = app:pos(x + width / 2, middle)
@@ -18454,8 +17869,6 @@ function Widgets.bindrow(app: App, spec: Spec, x: number, y: number, width: numb
     end, nil)
 end
 
--- a search result: the name with the typed text marked, where it lives under it, and on the right the option itself as it stands right now.
--- a switch can be flipped from here, the rest of the row opens the page of the option
 local function chip(app: App, text: string, rightX: number, centerY: number, fx: Fx, fade: number, hover: number): number
     local pal = app.Pal
     local unit = app.Unit
@@ -18487,14 +17900,12 @@ function Widgets.result(app: App, spec: Spec, x: number, y: number, width: numbe
 
     aura(app, spec, "row", p, s, 10, 0.16 * clamp01(hover), 0, fx, 14)
     Painter.rect(p, s, Color.lerp(Color.lerp(pal.Panel, pal.Text, 0.045 + 0.03 * pal.Light), pal.Accent, (0.15 - 0.10 * pal.Pick) * clamp01(hover)), app.Alpha.Btn * fx.Alpha * fade, Z_BG, 14)
-    -- the controls on the right: first the chevron or the switch, the value chip next to it
     local rightX = p.X + s.X - INSET * unit
     local flip: Spec? = nil
     if target and target.kind == "toggle" then
         flip = target
         rightX -= (SWITCH_WIDTH + 6) * unit
     else
-        -- a chevron of round dots that brightens while the row is hovered, it never moves
         local arm = 4.5 * unit
         local tip = Vector2.new(rightX - 4 * unit, centerY)
         local color = Color.lerp(pal.Sub, pal.Text, clamp01(hover))
@@ -18526,7 +17937,6 @@ function Widgets.result(app: App, spec: Spec, x: number, y: number, width: numbe
         end
     end
 
-    -- the name with the typed part lit, and the page it belongs to
     local room = rightX - p.X - (INSET + 8) * unit
     local titleSize = 14 * app.TextScale
     local title = fitText(spec.text, titleSize, room)
@@ -18588,7 +17998,6 @@ function Widgets.heightOf(spec: Spec): number
     if spec.kind == "text" then
         return spec.height or 23
     elseif spec.kind == "custom" then
-        -- a table holder lets the block change its own height, it writes Value while it is drawn and the page follows
         local height: any = spec.height
         return if type(height) == "table" then height.Value else height
     end
@@ -18704,7 +18113,6 @@ export type Options = {
 
 local CHANGE_KINDS = { "Added", "Changed", "Removed", "Fixed" }
 
--- a script can hand over its changelog data (VERSION, GROUPS, OPEN, CLOSING) and the update notice is built from it
 local function noticeFrom(options: Map): any
     local data: any = options.Changelog
     if options.UpdateNotice ~= nil or type(data) ~= "table" then
@@ -18869,7 +18277,6 @@ function Window.prepareState(self: Self)
     for key in Settings.COLOR_KEYS do
         state["Target_" .. key] = state[key]
     end
-    -- the first time a script runs on this machine its discord invite opens by itself, once, the marker lives in the script's own folder
     local invite = self.Options.Discord
     local opened = self.Folder .. "/discord_opened.txt"
     if invite and self.Options.FirstRunInvite and not Storage.isFile(opened) then
@@ -18907,8 +18314,6 @@ function Window.loadUiSettings(self: Self)
         saved[key] = state[key]
     end
     self.UiSaved = saved
-    -- Start Hidden always starts with the window closed. the menu key brings it back, and with no key bound the default
-    -- key does (see Runner). a device without a keyboard could never open it again, so there the window still shows
     if state.StartHidden and Window.hasKeyboard() then
         state.Visible = false
         self.HiddenStart = true
@@ -18922,7 +18327,6 @@ function Window.hasKeyboard(): boolean
     return not ok or enabled ~= false
 end
 
--- the key that opens the window: the bound menu key, or the default one while none is bound
 function Window.menuKey(self: Self): string
     local key = tostring(self.State.Keybind or "")
     if key == "" or key == "None" then
@@ -18931,7 +18335,6 @@ function Window.menuKey(self: Self): string
     return key
 end
 
--- writes the window behavior settings when one of them changed
 function Window.flushUi(self: Self)
     local state = self.State
     if state.RememberTab and state.CurrentTab ~= "" and self.TabByName[state.CurrentTab] then
@@ -18957,7 +18360,6 @@ function Window.flushUi(self: Self)
     Storage.writeJson(self:uiPath(), data)
 end
 
--- puts the window back in the middle of the screen at the default size
 function Window.resetWindow(self: Self)
     local state = self.State
     self.ScaleGoal = if tonumber(self.Options.Scale) then math.max(0.10, self.Options.Scale :: number) else Settings.defaultScale()
@@ -19072,7 +18474,6 @@ function Window.finalize(self: Self)
     if self.State.CurrentTab == "" or not self.TabByName[self.State.CurrentTab] then
         self.State.CurrentTab = self.Tabs[1].name
     end
-    -- a dock window has no Home, it opens on its first page
     if self.Options.Dock then
         local now = self.TabByName[self.State.CurrentTab]
         if not now or now.home or now.group == "Settings" then
@@ -19084,7 +18485,6 @@ function Window.finalize(self: Self)
             end
         end
     end
-    -- the Settings pages live in their own window, a remembered one would leave the page behind it empty
     if self:usesSettingsWindow(self.State.CurrentTab) then
         for _, tab in self.Tabs do
             if tab.group ~= "Settings" then
@@ -19095,7 +18495,6 @@ function Window.finalize(self: Self)
     end
 end
 
--- the Settings pages open in a window of their own over the page, the classic layout keeps them as pages
 function Window.usesSettingsWindow(self: Self, name: string): boolean
     local tab = self.TabByName[name]
     local options = self.Options
@@ -19185,7 +18584,6 @@ function Window.switchTab(self: Self, name: string)
     state.NextTab = name
     self.Focus = nil
     self.OpenDropdown = nil
-    -- the search lives on Home, leaving Home for another page leaves the search behind
     local target = self.TabByName[name]
     if target and not target.home and self.HomeTab then
         self.SearchQuery = ""
@@ -19346,13 +18744,10 @@ end
 function Window.openPopup(self: Self, name: string, arg: any?)
     local popup = self.Popup
     local click = self.LastClick
-    -- a click from a while ago belongs to something else, the popup then opens from the middle
     if click and click.At and os.clock() - click.At > 0.5 then
         click = nil
     end
-    -- a popup that opens over one that is fully shown takes its place in the same card: the old content fades out, the card eases to the new size and the new content fades in
     if popup.Open and popup.Name ~= "None" and popup.Alpha > 0.5 and popup.Shown then
-        -- while the content before is still fading out it keeps fading, only what comes after it changes
         if not (popup.From and popup.Leaving) then
             popup.From = { Name = popup.Name, Arg = popup.Arg, Width = popup.Shown.X, Height = popup.Shown.Y }
             popup.Swap = 0
@@ -19366,7 +18761,6 @@ function Window.openPopup(self: Self, name: string, arg: any?)
     if self.PopText then
         table.clear(self.PopText)
     end
-    -- a popup always grows from the control that was clicked, also while the one before is still fading away
     if click then
         popup.SourcePos, popup.SourceSize, popup.SourceKey = click.Pos, click.Size, click.Key
     elseif not (popup.Open and popup.SourcePos) then
@@ -19437,12 +18831,10 @@ end
 
 function Window.loadTheme(self: Self)
     local state = self.State
-    -- only the one look is left, in Dark or Light. a name saved by an older version (any other theme or Custom) becomes Dark
     local base: Map = Theme.Default
     self.Preset = base
     self.DefaultMain, self.DefaultAccent = base.Main, base.Accent
     local saved: any = Storage.readJson(self:themePath())
-    -- the theme picked last time comes back, anything unknown becomes the default look
     local preset: Map = base
     if type(saved) == "table" and saved.Version == THEME_VERSION and type(saved.Theme) == "string" and Theme.Presets[saved.Theme] then
         preset = Theme.Presets[saved.Theme]
@@ -19503,7 +18895,6 @@ function Window.applyTheme(self: Self, name: string)
     self:saveTheme()
 end
 
--- a theme from the list: its colors glide in and its sky starts moving
 function Window.chooseTheme(self: Self, name: string)
     local preset: Map? = Theme.Presets[name]
     if not preset then
@@ -19613,7 +19004,6 @@ end
 function Window.applyCodeBuffer(self: Self): boolean
     local state = self.State
     local text = tostring(state.CodeBuffer or "")
-    -- a code still being typed or pasted into the box counts, it is only stored once the box is left
     local typing = self.Buffers["config:code"]
     if self.Focus == "config:code" and type(typing) == "string" and typing ~= "" then
         text = typing
@@ -19665,7 +19055,6 @@ function Window.acknowledgeUpdate(self: Self)
     Storage.write(self:updateMarker(), self.Options.Version)
 end
 
--- the window plays its goodbye first (unload: the content fades to the logo, reload: the window glides to the middle), the runner ends it with finishFarewell
 local function startFarewell(self: Self, kind: string)
     local state = self.State
     if state.IsReloading then
@@ -19713,7 +19102,6 @@ function Window.finishWelcome(self: Self, position: Vector2, scale: number)
     state.VisibilityAnim = 1
     state.IntroAlpha = 1
     state.UIScaleAnim = 1
-    -- the open spring starts where the card left off, so the window does not drop to its opening size and grow again
     self.Springs.open = { x = 1, v = 0 }
     state.NavReveal, state.TabReveal, state.TabAlpha = 0, 0, 1
     state.UIScale = scale
@@ -19740,3 +19128,4 @@ if type(getgenv) ~= "function" then
     end
 end
 return import("lib")
+

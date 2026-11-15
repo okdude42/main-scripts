@@ -1523,7 +1523,6 @@ end)()
 
 local Counter = (function()
 return function(...)
--- this is for me just to know how much people actually execute this because i wanna know if people do use it, in which case if it is i will continue development, you can easily delete this from the source or/and see what info it sends (completely harmless and anonymous, it only sends the script name, your executor, which game, your input device, which executor functions exist, how long the script stayed open (a number of seconds, sent about every 5 minutes), a random anonymous id that is saved in your workspace folder (oklo scripts/anonymous id.txt, delete it to reset it) so people can be told apart, never your username, user id or ip)
 local SCRIPT, STOP = ...
 task.spawn(pcall, function()
     local function clean(value, limit)
@@ -1637,7 +1636,6 @@ task.spawn(pcall, function()
             end,
         }
         for _, attempt in attempts do
-            -- the first way the executor has is used once, an error answer is never sent again through the next way
             if pcall(attempt) then
                 break
             end
@@ -1651,7 +1649,6 @@ task.spawn(pcall, function()
         while true do
             task.wait(pause)
             pause = 300
-            -- the loop belongs to the run that registered this stop entry, running the loader again replaces the entry and ends the old loop
             if mine == nil then
                 mine = getgenv()[STOP]
             end
@@ -2257,3 +2254,4 @@ end
 pcall(Session)
 
 launch()
+

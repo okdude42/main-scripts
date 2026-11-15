@@ -18,9 +18,6 @@ modules["aero"] = function(...)
 local import: (string) -> any = ...
 local Env: typeof(require("./env")) = import("env")
 
--- the game sends every input through its own small signal tables, Services.InputService.<Name>, each one a plain table
--- whose Fire field calls FireServer. a function put in that field sees the game's own calls without hooking any
--- metamethod: nothing runs on the game's other calls, nothing exotic is needed, and nothing can stall the game
 local Aero = {}
 
 type Map = { [string]: any }
@@ -28,9 +25,7 @@ type Map = { [string]: any }
 local NAME = "__PBInputWrap"
 local VERSION = 1
 local WRAP = { "Shoot", "Sprint", "Steal", "Pass", "Dribble", "Jump", "Clutch", "HoldG" }
--- controllers the game loads at start, requiring one hands back the same table the game uses
 local CANDIDATES = { "Meter", "Gui", "Player", "UserInput", "Replication", "Team" }
--- a gc walk yields after this many objects so even a slow executor never freezes on it
 local GC_CHUNK = 4000
 
 local players: any = game:GetService("Players")
@@ -54,8 +49,6 @@ local function servicesOf(value: any): any?
     return value.Services
 end
 
--- some executors only hand back the game's cached module at the game's own script identity, it is set for the one
--- call and put back right after
 local function load(module: any): (boolean, any)
     local ok, value = pcall(require, module)
     if ok and type(value) == "table" then
@@ -102,7 +95,6 @@ local function controllers(): { any }
             end
         end
     end
-    -- the game's own input components, loaded as soon as the game reads a key
     local modules = if root then root:FindFirstChild("Modules") else nil
     local components = if modules then modules:FindFirstChild("Components") else nil
     local input = if components then components:FindFirstChild("Input") else nil
@@ -148,8 +140,6 @@ local function fromGc(): any?
     return nil
 end
 
--- the game's InputService signal table, or nil when this executor cannot reach it
--- light: only the cheap ways, no walk over the gc, for the retries
 function Aero.find(light: boolean?): any?
     local existing = Env.get(NAME)
     if type(existing) == "table" and existing.Version == VERSION and type(existing.Input) == "table" then
@@ -167,7 +157,6 @@ function Aero.find(light: boolean?): any?
     return fromGc()
 end
 
--- puts the wrappers in, handler(name, ...) runs on every game call of a wrapped input and true holds the call back
 function Aero.install(handler: (string, ...any) -> boolean, light: boolean?): (Map?, string?)
     local input = Aero.find(light)
     if not input then
@@ -176,7 +165,6 @@ function Aero.install(handler: (string, ...any) -> boolean, light: boolean?): (M
     local existing = Env.get(NAME)
     local reuse = type(existing) == "table" and existing.Version == VERSION and existing.Input == input
     if reuse then
-        -- an old load's wrapper under someone else's stays a passthrough, a new set goes on top
         for name, wrapper in existing.Wrappers do
             local signal = rawget(input, name)
             if type(signal) ~= "table" or rawget(signal, "Fire") ~= wrapper then
@@ -217,7 +205,6 @@ function Aero.install(handler: (string, ...any) -> boolean, light: boolean?): (M
     return state, nil
 end
 
--- true while the shoot wrapper is still the one in the game's table
 function Aero.intact(): boolean
     local state = Env.get(NAME)
     if type(state) ~= "table" or state.Off or type(state.Input) ~= "table" then
@@ -227,7 +214,6 @@ function Aero.intact(): boolean
     return type(signal) == "table" and rawget(signal, "Fire") == state.Wrappers.Shoot
 end
 
--- puts the game's own functions back, a wrapper something else put on top of is left as a plain passthrough
 function Aero.remove()
     local state = Env.get(NAME)
     if type(state) ~= "table" or state.Version ~= VERSION then
@@ -264,37 +250,25 @@ AutoBlock.__index = AutoBlock
 
 type Map = { [string]: any }
 
--- one jump per shot, and never two jumps closer than this
 local COOLDOWN = 0.9
--- a human reaction on top of the timing, now and then a slower read
 local REACT_MIN = 0.02
 local REACT_MAX = 0.07
 local SLOW_CHANCE = 0.2
 local SLOW_MIN = 0.03
 local SLOW_MAX = 0.08
--- a jump shot at ShotSpeed 1 leaves the hands this long after it starts, the block is highest this long after the jump
 local RELEASE = 0.48
 local BLOCK_PEAK = 0.35
--- the part of the reaction the timing already counts on
 local REACT_LEAD = 0.04
--- a shot no signal confirmed is held this long with Read Fakes on, a pump fake is over by then
 local FAKE_HOLD = 0.3
--- a ReleasedShot flip this long before the shot action still belongs to it (the gather of a layup or a catch)
 local FLIP_WINDOW = 0.6
--- the shooter counts as up once his root is this far over the floor he stood on
 local LIFT = 0.8
--- the ball counts as his this close to his root when the Basketball value is not there
 local BALL_REACH = 5
--- the most a shooter may look away from you, and the most you may look away from him
 local SHOOTER_FACING = 0.25
 local OWN_FACING = -0.2
--- closer than this the angles do not matter
 local POINT_BLANK = 2.5
 local MAX_HEIGHT = 6
 
--- the jump shots the game plays, a pump fake or a hop step is Gathering and never in here
 local SHOTS: { [string]: boolean } = { Shooting = true, MovingShot = true }
--- finishes at the rim and how close you have to be to get a hand on them
 local FINISHES: { [string]: number } = { Layup = 7, ContactLayup = 7, ClutchLayup = 7, Dunking = 6 }
 
 local random = Random.new()
@@ -320,7 +294,6 @@ local function react(): number
     return value
 end
 
--- the meter the game shows over a shooter, only there on a real shot
 local function metered(character: any): boolean
     for _, child in character:GetChildren() do
         if child:IsA("BillboardGui") and child.Enabled and string.sub(child.Name, -5) == "Meter" then
@@ -330,7 +303,6 @@ local function metered(character: any): boolean
     return false
 end
 
--- where he is against you: close enough, in front of him and not behind your back. finishes also need you between him and the rim
 local function reachable(root: any, character: any, theirs: any, reach: number, finish: boolean): boolean
     local here: Vector3 = root.Position
     local there: Vector3 = theirs.Position
@@ -346,7 +318,6 @@ local function reachable(root: any, character: any, theirs: any, reach: number, 
         return true
     end
     local direction = toMe / distance
-    -- he turns to his rim as the shot starts, the rim he shoots at counts as where he faces while the turn is on its way
     local look = Court.flat(theirs.CFrame.LookVector)
     if look.Magnitude > 0.01 and look.Unit:Dot(direction) < SHOOTER_FACING then
         local goal = Court.goal(character)
@@ -371,7 +342,6 @@ local function reachable(root: any, character: any, theirs: any, reach: number, 
     return true
 end
 
--- a block is a jump timed against the shot, the same Jump call that works for rebounds
 function AutoBlock.step(self: any, now: number)
     local read = self.Read
     local state: { [any]: Map } = self.State
@@ -401,7 +371,6 @@ function AutoBlock.step(self: any, now: number)
                 entry = {}
             end
             spare[character] = entry
-            -- the server sets ReleasedShot false when a real shot starts, a pump fake never touches it
             local released = character:GetAttribute("ReleasedShot")
             if entry.Released == true and released == false then
                 entry.FlipAt = now
@@ -424,7 +393,6 @@ function AutoBlock.step(self: any, now: number)
                 if released == false then
                     entry.SawFalse = true
                 end
-                -- once the ball is out of his hands a jump only comes late, nobody contests then
                 if released == true and entry.SawFalse then
                     entry.Done = true
                 end
@@ -446,7 +414,6 @@ function AutoBlock.step(self: any, now: number)
                     end
                     local go = elapsed >= wait and released ~= true
                     if go and not confirmed and readFakes then
-                        -- nothing said it is real: only once he held it past a pump fake and left the floor
                         local floor = entry.Floor
                         local up = character:GetAttribute("InAir") == true or (floor ~= nil and theirs.Position.Y - floor > LIFT)
                         go = elapsed >= FAKE_HOLD and up
@@ -485,18 +452,14 @@ AutoDribble.__index = AutoDribble
 
 type Map = { [string]: any }
 
--- the wait between two moves is never the same twice, and the first move waits a moment after a defender steps up
 local COOLDOWN_MIN = 1.0
 local COOLDOWN_MAX = 1.6
 local REACT_MIN = 0.2
 local REACT_MAX = 0.4
--- no dribble move this close to a rim, it throws a drive off its line and the dunk or layup misses
 local RIM_CLEAR = 24
 
 local random = Random.new()
 
--- tried until one of them starts a move, a real dribble call copied by the hook is used instead once there is one.
--- the first is the call the game itself makes for a crossover or a hesitation: the keys, whether sprint is held and where you are moving
 local FORMS: { (any) -> ...any } = {
     function(context: any): ...any
         return context.Key, context.Sprint, context.Heading
@@ -557,7 +520,6 @@ function AutoDribble.step(self: any, now: number)
     direction = direction.Unit
     self.Last = now
     self.Wait = COOLDOWN_MIN + random:NextNumber() * (COOLDOWN_MAX - COOLDOWN_MIN)
-    -- the real dribble calls the hook copied, one per key, are cycled with the aim turned to where you move now
     local hook = Env.get("__PBShootHook")
     local copied = if type(hook) == "table" and type(hook.Dribbles) == "table" then hook.Dribbles else nil
     local keys: { string } = self.Keys
@@ -610,22 +572,16 @@ local AutoDunk = {}
 AutoDunk.__index = AutoDunk
 
 local COOLDOWN = 2
--- measured from the game dunk tutorial: the dunk circles are 4.6 to 11 studs from the rim, a driving dunk reaches further
 local WINDOW_MIN = 4.6
 local WINDOW_MAX = 11
 local DRIVE_START = 20
 local DRIVE_SWITCH = 14
 local DRIVE_MIN = 6
 local DRIVE_MAX = 13
--- dunks came at 16.4 and up, layups at 14.9 and down, in a public game the sprint tops out at 15.7
 local DRIVE_PACE = 15.5
 local STAND_AT = 8
--- the exact sprint speed the real dunks were measured at (16.7 to 16.8), at 17.5 the server called it a mid range shot
 local RUN_SPEED = 16.8
--- a rim has to be this much in front of you to be the one you attack
 local FACING = 0.35
--- you have to be this much on the court side of the hoop, from the baseline or from under the backboard the game
--- plays the reverse finish
 local FRONT_CONE = 0.34
 local FRONT_AIM = 0.6
 
@@ -656,9 +612,7 @@ function AutoDunk.idle(self: any)
     Drive.clear("Dunk")
 end
 
--- the press of a dunk the script does not time is let go a moment after the dunk started
 function AutoDunk.finish(self: any, now: number, on: boolean)
-    -- a ball that left your hands without a dunk, a pass that beat the press, ends the run at once
     local lost = not Court.HasBall and Court.Action ~= "Dunking" and now - self.FiredAt >= 0.2
     if not self.SeenAt and (Court.Action == "Dunking" or now - self.FiredAt >= 1.2 or not on or lost) then
         self.SeenAt = now
@@ -678,9 +632,6 @@ function AutoDunk.finish(self: any, now: number, on: boolean)
     end
 end
 
--- with the ball and a rim in front, sprints at it and shoots from dunk distance so the game picks a dunk.
--- too close or too slow it backs away and runs at the rim again instead of shooting a normal shot. it always
--- comes in from the court side of the hoop, never from behind the ring
 function AutoDunk.step(self: any, now: number)
     local read = self.Read
     local on = read("AutoDunk") == true
@@ -703,7 +654,6 @@ function AutoDunk.step(self: any, now: number)
     end
     if move and goal then
         Drive.set("Dunk", goal, RUN_SPEED, false, true)
-        -- the server only calls it a driving dunk when the forward key is really held, so the key is held while the run is on
         Court.hold("Dunk", run)
     else
         Court.hold("Dunk", false)
@@ -711,7 +661,6 @@ function AutoDunk.step(self: any, now: number)
     end
 end
 
--- where to run this frame and whether the run at the rim is on, the dunk itself is fired from here once everything lines up
 function AutoDunk.plan(self: any, now: number, move: boolean): (Vector3?, boolean)
     local read = self.Read
     local mine, root = Court.Mine, Court.Root
@@ -723,17 +672,14 @@ function AutoDunk.plan(self: any, now: number, move: boolean): (Vector3?, boolea
     if (action ~= "" and action ~= "Dribbling" and action ~= "Pushing" and action ~= nil) or mine:GetAttribute("Stunned") == true or Court.Forced or Court.HandsOff then
         return nil, false
     end
-    -- Auto Move only drives while you are not steering, when you run yourself it still fires the dunk from the right spot
     local auto = move and not Court.steering(mine)
     local rim, distance = Court.facingRim(root, FACING, read("DunkRange") or 30)
-    -- only ever the rim your team attacks once that is known, never a run at your own
     local defense = self.Defense
     local attack = if defense then defense:attackRim() else nil
     if attack and rim ~= attack then
         rim = nil
     end
     if not rim and auto then
-        -- Auto Move brings you round to the rim itself, the way you happen to face does not matter then
         local near: number?, closest: any? = nil, attack
         if closest then
             near = flat(closest.Position - root.Position).Magnitude
@@ -755,7 +701,6 @@ function AutoDunk.plan(self: any, now: number, move: boolean): (Vector3?, boolea
     local rimAt = Vector3.new(rim.Position.X, here.Y, rim.Position.Z)
     local out = flat(here - rimAt)
     local side = if distance > 0.1 then out / distance else -flat(root.CFrame.LookVector)
-    -- the line of the run: straight in from where you are when that is the court side, bent out in front of the hoop when it is not
     local front = Court.front(rim)
     local cone = if front then side:Dot(front) else 1
     local aim = side
@@ -765,14 +710,11 @@ function AutoDunk.plan(self: any, now: number, move: boolean): (Vector3?, boolea
         aim = bent.Unit
     end
     local inFront = cone >= FRONT_CONE
-    -- the dunk needs the sprint key held, so sprint is kept on while running at the rim
     self.Player.WantSprint = now + 0.4
     local part = Court.proxy()
     local velocity = if part then part.AssemblyLinearVelocity else Vector3.zero
     local planar = flat(velocity)
     local pace = planar.Magnitude
-    -- the game's dunk tutorial: standing dunks are held from a circle about 8 studs out while idle, driving dunks start
-    -- from far out and are held while running into a wider circle
     local mode = read("DunkType") or Config.DUNK_BOTH
     local driving = mode == Config.DUNK_DRIVING or (mode == Config.DUNK_BOTH and (distance >= DRIVE_SWITCH or self.Run == true or pace >= DRIVE_PACE - 3))
     local goal: Vector3? = nil
@@ -791,19 +733,15 @@ function AutoDunk.plan(self: any, now: number, move: boolean): (Vector3?, boolea
             end
             self.Run = true
         end
-        -- it aims a little short of the ring so you do not run under it
         goal = if auto then rimAt + aim * 2.5 else nil
-        -- the speed has to be toward the rim, a sideways step right before the shot is what turned it into a normal shot
         local toward = if distance > 0.1 then -planar:Dot(side) else 0
         if distance > DRIVE_MAX or distance < DRIVE_MIN or pace < DRIVE_PACE or toward < DRIVE_PACE * 0.8 or not inFront then
             if distance < DRIVE_MIN or (self.Run and not inFront) then
-                -- ran past the circle without the dunk, or off the line, start over
                 self.Run = false
             end
             return goal, self.Run == true
         end
     end
-    -- the run goes on through a dribble move, the dunk itself waits until the move is over and you can move again
     if mine:GetAttribute("Sprinting") ~= true or action == "Dribbling" or mine:GetAttribute("CanMove") == false then
         return goal, self.Run == true
     end
@@ -813,8 +751,6 @@ function AutoDunk.plan(self: any, now: number, move: boolean): (Vector3?, boolea
     self.SeenAt = nil
     self.HoldGoal = goal
     self.Run = false
-    -- the game's own space key sends the shoot press with UseSpace and a jump. Auto Green times the release of the
-    -- dunk's meter itself when it can own the shot
     self.Owned = self.AutoGreen:begin(true)
     if not self.Owned then
         local shoot = Court.input("Shoot")
@@ -829,7 +765,6 @@ function AutoDunk.plan(self: any, now: number, move: boolean): (Vector3?, boolea
     return goal, goal ~= nil
 end
 
--- true when Auto Dunk is going to take this shot itself, a dunk in the making, a run for one, or standing in its circle
 function AutoDunk.claims(self: any, distance: number): boolean
     if self.Holding or self.Run then
         return true
@@ -854,7 +789,6 @@ function AutoDunk.claims(self: any, distance: number): boolean
     local part = Court.proxy()
     local velocity = if part then flat(part.AssemblyLinearVelocity) else Vector3.zero
     local pace = velocity.Magnitude
-    -- you are running at the rim yourself: that is a dunk coming, no shot is taken out of it
     local toRim = flat(rim.Position - root.Position)
     if mode ~= Config.DUNK_STANDING and toRim.Magnitude > 0.1 and velocity:Dot(toRim.Unit) >= 8 then
         return true
@@ -897,40 +831,28 @@ local LEARNED = "__PBPeaks"
 local PEAK_FILE = "oklo scripts/practicalbasketball/peaks.json"
 local TIMING_PERFECT = 5
 
--- a tap that never turned into a shot is let go once the character sat this long outside any shot, and any held shot after the longer one
 local TAP_TIMEOUT = 0.8
 local HOLD_TIMEOUT = 4.5
 local DUNK_TIMEOUT = 0.9
--- inside this distance of a rim a shot is a layup or a dunk
 local LAYUP_RANGE = 13
--- a held shot whose ball is gone is let go after this long, the same key is the defender's block
 local LOST_GRACE = 0.3
--- the server runs 60 steps a second
 local SERVER_STEP = 1 / 60
--- meter values this far apart, or a frame this long, is a stall: that shot is not learned from
 local STALL = 0.075
 
--- the actions that run a meter the shoot key is let go on, a dunk, a contact layup and the clutch layup the game makes
--- of it fill the same meter as a shot. any other action name still counts while its meter is up and the shot is held
 local METERED: { [string]: boolean } = { Shooting = true, Dunking = true, ContactLayup = true, ClutchLayup = true }
--- the actions a moving or catching player goes through before the meter starts, a press in them is still the coming shot
 local PRESHOT: { [string]: boolean } = { Gathering = true, CatchingPass = true, PassTransition = true, CatchingLob = true, AwaitingPass = true }
--- a press during a dribble move or a gather is played once the move ends, the held release waits for it
 local WAITING: { [string]: boolean } = { Dribbling = true, Gathering = true, CatchingPass = true, PassTransition = true, CatchingLob = true, AwaitingPass = true }
 
 local PRESS = { Shoot = true, Input = "E" }
 local PRESS_SPACE = { Shoot = true, Input = "E", UseSpace = true }
 local RELEASE = { Shoot = false }
 
--- with getgenv().PBGreenLog = true every shoot call, decision and state change of Auto Green is written with a
--- timestamp to the console and to oklo scripts/practicalbasketball/greenlog.txt, for a probe of what a press does
 local LOG_FILE = "oklo scripts/practicalbasketball/greenlog.txt"
 local LOG_LIMIT = 6000
 
 AutoGreen.METERED = METERED
 AutoGreen.PRESHOT = PRESHOT
 
--- meter peaks learned from Perfect shots, kept in a file so they survive a re-execute
 local function learned(): Map
     local store = Env.get(LEARNED)
     if type(store) ~= "table" then
@@ -940,7 +862,6 @@ local function learned(): Map
     return store
 end
 
--- the meter runs faster for a shot with a higher ShotSpeed, rates are kept per meter at ShotSpeed 1
 local function shotSpeed(character: any): number
     local value = character:GetAttribute("ShotSpeed")
     return if type(value) == "number" and value > 0.05 then value else 1
@@ -958,8 +879,6 @@ local function meterKind(character: any, meters: { any }): string?
     return nil
 end
 
--- a shot whose meter runs: a metered action, or any action while the shot is not released and its meter is up.
--- a moving shot can play under an action name of its own, the meter is what counts
 local function liveShot(character: any, action: any, meters: { any }): boolean
     if METERED[action] then
         return true
@@ -991,10 +910,8 @@ function AutoGreen.trace(self: any, text: string)
     print("[PBGreen] " .. line)
 end
 
--- the one line of state the log follows, a new line goes out whenever it changes
 function AutoGreen.traceState(self: any, now: number, action: any)
     local shot: any = self.Shot
-    -- where he stands against the nearest ring, a finish that turns reverse is decided by this when the shot starts
     local rimText = ""
     local root = Court.Root
     if root then
@@ -1037,13 +954,9 @@ function AutoGreen.new(read: (string) -> any, notify: (string) -> ()): any
         IdleAt = 0,
         LostAt = nil :: any,
         Warned = {} :: Map,
-        -- set while the shoot key counts as pressed for the script, the time of the press
         Press = nil :: any,
-        -- set while the server has the key down and the script owes it the release
         Held = nil :: any,
-        -- set while the press was sent by the script itself
         Own = false,
-        -- what the hook reads, kept up to date outside it so the hook itself never calls into the game
         Armed = false,
         HasBall = false,
         HoldOk = false,
@@ -1064,14 +977,12 @@ function AutoGreen.new(read: (string) -> any, notify: (string) -> ()): any
     }, AutoGreen)
 end
 
--- the open shot and distance filters, true when this shot may be released by the script
 function AutoGreen.allowed(self: any): boolean
     local root = Court.Root
     if not root then
         return true
     end
     local read = self.Read
-    -- the open and distance filters belong to Auto Shoot, they only count while it is on
     if read("AutoShoot") ~= true then
         return true
     end
@@ -1094,7 +1005,6 @@ function AutoGreen.peak(self: any, kind: string): number?
     return if type(value) == "number" then value else nil
 end
 
--- true when the script can take this shot over: the filters let it and the last meter seen is known
 function AutoGreen.canHold(self: any): boolean
     return self:allowed()
 end
@@ -1111,7 +1021,6 @@ function AutoGreen.fire(self: any, args: Map): boolean
     return Court.send(remote, args)
 end
 
--- the real release of the shoot key, sent by the script. whatever was owed is settled by it, so it can never go out twice for one shot
 function AutoGreen.send(self: any)
     self:trace("  SEND release")
     self.Planned = self.NextPlan
@@ -1129,7 +1038,6 @@ function AutoGreen.send(self: any)
     end
 end
 
--- ends a press without a shot: a release the server is owed goes out, a key the player still holds is left alone
 function AutoGreen.settle(self: any)
     self:trace("  settle held=" .. tostring(self.Held ~= nil))
     if self.Held ~= nil then
@@ -1152,11 +1060,9 @@ function AutoGreen.release(self: any)
         self:settle()
         return
     end
-    -- a shot with a stall in its meter values or a long frame is rated by the lag, not by the timing, it is not learned from
     local steady = (shot.Gap or 0) < STALL and (shot.LongFrame or 0) < STALL
     self.NextPlan = { Kind = shot.Kind, Clean = shot.ReleaseAt ~= nil and shot.Timed == true and shot.Sloppy == nil and steady }
     self:send()
-    -- the meter rate measured on this shot is kept in the file for the next session
     if shot.NewRate and shot.Kind then
         local store = learned()
         store["#" .. shot.Kind] = shot.NewRate
@@ -1164,17 +1070,14 @@ function AutoGreen.release(self: any)
     end
 end
 
--- the shoot key went down, from the game through the hook or from the script itself
 function AutoGreen.onPress(self: any)
     local read = self.Read
     if self.Stopped or read("AutoGreen") ~= true then
         self:trace("  onPress ignored, Auto Green off")
         return
     end
-    -- the same key is the defender's block, without the ball it is not a shot and must not be held back
     local mine = Court.mine()
     if not mine or (not Court.holds(mine) and not PRESHOT[mine:GetAttribute("Action")]) then
-        -- a catch and shoot press can beat the ball to this client by a frame, it is looked at again once the ball is in
         if mine and (self.KeyDown == true or self.Held ~= nil) then
             self.EarlyAt = os.clock()
         end
@@ -1182,13 +1085,11 @@ function AutoGreen.onPress(self: any)
         return
     end
     self.EarlyAt = nil
-    -- a press after this shot was already let go is not a new shot, holding it back only delays the game
     local shot: any = self.Shot
     if shot and shot.Fired then
         self:trace("  onPress ignored, shot already fired")
         return
     end
-    -- the game repeats its press while a catch or gather runs, the shot already owed keeps its one timing and its safety
     if self.Press ~= nil then
         self:trace("  onPress repeat, already owned")
         return
@@ -1198,13 +1099,10 @@ function AutoGreen.onPress(self: any)
     self.LastPress = now
     self.IdleAt = now
     self.LostAt = nil
-    -- the shoot key is always held: the game keeps it and the script only lets go on the green
     self.HoldOk = false
     self:trace("  onPress OWNED, hold E")
 end
 
--- starts a shot from the script: the press goes out and the release is owed until the green. false when the script
--- cannot own this shot, nothing was sent then
 function AutoGreen.begin(self: any, useSpace: boolean?): boolean
     if self.Stopped or self.Read("AutoGreen") ~= true or self.Press ~= nil or not self:canHold() then
         return false
@@ -1225,34 +1123,24 @@ function AutoGreen.begin(self: any, useSpace: boolean?): boolean
     return true
 end
 
--- how long a press that beat the ball here waits for it: the ball can be a whole ping behind the press
 function AutoGreen.earlyWindow(self: any): number
     return math.max(0.3, math.min(Court.Ping, 0.6) + 0.15)
 end
 
--- read inside the hook when the game lets go of the shoot key: only plain fields, nothing that calls into the game.
--- every release of the game while the script owns the shot is held, the game resends its press and release while moving
 function AutoGreen.holding(self: any): boolean
     if self.Armed ~= true then
         return false
     end
-    -- a catch and shoot tap can end before the ball even shows up here, its release waits for the ball too
     local early = self.EarlyAt
     if early ~= nil and self.Press == nil and os.clock() - early < self:earlyWindow() then
         return true
     end
-    -- the method hook hands the press over on the next frame, a release in the same frame waits for it. the ball can
-    -- still be on its way here, that press is looked at again once it is in like any early one
     if self.PressPending == true and self.Press == nil then
         return self.HoldMode ~= true
     end
     return self.Press ~= nil and self.HoldOk == true
 end
 
--- a call of the game's shoot input, seen by the input wrap in plain Lua. true holds the call back.
--- the game sends {Shoot = true} once the key was down for its shoot delay and {Shoot = false} when the key comes up.
--- a tap shorter than the delay comes as {Shoot = false, Input = "E"}: that is the hop step, gather or pump fake, it
--- always goes through as it is and never becomes a shot
 function AutoGreen.shootCall(self: any, data: any): boolean
     if type(data) ~= "table" then
         return false
@@ -1263,7 +1151,6 @@ function AutoGreen.shootCall(self: any, data: any): boolean
     end
     if flag == true then
         self.KeyDown = true
-        -- the space key's press is a dunk, the rim guard leaves the run at the rim alone for it
         self.DunkPress = rawget(data, "UseSpace") == true
         self:onPress()
         return false
@@ -1289,7 +1176,6 @@ function AutoGreen.shootCall(self: any, data: any): boolean
     return false
 end
 
--- the game's own release went through to the server
 function AutoGreen.passed(self: any)
     if self.Held == nil then
         self.Press = nil
@@ -1335,7 +1221,6 @@ function AutoGreen.sample(self: any, character: any)
             Kind = nil,
             Sloppy = sloppy,
             Timed = not nearRim and self:allowed(),
-            -- a dunk whose meter never gives a release time is let go here, about when the game's own players let go
             DunkAt = if action == "Dunking" then now + DUNK_TIMEOUT else nil,
         }
         return
@@ -1343,13 +1228,10 @@ function AutoGreen.sample(self: any, character: any)
     if value < shot.Low then
         shot.Low = value
     end
-    -- a stall in the meter values, a lag spike, is kept so the rating of this shot is not learned from
     if not shot.Fired then
         shot.Gap = math.max(shot.Gap or 0, now - (shot.SeenAt or now))
         shot.SeenAt = now
     end
-    -- every value until the meter turns is kept for its rate, the ones after the release too: at a high ping a fast meter
-    -- is let go before much of it was seen, the next shot of that meter then knows its rate
     if value - shot.Low > 0.012 then
         shot.Turned = true
     elseif not shot.Turned and now > shot.T0 then
@@ -1370,7 +1252,6 @@ function AutoGreen.sample(self: any, character: any)
         return
     end
     if read("AutoGreen") ~= true or not shot.Timed then
-        -- the script will not time this one, a release it is holding back goes out now
         if self.Held ~= nil then
             self:release()
         end
@@ -1378,7 +1259,6 @@ function AutoGreen.sample(self: any, character: any)
     end
     local elapsed = now - shot.T0
     if elapsed < 0.02 then
-        -- at a low frame rate one frame brings several server values, only the newest one belongs to this frame's time
         if now == shot.T0 then
             shot.V0 = value
         end
@@ -1386,8 +1266,6 @@ function AutoGreen.sample(self: any, character: any)
     end
     local kind: string = shot.Kind or meterKind(character, self.Meters) or ""
     if kind == "" then
-        -- a meter whose gui is not on the character is still timed, by its own turn at the top, instead of the key being
-        -- held until a timeout while the bar runs up and down
         if elapsed < 0.12 then
             return
         end
@@ -1399,7 +1277,6 @@ function AutoGreen.sample(self: any, character: any)
     end
     local peak = self:peak(kind)
     if not peak then
-        -- a meter nobody measured yet, it is held until it turns around and the lowest point it reached is kept as its green
         if value - shot.Low > 0.012 then
             local store = learned()
             store[kind] = shot.Low
@@ -1408,18 +1285,15 @@ function AutoGreen.sample(self: any, character: any)
         end
         return
     end
-    -- the meter already turned around, the green was missed, let go now instead of waiting on a speed that no longer makes sense
     if value - shot.Low > 0.012 then
         self:release()
         return
     end
-    -- the plan is made once a frame from the newest value, in step, a frame can bring more than one
     shot.Peak = peak
     shot.Latest = value
     shot.Fresh = true
 end
 
--- the release time from the newest meter value of this frame
 function AutoGreen.plan(self: any, now: number)
     local shot: any = self.Shot
     shot.Fresh = false
@@ -1428,8 +1302,6 @@ function AutoGreen.plan(self: any, now: number)
     local kind: string = shot.Kind
     local read = self.Read
     local elapsed = now - shot.T0
-    -- the meter fills at one steady rate, so a straight line through every value since the shot started gives the speed
-    -- and where the meter is now, one value that came in late or early no longer moves the release
     if not shot.N then
         shot.N, shot.St, shot.Sv, shot.Stt, shot.Stv = 1, 0, shot.V0, 0, 0
     end
@@ -1443,20 +1315,17 @@ function AutoGreen.plan(self: any, now: number)
     local spread = shot.N * shot.Stt - shot.St * shot.St
     local saved = learned()["#" .. kind]
     local scale: number = shot.Scale or 1
-    -- each meter type fills at its own rate times the ShotSpeed of the shot, a moving shot or a layup often has another
     local base: number? = self.Rates[kind] or (if type(saved) == "number" then saved else nil)
     local known: number? = if base then base * scale else nil
     if shot.N >= 6 and spread > 1e-9 then
         speed = (shot.N * shot.Stv - shot.St * shot.Sv) / spread
         level = (shot.Sv - speed * shot.St) / shot.N + speed * elapsed
-        -- the rate is kept for the next shot of that meter
         if shot.N >= 8 then
             local measured = speed / scale
             self.Rates[kind] = if base then base + (measured - base) * 0.5 else measured
             shot.NewRate = self.Rates[kind]
         end
     elseif known then
-        -- too few values yet, with a high ping a fast meter gives only a handful: the rate of the last shot of this meter is used
         speed = known
         level = (shot.Sv - speed * shot.St) / shot.N + speed * elapsed
     elseif shot.N >= 4 and spread > 1e-9 then
@@ -1467,29 +1336,23 @@ function AutoGreen.plan(self: any, now: number)
         return
     end
     local remaining = (peak - level) / speed
-    -- the value came in some time since the last frame, the server sends at most 60 a second, so on average half of
-    -- the shorter of the two before it was seen here, and the server reads the release on its next step, half a step late
     local delay = remaining - math.min(self.FrameDt or 0, 1 / 60) * 0.5 - SERVER_STEP * 0.5 - Court.Ping * (read("PingComp") or 100) / 100 + (read("GreenOffset") or 0) / 1000 + (shot.Sloppy or 0) + self:bias(kind)
     shot.Value = value
     shot.SampleAt = now
     shot.Speed = speed
     shot.Peak = peak
-    -- the first value or two can be a bunch that came in together on one frame, a plan from only those is not acted on
     local trusted = shot.N >= 6 or known ~= nil
     if not trusted and shot.N < 3 then
         return
     end
-    -- every new sample sharpens the speed, the frame loop always fires on the newest plan
     shot.ReleaseAt = now + delay
     if delay <= 0 then
         self:release()
     elseif delay < 0.03 and trusted then
-        -- close to the green, keep this plan, new samples this late only make the estimate worse
         shot.Frozen = true
     end
 end
 
--- the rate of a meter that was let go before the plan could measure it, from every value seen of it
 function AutoGreen.learnRate(self: any, shot: any)
     local n = shot.Ln
     local spread = n * shot.Ltt - shot.Lt * shot.Lt
@@ -1533,7 +1396,6 @@ function AutoGreen.calibrate(self: any, kind: string?, timing: number)
     Env.writeJson(PEAK_FILE, store)
 end
 
--- forgets the release bias of every meter and the peaks learned for meters without a measured one
 function AutoGreen.resetCalibration(self: any)
     local store = learned()
     local keys: { string } = {}
@@ -1583,7 +1445,6 @@ function AutoGreen.detach(self: any)
     end
     table.clear(self.Links)
     table.clear(self.Meters)
-    -- a release still held back goes out first, the server must never be left with the key down
     if self.Press ~= nil or self.Held ~= nil then
         self:settle()
     end
@@ -1607,7 +1468,6 @@ function AutoGreen.attach(self: any, character: any)
     table.insert(links, character:GetAttributeChangedSignal("meterOffset"):Connect(function()
         self:sample(character)
     end))
-    -- a shot that moves from one metered action to the next keeps its samples, only leaving the shot drops it
     table.insert(links, character:GetAttributeChangedSignal("Action"):Connect(function()
         if self.Character == character and self.Shot and not liveShot(character, character:GetAttribute("Action"), meters) then
             self.Shot = nil
@@ -1625,8 +1485,6 @@ function AutoGreen.attach(self: any, character: any)
     end
 end
 
--- runs every frame: the flags the hook reads, the release on the frame nearest to its planned time, and every
--- safety that keeps a held key from staying down
 function AutoGreen.step(self: any, now: number, dt: number)
     local on = self.Read("AutoGreen") == true
     local action0 = Court.Action
@@ -1667,13 +1525,10 @@ function AutoGreen.step(self: any, now: number, dt: number)
     if self.PressPending then
         self.PressPending = false
         self:onPress()
-        -- a release held for a press the filters then turned down goes out at once
         if self.Held ~= nil and self.Press ~= nil and self.HoldOk ~= true then
             self:send()
         end
     end
-    -- Tap To Shoot: a tap shorter than the game's shoot delay never reaches the server as a shot, the script presses for it
-    -- and owns the release. a tap in the middle of a dribble move is the game's own move and stays one
     if self.TapPending then
         self.TapPending = false
         if on and self.Read("TapShoot") == true and Court.HasBall and self.Press == nil and self.Held == nil and self.Shot == nil
@@ -1693,7 +1548,6 @@ function AutoGreen.step(self: any, now: number, dt: number)
             self:onPress()
         end
     end
-    -- a hook something else took out again is put back in by the next frame
     if self.Hooked and not self.HookFailed and now >= self.HookCheck then
         self.HookCheck = now + 2
         if self.HookBound and not Hook.owned(self) then
@@ -1701,7 +1555,6 @@ function AutoGreen.step(self: any, now: number, dt: number)
             self.Hooked = false
         end
     end
-    -- the game's input can load after the script, the light wrap is looked for again now and then
     if on and self.HookFailed and not self.Binding and now >= (self.WrapRetry or 0) and (self.Retries or 0) < 8 then
         self.Retries = (self.Retries or 0) + 1
         self.WrapRetry = now + 5 * self.Retries
@@ -1723,7 +1576,6 @@ function AutoGreen.step(self: any, now: number, dt: number)
     end
     if on and self.HookFailed and not self.HoldMode and not self.Warned.Hook and now >= (self.WarnAt or 0) then
         if not self.WarnAt then
-            -- the first look for the wrap can take a moment, the note waits for it
             self.WarnAt = now + 1.5
         else
             self.Warned.Hook = true
@@ -1744,7 +1596,6 @@ function AutoGreen.step(self: any, now: number, dt: number)
             end
             local at: number? = if shot.Fired then nil else shot.ReleaseAt
             if at then
-                -- a frame can only be early or late, the release goes out on the one nearest to the planned time
                 if now + math.min(dt, 0.05) * 0.5 >= at then
                     self:release()
                 end
@@ -1792,12 +1643,10 @@ function AutoGreen.step(self: any, now: number, dt: number)
             end
         end
     elseif self.Held ~= nil and self.EarlyAt == nil then
-        -- a release held for an early catch and shoot press waits for the ball, it goes out once that wait is over
         self:send()
     end
 end
 
--- true while the shot is in its green window: right around the planned release, and a moment after the release went out
 function AutoGreen.greenWindow(self: any, now: number): boolean
     local shot: any = self.Shot
     if shot and not shot.Fired and shot.ReleaseAt and math.abs(shot.ReleaseAt - now) <= 0.08 then
@@ -1806,9 +1655,6 @@ function AutoGreen.greenWindow(self: any, now: number): boolean
     return now - self.LastAuto < 0.35
 end
 
--- goes in only once Auto Green or a feature that repeats the game's own calls is switched on, never at load. the
--- game's input signals are wrapped first, that costs nothing and works without hook functions. the method hook is
--- only tried when allowHook says so. without either, Auto Green still lets go on the green while the key stays down
 function AutoGreen.hook(self: any, allowHook: boolean?)
     if self.Stopped or self.Binding or self.HookBound then
         return
@@ -1830,7 +1676,6 @@ function AutoGreen.hook(self: any, allowHook: boolean?)
         self.HookMode = mode
         self.HookFailed = nil
         if mode == "hook" then
-            -- the method hook is watched for a few seconds, an executor where it slows every frame loses it again
             self.WatchHook = { Until = os.clock() + 3, Base = self.FrameAvg or (1 / 60), Sum = 0, Count = 0 }
         end
     else
@@ -1896,14 +1741,12 @@ local players: any = game:GetService("Players")
 
 local COOLDOWN = 1.5
 local RETRY = 0.15
--- a teammate counts as open with no enemy this close to them
 local OPEN = 8
 local REACT_MIN = 0.2
 local REACT_MAX = 0.4
 
 local random = Random.new()
 
--- a copied real pass is aimed at whoever it went to, every character, player, name or aim in it is swapped for the new target
 local function retarget(value: any, context: Map, depth: number): any
     local target, mine = context.Target, context.Mine
     local folder = mine.Parent
@@ -1949,7 +1792,6 @@ local function adapt(args: any, context: Map): any
     return retarget(args, context, 0)
 end
 
--- guessed forms, a real pass copied by the hook is used instead once there is one
 local FORMS: { (any) -> ...any } = {
     function(context: any): ...any
         return { Player = context.Target.Name, PassType = 1 }
@@ -1971,7 +1813,6 @@ function AutoPass.new(read: (string) -> any): any
     return setmetatable({ Read = read, Last = -math.huge, Since = nil :: number?, React = REACT_MIN, Context = {} :: Map }, AutoPass)
 end
 
--- the most open teammate, open meaning no enemy near them, closer teammates and ones nearer the rim score higher
 local function pick(here: Vector3, openRange: number): any?
     local best: any? = nil
     local bestScore = -math.huge
@@ -2008,7 +1849,6 @@ function AutoPass.step(self: any, now: number)
         return
     end
     local action = Court.Action
-    -- a dribble move plays out first, a pass in the middle of one is not something a player can do
     if action == "Dribbling" then
         return
     end
@@ -2016,7 +1856,6 @@ function AutoPass.step(self: any, now: number)
         self.Since = nil
         return
     end
-    -- only when somebody is on you, otherwise you keep the ball
     local here: Vector3 = root.Position
     if Court.nearestFoe(here) > (read("PassPressure") or 6) then
         self.Since = nil
@@ -2071,7 +1910,6 @@ local function ready(self: any): boolean
     if not root or not mine or Court.HasBall or Court.TeamBall or Court.FoeBall or Court.Dead or Court.HandsOff then
         return false
     end
-    -- Moving is the game walking you into place for a dead ball, nobody jumps then
     local action = Court.Action
     if (action ~= "" and action ~= nil) or not Court.free(mine) then
         return false
@@ -2087,7 +1925,6 @@ local function ready(self: any): boolean
     if math.sqrt(offset.X * offset.X + offset.Z * offset.Z) > (self.Read("ReboundRange") or 8) or high < 2 or high > 12 or velocity.Y > 4 then
         return false
     end
-    -- a shot still dropping in toward the ring is not a rebound yet, a player waits for it to come off the rim
     local _, rim = Court.rimDistance(where)
     if rim then
         local toRim = Vector3.new(rim.Position.X - where.X, 0, rim.Position.Z - where.Z)
@@ -2099,7 +1936,6 @@ local function ready(self: any): boolean
     return true
 end
 
--- jumps for a ball that is in the air above you and coming down, for rebounds, missed shots and lobs
 function AutoRebound.step(self: any, now: number)
     if self.Read("AutoRebound") ~= true or now - self.Last < COOLDOWN or not ready(self) then
         self.Since = nil
@@ -2135,11 +1971,8 @@ AutoShoot.__index = AutoShoot
 
 local COOLDOWN = 1.6
 local RETRY = 0.25
--- this close to a rim the shot is a layup, it is taken from anywhere but behind the backboard
 local LAYUP_RANGE = 13
--- every wait is moved by up to this share of it either way
 local JITTER = 0.15
--- a catch in the air or a landing is not a shot, you have to stand on the floor this long first
 local SETTLE = 0.2
 
 local random = Random.new()
@@ -2148,8 +1981,6 @@ function AutoShoot.new(read: (string) -> any, autoGreen: any): any
     return setmetatable({ Read = read, AutoGreen = autoGreen, AutoDunk = nil :: any, Defense = nil :: any, Contest = nil :: any, Last = -math.huge, Since = nil :: number?, GroundAt = nil :: number?, Jitter = 0 }, AutoShoot)
 end
 
--- the rim the shot goes at: the one you look toward, or right next to you the closest one whichever way you face.
--- only ever the rim of the half you stand in, and only the rim your team attacks once a shot showed which one that is
 local function target(root: any, range: number, attack: any?): (any?, number)
     local near, closest = Court.rimDistance(root.Position)
     if not near or not closest or (attack and closest ~= attack) then
@@ -2209,7 +2040,6 @@ function AutoShoot.step(self: any, now: number)
     if not rim then
         return
     end
-    -- Auto Dunk only keeps the shot when it is really going to dunk it
     local dunk = self.AutoDunk
     if dunk and read("AutoDunk") == true and dunk:claims(distance) then
         return
@@ -2226,7 +2056,6 @@ function AutoShoot.step(self: any, now: number)
     if Court.nearestFoe(root.Position) <= (read("OpenRange") or 6) then
         return
     end
-    -- Max Contest: the same 0 to 100% estimate as Shot Contest, a shot more contested than this waits until it opens up
     local contest = self.Contest
     if contest and contest:estimate(root) > (tonumber(read("MaxContest")) or 35) / 100 then
         return
@@ -2249,7 +2078,6 @@ local Drive: typeof(require("./drive")) = import("drive")
 local BallMagnet = {}
 BallMagnet.__index = BallMagnet
 
--- while a pass, shot or inbound is happening the ball is in flight on purpose, it is only loose after that
 local BUSY: { [string]: boolean } = { Passing = true, CatchingPass = true, AwaitingPass = true, PassTransition = true, CatchingLob = true, Shooting = true, Inbounding = true, Gathering = true }
 local SPRINT_BONUS = 3.35
 local SLOW = 6
@@ -2285,7 +2113,6 @@ function BallMagnet.stop(self: any)
     end
 end
 
--- runs to the ball when nobody has it and it is close, your own movement always wins over it
 function BallMagnet.step(self: any, now: number)
     if self.Read("BallMagnet") ~= true then
         self:stop()
@@ -2299,7 +2126,6 @@ function BallMagnet.step(self: any, now: number)
     if inFlight() then
         self.LastBusy = now
     end
-    -- a shot or pass is still in the air for a moment after the shooter's action ends, that ball is not loose yet
     local action = Court.Action
     if Court.HasBall or Court.TeamBall or Court.FoeBall or Court.Dead or Court.HandsOff or now - self.LastBusy < 2 or (action ~= "" and action ~= nil) or not Court.free(mine) then
         self:stop()
@@ -2313,14 +2139,12 @@ function BallMagnet.step(self: any, now: number)
     local here: Vector3 = root.Position
     local where: Vector3 = ball.Position
     local velocity: Vector3 = ball.AssemblyLinearVelocity
-    -- a ball lying still that nobody just let go of is a dead ball set down for an inbound, not a loose one
     if velocity.Magnitude < 1 and not self.Chasing and now - self.LastLive > 1.5 then
         return
     end
     if velocity.Magnitude >= 1 then
         self.LastLive = now
     end
-    -- while chasing, a bounce that lifts the ball a little or speeds it up for a frame does not end the chase
     local height = if self.Chasing then 6 else 4
     local fast = if self.Chasing then 30 else 22
     local distance = (where - here).Magnitude
@@ -2328,7 +2152,6 @@ function BallMagnet.step(self: any, now: number)
         self:stop()
         return
     end
-    -- a slow ball or one rolling your way, never one running away from you
     local drift = Vector3.new(velocity.X, 0, velocity.Z)
     local rolling = drift.Magnitude
     if rolling > SLOW then
@@ -2340,12 +2163,10 @@ function BallMagnet.step(self: any, now: number)
     end
     local walk = mine:GetAttribute("WalkSpeed")
     local speed = math.clamp(if type(walk) == "number" then walk else 14, 8, 17)
-    -- only as fast as you really run, a sprint speed without the sprint on is not something a player can do
     if distance > 6 and mine:GetAttribute("Sprinting") == true then
         speed += SPRINT_BONUS
     end
     self.Chasing = true
-    -- aimed a little ahead of a rolling ball
     Drive.set("Magnet", Vector3.new(where.X + velocity.X * 0.15, here.Y, where.Z + velocity.Z * 0.15), speed, true, false)
 end
 
@@ -2474,14 +2295,11 @@ Combo.__index = Combo
 
 local INPUTS = Config.MOVE_INPUTS
 
--- how long the server gets to start a move, the pause between two moves and the pause before the chain starts over
 local START = 0.45
 local GAP_MIN = 0.15
 local GAP_MAX = 0.3
 local REST = 0.4
--- no dribble move this close to a rim, it throws a drive off its line and the dunk or layup misses
 local RIM_CLEAR = 24
--- a Play Combo press that cannot start this soon (no ball, too close to the rim) is dropped instead of firing later
 local ONCE_WAIT = 1.2
 
 local random = Random.new()
@@ -2496,14 +2314,12 @@ function Combo.reset(self: any)
     self.FreeAt = nil
 end
 
--- the Play Combo key: the chain plays one time from the start, then stops until the key is pressed again
 function Combo.playOnce(self: any)
     self.Once = os.clock()
     self.Done = false
     self:reset()
 end
 
--- one run is over: Play Combo ends, and with Combo Once the looping toggle switches itself off
 function Combo.finish(self: any)
     self.Done = false
     self:reset()
@@ -2532,7 +2348,6 @@ function Combo.step(self: any, now: number)
             self:finish()
         end
         self:reset()
-        -- a Play Combo press that never got going is let go
         if once and self.Index == 0 and now - once > ONCE_WAIT then
             self.Once = nil
         end
@@ -2553,7 +2368,6 @@ function Combo.step(self: any, now: number)
     end
     local action = Court.Action
     if action ~= "" and action ~= nil then
-        -- a move is playing, the next one waits for it to end
         self.Seen = true
         self.FreeAt = nil
         return
@@ -2591,7 +2405,6 @@ function Combo.step(self: any, now: number)
     if not keys then
         return
     end
-    -- the same call the game makes for the dribble keys: the keys, whether sprint is held and where you are moving
     local sprint = Court.sprintHeld() or mine:GetAttribute("Sprinting") == true
     Court.send(remote, keys[if mine:GetAttribute("Hand") == "L" then "L" else "R"], sprint, Court.heading() or Vector3.zero)
 end
@@ -2602,7 +2415,6 @@ modules["config"] = function(...)
 
 local Config = {}
 
--- where the meter fill (meterOffset Y) tops out for each meter type, measured from rated shots, releasing there is Perfect
 Config.PEAKS = {
     Bat = -0.99,
     Funnel2 = -0.985,
@@ -2614,7 +2426,6 @@ Config.GUARD_BALL = "Ball Handler"
 Config.GUARD_NEAREST = "Nearest Player"
 Config.GUARD_TARGETS = { Config.GUARD_BALL, Config.GUARD_NEAREST }
 
--- dribble moves chained one after the other, by the game's own move names
 Config.COMBO_NAMES = { "Cross Tween", "Hesi Cross", "Behind Back Spin", "Double Cross Snatch", "Breakdown Stepback", "Half Spin Cross" }
 Config.COMBOS = {
     ["Cross Tween"] = { "Crossover", "Tween", "Crossover" },
@@ -2625,7 +2436,6 @@ Config.COMBOS = {
     ["Half Spin Cross"] = { "HalfSpin", "Crossover" },
 } :: { [string]: { string } }
 
--- the keys of each dribble move for the hand the ball is in, from the game's own dribble table
 Config.MOVE_INPUTS = {
     Crossover = { R = "Z", L = "C" },
     Hesitation = { R = "C", L = "Z" },
@@ -2639,7 +2449,6 @@ Config.MOVE_INPUTS = {
     Breakdown = { R = "VC", L = "VZ" },
 } :: { [string]: { [string]: string } }
 
--- the moves that get a key of their own in the menu, the name shown and the game's move name
 Config.MOVE_KEYS = {
     { "Crossover", "Crossover" },
     { "Hesitation", "Hesitation" },
@@ -2664,7 +2473,6 @@ Config.CONTEST_COLORS = { "Contest Colors", "Custom" }
 
 Config.TIMINGS = { "Very Early", "Early", "Slightly Early", "Good", "Perfect", "Slightly Late", "Late", "Very Late" }
 
--- each on/off sub-option and the main option it belongs to, a sub-option reads as off while its main option is off
 Config.PARENT = {
     OpenShotGlow = "OpenShot", OpenShotNumber = "OpenShot", OpenShotBall = "OpenShot",
     ContestWho = "OpenShot", ContestFoeMark = "OpenShot",
@@ -2800,9 +2608,6 @@ local import: (string) -> any = ...
 local Court: typeof(require("./court")) = import("court")
 local Env: typeof(require("./env")) = import("env")
 
--- the glow on your own character and the contest number above your head.
--- Open Shot: green when nobody can contest your shot, yellow when one is close, red when he is on you, with the
--- distance to the closest defender and how much he contests it. a defender between you and the rim counts for more.
 local Contest = {}
 Contest.__index = Contest
 
@@ -2810,10 +2615,8 @@ local OPEN = Color3.fromRGB(70, 230, 110)
 local CLOSE = Color3.fromRGB(255, 200, 70)
 local TIGHT = Color3.fromRGB(255, 80, 80)
 local DARK = Color3.fromRGB(14, 16, 20)
--- how fast the color follows and the glow fades, so it never flickers when a defender steps in and out
 local EASE = 10
 local FADE = 6
--- the glow at full strength, kept soft: mostly an outline with a light fill
 local FILL = 0.84
 local OUTLINE = 0.3
 local OPEN_BELOW = 0.35
@@ -2838,7 +2641,6 @@ function Contest.new(read: (string) -> any, autoGreen: any?): any
     return setmetatable({ Read = read, AutoGreen = autoGreen, Light = nil :: any, Color = OPEN, Glow = 0, Value = 0, Gap = math.huge, Open = true }, Contest)
 end
 
--- 0 open, 1 fully contested: closeness inside the range, weighted by how much the defender stands toward the rim
 function Contest.measure(self: any, root: any): (number, number)
     local range: number = self.Read("ContestRange") or 6
     local here: Vector3 = root.Position
@@ -2861,17 +2663,14 @@ function Contest.measure(self: any, root: any): (number, number)
             if distance < range * 1.5 + 2 then
                 local away = if distance > 0.1 then offset / distance else Vector3.zero
                 local theirRoot = roots[index]
-                -- a defender closing out on you counts as nearer than he is, one drifting away as further
                 local motion = Court.flat(theirRoot.AssemblyLinearVelocity)
                 local closing = math.clamp(-motion:Dot(away), -6, 12)
                 local effective = math.max(distance - closing * 0.15, 0)
                 local closeness = math.clamp((range * 1.5 - effective) / range, 0, 1)
-                -- between you and the rim counts most, beside you less, behind you least
                 local front = 0.6
                 if toRim and distance > 0.1 then
                     front = 0.35 + 0.65 * math.clamp(away:Dot(toRim) * 0.5 + 0.5, 0, 1)
                 end
-                -- looking at you he can get a hand up, turned away he cannot
                 local look = Court.flat(theirRoot.CFrame.LookVector)
                 local facing = if look.Magnitude > 0.1 and distance > 0.1 then math.clamp(-look.Unit:Dot(away) * 0.5 + 0.5, 0, 1) else 0.5
                 local share = closeness * front * (0.6 + 0.4 * facing)
@@ -2886,7 +2685,6 @@ function Contest.measure(self: any, root: any): (number, number)
     return worst, gap
 end
 
--- the estimate alone, kept up to date for Auto Shoot without the glow or the label
 function Contest.estimate(self: any, root: any): number
     local value, gap = self:measure(root)
     self.Value, self.Gap = value, gap
@@ -2901,7 +2699,6 @@ function Contest.clear(self: any)
     end
 end
 
--- the one color both the glow and the number use, from the same open state
 function Contest.shade(self: any): Color3
     if self.Open then
         return OPEN
@@ -2914,7 +2711,6 @@ function Contest.step(self: any, now: number, dt: number)
     local mine, root = Court.Mine, Court.Root
     local contestOn = read("OpenShot") == true
     if not mine or not root or not contestOn then
-        -- Auto Shoot still needs the number while the glow and the label are off, nothing is drawn for it
         if root and read("AutoShoot") == true then
             self:estimate(root)
         end
@@ -2926,7 +2722,6 @@ function Contest.step(self: any, now: number, dt: number)
     local step = math.min(dt, 0.1)
     local value, gap = self:measure(root)
     self.Value, self.Gap = value, gap
-    -- open turns on below one value and off above a higher one, so the glow and the number never flicker on the edge
     if self.Open then
         self.Open = value < OPEN_BELOW + 0.05
     else
@@ -2935,7 +2730,6 @@ function Contest.step(self: any, now: number, dt: number)
     local ball = Court.HasBall
     local showing = contestOn and (read("OpenShotBall") ~= true or ball)
     self.Shown = showing
-    -- the green window comes first, then the contest colors
     local goal: Color3? = nil
     if showing and read("OpenShotGlow") == true then
         goal = self:shade()
@@ -2953,7 +2747,6 @@ function Contest.step(self: any, now: number, dt: number)
     local light = self.Light
     if (not light or light.Parent == nil or light.Adornee ~= mine) and now >= (self.RetryAt or 0) then
         self:clear()
-        -- a highlight this executor cannot make is not tried again every frame
         self.RetryAt = now + 2
         local ok, made = pcall(function(): any
             local item = Instance.new("Highlight")
@@ -2989,12 +2782,9 @@ local function wording(open: boolean, value: number): string
     return if value < 0.65 then "CONTESTED" else "SMOTHERED"
 end
 
--- how fast the shown number and color follow, so the label glides instead of jumping
 local FOLLOW = 12
 local REACH = 4
 
--- the label is the notification pill of the interface itself (same shape, font, colors and edge light), drawn by the
--- interface at a screen point, so it matches the watermark and the notifications exactly
 local function lift(self: any, key: string, want: number, dt: number): number
     local alpha: number = self[key] or 0
     alpha += math.clamp(want - alpha, -REACH * dt, REACH * dt)
@@ -3002,7 +2792,6 @@ local function lift(self: any, key: string, want: number, dt: number): number
     return alpha
 end
 
--- the label above your head: how contested your shot is (0 to 100%) and who contests it. it can mark the contester too
 function Contest.draw(self: any, canvas: any, chip: any)
     local read = self.Read
     local now = os.clock()
@@ -3039,13 +2828,11 @@ function Contest.draw(self: any, canvas: any, chip: any)
         self.LastPoint = point
         local shown = Vector2.new(point.X, point.Y - (1 - math.clamp(alpha / math.max(want, 0.1), 0, 1)) * 8)
         if read("ContestStyle") == "Bar" then
-            -- the Bar style is only a gauge, no words and no number
             chip("contest", shown, {}, alpha, scale, { Value = self.Eased, Color = tone, Only = true })
         else
             chip("contest", shown, { { { Text = wording(self.Open, self.Value), Color = tone } }, runs }, alpha, scale, nil)
         end
     end
-    -- the smaller mark over the contester keeps its last place while it fades out
     local theirs = self.WhoRoot
     local marking = labelOn and read("ContestFoeMark") == true and theirs ~= nil and not self.Open and theirs.Parent ~= nil
     local markPoint: Vector2? = nil
@@ -3095,10 +2882,8 @@ local stats: any = game:GetService("Stats")
 local MOVE_KEYS = { Enum.KeyCode.W, Enum.KeyCode.A, Enum.KeyCode.S, Enum.KeyCode.D, Enum.KeyCode.Up, Enum.KeyCode.Down, Enum.KeyCode.Left, Enum.KeyCode.Right }
 local FAR_RIM = 30
 local HOOK = "__PBShootHook"
--- the ball counts as a player's this close to his root
 local BALL_REACH = 6
 
--- the world as it was at the start of this frame, every feature reads it instead of walking the game again
 Court.Now = 0
 Court.Mine = nil :: any
 Court.Root = nil :: any
@@ -3114,28 +2899,18 @@ Court.FoeBall = false
 Court.Ping = 0.08
 Court.Sending = 0
 Court.Held = false
--- true while the script holds any move key
 Court.Keys = false
--- when the script last let go of its move keys, the game still moves you on them for a moment after
 Court.KeysOff = -math.huge
 Court.Focused = true
 Court.UserMoving = false
--- a made basket or an inbound: the ball is dead until somebody holds it again
 Court.Dead = false
--- true while the game moves or holds you itself, see Court.forced
 Court.Forced = false
--- true while the game walks, stuns or holds you and a short moment after: no feature presses a key, sends a call,
--- writes an attribute or touches your velocity then
 Court.HandsOff = false
--- when the game last walked you itself (Moving, Fouled, Inbounding), the last frame it walked or stunned you, and
--- whether anybody on the court is fouled
 Court.WalkAt = -math.huge
 Court.FreeAt = -math.huge
 Court.Foul = false
--- per character of the frame: holds the ball and the ball really is at him, and whether any enemy is such a one
 Court.Ball = {} :: { boolean }
 Court.FoeHeld = false
--- what was held back or written while hands were off, read by the walk debug line
 Court.Touched = {} :: { string }
 
 local function flat(vector: Vector3): Vector3
@@ -3181,7 +2956,6 @@ function Court.humanoid(character: any): any?
     return humanoid
 end
 
--- the one with the ball has a Basketball value in the character, dribbling and triple threat cover the moments around it
 function Court.holds(character: any): boolean
     local entry = record(character)
     local inner = entry.Inner
@@ -3208,7 +2982,6 @@ function Court.holds(character: any): boolean
     return character:GetAttribute("TripleThreat") == true or character:GetAttribute("Action") == "Dribbling"
 end
 
--- false while stunned or while the game holds you in place, a dribble move also turns CanMove off and still counts as free
 function Court.free(character: any): boolean
     if character:GetAttribute("Stunned") == true then
         return false
@@ -3216,15 +2989,12 @@ function Court.free(character: any): boolean
     return character:GetAttribute("CanMove") ~= false or character:GetAttribute("Action") == "Dribbling"
 end
 
--- the actions of your own moves, everything else that turns CanMove off is the game moving you itself
 local OWN_MOVES: { [string]: boolean } = {
     Dribbling = true, Shooting = true, Gathering = true, Dunking = true, ContactLayup = true, Layup = true, Passing = true,
     Stealing = true, Blocking = true, Jumping = true, Rebounding = true, CatchingPass = true, PassTransition = true,
     CatchingLob = true, AwaitingPass = true, Diving = true, Pushing = true, MovingShot = true,
 }
 
--- true while the game itself moves or holds you: a foul, a dead ball reset, being walked into place. every feature that
--- moves you or holds a key backs off completely then
 function Court.forced(character: any): boolean
     if not character then
         return false
@@ -3239,7 +3009,6 @@ function Court.forced(character: any): boolean
     return false
 end
 
--- the game walking you somewhere itself: a dead ball reset, a foul, an inbound
 local WALKS: { [string]: boolean } = { Moving = true, Fouled = true, Inbounding = true }
 
 function Court.walking(character: any): boolean
@@ -3250,12 +3019,9 @@ function Court.walking(character: any): boolean
     return type(action) == "string" and WALKS[action] == true
 end
 
--- after the game let go of you, every feature waits this long before it does anything again
 local GRACE = 0.5
 Court.GRACE = GRACE
 
--- true while the game walks or stuns you, and for a moment after. read live, an attribute that came in after the start
--- of the frame counts too
 function Court.held(character: any): boolean
     if not character then
         return false
@@ -3266,7 +3032,6 @@ function Court.held(character: any): boolean
     return os.clock() - (Court.FreeAt or -math.huge) < GRACE
 end
 
--- the same, and also while the game holds you in a move that is not one of your own
 function Court.handsOff(character: any): boolean
     if not character then
         return false
@@ -3274,7 +3039,6 @@ function Court.handsOff(character: any): boolean
     return Court.forced(character) or Court.held(character)
 end
 
--- notes a feature that held back or wrote something while hands are off, for the walk debug line
 function Court.touch(what: string)
     local list = Court.Touched
     if #list < 24 and not table.find(list, what) then
@@ -3282,7 +3046,6 @@ function Court.touch(what: string)
     end
 end
 
--- tutorial bots share your TeamIndex, their side is only in the Team attribute
 function Court.enemy(mine: any, character: any): boolean
     if character:GetAttribute("TeamIndex") ~= mine:GetAttribute("TeamIndex") then
         return true
@@ -3338,8 +3101,6 @@ local function characters(now: number): any?
         nextSync = now + ROSTER_SYNC
         return folder
     end
-    -- the list is read again every half second as well, a player or bot the signals missed was waiting up to three
-    -- seconds before any feature saw him
     if now >= nextSync then
         nextSync = now + ROSTER_SYNC
         table.clear(roster)
@@ -3365,10 +3126,8 @@ end
 local pingItem: any = nil
 local nextPing = 0
 local pingSeeded = false
--- each sample moves the ping this much of the way, one spike no longer throws a release off
 local PING_SMOOTH = 0.2
 
--- the last few samples: a lag spike only lifts the stat for a moment, the lower half of them is the ping the next shot meets
 local pingWindow: { number } = {}
 local PING_WINDOW = 6
 
@@ -3450,16 +3209,12 @@ function Court.input(name: string): any?
     return remote
 end
 
--- the let go of a shot the server is owed, the only call that still goes out while the game walks you
 local function shotRelease(remote: any, first: any): boolean
     return remote.Name == "Shoot" and type(first) == "table" and rawget(first, "Shoot") == false
 end
 
--- set while the script unloads, what it still holds is let go even in the middle of a walk
 Court.Closing = false
 
--- every call the script makes itself goes out as a plain function call, never through the method hook. while the game
--- walks or holds you nothing goes out at all, not even the let go of a key: a call then is what told the game you are free
 function Court.send(remote: any, ...: any): boolean
     if Court.HandsOff and not Court.Closing and not shotRelease(remote, (...)) then
         Court.touch("held back " .. tostring(remote.Name))
@@ -3471,7 +3226,6 @@ function Court.send(remote: any, ...: any): boolean
     return ok
 end
 
--- the last real press the game sent on an input remote, copied by the hook
 function Court.copied(name: string): any?
     local hook = Env.get(HOOK)
     if type(hook) ~= "table" then
@@ -3488,7 +3242,6 @@ local learnedForm: { [string]: number } = {}
 local tryForm: { [string]: number } = {}
 local trials: { [string]: Map } = {}
 
--- fires an input remote with the copied real call when there is one, otherwise each guessed form in turn until check sees it work
 function Court.fire(name: string, forms: { (any) -> ...any }, check: ((any) -> boolean)?, adapt: ((any, any) -> any)?, context: any): boolean
     if Court.HandsOff and not Court.Closing then
         Court.touch("held back " .. name)
@@ -3546,7 +3299,6 @@ local virtualTried = false
 local keyChannel = 0
 local keyDead = false
 
--- the move keys the script can hold, by name, with their key codes and the Windows key numbers keypress takes
 local KEYS: { [string]: { any } } = {
     W = { Enum.KeyCode.W, 0x57 },
     A = { Enum.KeyCode.A, 0x41 },
@@ -3610,7 +3362,6 @@ local function applyKeys()
             end
         end
     end
-    -- without a keyboard nothing is pressed, a thumbstick has to stay readable as your own movement
     if keyDead or Court.Forced or Court.HandsOff or not Court.Focused or userInput.KeyboardEnabled == false or userInput:GetFocusedTextBox() ~= nil then
         table.clear(wanted)
     end
@@ -3637,8 +3388,6 @@ local function applyKey()
     applyKeys()
 end
 
--- holds or lets go of the forward key the way a real key press does, never while you type and never into another window.
--- each feature holds it under its own name, the key stays down while any of them wants it
 function Court.hold(owner: string, down: boolean)
     if not down and not holders[owner] then
         return
@@ -3647,19 +3396,15 @@ function Court.hold(owner: string, down: boolean)
     applyKeys()
 end
 
--- true when this executor can press keys into the game at all
 function Court.canPress(): boolean
     return not keyDead and channel() ~= 0 and Court.Focused and userInput.KeyboardEnabled ~= false
 end
 
--- some executors take a key press without error and nothing reaches the game, a feature that held keys and saw you not
--- move at all calls this, from then on the keys are not used and the features steer the game's velocity part instead
 function Court.keysIgnored()
     keyDead = true
     applyKeys()
 end
 
--- holds a set of move keys under one name, like a person on a keyboard: any of W A S D, nil lets go of all of them
 function Court.holdKeys(owner: string, set: { [string]: boolean }?)
     if not set and not holders[owner] then
         return
@@ -3668,8 +3413,6 @@ function Court.holdKeys(owner: string, set: { [string]: boolean }?)
     applyKeys()
 end
 
--- the game moves characters with its own controller, so the move keys are read as well as MoveDirection. keys the
--- script itself holds are not you
 function Court.steering(mine: any): boolean
     if Court.UserMoving then
         return true
@@ -3683,7 +3426,6 @@ function Court.steering(mine: any): boolean
     return Court.userKeys()
 end
 
--- true while you hold a move key yourself, the keys the script holds are not counted
 function Court.userKeys(): boolean
     if userInput:GetFocusedTextBox() then
         return false
@@ -3699,7 +3441,6 @@ end
 local proxyPart: any = nil
 local proxyMover: any = nil
 
--- the game moves a local part named ProxyCharacter and sends its position to the server, its BodyVelocity is what sets your speed
 function Court.proxy(): (any?, any?)
     local part = proxyPart
     if not part or part.Parent ~= workspace then
@@ -3719,7 +3460,6 @@ function Court.proxy(): (any?, any?)
     return part, mover
 end
 
--- where the move keys point on the floor, the way the game reads them against the camera, nil when none is held
 function Court.heading(): Vector3?
     if userInput:GetFocusedTextBox() then
         return nil
@@ -3757,7 +3497,6 @@ function Court.heading(): Vector3?
     return (forward * z + right * x).Unit
 end
 
--- the sprint key counts as held when the last real sprint call the hook copied was a press, or the default key is down
 function Court.sprintHeld(): boolean
     local hook = Env.get(HOOK)
     local calls = if type(hook) == "table" then hook.Calls else nil
@@ -3780,8 +3519,6 @@ local function clearRims()
     hoopsFolder = nil
 end
 
--- every rim on the court, found once and kept. the search walks the whole workspace, so a court that is not there yet
--- is looked for at a slowing pace, never every frame
 function Court.rims(): { any }
     if rimCache[1] then
         return rimCache
@@ -3804,7 +3541,6 @@ function Court.rims(): { any }
     return rimCache
 end
 
--- flat distance to the closest rim and that rim
 function Court.rimDistance(position: Vector3): (number?, any?)
     local best: number? = nil
     local bestRim: any? = nil
@@ -3819,7 +3555,6 @@ function Court.rimDistance(position: Vector3): (number?, any?)
     return best, bestRim
 end
 
--- the closest rim the part looks at, inside the range
 function Court.facingRim(root: any, facing: number, range: number): (any?, number)
     local look = flat(root.CFrame.LookVector)
     local origin = root.Position
@@ -3916,7 +3651,6 @@ local function oppositeFront(rim: any): (Vector3?, boolean)
     return flat(best.Position - origin).Unit, single
 end
 
--- the way a hoop looks out over the court, from its backboard to its rim. nil when it cannot be told
 function Court.front(rim: any): Vector3?
     local known = fronts[rim]
     if known ~= nil then
@@ -3938,7 +3672,6 @@ function Court.front(rim: any): Vector3?
     return found
 end
 
--- how far the spot is out in front of the rim along the way the hoop looks, and how far off to the side
 function Court.frontOf(rim: any, position: Vector3): (number?, number)
     local front = Court.front(rim)
     if not front then
@@ -3949,7 +3682,6 @@ function Court.frontOf(rim: any, position: Vector3): (number?, number)
     return ahead, (offset - front * ahead).Magnitude
 end
 
--- the rim a player shoots at, from the Goal value the game keeps in his Attributes folder. nil when it is not there
 function Court.goal(character: any): any?
     local entry = record(character)
     local value = entry.Goal
@@ -3975,7 +3707,6 @@ function Court.goal(character: any): any?
     return if distance and distance < 20 then rim else nil
 end
 
--- distance to the closest enemy of the frame, huge when nobody is there
 function Court.nearestFoe(position: Vector3): number
     local best = math.huge
     local roots = Court.Roots
@@ -3995,7 +3726,6 @@ local ballFolder: any = nil
 local ballPart: any = nil
 local nextBall = 0
 
--- the ball lying in the world, the closest one to you when there are more
 function Court.ball(): any?
     local now = Court.Now
     local ball = ballPart
@@ -4032,8 +3762,6 @@ function Court.ball(): any?
     return ballPart
 end
 
--- true when any ball lies within reach of the position, nil when there is no ball at all. the tutorial's practice rack
--- and a second court keep more balls than the one in play, so the one closest to you is not always his
 function Court.ballNear(position: Vector3, reach: number): boolean?
     Court.ball()
     local folder = ballFolder
@@ -4060,7 +3788,6 @@ end
 
 local lastBall: Vector3? = nil
 
--- a ball that drops down through a ring was a make, it stays dead until somebody holds it, and so does an inbound
 local function trackDead(inbound: boolean)
     if inbound then
         Court.Dead = true
@@ -4095,7 +3822,6 @@ local function trim(list: { any }, from: number, to: number)
     end
 end
 
--- called once at the start of every frame
 function Court.refresh(now: number)
     Court.Now = now
     updatePing(now)
@@ -4113,7 +3839,6 @@ function Court.refresh(now: number)
     Court.Action = if mine then mine:GetAttribute("Action") else nil
     Court.HasBall = mine ~= nil and Court.holds(mine)
     local forced = Court.forced(mine)
-    -- a walk or a stun keeps hands off for a moment after it ends, the server's last changes are still on their way
     if mine and (Court.walking(mine) or mine:GetAttribute("Stunned") == true or Court.Action == "Stunned") then
         Court.FreeAt = now
     end
@@ -4154,7 +3879,6 @@ function Court.refresh(now: number)
                     roots[count] = other
                     foe[count] = enemy
                     carry[count] = has
-                    -- a value or a triple threat flag the game left behind is not the ball, it has to be at him
                     held[count] = has and Court.ballNear(other.Position, BALL_REACH) ~= false
                     if has then
                         if enemy then
@@ -4179,7 +3903,6 @@ function Court.refresh(now: number)
     Court.TeamBall = teamBall
     Court.FoeBall = foeBall
     Court.Foul = foul
-    -- an enemy the ball really is at, a flag the game left on somebody is not enough
     local foeHeld = false
     for index = 1, count do
         if foe[index] and held[index] then
@@ -4240,74 +3963,51 @@ local STEAL_COOLDOWN_MIN = 1.0
 local STEAL_COOLDOWN_MAX = 1.4
 local REACT_MIN = 0.12
 local REACT_MAX = 0.25
--- a handler slower than this, for this long, counts as standing still for a steal
 local STILL_SPEED = 2
 local STILL_TIME = 0.35
--- how far he may sway on the spot and still count as standing, and how close the ball has to be to count as his
 local STILL_DRIFT = 0.35
 local BALL_REACH = 6
--- what a tutorial bot is never reached for in: a shot, a pass, or a catch
 local BOT_BUSY: { [string]: boolean } = { Shooting = true, Dunking = true, Layup = true, ContactLayup = true, Gathering = true, Passing = true, AwaitingPass = true, CatchingPass = true, MovingShot = true }
--- the guarded player is reacted to as he was this long ago, nobody reacts the instant a step starts, and his speed is
--- read over about this rate per second, so a cut is followed a moment late instead of mirrored
 local LAG = 0.08
 local TRAIL = 32
 local READ_RATE = 12
--- how far ahead of where he was seen the spot leads him, in seconds of his speed
 local AHEAD = 0.15
--- how quickly the gap to the spot is closed, per second, the last studs are eased so it settles instead of overshooting
 local ARRIVE = 3.6
--- on the spot this close while he stands it stands too, and only moves again once the spot is this far off
 local STAND_IN = 0.45
 local STAND_OUT = 1.1
--- never closer to him than this
 local NEAR = 2.5
--- the game's own stance speed while G is held, and what a sprint adds on the way back
 local STANCE = 0.85
 local SPRINT_EXTRA = 3
 local SLOW_DOWN = 40
--- the pace drifts between this much of full speed and full speed, a new pace every so often
 local PACE_LOW = 0.9
 local PACE_MIN = 0.6
 local PACE_MAX = 1.4
--- the move keys go down once you move faster than this and come up below the second, a key change waits this long
 local KEY_ON = 1.6
 local KEY_OFF = 0.8
 local KEY_CHANGE = 0.12
 local KEY_TURN_BACK = 0.24
--- how far off the guarded player it stands, toward the rim they attack, and the default Move Distance. the gap is
--- picked for each man between the two, and drifts this much either way at about this rate
 local GAP = 3
 local GAP_LOW = 2.8
 local GAP_HIGH = 3.4
 local WANDER = 0.2
 local WANDER_RATE = 1.3
 local REACH = 16
--- the moment before the first step on a new man, shorter when you were just on somebody (a pass, a switch)
 local START_MIN = 0.16
 local START_MAX = 0.28
 local SWITCH_MIN = 0.06
 local SWITCH_MAX = 0.14
--- a first step from standing starts at this share of your speed and builds up over this long
 local RAMP = 0.3
 local RAMP_FLOOR = 0.45
--- closer to the spot than this you slide with him: his speed and this much more at the most
 local CHOP = 5
 local EXTRA = 2.5
--- the longest a step is slowed to a stop once the man is gone
 local EASE_TIME = 0.35
--- standing on the spot facing him less than this, you turn to him until you face him more than the second
 local SQUARE = 0.2
 local SQUARED = 0.75
--- how far it leans to the side of the hand the ball is in
 local SHADE = 0.9
--- how long it takes to press G on a new man to guard, a player needs a moment to see the catch
 local PICKUP_MIN = 0.15
 local PICKUP_MAX = 0.3
--- beaten by more than this off the spot, the hold is let go and you sprint to recover, like a person does
 local RECOVER = 5
 local RECOVERED = 3.5
--- the move keys for each of eight directions around the camera, 0 straight ahead, counted to the right
 local SECTOR = math.pi / 4
 local KEYSETS: { [number]: { [string]: boolean } } = {
     [0] = { W = true },
@@ -4319,13 +4019,9 @@ local KEYSETS: { [number]: { [string]: boolean } } = {
     [6] = { A = true },
     [7] = { W = true, A = true },
 }
--- the keys stay as they are while the way you move is within this of them, so the guard never flickers between two
 local HOLD_ANGLE = math.rad(34)
--- after your own keys let go the guard waits this long before it moves you again
 local USER_GRACE = 0.4
--- how much you have to look at him before Only When Facing lets the hold go on
 local FACING = 0.35
--- once following, your man is kept this share past Move Distance before he is let go, so the edge never flickers
 local FOLLOW_SLACK = 1.1
 
 local HOLD_ON = { HoldingG = true }
@@ -4336,7 +4032,6 @@ local SHOOTING: { [string]: boolean } = { Shooting = true, Dunking = true }
 local flat = Court.flat
 local random = Random.new()
 
--- the steal argument is not known, a steal press copied by the hook wins over these
 local STEAL_FORMS: { (any) -> ...any } = {
     function(_: any): ...any
         return
@@ -4392,9 +4087,6 @@ function Defense.new(read: (string) -> any, player: any?): any
     }, Defense)
 end
 
--- the closest enemy inside the range, only one the ball really is at when asked: a ball value or a triple threat flag
--- the game left on a player who passed is never enough. the current one is kept until another is clearly closer, two
--- players at the same distance must not make the guard flip between them
 local function nearest(origin: Vector3, range: number, holderOnly: boolean, current: any): any?
     local best: any? = nil
     local bestDistance = range
@@ -4424,8 +4116,6 @@ local function isFoe(character: any): boolean
     return false
 end
 
--- the hold is never flipped faster than this, a man at the edge of the range or a quick recover would spam it. letting go
--- because there is nobody to guard any more always goes out at once
 local HOLD_GAP = 0.3
 
 function Defense.setGuard(self: any, on: boolean, again: boolean?, urgent: boolean?): boolean
@@ -4457,14 +4147,12 @@ function Defense.rest(self: any)
     self.EaseUntil = nil
 end
 
--- lets go of the move keys the guard holds, you stand where you are
 function Defense.settle(self: any)
     self.Sector = nil
     Court.holdKeys("Guard", nil)
     Drive.clear("Guard")
 end
 
--- which rim each side attacks is read off the shots that are taken
 function Defense.learn(self: any, now: number)
     local checked = self.Checked
     for character in checked do
@@ -4495,7 +4183,6 @@ function Defense.learn(self: any, now: number)
     end
 end
 
--- the Goal value of a shooter is held against the rim he really shot at, once per shot. it is only used while it agrees
 function Defense.check(self: any, character: any, rim: any)
     if self.Checked[character] then
         return
@@ -4507,7 +4194,6 @@ function Defense.check(self: any, character: any, rim: any)
     end
 end
 
--- the rim a player attacks by his Goal value, nil when there is none or it was seen to be wrong
 function Defense.goal(self: any, character: any?): any?
     if not character or self.GoalScore < 0 then
         return nil
@@ -4528,7 +4214,6 @@ local function farthestFrom(rim: any): any?
     return best
 end
 
--- the rims learned so far, one that left the court is forgotten
 function Defense.known(self: any): (any?, any?)
     if self.FoeRim and self.FoeRim.Parent == nil then
         self.FoeRim = nil
@@ -4539,7 +4224,6 @@ function Defense.known(self: any): (any?, any?)
     return self.FoeRim, self.TeamRim
 end
 
--- the rim your team attacks, read off the last shot seen, nil while nobody has shot yet
 function Defense.attackRim(self: any): any?
     local own = self:goal(Court.Mine)
     if own then
@@ -4555,7 +4239,6 @@ function Defense.attackRim(self: any): any?
     return nil
 end
 
--- the rim the guarded player attacks, the one you stand in front of
 function Defense.rimFor(self: any, theirs: Vector3, mine: Vector3, target: any?): any?
     local rims = Court.rims()
     local count = #rims
@@ -4582,7 +4265,6 @@ function Defense.rimFor(self: any, theirs: Vector3, mine: Vector3, target: any?)
     if foeRim then
         return foeRim
     end
-    -- nothing seen yet: a hard drive at a rim gives it away
     local moving = self.Velocity
     if moving.Magnitude > 8 then
         for _, rim in rims do
@@ -4593,7 +4275,6 @@ function Defense.rimFor(self: any, theirs: Vector3, mine: Vector3, target: any?)
             end
         end
     end
-    -- otherwise a defender stands between the ball and the rim he defends, so it is the rim you are closer to than they are
     local best: any? = nil
     local bestScore = math.huge
     local guessScore: number? = nil
@@ -4610,7 +4291,6 @@ function Defense.rimFor(self: any, theirs: Vector3, mine: Vector3, target: any?)
     if guessScore and guessScore - bestScore < 6 then
         return self.Guess
     end
-    -- a man who beat you is closer to that rim than you are, the guess only moves once he is not heading at it anymore
     if self.Guess and moving.Magnitude > 4 then
         local toward = flat(self.Guess.Position - theirs)
         if toward.Magnitude > 2 and toward.Unit:Dot(moving.Unit) > 0.3 then
@@ -4621,7 +4301,6 @@ function Defense.rimFor(self: any, theirs: Vector3, mine: Vector3, target: any?)
     return best
 end
 
--- a step that is still running when the man is gone is slowed to a stop like a person plants his feet, never cut dead
 function Defense.easeOut(self: any, root: any, now: number)
     local moving = Drive.velocity("Guard")
     if not moving or moving.Magnitude < 0.4 then
@@ -4640,23 +4319,14 @@ function Defense.easeOut(self: any, root: any, now: number)
     self:steerKeys(now, Drive.velocity("Guard"), Vector3.zero)
 end
 
--- Move With Him plays a defender sliding with his man. it only starts on a man inside Move Distance who has the ball
--- (or the closest man with Nearest Player), a moment after it sees him, like a person needs to. it closes out on the
--- spot between him and the rim he attacks, a step and a half off him, at your own run speed, then matches his speed
--- plus a little instead of beelining at him, reads his steps a moment late so a cut is followed and not mirrored, keeps
--- a gap that wanders a little, and slows to a stop when he is gone. the velocity goes through the game's own velocity
--- part like every other move of the script, the move keys for the way you go are held so the game plays the run, and
--- your own movement, the game moving you, a stun or a move of yours always takes over at once
 function Defense.follow(self: any, mine: any, root: any, target: any?, now: number, dt: number)
     local read = self.Read
     local action = Court.Action
-    -- holding G sets an action of its own, so only the moves that really take over the body stop the following
     if (type(action) == "string" and NO_FOLLOW[action]) or mine:GetAttribute("CanMove") == false or mine:GetAttribute("Stunned") == true or Court.handsOff(mine) then
         self.EngageFor = nil
         self:rest()
         return
     end
-    -- your own keys win, and the guard waits a moment after you let go before it moves you again
     if Court.steering(mine) then
         self.UserAt = now
     end
@@ -4666,13 +4336,11 @@ function Defense.follow(self: any, mine: any, root: any, target: any?, now: numb
         return
     end
     local theirRoot = if target and read("GuardMove") == true then Court.root(target) else nil
-    -- a man who passes is let go as the pass starts, a defender stops and looks for the ball instead of running on
     if not target or not theirRoot or target:GetAttribute("Action") == "Passing" then
         self.EngageFor = nil
         self:easeOut(root, now)
         return
     end
-    -- a new man: a moment to see him first, shorter when you were just on somebody (a pass, a switch)
     if self.EngageFor ~= target then
         local recent = self.Following or now - (self.FollowedAt or -math.huge) < 1.5
         self.EngageFor = target
@@ -4696,7 +4364,6 @@ function Defense.follow(self: any, mine: any, root: any, target: any?, now: numb
     self.TrailIndex = slot
     trail[slot] = theirs
     trailAt[slot] = now
-    -- what you react to is where he was a moment ago, nobody reacts to a step the instant it starts
     local seen: Vector3 = theirs
     for back = 0, TRAIL - 1 do
         local index = (slot - back - 1) % TRAIL + 1
@@ -4709,7 +4376,6 @@ function Defense.follow(self: any, mine: any, root: any, target: any?, now: numb
             break
         end
     end
-    -- where he is heading, read off his steps and smoothed, so a drive is met instead of chased
     if not fresh and dt > 0 then
         self.Velocity = self.Velocity:Lerp(flat(seen - self.SeenAt) / dt, 1 - math.exp(-READ_RATE * math.min(dt, 0.1)))
     else
@@ -4718,7 +4384,6 @@ function Defense.follow(self: any, mine: any, root: any, target: any?, now: numb
     end
     self.SeenFor = target
     self.SeenAt = seen
-    -- still taking him in: his steps are read already, the first step of yours waits
     if now < self.EngageAt then
         self:easeOut(root, now)
         return
@@ -4726,7 +4391,6 @@ function Defense.follow(self: any, mine: any, root: any, target: any?, now: numb
     local lead: Vector3 = self.Velocity
     local theirSpeed = lead.Magnitude
     local direction: Vector3? = nil
-    -- the gap a person keeps is never exact, it drifts a little around the one picked for this man
     local wanted = (self.Gap or GAP) + math.sin(now * WANDER_RATE + (self.Phase or 0)) * WANDER
     local gap = wanted
     local rim = self:rimFor(theirs, here, target)
@@ -4762,18 +4426,15 @@ function Defense.follow(self: any, mine: any, root: any, target: any?, now: numb
     self.EaseUntil = nil
     local toSpot = flat((spot :: Vector3) - here)
     local span = toSpot.Magnitude
-    -- beaten off the dribble: let go of the hold and sprint back in front, then pick the stance up again
     if not self.Recovering and span > RECOVER and theirSpeed > 6 then
         self.Recovering = true
         self.GuardOn = nil
     elseif self.Recovering and span < RECOVERED then
         self.Recovering = false
     end
-    -- a long closeout to a man who stands far off the spot is run at a sprint too, then the stance is taken again
     if self.Player and (self.Recovering or span > RECOVER + 3) then
         self.Player.WantSprint = now + 0.3
     end
-    -- the pace a person keeps: a little slower or quicker from one moment to the next, never a fixed beat
     if now >= (self.PaceAt or 0) then
         self.PaceAt = now + PACE_MIN + random:NextNumber() * (PACE_MAX - PACE_MIN)
         self.PaceWant = PACE_LOW + random:NextNumber() * (1 - PACE_LOW)
@@ -4781,24 +4442,20 @@ function Defense.follow(self: any, mine: any, root: any, target: any?, now: numb
     self.Pace = (self.Pace or 1) + ((self.PaceWant or 1) - (self.Pace or 1)) * (1 - math.exp(-2 * math.min(dt, 0.1)))
     local walk = mine:GetAttribute("WalkSpeed")
     local top = math.clamp(if type(walk) == "number" then walk else 14, 8, 17)
-    -- where G is going to be held you move at stance speed before it is down, so the hold going on never brakes you
     if mine:GetAttribute("HoldingG") == true or (self.WantHold and not self.Recovering) then
         top *= STANCE
     elseif self.Recovering and mine:GetAttribute("Sprinting") == true then
         top += SPRINT_EXTRA
     end
     top *= self.Pace
-    -- a first step from standing builds up over a moment, a person does not leave at full speed
     local ramp = math.min((self.Ramp or 1) + dt / RAMP, 1)
     self.Ramp = ramp
     top *= RAMP_FLOOR + (1 - RAMP_FLOOR) * ramp * ramp * (3 - 2 * ramp)
-    -- a lower top speed is eased into like a person slowing down, never dropped in one frame
     local before: number? = self.Top
     if before and top < before then
         top = math.max(top, before - SLOW_DOWN * math.min(dt, 0.1))
     end
     self.Top = top
-    -- standing on the spot while he stands, so it never hunts around it. a step of his or the spot moving off starts it again
     local mySpeed = flat(root.AssemblyLinearVelocity).Magnitude
     if self.Standing then
         if span > STAND_OUT or theirSpeed > 1.5 then
@@ -4807,17 +4464,13 @@ function Defense.follow(self: any, mine: any, root: any, target: any?, now: numb
     elseif span < STAND_IN and theirSpeed < 1 and mySpeed < 1.5 then
         self.Standing = true
     end
-    -- move with him and close the gap on top, eased near the spot so it settles instead of overshooting
     local want: Vector3 = Vector3.zero
     if not self.Standing then
-        -- far off the spot it is a closeout at your run speed, close to it you slide with him: his speed and a little
-        -- more, never a sprint into his chest
         local cap = top
         if span < CHOP then
             cap = math.min(top, math.max(theirSpeed + EXTRA, span * ARRIVE + 1.5))
         end
         local close = if span > 0.01 then toSpot / span * math.min(span * ARRIVE, cap) else Vector3.zero
-        -- getting back in front comes first: when both do not fit in your speed, less of his run is matched
         local sum = lead + close
         if sum.Magnitude > cap and lead.Magnitude > 0.01 then
             local low, high = 0, 1
@@ -4833,8 +4486,6 @@ function Defense.follow(self: any, mine: any, root: any, target: any?, now: numb
         end
         want = sum
     end
-    -- on the spot but turned away from him: a short step his way turns you round, a defender always squares up to his
-    -- man. it goes on below one share of facing him and stops above the other, so it never flickers
     local turning = false
     if self.Standing and distance > 0.5 then
         local facing = flat(root.CFrame.LookVector):Dot(offset / distance)
@@ -4846,8 +4497,6 @@ function Defense.follow(self: any, mine: any, root: any, target: any?, now: numb
     if turning then
         want = offset / distance * 2.5
     end
-    -- never run into him: closer than a step, what heads at him is taken out and you ease back off. a man coming
-    -- straight at you is given room early, the way a defender gives ground on a drive
     if distance > 0.05 then
         local out = offset / -distance
         local mine0: Vector3 = Drive.velocity("Guard") or flat(root.AssemblyLinearVelocity)
@@ -4861,7 +4510,6 @@ function Defense.follow(self: any, mine: any, root: any, target: any?, now: numb
             want += out * ((room - distance) * 6)
         end
     end
-    -- anyone standing in the way, a screen, is stepped around instead of run into
     if not turning and span > 1.5 then
         local heading = toSpot / span
         local pushX, pushZ = 0, 0
@@ -4891,8 +4539,6 @@ function Defense.follow(self: any, mine: any, root: any, target: any?, now: numb
     self:steerKeys(now, if turning then want else Drive.velocity("Guard"), want)
 end
 
--- holds the move keys a person would hold for the way you are moving, so the game plays the run and turns the body the
--- same as for a player. a key change waits a short moment so the keys never flicker between two
 function Defense.steerKeys(self: any, now: number, moving: Vector3?, want: Vector3)
     local camera = workspace.CurrentCamera
     if not Court.canPress() or not camera or not moving then
@@ -4932,8 +4578,6 @@ function Defense.steerKeys(self: any, now: number, moving: Vector3?, want: Vecto
     Court.holdKeys("Guard", KEYSETS[sector])
 end
 
--- facing the handler, and not stealing from behind or while they shoot, which is where fouls come from. nil when the
--- steal may go, otherwise the reason it may not
 function Defense.stealOk(self: any, root: any, handlerRoot: any, handler: any): string?
     local toHandler = flat(handlerRoot.Position - root.Position)
     local length = toHandler.Magnitude
@@ -4964,7 +4608,6 @@ function Defense.step(self: any, now: number, dt: number)
     local read = self.Read
     local guardOn = read("AutoGuard") == true
     local stealOn = read("AutoSteal") == true
-    -- Auto Shoot reads which rim you attack from here, so the shots are watched whatever is on
     self:learn(now)
     if not mine or not root or (not guardOn and not stealOn) then
         self.FaceWant = false
@@ -4980,8 +4623,6 @@ function Defense.step(self: any, now: number, dt: number)
         self:rest()
         return
     end
-    -- while the game walks, stuns or holds you, and a moment after, nothing is pressed, sent or moved. the hold the game
-    -- may have dropped by itself is only noted, it is put right once you are free again
     if Court.HandsOff then
         self.Guarding = mine:GetAttribute("HoldingG") == true
         self.GuardOn = nil
@@ -4995,27 +4636,21 @@ function Defense.step(self: any, now: number, dt: number)
     end
     local here: Vector3 = root.Position
     local guardRange = read("GuardRange") or 0
-    -- with Move With Him on you are only ever walked to a man inside Move Distance, a turnover or a pass included. the
-    -- hold itself only goes on inside Guard Range. once following he is kept a little further before he is let go
     local moveOn = guardOn and read("GuardMove") == true
     local gap: number = if moveOn then read("GuardGap") or REACH else 0
     local slack = if self.Following then FOLLOW_SLACK else 1
     local walkTo = gap * slack
     local holdTo = if self.Guarding then guardRange * 1.1 else guardRange
     local search = math.max(walkTo, holdTo)
-    -- the steal looks at the closest enemy the ball really is at, wherever he is, the steal checks its own range
     local handler = if stealOn then nearest(here, math.huge, true, self.Handler) else nil
     self.Handler = handler
     local target: any = nil
-    -- nobody is guarded on offense, on a dead ball or an inbound
     if guardOn and not Court.HasBall and not Court.TeamBall and not Court.Dead then
         if read("GuardTarget") == Config.GUARD_NEAREST then
-            -- the closest enemy inside your ranges, and only while the other team really has the ball
             if Court.FoeHeld then
                 target = nearest(here, search, false, self.Target)
             end
         else
-            -- only an enemy the ball really is at, inside your ranges. a player who let it go is dropped at once
             target = nearest(here, search, true, self.Target)
         end
     end
@@ -5029,7 +4664,6 @@ function Defense.step(self: any, now: number, dt: number)
             local distance = (theirRoot.Position - here).Magnitude
             guarding = distance <= holdTo
             chasing = moveOn and distance <= walkTo
-            -- Only When Facing: the hold waits until you look at him, once it is on it only lets go when you turn away
             if guarding and read("GuardFacing") == true then
                 local toward = flat(theirRoot.Position - here)
                 local length = toward.Magnitude
@@ -5042,8 +4676,6 @@ function Defense.step(self: any, now: number, dt: number)
     self.FaceWant = guarding and not facing
     local holding = guarding and facing
     self.WantHold = holding
-    -- the game lets go of the hold by itself when the ball changes hands, so while a target is in range the hold is sent
-    -- again for a new target, a moment after it shows up, and every two seconds. never while a jump, a steal or a stun has you
     local action0 = Court.Action
     local canPress = Court.free(mine) and (action0 == "" or action0 == nil)
     if holding and self.SeenTarget ~= target then
@@ -5059,7 +4691,6 @@ function Defense.step(self: any, now: number, dt: number)
         self.SeenTarget = nil
         self:setGuard(false, false, target == nil)
     elseif self.Recovering then
-        -- the sprint back needs the hold let go, it is picked up again once you are in front
         if self.Guarding then
             self:setGuard(false)
         end
@@ -5084,8 +4715,6 @@ function Defense.step(self: any, now: number, dt: number)
     end
 end
 
--- with getgenv().PBDebug = true, why a steal was not tried goes to the console, once a second at most and only when
--- the reason changes or a second passed
 function Defense.stealNote(self: any, now: number, reason: string, handler: any?)
     if Env.get("PBDebug") ~= true then
         return
@@ -5101,12 +4730,10 @@ function Defense.stealNote(self: any, now: number, reason: string, handler: any?
     print("[PB steal] " .. line)
 end
 
--- a bot of the game's tutorial has no Player of its own, a real player always has one
 local function isBot(character: any): boolean
     return players:FindFirstChild(character.Name) == nil
 end
 
--- tries a steal on the ball handler, returns why it did not when it did not
 function Defense.steal(self: any, now: number, mine: any, root: any, here: Vector3, handler: any): string?
     local read = self.Read
     local handlerRoot = Court.root(handler)
@@ -5134,9 +4761,6 @@ function Defense.steal(self: any, now: number, mine: any, root: any, here: Vecto
         self.StillSince = now
         return "the ball is not in his hands"
     end
-    -- a real player is only reached for while he holds the ball standing still: never on the move, in a dribble move,
-    -- passing or shooting. his velocity is not always seen here, so where he stands is watched as well. a tutorial bot
-    -- keeps dribbling around and never fouls you, he is reached for on the move too, only never while he shoots or passes
     local bot = isBot(handler)
     if bot then
         if type(handlerAction) == "string" and BOT_BUSY[handlerAction] then
@@ -5209,19 +4833,14 @@ modules["drive"] = function(...)
 local import: (string) -> any = ...
 local Court: typeof(require("./court")) = import("court")
 
--- moves you by the velocity of the game's own proxy part, one goal at a time. the features ask for a goal every frame
--- they want one, the highest priority wins, and your own movement always takes over
 local Drive = {}
 
 type Map = { [string]: any }
 
--- the game drops any speed above 27.5
 local LIMIT = 27
--- the fastest a drive changes your velocity, in studs per second each second
 local TURN = 140
 local FRESH = 0.12
 
--- Follow: with a velocity to match, how strongly the gap to the goal is closed on top of it, per second
 local PROFILES: { [string]: Map } = {
     Dunk = { Priority = 3, Accel = 38, Base = 6, Gain = 1.6, Stop = 2, Resume = 4 },
     Guard = { Priority = 2, Accel = 75, Brake = 200, Base = 1.5, Gain = 5, Stop = 0.8, Resume = 1.6, Direct = true, Turn = math.rad(280) },
@@ -5243,7 +4862,6 @@ local feed: Vector3? = nil
 local seenNative = 0
 local seenAt = -math.huge
 
--- match: the velocity of what is followed, the drive moves with it and closes the gap on top, so it keeps up instead of trailing
 function Drive.set(name: string, target: Vector3, speed: number, key: boolean, force: boolean, match: Vector3?)
     local now = os.clock()
     local current = owner
@@ -5273,7 +4891,6 @@ function Drive.moving(name: string): boolean
     return owner == name and moving
 end
 
--- the velocity last written for this feature, nil while it is not moving you
 function Drive.velocity(name: string): Vector3?
     if owner == name and moving then
         return last
@@ -5281,36 +4898,28 @@ function Drive.velocity(name: string): Vector3?
     return nil
 end
 
--- seconds since any feature last wrote your velocity
 function Drive.since(now: number): number
     return now - lastAt
 end
 
--- true while any feature is moving you
 function Drive.active(): boolean
     return owner ~= nil and moving
 end
 
 local function halt(mover: any, hands: boolean?)
-    -- the game wrote this frame's velocity before a key let go late last frame was seen, so a key just let go counts too
     local keyed = Court.Held or os.clock() - Court.KeysOff < FRESH
     moving = false
     pace = nil
     Court.hold("Drive", false)
     local written = last
     if written and hands then
-        -- the game moves you itself now, its velocity is left exactly as it wrote it
         last = nil
     elseif written then
         last = nil
-        -- a velocity still the one written here means the game did not set a new one, left alone it would carry you on
-        -- while you steer yourself the game wrote this frame for your keys, even when it happens to match, so it is kept
         local steering = Court.Mine ~= nil and Court.steering(Court.Mine)
         if mover and not steering and (mover.Velocity - written).Magnitude < 0.05 then
             mover.Velocity = Vector3.zero
         elseif mover and keyed and not (Court.Mine and Court.steering(Court.Mine)) then
-            -- the game already wrote a run for the forward key this drive held, faster than the drive was going that
-            -- one frame would lunge you forward, the drive's own speed is kept for it instead
             if mover.Velocity.Magnitude > written.Magnitude + 1 then
                 mover.Velocity = written
             end
@@ -5318,8 +4927,6 @@ local function halt(mover: any, hands: boolean?)
     end
 end
 
--- runs first in the physics step, before anything writes: a velocity the game set that is not the one written here
--- last frame is you moving, by keys, a thumbstick or a controller
 function Drive.begin(now: number)
     local _, mover = Court.proxy()
     if not mover then
@@ -5345,7 +4952,6 @@ function Drive.begin(now: number)
     Court.UserMoving = now - userAt < 0.25
 end
 
--- runs last in the physics step, after the game wrote its own velocity for the frame
 function Drive.finish(now: number, dt: number)
     local part, mover = Court.proxy()
     local name = owner
@@ -5354,8 +4960,6 @@ function Drive.finish(now: number, dt: number)
         local mine = Court.Mine
         live = mine ~= nil and not Court.steering(mine)
     end
-    -- read again here, the frame's snapshot is from before a change that came in this frame. a walk, a stun and the
-    -- moment after them are the game's, the velocity it wrote is left exactly as it is
     if Court.Forced or Court.HandsOff or (Court.Mine ~= nil and Court.handsOff(Court.Mine)) then
         owner = nil
         halt(mover, true)
@@ -5367,8 +4971,6 @@ function Drive.finish(now: number, dt: number)
     end
     local profile = PROFILES[name]
     if profile.Direct then
-        -- Direct: the feature hands over the velocity it wants, it is reached like a person gets there: the push off and
-        -- the turn are limited, the same at any frame rate, and the game's own speed for the held keys is never beaten
         local want = feed or Vector3.zero
         local wx, wz = want.X, want.Z
         local native: Vector3 = mover.Velocity
@@ -5391,7 +4993,6 @@ function Drive.finish(now: number, dt: number)
         local span = math.min(dt, 0.05)
         local before = math.sqrt(vx * vx + vz * vz)
         if before > 2 then
-            -- the part of the change that bends the way you run is limited to a person's turn, a cut back is braked into
             local ux, uz = vx / before, vz / before
             local along = stepX * ux + stepZ * uz
             local px, pz = stepX - ux * along, stepZ - uz * along
@@ -5403,7 +5004,6 @@ function Drive.finish(now: number, dt: number)
             stepX, stepZ = ux * along + px, uz * along + pz
         end
         local step = math.sqrt(stepX * stepX + stepZ * stepZ)
-        -- a person plants and stops quicker than he pushes off, a stop may use the brake
         local most = (if wantSize < 0.05 and profile.Brake then profile.Brake else profile.Accel) * span
         if step > most then
             stepX, stepZ = stepX / step * most, stepZ / step * most
@@ -5416,8 +5016,6 @@ function Drive.finish(now: number, dt: number)
         end
         local write = Vector3.new(nx, 0, nz)
         if wantSize < 0.05 and after < 0.4 then
-            -- stopped: while move keys are still down the game would run you on them for a frame, so you are held still
-            -- until they come up
             if not Court.Keys then
                 halt(mover)
                 return
@@ -5440,7 +5038,6 @@ function Drive.finish(now: number, dt: number)
     if match and profile.Follow then
         local mx, mz = match.X, match.Z
         local matchSpeed = math.sqrt(mx * mx + mz * mz)
-        -- close and the one followed is standing still: a person stands too, there is nothing to correct
         if matchSpeed < 1 and away <= profile.Stop then
             halt(mover)
             return
@@ -5451,14 +5048,11 @@ function Drive.finish(now: number, dt: number)
         if useKey and Court.Held and nativeSpeed > 4 and (not last or (native - last).Magnitude > 0.05) then
             seenNative, seenAt = nativeSpeed, now
         end
-        -- the game's own speed for the held key, stance and stamina included, is the most the follow ever goes. a frame
-        -- where the game wrote nothing new uses the last one it did write
         local nativeCap = math.huge
         if useKey and now - seenAt < 0.5 then
             nativeCap = seenNative + 0.3
             top = math.min(top, nativeCap)
         end
-        -- move with them, close the gap on top, eased near the spot so it settles instead of overshooting
         local pull = profile.Follow * math.min(away, 6)
         local wantX = mx + (if away > 0.05 then dx / away * pull else 0)
         local wantZ = mz + (if away > 0.05 then dz / away * pull else 0)
@@ -5467,7 +5061,6 @@ function Drive.finish(now: number, dt: number)
         if want > cap then
             wantX, wantZ = wantX / want * cap, wantZ / want * cap
         end
-        -- the change in velocity is limited like a person's push off, the same at any frame rate
         local velocity = part.AssemblyLinearVelocity
         local stepX, stepZ = wantX - velocity.X, wantZ - velocity.Z
         local step = math.sqrt(stepX * stepX + stepZ * stepZ)
@@ -5476,7 +5069,6 @@ function Drive.finish(now: number, dt: number)
             stepX, stepZ = stepX / step * most, stepZ / step * most
         end
         local write = Vector3.new(velocity.X + stepX, 0, velocity.Z + stepZ)
-        -- slowing down to the game's own speed is never held back, the game itself drops you to stance speed at once
         local size = write.Magnitude
         if size > nativeCap then
             write = write * (nativeCap / size)
@@ -5503,8 +5095,6 @@ function Drive.finish(now: number, dt: number)
     local velocity = part.AssemblyLinearVelocity
     local current = math.sqrt(velocity.X * velocity.X + velocity.Z * velocity.Z)
     local speed = math.max(pace or current, current)
-    -- with the forward key held the game just wrote the speed it would move you at itself, stance, stamina and sprint
-    -- included, and the drive is never faster than that
     local top = topSpeed
     local native: Vector3 = mover.Velocity
     local nativeSpeed = math.sqrt(native.X * native.X + native.Z * native.Z)
@@ -5513,10 +5103,8 @@ function Drive.finish(now: number, dt: number)
     end
     speed = math.min(speed + profile.Accel * math.min(dt, 0.05), top)
     pace = speed
-    -- it eases off the last few studs so the stop is not abrupt
     local scale = math.min(speed, profile.Base + away * profile.Gain, LIMIT) / away
     local write = Vector3.new(dx * scale, 0, dz * scale)
-    -- a turn onto the goal or a take over from your own run is bent in over a few frames, never snapped
     local before = part.AssemblyLinearVelocity
     local change = Vector3.new(write.X - before.X, 0, write.Z - before.Z)
     local most = TURN * math.min(dt, 0.05)
@@ -5624,8 +5212,6 @@ local import: (string) -> any = ...
 local Court: typeof(require("./court")) = import("court")
 local Config: typeof(require("./config")) = import("config")
 
--- a clean tag over every player: the name and position, a thin stamina bar under it, and a soft ring on the floor
--- under whoever has the ball. far players fade out instead of cluttering the court
 local Esp = {}
 Esp.__index = Esp
 
@@ -5657,7 +5243,6 @@ function Esp.new(read: (string) -> any): any
     return setmetatable({ Read = read, Labels = setmetatable({}, { __mode = "k" }) :: any }, Esp)
 end
 
--- the text of a tag is only built again when something on it changed
 local function label(labels: { [any]: Map }, character: any, holder: boolean): string
     local entry = labels[character]
     if not entry then
@@ -5687,8 +5272,6 @@ local function floorRing(canvas: any, center: Vector3, color: Color3, alpha: num
     canvas.worldPath(points, color, 0.8 * alpha, 2)
 end
 
--- the runs of the pill: the name in the player's color, the position in the quiet text color. only built again when
--- something on it changed
 local function segments(labels: { [any]: Map }, character: any, holder: boolean, color: Color3): any
     local entry = labels[character]
     if not entry then
@@ -5727,7 +5310,6 @@ function Esp.draw(self: any, canvas: any, chip: any?)
     local onlyBall = read("EspBallOnly") == true
     local opacity = math.clamp(tonumber(read("ContestOpacity")) or 0.85, 0.1, 1)
     local chars, roots, foe, carry = Court.Chars, Court.Roots, Court.Foe, Court.Carry
-    -- a tag whose middle is this far off the screen cannot show any part of itself, it is not drawn
     local margin = OFF_SCREEN * math.max(1, size / 13)
     local viewW, viewH = math.huge, math.huge
     pcall(function()
@@ -5743,7 +5325,6 @@ function Esp.draw(self: any, canvas: any, chip: any?)
             local where: Vector3 = other.Position
             local distance = (where - here).Magnitude
             if distance <= maxDistance then
-                -- the last fifth of the range fades out
                 local fade = math.clamp((maxDistance - distance) / (maxDistance * 0.2), 0, 1)
                 local color = if holder then holderColor elseif enemy then enemyColor else teamColor
                 if holder then
@@ -5754,8 +5335,6 @@ function Esp.draw(self: any, canvas: any, chip: any?)
                     local character = chars[index]
                     local stamina = if showStamina then character:GetAttribute("Stamina") else nil
                     if chip then
-                        -- the same notification pill the contest label uses, the stamina is its slim gauge. the key and the
-                        -- gauge table are kept per player instead of made new every frame
                         local runs = segments(labels, character, holder, color)
                         local entry = labels[character]
                         local name = character.Name
@@ -5792,275 +5371,85 @@ modules["glide"] = function(...)
 local import: (string) -> any = ...
 local Court: typeof(require("./court")) = import("court")
 
--- keeps part of your speed through a move the game slows you down in. each glide follows its own move:
--- Dribble Glide rides along the dribble move itself: it only adds to the speed the game's own move already has, along
---   the way the move goes, so the body never slides somewhere the animation does not go
--- Gather Step Glide carries you into a hop step or gather toward the rim you attack, so the finish starts from the right
---   side. it stays off inside layup range, the layup itself belongs to the game
--- Shot Glide carries you on the line you came in on through the start of the shot, then eases to nothing
--- the game stops you dead within a few frames of a shot or a gather, so these two hold their share of your speed from
--- the very first frame of the move and only ease out after that. they never come closer to a ring than layup range
 local Glide = {}
 Glide.__index = Glide
 
-local ACTIONS: { [string]: string } = {
-    Dribbling = "DribbleGlide",
-    Gathering = "GatherGlide",
-    Shooting = "ShotGlide",
-    MovingShot = "ShotGlide",
-}
--- finishes at the rim fill a meter too, they are never a shot glide
-local FINISHES: { [string]: boolean } = { Dunking = true, ContactLayup = true, ClutchLayup = true, Layup = true }
-local WALKS: { [string]: boolean } = { Moving = true, Fouled = true, Inbounding = true, Stunned = true }
-Glide.DEFAULTS = {
-    DribbleGlide = { Speed = 5, Time = 240, Strength = 30 },
-    GatherGlide = { Speed = 14, Time = 500, Strength = 100 },
-    ShotGlide = { Speed = 10, Time = 440, Strength = 60 },
-}
+local ACTIONS: { [string]: string } = { Dribbling = "DribbleGlide", Gathering = "GatherGlide", Shooting = "ShotGlide" }
 
--- the game drops any speed above 27.5
 local LIMIT = 27
--- a gather or a shot this close to a ring is the game's layup or dunk, gliding it is what made finishes jitter. a glide
--- toward a ring also eases to nothing before it comes this close
-local RIM_CLEAR = 14
--- how fast the carry eases off per stud left before the rim clear
-local RIM_EASE = 3
--- the dribble glide blends in from nothing, the dribble move keeps you going by itself at first
-local BLEND_IN = 0.08
--- the shot glide holds its full carry this share of its length, then eases out
-local HOLD = 0.4
--- the game's own gather keeps about nine tenths of your speed for a quarter second and only then falls, so the gather
--- glide holds its full carry for most of its length or it never gets above the game's own move
-local GATHER_HOLD = 0.7
--- the game can stop you on the very frame a move starts, the speed you ran with this long before still counts as yours
-local ENTRY_MEMORY = 0.25
--- a stop while you still hold a move key is the game holding you until the server names the move, that wait is the
--- shoot delay and a round trip, so the run before it counts for longer
-local ENTRY_HELD = 0.7
 
-local function smooth(x: number): number
-    local t = math.clamp(x, 0, 1)
-    return t * t * (3 - 2 * t)
+function Glide.new(read: (string) -> any): any
+    return setmetatable({ Read = read, Action = nil :: any, Direction = nil :: Vector3?, Speed = 0 }, Glide)
 end
 
-local function flat(v: Vector3): Vector3
-    return Vector3.new(v.X, 0, v.Z)
-end
-
--- tops the velocity up along the line to the carry, what the game already moves you along that line is kept
-local function apply(mover: any, direction: Vector3, carried: number): Vector3?
-    local native: Vector3 = mover.Velocity
-    local nativeFlat = flat(native)
-    local along = nativeFlat:Dot(direction)
-    if carried <= along + 0.05 then
-        return nil
-    end
-    local result = nativeFlat + direction * (carried - math.max(along, 0))
-    if result.Magnitude > LIMIT then
-        result = result.Unit * LIMIT
-    end
-    local written = Vector3.new(result.X, native.Y, result.Z)
-    mover.Velocity = written
-    return written
-end
-
--- shooting tells a shot the game plays under a name of its own, by its meter
-function Glide.new(read: (string) -> any, shooting: ((any, string) -> boolean)?): any
-    return setmetatable({ Read = read, Shooting = shooting, Action = nil :: any, Direction = nil :: Vector3?, Speed = 0 }, Glide)
-end
-
-function Glide.option(self: any, flag: string, name: string): number
-    local value = self.Read(flag .. name)
-    return if type(value) == "number" then value else Glide.DEFAULTS[flag][name]
-end
-
--- the speed you ran with outside a glide, the entry of the next one. a frame where the game already stopped you is not
--- kept, the run before it is what the move starts from
-function Glide.remember(self: any, now: number)
-    local part = Court.proxy()
-    if not part then
-        return
-    end
-    if Court.heading() then
-        self.KeysAt = now
-    end
-    local planar = flat(part.AssemblyLinearVelocity)
-    local last: Vector3? = self.Last
-    -- a sharp drop while a move key is still down is the game holding you for a move, the run before it is kept
-    local held = last ~= nil and self.KeysAt == now and now - self.LastAt <= ENTRY_HELD and planar.Magnitude < last.Magnitude * 0.5
-    if planar.Magnitude > 1 and not held then
-        self.Last = planar
-        self.LastAt = now
-    end
-end
-
--- the speed a glide starts from: this frame's, or the run right before the game stopped you
-function Glide.entry(self: any, part: any, now: number): Vector3
-    local planar = flat(part.AssemblyLinearVelocity)
-    local before: Vector3? = self.Last
-    if not before then
-        return planar
-    end
-    local keys = (self.KeysAt or -math.huge) >= self.LastAt
-    local memory = if keys then ENTRY_HELD else ENTRY_MEMORY
-    return if now - self.LastAt <= memory and before.Magnitude > planar.Magnitude then before else planar
-end
-
--- the glide a move gets: its own name, or a shot the game names its own way while its meter is up
-function Glide.flagOf(self: any, mine: any, action: any): string?
-    if type(action) ~= "string" or action == "" then
-        return nil
-    end
-    local flag = ACTIONS[action]
-    if flag or FINISHES[action] then
-        return flag
-    end
-    if action == self.Action then
-        return self.Flag
-    end
-    local shooting = self.Shooting
-    return if shooting and shooting(mine, action) then "ShotGlide" else nil
-end
-
--- the game may write its stop before the physics step after this script did, on the same signal. a deferred thread runs
--- once every handler of the signal is done and still before the physics step, so the carry is put back on top of it
-function Glide.settle(self: any, live: any)
-    if self.Live ~= live or Court.Now ~= live.Frame then
-        return
-    end
-    local mover = live.Mover
-    if mover.Parent == nil or mover.Velocity == live.After then
-        return
-    end
-    local native = flat(mover.Velocity)
-    if native.Magnitude > 1.5 and native:Dot(live.Direction) < native.Magnitude * 0.5 then
-        return
-    end
-    local written = apply(mover, live.Direction, live.Carried)
-    live.After = if written then written else mover.Velocity
-end
-
--- runs right before the physics step, after the game wrote its own velocity for the frame
 function Glide.physics(self: any)
     local mine = Court.Mine
-    local read = self.Read
     local action = if mine then mine:GetAttribute("Action") else nil
-    -- the game walking you or a stun is never a glide, even with a shot meter still up
-    local walked = type(action) == "string" and WALKS[action] == true or (mine ~= nil and (mine:GetAttribute("Stunned") == true or Court.held(mine)))
-    local flag = if mine and not walked then self:flagOf(mine, action) else nil
-    local now = os.clock()
-    self.Live = nil
-    if not mine or not flag or read(flag) ~= true then
-        self.Action = nil
-        self.Flag = nil
-        self:remember(now)
-        return
-    end
-    -- a dribble move you steer yourself is left alone. a shot or a gather holds from its first frame on, the game may
-    -- still say you can move on that frame and stops you right after
-    if flag == "DribbleGlide" and mine:GetAttribute("CanMove") == true then
-        self.Action = nil
-        self.Flag = nil
-        self:remember(now)
-        return
-    end
+    local flag = if type(action) == "string" then ACTIONS[action] else nil
     local part, mover = Court.proxy()
+    local now = os.clock()
+    if not flag and part then
+        local velocity = part.AssemblyLinearVelocity
+        local planar = Vector3.new(velocity.X, 0, velocity.Z)
+        if planar.Magnitude > 2 then
+            self.Ran, self.RanAt, self.RanSpeed = planar.Unit, now, planar.Magnitude
+        end
+    end
+    if not mine or not flag or self.Read(flag) ~= true or mine:GetAttribute("CanMove") == true then
+        self.Action = nil
+        return
+    end
     if not part or not mover then
         return
     end
+    local dt = math.min(now - (self.Last or now), 0.1)
+    self.Last = now
     if self.Action ~= action then
         self.Action = action
-        self.Flag = flag
         self.Since = now
-        local planar = self:entry(part, now)
-        self.Speed = math.min(planar.Magnitude, LIMIT)
+        local velocity = part.AssemblyLinearVelocity
+        local planar = Vector3.new(velocity.X, 0, velocity.Z)
+        self.Speed = planar.Magnitude
+        self.Entry = math.min(planar.Magnitude, LIMIT)
         self.Direction = if planar.Magnitude > 1 then planar.Unit else nil
-        -- the speed the body still has along the line on this frame, a glide that starts above it blends up from it
-        self.Moving = if planar.Magnitude > 1 then math.max(flat(part.AssemblyLinearVelocity):Dot(planar.Unit), 0) else 0
+        if planar.Magnitude < 2 and self.RanAt and now - self.RanAt < 0.7 then
+            self.Speed = self.RanSpeed
+            self.Entry = math.min(self.RanSpeed, LIMIT)
+            self.Direction = self.Ran
+        end
+    end
+    local heading = Court.heading()
+    local direction: Vector3? = heading or self.Direction
+    if not direction then
+        return
+    end
+    local limit: number = self.Read(flag .. "Speed") or 10
+    if action == "Shooting" then
+        limit = math.min(limit, 8)
+        if now - (self.Since or now) > 0.3 then
+            return
+        end
+    end
+    if not heading then
+        self.Speed = self.Speed * math.exp(-3 * dt)
+    end
+    local entry: number = self.Entry or limit
+    local cap = limit + math.max(entry - limit, 0) * math.exp(-10 * (now - (self.Since or now)))
+    local speed: number = math.min(self.Speed, cap)
+    if speed < 2 then
+        return
+    end
+    if action == "Shooting" then
         local distance, rim = Court.rimDistance(part.Position)
-        self.Rim = rim
-        self.NearRim = action ~= "Dribbling" and distance ~= nil and distance < RIM_CLEAR
-    end
-    if self.NearRim then
-        return
-    end
-    local length = self:option(flag, "Time") / 1000
-    local elapsed = now - (self.Since or now)
-    if length <= 0 or elapsed >= length then
-        return
-    end
-    local native: Vector3 = mover.Velocity
-    local nativeFlat = flat(native)
-    local nativeSpeed = nativeFlat.Magnitude
-    local entry: Vector3? = self.Direction
-    if not entry then
-        return
-    end
-    -- the share of your entry speed still carried
-    local strength = math.clamp(self:option(flag, "Strength"), 0, 100) / 100
-    local fade
-    if flag == "DribbleGlide" then
-        fade = (1 - smooth(elapsed / length)) * smooth(elapsed / BLEND_IN)
-    else
-        local hold = length * (if flag == "GatherGlide" then GATHER_HOLD else HOLD)
-        fade = if elapsed <= hold then 1 else 1 - smooth((elapsed - hold) / (length - hold))
-    end
-    local top = self:option(flag, "Speed")
-    local carried = math.min(self.Speed * strength, top) * fade
-    -- the game stopped you before the move reached this script: the carry comes on over a few frames, never in one
-    local moving: number = self.Moving or 0
-    if flag ~= "DribbleGlide" and carried > moving then
-        carried = moving + (carried - moving) * smooth(elapsed / BLEND_IN)
-    end
-    local direction: Vector3 = entry
-    if flag == "DribbleGlide" then
-        -- along the move: the game's own direction while it moves you, your run's line only while it stands you still
-        if nativeSpeed > 1.5 then
-            direction = nativeFlat / nativeSpeed
-        end
-    elseif flag == "GatherGlide" then
-        -- into the gather: bent toward the rim you are attacking when it is ahead of you
-        local rim = self.Rim
-        if rim then
-            local toRim = flat(rim.Position - part.Position)
-            if toRim.Magnitude > 1 and toRim.Unit:Dot(entry) > 0.3 then
-                local bent = entry:Lerp(toRim.Unit, 0.35)
-                direction = if bent.Magnitude > 0.05 then bent.Unit else entry
+        if distance and rim and distance < 24 then
+            local toRim = Vector3.new(rim.Position.X - part.Position.X, 0, rim.Position.Z - part.Position.Z)
+            if distance < 4.5 or (toRim.Magnitude > 0.1 and toRim.Unit:Dot(direction) < 0.2) then
+                return
             end
+            speed = math.min(speed, distance * 2.5)
         end
     end
-    if read(flag .. "Steer") == true then
-        local heading = Court.heading()
-        if heading then
-            -- steering bends the glide a little at a time, a person cannot turn a glide on the spot
-            local bent = direction:Lerp(heading, 0.25)
-            direction = if bent.Magnitude > 0.05 then bent.Unit else direction
-        end
-    end
-    if flag ~= "DribbleGlide" then
-        -- heading at a ring the carry eases to nothing before layup range, it never reaches or passes the rim
-        local distance, rim = Court.rimDistance(part.Position)
-        if distance and rim then
-            local toRim = flat(rim.Position - part.Position)
-            if toRim.Magnitude > 0.1 and toRim.Unit:Dot(direction) > 0 then
-                carried = math.min(carried, math.max(distance - RIM_CLEAR, 0) * RIM_EASE)
-            end
-        end
-    end
-    if carried <= 0.05 then
-        return
-    end
-    -- a run off the line is yours or the game's own, the glide never pushes back against it
-    local line = if mine:GetAttribute("CanMove") == true then 0.7 else 0.5
-    if flag ~= "DribbleGlide" and nativeSpeed > 1.5 and nativeFlat:Dot(direction) < nativeSpeed * line then
-        return
-    end
-    local written = apply(mover, direction, carried)
-    if flag ~= "DribbleGlide" then
-        local live = { Mover = mover, Direction = direction, Carried = carried, Frame = Court.Now, After = if written then written else mover.Velocity }
-        self.Live = live
-        pcall(task.defer, Glide.settle, self, live)
-    end
+    mover.Velocity = direction * math.min(speed, LIMIT)
 end
 
 return Glide
@@ -6079,14 +5468,12 @@ type Map = { [string]: any }
 local NAME = "__PBShootHook"
 local VERSION = 6
 
--- the input remotes whose real calls are copied, so the script repeats the exact arguments the game uses
 local CAPTURE = { Sprint = true, Steal = true, Pass = true, Dribble = true, Jump = true, Clutch = true, HoldG = true }
 
 local getMethod: any = Env.getnamecallmethod
 local ours: any = Env.checkcaller
 local stopped = false
 
--- a call whose first flag is false lets go of a key, everything else is a press
 local function isPress(args: any): boolean
     for index = 1, args.n do
         local value = args[index]
@@ -6134,7 +5521,6 @@ local function capture(state: Map, name: string, args: any)
         end
     end
     if name == "Sprint" and press then
-        -- whichever press turns Sprinting on is what Always Sprint repeats
         task.wait(0.25)
         local mine = Court.mine()
         if mine ~= nil and mine:GetAttribute("Sprinting") == true then
@@ -6143,8 +5529,6 @@ local function capture(state: Map, name: string, args: any)
     end
 end
 
--- runs inside the hook under pcall, true holds the game's call back. the method name is read first and nothing here
--- calls a method of the game, a call made here would change the method the pass on after it is made with
 local function watch(state: Map, remote: any, ...: any): boolean
     if not getMethod or getMethod() ~= "FireServer" or typeof(remote) ~= "Instance" then
         return false
@@ -6163,7 +5547,6 @@ local function watch(state: Map, remote: any, ...: any): boolean
         if #queue < 32 then
             queue[#queue + 1] = { name, args }
         end
-        -- the block only reads the menu and the arguments, nothing in it calls into the game
         local owner = state.Owner
         if name == "Dribble" and type(owner) == "table" and type(owner.BlockDribble) == "function" then
             return owner.BlockDribble(args) == true
@@ -6184,7 +5567,6 @@ local function watch(state: Map, remote: any, ...: any): boolean
     local flag = rawget(data, "Shoot")
     if flag == true then
         owner.KeyDown = true
-        -- the press goes through untouched, the bookkeeping runs on the next frame where its game calls cannot reach this one
         owner.PressPending = true
         owner.DunkPress = rawget(data, "UseSpace") == true
         return false
@@ -6193,8 +5575,6 @@ local function watch(state: Map, remote: any, ...: any): boolean
         return false
     end
     owner.KeyDown = false
-    -- a release that carries the key is the game's tap, shorter than its shoot delay: a hop step, gather or pump
-    -- fake. it always goes through untouched and is never turned into a shot
     if rawget(data, "Input") ~= nil then
         return false
     end
@@ -6208,7 +5588,6 @@ local function watch(state: Map, remote: any, ...: any): boolean
     return false
 end
 
--- the same rules for a call the input wrap saw, it runs in plain Lua outside any metamethod so the owner is told at once
 local function wrapped(state: Map, name: string, ...: any): boolean
     if CAPTURE[name] then
         local args = table.pack(...)
@@ -6259,7 +5638,6 @@ local function writeNamecall(target: any): boolean
     end))
 end
 
--- plain method calls of the game, each must give the answer it gives without the hook
 local function probe(): boolean
     local folder = Instance.new("Folder")
     folder.Name = "probe"
@@ -6272,7 +5650,6 @@ local function probe(): boolean
     return found == nil and isFolder == true and isPart == false and typeof(service) == "Instance" and type(children) == "table"
 end
 
--- whether the hook is really in the way of the game's calls, and whether those calls still answer right
 local function live(state: Map): (boolean, boolean)
     local seen = false
     local before, off = state.Watch, state.Off
@@ -6302,7 +5679,6 @@ local function putBack(state: Map)
     end
 end
 
--- returns the hook state, or nil and why there is none
 function Hook.install(): (any?, string?)
     local existing = Env.get(NAME)
     if type(existing) == "table" and existing.Mode == "wrap" then
@@ -6312,7 +5688,6 @@ function Hook.install(): (any?, string?)
     end
     if type(existing) == "table" then
         if existing.Version ~= VERSION or existing.Broken then
-            -- anything older stays a passthrough, another hook on top of it would only stack a second layer on every method call
             existing.Owner = nil
             return nil, if existing.Broken then "broken" else "old"
         end
@@ -6332,8 +5707,6 @@ function Hook.install(): (any?, string?)
     if not getMethod or (not hookMeta and (type(original) ~= "function" or not Env.setreadonly)) then
         return nil, "unsupported"
     end
-    -- some executors hook by rewriting the original function itself, after that the original calls straight back into the
-    -- hook and every method call overflows the stack, so a copy made before the hook goes in is what is passed on to
     local clean: any = original
     if type(original) == "function" and Env.clonefunction then
         local cloned, copy = pcall(Env.clonefunction, original)
@@ -6355,7 +5728,6 @@ function Hook.install(): (any?, string?)
         Claim = Hook,
     }
     local old: any = clean
-    -- only the pass on to the original is left outside the pcall, and on any doubt the call is passed on
     local function body(self: any, ...: any): ...any
         if not state.Off and getMethod and getMethod() == "FireServer" then
             local ok, hold = pcall(state.Watch, state, self, ...)
@@ -6399,8 +5771,6 @@ function Hook.install(): (any?, string?)
             elseif type(clean) == "function" then
                 placed = writeNamecall(wrapped)
             end
-            -- some executors cannot pass a call on from inside the hook, others only pretend to hook: a few ordinary
-            -- calls are tried, they have to show up in the hook and still answer right, or the hook is taken out again
             local seen, works = live(state)
             local fine = placed and works
             if stopped then
@@ -6434,7 +5804,6 @@ function Hook.install(): (any?, string?)
     return nil, why
 end
 
--- the calls the hook saw are handled here on the frame loop, never inside the hook
 function Hook.drain()
     local state = Env.get(NAME)
     if type(state) ~= "table" or state.Claim ~= Hook then
@@ -6450,15 +5819,12 @@ function Hook.drain()
     end
 end
 
--- the light way first: the game's own input signals are wrapped, no metamethod is touched. a state left by an older
--- load in this mode is taken over, one in the hook mode is left to its own remove
 local function bindWrap(owner: any, light: boolean?): boolean
     local existing = Env.get(NAME)
     local state: Map = if type(existing) == "table" and existing.Mode == "wrap" and existing.Version == VERSION
         then existing
         else { Version = VERSION, Mode = "wrap", SprintOn = nil, Calls = {}, Queue = {}, Press = {}, Dribbles = {} }
     if type(existing) == "table" and existing ~= state then
-        -- an older hook keeps passing every call on, it only stops reporting
         existing.Owner = nil
     end
     local installed = Aero.install(function(name: string, ...: any): boolean
@@ -6474,7 +5840,6 @@ local function bindWrap(owner: any, light: boolean?): boolean
     return true
 end
 
--- allowHook: whether the method hook may be tried when the input wrap cannot be put in
 function Hook.bind(owner: any, allowHook: boolean?, light: boolean?): (boolean, string?)
     local done, wrappedOk = pcall(bindWrap, owner, light)
     if done and wrappedOk then
@@ -6491,7 +5856,6 @@ function Hook.bind(owner: any, allowHook: boolean?, light: boolean?): (boolean, 
     return false, if ok then why else "broken"
 end
 
--- true while the wrap or the hook in the game is the one this load put in or took over and it still reports to this owner
 function Hook.owned(owner: any): boolean
     local state = Env.get(NAME)
     if type(state) ~= "table" or state.Claim ~= Hook or state.Owner ~= owner or state.Off then
@@ -6503,7 +5867,6 @@ function Hook.owned(owner: any): boolean
     return true
 end
 
--- which way the shoot key is seen: "wrap", "hook" or nil
 function Hook.mode(): string?
     local state = Env.get(NAME)
     if type(state) ~= "table" or state.Claim ~= Hook or state.Off then
@@ -6512,8 +5875,6 @@ function Hook.mode(): string?
     return if state.Mode == "wrap" then "wrap" else "hook"
 end
 
--- takes the hook out on unload when it is still the one in the metatable, a hook another script put on top is left as a
--- plain passthrough. a hook a newer load of the script took over is theirs and is left alone
 function Hook.remove()
     stopped = true
     local state = Env.get(NAME)
@@ -6552,9 +5913,6 @@ local import: (string) -> any = ...
 local Changelog: typeof(require("./changelog")) = import("changelog")
 local Config: typeof(require("./config")) = import("config")
 
--- the menu: Home, Shoot, Defend, Handle, Player, Visuals. every page is one scroll of cards, each card says in one plain line
--- what it does, its main switch comes first and the finer settings sit in a closed Advanced group. the flag names are the
--- same as before, so saved configs and keybinds keep working
 local Interface = {}
 
 local function studs(value: number): string
@@ -6586,7 +5944,6 @@ local function delay(value: number): string
     return if value <= 0 then "Instant" else string.format("%d ms", math.floor(value + 0.5))
 end
 
--- every option a preset touches, a preset sets all of them so the presets never mix
 local PRESET_FLAGS = {
     "AutoGreen", "PerfectChance", "AutoCalibrate", "OpenShot", "AutoShoot", "AutoDunk",
     "AutoGuard", "GuardMove", "AutoSteal", "AutoBlock", "AutoRebound",
@@ -6596,7 +5953,6 @@ local PRESET_FLAGS = {
     "Esp", "EspTeam", "EspStamina", "ThreePointLine", "DunkZones", "ShotRangeViz", "RangeViz",
 }
 
--- an option a preset does not name is off, a sub-option keeps its default, it does nothing while its main option is off
 local function preset(on: { [string]: any }): { [string]: any }
     local values: { [string]: any } = {}
     for _, flag in PRESET_FLAGS do
@@ -6615,13 +5971,10 @@ function Interface.build(ui: any, actions: { [string]: any }?)
         end
     end
 
-    -- HOME: the greeting, the search and four quick start cards for what people use most
     local presets = {
         { Name = "Off", Values = preset({}) },
         { Name = "Casual", Values = preset({ AutoGreen = true, PerfectChance = 85, AutoCalibrate = true, OpenShot = true }) },
         { Name = "Legit", Values = preset({ AutoGreen = true, PerfectChance = 100, AutoCalibrate = true, OpenShot = true, AutoGuard = true, GuardMove = true, DribbleGlide = true }) },
-        -- Full: every helper, every visual and every status option. Move Keys stays off (it takes the game's dribble keys
-        -- away), the combo loop stays off (it would play moves without a key press) and so does Always Sprint
         {
             Name = "Full",
             Values = preset({
@@ -6673,7 +6026,6 @@ function Interface.build(ui: any, actions: { [string]: any }?)
         return { Name = name, Flag = flag, Min = low, Max = high, Step = step, Default = defaults[flag], Format = format }
     end
 
-    -- SHOOT
     local shootTab = ui:tab("Shoot")
     local shoot = shootTab:section("SHOOT")
     shoot:presets({ Name = "Preset", Presets = presets })
@@ -6784,7 +6136,6 @@ function Interface.build(ui: any, actions: { [string]: any }?)
         },
     })
 
-    -- DEFEND
     local defendTab = ui:tab("Defend")
     local defend = defendTab:section("DEFEND")
     defend:cards({
@@ -6841,7 +6192,6 @@ function Interface.build(ui: any, actions: { [string]: any }?)
         },
     })
 
-    -- HANDLE
     local handleTab = ui:tab("Handle")
     local handle = handleTab:section("HANDLE")
     handle:cards({
@@ -6944,7 +6294,6 @@ function Interface.build(ui: any, actions: { [string]: any }?)
         },
     })
 
-    -- PLAYER
     local playerTab = ui:tab("Player")
     local player = playerTab:section("PLAYER")
     player:cards({
@@ -6964,7 +6313,6 @@ function Interface.build(ui: any, actions: { [string]: any }?)
         },
     })
 
-    -- VISUALS
     local visualTab = ui:tab("Visuals")
     local visual = visualTab:section("VISUALS")
     visual:cards({
@@ -7040,18 +6388,13 @@ local READER = "__PBRead"
 local TELEPORT_URL = "https://raw.githubusercontent.com/okdude42/main-scripts/main/practical-basketball/pb.lua"
 local GAME_ID = 7529591378
 local MENU_ID = "Practical Basketball"
--- an older load lets go of its hook a moment after it stopped, the new hook only goes in after that
 local HOOK_DELAY = 0.8
 
--- Auto Green and the features that repeat or block the game's own input calls, the input wrap only goes in once one is on
 local COPY_FLAGS = { "AutoGreen", "AlwaysSprint", "AutoDribble", "DribbleCombo", "BlockDribbleKeys", "MoveKeys" }
--- the attributes the walk debug watches for a write of the script
 local WATCHED = { "Action", "CanMove", "Stunned", "Debounce", "DodgeDebounce", "BoxoutPushDebounce", "Cold", "Stamina", "Sprinting", "HoldingG" }
 
 type Map = { [string]: any }
 
--- the load before this one is stopped for real before anything starts. its menu only stops its features at the end of
--- its goodbye, and the new menu replaces it before that, so its own stop is called straight away
 local function stopPrevious()
     local previous = Env.get(REGISTRY)
     local instances = Env.get("OkloUIInstances")
@@ -7084,7 +6427,6 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
             return false
         end
         local value = raw(flag)
-        -- a sub-option does nothing at all while its main option is off
         local parent = Config.PARENT[flag]
         if parent and value == true and raw(parent) ~= true then
             return false
@@ -7104,7 +6446,6 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
         end
     end
 
-    -- the probe reads the options through this
     Env.set(READER, read)
 
     local autoGreen = AutoGreen.new(read, notify)
@@ -7124,7 +6465,6 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
     local rings = Rings.new(read)
     local contest = Contest.new(read, autoGreen)
     local moves = Moves.new(read)
-    -- the input wrap asks this before a dribble call of the game's own keys goes out
     autoGreen.BlockDribble = function(args: any): boolean
         return moves:blocks(args)
     end
@@ -7135,12 +6475,10 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
     autoDunk.Defense = defense
     local rimGuard = RimGuard.new(read, autoGreen)
     local connections: { any } = {}
-    -- Auto Green is last to stop, the others still need the calls its hook copied to let go of what they hold
     local parts: { any } = { autoGreen, defense, autoShoot, autoDunk, autoBlock, autoRebound, autoPass, autoDribble, combo, ballMagnet, player, contest }
     local partNames: { string } = { "autogreen", "defense", "autoshoot", "autodunk", "autoblock", "autorebound", "autopass", "autodribble", "combo", "ballmagnet", "player", "contest" }
     local closing: { any } = { defense, autoDunk, ballMagnet, player, contest, autoGreen }
 
-    -- each part is stopped on its own, one that fails must not leave the hook or the others behind
     local function sweep()
         for _, part in closing do
             pcall(part.shutdown, part)
@@ -7154,7 +6492,6 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
             return
         end
         running = false
-        -- what the script still holds is let go on the way out, even in the middle of a walk
         Court.Closing = true
         if Env.get(REGISTRY) ~= nil then
             Env.set(REGISTRY, nil)
@@ -7167,7 +6504,6 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
         if Env.get(READER) == read then
             Env.set(READER, nil)
         end
-        -- a thread that was mid-step or still binding can leave a link behind, a second pass catches it
         task.delay(0.6, sweep)
     end
 
@@ -7199,7 +6535,6 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
         end
     end
 
-    -- a part of the menu that fails on this executor must not stop the window from opening, it is said once instead
     local built, failure = pcall(Interface.build, ui, {
         resetCalibration = function()
             autoGreen:resetCalibration()
@@ -7210,7 +6545,6 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
         playMove = function(move: string)
             moves:play(move)
         end,
-        -- the line on Home that says what Auto Green can do on this executor
         status = function(): string
             if read("AutoGreen") ~= true then
                 return "Auto Green is off"
@@ -7224,8 +6558,6 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
     pcall(Court.start)
     pcall(autoGreen.bind, autoGreen)
 
-    -- the walk debug: with getgenv().PBDebug = true, every time the game walks or holds you a line goes to the console a
-    -- few times a second with what the game and the script did, so a freeze can be pinned on its cause
     local walkLog: Map = { On = false, Start = 0, At = 0, From = nil :: Vector3?, Game = nil :: Vector3? }
     local function snapshot(mine: any): { [string]: any }
         local values: { [string]: any } = {}
@@ -7292,15 +6624,11 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
                     break
                 end
             end
-            -- the light input wrap goes in for any of them, the method hook only for Auto Green outside Safe Mode and Hold E
-            -- Hold E only needs the light input wrap, the method hook is never used
             local allowHook = false
             if wanted and (not autoGreen.Hooked or (allowHook and not autoGreen.TriedHook)) then
                 task.spawn(autoGreen.hook, autoGreen, allowHook)
             end
         end
-        -- each part runs on its own, one that fails in a frame must not stop the ones after it. with the walk debug on,
-        -- every attribute a part changes while the game walks you is noted with the part's name
         local mine = Court.Mine
         local watch = mine ~= nil and Court.HandsOff and Env.get("PBDebug") == true
         for index, part in parts do
@@ -7314,8 +6642,6 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
             pcall(walkLine, mine, now)
         end
     end))
-    -- the game writes its movement on Heartbeat, right before the physics step is where a changed speed holds. while the
-    -- game walks or holds you, and a moment after, nothing here touches the velocity it wrote
     local function beforePhysics(first: any, second: any)
         if not running then
             return
@@ -7323,11 +6649,9 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
         local dt = if type(second) == "number" then second elseif type(first) == "number" then first else 1 / 60
         local now = os.clock()
         local mine = Court.Mine
-        -- a shot of the game's own under a name the script does not know holds you too, the glide still rides that one
         local hands = mine ~= nil and Court.held(mine)
         local _, mover = Court.proxy()
         walkLog.Game = if mover then mover.Velocity else nil
-        -- the walk debug names the part that changed the velocity the game wrote, there should never be one
         local function run(name: string, fn: any, ...: any)
             local before: Vector3? = if hands and mover then mover.Velocity else nil
             pcall(fn, ...)
@@ -7371,7 +6695,6 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
         stop()
         pcall(ui.unload, ui)
     end
-    -- what the menu keys do, for a probe or a test
     function api.PlayMove(move: string): boolean
         return moves:play(move)
     end
@@ -7393,18 +6716,15 @@ local import: (string) -> any = ...
 local Config: typeof(require("./config")) = import("config")
 local Court: typeof(require("./court")) = import("court")
 
--- a key of your own for every dribble move, and the game's own Z C X V dribble keys switched off when you want only yours
 local Moves = {}
 Moves.__index = Moves
 
--- one press is one move, a key held down or pressed again while the move plays is not sent twice
 local GAP = 0.18
 
 function Moves.new(read: (string) -> any): any
     return setmetatable({ Read = read, Last = -math.huge }, Moves)
 end
 
--- the call the game makes for its dribble keys: the keys for the hand the ball is in, whether sprint is held, where you move
 function Moves.play(self: any, move: string): boolean
     if self.Read("MoveKeys") ~= true then
         return false
@@ -7431,7 +6751,6 @@ function Moves.play(self: any, move: string): boolean
     return Court.send(remote, keys[if mine:GetAttribute("Hand") == "L" then "L" else "R"], sprint, Court.heading() or Vector3.zero)
 end
 
--- true holds back a dribble call of the game's own keys, the hand switch and anything the script sends go through
 function Moves.blocks(self: any, args: any): boolean
     if self.Read("BlockDribbleKeys") ~= true or type(args) ~= "table" then
         return false
@@ -7451,10 +6770,8 @@ local Drive: typeof(require("./drive")) = import("drive")
 local Player = {}
 Player.__index = Player
 
--- the flags the game sets on every character that hold you back
 local DEBOUNCES = { "Debounce", "DodgeDebounce", "BoxoutPushDebounce" }
 
--- the sprint remote argument is not known, each form is tried until Sprinting turns on, a real sprint copied by the hook wins over all of them
 local FORMS: { (any) -> ...any } = {
     function(_: any): ...any
         return true
@@ -7468,14 +6785,10 @@ local FORMS: { (any) -> ...any } = {
 }
 local RELEASES: { any } = { false, { Sprinting = false }, { Sprint = false } }
 
--- the game's own numbers: the walk speed it caps the attribute at, what a sprint adds, and the speed above which it stops you
 local GAME_CAP = 17
 local LIMIT = 27
 local MAX_STAMINA = 100
--- a walk the game names this soon after a stun cleared here puts the stun back
 local FREED_TIME = 2
--- No Stun waits this long into a stun before it clears it, the walk of a foul or a dead ball is named in that time and
--- then the stun is never touched. no stun is cleared this soon after the game walked you
 local STUN_WAIT = 0.4
 local WALK_CLEAR = 1
 
@@ -7500,7 +6813,6 @@ function Player.new(read: (string) -> any): any
     }, Player)
 end
 
--- the bar is the game's Stamina attribute, written here on your own client only. the server keeps its own count
 function Player.fill(self: any, mine: any)
     local value = mine:GetAttribute("Stamina")
     if type(value) ~= "number" or Court.HandsOff or Court.handsOff(mine) then
@@ -7523,7 +6835,6 @@ function Player.step(self: any, now: number)
     local read = self.Read
     local infinite = read("InfStamina") == true
     if read("FullSpeed") == true or infinite then
-        -- the server owns stamina, its value is what the speed hold reads
         self:watch(mine)
     elseif self.Link then
         self:unwatch()
@@ -7531,9 +6842,6 @@ function Player.step(self: any, now: number)
     if infinite then
         self:fill(mine)
     end
-    -- a stun from a foul or a dead ball comes with the game walking you, giving the controller back then is what froze you.
-    -- the server often names the walk a moment after the stun and never sends CanMove again, an attribute only comes when
-    -- it changes, so a stun cleared here that turns into a walk is put back the way the server still has it
     local action = mine:GetAttribute("Action")
     local walked = action == "Moving" or action == "Fouled" or action == "Inbounding"
     local freed = self.Freed
@@ -7558,7 +6866,6 @@ function Player.step(self: any, now: number)
             end
         end
     elseif read("NoStun") == true and stunned and now - (self.StunAt or now) >= STUN_WAIT and not Court.Foul and now - Court.WalkAt >= WALK_CLEAR then
-        -- only a stun on a live ball with nobody fouled is cleared, the one a foul or a dead ball comes with is the game's
         mine:SetAttribute("Stunned", false)
         local gave = false
         if mine:GetAttribute("CanMove") == false and (action == "" or action == nil or action == "Stunned") then
@@ -7567,7 +6874,6 @@ function Player.step(self: any, now: number)
         end
         self.Freed = { Character = mine, At = now, CanMove = gave }
     end
-    -- while the game walks or holds you, and a moment after, nothing else is written or pressed
     if Court.HandsOff or Court.handsOff(mine) then
         return
     end
@@ -7598,7 +6904,6 @@ function Player.unwatch(self: any)
     self.Real = nil
 end
 
--- the server keeps its own stamina and sends it a few times a second, every value that comes in is noted as the real one
 function Player.watch(self: any, mine: any)
     if self.Watched == mine then
         return
@@ -7611,7 +6916,6 @@ function Player.watch(self: any, mine: any)
             return
         end
         local now = os.clock()
-        -- the full bar written here is not the server's value, only what came from the server counts
         if value == self.Wrote and now - (self.WroteAt or -math.huge) < 0.1 then
             return
         end
@@ -7623,8 +6927,6 @@ function Player.watch(self: any, mine: any)
     end)
 end
 
--- runs right before the physics step, after the game wrote its own velocity for the frame. the game caps the WalkSpeed
--- attribute before it uses it, so the speed is scaled on the part the game really moves
 function Player.physics(self: any)
     local read = self.Read
     local custom = read("CustomSpeed") == true
@@ -7634,9 +6936,7 @@ function Player.physics(self: any)
         return
     end
     local mine = Court.Mine
-    -- the game walking you is left exactly at the speed it writes, whatever CanMove says
     if not mine or mine:GetAttribute("CanMove") ~= true or Court.handsOff(mine) then
-        -- after a move the game held you in, the custom speed builds up again from the game's own instead of jumping back
         self.Boost = 0
         self.Ratio = 1
         self.PhysicsAt = nil
@@ -7648,10 +6948,7 @@ function Player.physics(self: any)
     end
     local velocity: Vector3 = mover.Velocity
     local speed = velocity.Magnitude
-    -- a velocity still the one written here means the game did not set a new one, scaling it again would stack
     if speed < 1 or Drive.active() or Drive.since(os.clock()) < 0.15 then
-        -- standing still, or a feature moving you or just done with it: the next run of your own starts at the game's own
-        -- speed again
         self.Ratio = 1
         self.Boost = 0
         self.PhysicsAt = nil
@@ -7664,10 +6961,6 @@ function Player.physics(self: any)
     local dt = math.clamp(now - (self.PhysicsAt or now), 0, 0.1)
     self.PhysicsAt = now
     local target = speed
-    -- the game's own walk and sprint speeds are learned while the server's stamina is high, then held when stamina drops.
-    -- speed is the only thing the server takes away from you when you are tired. the hold stays a little under a full
-    -- bar, eases in and out, and leaves the guard stance and anything slower than a tired run alone so it never looks
-    -- like a speed hack
     local real: number? = self.Real
     local boost = 0
     if lock and real and now - self.RealAt < 3 then
@@ -7684,7 +6977,6 @@ function Player.physics(self: any)
             boost = math.clamp(known * share - speed, 0, if infinite then 6 else 3.5)
         end
     end
-    -- the extra speed comes on over about half a second and goes the same way, never in one frame
     local current: number = self.Boost or 0
     current += math.clamp(boost - current, -14 * dt, 7 * dt)
     self.Boost = current
@@ -7694,7 +6986,6 @@ function Player.physics(self: any)
     if custom then
         local base = mine:GetAttribute("WalkSpeed")
         if type(base) == "number" and base > 1 then
-            -- the custom speed builds up over a few tenths of a second from the game's own, like a person's push off
             local want = (read("WalkSpeed") or 16) / math.min(base, GAME_CAP)
             local ratio: number = self.Ratio or 1
             ratio += math.clamp(want - ratio, -3 * dt, 1.6 * dt)
@@ -7710,7 +7001,6 @@ function Player.physics(self: any)
     self.Sent = scaled
 end
 
--- the same call as the press that turned sprint on with every true turned into false, so the sprint ends the way letting go of the key would
 local function released(args: any): any
     local copy: any = table.clone(args)
     for index = 1, args.n or #args do
@@ -7730,7 +7020,6 @@ local function released(args: any): any
     return copy
 end
 
--- Always Sprint only presses sprint, so when it is turned off the key is let go once, tried a few times until Sprinting really turns off
 function Player.release(self: any, mine: any, now: number)
     if mine:GetAttribute("Sprinting") ~= true or self.Releases >= 4 then
         self.Pressed = false
@@ -7740,7 +7029,6 @@ function Player.release(self: any, mine: any, now: number)
     if now - self.LastRelease < 0.5 then
         return
     end
-    -- your own sprint key is held, the sprint is yours now
     if Court.sprintHeld() then
         self.Pressed = false
         self.Releases = 0
@@ -7769,12 +7057,10 @@ function Player.sprint(self: any, mine: any, now: number)
     if (action ~= "" and action ~= "Dribbling" and action ~= nil) or mine:GetAttribute("CanMove") == false or now - self.LastSprint < 0.7 then
         return
     end
-    -- holding G or an empty stamina bar keeps the game from sprinting, pressing again and again then is only noise
     local stamina = mine:GetAttribute("Stamina")
     if mine:GetAttribute("HoldingG") == true or (type(stamina) == "number" and stamina < 3) then
         return
     end
-    -- the game's own controller moves the character, Humanoid.MoveDirection stays at zero, so the move keys and the speed count as moving
     local root = Court.Root
     local velocity = if root then root.AssemblyLinearVelocity else Vector3.zero
     if now >= self.WantSprint and not Court.steering(mine) and velocity.X * velocity.X + velocity.Z * velocity.Z <= 16 then
@@ -7786,7 +7072,6 @@ function Player.sprint(self: any, mine: any, now: number)
     Court.fire("Sprint", FORMS, sprinting, nil, mine)
 end
 
--- unloading lets go of a sprint that Always Sprint started
 function Player.shutdown(self: any)
     self:unwatch()
     local mine = Court.mine()
@@ -7812,25 +7097,18 @@ modules["rimguard"] = function(...)
 local import: (string) -> any = ...
 local Court: typeof(require("./court")) = import("court")
 
--- keeps you from running under the ring while a layup or a dunk press waits for the game to start the shot. the game
--- plays the reverse finish when you are behind or beside the ring when the shot starts
 local RimGuard = {}
 RimGuard.__index = RimGuard
 
 local RANGE = 13
--- how far out in front of the ring you are kept, and how much further for every stud you are off to the side
 local FRONT_MIN = 2.6
 local SLOPE = 0.4
--- once the game plays the shot, a gather or a move it owns the body, nothing is written then: a second writer on the
--- body is what made layups jitter and turned them into odd finishes
 local BUSY: { [string]: boolean } = { Shooting = true, Gathering = true, Dunking = true, ContactLayup = true, ClutchLayup = true, Layup = true, Dribbling = true }
 
 function RimGuard.new(read: (string) -> any, autoGreen: any): any
     return setmetatable({ Read = read, AutoGreen = autoGreen }, RimGuard)
 end
 
--- runs right before the physics step, after everything else wrote the velocity for the frame. it only ever takes speed
--- toward the backboard away, it never pushes you out, turns you or moves you sideways
 function RimGuard.physics(self: any)
     if self.Read("RimFront") ~= true then
         return
@@ -7840,7 +7118,6 @@ function RimGuard.physics(self: any)
         return
     end
     local green = self.AutoGreen
-    -- a dunk press needs the full run at the rim, slowing it turns the dunk into a layup
     if green.Press == nil or green.DunkPress == true or (green.Shot and green.Shot.Fired) then
         return
     end
@@ -7864,7 +7141,6 @@ function RimGuard.physics(self: any)
     local offsetX, offsetZ = position.X - rim.Position.X, position.Z - rim.Position.Z
     local ahead = offsetX * front.X + offsetZ * front.Z
     if ahead <= 0 then
-        -- already beside or behind the ring, nothing to save, the move is left alone
         return
     end
     local sideX, sideZ = offsetX - front.X * ahead, offsetZ - front.Z * ahead
@@ -7885,31 +7161,18 @@ modules["rings"] = function(...)
 local import: (string) -> any = ...
 local Court: typeof(require("./court")) = import("court")
 
--- everything drawn on the floor, shaped like the court itself: the three point line traced off the game's own walls,
--- the dunk zones and the auto shot range as arcs on the court side of each rim, and your action ranges as soft rings.
--- every line is a thin bright stroke over a wide faint one, so it reads as light on the floor, not as a wire
 local Rings = {}
 Rings.__index = Rings
 
--- a full ring and a half circle have the same step between points, so every curve is worked out equally smooth. only
--- the points the screen needs are drawn, see pick
-local SEGMENTS = 192
+local SEGMENTS = 32
+local ARC_PIECES = 16
 local ARC_SEGMENTS = 96
--- the three strokes of a line of light. the faint wide ones are blurry, they follow the curve more loosely (tolerance in
--- pixels, turn in radians per piece) and so take fewer pieces. each has its own fixed layer: fills under the wide
--- strokes under the bright ones
-local LAYERS = {
-    { Name = "wide", Width = 13, Alpha = 0.05, Tolerance = 1.5, Turn = 0.35, Z = 2 },
-    { Name = "soft", Width = 7, Alpha = 0.12, Tolerance = 0.8, Turn = 0.25, Z = 3 },
-    { Name = "core", Width = 2.5, Alpha = 0.9, Tolerance = 0.2, Turn = 0.15, Z = 4 },
-}
--- fills are faint and sit under the strokes, their edges may follow the curve a bit looser still
-local FILL_TOLERANCE = 2
-local FILL_TURN = 0.4
+local LINE_PIECE = 6
+local LINE_TOLERANCE = 0.05
+local DISC_ALPHA = 0.05
+local RIM_ALPHA = 1 - (1 - DISC_ALPHA) * (1 - 0.09)
 local FILL_Z = 1
--- the floor under you is looked up this often, not every frame
 local LEVEL_EVERY = 0.1
--- the list of hoops is worked out again this often, the rims do not move
 local HOOPS_EVERY = 0.5
 local STEAL = Color3.fromRGB(255, 90, 90)
 local GUARD = Color3.fromRGB(90, 160, 255)
@@ -7918,25 +7181,16 @@ local SHOT = Color3.fromRGB(110, 255, 140)
 local LINE = Color3.fromRGB(255, 255, 255)
 local DUNK_STAND = Color3.fromRGB(110, 255, 140)
 local DUNK_DRIVE = Color3.fromRGB(90, 160, 255)
--- the dunk zones of the game's tutorial, measured from the rim: standing dunks 4.6 to 11 studs out, driving dunks 6 to 13
 local STAND_IN, STAND_OUT = 4.6, 11
 local DRIVE_IN, DRIVE_OUT = 6, 13
--- a rim further than this is not drawn, the other half of the court stays clean
 local NEAR = 60
--- radii ease to a new slider value instead of jumping
 local EASE = 12
--- everything sits this far over the floor, all at the same height so nothing slides against the paint
 local LIFT = 0.05
--- two rims closer than this are the same hoop, it is drawn once
 local SAME_HOOP = 6
 
 local RAYS = 360
--- far enough for the deepest part of the line, too short to reach the line of the other basket
 local REACH = 60
--- how far past a hit the second ray starts, the one that finds the far side of the wall
 local SPAN = 6
--- the court is built square to the hoop, a front this close to a side of its parts is that side: the traced front is
--- already within a degree, the court's own idea of it less sure, and a guess from where you stood is only a hint
 local SNAP_TRACE = math.cos(math.rad(2))
 local SNAP_COURT = math.cos(math.rad(10))
 local SNAP_GUESS = math.cos(math.rad(45))
@@ -7955,8 +7209,6 @@ function Rings.new(read: (string) -> any): any
     return setmetatable({ Read = read, Radius = {} :: { [string]: number }, Last = os.clock() }, Rings)
 end
 
--- the camera of this frame. while plain math gives the same screen points as the engine (checked every frame on three
--- points) each point is worked out here, else every point goes through the canvas
 local fast = false
 local slowProject: any = nil
 local camX, camY, camZ = 0, 0, 0
@@ -7988,7 +7240,6 @@ local function beginView(canvas: any): boolean
         viewW, viewH = 1e5, 1e5
         return true
     end
-    -- three spots of known place in the camera's own view, the engine says where they land on the screen
     local a, depthA = slowProject(refPoint(-6, -4, -20))
     local b, depthB = slowProject(refPoint(6, 4, -20))
     local c, depthC = slowProject(refPoint(3, -5, -30))
@@ -8018,15 +7269,12 @@ local function screen(x: number, y: number, z: number): (number, number, boolean
     return 0, 0, false
 end
 
--- the screen points of a path, two sets so a band has both its edges at once. every point is projected once a frame,
--- the strokes and the fill share it
 type Buffer = { X: { number }, Y: { number }, Ok: { boolean }, Count: number }
 local function buffer(): Buffer
     return { X = table.create(SEGMENTS + 1), Y = table.create(SEGMENTS + 1), Ok = table.create(SEGMENTS + 1), Count = 0 }
 end
 local nearBuf, farBuf = buffer(), buffer()
-local picked: { number } = table.create(SEGMENTS * 2)
-local fillPicked: { number } = table.create(SEGMENTS * 2)
+local corners: { any } = table.create(SEGMENTS)
 
 local function projectPath(into: Buffer, path: { Vector3 })
     local xs, ys, oks = into.X, into.Y, into.Ok
@@ -8046,70 +7294,6 @@ local function projectCircle(into: Buffer, x: number, y: number, z: number, radi
     into.Count = SEGMENTS + 1
 end
 
--- the points of a projected path a stroke really needs: a point is left out while the straight piece past it stays
--- within tolerance pixels of the curve and turns less than limit. a run ends where the path goes behind the camera,
--- a 0 in the list closes it
-local function pick(from: Buffer, tolerance: number, limit: number, list: { number }): number
-    local xs, ys, oks = from.X, from.Y, from.Ok
-    local count = 0
-    local open = false
-    local last = 0
-    local length, turn = 0, 0
-    local ux, uy = 0, 0
-    local stepped = false
-    local budget = tolerance * 8
-    for index = 1, from.Count do
-        if not oks[index] then
-            if open then
-                if list[count] ~= last then
-                    count += 1
-                    list[count] = last
-                end
-                count += 1
-                list[count] = 0
-                open = false
-            end
-        elseif not open then
-            open, stepped = true, false
-            count += 1
-            list[count] = index
-            last, length, turn = index, 0, 0
-        else
-            local dx, dy = xs[index] - xs[last], ys[index] - ys[last]
-            local step = math.sqrt(dx * dx + dy * dy)
-            if step > 0.05 then
-                local nx, ny = dx / step, dy / step
-                length += step
-                if stepped then
-                    local dot = ux * nx + uy * ny
-                    turn += math.abs(ux * ny - uy * nx)
-                    -- the bow of a curve over its chord is about its length times its turn over eight
-                    if dot < 0.7 or turn > limit or length * turn > budget then
-                        if list[count] ~= last then
-                            count += 1
-                            list[count] = last
-                        end
-                        length, turn = step, 0
-                    end
-                end
-                ux, uy, stepped = nx, ny, true
-                last = index
-            end
-        end
-    end
-    if open then
-        if list[count] ~= last then
-            count += 1
-            list[count] = last
-        end
-        count += 1
-        list[count] = 0
-    end
-    return count
-end
-
--- every stroke and fill has its own pool and layer on the canvas, so a shape that takes a different number of pieces
--- this frame does not move the color, width or layer of every piece after it
 local names: { [string]: { [string]: string } } = {}
 local function named(base: string, part: string): string
     local row = names[base]
@@ -8145,11 +7329,6 @@ local function enter(canvas: any, key: string?, z: number?)
     end
 end
 
-local function offscreen(ax: number, ay: number, bx: number, by: number, margin: number): boolean
-    return (ax < -margin and bx < -margin) or (ay < -margin and by < -margin) or (ax > viewW + margin and bx > viewW + margin) or (ay > viewH + margin and by > viewH + margin)
-end
-
--- a fill piece with all four corners off the same side of the screen
 local function beyond(ax: number, ay: number, bx: number, by: number, cx: number, cy: number, dx: number, dy: number): boolean
     return (ax < 0 and bx < 0 and cx < 0 and dx < 0)
         or (ay < 0 and by < 0 and cy < 0 and dy < 0)
@@ -8157,59 +7336,18 @@ local function beyond(ax: number, ay: number, bx: number, by: number, cx: number
         or (ay > viewH and by > viewH and cy > viewH and dy > viewH)
 end
 
-local function stroke(canvas: any, from: Buffer, list: { number }, count: number, color: Color3, alpha: number, width: number)
-    local line = canvas.line
-    if not line then
-        return
-    end
-    local xs, ys = from.X, from.Y
-    local margin = width + 2
-    local previous = 0
-    local start: Vector2? = nil
-    for at = 1, count do
-        local index = list[at]
-        if index == 0 then
-            previous, start = 0, nil
-        else
-            if previous ~= 0 then
-                local ax, ay, bx, by = xs[previous], ys[previous], xs[index], ys[index]
-                -- a piece wholly off one side of the screen is not drawn
-                if offscreen(ax, ay, bx, by, margin) then
-                    start = nil
-                else
-                    local finish = Vector2.new(bx, by)
-                    line(start or Vector2.new(ax, ay), finish, color, alpha, width)
-                    start = finish
-                end
-            end
-            previous = index
-        end
-    end
-end
-
--- a line of light: a wide faint stroke under a thin bright one
-local function glow(canvas: any, from: Buffer, key: string, color: Color3, strength: number)
-    for _, layer in LAYERS do
-        local count = pick(from, layer.Tolerance, layer.Turn, picked)
-        enter(canvas, named(key, layer.Name), layer.Z)
-        stroke(canvas, from, picked, count, color, layer.Alpha * strength, layer.Width)
-    end
-end
-
--- a soft wash between two projected edges, one quad for every point the outer edge needs
-local function fillBand(canvas: any, near: Buffer, far: Buffer, list: { number }, count: number, key: string, color: Color3, alpha: number)
+local function fillBand(canvas: any, near: Buffer, far: Buffer, key: string, color: Color3, alpha: number)
     local quad = canvas.filledQuad
     if not quad then
         return
     end
     enter(canvas, key, FILL_Z)
-    local nx, ny, nok, fx, fy = near.X, near.Y, near.Ok, far.X, far.Y
-    local previous = 0
+    local nx, ny, nok, fx, fy, fok = near.X, near.Y, near.Ok, far.X, far.Y, far.Ok
     local lastNear: Vector2? = nil
     local lastFar: Vector2? = nil
-    for at = 1, count do
-        local index = list[at]
-        if index == 0 or not nok[index] then
+    local previous = 0
+    for index = 1, math.min(near.Count, far.Count) do
+        if not (nok[index] and fok[index]) then
             previous, lastNear, lastFar = 0, nil, nil
         else
             if previous ~= 0 then
@@ -8220,7 +7358,7 @@ local function fillBand(canvas: any, near: Buffer, far: Buffer, list: { number }
                     local a = lastNear or Vector2.new(nx[p], ny[p])
                     local d = lastFar or Vector2.new(fx[p], fy[p])
                     local b, c = Vector2.new(nx[index], ny[index]), Vector2.new(fx[index], fy[index])
-                    quad(a, b, c, d, color, alpha)
+                    quad(a, b, c, d, color, alpha, 0)
                     lastNear, lastFar = b, c
                 end
             end
@@ -8229,60 +7367,53 @@ local function fillBand(canvas: any, near: Buffer, far: Buffer, list: { number }
     end
 end
 
--- a faint disc: a fan from the middle to every point the edge needs
-local function fillDisc(canvas: any, cx: number, cy: number, far: Buffer, list: { number }, count: number, key: string, color: Color3, alpha: number)
-    local triangle, quad = canvas.filledTriangle, canvas.filledQuad
-    if not (triangle or quad) then
+local function mirror(index: number): number
+    return (SEGMENTS + 1 - index) % SEGMENTS + 1
+end
+
+local function fillSlices(canvas: any, edge: Buffer, key: string, color: Color3, alpha: number)
+    local quad, triangle = canvas.filledQuad, canvas.filledTriangle
+    if not quad then
         return
     end
     enter(canvas, key, FILL_Z)
-    local center = Vector2.new(cx, cy)
-    local fx, fy = far.X, far.Y
-    local previous = 0
-    local last: Vector2? = nil
-    for at = 1, count do
-        local index = list[at]
-        if index == 0 then
-            previous, last = 0, nil
-        else
-            if previous ~= 0 then
-                local p = previous
-                if beyond(cx, cy, fx[index], fy[index], fx[p], fy[p], cx, cy) then
-                    last = nil
+    local xs, ys, oks = edge.X, edge.Y, edge.Ok
+    for index = 1, SEGMENTS do
+        corners[index] = if oks[index] then Vector2.new(xs[index], ys[index]) else false
+    end
+    for index = 1, SEGMENTS // 2 do
+        local a, b, c, d = corners[index], corners[index + 1], corners[mirror(index + 1)], corners[mirror(index)]
+        if a and b and c and d and not beyond(a.X, a.Y, b.X, b.Y, c.X, c.Y, d.X, d.Y) then
+            if index == 1 then
+                if triangle then
+                    triangle(a, b, c, color, alpha, 0)
                 else
-                    local d = last or Vector2.new(fx[p], fy[p])
-                    local c = Vector2.new(fx[index], fy[index])
-                    if triangle then
-                        triangle(center, c, d, color, alpha)
-                    else
-                        quad(center, center, c, d, color, alpha)
-                    end
-                    last = c
+                    quad(a, b, c, c, color, alpha, 0)
                 end
+            elseif index == SEGMENTS // 2 then
+                if triangle then
+                    triangle(a, b, d, color, alpha, 0)
+                else
+                    quad(a, b, d, d, color, alpha, 0)
+                end
+            else
+                quad(a, b, c, d, color, alpha, 0)
             end
-            previous = index
         end
     end
 end
 
--- an action range: a faint disc, a brighter rim just inside the line, then the line itself
 local function ring(canvas: any, key: string, x: number, y: number, z: number, radius: number, color: Color3)
     projectCircle(farBuf, x, y, z, radius)
-    local count = pick(farBuf, FILL_TOLERANCE, FILL_TURN, fillPicked)
-    local cx, cy, seen = screen(x, y, z)
-    if seen then
-        fillDisc(canvas, cx, cy, farBuf, fillPicked, count, named(key, "disc"), color, 0.05)
-    end
     projectCircle(nearBuf, x, y, z, radius * 0.82)
-    fillBand(canvas, nearBuf, farBuf, fillPicked, count, named(key, "rim"), color, 0.09)
+    fillSlices(canvas, nearBuf, named(key, "disc"), color, DISC_ALPHA)
+    fillBand(canvas, nearBuf, farBuf, named(key, "rim"), color, RIM_ALPHA)
 end
 
--- the half of a circle around a rim that faces the court, from one baseline side round to the other. the list is
--- filled in place, a curve is only worked out again when it changes
 local function arc(list: { Vector3 }, center: Vector3, front: Vector3, radius: number, y: number): { Vector3 }
     local fx, fz = front.X, front.Z
-    for index = 0, ARC_SEGMENTS do
-        local angle = (index / ARC_SEGMENTS - 0.5) * math.pi
+    for index = 0, ARC_PIECES do
+        local angle = (index / ARC_PIECES - 0.5) * math.pi
         local cos, sin = math.cos(angle), math.sin(angle)
         local dx, dz = fx * cos - fz * sin, fz * cos + fx * sin
         list[index + 1] = Vector3.new(center.X + dx * radius, y, center.Z + dz * radius)
@@ -8290,13 +7421,59 @@ local function arc(list: { Vector3 }, center: Vector3, front: Vector3, radius: n
     return list
 end
 
--- a filled band between two arcs, a light wash on the floor with the edges stroked at the given strengths. both arcs
--- are projected once, the fill and the strokes share them
 local function band(canvas: any, key: string, near: { Vector3 }, far: { Vector3 }, color: Color3, alpha: number)
     projectPath(nearBuf, near)
     projectPath(farBuf, far)
-    local count = pick(farBuf, FILL_TOLERANCE, FILL_TURN, fillPicked)
-    fillBand(canvas, nearBuf, farBuf, fillPicked, count, named(key, "fill"), color, alpha)
+    fillBand(canvas, nearBuf, farBuf, named(key, "fill"), color, alpha)
+end
+
+type Strip = { Near: { Vector3 }, Far: { Vector3 } }
+local strips: { [any]: Strip } = setmetatable({}, { __mode = "k" }) :: any
+local function stripOf(run: { Vector3 }, rimPos: Vector3): Strip
+    local kept = strips[run]
+    if kept then
+        return kept
+    end
+    local count = #run
+    local near: { Vector3 } = { run[1] }
+    local from = 1
+    while from < count do
+        local reach = from + 1
+        local a = run[from]
+        for to = from + 2, count do
+            local b = run[to]
+            local dx, dz = b.X - a.X, b.Z - a.Z
+            local length = math.sqrt(dx * dx + dz * dz)
+            if length > LINE_PIECE then
+                break
+            end
+            local fits = true
+            if length > 0.001 then
+                for middle = from + 1, to - 1 do
+                    local point = run[middle]
+                    if math.abs((point.X - a.X) * dz - (point.Z - a.Z) * dx) / length > LINE_TOLERANCE then
+                        fits = false
+                        break
+                    end
+                end
+            end
+            if not fits then
+                break
+            end
+            reach = to
+        end
+        table.insert(near, run[reach])
+        from = reach
+    end
+    local far: { Vector3 } = table.create(#near)
+    for index, point in near do
+        local ox, oz = point.X - rimPos.X, point.Z - rimPos.Z
+        local length = math.max(math.sqrt(ox * ox + oz * oz), 0.001)
+        far[index] = Vector3.new(point.X + ox / length * 0.6, point.Y, point.Z + oz / length * 0.6)
+    end
+    local made = { Near = near, Far = far }
+    strips[run] = made
+    return made
 end
 
 local floorParams = RaycastParams.new()
@@ -8304,7 +7481,6 @@ floorParams.RespectCanCollide = true
 floorParams.FilterType = Enum.RaycastFilterType.Exclude
 local nextIgnore = 0
 
--- the floor under a point, found by looking straight down through the players and the balls
 local function floorBelow(x: number, top: number, z: number, depth: number): number?
     local now = os.clock()
     if now >= nextIgnore then
@@ -8329,8 +7505,6 @@ end
 local levelY: number? = nil
 local nextLevel = 0
 
--- the height of the floor under you. the ray goes straight down, so it finds the same floor while you run or jump and
--- the rings stay flat on it. the floor does not change every frame, it is looked up a few times a second
 local function level(root: any): number
     local now = os.clock()
     if levelY and now < nextLevel then
@@ -8352,7 +7526,6 @@ local function smoothWeight(x: number): number
     return t * t * (3 - 2 * t)
 end
 
--- the sides of the parts the court is built square to, as flat x and z pairs
 local function axesOf(parts: { any }): { number }
     local list: { number } = {}
     for _, part in parts do
@@ -8386,8 +7559,6 @@ local function snap(x: number, z: number, axes: { number }, limit: number): (num
     return bestX, bestZ
 end
 
--- the way the traced line looks out over the court. the line is a mirror image about that way, so the sum of all its
--- hits points straight along it
 local function frontFrom(ox: { [number]: number }, oz: { [number]: number }, axes: { number }): (number?, number?)
     local sx, sz = 0, 0
     for index = 1, RAYS do
@@ -8416,10 +7587,6 @@ local function median(list: { number }): number?
     return (list[count // 2] + list[count // 2 + 1]) / 2
 end
 
--- the line as the painted floor has it: one round arc and two straight corners down to the baseline, worked out from the
--- hits of the low poly wall. ox and oz are the hits from the rim, depth how thick the wall is at each. the result is
--- the path along the middle of the wall, as ahead and across pairs from the rim, or nil when the hits do not look like
--- a three point line
 local function fitLine(ox: { [number]: number }, oz: { [number]: number }, depth: { [number]: number }, fx: number, fz: number): ({ number }?, { number }?)
     local sx, sz = -fz, fx
     local ahead: { [number]: number } = {}
@@ -8440,7 +7607,6 @@ local function fitLine(ox: { [number]: number }, oz: { [number]: number }, depth
     local function angleOf(a: number, b: number): number
         return math.deg(math.atan2(math.abs(b), a))
     end
-    -- the straight corners: out to the side the wall stays the same distance across all the way down
     local function corners(ca: number, cb: number): (number?, { number })
         local left: { number } = {}
         local right: { number } = {}
@@ -8458,7 +7624,6 @@ local function fitLine(ox: { [number]: number }, oz: { [number]: number }, depth
                 end
             end
         end
-        -- a side counts as straight when most of its hits are the same distance across
         local function straight(list: { number }): number?
             local middle = median(list)
             if not middle then
@@ -8477,7 +7642,6 @@ local function fitLine(ox: { [number]: number }, oz: { [number]: number }, depth
         return c, thick
     end
     local corner = corners(0, 0)
-    -- the round part, and on it the hits next to the wall's corners: the flat pieces sag in between them
     local round: { [number]: number } = {}
     for index = 1, RAYS do
         local a = ahead[index]
@@ -8495,7 +7659,6 @@ local function fitLine(ox: { [number]: number }, oz: { [number]: number }, depth
             local top = true
             for step = -2, 2 do
                 local other = round[(index + step - 1) % RAYS + 1]
-                -- a hit at the end of the round part is cut off mid piece, it is no corner of the wall
                 if step ~= 0 and (not other or other > away + 1e-4) then
                     top = false
                     break
@@ -8506,7 +7669,6 @@ local function fitLine(ox: { [number]: number }, oz: { [number]: number }, depth
             end
         end
     end
-    -- a circle through the tips, its middle should be the rim or very close to it
     local ca, cb, radius = 0, 0, 0
     local fitted = false
     if #tips >= 5 then
@@ -8552,7 +7714,6 @@ local function fitLine(ox: { [number]: number }, oz: { [number]: number }, depth
     if radius < 4 then
         return nil, nil
     end
-    -- the paint runs along the middle of the wall: half its thickness out from where the rays hit
     local roundThick: { number } = {}
     for _, index in tips do
         if depth[index] then
@@ -8562,12 +7723,10 @@ local function fitLine(ox: { [number]: number }, oz: { [number]: number }, depth
     local side, sideThick = corners(ca, cb)
     local roundHalf = math.min(median(roundThick) or 0, 3) / 2
     local sideHalf = math.min(median(sideThick) or 0, 3) / 2
-    -- where the corners end at the baseline, and how far round the line goes when it has no corners
     local widest = 0
     local ends: { number } = {}
     local endAngle = 0
     for _, sign in { -1, 1 } do
-        -- the last ray to hit a corner stops short of its end by up to one ray step, half a step is put back
         local first, second = math.huge, math.huge
         for index = 1, RAYS do
             local a0 = ahead[index]
@@ -8593,8 +7752,6 @@ local function fitLine(ox: { [number]: number }, oz: { [number]: number }, depth
     if #ends > 0 then
         baseline = (ends[1] + (ends[2] or ends[1])) / 2
     end
-    -- every hit has to lie on the arc or on a corner, a few flat pieces sag a little in between. hits past the ends of
-    -- the corners are a closed wall's back, not the line
     local good, counted = 0, 0
     for index = 1, RAYS do
         local a0 = ahead[index]
@@ -8626,7 +7783,6 @@ local function fitLine(ox: { [number]: number }, oz: { [number]: number }, depth
     local c: number? = nil
     if side and baseline then
         c = side + sideHalf
-        -- corners as wide as the arc carry its sides straight down, the arc is then a full half circle
         if side >= radius - 0.3 then
             c = r
         end
@@ -8655,8 +7811,6 @@ local function fitLine(ox: { [number]: number }, oz: { [number]: number }, depth
     return listA, listB
 end
 
--- the raw hits as lines, for a wall that is not shaped like a three point line. jumps start a new piece, and the
--- round part is pushed out onto one radius so the flat pieces do not show
 local function rawLine(ox: { [number]: number }, oz: { [number]: number }, origin: Vector3, y: number): { { Vector3 } }
     local radius = 0
     for index = 1, RAYS do
@@ -8697,7 +7851,6 @@ local function rawLine(ox: { [number]: number }, oz: { [number]: number }, origi
             last = nil
         end
     end
-    -- the circle closes when the last ray and the first both hit
     if run and first and last and (first - last).Magnitude <= 12 then
         table.insert(run :: { Vector3 }, first)
     end
@@ -8706,8 +7859,6 @@ end
 
 type Survey = { Runs: { { Vector3 } }, Front: Vector3?, Fitted: boolean, Floor: number? }
 
--- the line is traced the way the game finds it: a ray from the rim out to the wall in every direction, and one back
--- from just past each hit to find the far side of the wall
 local function survey(rim: any, folder: any, fallbackY: number): Survey?
     local params = RaycastParams.new()
     params.FilterType = Enum.RaycastFilterType.Include
@@ -8723,7 +7874,6 @@ local function survey(rim: any, folder: any, fallbackY: number): Survey?
             counts[hit.Instance] = (counts[hit.Instance] or 0) + 1
         end
     end
-    -- the wall around this rim is the part most rays hit, anything much further out belongs to another basket
     local wall: any = nil
     local most = 0
     for part, count in counts do
@@ -8794,13 +7944,11 @@ local zoneFolder: any = nil
 local nextZoneScan = 0
 local nextDeepScan = 0
 
--- the game's own three point walls, the folder it checks a shot against
 local function zones(): any?
     if zoneFolder and zoneFolder:IsDescendantOf(workspace) then
         return zoneFolder
     end
     zoneFolder = nil
-    -- the search runs once a second at most, every frame is what freezes the game
     if os.clock() < nextZoneScan then
         return nil
     end
@@ -8809,7 +7957,6 @@ local function zones(): any?
     local functionals = if assets then assets:FindFirstChild("Functionals") else nil
     local area = if functionals then functionals:FindFirstChild("Zones") else nil
     zoneFolder = if area then area:FindFirstChild("ThreePoint") else nil
-    -- the search through the whole workspace only every few seconds while the folder is missing
     if not zoneFolder and os.clock() >= nextDeepScan then
         nextDeepScan = os.clock() + 5
         zoneFolder = workspace:FindFirstChild("ThreePoint", true)
@@ -8817,7 +7964,6 @@ local function zones(): any?
     return zoneFolder
 end
 
--- the line of a rim, traced once and kept. a court that is not loaded yet gives no hits, it is tried again once a second
 local function surveyOf(rim: any, fallbackY: number): Survey?
     local known = surveys[rim]
     if known then
@@ -8840,8 +7986,6 @@ local function surveyOf(rim: any, fallbackY: number): Survey?
     return nil
 end
 
--- every hoop once: a hoop can have more than one part called Rim, each would trace and draw the same line again. the
--- rims stand still, the list is only worked out again a few times a second
 local nextHoops = 0
 local function hoops(): { any }
     local now = os.clock()
@@ -8870,8 +8014,6 @@ local function hoops(): { any }
     return distinct
 end
 
--- the way a rim looks out over the court: from its traced line when that worked, then from the court's own idea of it,
--- then toward where you stood when it was first needed. each is squared to the hoop's parts and kept, so it never turns
 local chosen: { [any]: Vector3 } = setmetatable({}, { __mode = "k" }) :: any
 local chosenBy: { [any]: any } = setmetatable({}, { __mode = "k" }) :: any
 local function frontOf(rim: any, root: any, surveyed: Survey?): Vector3?
@@ -8910,7 +8052,6 @@ local function frontOf(rim: any, root: any, surveyed: Survey?): Vector3?
     return found
 end
 
--- the floor around a rim: from its survey, else looked up once in front of it
 local rimFloor: { [any]: number } = setmetatable({}, { __mode = "k" }) :: any
 local nextRimFloor: { [any]: number } = setmetatable({}, { __mode = "k" }) :: any
 local function floorAt(rim: any, front: Vector3, surveyed: Survey?, fallback: number): number
@@ -8935,7 +8076,6 @@ local function floorAt(rim: any, front: Vector3, surveyed: Survey?, fallback: nu
     return fallback
 end
 
--- the arcs of a rim, kept and only worked out again when the front, the floor or a radius changes
 type Shapes = { Front: Vector3, Y: number, StandIn: { Vector3 }, StandOut: { Vector3 }, DriveIn: { Vector3 }, DriveOut: { Vector3 }, Shot: { Vector3 }, ShotIn: { Vector3 }, ShotRadius: number }
 local shapes: { [any]: Shapes } = setmetatable({}, { __mode = "k" }) :: any
 local function shapesOf(rim: any, front: Vector3, y: number): Shapes
@@ -8946,12 +8086,12 @@ local function shapesOf(rim: any, front: Vector3, y: number): Shapes
     local made: Shapes = kept or {
         Front = front,
         Y = y,
-        StandIn = table.create(ARC_SEGMENTS + 1),
-        StandOut = table.create(ARC_SEGMENTS + 1),
-        DriveIn = table.create(ARC_SEGMENTS + 1),
-        DriveOut = table.create(ARC_SEGMENTS + 1),
-        Shot = table.create(ARC_SEGMENTS + 1),
-        ShotIn = table.create(ARC_SEGMENTS + 1),
+        StandIn = table.create(ARC_PIECES + 1),
+        StandOut = table.create(ARC_PIECES + 1),
+        DriveIn = table.create(ARC_PIECES + 1),
+        DriveOut = table.create(ARC_PIECES + 1),
+        Shot = table.create(ARC_PIECES + 1),
+        ShotIn = table.create(ARC_PIECES + 1),
         ShotRadius = -1,
     }
     local center = rim.Position
@@ -8970,7 +8110,6 @@ function Rings.tint(self: any, flag: string, fallback: Color3): Color3
     return if kind == "Color3" then color else fallback
 end
 
--- a radius that eases toward the slider, so moving a slider glides the ring out instead of popping it
 function Rings.radius(self: any, key: string, goal: number, dt: number): number
     local current = self.Radius[key]
     if not current then
@@ -9007,7 +8146,6 @@ function Rings.draw(self: any, canvas: any)
     if not beginView(canvas) then
         return
     end
-    -- the pools and layers are always handed back, also when a shape fails half way
     local ok, problem = pcall(self.paint, self, canvas, root, read, dt, viz, shot, line, dunk)
     enter(canvas, nil, nil)
     if not ok then
@@ -9027,19 +8165,12 @@ function Rings.paint(self: any, canvas: any, root: any, read: (string) -> any, d
             local surveyed = surveyOf(rim, floor)
             if line and surveyed then
                 local key = named(tag, "line")
-                -- the line is a thin filled strip, the same run pushed half a stud away from the rim
                 local rimPos = rim.Position
                 for number, run in surveyed.Runs do
-                    local outer = {}
-                    for index, point in run do
-                        local ox, oz = point.X - rimPos.X, point.Z - rimPos.Z
-                        local length = math.max(math.sqrt(ox * ox + oz * oz), 0.001)
-                        outer[index] = Vector3.new(point.X + ox / length * 0.6, point.Y, point.Z + oz / length * 0.6)
-                    end
-                    projectPath(nearBuf, run)
-                    projectPath(farBuf, outer)
-                    local count = pick(farBuf, FILL_TOLERANCE, FILL_TURN, fillPicked)
-                    fillBand(canvas, nearBuf, farBuf, fillPicked, count, named(key, "strip" .. number), lineColor, 0.4)
+                    local strip = stripOf(run, rimPos)
+                    projectPath(nearBuf, strip.Near)
+                    projectPath(farBuf, strip.Far)
+                    fillBand(canvas, nearBuf, farBuf, named(key, "strip" .. number), lineColor, 0.4)
                 end
             end
             if dunk or shot then
@@ -9049,8 +8180,6 @@ function Rings.paint(self: any, canvas: any, root: any, read: (string) -> any, d
                 if front then
                     local made = shapesOf(rim, front, floorAt(rim, front, surveyed, floor) + LIFT)
                     if dunk then
-                        -- standing dunks: the filled band. driving dunks: a lighter band with the two blue edges a sprint
-                        -- has to cross
                         band(canvas, named(tag, "drive"), made.DriveIn, made.DriveOut, DUNK_DRIVE, 0.07)
                         band(canvas, named(tag, "stand"), made.StandIn, made.StandOut, DUNK_STAND, 0.12)
                     end
@@ -9094,7 +8223,6 @@ local function fetch(url)
     return if got and type(body) == "string" and body ~= "" then body else nil
 end
 
--- an executor without getgenv keeps the shared values in _G
 local function globals()
     local ok, env = pcall(getgenv)
     return if ok and type(env) == "table" then env else _G
@@ -9121,3 +8249,4 @@ local function launch()
 end
 
 return launch()
+

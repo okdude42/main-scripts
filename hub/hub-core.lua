@@ -379,7 +379,6 @@ local function save(entry: Registry.Entry, url: string)
     end
 end
 
--- the pictures are the game icons of roblox, saved in the folder so they only download once
 function Icons.start(entries: { Registry.Entry }, icons: string)
     folder = icons
     pcall(function()
@@ -446,7 +445,6 @@ function Launcher.starting(entry: Registry.Entry): boolean
     return since ~= nil
 end
 
--- runs the one shared loader with this script's settings, then closes the hub so it never sits over the script window
 function Launcher.run(entry: Registry.Entry, base: { [string]: any }?, ui: any?, announce: (string) -> ())
     if Launcher.starting(entry) then
         return
@@ -477,7 +475,6 @@ function Launcher.run(entry: Registry.Entry, base: { [string]: any }?, ui: any?,
             if at then
                 config.FromX, config.FromY = at.X + config.FromWidth / 2, at.Y + config.FromHeight / 2
             end
-            -- the frame exactly as it is drawn, its corners and colour, so the card that covers it matches it pixel for pixel
             local pos, size = window.WindowPos, window.WindowSize
             if pos and size and size.X > 0 then
                 config.FromWidth, config.FromHeight = size.X, size.Y
@@ -490,7 +487,6 @@ function Launcher.run(entry: Registry.Entry, base: { [string]: any }?, ui: any?,
         for key, value in entry.Config do
             config[key] = value
         end
-        -- the loader plays its card until the script is up, so it runs on its own while the hub hands over to the card
         local failed = false
         getgenv().__OkloCardUp = nil
         task.spawn(function()
@@ -504,7 +500,6 @@ function Launcher.run(entry: Registry.Entry, base: { [string]: any }?, ui: any?,
         while getgenv().__OkloCardUp ~= true and not failed and os.clock() - waited < 4 do
             task.wait()
         end
-        -- the card covers the hub window now, the hub goes right away and only then is the signal taken, the card starts to glide once it is gone
         if ui and not failed then
             pcall(function()
                 ui:destroy()
@@ -635,7 +630,6 @@ local function build(OkloUI: any, reload: () -> (), entries: { Registry.Entry },
         return nil
     end
 
-    -- one line per game like a file list: a click opens the line, the icon grows and the description and the Execute button ease in
     local function icon(kit: any, window: any, entry: Registry.Entry, x: number, y: number, size: number, alpha: number)
         local pal = window.Pal
         local asset = Icons.get(entry)
@@ -651,7 +645,6 @@ local function build(OkloUI: any, reload: () -> (), entries: { Registry.Entry },
         end
     end
 
-    -- the description breaks into at most two lines so a long one never runs under the button
     local function wrap(kit: any, text: string, size: number, width: number): { string }
         local lines: { string } = {}
         local current = ""
@@ -673,7 +666,6 @@ local function build(OkloUI: any, reload: () -> (), entries: { Registry.Entry },
         return lines
     end
 
-    -- one slim row per script: the icon and the name. a click picks it and the Execute pill eases in, a dot marks the one running or made for this game
     local function line(kit: any, window: any, id: string, entry: Registry.Entry, y: number): number
         local pal = window.Pal
         local key = id .. ":" .. entry.Id
@@ -714,7 +706,6 @@ local function build(OkloUI: any, reload: () -> (), entries: { Registry.Entry },
         return ROW
     end
 
-    -- the toolbar search of this page keeps only the games that hold the text, nothing from the other pages is mixed in
     local function holds(entry: Registry.Entry, query: string): boolean
         for _, text in { entry.Name, entry.Description, entry.Category, tostring(entry.HomePlace or "") } do
             if string.find(string.lower(text), query, 1, true) then
@@ -899,7 +890,6 @@ local function decode(text: string): { Entry }?
     return if #list > 0 then list else nil
 end
 
--- the saved list inside the hub is used when the public list cannot be downloaded
 function Registry.load(): ({ Entry }, boolean)
     local body = Registry.fetch(URL .. "?t=" .. tostring(math.floor(os.time() / 300)))
     local live = if body then decode(body) else nil
@@ -924,7 +914,6 @@ function Registry.running(entry: Entry): boolean
     return entry.Registry ~= "" and type(getgenv()[entry.Registry]) == "function"
 end
 
--- only the public github files can be started from the list
 function Registry.safe(entry: Entry): boolean
     local url = entry.Config.ScriptUrl
     return type(url) == "string" and string.sub(url, 1, #PREFIX) == PREFIX and string.sub(Registry.LoaderUrl, 1, #PREFIX) == PREFIX
@@ -944,7 +933,6 @@ local function fetch(url)
     return if got and type(body) == "string" and body ~= "" then body else nil
 end
 
--- an executor without getgenv keeps the shared values in _G
 local function globals()
     local ok, env = pcall(getgenv)
     return if ok and type(env) == "table" then env else _G
@@ -971,3 +959,4 @@ local function launch()
 end
 
 return launch()
+

@@ -131,7 +131,6 @@ local SCAN_SECONDS = 0.2
 local scanned: { any } = {}
 local scanAt = -math.huge
 
--- the models that could be a target, found by walking the folders at most a few times a second, the hostile check runs on every call
 local function scanModels(): { any }
     local now = os.clock()
     if now - scanAt < SCAN_SECONDS then
@@ -176,7 +175,6 @@ local function aimPart(model: any): any
     return Targets.aimPoint(model)
 end
 
--- the parts picked in the silent aim popup, a boss keeps its weak point and a model without any of them falls back to its body
 local function silentParts(model: any, selected: { [string]: boolean }?): { any }
     if Targets.boss() == model then
         return { aimPart(model) }
@@ -252,7 +250,6 @@ local function blocker(result: any, weapon: any): boolean
     return part.Transparency < threshold and part.CanCollide and part.CollisionGroup ~= "SurvivorsKillersNoClip"
 end
 
--- true when nothing solid sits between the camera and the part, a wallbang weapon never needs a clear line
 local function visible(camera: any, part: any, weapon: any): boolean
     if Context.S.Wallbang then
         return true
@@ -283,7 +280,6 @@ local function visible(camera: any, part: any, weapon: any): boolean
     return false
 end
 
--- the enemy closest to the screen center inside the radius with a free line to it, used by the triggerbot so it also works on npcs
 function Aim.triggerTarget(weapon: any, radius: number): any
     local camera = Context.camera()
     if not camera then
@@ -379,7 +375,6 @@ local function copy(parts: { [string]: boolean }): { [string]: boolean }
     return clone
 end
 
--- every selected part that exists on the model, empty when the model has none of them
 function AimParts.forModel(model: any, selected: { [string]: boolean }?): { any }
     local list: { any } = {}
     local chosen = selected or { HumanoidRootPart = true }
@@ -728,7 +723,6 @@ end
 
 local visiting = false
 
--- the game's Checks script kills a character that is moved through collidable map parts, it pauses while the Torso is in the NoClip group
 local savedGroup: string? = nil
 
 local function pauseCheck(character: any)
@@ -740,7 +734,6 @@ local function pauseCheck(character: any)
         savedGroup = torso.CollisionGroup
         torso.CollisionGroup = "NoClip"
     end)
-    -- two frames so the check reaches its pause before the character moves
     Context.RunService.Heartbeat:Wait()
     Context.RunService.Heartbeat:Wait()
 end
@@ -755,7 +748,6 @@ local function resumeCheck(character: any)
     savedGroup = nil
 end
 
--- the server checks the distance when a prompt is triggered, so the character is moved next to the prompt, the prompt is pressed and the character goes back
 local function visit(prompt: any, press: boolean): boolean
     local character = Context.LocalPlayer.Character
     local root = Context.root(character)
@@ -786,7 +778,6 @@ local function visit(prompt: any, press: boolean): boolean
     return true
 end
 
--- one pickup at a time, called again on the next interval for the rest
 function Classic.pickup(prompt: any)
     if visiting then
         return
@@ -798,10 +789,8 @@ function Classic.pickup(prompt: any)
     end)
 end
 
--- the game hides the prompt once two guns are carried, it is switched back on here and the server decides what it accepts
 local HAZARD_WORDS = { "kill", "lava", "death", "damage", "acid", "trap", "laser", "fire", "void", "spike", "hurt", "poison" }
 
--- some pickups sit on top of a part that kills on touch, those are skipped
 local function hazardNear(hitbox: any): string?
     local parts = Context.Workspace:GetPartBoundsInRadius(hitbox.Position, 8)
     for _, part in parts do
@@ -815,7 +804,6 @@ local function hazardNear(hitbox: any): string?
     return nil
 end
 
--- touch kills need the Touched event, so the character stops being touchable while it visits a gun
 local function touchable(character: any, value: boolean)
     for _, part in character:GetDescendants() do
         if part:IsA("BasePart") then
@@ -840,7 +828,6 @@ local function wanted(only: any, name: string): boolean
     return only == name
 end
 
--- names of the guns lying on the map right now, refreshed twice a second
 function Classic.available(): { string }
     local now = os.clock()
     if now - listedAt < 0.5 then
@@ -877,7 +864,6 @@ function Classic.owned(name: string): boolean
     return owns(name)
 end
 
--- the game allows two guns, picking a third drops the oldest choice
 function Classic.togglePicked(name: string)
     local at = table.find(picked, name)
     if at then
@@ -890,7 +876,6 @@ function Classic.togglePicked(name: string)
     table.insert(picked, name)
 end
 
--- every gun lying on the map, Killer Mode only
 function Classic.takeAll(report: (string) -> ())
     Classic.available()
     Classic.getAllGuns(report, nil)
@@ -950,7 +935,6 @@ function Classic.getAllGuns(report: (string) -> (), only: any)
         local tried = 0
         local deadAt = ""
         local home = character:GetPivot()
-        -- the server needs about one round trip to see the new position, so the wait follows the ping and the loop moves on the moment the gun is carried
         local okPing, ping = pcall(function()
             return Context.LocalPlayer:GetNetworkPing()
         end)
@@ -969,7 +953,6 @@ function Classic.getAllGuns(report: (string) -> (), only: any)
             report("Picking up guns " .. tried .. "/" .. total)
             local hitbox = prompt.Parent
             pcall(function()
-                -- stands in front of the gun facing it, on its own side of the pickup and not on top of it
                 local look = hitbox.CFrame.LookVector
                 local flat = Vector3.new(look.X, 0, look.Z)
                 if flat.Magnitude < 0.3 then
@@ -983,7 +966,6 @@ function Classic.getAllGuns(report: (string) -> (), only: any)
                 prompt.Enabled = true
                 prompt.HoldDuration = 0
             end)
-            -- the server must see the new position before it accepts the prompt, so the press waits for it and repeats until the gun is carried
             local gunName = if hitbox.Parent then hitbox.Parent.Name else ""
             task.wait(settle)
             for _ = 1, 3 do
@@ -1178,7 +1160,6 @@ local function isBullet(part: any): boolean
     return bulletName(string.lower(part.Name))
 end
 
--- shot parts can sit inside any container, so anything that belongs to a character, a tool or a map piece is left alone
 local function stray(part: any): boolean
     if part.Anchored then
         return false
@@ -1238,7 +1219,6 @@ local function remove(object: any)
     end
 end
 
--- bullets are hidden at once and destroyed after their flight time, so a hit still finds the part while it travels
 local function handle(part: any)
     if not (part:IsA("BasePart") or part:IsA("Model")) then
         return
@@ -1253,7 +1233,6 @@ local function handle(part: any)
     end
 end
 
--- every part or model of the workspace that is named like a bullet or a clip, so the sweep never walks the whole workspace
 local candidates: { [any]: boolean } = setmetatable({}, { __mode = "k" }) :: any
 
 local function remember(object: any)
@@ -1265,7 +1244,6 @@ local function remember(object: any)
     end
 end
 
--- catches whatever was already lying around when the option was turned on
 local function sweep()
     local settings = Context.S
     local now = os.clock()
@@ -1283,7 +1261,6 @@ local function sweep()
     end
 end
 
--- full screen images the killers throw at the player, the guis are only switched off so the game scripts keep working
 local SCREEN_EFFECTS: { [string]: string } = { Ink = "RemoveInk", TailsPopup = "RemoveTailsPopup" }
 local guiLink: any = nil
 
@@ -1609,7 +1586,6 @@ function Config.fresh(): Settings
 end
 
 function Config.refresh(ui: any, into: Settings)
-    -- ui:get only reads the window flags, reading them straight saves two calls per key every frame
     local window = ui.Window
     local flags = if type(window) == "table" then window.Flags else nil
     if type(flags) == "table" then
@@ -1712,7 +1688,6 @@ local samples: { [string]: string } = {}
 local order: { string } = {}
 local nextReport = 0
 
--- getgenv is a call into the executor and every shot asks several times, so the flag is read a few times a second
 local ON_SECONDS = 0.25
 local onValue = false
 local onAt = -math.huge
@@ -1740,7 +1715,6 @@ function Debug.count(key: string, sample: any?)
     end
 end
 
--- the sample is only read by count, which drops it while debugging is off, so the full name is not built for nothing on every shot
 function Debug.describe(part: any): string
     if not Debug.on() then
         return ""
@@ -1819,7 +1793,6 @@ local function costOf(model: any): number
     return if cost and cost:IsA("ValueBase") then tonumber((cost :: any).Value) or 0 else 0
 end
 
--- the game checks the points itself, the prompt is only pressed when they are enough and the perk is not owned yet
 local function buy()
     if type(press) ~= "function" then
         return
@@ -1897,7 +1870,6 @@ local function positionOf(prompt: any): Vector3?
     return nil
 end
 
--- what a prompt is, decided from where it sits and what it says
 local function kindOf(prompt: any): string
     local doors = Context.folder("Doors")
     local weapons = Context.folder("Weapons")
@@ -2358,7 +2330,6 @@ local function usable(part: any, rootParent: any, rootPosition: Vector3): boolea
     return (part.Position - rootPosition).Magnitude <= 30
 end
 
--- the corners are folded into plain numbers, the same min and max as before without two new vectors per corner
 local function characterBounds(model: any, root: any): (CFrame?, Vector3?)
     local basis = root.CFrame
     local rootParent, rootPosition = root.Parent, root.Position
@@ -2515,14 +2486,12 @@ end
 local function highlight(entry: Map, on: boolean, mode: string, settings: Map)
     local object = entry.Highlight
     if not object then
-        -- nothing to switch, marked off so the frame loop stops calling for it
         entry.HighlightOn = false
         return
     end
     local outline = mode == "Outline" or mode == "Outline + Fill"
     local fill = mode == "Fill" or mode == "Outline + Fill"
     local shown = on and (outline or fill)
-    -- a hidden highlight is left alone and a visible one only gets the values that changed, property writes every frame on every entry are costly
     if not shown then
         if entry.HighlightOn ~= false then
             entry.HighlightOn = false
@@ -2587,7 +2556,6 @@ local FORCEFIELD_FILL = Color3.fromRGB(70, 165, 225)
 local FORCEFIELD_LIGHT = Color3.fromRGB(150, 220, 255)
 local FORCEFIELD_WHITE = Color3.fromRGB(255, 255, 255)
 
--- tracers and the weapon arrows are dimmed in the menu while their main option is off, so they only count while it is on, the entity arrows stand alone
 local function wanted(kind: Kind, settings: Map): (boolean, boolean, boolean)
     local enabled = settings[kind.Enabled] == true
     local tracer = enabled and kind.Tracer ~= nil and settings[kind.Tracer] == true
@@ -2620,7 +2588,6 @@ local function update(canvas: any, camera: any, entry: Map, settings: Map, origi
         local point, depth = canvas.project(position + lift)
         if point and depth > MIN_DEPTH then
             local backgroundAlpha = 1 - math.clamp(settings.VisualLabelBackgroundTransparency, 0, 1)
-            -- the text only changes with the numbers in it, so it is rebuilt ten times a second
             local clock = os.clock()
             if not entry.LabelText or clock - (entry.LabelAt or 0) >= LABEL_SECONDS then
                 entry.LabelAt = clock
@@ -2647,7 +2614,6 @@ end
 local UPKEEP_SECONDS = 0.15
 local lastUpkeep = -math.huge
 
--- the kinds each registry list can hold, a list with none of them shown is not visited at all
 local BUCKET_KINDS: { [string]: { string } } = {
     Weapons = { "weapon" },
     Killers = { "killer", "npc" },
@@ -2683,7 +2649,6 @@ local function bucketOn(name: string): boolean
     return false
 end
 
--- the checks that only change now and then run a few times a second: which kind an entry is, whether it is dead and whether it is gone
 local function upkeep()
     for bucket, registry in Registry.All do
         if not bucketLive[bucket] then
@@ -2694,7 +2659,6 @@ local function upkeep()
             if Registry.isSelf(entry.Target) or not Registry.alive(entry) then
                 table.insert(stale, key)
             else
-                -- a killer folder entry that no player controls is an NPC monster, only player killers use the killers toggle
                 local npcKiller = entry.Kind == "killer" and (not Modes.canReroll() or Context.Players:GetPlayerFromCharacter(entry.Target) == nil)
                 local name = if npcKiller then "npc" else entry.Kind
                 entry.KindKey = if KINDS[name] then name else nil
@@ -2704,7 +2668,6 @@ local function upkeep()
                     entry.Shielded = entry.Target:FindFirstChildOfClass("ForceField") ~= nil
                 end
                 if dead and entry.Highlight and entry.HighlightOn ~= false then
-                    -- a dead enemy keeps its entry in case it revives, but nothing of it is drawn
                     entry.HighlightOn = false
                     entry.Highlight.Enabled = false
                 end
@@ -2727,7 +2690,6 @@ function ESP.frame(canvas: any, camera: any)
         return
     end
     local settings = Context.S
-    -- with every esp option off nothing is drawn, so the entries are hidden once and not visited again
     local active = false
     for name, kind in KINDS do
         local enabled, tracer, arrow = wanted(kind, settings)
@@ -2746,7 +2708,6 @@ function ESP.frame(canvas: any, camera: any)
         return
     end
     idle = false
-    -- a list that just started showing is checked on this frame, so its first drawing is as fresh as before
     local woke = false
     for bucket in Registry.All do
         local on = bucketOn(bucket)
@@ -2765,7 +2726,6 @@ function ESP.frame(canvas: any, camera: any)
     local lift = Vector3.new(0, settings.VisualBillboardOffset, 0)
     for bucket, registry in Registry.All do
         local on = bucketLive[bucket]
-        -- a list that stopped showing gets one more pass so its highlights go off, after that it is skipped
         if on or bucketWas[bucket] then
             for _, entry in registry do
                 local name = entry.KindKey
@@ -3003,7 +2963,6 @@ local function hookClass(weaponClass: any)
 
     if originals.play_animation then
         weaponClass.play_animation = function(self: any, name: any, ...)
-            -- the Fire and Bolt animations step frame by frame inside fire, on slow guns they stack up and throttle the fire rate
             if (name == "Fire" or name == "Bolt") and (Context.S.MinigunMode or Context.S.RapidFire) and not Weapons.isFlame(self) then
                 return
             end
@@ -3057,7 +3016,6 @@ local function hookClass(weaponClass: any)
     if originals.missile_hit then
         weaponClass.missile_hit = function(self: any, missile: any, moment: any, hitPart: any, hitPosition: any, ...)
             local settings = Context.S
-            -- only the weak point hurts a boss, a bullet that lands on any other part of it is moved onto the weak point
             local boss = Targets.boss()
             if boss and typeof(hitPart) == "Instance" and hitPart.Name ~= "WeakPoint" and hitPart:IsDescendantOf(boss) then
                 local weak = Targets.aimPoint(boss)
@@ -3159,7 +3117,6 @@ local function hookClass(weaponClass: any)
     Weapons.discover()
 end
 
--- module scripts already patched, so the patch pass every second does not require each of them again
 local patchedScripts: { [any]: any } = setmetatable({}, { __mode = "k" }) :: any
 
 local function patchModule(moduleScript: any)
@@ -3260,7 +3217,6 @@ function Guns.patch()
     end
 end
 
--- every sound of a gun is muted the moment it appears and held at zero by its own volume signal, so nothing walks the guns every frame
 local SOUND_SECONDS = 1
 local gunLinks: { [any]: any } = {}
 local soundLinks: { [any]: any } = {}
@@ -3390,7 +3346,6 @@ local function minigun(weapon: any)
     end
 end
 
--- reports the hit straight to the server for every bullet of the shot, so the kill never depends on the bullet travelling, walls or the other toggles
 local function directHit(weapon: any, part: any, moment: number)
     local packets = class and class.weapon_packets
     local touch = type(packets) == "table" and type(packets.touch) == "table" and packets.touch.send or nil
@@ -3405,7 +3360,6 @@ local function directHit(weapon: any, part: any, moment: number)
     end
 end
 
--- Giant and Jane are never shot by the aura, the answer only depends on the name
 local AURA_SKIP: { [string]: boolean } = { giant = true, giantzombie = true, jane = true, janethekiller = true }
 local auraSkipMemo: { [string]: boolean } = {}
 local auraSkipCount = 0
@@ -3425,7 +3379,6 @@ local function auraSkipped(model: any): boolean
     return result
 end
 
--- fires the held gun at every enemy inside the distance, each shot is aimed at its own target through screen_to_target
 local function aura(weapon: any)
     local settings = Context.S
     if not settings.KillAura or type(weapon) ~= "table" or Weapons.isFlame(weapon) then
@@ -3454,7 +3407,6 @@ local function aura(weapon: any)
         local part = Targets.aimPoint(model)
         if part and part:IsA("BasePart") then
             local distance = (part.Position - root.Position).Magnitude
-            -- a boss is huge and never moves, its distance to the centre says nothing about reach
             if distance <= range or model == Targets.boss() then
                 table.insert(found, { Part = part, Distance = distance })
             end
@@ -3553,7 +3505,6 @@ local lastState = -math.huge
 function Guns.update()
     local settings = Context.S
     local equipped = Weapons.equipped()
-    -- the held gun is set every frame, the others only count once they are held, fired or reloaded (and those paths set them first), so they follow a few times a second
     local now = os.clock()
     if now - lastState >= STATE_SECONDS then
         lastState = now
@@ -3583,7 +3534,6 @@ end
 
 local RING_POINTS = 72
 
--- ring on the ground around the character at the aura distance
 local function drawAuraRing(canvas: any)
     local root = Context.root(Context.LocalPlayer.Character)
     if not root then
@@ -3714,7 +3664,6 @@ local function reading(area: any, flag: string): { string }
             table.insert(lines, "Cleaner: " .. table.concat(bits, ""))
         end
     elseif flag == "VisualVaultScreenHUD" then
-        -- the keypad screen only echoes what is typed, the code itself is fixed in the vault script
         local sewer = area:FindFirstChild("SewerVaultRoom")
         if sewer then
             table.insert(lines, "Vault Code: 1947")
@@ -3932,11 +3881,7 @@ type Actions = {
 
 local D = Config.DEFAULTS
 
--- the layout: a few flat pages named by what the player wants to do, no page strips and no chips on top.
--- a feature shows one switch, its settings slide in under it only while it is on, short on or off options sit two to a row
--- or as chips, and the ESP is one table of who by how
 
--- a rule that is true while at least one of the flags is on, for the settings that only show under their switch
 local function on(requires: any): ((window: any) -> boolean)?
     if requires == nil then
         return nil
@@ -3958,17 +3903,14 @@ local function both(first: string, second: string): (window: any) -> boolean
     end
 end
 
--- the name of every switch that has settings under it, and the switch whose settings were captioned last in a section
 local switchNames: { [string]: string } = {}
 local switchRows: { [string]: any } = {}
 local switchFirst: { [string]: boolean } = {}
 local headed: { [any]: boolean } = {}
 local captioned: { [any]: string? } = {}
 
--- a small grey caption over a switch that has settings, drawn only while the switch is on
 local function gate(section: any, requires: any)
     if type(requires) ~= "string" or not switchNames[requires] then
-        -- a plain switch after settings ends their panel with a small gap
         local last = captioned[section]
         if last and requires == nil then
             section:label({ Text = "", Height = 6, Show = on(last) })
@@ -3979,10 +3921,8 @@ local function gate(section: any, requires: any)
     if captioned[section] ~= requires then
         captioned[section] = requires
         if switchFirst[requires] then
-            -- the switch already sits right under a heading, a second caption would only repeat it
             return
         end
-        -- the caption goes over the switch itself, so the switch and its settings read as one group
         local rows = section.Spec.rows
         local index = table.find(rows, switchRows[requires])
         section:label({ Text = switchNames[requires] .. " Settings", Size = 12, Height = 28, Offset = 4, Show = on(requires) })
@@ -4010,7 +3950,6 @@ local function slider(section: any, name: string, flag: string, min: number, max
     section:slider({ Name = name, Flag = flag, Min = min, Max = max, Step = step, Default = D[flag], Format = format, Show = if type(shown) == "function" then shown else on(shown) })
 end
 
--- two short switches side by side, each item is { name, flag, keywords }
 local function twin(section: any, left: { string }, right: { string }, shown: any?)
     local show = on(shown)
     gate(section, shown)
@@ -4020,7 +3959,6 @@ local function twin(section: any, left: { string }, right: { string }, shown: an
     )
 end
 
--- a small grey heading over a group of options
 local function header(section: any, text: string)
     captioned[section] = nil
     headed[section] = true
@@ -4039,7 +3977,6 @@ local function bossRush(): boolean
     return Modes.Current == "Boss Rush"
 end
 
--- every gun mod that is a plain switch, the fire rate ones open their own slider
 local function guns(ui: any)
     local section = ui:tab("Guns"):section("GUNS")
     header(section, "Ammo")
@@ -4057,7 +3994,6 @@ local function guns(ui: any)
     slider(section, "Shots Per Fire", "ShotMultiplierCount", 1, 10, 1, whole, "ShotMultiplier")
 end
 
--- everything that decides what a shot hits: the aim helpers first, then how the bullet flies
 local function aim(ui: any, actions: Actions, killAura: boolean, hitbox: boolean)
     local section = ui:tab("Aim"):section("AIM")
     header(section, "Targeting")
@@ -4073,7 +4009,7 @@ local function aim(ui: any, actions: Actions, killAura: boolean, hitbox: boolean
         end,
         Callback = actions.chooseAimParts,
         Show = on("SilentAim"),
-        
+
     })
     toggle(section, "Triggerbot", "AutoShoot", nil, "auto shoot")
     toggle(section, "Show Triggerbot FOV Circle", "ShowTriggerFOV", "AutoShoot")
@@ -4118,7 +4054,6 @@ local PICK_ROW = 34
 local PICK_SLOTS = 40
 local PLAYER_SLOTS = 32
 
--- one row per gun on the map, rows without a gun are hidden so the list always fits the page
 local function gunRow(index: number): any
     return {
         Type = "Custom",
@@ -4158,7 +4093,6 @@ local function gunRow(index: number): any
     }
 end
 
--- every other player as a row, the picked ones are the only targets of Kill Specified
 local function playerRow(index: number): any
     return {
         Type = "Custom",
@@ -4206,7 +4140,6 @@ local function notPlaying(): boolean
     return not KillAll.playing()
 end
 
--- Kill All hits everyone, Kill Specified opens the player list and hits only the picked ones
 local function killControls(section: any)
     header(section, "Kill")
     section:toggle({ Name = "Kill All", Flag = "KillAll", Default = D.KillAll, Disabled = notPlaying })
@@ -4241,14 +4174,12 @@ local function killers(ui: any, actions: Actions)
     return section
 end
 
--- the Juggernaut is the one killer of this mode, so Kill All works the same as in the other killer modes
 local function juggernaut(ui: any)
     local section = ui:tab("Juggernaut"):section("JUGGERNAUT")
     killControls(section)
     return section
 end
 
--- the live gun picker of the modes that have guns lying on the map, at the end of the mode page or on a page of its own
 local function armory(section: any)
     Portraits.prepare()
     local every = Modes.Current == "Killer Mode" or Modes.Current == "Classic"
@@ -4272,7 +4203,6 @@ local function armory(section: any)
         left.NoStack, right.NoStack = true, true
         section:pair(left, right)
     end
-    -- the status and the take buttons only come up while there are guns to take
     local function stocked(): boolean
         return #Classic.available() > 0
     end
@@ -4300,7 +4230,6 @@ local function armory(section: any)
     end
 end
 
--- one ESP row: the main switch, then tracers, arrows, health and distance. arrows work without the main switch
 local function espRow(name: string, prefix: string, label: string, arrowsNeedEsp: boolean?, health: boolean?): any
     local esp = "Visual" .. prefix .. "ESP"
     return {
@@ -4321,7 +4250,6 @@ end
 
 local MAP_FLAGS = { "VisualLandmarkESP", "VisualSecretAreaESP", "VisualPackAPunchESP", "VisualInteractableESP", "VisualSurveillanceESP" }
 
--- who can be seen as a table, the objects of the map as chips, the look of it all tucked away at the bottom
 local function esp(section: any, hunting: boolean)
     local rows: { any } = {}
     if not bossRush() then
@@ -4345,7 +4273,6 @@ local function esp(section: any, hunting: boolean)
         local classic = Modes.Current == "Classic"
         local endless = Modes.Current == "Endless"
         local items: { any } = {}
-        -- Endless has no keycards, papers or loose tools to pick up
         if classic then
             table.insert(items, chip("Keycards ESP", "VisualKeycardESP", "Keycards"))
             table.insert(items, chip("Papers ESP", "VisualPaperESP", "Papers"))
@@ -4365,7 +4292,6 @@ local function esp(section: any, hunting: boolean)
             table.insert(items, chip("Traps ESP", "VisualTrapESP", "Traps"))
             table.insert(items, chip("Mystery Box ESP", "VisualMysteryBoxESP", "Mystery Box"))
         end
-        -- the distance chips come last, each one lights up once something it labels is shown
         if classic then
             table.insert(items, chip("Pickup Show Distance", "VisualPickupShowDistance", "Pickup Distance", { "VisualKeycardESP", "VisualPaperESP" }))
         end
@@ -4408,7 +4334,6 @@ local function look(section: any)
     )
 end
 
--- what is drawn on the screen: the HUDs of the script, then the light of the world and the clutter that can go
 local function visuals(section: any, hunting: boolean)
     if not bossRush() then
         header(section, "HUD")
@@ -4444,7 +4369,6 @@ local function visuals(section: any, hunting: boolean)
         chip("Remove Ammo Clips (Client Side)", "RemoveClips", "No Ammo Clips"),
         chip("Mute Gun Sounds (Client Side)", "MuteGunSounds", "Mute Guns"),
     }
-    -- the killer screen effects exist only in the modes that have them
     if hunting or Modes.facility() then
         table.insert(items, chip("Remove Ink Screen (Eyeless Jack)", if hunting then "NoInk" else "RemoveInk", "No Ink Screen"))
         table.insert(items, chip("Remove Tails Doll Image", "RemoveTailsPopup", "No Tails Doll"))
@@ -4452,7 +4376,6 @@ local function visuals(section: any, hunting: boolean)
     section:chips({ Items = items })
 end
 
--- how the player moves, and in the facility the chores that run by themselves
 local function player(ui: any, hunting: boolean)
     local section = ui:tab("Player"):section("PLAYER")
     if bossRush() then
@@ -4494,7 +4417,6 @@ local function player(ui: any, hunting: boolean)
     end
 end
 
--- Endless runs a whole shop and a base to keep up, so its chores get a page of their own
 local function auto(ui: any)
     local section = ui:tab("Auto"):section("AUTO")
     header(section, "Survival")
@@ -4511,7 +4433,6 @@ local function auto(ui: any)
     } })
 end
 
--- the four switches most players reach for first, on the Home page
 local function home(ui: any, hunting: boolean)
     local seen = if bossRush() then "VisualBossESP" elseif hunting then "VisualKillerESP" else "VisualNPCESP"
     local seenTitle = if bossRush() then "Boss ESP" elseif hunting then "Killer ESP" else "NPC ESP"
@@ -4538,7 +4459,6 @@ function Interface.build(ui: any, actions: Actions)
     home(ui, hunting)
     guns(ui)
     aim(ui, actions, killAura, hitbox)
-    -- one page for what only this mode has: the killer tools and the guns on the map, Classic only has the guns
     if hunting then
         armory(killers(ui, actions))
     elseif Modes.Current == "Juggernaut" then
@@ -4589,7 +4509,6 @@ local lastFind = 0
 local cached: any = nil
 local cachedFor: any = nil
 
--- the character of the local killer, nil while I play something else
 local function myKiller(): any
     local character = Context.LocalPlayer.Character
     if character and Targets.isKiller(character) and Targets.alive(character) then
@@ -4602,7 +4521,6 @@ function KillAll.playing(): boolean
     return myKiller() ~= nil
 end
 
--- the game keeps one client side Killer object per character, it owns attack() for every killer type
 local function findObject(character: any): any
     if cachedFor == character and cached and rawget(cached, "model") == character then
         return cached
@@ -4627,7 +4545,6 @@ local function findObject(character: any): any
     return nil
 end
 
--- the attack is repeated once per round trip, faster only floods the game
 local function spamInterval(): number
     local ok, ping = pcall(function()
         return Context.LocalPlayer:GetNetworkPing()
@@ -4635,8 +4552,6 @@ local function spamInterval(): number
     return math.clamp((if ok then ping else 0.1) * 2, MIN_SPAM, MAX_SPAM)
 end
 
--- a player whose character is in neither the killers nor the survivors is dead or spectating
--- Kill All and Kill Specified share the same loop
 local function active(): boolean
     return Context.S.KillAll == true or Context.S.KillSpecified == true
 end
@@ -4650,7 +4565,6 @@ local function gone(model: any): boolean
     return parent == nil or (parent ~= killers and parent ~= survivors)
 end
 
--- every other player of the server for the target list, refreshed twice a second
 function KillAll.players(): { string }
     local now = os.clock()
     if now - listedAt > 0.5 then
@@ -4669,7 +4583,6 @@ function KillAll.players(): { string }
     return listed
 end
 
--- Dead, Killer or nil for a player that can be hit
 function KillAll.status(name: string): string?
     local player = Context.Players:FindFirstChild(name)
     local character = player and (player :: any).Character
@@ -4682,7 +4595,6 @@ function KillAll.status(name: string): string?
     return nil
 end
 
--- the headshot of the avatar, the engine loads it by itself
 function KillAll.avatar(name: string): string?
     local player: any = Context.Players:FindFirstChild(name)
     if not player then
@@ -4760,7 +4672,6 @@ local function swing(character: any, object: any, victim: any, attack: boolean)
     end
 end
 
--- a spot on a circle around the victim, the circle keeps turning so I am a moving target, with the victim open space between us and solid floor under it, so a victim against a wall never puts me behind it
 local function standPoint(character: any, victim: any, target: any, angle: number): (Vector3, number)
     local params = RaycastParams.new()
     params.FilterType = Enum.RaycastFilterType.Exclude
@@ -4782,7 +4693,6 @@ local function dead(victim: any): boolean
     return not humanoid or humanoid.Health <= 0
 end
 
--- sticks to the victim every frame and attacks until he is dead, the cap only frees me from a victim that cannot die
 local function strike(character: any, root: any, victim: any, object: any)
     local interval = spamInterval()
     local started = os.clock()
@@ -4810,7 +4720,6 @@ local function strike(character: any, root: any, victim: any, object: any)
     end
 end
 
--- one round over every victim, false when there was nothing to do
 local function cycle(): boolean
     local character = myKiller()
     local root = character and Context.root(character)
@@ -4835,7 +4744,6 @@ local function cycle(): boolean
     return true
 end
 
--- stays alive across deaths, a dead or changed character just idles until I am a killer again
 local function loop()
     while Context.Running and active() do
         local ok, worked = pcall(cycle)
@@ -4889,7 +4797,6 @@ local active: { [any]: boolean } = {}
 local last = 0
 local lastTouch = 0
 
--- enemies are enlarged, that includes the players of the other team, never the own team
 local function friendly(model: any): boolean
     return not model or not Targets.hostile(model)
 end
@@ -5478,7 +5385,6 @@ function Modes.detect(): string
     return "Classic"
 end
 
--- every Boss Rush boss lives in its own arena, the remotes of the map tell which one it is
 function Modes.bossName(): string?
     local area = Context.folder("AREA51")
     local map = area and area:FindFirstChild("Map")
@@ -5501,13 +5407,11 @@ function Modes.refresh(): boolean
     return changed
 end
 
--- Classic, Juggernaut and Infection Mode are played on the same facility map
 function Modes.facility(mode: string?): boolean
     local current = mode or Modes.Current
     return current == "Classic" or current == "Juggernaut" or current == "Infection Mode"
 end
 
--- Area 51 Storming is a co-op defence against the aliens, players never fight each other
 function Modes.storming(mode: string?): boolean
     return (mode or Modes.Current) == "Area 51 Storming"
 end
@@ -5709,14 +5613,12 @@ end
 
 local DEFAULT_WALK_SPEED = 16
 
--- boss cutscenes hand the camera to a script, this gives it back to the player
 local function unlockCamera(character: any)
     local camera = Context.camera()
     local humanoid = Context.humanoid(character)
     if not camera or not humanoid then
         return
     end
-    -- the fight camera of the Kraken is a render step named camera that rewrites the camera every frame
     pcall(function()
         Context.RunService:UnbindFromRenderStep("camera")
     end)
@@ -5728,7 +5630,6 @@ local function unlockCamera(character: any)
     end
 end
 
--- the game resets and reports any WalkSpeed above its limit, so the property stays untouched and the character is pushed along its move direction instead
 local function boostSpeed(character: any, dt: number)
     local humanoid = Context.humanoid(character)
     local root = Context.root(character)
@@ -6000,7 +5901,6 @@ local WIKI_TITLES: { [string]: string } = { RayGun = "Ray Gun" }
 
 local function resolveUrl(name: string): string?
     local killer = WIKI_TITLES[name] or name
-    -- the small headshot icon first, then the main picture of the page, guns have no headshot and use the page picture
     local headshot = bestGalleryImage(killer, killer, 100)
     if headshot then
         return headshot
@@ -6052,7 +5952,6 @@ local function download(killer: string): string?
         lastStage = "no picture found on the wiki"
         return nil
     end
-    -- the wiki serves webp unless the original format is asked for, and webp cannot be used as an asset
     local original = url .. (if string.find(url, "?", 1, true) then "&" else "?") .. "format=original"
     local body = fetch(original)
     if not body then
@@ -6090,7 +5989,6 @@ local function load(killer: string)
         local used = (tries[killer] or 0) + 1
         tries[killer] = used
         if used < MAX_TRIES then
-            -- a failed fetch is tried again later, the first requests of a session often fail
             state[killer] = "loading"
             task.delay(RETRY_DELAY * used, function()
                 if Context.Running and state[killer] == "loading" then
@@ -6140,7 +6038,6 @@ function Portraits.image(killer: string): string?
         return ready
     end
     if state[killer] == nil then
-        -- a picture saved in the decals folder loads at once, only a missing one goes to the wiki
         local saved = cached(killer)
         if saved then
             assets[killer] = saved
@@ -6154,7 +6051,6 @@ function Portraits.image(killer: string): string?
     return nil
 end
 
--- starts every picture in the background so the pickers open with them ready
 function Portraits.preload(names: { string })
     for _, name in names do
         Portraits.image(name)
@@ -6186,7 +6082,6 @@ local Weapons: typeof(require("./weapons")) = import("weapons")
 
 local Projectiles = {}
 
--- the moment of the newest fire packet, kept so a direct hit report can match its shot
 Projectiles.lastMoment = 0
 
 type Shot = { weapon: any, moduleName: string?, origin: Vector3, aimPoint: Vector3, created: number }
@@ -6206,7 +6101,6 @@ local shots: { Shot } = {}
 local adjusted: { [any]: boolean } = setmetatable({}, { __mode = "k" }) :: any
 local link: any = nil
 
--- shots are stored oldest first, so only the expired ones at the front are dropped and nothing is rebuilt while all are fresh
 local function purge(now: number)
     local expired = 0
     for _, shot in shots do
@@ -6225,7 +6119,6 @@ local function purge(now: number)
     shots = keep
 end
 
--- the part a shot leaves from is searched through the whole gun, so it is remembered for a short while per gun and aim state
 local MUZZLE_SECONDS = 0.5
 local muzzleCache: { [any]: { Part: any, Scoped: boolean, At: number } } = setmetatable({}, { __mode = "k" }) :: any
 
@@ -6409,7 +6302,6 @@ local function instantDestination(shot: Shot, projectile: any): Vector3
     return target
 end
 
--- reports the hit to the game right away instead of waiting for the bullet to touch, the missile is destroyed by the report so it can not hit twice
 local function reportHit(shot: Shot, part: any, destination: Vector3)
     if not Context.S.InstantHit or Projectiles.lastMoment == 0 then
         return
@@ -6531,7 +6423,6 @@ local Context: typeof(require("./context")) = import("context")
 
 local PromptWatch = {}
 
--- every proximity prompt of the workspace, kept up to date by one connection so nothing has to scan the whole workspace again
 PromptWatch.Set = {} :: { [any]: boolean }
 
 local holders: { [string]: boolean } = {}
@@ -6614,7 +6505,6 @@ end
 
 local blockedRemotes: { [string]: boolean } = {}
 
--- the client handlers of ServerTrip are what knock the character down, ServerTeleport moves it, so they are switched off while their option is on
 local function setBlocked(name: string, blocked: boolean)
     if blocked == (blockedRemotes[name] == true) then
         return
@@ -6641,8 +6531,6 @@ local function setBlocked(name: string, blocked: boolean)
     blockedRemotes[name] = blocked
 end
 
--- the Kraken hurts through the client: its tentacles and waves lower my health locally and then report the damage with MakeWave:FireServer, so dropping that report means it never lands
--- a namecall hook slows every method call of the whole game and can never be taken off, so it is only put in once the option is first turned on and every later run reuses the same one
 local HOOK_KEY = "__SAKTK51BossHook"
 local bossHooked = false
 local hookState: { On: boolean }? = nil
@@ -6690,7 +6578,6 @@ local function syncHook()
     end
 end
 
--- the same damage can also be cut at the source, the wave handler of MakeWave and the Touched handlers on my own HeadCollision and Torso are what apply it
 local immune = false
 
 local function switchConnections(signal: any, enable: boolean)
@@ -6724,7 +6611,6 @@ local function bossImmunity(on: boolean)
         return
     end
     if Modes.bossName() == "Kraken" then
-        -- Expel is the knockback of the boss, it throws me about the arena and into the toxic water
         for _, name in { "MakeWave", "Expel" } do
             local remote = map:FindFirstChild(name)
             if remote and remote:IsA("RemoteEvent") then
@@ -6857,9 +6743,7 @@ local folderLinks: { [string]: { any } } = {}
 local deepStarted = false
 local lastRefresh = -math.huge
 local listeners: { any } = {}
--- the Enabled watchers of keycard and paper prompts, one per prompt, dropped with the prompt or on stop
 local promptLinks: { [any]: any } = {}
--- the deep searches for the boss and the vault keypad only feed their esp, so they only run while that esp can show them
 local bossWanted = false
 local facilityWanted = false
 
@@ -7149,7 +7033,6 @@ local function refreshEndless()
             end
         end
     end
-    -- the folder also holds every possible spot, only the Box model is the one standing somewhere right now
     local boxes = Context.folder("Mystery Box")
     local box = boxes and boxes:FindFirstChild("Box")
     if box then
@@ -7200,7 +7083,6 @@ local function classify(object: any)
             local label = (if room and room.Name ~= "AREA51" then Registry.prettyName(room.Name) .. " " else "") .. Registry.prettyName(holder.Name)
             local bucket = list
             local kindName = kind
-            -- the game turns the prompt off once the item is taken, so the marker follows the prompt
             local function sync()
                 if not Context.Running then
                     return
@@ -7211,7 +7093,6 @@ local function classify(object: any)
                     Registry.destroy(bucket, holder)
                 end
             end
-            -- a prompt seen again (moved and added back) swaps its watcher instead of stacking another
             local previous = promptLinks[object]
             if previous then
                 pcall(function()
@@ -7296,7 +7177,6 @@ function Registry.tick()
     local settings = Context.S
     local boss = settings.VisualBossESP == true or settings.VisualBossOffscreen == true
     local facility = settings.VisualFacilityObjectiveESP == true
-    -- turning one of them on refreshes at once, so the marker shows as fast as when the search always ran
     local woke = (boss and not bossWanted) or (facility and not facilityWanted)
     bossWanted, facilityWanted = boss, facility
     local now = os.clock()
@@ -7605,9 +7485,7 @@ local function inside(model: any, container: any): boolean
     return container ~= nil and (model == container or model:IsDescendantOf(container))
 end
 
--- Jane and the Giant do not exist for the script in Classic, every aimbot, aura, hitbox, ESP and HUD feature goes through killers(), hostile() or the registry
 local WHITELIST: { [string]: boolean } = { jane = true, janethekiller = true, giant = true, giantzombie = true }
--- the answer only depends on the name, the aim and hitbox loops ask for the same few names many times a second
 local whitelistMemo: { [string]: boolean } = {}
 local whitelistCount = 0
 
@@ -7636,7 +7514,6 @@ function Targets.boss(): any
     return map and map:FindFirstChild("Boss")
 end
 
--- the spot that hurts a model most, bosses carry a weak point (every boss of Boss Rush is built the same way), everything else its body
 function Targets.aimPoint(model: any): any
     if not model then
         return nil
@@ -7653,7 +7530,6 @@ function Targets.aimPoint(model: any): any
         or model:FindFirstChildWhichIsA("BasePart", true)
 end
 
--- every enemy NPC of the match, the single place that knows where they live
 function Targets.killers(): { any }
     local list: { any } = {}
     local folder = Context.folder("Killers")
@@ -7706,18 +7582,15 @@ function Targets.alive(model: any): boolean
     return humanoid:GetState() ~= Enum.HumanoidStateType.Dead
 end
 
--- true only for a model that has a humanoid and it is dead, a model without one is never reported dead
 function Targets.dead(model: any): boolean
     local humanoid = model and model:FindFirstChildOfClass("Humanoid")
     return humanoid ~= nil and (humanoid.Health <= 0 or humanoid:GetState() == Enum.HumanoidStateType.Dead)
 end
 
--- spawn protection, damage does nothing while the model has a force field
 function Targets.shielded(model: any): boolean
     return model ~= nil and model:FindFirstChildWhichIsA("ForceField") ~= nil
 end
 
--- false for the local character, the own team, the own side (killers do not shoot killers, survivors do not shoot survivors) and anything dead
 function Targets.hostile(model: any): boolean
     if not model or not Targets.alive(model) or Targets.whitelisted(model) then
         return false
@@ -7743,7 +7616,6 @@ function Targets.hostile(model: any): boolean
     if Targets.isSurvivor(model) then
         return iAmKiller
     end
-    -- a player outside both folders, only an enemy when the teams differ
     if player then
         local team = Context.LocalPlayer.Team
         return team == nil or player.Team ~= team
@@ -7755,7 +7627,6 @@ local CREATURE_INTERVAL = 1
 local creatureCache: { any } = {}
 local creatureScan = 0
 
--- Boss Rush spawns creatures next to the boss, loose models with a humanoid in the workspace or under the Killers model
 function Targets.creatures(): { any }
     if Modes.Current ~= "Boss Rush" then
         return {}
@@ -7791,7 +7662,6 @@ function Targets.creatures(): { any }
     return list
 end
 
--- every living model I can fight right now, NPCs and players alike
 function Targets.enemies(): { any }
     local list: { any } = {}
     local seen: { [any]: boolean } = {}
@@ -8157,13 +8027,11 @@ function Weapons.equipped(): any
     return nil
 end
 
--- the flamethrower keeps its own fire timing, the server counts its ticks and the rate options break it
 function Weapons.isFlame(weapon: any): boolean
     local meta = Weapons.Meta[weapon]
     return meta ~= nil and meta.moduleName == "Flamethrower"
 end
 
--- the one place that decides the fire delay, nil means the weapon keeps its own
 function Weapons.fireDelay(): number?
     local settings = Context.S
     if settings.MinigunMode then
@@ -8188,9 +8056,7 @@ function Weapons.applyAmmo(weapon: any)
     end
 end
 
--- the weapon modules never move, so the lookup and require of each one is reused for a second
 local MODULE_SECONDS = 1
--- pack a punch is part of the key and the options are applied on top every frame, so the stats are asked from the game a few times a second instead of every frame
 local STATS_SECONDS = 0.15
 local moduleCache: { [string]: { Loaded: any, At: number } } = {}
 
@@ -8322,7 +8188,6 @@ function Weapons.discover()
     task.delay(3, Weapons.scan)
 end
 
--- the full memory scan waits until the game and the menu have settled, then the result is checked in slices
 function Weapons.scan()
     local ok, objects = pcall(getgc, true)
     if not ok or type(objects) ~= "table" then
@@ -8375,7 +8240,6 @@ local function fetch(url)
     return if got and type(body) == "string" and body ~= "" then body else nil
 end
 
--- an executor without getgenv keeps the shared values in _G
 local function globals()
     local ok, env = pcall(getgenv)
     return if ok and type(env) == "table" then env else _G
@@ -8402,3 +8266,4 @@ local function launch()
 end
 
 return launch()
+
