@@ -63,18 +63,18 @@ local function try(fn, ...)
 end
 
 local function fetch(url)
+    local send = request or http_request
+    if send then
+        local response = try(send, { Url = url, Method = "GET" })
+        if type(response) == "table" and type(response.Body) == "string" and #response.Body > 0 and (tonumber(response.StatusCode) or 200) < 400 then
+            return response.Body
+        end
+    end
     local body = try(function()
         return game:HttpGet(url)
     end)
     if type(body) == "string" and #body > 0 then
         return body
-    end
-    local send = request or http_request
-    if send then
-        local response = try(send, { Url = url, Method = "GET" })
-        if type(response) == "table" and type(response.Body) == "string" and #response.Body > 0 then
-            return response.Body
-        end
     end
     return nil
 end
@@ -898,9 +898,17 @@ function Loader.play(opts)
         end
     end
 
-    pcall(function()
-        ContentProvider:PreloadAsync(preload)
+    local preloading = true
+    task.spawn(function()
+        pcall(function()
+            ContentProvider:PreloadAsync(preload)
+        end)
+        preloading = false
     end)
+    local preloadUntil = os.clock() + 0.75
+    while preloading and os.clock() < preloadUntil do
+        task.wait(0.03)
+    end
 
     local noticeGroup, noticeSize, noticeStart, leaving
     local function arm(message)
