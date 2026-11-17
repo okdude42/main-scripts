@@ -5169,8 +5169,9 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
         Thanks = true,
         Watermark = true,
         Logo = { Emblem = true },
-        Width = 720,
-        Height = 470,
+        Width = 860,
+        CompactSidebar = false,
+        Height = 540,
         Theme = "Winter Frost",
         BoldTitles = true,
         Status = function(): string?
