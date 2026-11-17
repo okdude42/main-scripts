@@ -3095,7 +3095,9 @@ local function fetch(url)
     if ok and type(response) == "table" and type(response.Body) == "string" and response.Body ~= "" and (tonumber(response.StatusCode) or 200) < 400 then
         return response.Body
     end
-    local got, body = pcall(game.HttpGet, game, url)
+    local got, body = pcall(function()
+        return game:HttpGet(url)
+    end)
     return if got and type(body) == "string" and body ~= "" then body else nil
 end
 
@@ -3105,7 +3107,12 @@ local function globals()
 end
 
 local function loadUi()
-    local source = globals().__OkloUiPrefetch or fetch(UI_URL)
+    local env = globals()
+    local source = env.__OkloUiPrefetch
+    if type(source) ~= "string" or not string.find(source, "copyConfigCode", 1, true) then
+        source = fetch(UI_URL) or (if type(source) == "string" then source else nil)
+    end
+    env.__OkloUiPrefetch = nil
     if not source then
         error("could not download the ui lib from github", 0)
     end
@@ -3125,4 +3132,5 @@ local function launch()
 end
 
 return launch()
+
 

@@ -884,6 +884,7 @@ function OkloUI.new(options: Map)
     if previous then
         pcall(previous.destroy, previous)
     end
+    Canvas.adopt(id)
     registry()[id] = instance
     return instance
 end
@@ -1083,7 +1084,7 @@ function Library.destroy(self: Map)
     end
     self.Destroyed = true
     if self.Stop then
-        self.Stop()
+        pcall(self.Stop)
     end
     Canvas.destroy()
     Draw.destroyAll()
@@ -1132,25 +1133,36 @@ local blank = { __index = function(): any
 end }
 
 local function wipe(object: any)
-    pcall(function()
+    local removed = pcall(function()
         object:Remove()
     end)
-    pcall(function()
-        object:Destroy()
-    end)
+    if not removed then
+        pcall(function()
+            object:Destroy()
+        end)
+    end
 end
 
 local made: { any } = {}
-pcall(function()
-    local environment = getgenv()
-    local old = environment.__OkloCanvasObjects
-    if type(old) == "table" then
-        for _, object in old do
-            wipe(object)
+
+function Canvas.adopt(id: string)
+    pcall(function()
+        local environment = getgenv()
+        local lists = environment.__OkloCanvasLists
+        if type(lists) ~= "table" then
+            lists = {}
+            environment.__OkloCanvasLists = lists
         end
-    end
-    environment.__OkloCanvasObjects = made
-end)
+        local old = lists[id]
+        if type(old) == "table" and old ~= made then
+            for _, object in old do
+                wipe(object)
+            end
+            table.clear(old)
+        end
+        lists[id] = made
+    end)
+end
 
 local function make(kind: string): any
     local ok, object = pcall(function(): any
@@ -1187,6 +1199,9 @@ local function acquire(kind: string): (any, Map)
     local pool = current.pools[kind]
     local index = pool.used + 1
     pool.used = index
+    if index > pool.shown then
+        pool.shown = index
+    end
     local item = pool.items[index]
     if not item then
         local object = make(kind)
@@ -1545,6 +1560,7 @@ function Canvas.destroy()
         destroyScope(scope)
     end
     scopes = {}
+    table.clear(made)
     current = fallback
     touched, lastTouched = { fallback }, {}
     if probe then
@@ -3326,6 +3342,7 @@ end
 function Section.cards(self: Map, options: Map): Map
     local window = self.Window
     local columns = math.max(1, options.Columns or 2)
+    local pack = options.Pack == true
     local items: { Map } = {}
     local words: { string } = {}
     cardSerial += 1
@@ -3333,7 +3350,8 @@ function Section.cards(self: Map, options: Map): Map
     local total = 0
     for index, source in options.Items or {} do
         local key = prefix .. index
-        local card: Map = { Title = tostring(source.Title), Text = source.Text, Inline = {}, Extra = {}, Open = false, Key = key, InlineKeys = {}, ExtraKeys = {}, ExtraFades = {}, HoverKey = key .. ":hover" }
+        local openId = tostring(self.TabSpec.name) .. "/" .. tostring(source.Title)
+        local card: Map = { Title = tostring(source.Title), Text = source.Text, Inline = {}, Extra = {}, Open = window:cardOpen(openId), OpenId = openId, Key = key, InlineKeys = {}, ExtraKeys = {}, ExtraFades = {}, HoverKey = key .. ":hover" }
         table.insert(words, string.lower(tostring(source.Title) .. " " .. tostring(source.Text or "") .. " " .. tostring(source.Keywords or "")))
         if source.Flag then
             local master = table.clone(source)
@@ -3362,10 +3380,10 @@ function Section.cards(self: Map, options: Map): Map
     for _, card in items do
         table.insert(finds, { Text = card.Title, Words = tostring(card.Text or ""), Key = card.Key, Control = card.Master })
         for position, spec in card.Inline do
-            table.insert(finds, { Text = tostring(spec.cardName or ""), Words = card.Title .. " " .. (spec.keywords or ""), Key = card.InlineKeys[position], Control = spec })
+            table.insert(finds, { Text = tostring(spec.cardName or ""), Words = tostring(spec.keywords or ""), Key = card.InlineKeys[position], Control = spec, Child = true })
         end
         for position, spec in card.Extra do
-            table.insert(finds, { Text = tostring(spec.cardName or ""), Words = card.Title .. " " .. (spec.keywords or ""), Key = card.ExtraKeys[position], Control = spec, Open = function()
+            table.insert(finds, { Text = tostring(spec.cardName or ""), Words = tostring(spec.keywords or ""), Key = card.ExtraKeys[position], Control = spec, Child = true, Open = function()
                 card.Open = true
             end })
         end
@@ -3378,6 +3396,8 @@ function Section.cards(self: Map, options: Map): Map
         end
     end)
     local holder = { Value = 100 }
+    local placed: { number } = {}
+    local placedSignature = ""
     local startedAt = 0
     local drawn = false
     return self:add({
@@ -3497,19 +3517,90 @@ function Section.cards(self: Map, options: Map): Map
                 for index = first, last do
                     local open = clamp01(Motion.spring(state, kit.App.Springs, prefix .. index .. ":open", if items[index].Open then 1 else 0, app.Dt, 0.36, 1))
                     opens[index] = open
-                    bases[index] = tallest
-                    heights[index] = tallest + items[index].ExtraHeight * open
+                    bases[index] = if pack then owns[index] else tallest
+                    heights[index] = bases[index] + items[index].ExtraHeight * open
                 end
             end
             local rowTop: { number } = {}
+            local cardTop: { number } = {}
             local cursor = 6
-            for first = 1, #items, columns do
-                local tallest = 0
-                for index = first, math.min(first + columns - 1, #items) do
-                    tallest = math.max(tallest, heights[index])
+            if pack then
+                local count = #items
+                local parts: { string } = table.create(count)
+                for index = 1, count do
+                    parts[index] = tostring(math.floor(owns[index] + 0.5))
                 end
-                rowTop[(first - 1) // columns + 1] = cursor
-                cursor += tallest + CARD_GAP
+                local signature = table.concat(parts, ",") .. "/" .. columns
+                if signature ~= placedSignature then
+                    placedSignature = signature
+                    table.clear(placed)
+                    if columns == 2 and count <= 16 then
+                        local best, bestMask = math.huge, 0
+                        for mask = 0, 2 ^ (count - 1) - 1 do
+                            local left, right = 0, 0
+                            local bits = mask
+                            for index = 1, count do
+                                local size = owns[index] + CARD_GAP
+                                if index > 1 and bits % 2 == 1 then
+                                    right += size
+                                else
+                                    left += size
+                                end
+                                if index > 1 then
+                                    bits = bits // 2
+                                end
+                            end
+                            local gap = math.abs(left - right)
+                            if gap < best - 0.001 then
+                                best, bestMask = gap, mask
+                            end
+                        end
+                        local bits = bestMask
+                        for index = 1, count do
+                            if index > 1 and bits % 2 == 1 then
+                                placed[index] = 2
+                            else
+                                placed[index] = 1
+                            end
+                            if index > 1 then
+                                bits = bits // 2
+                            end
+                        end
+                    else
+                        local fill: { number } = table.create(columns, 0)
+                        for index = 1, count do
+                            local short = 1
+                            for column = 2, columns do
+                                if fill[column] < fill[short] - 0.001 then
+                                    short = column
+                                end
+                            end
+                            placed[index] = short
+                            fill[short] += owns[index] + CARD_GAP
+                        end
+                    end
+                end
+                local columnEnd: { number } = {}
+                for column = 1, columns do
+                    columnEnd[column] = 6
+                end
+                for index = 1, #items do
+                    local column = placed[index] or ((index - 1) % columns + 1)
+                    cardTop[index] = columnEnd[column]
+                    columnEnd[column] += heights[index] + CARD_GAP
+                end
+                for column = 1, columns do
+                    cursor = math.max(cursor, columnEnd[column])
+                end
+            else
+                for first = 1, #items, columns do
+                    local tallest = 0
+                    for index = first, math.min(first + columns - 1, #items) do
+                        tallest = math.max(tallest, heights[index])
+                    end
+                    rowTop[(first - 1) // columns + 1] = cursor
+                    cursor += tallest + CARD_GAP
+                end
             end
             holder.Value = math.max(60, cursor + 6)
 
@@ -3517,9 +3608,9 @@ function Section.cards(self: Map, options: Map): Map
             for index, card in items do
                 local key = card.Key
                 local rowIndex = (index - 1) // columns + 1
-                local column = (index - 1) % columns
+                local column = if pack then (placed[index] or ((index - 1) % columns + 1)) - 1 else (index - 1) % columns
                 local x = column * (width + CARD_GAP)
-                local top = rowTop[rowIndex]
+                local top = if pack then cardTop[index] else rowTop[rowIndex]
                 local h = heights[index]
                 local head = heads[index]
                 local t = if animated then clamp01((now - startedAt - 0.035 * (index - 1)) / 0.42) else 1
@@ -3543,7 +3634,8 @@ function Section.cards(self: Map, options: Map): Map
                 kit:region(key, x, y, width, head - 4, if master then function()
                     master.set(not on)
                 end else nil)
-                local titleRoom = inner - (if master then switchW + 10 else 0)
+                local headCap = master ~= nil and master.bindable == true
+                local titleRoom = inner - (if master then switchW + 10 else 0) - (if headCap then 62 else 0)
                 local title, titleSize = fitName(kit, card.Title, 14.5, titleRoom, kit:boldFace())
                 kit:text(title, x + CARD_PAD, y + CARD_TITLE_Y, titleSize, pal.Text, false, true, kit:boldFace())
                 local swap = card.LineSwap or 1
@@ -3563,6 +3655,24 @@ function Section.cards(self: Map, options: Map): Map
                     kit:miniSwitch(key .. ":master", x + width - CARD_PAD - switchW, y + CARD_TITLE_Y - switchH / 2, on, function()
                         master.set(not on)
                     end)
+                    if headCap then
+                        local capKey = key .. ":cap"
+                        local capture = app.Focus == app.CAPTURE_PREFIX .. master.flag
+                        local bound = app:shortKey(app.State.OptionKeybinds[master.flag])
+                        local empty = bound == "" or bound == "none" or bound == "None"
+                        local capX = x + width - CARD_PAD - switchW - 10 - 52
+                        local capY = y + CARD_TITLE_Y - 12
+                        local capLit = kit:ease(capKey .. ":hot", if kit:hovered(capKey) or capture then 1 else 0, 16)
+                        well(kit, pal, bg, capX, capY, 52, 24, capLit)
+                        if capture then
+                            kit:border(capX, capY, 52, 24, 12, pal.Accent, 0.5 + 0.4 * math.sin(os.clock() * math.pi * 2), 1.5)
+                        end
+                        local capLabel = if capture then "..." elseif empty then "Bind" else bound
+                        kit:text(clip(kit, capLabel, 11.5, 44), capX + 26, capY + 12, 11.5, if empty and not capture then pal.Sub else pal.Text, true, true)
+                        kit:region(capKey, capX, capY, 52, 24, function()
+                            app:beginBindCapture(master.flag)
+                        end)
+                    end
                 end
                 if #card.Inline + #card.Extra > 0 then
                     kit:box(x + CARD_PAD, y + head - 1, inner, 1, pal.Text, 0.06, 0)
@@ -3739,15 +3849,34 @@ function Section.cards(self: Map, options: Map): Map
                         local value = spec.get() == true
                         local info = spec.cardInfo
                         local infoW = if info then kit:measure("Info", 11.5) + 24 else 0
-                        local reserve = if info then infoW + 8 else 0
+                        local rowCap = spec.bindable == true
+                        local capRoom = if rowCap then 62 else 0
+                        local reserve = (if info then infoW + 8 else 0) + capRoom
                         kit:text(clip(kit, name, 12.5, inner - switchW - 10 - reserve), left, ry + rh / 2, 12.5, nameColor, false, true)
                         kit:miniSwitch(rowKey, right - switchW, ry + (rh - switchH) / 2, value, function()
                             setRow(not value)
                         end, muted)
+                        if rowCap then
+                            local capKey = rowKey .. ":cap"
+                            local capture = app.Focus == app.CAPTURE_PREFIX .. spec.flag
+                            local bound = app:shortKey(app.State.OptionKeybinds[spec.flag])
+                            local empty = bound == "" or bound == "none" or bound == "None"
+                            local capX = right - switchW - 10 - 52
+                            local capLit = kit:ease(capKey .. ":hot", if kit:hovered(capKey) or capture then 1 else 0, 16)
+                            well(kit, pal, bg, capX, ry + (rh - 24) / 2, 52, 24, capLit)
+                            if capture then
+                                kit:border(capX, ry + (rh - 24) / 2, 52, 24, 12, pal.Accent, 0.5 + 0.4 * math.sin(os.clock() * math.pi * 2), 1.5)
+                            end
+                            local capLabel = if capture then "..." elseif empty then "Bind" else bound
+                            kit:text(clip(kit, capLabel, 11.5, 44), capX + 26, ry + rh / 2, 11.5, if empty and not capture then pal.Sub else tone(pal.Text), true, true)
+                            kit:region(capKey, capX, ry + 2, 52, rh - 4, function()
+                                if not locked then app:beginBindCapture(spec.flag) end
+                            end)
+                        end
                         if info then
                             local infoKey = rowKey .. ":info"
                             local hotInfo = kit:ease(infoKey .. ":hot", if kit:hovered(infoKey) then 1 else 0, 16)
-                            local ix = right - switchW - 10 - infoW
+                            local ix = right - switchW - 10 - infoW - capRoom
                             well(kit, pal, bg, ix, ry + (rh - 24) / 2, infoW, 24, hotInfo)
                             kit:text("Info", ix + infoW / 2, ry + rh / 2, 11.5, tone(pal.Text), true, true)
                             kit:region(infoKey, ix, ry + 2, infoW, rh - 4, function()
@@ -3787,6 +3916,7 @@ function Section.cards(self: Map, options: Map): Map
                     kit:chevron(x + width - CARD_PAD - 5, midY, turn, advColor, 4.5, 1.9)
                     kit:region(advKey, x, ay, width, CARD_ADV, function()
                         card.Open = not card.Open
+                        window:setCardOpen(card.OpenId, card.Open)
                     end)
                     if turn > 0.01 or card.Open then
                         local ey = ay + CARD_ADV
@@ -5217,6 +5347,7 @@ local SHELL_ICON_SET = {
     ["updates"] = "bell",
     ["info"] = "info",
     ["about"] = "info",
+    ["help"] = "circle-help",
     ["killers"] = "skull",
     ["aim"] = "locate-fixed",
     ["guns"] = "crosshair",
@@ -9153,6 +9284,12 @@ Icons.SETS = {
         [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAACdklEQVR4AZyUPSxdYRjHz7mlFdfXjcbUtGmXDh2MXduh6dCh6VCThBCC2GwGg8FmE4QQEhODGAwmVqPBYCESkxCfV4iP6/d7vZeQO5Hz8zzv8/z/zzn3nPecTPLir1AopPAWcvARGuFXxNyaPTXpC3vybCAm11lEX6ATJmABpiLm1uypyUYP7YfDASGj8YakDv7BLHTAe9iA4mFuzZ4atXXRGzRhIAVjLZV2GADXw8QmcL1LFHNr9tS41lMbZyQZEu9DJYY/4E/ZIXbDHDjkkHgWMbdmT41aPXorneVZyhF/gF44hn7YhPM0TW+Jl7AWuYy1c9Zq1OrR64xyB/oQ/iKoh2nYAo0FoscF/0Yj5glD7XkitXr0OiPrwGrEP8EzrRAvooE00XzD2quVmyT+UXOoJ9Cj1xnVDsyhcQt4P96R13MvaqCMvORhD2poemV69Doj58AGGhXwHdxjM8QusEYoedhTo1aPXmsNDizpeG3RgfuYvcHrRLdAK3EcrBFKHvbUqNWj19q+A4+wbMNnuIJDbvgpPD4Aas8Oe3BK0X2pR68zjhzopl2l6Wv3mxg2KDEc3PwyqIo8PijWxRdCj15nnDkwj3MJPFsb8StURANp4lvUQyLmSez5ENTq0euMvAOvEe/BCHimIeI38Kr8YGj8wVo8kbUq1mrU6tHrjOsM96K4QZcRuQW8H2PkzfAJ3GtufjG3Zk+NWj16wwvhFfo23GE8Ab97g0TXfcR5cO0QMbdmT41rPSdcmOunDywFPwS+QosMaYFJOIBGKB7m1uypUXscvUETrjBk/KPhWXxIbgF/invsPy2/eWJuzZ6afPQgeTjuAQAA//95H0ImAAAABklEQVQDAPm5+1lifCb6AAAAAElFTkSuQmCC",
         [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAADTUlEQVR4AaSVT0sVURiHZ27+vVqWoISC4MKIiGjRooiCoOgL1KZNUREtqkVRm4IIalPUolpEVNSmTX2BKAiKqEWLiIiohSAooWBYev3T1fF57hwdB7wXQTmP58z7vr/fmXNm5txCVOUvSZIY6mE9dEEv9AUcGzNnTVzFJlp2AkzqELTBJjgKt+EFvAo4NmbOmragIZ1vuQko8q6bKOmB8/ASLsEeMNZFL46NmbPG2h70TZBbzeIEIdGMwXZ4CCehFT7ANTgB/wKOjZmzxlo1apuDF6VRbosaiWyDu7AVfsJpOAvP4RtMBRwbM2eNtWrU6qEXpWECZnTPXfp1oi7fO1P4luuROI4n6Gfgf2AmxEa4tsZaNWr18AXQMypgHlPkMo/Rb4EfcBn6MSnBHGPbJP8+BhxH5qBErB/UqNVDr1a9fQbO1E3BYZiFWzCAcJp+aRvn4kzAMcO0hdoBrtTqoZeedU7QQmI/rAPv8DO9e02XNUzclj/04nZlyXSkRq0eeunZ4gRF8jshgdcwjsnCtnC5shY0rkwPvfQsOoFPvA+bBvgNnexdN7SDMULVmzVgrVvSSaUe6vRsdAKfQTsJl/WE/h28h3vg9tHVbNZYq0atHnrpWXkGNdWrTbqCMiaj8BeOw17wGPAj8v3nsmazxlo1avXQS8+yE/g6/sLCN2Mj/TAPbBBGwRih6s0asHaQqmHQQ52e007gh/KJhB/cAXo/EOMMV9540Gr8YPXQS8+SQZf4BiuXtYt+B3ii0mUNgwbYEPAtyZLpSI1aPfTSc8IJfAYuzzN+DbUXwaPX15fhYvPu7nMljhmmjUmt9RxSq4deepYL7J8fhR/IU8q/w2a4Af5qFRF7E1xGHuXenTiOzIEfai8FatTqoZcfbFIRM4mrGKLoCnim7KZ/APugAxPfdbelnmtxu4x1cG2NtWrU6jEUPHO/B75NXxGcA897fwoV+hEdIeZ57z6LY2PmrLFWjVo99EISZRMwo1vlMfyFzCl4BG6dd3aV8WNYG3BszJw11qpROxm8KF0ygVcmwFPRpd4hdghugseAMbdRHBszZ421HvFT6L1RJGmrPIN0mP2nyGcyRsSfwmf0F8Az/iC9ODZmzpqxoCGdb/MAAAD//2HWN9AAAAAGSURBVAMAvJRHCKo/25AAAAAASUVORK5CYII=",
     },
+    ["circle-help"] = {
+        [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAyUlEQVR42q1TsQ0DIQx0xwS/yHd032WCXyJdNvhB6NJ9l2GYIB1LXIJ0lowfEil5JEvId5yNDwSAdCIAiABWRmTuwO0d3AAUHFchFkYC07taJjkBWJibuE/EMnONQCBQ2K4MIpKTtRMFNqpHR74zFpcHz4hWL2zRk7K51sXgiWeCJdsqlbxTvMaTnSi+aMdCm2AH41y5Er+5gde1fhN4ENudfY1A7woa88CV5gq9IVqBuZNvhjiyUYyN8snGUx7S30/5lM/003d+AcliR/22lVBiAAAAAElFTkSuQmCC",
+        [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAA4ElEQVR42q1UuQ3DMBBTl85dJlDpJTyBu0zgLlNoiezizl06l1lCE7hjHIASGH0xAgsgBJx41B31GACmAQvgRtgWtxTs9tkB8MiH51r3S2gQgZVJoSLHWBAcakKfhY2ksdHGSM6mYtqOJ/qCT6k/vfA7FXIsWSu5AljEnydjWhmYG4U8+9ddZxIfBBhTzspcE0qPyoKJSIWVEzqxhicCziVzL/uud5q7JGsx94hQ8OmVeJQJ1VpT8sTKTKu1mtlH8GV27fjV5LlyMbPjb13IsbBB9UKe9kROfbSnfiN/f2xvgAsnKGjEXLMAAAAASUVORK5CYII=",
+        [20] = "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAA/klEQVR42rVVsQ2DMBB0546OCVLSpWOCdOnoPIEnoGQeOibIBJQs4QnSXYJ0lp4HG0sJll6I//fZf3+2DQBzYhZAQ7Nn+alABaAHMGM/ZsaqUsAOQODk9Tt+/QNtVLHuDNCLZJco0TIWgX0KsGPCAqAu4LZmLuROJWeBpsHuouT2ADTOqyRgz5VcggI5vMpx9PcScOYqmrM3y2ppC3214jQQw0QH2EHN0xPATfzHSh4qb6TfGgoW5CjXBMfdhQMNDsRoSgFfQk7tQXwDmCtZljqkTocuOdcUU3jWN03JyUbKx2e43ckmJ+zVJpopFfbfj94ll8Ml19clF+xPT8AHSNMXPAXjx6gAAAAASUVORK5CYII=",
+        [24] = "iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABJklEQVR42r1VKxKDMBDF4ThBHTfAcYK6urq4ujhcJSfA9SB1nKCuEleH4wS4V5jJ0p3M5sNMSWbeMCwvecv+kgHIjkSIUADQAHoAI35rNDZtOLsF8uXZApgRXrPh5rECJYCBHfAEoIydc5T5RmuwOKLASpjYhjoizjVzaLJF7LAQsXf9siekPXMslwRaicBQLfG+G1QOEXKwtQUKllApLJ2Q3M4RLkp8wQU0S6i9qWGbHgbkTCPwKfGaC1D8lMf7C7Ndje0j8BXL4yZATVQ6kniy3s+s4aRK3L6RkVZMxShWyncHZztvr4DdgHmsQChEXGDFzcMRQ+RL8l6ISfaV6V6IZRpqNMILwDswl8RGixkVIQHvqEgy7A4f10kunCRXZpJL/2/4AjZQVJtkMmV6AAAAAElFTkSuQmCC",
+    },
     ["ellipsis"] = {
         [16] = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAx0lEQVR4AeyQOw7CMBBE7fCTIGWuQE3LCbgIDS0noaXhIpyAlporpAxI/GLeOOuIOnQoUZ52d3Z2ZTtzP379AufiG4QQPAxgBN/akFp4vTV5BvLIG7VopjmBOaygwDQm5rA0ctMKannk1UxzAsQZ7Iw1cQoL2BvKpamXfJppF+Dr9qcrXBnfGgfiDc6wMZRLUy/5NNOe4I7xAkcovfcPYgUnozKtpJZHXs00C2gGeMMTakyOKO1FFMG0mloeeaOWrqB+J/5gwQcAAP//uISNgAAAAAZJREFUAwD92lIhhpQ6egAAAABJRU5ErkJggg==",
         [18] = "iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAA60lEQVR4AeyQOw6CQBRFwU+U0LABOndiae8CrG1N7Iydia21C7C3dCd2bICGIJGP58JDSwuojIQD7925785kBk5Pzz/o+0X2f0dVVY3AgwnUG/AfwtQY6lzUA5BH3pE00Q6MaUJYwRx8zDIF1EsjMM2nl0feEE2zTh3Eggdr2MIRZjCBBewM1dK0Jo+8mtHsOwhvt7c9UUrMCQ6wgTtkcIW9oVqa1uSRVzOabU7kuu4TcwRnuEGClvOP4WLEpiX08sgboWm2CWLBQcghhQxK0wrqh1GYVtLLI682k/wJqrsOn/aOOkQ0oz8c9AIAAP//mMWuogAAAAZJREFUAwCzrlwlN0k8bwAAAABJRU5ErkJggg==",
@@ -9511,31 +9648,50 @@ function Layout.results(app: App, query: string, clear: (App) -> ()): Spec
             if entry.show and entry.show(app) ~= true then
                 return
             end
+            local groups: { { head: Spec, position: number, hit: boolean, children: { { item: Spec, position: number } } } } = {}
             for position, item in entry.finds do
                 local text = item.Text
                 if text == "" then
                     continue
                 end
-                local hay = string.lower(text .. " " .. (item.Words or ""))
-                if string.find(hay, query, 1, true) then
-                    local id = "result:" .. tab.name .. ":" .. sectionIndex .. ":" .. number .. ":" .. position
-                    local row = cache[id]
-                    if not row then
-                        row = { kind = "result", id = id }
-                        cache[id] = row
+                local hit = string.find(string.lower(text .. " " .. (item.Words or "")), query, 1, true) ~= nil
+                if item.Child and #groups > 0 then
+                    if hit then
+                        table.insert(groups[#groups].children, { item = item, position = position })
                     end
-                    row.text = text
-                    row.label = nil
-                    row.target = item.Control
-                    row.detail = tab.label .. (if #tab.sections > 1 then "  ›  " .. section.title else "")
-                    row.onClick = function()
-                        goTo(app, tab, sectionIndex, clear)
-                        if item.Open then
-                            item.Open()
-                        end
-                        app.Highlight = { Spec = entry, Key = item.Key, At = nil, Scrolled = false }
+                else
+                    table.insert(groups, { head = item, position = position, hit = hit, children = {} })
+                end
+            end
+            local function emit(item: Spec, position: number, depth: number, last: boolean, dim: boolean)
+                local id = "result:" .. tab.name .. ":" .. sectionIndex .. ":" .. number .. ":" .. position
+                local row = cache[id]
+                if not row then
+                    row = { kind = "result", id = id }
+                    cache[id] = row
+                end
+                row.text = item.Text
+                row.label = nil
+                row.target = item.Control
+                row.depth = depth
+                row.last = last
+                row.dim = dim
+                row.detail = if depth > 0 then nil else tab.label .. (if #tab.sections > 1 then "  ›  " .. section.title else "")
+                row.onClick = function()
+                    goTo(app, tab, sectionIndex, clear)
+                    if item.Open then
+                        item.Open()
                     end
-                    table.insert(rows, row)
+                    app.Highlight = { Spec = entry, Key = item.Key, At = nil, Scrolled = false }
+                end
+                table.insert(rows, row)
+            end
+            for _, group in groups do
+                if group.hit or #group.children > 0 then
+                    emit(group.head, group.position, 0, false, not group.hit)
+                    for index, child in group.children do
+                        emit(child.item, child.position, 1, index == #group.children, false)
+                    end
                 end
             end
             return
@@ -10416,7 +10572,7 @@ type App = { [string]: any }
 local function touchOnly(): boolean
     local ok, result = pcall(function()
         local input = game:GetService("UserInputService")
-        return input.TouchEnabled and not input.KeyboardEnabled
+        return input.TouchEnabled
     end)
     return ok and result == true
 end
@@ -13169,6 +13325,36 @@ Builtin.thanks = {
     end,
 }
 
+local KEYBIND_TITLE = "Hide and show the menu"
+
+local function keybindLines(app: App): { string }
+    if app.hasKeyboard() then
+        return { "Press " .. tostring(app:menuKey()) .. " to hide or show the menu" }
+    end
+    return { "Tap the logo button to show the menu again", "after you hide it" }
+end
+
+Builtin.keybind = {
+    size = function(app: App)
+        return fitWidth(app, KEYBIND_TITLE, keybindLines(app), 340), fitHeight(#keybindLines(app) + 1, false)
+    end,
+    title = function()
+        return ""
+    end,
+    locked = true,
+    render = function(app: App, kit: any)
+        local lines = keybindLines(app)
+        local function close()
+            app:acknowledgeKeybind()
+            app:closePopup()
+        end
+        kit:title(KEYBIND_TITLE)
+        kit:closeX(close)
+        bodyLines(kit, lines)
+        kit:text("this will show only once", EDGE, TOP + #lines * LINE + LINE / 2, 11, app.Pal.Disabled, false, true, 35)
+    end,
+}
+
 local previewText: string? = nil
 local previewLimit = 0
 local previewResult = ""
@@ -13229,19 +13415,19 @@ Builtin.configCode = {
             end)
         end
         kit:swapText("config:note", state.CodeNote or "", EDGE, top + CODE_BOX + GAP + LINE / 2, 11, pal.Accent, false, true)
-        local width = if importing then (kit.Width - EDGE * 2 - GAP * 2) / 3 else kit.Width - EDGE * 2
+        local width = if importing then (kit.Width - EDGE * 2 - GAP) / 2 else kit.Width - EDGE * 2
         local y = kit.Height - EDGE - BUTTON
         local hasCode = code ~= ""
-        kit:button("config:copy", EDGE, y, width, BUTTON, function()
-            app:copyCodeBuffer()
-        end, { label = "Copy", disabled = not hasCode, active = not importing and hasCode })
         if not importing then
+            kit:button("config:copy", EDGE, y, width, BUTTON, function()
+                app:copyCodeBuffer()
+            end, { label = "Copy", disabled = not hasCode, active = hasCode })
             return
         end
-        kit:button("config:paste", EDGE + width + GAP, y, width, BUTTON, function()
+        kit:button("config:paste", EDGE, y, width, BUTTON, function()
             app:pasteCodeBuffer()
         end, { label = "Paste" })
-        kit:button("config:apply", EDGE + (width + GAP) * 2, y, width, BUTTON, function()
+        kit:button("config:apply", EDGE + width + GAP, y, width, BUTTON, function()
             if app:applyCodeBuffer() then
                 app:closePopup()
             end
@@ -15197,6 +15383,12 @@ function Runner.step(app: App, now: number)
         app:openPopup("thanks")
     end
 
+    if not app.Welcome and not waiting and state.Visible and state.KeybindPending and not state.KeybindOpened and not state.ThanksPending and not state.UpdateNoticePending and app.Popup.Name == "None" then
+        state.KeybindOpened = true
+        app.LastClick = nil
+        app:openPopup("keybind")
+    end
+
     updateSlow(app, now)
     if not booting then
         handleKeys(app, now)
@@ -15339,17 +15531,17 @@ function Runner.start(app: App): () -> ()
                 connection:Disconnect()
             end)
         end
+        pcall(Canvas.clear)
         for _, link in focusConnections do
             pcall(function()
                 link:Disconnect()
             end)
         end
-        destroyOpener()
-        app.Typing:destroy()
+        pcall(destroyOpener)
+        pcall(app.Typing.destroy, app.Typing)
         pcall(app.flushUi, app)
-        Overlay.destroy(app)
-        Canvas.clear()
-        Painter.hideAll()
+        pcall(Overlay.destroy, app)
+        pcall(Painter.hideAll)
         WindowBlock.setBlocked(false)
     end
 end
@@ -17894,9 +18086,22 @@ function Widgets.result(app: App, spec: Spec, x: number, y: number, width: numbe
     local press = pressScale(app, spec, "press", key, true) * fx.Scale
     local p, s = shrinkBox(position, size, press)
     local fade = app:sourceFade(key)
-    local alpha = app.Alpha.Text * fx.Alpha * fade
+    local alpha = app.Alpha.Text * fx.Alpha * fade * (if spec.dim then 0.62 else 1)
     local target: Spec? = spec.target
     local centerY = p.Y + s.Y / 2
+
+    if spec.depth and spec.depth > 0 then
+        local indent = 26 * unit
+        local stem = p.X + 12 * unit
+        local thick = math.max(1, unit * 1.2)
+        local lineAlpha = app.Alpha.Btn * fx.Alpha * fade * 0.28
+        local top = p.Y - 8 * unit
+        local bottom = if spec.last then centerY else p.Y + s.Y + 8 * unit
+        Painter.rect(Vector2.new(stem, top), Vector2.new(thick, bottom - top), pal.Text, lineAlpha, Z_BG, 0)
+        Painter.rect(Vector2.new(stem, centerY - thick / 2), Vector2.new(indent - 16 * unit, thick), pal.Text, lineAlpha, Z_BG, 0)
+        p = Vector2.new(p.X + indent, p.Y)
+        s = Vector2.new(s.X - indent, s.Y)
+    end
 
     aura(app, spec, "row", p, s, 10, 0.16 * clamp01(hover), 0, fx, 14)
     Painter.rect(p, s, Color.lerp(Color.lerp(pal.Panel, pal.Text, 0.045 + 0.03 * pal.Light), pal.Accent, (0.15 - 0.10 * pal.Pick) * clamp01(hover)), app.Alpha.Btn * fx.Alpha * fade, Z_BG, 14)
@@ -18268,6 +18473,7 @@ function Window.prepareState(self: Self)
         MenuSizeX = self.M.Width * state.UIScale, MenuSizeY = self.M.Height * state.UIScale,
         UpdateNoticePending = self.Options.UpdateNotice ~= nil, UpdateNoticeOpened = false,
         ThanksPending = self.Options.Thanks and not Storage.isFile(self.Folder .. "/thanks_seen.txt"), ThanksOpened = false,
+        KeybindPending = not Storage.isFile(self.Folder .. "/keybind_seen.txt"), KeybindOpened = false,
     }
     for key, value in runtime do
         if state[key] == nil then
@@ -18298,6 +18504,31 @@ function Window.uiPath(self: Self): string
     return self.Folder .. "/ui_settings.json"
 end
 
+local SHARED_FOLDER = "oklo scripts"
+local SHARED_PATH = SHARED_FOLDER .. "/ui_shared.json"
+
+local function writeShared(hidden: boolean)
+    Storage.ensureFolder(SHARED_FOLDER)
+    Storage.writeJson(SHARED_PATH, { StartHidden = hidden })
+end
+
+function Window.cardOpen(self: Self, id: string): boolean
+    local open = self.OpenCards
+    if not open then
+        local data: any = Storage.readJson(self.Folder .. "/open_cards.json")
+        open = if type(data) == "table" then data else {}
+        self.OpenCards = open
+    end
+    return open[id] == true
+end
+
+function Window.setCardOpen(self: Self, id: string, value: boolean)
+    self:cardOpen(id)
+    self.OpenCards[id] = if value then true else nil
+    Storage.ensureFolder(self.Folder)
+    Storage.writeJson(self.Folder .. "/open_cards.json", self.OpenCards)
+end
+
 function Window.loadUiSettings(self: Self)
     local state = self.State
     local data: any = Storage.readJson(self:uiPath())
@@ -18308,6 +18539,12 @@ function Window.loadUiSettings(self: Self)
                 state[key] = value
             end
         end
+    end
+    local shared: any = Storage.readJson(SHARED_PATH)
+    if type(shared) == "table" and type(shared.StartHidden) == "boolean" then
+        state.StartHidden = shared.StartHidden
+    elseif state.StartHidden == true then
+        writeShared(true)
     end
     local saved: Map = {}
     for _, key in Settings.UI_KEYS do
@@ -18322,7 +18559,8 @@ end
 
 function Window.hasKeyboard(): boolean
     local ok, enabled = pcall(function(): any
-        return game:GetService("UserInputService").KeyboardEnabled
+        local input = game:GetService("UserInputService")
+        return input.KeyboardEnabled and not (input.TouchEnabled and not input.MouseEnabled)
     end)
     return not ok or enabled ~= false
 end
@@ -18350,6 +18588,9 @@ function Window.flushUi(self: Self)
     end
     if not changed then
         return
+    end
+    if saved.StartHidden ~= state.StartHidden then
+        writeShared(state.StartHidden == true)
     end
     local data: Map = {}
     for _, key in Settings.UI_KEYS do
@@ -19049,6 +19290,12 @@ function Window.acknowledgeThanks(self: Self)
     Storage.write(self.Folder .. "/thanks_seen.txt", "1")
 end
 
+function Window.acknowledgeKeybind(self: Self)
+    self.State.KeybindPending = false
+    Storage.ensureFolder(self.Folder)
+    Storage.write(self.Folder .. "/keybind_seen.txt", "1")
+end
+
 function Window.acknowledgeUpdate(self: Self)
     self.State.UpdateNoticePending = false
     Storage.ensureFolder(self.Folder)
@@ -19128,4 +19375,5 @@ if type(getgenv) ~= "function" then
     end
 end
 return import("lib")
+
 

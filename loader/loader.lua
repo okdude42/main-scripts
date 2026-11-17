@@ -15,6 +15,51 @@ if type(CONFIG) ~= "table" then
     }
 end
 
+do
+local missing = {}
+local function present(name)
+    local ok, value = pcall(function()
+        return getfenv()[name]
+    end)
+    return ok and type(value) == "function"
+end
+local function put(name, fn)
+    table.insert(missing, name)
+    pcall(function()
+        getfenv()[name] = fn
+    end)
+    pcall(function()
+        local shared = getgenv()
+        if type(shared) == "table" and shared[name] == nil then
+            shared[name] = fn
+        end
+    end)
+end
+if not present("getgenv") then
+    local shared = if type(_G) == "table" then _G else {}
+    put("getgenv", function()
+        return shared
+    end)
+end
+for _, name in { "isfile", "isfolder" } do
+    if not present(name) then
+        put(name, function()
+            return false
+        end)
+    end
+end
+for _, name in { "readfile", "writefile", "makefolder" } do
+    if not present(name) then
+        put(name, function()
+            error(name .. " is not supported on this executor", 2)
+        end)
+    end
+end
+if #missing > 0 then
+    warn("oklo loader: this executor is missing " .. table.concat(missing, ", ") .. ", the script runs without them")
+end
+end
+
 local Intro = (function()
 
 local Players = game:GetService("Players")
@@ -1659,6 +1704,10 @@ task.spawn(pcall, function()
             pause = 300
             if mine == nil then
                 mine = getgenv()[STOP]
+                if mine == nil and os.time() - started < 60 then
+                    pause = 5
+                    continue
+                end
             end
             local alive = mine ~= nil and getgenv()[STOP] == mine
             send(base .. "s=" .. SCRIPT .. "&hb=1&i=" .. id .. "&sid=" .. sessionId .. "&sec=" .. math.max(0, os.time() - started) .. (if alive then "" else "&end=1"))
@@ -1676,7 +1725,7 @@ local HUB_SOURCE = nil
 local SIZES = {
     ["booga-utilities"] = { Width = 879, Height = 605 },
     ["hitbox-expander"] = { Width = 700, Height = 460 },
-    ["practical-basketball"] = { Width = 820, Height = 540 },
+    ["practical-basketball"] = { Width = 838, Height = 562 },
     ["saktk51"] = { Width = 760, Height = 500 },
     ["script-hub"] = { Width = 400, Height = 432 },
 }
@@ -1718,8 +1767,8 @@ local SAVED_REGISTRY = [=====[
                 "Folder": "oklo scripts/practicalbasketball",
                 "ScriptUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/practical-basketball/pb-core.lua",
                 "Registry": "__PracticalBasketballStop",
-                "Width": 820,
-                "Height": 540,
+                "Width": 838,
+                "Height": 562,
                 "GameName": "Practical Basketball",
                 "HomePlace": 80681221431821,
                 "Places": "78438427735992,79672855812610,80681221431821,85576197307056,104645279125178,106120159518740,113883239895081,115491614485922,115776365257536,118669925076970,119587547774646,133311125103681,137269396533485,137939444694121,138505112166361",
@@ -2009,7 +2058,7 @@ local function fetchCached(url, name)
     if ok and type(response) == "table" then
         local status = tonumber(response.StatusCode) or 200
         if status == 304 and cached then
-            return cached
+            return cached, "same"
         end
         if status < 400 and type(response.Body) == "string" and response.Body ~= "" then
             local fresh
@@ -2029,13 +2078,14 @@ local function fetchCached(url, name)
                     writefile(tagPath, fresh)
                 end)
             end
-            return response.Body
-        end
-        if cached then
-            return cached
+            return response.Body, "new"
         end
     end
-    return fetch(url) or cached
+    local plain = fetch(url)
+    if plain then
+        return plain, "new"
+    end
+    return cached, "stale"
 end
 
 if CONFIG.Hub and CONFIG.RegistryUrl then
@@ -2140,16 +2190,44 @@ end
 
 local function launch()
     local chunk
+    local loadState, started = nil, false
+    local loadInner
 
     local function load()
-        local lib, libDone = nil, false
+        if loadState ~= nil then
+            return
+        end
+        loadState = "running"
+        local ok, result = xpcall(function()
+            return loadInner()
+        end, function(message)
+            return tostring(message) .. "\n" .. debug.traceback()
+        end)
+        loadState = "done"
+        if not ok then
+            warn(NAME .. " loader: download failed: " .. tostring(result))
+            return nil
+        end
+        return result
+    end
+
+    loadInner = function()
+        local lib, libState, libDone = nil, nil, false
         task.spawn(function()
-            lib = fetchCached(CONFIG.UiUrl, "OkloUI.luau")
+            lib, libState = fetchCached(CONFIG.UiUrl, "OkloUI.luau")
             libDone = true
         end)
-        local source = if CONFIG.Hub and HUB_SOURCE then HUB_SOURCE else fetchCached(CONFIG.ScriptUrl, tostring(CONFIG.Id) .. "-core.lua")
+        local source, sourceState
+        if CONFIG.Hub and HUB_SOURCE then
+            source = HUB_SOURCE
+        else
+            source, sourceState = fetchCached(CONFIG.ScriptUrl, tostring(CONFIG.Id) .. "-core.lua")
+        end
         while not libDone do
             task.wait()
+        end
+        if libState == "stale" and sourceState == "new" then
+            lib = nil
         end
         if not source then
             return style({
@@ -2168,9 +2246,17 @@ local function launch()
     end
 
     local function start()
-        if not chunk then
+        if started then
             return
         end
+        if not chunk then
+            if loadState == "done" then
+                started = true
+                warn(NAME .. " loader: the script could not be loaded, nothing to start")
+            end
+            return
+        end
+        started = true
         pcall(Migrate)
         pcall(Counter, CONFIG.Id, CONFIG.Registry)
         local ok, failure = xpcall(chunk, debug.traceback, API)
@@ -2190,10 +2276,37 @@ local function launch()
 
     local running = type(getgenv()[CONFIG.Registry]) == "function"
     local faster = fasterLoader() or running
-    if not pcall(Intro.play, style({ Run = load, Done = start, Fast = faster })) then
+    local played, problem = pcall(Intro.play, style({ Run = load, Done = start, Fast = faster }))
+    if not played then
+        warn(NAME .. " loader: the intro could not play, starting without it: " .. tostring(problem))
         load()
         start()
+        return
     end
+    task.spawn(function()
+        local waited = 0
+        while not started and waited < 45 do
+            waited += task.wait(1)
+        end
+        if started then
+            return
+        end
+        warn(NAME .. " loader: the intro stalled, starting the script without it")
+        if loadState == nil then
+            load()
+        end
+        local spent = 0
+        while loadState ~= "done" and spent < 30 do
+            spent += task.wait(0.25)
+        end
+        start()
+        local ok = pcall(function()
+            getgenv().__OkloReveal = true
+        end)
+        if not ok then
+            warn(NAME .. " loader: could not reveal the window")
+        end
+    end)
 end
 
 local function wrongGame()
@@ -2262,4 +2375,5 @@ end
 pcall(Session)
 
 launch()
+
 

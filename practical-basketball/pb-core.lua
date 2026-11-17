@@ -452,10 +452,10 @@ AutoDribble.__index = AutoDribble
 
 type Map = { [string]: any }
 
-local COOLDOWN_MIN = 1.0
-local COOLDOWN_MAX = 1.6
-local REACT_MIN = 0.2
-local REACT_MAX = 0.4
+local COOLDOWN_MIN = 0.45
+local COOLDOWN_MAX = 0.8
+local REACT_MIN = 0.06
+local REACT_MAX = 0.14
 local RIM_CLEAR = 24
 
 local random = Random.new()
@@ -694,7 +694,7 @@ function AutoDunk.plan(self: any, now: number, move: boolean): (Vector3?, boolea
         self.Run = false
         return nil, false
     end
-    if read("DunkOpenOnly") == true and Court.nearestFoe(root.Position) <= (read("OpenRange") or 6) then
+    if read("DunkOpenOnly") == true and Court.nearestFoe(root.Position) <= (read("OpenRange") or 6) * (1 - self.AutoGreen:ignore()) then
         return nil, false
     end
     local here: Vector3 = root.Position
@@ -710,7 +710,6 @@ function AutoDunk.plan(self: any, now: number, move: boolean): (Vector3?, boolea
         aim = bent.Unit
     end
     local inFront = cone >= FRONT_CONE
-    self.Player.WantSprint = now + 0.4
     local part = Court.proxy()
     local velocity = if part then part.AssemblyLinearVelocity else Vector3.zero
     local planar = flat(velocity)
@@ -726,7 +725,11 @@ function AutoDunk.plan(self: any, now: number, move: boolean): (Vector3?, boolea
         if pace >= 2 then
             return nil, false
         end
+        self.Player.WantSprint = now + 0.4
     else
+        if auto or self.Run or pace >= 2 then
+            self.Player.WantSprint = now + 0.4
+        end
         if not self.Run and auto then
             if distance < DRIVE_START or not inFront then
                 return rimAt + aim * (DRIVE_START + 4), false
@@ -773,10 +776,13 @@ function AutoDunk.claims(self: any, distance: number): boolean
     if distance > (read("DunkRange") or 30) then
         return false
     end
+    local root = Court.Root
     if read("DunkMove") == true then
+        if read("DunkOpenOnly") == true and root and Court.nearestFoe(root.Position) <= (read("OpenRange") or 6) * (1 - self.AutoGreen:ignore()) then
+            return false
+        end
         return true
     end
-    local root = Court.Root
     local rim = if root then Court.facingRim(root, FACING, read("DunkRange") or 30) else nil
     if not rim then
         return false
@@ -879,6 +885,24 @@ local function meterKind(character: any, meters: { any }): string?
     return nil
 end
 
+local function hiddenKind(meters: { any }): string?
+    local found: string? = nil
+    for _, gui in meters do
+        local name = gui.Name
+        if string.sub(name, -5) == "Meter" then
+            local kind = string.sub(name, 1, -6)
+            local value = Config.PEAKS[kind] or learned()[kind]
+            if type(value) == "number" then
+                if found and found ~= kind then
+                    return nil
+                end
+                found = kind
+            end
+        end
+    end
+    return found
+end
+
 local function liveShot(character: any, action: any, meters: { any }): boolean
     if METERED[action] then
         return true
@@ -974,29 +998,123 @@ function AutoGreen.new(read: (string) -> any, notify: (string) -> ()): any
         Stats = { Total = 0, Perfect = 0, Streak = 0, Last = "-" },
         Rates = {} :: { [string]: number },
         StatsText = nil :: any,
+        ServerDown = false,
+        TeamBallAt = -math.huge,
+        TapConvert = nil :: any,
+        PlantUntil = nil :: any,
+        PlantRestore = nil :: any,
     }, AutoGreen)
 end
 
-function AutoGreen.allowed(self: any): boolean
-    local root = Court.Root
-    if not root then
-        return true
-    end
+function AutoGreen.ignore(self: any): number
+    local value = tonumber(self.Read("IgnoreContest")) or 0
+    return math.clamp(value / 100, 0, 1)
+end
+
+function AutoGreen.seesCalls(self: any): boolean
+    return self.HookBound == true
+end
+
+local START_PING_SCALE = 1
+local PING_FLOOR = 0.012
+local PING_KEY = "%lead"
+
+function AutoGreen.pingLead(self: any): number
+    local ping = Court.Ping
     local read = self.Read
-    if read("AutoShoot") ~= true then
-        return true
+    if read("AutoPing") == false then
+        return ping * (read("PingComp") or 100) / 100
     end
-    if read("OpenOnly") == true and Court.nearestFoe(root.Position) <= (read("OpenRange") or 6) then
+    local scale = learned()[PING_KEY]
+    if type(scale) ~= "number" or scale ~= scale then
+        scale = START_PING_SCALE
+    end
+    return math.max(0, ping * math.clamp(scale, 0.5, 1.4) - PING_FLOOR)
+end
+
+function AutoGreen.learnPing(self: any, step: number)
+    local ping = Court.Ping
+    if self.Read("AutoPing") == false or ping < 0.02 then
+        return
+    end
+    local store = learned()
+    local scale = if type(store[PING_KEY]) == "number" then store[PING_KEY] else START_PING_SCALE
+    store[PING_KEY] = math.clamp(scale - step / ping * 0.5, 0.5, 1.4)
+end
+
+function AutoGreen.expectsPass(self: any): boolean
+    local now = os.clock()
+    if Court.FoeBall or Court.FoeHeld or now - (self.FoeBallAt or -math.huge) < 1.5 then
         return false
     end
-    local minimum = read("MinShot") or 0
-    local maximum = read("MaxShot") or 120
-    if minimum > 0 or maximum < 120 then
-        local best = Court.rimDistance(root.Position)
-        if best and (best < minimum or best > maximum) then
-            return false
-        end
+    if Court.TeamBall or now - (self.TeamBallAt or -math.huge) < 1.2 or Court.Dead then
+        return true
     end
+    local root = Court.Root
+    return root ~= nil and Court.ballNear(root.Position, 12) == true
+end
+
+function AutoGreen.plant(self: any, mine: any)
+    if self.Read("PlantedShot") ~= true or self.DunkPress == true then
+        return
+    end
+    local root = Court.root(mine)
+    local rimAt = if root then Court.rimDistance(root.Position) else nil
+    if rimAt ~= nil and rimAt <= LAYUP_RANGE then
+        return
+    end
+    local now = os.clock()
+    self.PlantUntil = now + 1.4
+    self.PlantRestore = now + 3
+    local remote = Court.input("MoveDirection")
+    if remote then
+        Court.send(remote, Vector3.zero)
+    end
+end
+
+function AutoGreen.physics(self: any)
+    local limit: number? = self.PlantUntil
+    if not limit then
+        return
+    end
+    local now = os.clock()
+    local action = Court.Action
+    local shotOn = self.Press ~= nil or (self.Shot ~= nil and not self.Shot.Fired)
+    if now < limit and shotOn and not METERED[action] then
+        local _, mover = Court.proxy()
+        if mover then
+            mover.Velocity = Vector3.zero
+        end
+        return
+    end
+    if shotOn and now < limit then
+        return
+    end
+    local remote = Court.input("MoveDirection")
+    local sent = remote ~= nil and Court.send(remote, Court.heading() or Vector3.zero)
+    if sent or now > (self.PlantRestore or now) then
+        self.PlantUntil = nil
+        self.PlantRestore = nil
+    end
+end
+
+function AutoGreen.onDribble(self: any)
+    if self.Press == nil or self.KeyDown == true then
+        return
+    end
+    local shot: any = self.Shot
+    if shot and shot.Fired then
+        return
+    end
+    local character = self.Character
+    if character and liveShot(character, character:GetAttribute("Action"), self.Meters) then
+        return
+    end
+    self:trace("  dribble move while a short press was held, it stays a fake")
+    self:settle()
+end
+
+function AutoGreen.allowed(self: any): boolean
     return true
 end
 
@@ -1025,6 +1143,7 @@ function AutoGreen.send(self: any)
     self:trace("  SEND release")
     self.Planned = self.NextPlan
     self.NextPlan = nil
+    self.Swallow = self.KeyDown == true
     self.Press = nil
     self.Held = nil
     self.Own = false
@@ -1032,6 +1151,12 @@ function AutoGreen.send(self: any)
     local shot: any = self.Shot
     if shot then
         shot.Fired = true
+    end
+    local owed = self.ServerDown == true or not self:seesCalls()
+    self.ServerDown = false
+    if not owed then
+        self:trace("  release skipped, the server already has the key up")
+        return
     end
     if self:fire(RELEASE) then
         self.LastAuto = os.clock()
@@ -1060,14 +1185,9 @@ function AutoGreen.release(self: any)
         self:settle()
         return
     end
-    local steady = (shot.Gap or 0) < STALL and (shot.LongFrame or 0) < STALL
+    local steady = (shot.Gap or 0) < math.max(STALL, 0.04 + Court.Ping * 0.6) and (shot.LongFrame or 0) < STALL
     self.NextPlan = { Kind = shot.Kind, Clean = shot.ReleaseAt ~= nil and shot.Timed == true and shot.Sloppy == nil and steady }
     self:send()
-    if shot.NewRate and shot.Kind then
-        local store = learned()
-        store["#" .. shot.Kind] = shot.NewRate
-        Env.writeJson(PEAK_FILE, store)
-    end
 end
 
 function AutoGreen.onPress(self: any)
@@ -1078,7 +1198,7 @@ function AutoGreen.onPress(self: any)
     end
     local mine = Court.mine()
     if not mine or (not Court.holds(mine) and not PRESHOT[mine:GetAttribute("Action")]) then
-        if mine and (self.KeyDown == true or self.Held ~= nil) then
+        if mine and (self.KeyDown == true or self.Held ~= nil) and self:expectsPass() then
             self.EarlyAt = os.clock()
         end
         self:trace("  onPress no ball yet, early=" .. tostring(self.EarlyAt ~= nil))
@@ -1099,14 +1219,25 @@ function AutoGreen.onPress(self: any)
     self.LastPress = now
     self.IdleAt = now
     self.LostAt = nil
-    self.HoldOk = false
-    self:trace("  onPress OWNED, hold E")
+    local nearRim = false
+    if read("LayupGreen") == false then
+        local root = Court.root(mine)
+        local rimAt = if root then Court.rimDistance(root.Position) else nil
+        nearRim = rimAt ~= nil and rimAt <= LAYUP_RANGE
+    end
+    self.HoldOk = not nearRim and (self.DunkPress == true or self:canHold())
+    self:plant(mine)
+    self:trace("  onPress OWNED, holdOk=" .. tostring(self.HoldOk))
 end
 
-function AutoGreen.begin(self: any, useSpace: boolean?): boolean
-    if self.Stopped or self.Read("AutoGreen") ~= true or self.Press ~= nil or not self:canHold() then
+function AutoGreen.begin(self: any, useSpace: boolean?, force: boolean?): boolean
+    if self.Stopped or self.Read("AutoGreen") ~= true or self.Press ~= nil then
         return false
     end
+    if not useSpace and not force and not self:canHold() then
+        return false
+    end
+    self.DunkPress = useSpace == true
     self:onPress()
     local press = self.Press
     if press == nil then
@@ -1116,6 +1247,7 @@ function AutoGreen.begin(self: any, useSpace: boolean?): boolean
         self.Press = nil
         return false
     end
+    self.ServerDown = true
     self.Held = press
     self.DunkPress = useSpace == true
     self.Own = true
@@ -1151,6 +1283,8 @@ function AutoGreen.shootCall(self: any, data: any): boolean
     end
     if flag == true then
         self.KeyDown = true
+        self.Swallow = false
+        self.ServerDown = true
         self.DunkPress = rawget(data, "UseSpace") == true
         self:onPress()
         return false
@@ -1161,8 +1295,18 @@ function AutoGreen.shootCall(self: any, data: any): boolean
     self.KeyDown = false
     if rawget(data, "Input") ~= nil then
         self.TapAt = os.clock()
-        self.TapPending = true
+        if self:convertsTap(data) then
+            self.TapConvert = { Data = data, At = os.clock() }
+            self:trace("  TAP held, it is pressed for you on the next frame")
+            return true
+        end
+        self.ServerDown = false
         return false
+    end
+    if self.Swallow == true then
+        self.Swallow = false
+        self:trace("  release swallowed, the script already let go")
+        return true
     end
     if self:holding() then
         if self.Held == nil then
@@ -1172,8 +1316,23 @@ function AutoGreen.shootCall(self: any, data: any): boolean
         return true
     end
     self:trace("  release passed through")
+    self.ServerDown = false
     self:passed()
     return false
+end
+
+function AutoGreen.convertsTap(self: any, data: any): boolean
+    if self.Armed ~= true or self.HasBall ~= true or rawget(data, "Input") ~= "E" then
+        return false
+    end
+    if self.Press ~= nil or self.Held ~= nil or self.Shot ~= nil or self.TapConvert ~= nil then
+        return false
+    end
+    local action = Court.Action
+    if action == "Dribbling" or action == "Dunking" or METERED[action] then
+        return false
+    end
+    return self.Read("TapShoot") == true
 end
 
 function AutoGreen.passed(self: any)
@@ -1220,7 +1379,7 @@ function AutoGreen.sample(self: any, character: any)
             Fired = false,
             Kind = nil,
             Sloppy = sloppy,
-            Timed = not nearRim and self:allowed(),
+            Timed = not nearRim and (self.DunkPress == true or action == "Dunking" or self.HoldOk == true or self:allowed()),
             DunkAt = if action == "Dunking" then now + DUNK_TIMEOUT else nil,
         }
         return
@@ -1265,11 +1424,19 @@ function AutoGreen.sample(self: any, character: any)
         return
     end
     local kind: string = shot.Kind or meterKind(character, self.Meters) or ""
+    if kind ~= "" and not shot.Kind then
+        local store = learned()
+        if store["@last"] ~= kind then
+            store["@last"] = kind
+            Env.writeJson(PEAK_FILE, store)
+        end
+    end
     if kind == "" then
         if elapsed < 0.12 then
             return
         end
-        kind = if action == "Dunking" then "Dunk" else "Shot"
+        local last = learned()["@last"]
+        kind = hiddenKind(self.Meters) or (if type(last) == "string" and self:peak(last) then last else nil) or (if action == "Dunking" then "Dunk" else "Shot")
     end
     if not shot.Kind then
         shot.Kind = kind
@@ -1336,7 +1503,7 @@ function AutoGreen.plan(self: any, now: number)
         return
     end
     local remaining = (peak - level) / speed
-    local delay = remaining - math.min(self.FrameDt or 0, 1 / 60) * 0.5 - SERVER_STEP * 0.5 - Court.Ping * (read("PingComp") or 100) / 100 + (read("GreenOffset") or 0) / 1000 + (shot.Sloppy or 0) + self:bias(kind)
+    local delay = remaining - math.min(self.FrameDt or 0, 1 / 60) * 0.5 - SERVER_STEP * 0.5 - self:pingLead() + (read("GreenOffset") or 0) / 1000 + (shot.Sloppy or 0) + self:bias(kind)
     shot.Value = value
     shot.SampleAt = now
     shot.Speed = speed
@@ -1367,7 +1534,7 @@ function AutoGreen.learnRate(self: any, shot: any)
     local measured = speed / (shot.Scale or 1)
     local saved = learned()["#" .. kind]
     local base: number? = self.Rates[kind] or (if type(saved) == "number" then saved else nil)
-    self.Rates[kind] = if base then base + (measured - base) * 0.5 else measured
+    self.Rates[kind] = if base then base + (measured - base) * 0.2 else measured
     shot.NewRate = self.Rates[kind]
     local store = learned()
     store["#" .. kind] = shot.NewRate
@@ -1392,7 +1559,12 @@ function AutoGreen.calibrate(self: any, kind: string?, timing: number)
     local store = learned()
     local key = "~" .. kind
     local current = if type(store[key]) == "number" then store[key] else 0
-    store[key] = math.clamp(current * 0.97 + step, -0.08, 0.08)
+    local share = step
+    if self.Read("AutoPing") ~= false and Court.Ping >= 0.02 then
+        self:learnPing(step * 0.5)
+        share = step * 0.5
+    end
+    store[key] = math.clamp(current * 0.97 + share, -0.08, 0.08)
     Env.writeJson(PEAK_FILE, store)
 end
 
@@ -1529,14 +1701,28 @@ function AutoGreen.step(self: any, now: number, dt: number)
             self:send()
         end
     end
-    if self.TapPending then
-        self.TapPending = false
-        if on and self.Read("TapShoot") == true and Court.HasBall and self.Press == nil and self.Held == nil and self.Shot == nil
-            and self.KeyDown ~= true and action0 ~= "Dribbling" and action0 ~= "Dunking" and action0 ~= "Shooting" then
-            self:trace("  TAP turned into a shot, action=" .. tostring(action0))
-            self:begin()
+    if Court.TeamBall and not Court.HasBall then
+        self.TeamBallAt = now
+    end
+    if Court.FoeBall then
+        self.FoeBallAt = now
+    end
+    local convert: any = self.TapConvert
+    if convert then
+        self.TapConvert = nil
+        local started = false
+        if on and Court.HasBall and self.Press == nil and self.Held == nil and self.Shot == nil and self.KeyDown ~= true then
+            started = self:begin(false, true)
+        end
+        if started then
+            self:trace("  TAP turned into a held shot, action=" .. tostring(action0))
         else
-            self:trace("  TAP left as it is, action=" .. tostring(action0))
+            self:trace("  TAP passed on as it was, action=" .. tostring(action0))
+            local remote = Court.input("Shoot")
+            if remote then
+                Court.send(remote, convert.Data)
+            end
+            self.ServerDown = false
         end
     end
     local early: number? = self.EarlyAt
@@ -1573,14 +1759,6 @@ function AutoGreen.step(self: any, now: number, dt: number)
                 self.HookFailed = nil
             end
         end)
-    end
-    if on and self.HookFailed and not self.HoldMode and not self.Warned.Hook and now >= (self.WarnAt or 0) then
-        if not self.WarnAt then
-            self.WarnAt = now + 1.5
-        else
-            self.Warned.Hook = true
-            self.Notify("Hold the shoot key until the green on this executor, Auto Green lets go for you")
-        end
     end
     local action = action0
     local live = character ~= nil and liveShot(character, action, self.Meters)
@@ -1630,7 +1808,9 @@ function AutoGreen.step(self: any, now: number, dt: number)
             end
             if action == "Dunking" and self.Held ~= nil then
                 self.DunkSince = self.DunkSince or now
-                if now - self.DunkSince >= 0.9 then
+                local planned: any = self.Shot
+                local cap = if planned and planned.ReleaseAt and not planned.Fired then 1.8 else 0.9
+                if now - self.DunkSince >= cap then
                     self.DunkSince = nil
                     self:send()
                     return
@@ -1721,6 +1901,14 @@ function AutoGreen.shutdown(self: any)
     if feedback then
         self.Feedback = nil
         pcall(feedback.Disconnect, feedback)
+    end
+    if self.PlantUntil then
+        local remote = Court.input("MoveDirection")
+        if remote then
+            Court.send(remote, Court.heading() or Vector3.zero)
+        end
+        self.PlantUntil = nil
+        self.PlantRestore = nil
     end
     pcall(Hook.remove)
 end
@@ -1919,7 +2107,7 @@ local function ready(self: any): boolean
         return false
     end
     local where: Vector3 = ball.Position
-    local velocity: Vector3 = ball.AssemblyLinearVelocity
+    local velocity: Vector3 = Court.velocity(ball)
     local offset: Vector3 = where - root.Position
     local high = offset.Y
     if math.sqrt(offset.X * offset.X + offset.Z * offset.Z) > (self.Read("ReboundRange") or 8) or high < 2 or high > 12 or velocity.Y > 4 then
@@ -1972,6 +2160,8 @@ AutoShoot.__index = AutoShoot
 local COOLDOWN = 1.6
 local RETRY = 0.25
 local LAYUP_RANGE = 13
+local FRONT_CONE = 0.34
+local LOOK_AHEAD = 0.45
 local JITTER = 0.15
 local SETTLE = 0.2
 
@@ -1996,6 +2186,39 @@ local function target(root: any, range: number, attack: any?): (any?, number)
     return nil, math.huge
 end
 
+local LIFTED: { [string]: boolean } = { Blocking = true, Jumping = true }
+
+local function blocker(root: any, rim: any, reach: number): boolean
+    local here: Vector3 = root.Position
+    local toRim = Court.flat(rim.Position - here)
+    local ahead: Vector3? = if toRim.Magnitude > 0.5 then toRim.Unit else nil
+    local roots, foe, chars = Court.Roots, Court.Foe, Court.Chars
+    for index = 1, Court.Count do
+        if foe[index] then
+            local theirs = roots[index]
+            local offset = Court.flat(theirs.Position - here)
+            local distance = offset.Magnitude
+            local away = if distance > 0.1 then offset / distance else Vector3.zero
+            local motion = Court.Motion[index] or Court.flat(theirs.AssemblyLinearVelocity)
+            local closing = math.max(-motion:Dot(away), 0)
+            if distance - closing * LOOK_AHEAD <= reach then
+                local character = chars[index]
+                local action = character:GetAttribute("Action")
+                if distance < 3 or (type(action) == "string" and LIFTED[action]) then
+                    return true
+                end
+                local side = if ahead then away:Dot(ahead) else 1
+                local look = Court.flat(theirs.CFrame.LookVector)
+                local facing = if look.Magnitude > 0.1 then -look.Unit:Dot(away) else 1
+                if side > -0.2 and facing > 0 then
+                    return true
+                end
+            end
+        end
+    end
+    return false
+end
+
 local function grounded(mine: any, root: any): boolean
     local humanoid = Court.humanoid(mine)
     if humanoid and humanoid.FloorMaterial == Enum.Material.Air and math.abs(root.AssemblyLinearVelocity.Y) > 2 then
@@ -2014,6 +2237,7 @@ function AutoShoot.step(self: any, now: number)
     if not mine or not root or not Court.HasBall then
         self.Since = nil
         self.GroundAt = nil
+        self.StillAt = nil
         return
     end
     if not self.Since then
@@ -2031,6 +2255,18 @@ function AutoShoot.step(self: any, now: number)
     if now - self.Last < COOLDOWN or now - self.Since < hold / 1000 or now - self.GroundAt < SETTLE then
         return
     end
+    if read("PlantedShot") == true then
+        local part = Court.proxy()
+        local velocity = if part then part.AssemblyLinearVelocity else root.AssemblyLinearVelocity
+        if Court.flat(velocity).Magnitude > 2 or Court.steering(mine) then
+            self.StillAt = nil
+            return
+        end
+        self.StillAt = self.StillAt or now
+        if now - self.StillAt < 0.15 then
+            return
+        end
+    end
     local action = Court.Action
     if (action ~= "" and action ~= "Dribbling" and action ~= nil) or not Court.free(mine) or Court.forced(mine) or Court.HandsOff then
         return
@@ -2044,20 +2280,24 @@ function AutoShoot.step(self: any, now: number)
     if dunk and read("AutoDunk") == true and dunk:claims(distance) then
         return
     end
-    if distance < (read("MinShot") or 0) or distance > (read("ShootRange") or 24) then
+    if distance < (read("MinShot") or 0) or distance > math.min(read("ShootRange") or 24, read("MaxShot") or 120) then
         return
     end
     if distance <= LAYUP_RANGE then
-        local ahead = Court.frontOf(rim, root.Position)
-        if ahead and ahead < -1 then
+        local ahead, aside = Court.frontOf(rim, root.Position)
+        if ahead and ahead < FRONT_CONE * math.sqrt(ahead * ahead + aside * aside) then
             return
         end
     end
-    if Court.nearestFoe(root.Position) <= (read("OpenRange") or 6) then
+    local ignore = self.AutoGreen:ignore()
+    if read("OpenOnly") == true and Court.nearestFoe(root.Position) <= (read("OpenRange") or 6) * (1 - ignore) then
+        return
+    end
+    if blocker(root, rim, (read("ContestRange") or 6) * 1.5 * (1 - ignore)) then
         return
     end
     local contest = self.Contest
-    if contest and contest:estimate(root) > (tonumber(read("MaxContest")) or 35) / 100 then
+    if contest and contest:estimate(root, LOOK_AHEAD) * (1 - ignore) > (tonumber(read("MaxContest")) or 35) / 100 then
         return
     end
     if self.AutoGreen:begin(false) then
@@ -2138,7 +2378,7 @@ function BallMagnet.step(self: any, now: number)
     end
     local here: Vector3 = root.Position
     local where: Vector3 = ball.Position
-    local velocity: Vector3 = ball.AssemblyLinearVelocity
+    local velocity: Vector3 = Court.velocity(ball)
     if velocity.Magnitude < 1 and not self.Chasing and now - self.LastLive > 1.5 then
         return
     end
@@ -2180,8 +2420,8 @@ modules["changelog"] = function(...)
 
 local Changelog = {}
 
-Changelog.VERSION = "1.2"
-Changelog.DATE = "November 10, 2026"
+Changelog.VERSION = "1.2.2"
+Changelog.DATE = "November 17, 2026"
 
 type Group = { Mode: string, Added: { string }?, Changed: { string }?, Removed: { string }?, Fixed: { string }? }
 
@@ -2189,46 +2429,101 @@ Changelog.GROUPS = {
     {
         Mode = "General",
         Added = {
-            "Added Presets, Casual, Legit and Full",
-            "Added Auto Dunk, runs you to the rim and dunks for you",
-            "Added Dunk support for Auto Green",
-            "Added Shot Contest, shows how open your shot is",
-            "Added Max Contest for Auto Shoot, it waits for an open shot",
-            "Added Move Keys, your own key for every dribble move",
-            "Added Play Combo, plays the combo once per key press",
-            "Added Guard Only When Facing for Auto Guard",
-            "Added Dribble Moves When Guarded",
-            "Added separate settings for every glide",
-            "Added stamina and ball handler to the ESP",
+            "Added Auto Ping Compensation, no more release timing guessing",
+            "Added support for a hidden shot meter",
+            "Added Planted Shot, Auto Shoot only shoots while you stand still",
+            "Added Ignore Contest for Auto Shoot, how much defenders are ignored",
+            "Added Auto and Anti Ankle Break",
+            "Added Halo Spin and big man combos",
+            "Added new Move Keys",
+            "Added On/Off keys for Auto Green, Guard, Steal, Block and Dunk",
+            "Added Auto Take Spot and Auto Queue, Auto Queue walks you back to the pad and retries",
+            "Added Share Config codes",
+            "Added Blacktop 1s",
+            "Added Slide and Big Man presets",
+            "Added Glide Strength and Length sliders",
+            "Added a first launch popup that shows the hide and show key",
+            "Added notes on settings that use another card",
         },
         Changed = {
-            "Reworked Auto Green, now press to green and works on more executors",
-            "Reworked Auto Guard, moves you with W A S D and keeps a gap",
-            "Reworked Move With Him, closes out and slides with your man",
-            "Reworked Auto Block, faster and ignores pump fakes",
-            "Reworked Auto Shoot, Auto Pass and Auto Dunk, they pick better moments",
-            "Reworked Glides, each one follows its own move",
-            "Reworked court visuals, ESP and the menu",
-        },
-        Removed = {
-            "Removed Stamina Lock, the server keeps its own stamina",
-            "Removed Tap Rescue, a quick tap of E stays a pump fake",
-            "Removed Shot Stats and Meter Overlay",
+            "Reworked visuals",
+            "Reworked Tap To Shoot, it is one tap now",
+            "Reworked Auto Guard, steals on moving players",
+            "Reworked Contest, ignores defenders behind or beside you",
+            "Reworked Glides, they never pin you anymore",
+            "Reworked Anti Ankle, now a toggle inside Auto Guard",
+            "Improved move direction on mobile",
         },
         Fixed = {
-            "Fixed Auto Shoot shooting from your own half or while contested",
-            "Fixed Auto Guard not walking to the player and stopping every possession",
-            "Fixed Auto Steal in the tutorial",
-            "Fixed Shot Glide doing nothing on a running shot",
-            "Fixed fake shot into step back shooting",
-            "Fixed layup jelly",
-            "Fixed freezing after a foul or dead ball",
-            "Fixed low FPS with the court visuals and ESP on",
+            "Fixed visuals",
+            "Fixed reverse and clutch layups on a quick tap of E or Space",
+            "Fixed pump fakes instead of shots, a short press now greens",
+            "Fixed Auto Green shooting by itself after a block press",
+            "Fixed Auto Dunk not timed",
+            "Fixed Auto Shoot ignoring Only When Open",
+            "Fixed manual shots losing Auto Green while Auto Shoot is on",
+            "Fixed early release when a defender closes in after the press",
+            "Fixed Gather Glide carrying you through the rim",
+            "Fixed Auto Dunk sprinting without a dunk",
+            "Fixed Halo Spin pauses and dropped moves",
+            "Fixed Full Speed learning a wrong speed after dribble moves",
+            "Fixed players on other courts counted as defenders",
+            "Fixed Auto Take Spot spamming joins and picking Squad pads",
+            "Fixed Move With Him dropping the guard on close out",
+            "Fixed shot timing drifting between sessions",
+            "Fixed script not starting on Delta mobile",
+            "Fixed show UI button missing on mobile devices",
         },
     },
 } :: { Group }
 
 Changelog.HISTORY = {
+    {
+        Version = "1.2",
+        Date = "November 10, 2026",
+        Groups = {
+            {
+                Mode = "General",
+                Added = {
+                    "Added Presets, Casual, Legit and Full",
+                    "Added Auto Dunk, runs you to the rim and dunks for you",
+                    "Added Dunk support for Auto Green",
+                    "Added Shot Contest, shows how open your shot is",
+                    "Added Max Contest for Auto Shoot, it waits for an open shot",
+                    "Added Move Keys, your own key for every dribble move",
+                    "Added Play Combo, plays the combo once per key press",
+                    "Added Guard Only When Facing for Auto Guard",
+                    "Added Dribble Moves When Guarded",
+                    "Added separate settings for every glide",
+                    "Added stamina and ball handler to the ESP",
+                },
+                Changed = {
+                    "Reworked Auto Green, now press to green and works on more executors",
+                    "Reworked Auto Guard, moves you with W A S D and keeps a gap",
+                    "Reworked Move With Him, closes out and slides with your man",
+                    "Reworked Auto Block, faster and ignores pump fakes",
+                    "Reworked Auto Shoot, Auto Pass and Auto Dunk, they pick better moments",
+                    "Reworked Glides, each one follows its own move",
+                    "Reworked court visuals, ESP and the menu",
+                },
+                Removed = {
+                    "Removed Stamina Lock, the server keeps its own stamina",
+                    "Removed Tap Rescue, a quick tap of E stays a pump fake",
+                    "Removed Shot Stats and Meter Overlay",
+                },
+                Fixed = {
+                    "Fixed Auto Shoot shooting from your own half or while contested",
+                    "Fixed Auto Guard not walking to the player and stopping every possession",
+                    "Fixed Auto Steal in the tutorial",
+                    "Fixed Shot Glide doing nothing on a running shot",
+                    "Fixed fake shot into step back shooting",
+                    "Fixed layup jelly",
+                    "Fixed freezing after a foul or dead ball",
+                    "Fixed low FPS with the court visuals and ESP on",
+                },
+            },
+        },
+    },
     {
         Version = "1",
         Date = "November 4, 2026",
@@ -2296,8 +2591,8 @@ Combo.__index = Combo
 local INPUTS = Config.MOVE_INPUTS
 
 local START = 0.45
-local GAP_MIN = 0.15
-local GAP_MAX = 0.3
+local GAP_MIN = 0.06
+local GAP_MAX = 0.14
 local REST = 0.4
 local RIM_CLEAR = 24
 local ONCE_WAIT = 1.2
@@ -2384,7 +2679,7 @@ function Combo.step(self: any, now: number)
     end
     local free: number = self.FreeAt or now
     self.FreeAt = free
-    if now - free < (if self.Rest then REST else self.Gap) then
+    if now - free < math.max(0, (if self.Rest then REST else self.Gap) - Court.Ping) then
         return
     end
     local remote = Court.input("Dribble")
@@ -2392,6 +2687,12 @@ function Combo.step(self: any, now: number)
         return
     end
     local chain = Config.COMBOS[read("ComboMoves")] or Config.COMBOS[Config.COMBO_NAMES[1]]
+    if not self.Seen and self.Index > 0 and (self.Retried or 0) < 1 then
+        self.Index -= 1
+        self.Retried = (self.Retried or 0) + 1
+    else
+        self.Retried = 0
+    end
     self.Index = self.Index % #chain + 1
     self.Rest = self.Index == #chain
     if self.Rest and (once or read("ComboOnce") == true) then
@@ -2426,7 +2727,10 @@ Config.GUARD_BALL = "Ball Handler"
 Config.GUARD_NEAREST = "Nearest Player"
 Config.GUARD_TARGETS = { Config.GUARD_BALL, Config.GUARD_NEAREST }
 
-Config.COMBO_NAMES = { "Cross Tween", "Hesi Cross", "Behind Back Spin", "Double Cross Snatch", "Breakdown Stepback", "Half Spin Cross" }
+Config.COMBO_NAMES = {
+    "Cross Tween", "Hesi Cross", "Behind Back Spin", "Double Cross Snatch", "Breakdown Stepback", "Half Spin Cross",
+    "Halo Spin", "Double Behind Snatch", "Signature Combo", "Big Drop Step", "Big Spin Out", "Big Face Up",
+}
 Config.COMBOS = {
     ["Cross Tween"] = { "Crossover", "Tween", "Crossover" },
     ["Hesi Cross"] = { "Hesitation", "Crossover", "Hesitation" },
@@ -2434,6 +2738,12 @@ Config.COMBOS = {
     ["Double Cross Snatch"] = { "DoubleCrossover", "SnatchBack" },
     ["Breakdown Stepback"] = { "Breakdown", "Crossover", "StepBack" },
     ["Half Spin Cross"] = { "HalfSpin", "Crossover" },
+    ["Halo Spin"] = { "BehindBack", "HalfSpin", "Spin" },
+    ["Double Behind Snatch"] = { "DoubleBehindBack", "SnatchBack" },
+    ["Signature Combo"] = { "Combo" },
+    ["Big Drop Step"] = { "Hesitation", "HalfSpin", "StepBack" },
+    ["Big Spin Out"] = { "Crossover", "Spin", "SnatchBack" },
+    ["Big Face Up"] = { "Breakdown", "Hesitation", "DoubleCrossover" },
 } :: { [string]: { string } }
 
 Config.MOVE_INPUTS = {
@@ -2447,6 +2757,9 @@ Config.MOVE_INPUTS = {
     SnatchBack = { R = "XX", L = "XX" },
     HalfSpin = { R = "V", L = "V" },
     Breakdown = { R = "VC", L = "VZ" },
+    DoubleBehindBack = { R = "XC", L = "XZ" },
+    Combo = { R = "VV", L = "VV" },
+    SwitchHand = { R = "H", L = "H" },
 } :: { [string]: { [string]: string } }
 
 Config.MOVE_KEYS = {
@@ -2460,6 +2773,9 @@ Config.MOVE_KEYS = {
     { "Snatch Back", "SnatchBack" },
     { "Half Spin", "HalfSpin" },
     { "Breakdown", "Breakdown" },
+    { "Double Behind", "DoubleBehindBack" },
+    { "Signature", "Combo" },
+    { "Switch Hand", "SwitchHand" },
 } :: { { string } }
 
 
@@ -2485,7 +2801,9 @@ Config.PARENT = {
     BlockDribbleKeys = "MoveKeys",
     ComboOnce = "DribbleCombo", ComboGuarded = "DribbleCombo",
     TapShoot = "AutoGreen", AutoCalibrate = "AutoGreen", RimFront = "AutoGreen", NotifyRelease = "AutoGreen", SafeMode = "AutoGreen",
-    DribbleGlideSteer = "DribbleGlide", GatherGlideSteer = "GatherGlide", ShotGlideSteer = "ShotGlide",
+    AutoPing = "AutoGreen", PlantedShot = "AutoShoot",
+    StealAlways = "AutoSteal",
+    AntiAnkle = "AutoGuard",
     EspTeam = "Esp", EspStamina = "Esp", EspBallOnly = "Esp",
 } :: { [string]: string }
 
@@ -2516,10 +2834,10 @@ Config.DEFAULTS = {
     AutoSteal = false,
     StealRange = 8,
     AutoGuard = false,
-    GuardRange = 7,
+    GuardRange = 16,
     GuardTarget = "Ball Handler",
-    GuardMove = true,
-    GuardGap = 16,
+    GuardMove = false,
+    GuardGap = 10,
     GuardFacing = false,
     ReadFakes = true,
     StealFacing = true,
@@ -2556,18 +2874,15 @@ Config.DEFAULTS = {
     DribbleGlide = false,
     GatherGlide = false,
     ShotGlide = false,
-    DribbleGlideSpeed = 5,
-    DribbleGlideTime = 240,
+    DribbleGlideSpeed = 10,
+    DribbleGlideTime = 350,
     DribbleGlideStrength = 30,
-    DribbleGlideSteer = false,
     GatherGlideSpeed = 14,
     GatherGlideTime = 500,
     GatherGlideStrength = 100,
-    GatherGlideSteer = false,
     ShotGlideSpeed = 10,
     ShotGlideTime = 440,
     ShotGlideStrength = 60,
-    ShotGlideSteer = false,
     ComboOnce = true,
     MoveKeys = false,
     BlockDribbleKeys = false,
@@ -2598,7 +2913,23 @@ Config.DEFAULTS = {
     ColorTeam = Color3.fromRGB(105, 235, 135),
     ColorHolder = Color3.fromRGB(255, 215, 80),
     ColorBackground = Color3.fromRGB(16, 16, 22),
+    AutoPing = true,
+    IgnoreContest = 0,
+    PlantedShot = false,
+    StealAlways = false,
+    AutoAnkle = false,
+    AntiAnkle = false,
+    AutoSpot = false,
+    AutoQueue = false,
 } :: { [string]: any }
+
+Config.CHOICES = {
+    GuardTarget = Config.GUARD_TARGETS,
+    DunkType = Config.DUNK_TYPES,
+    ContestStyle = Config.CONTEST_STYLES,
+    ContestColorMode = Config.CONTEST_COLORS,
+    ComboMoves = Config.COMBO_NAMES,
+} :: { [string]: { string } }
 
 return Config
 end
@@ -2641,15 +2972,22 @@ function Contest.new(read: (string) -> any, autoGreen: any?): any
     return setmetatable({ Read = read, AutoGreen = autoGreen, Light = nil :: any, Color = OPEN, Glow = 0, Value = 0, Gap = math.huge, Open = true }, Contest)
 end
 
-function Contest.measure(self: any, root: any): (number, number)
+function Contest.measure(self: any, root: any, lead: number?): (number, number)
     local range: number = self.Read("ContestRange") or 6
     local here: Vector3 = root.Position
-    local _, rim = Court.rimDistance(here)
+    local mine = Court.Mine
+    local rim: any = if mine then Court.goal(mine) else nil
+    if not rim then
+        local _, nearest = Court.rimDistance(here)
+        rim = nearest
+    end
     local toRim: Vector3? = nil
     if rim then
         local flat = Court.flat(rim.Position - here)
         toRim = if flat.Magnitude > 0.5 then flat.Unit else nil
     end
+    local myLook = Court.flat(root.CFrame.LookVector)
+    local ahead: Vector3? = toRim or (if myLook.Magnitude > 0.1 then myLook.Unit else nil)
     local worst, gap = 0, math.huge
     local who, whoRoot = nil, nil
     local roots, foe, chars = Court.Roots, Court.Foe, Court.Chars
@@ -2660,16 +2998,25 @@ function Contest.measure(self: any, root: any): (number, number)
             if distance < gap then
                 gap = distance
             end
-            if distance < range * 1.5 + 2 then
+            if distance - (lead or 0) * 20 < range * 1.5 + 2 then
                 local away = if distance > 0.1 then offset / distance else Vector3.zero
                 local theirRoot = roots[index]
-                local motion = Court.flat(theirRoot.AssemblyLinearVelocity)
-                local closing = math.clamp(-motion:Dot(away), -6, 12)
-                local effective = math.max(distance - closing * 0.15, 0)
+                local motion = Court.Motion[index] or Court.flat(theirRoot.AssemblyLinearVelocity)
+                local closing = math.clamp(-motion:Dot(away), -6, if lead then 20 else 12)
+                local effective = math.max(distance - closing * (lead or 0.15), 0)
                 local closeness = math.clamp((range * 1.5 - effective) / range, 0, 1)
                 local front = 0.6
-                if toRim and distance > 0.1 then
-                    front = 0.35 + 0.65 * math.clamp(away:Dot(toRim) * 0.5 + 0.5, 0, 1)
+                if ahead and distance > 0.1 then
+                    local side = away:Dot(ahead)
+                    front = math.clamp((side - 0.15) / 0.55, 0, 1)
+                    if front > 0 and myLook.Magnitude > 0.1 and toRim then
+                        local lookSide = away:Dot(myLook.Unit)
+                        if lookSide < -0.2 then
+                            front *= math.clamp((lookSide + 0.6) / 0.4, 0, 1)
+                        end
+                    end
+                elseif distance <= 0.1 then
+                    front = 1
                 end
                 local look = Court.flat(theirRoot.CFrame.LookVector)
                 local facing = if look.Magnitude > 0.1 and distance > 0.1 then math.clamp(-look.Unit:Dot(away) * 0.5 + 0.5, 0, 1) else 0.5
@@ -2685,9 +3032,11 @@ function Contest.measure(self: any, root: any): (number, number)
     return worst, gap
 end
 
-function Contest.estimate(self: any, root: any): number
-    local value, gap = self:measure(root)
-    self.Value, self.Gap = value, gap
+function Contest.estimate(self: any, root: any, lead: number?): number
+    local value, gap = self:measure(root, lead)
+    if not lead then
+        self.Value, self.Gap = value, gap
+    end
     return value
 end
 
@@ -2911,6 +3260,7 @@ Court.FreeAt = -math.huge
 Court.Foul = false
 Court.Ball = {} :: { boolean }
 Court.FoeHeld = false
+Court.Motion = {} :: { Vector3 }
 Court.Touched = {} :: { string }
 
 local function flat(vector: Vector3): Vector3
@@ -2928,6 +3278,36 @@ local function record(character: any): Map
         records[character] = entry
     end
     return entry
+end
+
+local function track(character: any, root: any, now: number): Vector3
+    local entry = record(character)
+    local real = if root.Anchored then Vector3.zero else root.AssemblyLinearVelocity
+    local position = root.Position
+    local last: Vector3? = entry.Seen
+    local at: number = entry.SeenAt or now
+    local smooth: Vector3 = entry.Motion or Vector3.zero
+    local dt = now - at
+    if last and dt < 0.2 and (position - last).Magnitude < 0.01 then
+        return if real.Magnitude > 0.5 then real else smooth
+    end
+    if last and dt > 0.01 and dt <= 0.5 then
+        local step = (position - last) / dt
+        if step.Magnitude > 120 then
+            step = Vector3.zero
+        end
+        smooth = smooth:Lerp(step, math.min(dt * 12, 1))
+        entry.Seen, entry.SeenAt = position, now
+    elseif not last or dt > 0.5 then
+        entry.Seen, entry.SeenAt = position, now
+        smooth = Vector3.zero
+    end
+    entry.Motion = smooth
+    return if real.Magnitude > 0.5 then real else smooth
+end
+
+function Court.velocity(part: any): Vector3
+    return track(part, part, Court.Now)
 end
 
 function Court.root(character: any): any?
@@ -3482,6 +3862,13 @@ function Court.heading(): Vector3?
         x -= 1
     end
     if x == 0 and z == 0 then
+        if userInput.TouchEnabled and Court.UserMoving then
+            local part = Court.proxy()
+            local velocity = if part then flat(part.AssemblyLinearVelocity) else Vector3.zero
+            if velocity.Magnitude > 1 then
+                return velocity.Unit
+            end
+        end
         return nil
     end
     local frame = camera.CFrame
@@ -3512,14 +3899,123 @@ local fronts: { [any]: any } = {}
 local hoopsFolder: any = nil
 local nextRimScan = 0
 local rimWait = 0.5
+local scopedRims: { any } = {}
+local scopeKey: number? = nil
+local scopeFirst: any = nil
+local myCourt: any = nil
+local courtsFolder: any = nil
+local nextCourtScan = 0
+local courtBoxes: { [any]: any } = {}
 
 local function clearRims()
     table.clear(rimCache)
     table.clear(fronts)
+    table.clear(scopedRims)
+    scopeKey = nil
     hoopsFolder = nil
 end
 
+local function courtModels(): any?
+    local folder = courtsFolder
+    if folder and folder.Parent then
+        return folder
+    end
+    courtsFolder = nil
+    local now = os.clock()
+    if now < nextCourtScan then
+        return nil
+    end
+    nextCourtScan = now + 3
+    local map = workspace:FindFirstChild("Map")
+    folder = if map then map:FindFirstChild("Courts") else nil
+    courtsFolder = folder
+    return folder
+end
+
+local function boxOf(court: any): any?
+    local box = courtBoxes[court]
+    if box == nil then
+        local ok, frame, size = pcall(court.GetBoundingBox, court)
+        box = if ok then { frame, size } else false
+        courtBoxes[court] = box
+    end
+    return box or nil
+end
+
+local function inside(box: any, position: Vector3, margin: number): boolean
+    local offset = box[1]:PointToObjectSpace(position)
+    local half = box[2] / 2
+    return math.abs(offset.X) <= half.X + margin and math.abs(offset.Z) <= half.Z + margin
+end
+
+local function scope(mine: any)
+    local number = if mine then mine:GetAttribute("CourtNumber") else nil
+    local key = if type(number) == "number" and number > 0 then number * 1000 + #rimCache else nil
+    if key == scopeKey and scopeFirst == rimCache[1] then
+        return
+    end
+    table.clear(scopedRims)
+    myCourt = nil
+    scopeKey = nil
+    scopeFirst = rimCache[1]
+    if not key then
+        return
+    end
+    local folder = courtModels()
+    if not folder then
+        return
+    end
+    scopeKey = key
+    for _, court in folder:GetChildren() do
+        if court:GetAttribute("CourtNumber") == number then
+            myCourt = court
+            break
+        end
+    end
+    local hoops = if myCourt then myCourt:GetAttribute("Hoops") else nil
+    if type(hoops) ~= "string" or not hoopsFolder then
+        return
+    end
+    local names: { [string]: boolean } = {}
+    for name in string.gmatch(hoops, "[^,;%s]+") do
+        names[name] = true
+    end
+    local box = boxOf(myCourt)
+    for _, rim in rimCache do
+        local model = rim
+        while model.Parent and model.Parent ~= hoopsFolder do
+            model = model.Parent
+        end
+        if (model.Parent == hoopsFolder and names[model.Name]) or (box and inside(box, rim.Position, 4)) then
+            table.insert(scopedRims, rim)
+        end
+    end
+end
+
+local function foreign(position: Vector3): boolean
+    local folder = courtsFolder
+    if not myCourt or not folder or not folder.Parent then
+        return false
+    end
+    local own = boxOf(myCourt)
+    if not own or inside(own, position, 6) then
+        return false
+    end
+    for _, court in folder:GetChildren() do
+        if court ~= myCourt and court:GetAttribute("CourtNumber") ~= nil then
+            local box = boxOf(court)
+            if box and inside(box, position, 0) then
+                return true
+            end
+        end
+    end
+    return false
+end
+
 function Court.rims(): { any }
+    if scopedRims[1] then
+        return scopedRims
+    end
     if rimCache[1] then
         return rimCache
     end
@@ -3751,7 +4247,7 @@ function Court.ball(): any?
         elseif child:IsA("Model") then
             part = child.PrimaryPart
         end
-        if part then
+        if part and not foreign(part.Position) then
             local distance = if origin then (part.Position - origin).Magnitude else 0
             if distance < bestDistance then
                 bestDistance = distance
@@ -3822,6 +4318,27 @@ local function trim(list: { any }, from: number, to: number)
     end
 end
 
+local function sameCourt(mine: any, character: any): boolean
+    local court = mine:GetAttribute("CourtNumber")
+    local theirs = character:GetAttribute("CourtNumber")
+    if type(court) == "number" and court > 0 and type(theirs) == "number" and theirs > 0 and theirs ~= court then
+        return false
+    end
+    if (type(court) ~= "number" or court == 0) and type(theirs) == "number" and theirs > 0 and string.sub(character.Name, 1, 2) ~= "AI" then
+        return false
+    end
+    if string.sub(character.Name, 1, 2) == "AI" or character:GetAttribute("TeamIndex") ~= 0 then
+        return true
+    end
+    if mine:GetAttribute("OnCourt") == true and character:GetAttribute("OnCourt") == false then
+        return false
+    end
+    if mine:GetAttribute("InGame") == true and character:GetAttribute("InGame") == false then
+        return false
+    end
+    return true
+end
+
 function Court.refresh(now: number)
     Court.Now = now
     updatePing(now)
@@ -3836,6 +4353,7 @@ function Court.refresh(now: number)
     local root = if mine then Court.root(mine) else nil
     Court.Mine = mine
     Court.Root = root
+    scope(mine)
     Court.Action = if mine then mine:GetAttribute("Action") else nil
     Court.HasBall = mine ~= nil and Court.holds(mine)
     local forced = Court.forced(mine)
@@ -3862,7 +4380,7 @@ function Court.refresh(now: number)
     local inbound = Court.Action == "Inbounding"
     if folder and mine then
         for _, character in roster do
-            if character ~= mine and character.Parent == folder and character:GetAttribute("TeamIndex") ~= nil then
+            if character ~= mine and character.Parent == folder and character:GetAttribute("TeamIndex") ~= nil and sameCourt(mine, character) then
                 local other = Court.root(character)
                 if other then
                     count += 1
@@ -3877,6 +4395,7 @@ function Court.refresh(now: number)
                     local has = Court.holds(character)
                     chars[count] = character
                     roots[count] = other
+                    Court.Motion[count] = track(character, other, now)
                     foe[count] = enemy
                     carry[count] = has
                     held[count] = has and Court.ballNear(other.Position, BALL_REACH) ~= false
@@ -3898,6 +4417,7 @@ function Court.refresh(now: number)
         trim(foe, count + 1, before)
         trim(carry, count + 1, before)
         trim(held, count + 1, before)
+        trim(Court.Motion, count + 1, before)
     end
     Court.Count = count
     Court.TeamBall = teamBall
@@ -3991,7 +4511,7 @@ local GAP_LOW = 2.8
 local GAP_HIGH = 3.4
 local WANDER = 0.2
 local WANDER_RATE = 1.3
-local REACH = 16
+local REACH = 10
 local START_MIN = 0.16
 local START_MAX = 0.28
 local SWITCH_MIN = 0.06
@@ -3999,7 +4519,7 @@ local SWITCH_MAX = 0.14
 local RAMP = 0.3
 local RAMP_FLOOR = 0.45
 local CHOP = 5
-local EXTRA = 2.5
+local EXTRA = 3.5
 local EASE_TIME = 0.35
 local SQUARE = 0.2
 local SQUARED = 0.75
@@ -4322,10 +4842,22 @@ end
 function Defense.follow(self: any, mine: any, root: any, target: any?, now: number, dt: number)
     local read = self.Read
     local action = Court.Action
+    if action == "BlowbyPush" or action == "Bumping" then
+        self.AnkleAt = now
+    end
     if (type(action) == "string" and NO_FOLLOW[action]) or mine:GetAttribute("CanMove") == false or mine:GetAttribute("Stunned") == true or Court.handsOff(mine) then
         self.EngageFor = nil
         self:rest()
         return
+    end
+    if read("AntiAnkle") == true and self.AnkleAt and now - self.AnkleAt < 1.5 and target then
+        self.AnkleAt = nil
+        self.Recovering = true
+        self.GuardOn = nil
+        self.Ramp = 1
+        if self.Player then
+            self.Player.WantSprint = now + 0.6
+        end
     end
     if Court.steering(mine) then
         self.UserAt = now
@@ -4392,11 +4924,22 @@ function Defense.follow(self: any, mine: any, root: any, target: any?, now: numb
     local theirSpeed = lead.Magnitude
     local direction: Vector3? = nil
     local wanted = (self.Gap or GAP) + math.sin(now * WANDER_RATE + (self.Phase or 0)) * WANDER
+    local theirAction = target:GetAttribute("Action")
+    if read("AntiAnkle") == true and distance < 8 and (theirAction == "Dribbling" or theirAction == "BlowingBy") then
+        self.BraceUntil = now + 0.6
+    end
+    if self.BraceUntil and now < self.BraceUntil then
+        wanted += 1.2
+    end
     local gap = wanted
     local rim = self:rimFor(theirs, here, target)
+    local mineToRim: number? = nil
+    local theirToRim: number? = nil
     if rim then
         local toRim = flat(rim.Position - theirs)
         local length = toRim.Magnitude
+        theirToRim = length
+        mineToRim = flat(rim.Position - here).Magnitude
         if length > 1.5 then
             direction = toRim / length
             gap = math.min(wanted, math.max(length - 1.5, 1))
@@ -4405,7 +4948,19 @@ function Defense.follow(self: any, mine: any, root: any, target: any?, now: numb
     if not direction then
         direction = if distance > 0.5 then offset / -distance else -flat(root.CFrame.LookVector)
     end
-    local raw: Vector3 = seen + lead * AHEAD + (direction :: Vector3) * gap
+    local axis: Vector3 = direction :: Vector3
+    local drive = lead:Dot(axis)
+    local lateral = lead - axis * drive
+    if drive > 4 then
+        gap = math.min(gap + math.clamp((drive - 4) * 0.12, 0, 2), math.max((theirToRim or gap) - 1.5, 1))
+    end
+    local ahead = math.clamp(AHEAD + theirSpeed * 0.008, AHEAD, 0.28)
+    local raw: Vector3 = seen + lead * ahead + lateral * 0.06 + axis * gap
+    local extraLead = (ahead - AHEAD) * theirSpeed + lateral.Magnitude * 0.06
+    if mineToRim and theirToRim and distance < 6 and theirToRim + 1.5 < mineToRim and theirSpeed > 6 and not self.Recovering then
+        self.Recovering = true
+        self.GuardOn = nil
+    end
     local hand = target:GetAttribute("Hand")
     if hand == "L" or hand == "R" then
         local right = flat(theirRoot.CFrame.RightVector)
@@ -4426,7 +4981,7 @@ function Defense.follow(self: any, mine: any, root: any, target: any?, now: numb
     self.EaseUntil = nil
     local toSpot = flat((spot :: Vector3) - here)
     local span = toSpot.Magnitude
-    if not self.Recovering and span > RECOVER and theirSpeed > 6 then
+    if not self.Recovering and now - (self.EngageAt or 0) > 0.4 and span - extraLead > RECOVER and theirSpeed > 6 then
         self.Recovering = true
         self.GuardOn = nil
     elseif self.Recovering and span < RECOVERED then
@@ -4778,17 +5333,44 @@ function Defense.steal(self: any, now: number, mine: any, root: any, here: Vecto
             self.StillSince = now
         end
         local motion = handlerRoot.AssemblyLinearVelocity
-        local speed = Vector3.new(motion.X, 0, motion.Z).Magnitude
+        for index = 1, Court.Count do
+            if Court.Chars[index] == handler then
+                motion = Court.Motion[index] or motion
+                break
+            end
+        end
+        local planar = Vector3.new(motion.X, 0, motion.Z)
+        local speed = planar.Magnitude
         if speed >= STILL_SPEED then
             self.StillSince = now
-            return string.format("he is moving, %.1f studs/s", speed)
-        end
-        if handlerAction ~= "" and handlerAction ~= nil then
-            self.StillSince = now
-            return "his Action is " .. tostring(handlerAction)
-        end
-        if now - self.StillSince < STILL_TIME then
-            return "waiting for him to stand still"
+            if read("StealAlways") ~= true then
+                return string.format("he is moving, %.1f studs/s", speed)
+            end
+            if handlerAction ~= "" and handlerAction ~= nil and handlerAction ~= "Dribbling" then
+                return "his Action is " .. tostring(handlerAction)
+            end
+            local predicted = flat(handlerRoot.Position + planar * 0.18 - here)
+            local reach = predicted.Magnitude
+            if reach > range * 0.9 then
+                return string.format("moving, out of reach at %.1f studs", reach)
+            end
+            if reach > 0.5 then
+                local toward = predicted / reach
+                if flat(root.CFrame.LookVector):Dot(toward) < 0.45 then
+                    return "moving, you do not face where he is going"
+                end
+                if planar:Dot(toward) > 10 then
+                    return "moving, he runs away from you"
+                end
+            end
+        else
+            if handlerAction ~= "" and handlerAction ~= nil then
+                self.StillSince = now
+                return "his Action is " .. tostring(handlerAction)
+            end
+            if now - self.StillSince < STILL_TIME then
+                return "waiting for him to stand still"
+            end
         end
     end
     local action = Court.Action
@@ -4845,6 +5427,7 @@ local PROFILES: { [string]: Map } = {
     Dunk = { Priority = 3, Accel = 38, Base = 6, Gain = 1.6, Stop = 2, Resume = 4 },
     Guard = { Priority = 2, Accel = 75, Brake = 200, Base = 1.5, Gain = 5, Stop = 0.8, Resume = 1.6, Direct = true, Turn = math.rad(280) },
     Magnet = { Priority = 1, Accel = 60, Base = 5, Gain = 3, Stop = 1, Resume = 1.5 },
+    Queue = { Priority = 0, Accel = 60, Base = 5, Gain = 3, Stop = 1, Resume = 1.5 },
 }
 
 local owner: string? = nil
@@ -5366,6 +5949,471 @@ end
 
 return Esp
 end
+modules["extras"] = function(...)
+
+local import: (string) -> any = ...
+local Config: typeof(require("./config")) = import("config")
+local Court: typeof(require("./court")) = import("court")
+local Drive: typeof(require("./drive")) = import("drive")
+
+local Extras = {}
+Extras.__index = Extras
+
+type Map = { [string]: any }
+
+local players: any = game:GetService("Players")
+local flat = Court.flat
+
+local SPOT_RANGE = 7.5
+local SPOT_EVERY = 0.4
+local SPOT_RETRY = 2
+local SPOT_TRIES = 3
+local QUEUE_DELAY = 2
+local QUEUE_WINDOW = 20
+local ANKLE_COOLDOWN = 1.8
+local ANKLE_RANGE = 5.5
+local ANKLE_LEAN = 5
+
+function Extras.new(read: (string) -> any): any
+    return setmetatable({
+        Read = read,
+        SpotAt = 0,
+        JoinedAt = -math.huge,
+        LastPad = nil :: Map?,
+        WasInGame = false,
+        QueueAt = nil :: number?,
+        AnkleAt = -math.huge,
+    }, Extras)
+end
+
+local function attribute(name: string): any
+    local mine = Court.Mine
+    local value = if mine then mine:GetAttribute(name) else nil
+    if value == nil then
+        local player = players.LocalPlayer
+        local character = if player then player.Character else nil
+        if character then
+            value = character:GetAttribute(name)
+        end
+    end
+    return value
+end
+
+local function padPart(item: any): any?
+    if item:IsA("BasePart") then
+        return item
+    end
+    local circle = item:FindFirstChild("Circle")
+    return if circle and circle:IsA("BasePart") then circle else nil
+end
+
+function Extras.nearestPad(self: any): (Map?, Vector3?)
+    local root = Court.Root
+    local map = workspace:FindFirstChild("Map")
+    local courts = if map then map:FindFirstChild("Courts") else nil
+    if not root or not courts then
+        return nil, nil
+    end
+    local here: Vector3 = root.Position
+    local best: Map? = nil
+    local bestPosition: Vector3? = nil
+    local bestDistance = math.huge
+    for _, court in courts:GetChildren() do
+        local spots = court:FindFirstChild("Spots")
+        if spots then
+            for _, kind in spots:GetChildren() do
+                if kind.Name ~= "Squad" then
+                    for _, item in kind:GetChildren() do
+                        local part = padPart(item)
+                        if part then
+                            local distance = flat(here - part.Position).Magnitude
+                            if distance < SPOT_RANGE and distance < bestDistance then
+                                bestDistance = distance
+                                best = { Court = court.Name, SpotType = kind.Name, SpotIndex = item.Name }
+                                bestPosition = part.Position
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+    return best, bestPosition
+end
+
+function Extras.joinSpot(self: any, pad: Map): boolean
+    local folder = Court.service("SpotService")
+    local remote = if folder then folder:FindFirstChild("JoinSpot") else nil
+    if not remote then
+        return false
+    end
+    self.JoinedAt = os.clock()
+    self.LastPad = pad
+    return Court.send(remote, pad)
+end
+
+function Extras.spots(self: any, now: number)
+    local read = self.Read
+    local spotOn = read("AutoSpot") == true
+    local queueOn = read("AutoQueue") == true
+    if not spotOn and not queueOn then
+        self.QueueAt = nil
+        self.WalkTo = nil
+        return
+    end
+    local inGame = attribute("InGame") == true
+    if self.WasInGame and not inGame and queueOn then
+        self.QueueAt = now + QUEUE_DELAY
+    end
+    self.WasInGame = inGame
+    if now < self.SpotAt then
+        return
+    end
+    self.SpotAt = now + SPOT_EVERY
+    if inGame or attribute("OnCourt") == true then
+        self.WalkTo = nil
+        return
+    end
+    local onSpot = attribute("OnSpot") == true
+    local pad, padPosition = self:nearestPad()
+    if onSpot then
+        if pad then
+            self.LastPad = pad
+            self.LastPadPosition = padPosition
+        end
+        self.QueueAt = nil
+        self.WalkTo = nil
+        self.FailedPad = nil
+        self.Fails = 0
+        return
+    end
+    if not pad then
+        self.FailedPad = nil
+        self.Fails = 0
+    end
+    local queueing = false
+    local queued: number? = self.QueueAt
+    if queueOn and queued and now >= queued then
+        if now - queued > QUEUE_WINDOW or not self.LastPad then
+            self.QueueAt = nil
+        else
+            queueing = true
+        end
+    end
+    if queueing and not pad then
+        self.WalkTo = self.LastPadPosition
+        return
+    end
+    self.WalkTo = nil
+    if not pad or not (spotOn or queueing) or now - self.JoinedAt < SPOT_RETRY then
+        return
+    end
+    local key = pad.Court .. pad.SpotType .. pad.SpotIndex
+    if key == self.FailedPad and (self.Fails or 0) >= SPOT_TRIES then
+        return
+    end
+    self.Fails = if key == self.FailedPad then (self.Fails or 0) + 1 else 1
+    self.FailedPad = key
+    self.LastPadPosition = padPosition
+    self:joinSpot(pad)
+end
+
+function Extras.walk(self: any)
+    local target: Vector3? = self.WalkTo
+    local root = Court.Root
+    if not target or not root or self.Read("AutoQueue") ~= true or Court.HandsOff then
+        if self.Walking then
+            self.Walking = false
+            Drive.clear("Queue")
+        end
+        return
+    end
+    self.Walking = true
+    Drive.set("Queue", Vector3.new(target.X, root.Position.Y, target.Z), 14, true, false)
+end
+
+function Extras.ankle(self: any, now: number)
+    if self.Read("AutoAnkle") ~= true or now - self.AnkleAt < ANKLE_COOLDOWN then
+        return
+    end
+    local mine, root = Court.Mine, Court.Root
+    if not mine or not root or not Court.HasBall or Court.HandsOff then
+        return
+    end
+    local action = Court.Action
+    if (action ~= "" and action ~= nil) or not Court.free(mine) or mine:GetAttribute("Debounce") == true then
+        return
+    end
+    local distance = Court.rimDistance(root.Position)
+    if distance and distance < 8 then
+        return
+    end
+    local look = flat(root.CFrame.LookVector)
+    if look.Magnitude < 0.1 then
+        return
+    end
+    look = look.Unit
+    local right = Vector3.new(-look.Z, 0, look.X)
+    local here: Vector3 = root.Position
+    local lean: number? = nil
+    local chars, roots, foe = Court.Chars, Court.Roots, Court.Foe
+    for index = 1, Court.Count do
+        if foe[index] then
+            local offset = flat(roots[index].Position - here)
+            local gap = offset.Magnitude
+            if gap < ANKLE_RANGE and gap > 0.5 and look:Dot(offset / gap) > 0.5 then
+                local velocity = Court.Motion[index] or flat(roots[index].AssemblyLinearVelocity)
+                local side = velocity:Dot(right)
+                local guarding = chars[index]:GetAttribute("HoldingG") == true
+                if math.abs(side) >= ANKLE_LEAN and (guarding or math.abs(side) >= ANKLE_LEAN + 2) then
+                    lean = side
+                end
+            end
+        end
+    end
+    if not lean then
+        return
+    end
+    local remote = Court.input("Dribble")
+    if not remote then
+        return
+    end
+    local hand = if mine:GetAttribute("Hand") == "L" then "L" else "R"
+    local goRight = lean < 0
+    local move = if (hand == "R" and not goRight) or (hand == "L" and goRight) then "Crossover" else "Hesitation"
+    local keys = Config.MOVE_INPUTS[move]
+    if not keys then
+        return
+    end
+    self.AnkleAt = now
+    local heading = (look + right * (if goRight then 0.8 else -0.8)).Unit
+    local sprint = Court.sprintHeld() or mine:GetAttribute("Sprinting") == true
+    Court.send(remote, keys[hand], sprint, heading)
+end
+
+function Extras.step(self: any, now: number)
+    pcall(self.spots, self, now)
+    pcall(self.walk, self)
+    pcall(self.ankle, self, now)
+end
+
+function Extras.shutdown(self: any)
+    self.WalkTo = nil
+    if self.Walking then
+        self.Walking = false
+        Drive.clear("Queue")
+    end
+end
+
+return Extras
+end
+modules["floor"] = function(...)
+
+local import: (string) -> any = ...
+local Env: typeof(require("./env")) = import("env")
+
+local Floor = {}
+Floor.__index = Floor
+
+local KEEP = "__OkloFloorFolder"
+local THICK = 0.02
+local EDGE = 0.22
+local LINE_LIFT = 0.03
+local FLAT = CFrame.Angles(-math.pi / 2, 0, 0)
+local ARC_PHASE = -math.pi / 2
+
+type Item = { Object: any, Last: { [string]: any }, Used: boolean }
+
+local function holder(): any?
+    local hui = Env.gethui
+    if hui then
+        local ok, folder = pcall(hui)
+        if ok and folder then
+            return folder
+        end
+    end
+    local ok, core = pcall(game.GetService, game, "CoreGui")
+    return if ok then core else nil
+end
+
+function Floor.new(): any?
+    local previous = Env.get(KEEP)
+    if previous then
+        pcall(function()
+            previous:Destroy()
+        end)
+        Env.set(KEEP, nil)
+    end
+    local parent = holder()
+    local ok, anchor = pcall(function(): any
+        return workspace.Terrain
+    end)
+    if not parent or not ok or not anchor then
+        return nil
+    end
+    local made, folder = pcall(function(): any
+        local item = Instance.new("Folder")
+        item.Name = "OkloFloor"
+        item.Parent = parent
+        return item
+    end)
+    if not made or not folder then
+        return nil
+    end
+    Env.set(KEEP, folder)
+    local inverse = CFrame.new()
+    pcall(function()
+        inverse = anchor.CFrame:Inverse()
+    end)
+    return setmetatable({ Folder = folder, Anchor = anchor, Inverse = inverse, Items = {} :: { [string]: Item }, Groups = {} :: { [string]: any } }, Floor)
+end
+
+local function put(item: Item, property: string, value: any)
+    if item.Last[property] ~= value then
+        item.Last[property] = value
+        item.Object[property] = value
+    end
+end
+
+function Floor.get(self: any, key: string, class: string): Item?
+    local item: Item? = self.Items[key]
+    if item then
+        item.Used = true
+        return item
+    end
+    local ok, object = pcall(function(): any
+        local made = Instance.new(class)
+        made.Adornee = self.Anchor
+        made.AlwaysOnTop = false
+        made.ZIndex = 1
+        made.Parent = self.Folder
+        return made
+    end)
+    if not ok or not object then
+        return nil
+    end
+    local made: Item = { Object = object, Last = {}, Used = true }
+    self.Items[key] = made
+    return made
+end
+
+local function place(self: any, item: Item, world: CFrame)
+    put(item, "CFrame", self.Inverse * world)
+end
+
+function Floor.start(self: any)
+    for _, item in self.Items do
+        item.Used = false
+    end
+end
+
+function Floor.finish(self: any)
+    for _, item in self.Items do
+        put(item, "Visible", item.Used)
+    end
+end
+
+function Floor.disc(self: any, key: string, x: number, y: number, z: number, radius: number, color: Color3, alpha: number, inner: number?)
+    local item = self:get(key, "CylinderHandleAdornment")
+    if not item then
+        return
+    end
+    put(item, "Height", THICK)
+    put(item, "Radius", radius)
+    put(item, "InnerRadius", inner or 0)
+    put(item, "Angle", 360)
+    put(item, "Color3", color)
+    put(item, "Transparency", 1 - alpha)
+    place(self, item, CFrame.new(x, y, z) * FLAT)
+end
+
+function Floor.arc(self: any, key: string, center: Vector3, front: Vector3, inner: number, outer: number, y: number, color: Color3, alpha: number)
+    local item = self:get(key, "CylinderHandleAdornment")
+    if not item then
+        return
+    end
+    put(item, "Height", THICK)
+    put(item, "Radius", outer)
+    put(item, "InnerRadius", math.max(inner, 0))
+    put(item, "Angle", 180)
+    put(item, "Color3", color)
+    put(item, "Transparency", 1 - alpha)
+    local yaw = math.atan2(-front.Z, front.X) + ARC_PHASE
+    place(self, item, CFrame.new(center.X, y, center.Z) * CFrame.Angles(0, yaw, 0) * FLAT)
+end
+
+function Floor.ring(self: any, key: string, x: number, y: number, z: number, radius: number, color: Color3, fill: number, line: number)
+    self:disc(key .. "~f", x, y, z, radius, color, fill)
+    self:disc(key .. "~o", x, y + LINE_LIFT, z, radius, color, line, math.max(radius - EDGE, 0))
+end
+
+function Floor.zone(self: any, key: string, center: Vector3, front: Vector3, inner: number, outer: number, y: number, color: Color3, fill: number, line: number)
+    self:arc(key .. "~f", center, front, inner, outer, y, color, fill)
+    local top = y + LINE_LIFT
+    self:arc(key .. "~a", center, front, math.max(outer - EDGE, inner), outer, top, color, line)
+    if inner > EDGE * 2 then
+        self:arc(key .. "~b", center, front, inner, inner + EDGE, top, color, line)
+    end
+    local length = outer - inner
+    for index, sign in { 1, -1 } do
+        local item = self:get(key .. "~e" .. index, "BoxHandleAdornment")
+        if item then
+            local side = Vector3.new(-front.Z, 0, front.X) * sign
+            local middle = Vector3.new(center.X, top, center.Z) + side * ((inner + outer) / 2)
+            put(item, "Size", Vector3.new(EDGE, THICK, length))
+            put(item, "Color3", color)
+            put(item, "Transparency", 1 - line)
+            place(self, item, CFrame.lookAt(middle, middle + side))
+        end
+    end
+end
+
+function Floor.strip(self: any, key: string, near: { Vector3 }, far: { Vector3 }, color: Color3, alpha: number)
+    local group = self.Groups[key]
+    if group and group.Near == near and group.Far == far then
+        for _, item in group.Items do
+            item.Used = true
+        end
+        return
+    end
+    if group then
+        for _, item in group.Items do
+            item.Used = false
+        end
+    end
+    local items: { Item } = {}
+    for index = 1, math.min(#near, #far) - 1 do
+        local a, b, c, d = near[index], near[index + 1], far[index], far[index + 1]
+        local along = b - a
+        if along.Magnitude > 0.001 then
+            local item = self:get(key .. "#" .. index, "BoxHandleAdornment")
+            if item then
+                local middle = (a + b + c + d) / 4
+                local width = ((c + d) / 2 - (a + b) / 2).Magnitude
+                put(item, "Size", Vector3.new(math.max(width, 0.05), THICK, along.Magnitude + 0.06))
+                put(item, "Color3", color)
+                put(item, "Transparency", 1 - alpha)
+                place(self, item, CFrame.lookAt(middle, middle + along))
+                table.insert(items, item)
+            end
+        end
+    end
+    self.Groups[key] = { Near = near, Far = far, Items = items }
+end
+
+function Floor.clear(self: any)
+    pcall(function()
+        self.Folder:Destroy()
+    end)
+    table.clear(self.Items)
+    table.clear(self.Groups)
+    if Env.get(KEEP) == self.Folder then
+        Env.set(KEEP, nil)
+    end
+end
+
+return Floor
+end
 modules["glide"] = function(...)
 
 local import: (string) -> any = ...
@@ -5377,9 +6425,34 @@ Glide.__index = Glide
 local ACTIONS: { [string]: string } = { Dribbling = "DribbleGlide", Gathering = "GatherGlide", Shooting = "ShotGlide" }
 
 local LIMIT = 27
+local HARD_CAP = 1.2
+local PINNED_SPEED = 1.5
+local PINNED_TIME = 0.15
+local MIN_TIME = 0.35
 
 function Glide.new(read: (string) -> any): any
-    return setmetatable({ Read = read, Action = nil :: any, Direction = nil :: Vector3?, Speed = 0 }, Glide)
+    return setmetatable({ Read = read, Action = nil :: any, Direction = nil :: Vector3?, Speed = 0, Wrote = nil :: Vector3?, Done = false }, Glide)
+end
+
+local function serverVelocity(mine: any): Vector3
+    local value = mine:GetAttribute("ServerVelocity")
+    if typeof(value) == "Vector3" then
+        return Vector3.new(value.X, 0, value.Z)
+    end
+    return Vector3.zero
+end
+
+function Glide.letGo(self: any, mine: any?, mover: any?)
+    local wrote: Vector3? = self.Wrote
+    self.Wrote = nil
+    self.PinnedAt = nil
+    if wrote and mover and not Court.HandsOff and not (mine and Court.held(mine)) then
+        pcall(function()
+            if (mover.Velocity - wrote).Magnitude < 0.05 then
+                mover.Velocity = if mine then serverVelocity(mine) else Vector3.zero
+            end
+        end)
+    end
 end
 
 function Glide.physics(self: any)
@@ -5395,8 +6468,12 @@ function Glide.physics(self: any)
             self.Ran, self.RanAt, self.RanSpeed = planar.Unit, now, planar.Magnitude
         end
     end
-    if not mine or not flag or self.Read(flag) ~= true or mine:GetAttribute("CanMove") == true then
+    if not mine or not flag or self.Read(flag) ~= true or mine:GetAttribute("CanMove") == true or mine:GetAttribute("Stunned") == true or Court.HandsOff then
+        if self.Action ~= nil then
+            self:letGo(mine, mover)
+        end
         self.Action = nil
+        self.Done = false
         return
     end
     if not part or not mover then
@@ -5405,8 +6482,12 @@ function Glide.physics(self: any)
     local dt = math.min(now - (self.Last or now), 0.1)
     self.Last = now
     if self.Action ~= action then
+        if self.Action ~= nil then
+            self:letGo(mine, mover)
+        end
         self.Action = action
         self.Since = now
+        self.Done = false
         local velocity = part.AssemblyLinearVelocity
         local planar = Vector3.new(velocity.X, 0, velocity.Z)
         self.Speed = planar.Magnitude
@@ -5418,15 +6499,36 @@ function Glide.physics(self: any)
             self.Direction = self.Ran
         end
     end
+    if self.Done then
+        return
+    end
+    local elapsed = now - (self.Since or now)
+    local length = math.max((tonumber(self.Read(flag .. "Time")) or 400) / 1000, MIN_TIME)
+    if elapsed > math.min(length * 1.75, HARD_CAP) then
+        self.Done = true
+        self:letGo(mine, mover)
+        return
+    end
     local heading = Court.heading()
     local direction: Vector3? = heading or self.Direction
     if not direction then
+        self:letGo(mine, mover)
         return
     end
     local limit: number = self.Read(flag .. "Speed") or 10
+    if action == "Gathering" then
+        local distance = Court.rimDistance(part.Position)
+        if distance and distance < 13 then
+            self.Done = true
+            self:letGo(mine, mover)
+            return
+        end
+    end
     if action == "Shooting" then
         limit = math.min(limit, 8)
-        if now - (self.Since or now) > 0.3 then
+        if elapsed > 0.3 then
+            self.Done = true
+            self:letGo(mine, mover)
             return
         end
     end
@@ -5434,9 +6536,13 @@ function Glide.physics(self: any)
         self.Speed = self.Speed * math.exp(-3 * dt)
     end
     local entry: number = self.Entry or limit
-    local cap = limit + math.max(entry - limit, 0) * math.exp(-10 * (now - (self.Since or now)))
+    local cap = limit + math.max(entry - limit, 0) * math.exp(-10 * elapsed)
     local speed: number = math.min(self.Speed, cap)
+    if elapsed > length then
+        speed *= math.clamp(1 - (elapsed - length) / (length * 0.75), 0, 1)
+    end
     if speed < 2 then
+        self:letGo(mine, mover)
         return
     end
     if action == "Shooting" then
@@ -5444,12 +6550,35 @@ function Glide.physics(self: any)
         if distance and rim and distance < 24 then
             local toRim = Vector3.new(rim.Position.X - part.Position.X, 0, rim.Position.Z - part.Position.Z)
             if distance < 4.5 or (toRim.Magnitude > 0.1 and toRim.Unit:Dot(direction) < 0.2) then
+                self.Done = true
+                self:letGo(mine, mover)
                 return
             end
             speed = math.min(speed, distance * 2.5)
         end
     end
-    mover.Velocity = direction * math.min(speed, LIMIT)
+    local actual = part.AssemblyLinearVelocity
+    if self.Wrote and Vector3.new(actual.X, 0, actual.Z).Magnitude < PINNED_SPEED and speed > 6 then
+        self.PinnedAt = self.PinnedAt or now
+        if now - self.PinnedAt > PINNED_TIME then
+            self.Done = true
+            self:letGo(mine, mover)
+            return
+        end
+    else
+        self.PinnedAt = nil
+    end
+    local strength = math.clamp((tonumber(self.Read(flag .. "Strength")) or 100) / 100, 0, 1)
+    local blend = 0.5 + 0.5 * strength
+    local game0 = mover.Velocity
+    if self.Wrote and (game0 - self.Wrote).Magnitude < 0.05 then
+        game0 = serverVelocity(mine)
+    end
+    local goal = direction * math.min(speed, LIMIT)
+    local wanted = Vector3.new(game0.X, 0, game0.Z):Lerp(goal, blend)
+    local written = Vector3.new(wanted.X, game0.Y, wanted.Z)
+    mover.Velocity = written
+    self.Wrote = written
 end
 
 return Glide
@@ -5567,6 +6696,8 @@ local function watch(state: Map, remote: any, ...: any): boolean
     local flag = rawget(data, "Shoot")
     if flag == true then
         owner.KeyDown = true
+        owner.Swallow = false
+        owner.ServerDown = true
         owner.PressPending = true
         owner.DunkPress = rawget(data, "UseSpace") == true
         return false
@@ -5576,7 +6707,12 @@ local function watch(state: Map, remote: any, ...: any): boolean
     end
     owner.KeyDown = false
     if rawget(data, "Input") ~= nil then
+        owner.ServerDown = false
         return false
+    end
+    if owner.Swallow == true then
+        owner.Swallow = false
+        return true
     end
     if owner.holding(owner) then
         if owner.Held == nil then
@@ -5584,6 +6720,7 @@ local function watch(state: Map, remote: any, ...: any): boolean
         end
         return true
     end
+    owner.ServerDown = false
     owner.passed(owner)
     return false
 end
@@ -5593,8 +6730,13 @@ local function wrapped(state: Map, name: string, ...: any): boolean
         local args = table.pack(...)
         task.spawn(capture, state, name, args)
         local owner = state.Owner
-        if name == "Dribble" and type(owner) == "table" and type(owner.BlockDribble) == "function" then
-            return owner.BlockDribble(args) == true
+        if name == "Dribble" and type(owner) == "table" then
+            if type(owner.BlockDribble) == "function" and owner.BlockDribble(args) == true then
+                return true
+            end
+            if type(owner.onDribble) == "function" then
+                pcall(owner.onDribble, owner)
+            end
         end
         return false
     end
@@ -5948,7 +7090,7 @@ local PRESET_FLAGS = {
     "AutoGreen", "PerfectChance", "AutoCalibrate", "OpenShot", "AutoShoot", "AutoDunk",
     "AutoGuard", "GuardMove", "AutoSteal", "AutoBlock", "AutoRebound",
     "MoveKeys", "BlockDribbleKeys", "DribbleCombo", "AutoPass", "AutoDribble",
-    "DribbleGlide", "DribbleGlideSteer", "GatherGlide", "GatherGlideSteer", "ShotGlide", "ShotGlideSteer",
+    "DribbleGlide", "GatherGlide", "ShotGlide",
     "AlwaysSprint", "FullSpeed", "NoStun", "NoDebounce", "NoCold",
     "Esp", "EspTeam", "EspStamina", "ThreePointLine", "DunkZones", "ShotRangeViz", "RangeViz",
 }
@@ -5959,7 +7101,16 @@ local function preset(on: { [string]: any }): { [string]: any }
         local default = Config.DEFAULTS[flag]
         values[flag] = if on[flag] ~= nil then on[flag] elseif type(default) == "boolean" and not Config.PARENT[flag] then false else default
     end
+    for flag, value in on do
+        if values[flag] == nil and Config.DEFAULTS[flag] ~= nil then
+            values[flag] = value
+        end
+    end
     return values
+end
+
+local function scale(value: number): string
+    return string.format("x%.2f", value)
 end
 
 function Interface.build(ui: any, actions: { [string]: any }?)
@@ -5974,16 +7125,43 @@ function Interface.build(ui: any, actions: { [string]: any }?)
     local presets = {
         { Name = "Off", Values = preset({}) },
         { Name = "Casual", Values = preset({ AutoGreen = true, PerfectChance = 85, AutoCalibrate = true, OpenShot = true }) },
-        { Name = "Legit", Values = preset({ AutoGreen = true, PerfectChance = 100, AutoCalibrate = true, OpenShot = true, AutoGuard = true, GuardMove = true, DribbleGlide = true }) },
+        { Name = "Legit", Values = preset({ AutoGreen = true, PerfectChance = 100, AutoCalibrate = true, OpenShot = true, AutoGuard = true, DribbleGlide = true }) },
         {
             Name = "Full",
             Values = preset({
                 AutoGreen = true, PerfectChance = 100, AutoCalibrate = true, OpenShot = true, AutoShoot = true, AutoDunk = true,
                 AutoGuard = true, GuardMove = true, AutoSteal = true, AutoBlock = true, AutoRebound = true,
                 MoveKeys = false, BlockDribbleKeys = false, DribbleCombo = false, AutoPass = true, AutoDribble = true,
-                DribbleGlide = true, DribbleGlideSteer = true, GatherGlide = true, GatherGlideSteer = true, ShotGlide = true, ShotGlideSteer = true,
+                DribbleGlide = true, GatherGlide = true, ShotGlide = true,
                 AlwaysSprint = false, FullSpeed = true, NoStun = true, NoDebounce = true, NoCold = true,
                 Esp = true, EspTeam = true, EspStamina = true, ThreePointLine = true, DunkZones = true, ShotRangeViz = true, RangeViz = true,
+            }),
+        },
+        {
+            Name = "Blacktop 1s",
+            Values = preset({
+                AutoGreen = true, PerfectChance = 100, AutoCalibrate = true, OpenShot = true,
+                AutoGuard = true, GuardMove = true, AutoSteal = true, AutoBlock = true, AutoRebound = true,
+                DribbleGlide = true, GatherGlide = true, AlwaysSprint = false, NoStun = true,
+                GuardTarget = Config.GUARD_BALL, GuardRange = 14, GuardGap = 12, StealRange = 7, BlockRange = 9, ReboundRange = 8,
+                DribbleGlideSpeed = 11, GatherGlideSpeed = 14, AutoPing = true,
+            }),
+        },
+        {
+            Name = "Slide",
+            Values = preset({
+                AutoGreen = true, PerfectChance = 100, AutoCalibrate = true, OpenShot = true,
+                DribbleGlide = true, GatherGlide = true, ShotGlide = true,
+                DribbleGlideSpeed = 13, GatherGlideSpeed = 15, ShotGlideSpeed = 8, DribbleGlideStrength = 60, GatherGlideStrength = 100, ShotGlideStrength = 60,
+                FullSpeed = true, AutoPing = true,
+            }),
+        },
+        {
+            Name = "Big Man",
+            Values = preset({
+                AutoGreen = true, PerfectChance = 100, AutoCalibrate = true, OpenShot = true, AutoDunk = true,
+                AutoBlock = true, AutoRebound = true, AutoGuard = true, NoStun = true,
+                DunkType = Config.DUNK_BOTH, BlockRange = 11, ReboundRange = 10, ComboMoves = "Big Drop Step", AutoPing = true,
             }),
         },
     }
@@ -6025,26 +7203,60 @@ function Interface.build(ui: any, actions: { [string]: any }?)
     local function slider(name: string, flag: string, low: number, high: number, step: number, format: ((number) -> string)?): { [string]: any }
         return { Name = name, Flag = flag, Min = low, Max = high, Step = step, Default = defaults[flag], Format = format }
     end
+    local function note(text: string): { [string]: any }
+        return { Type = "Note", Text = text }
+    end
 
     local shootTab = ui:tab("Shoot")
     local shoot = shootTab:section("SHOOT")
     shoot:presets({ Name = "Preset", Presets = presets })
     shoot:cards({
         Columns = 2,
+        Pack = true,
         Items = {
             {
                 Title = "Auto Green",
-                Text = "Lets go of your shot on the green",
+                Text = "Lets go of your shot on the green. Press or hold E, a short press still greens",
                 Flag = "AutoGreen",
                 Default = defaults.AutoGreen,
-                Keywords = "release perfect timing shoot",
+                Keywords = "release perfect timing shoot tap ping meter",
                 Controls = {
                     slider("Release Timing", "GreenOffset", -60, 60, 1, milliseconds),
+                    {
+                        Name = "Tap To Shoot",
+                        Flag = "TapShoot",
+                        Default = defaults.TapShoot,
+                        Keywords = "tap one tap shoot quick",
+                        Info = {
+                            Title = "Tap To Shoot",
+                            Lines = {
+                                "One quick tap of E starts the shot and",
+                                "Auto Green lets go on the green for you.",
+                                "",
+                                "Off: a tap shorter than the game's shoot",
+                                "delay stays a pump fake or hop step. Any",
+                                "press the game counts as a shot is held",
+                                "and let go once, on the green.",
+                            },
+                            Width = 360,
+                        },
+                    },
                 },
                 Advanced = {
+                    toggle("Auto Ping Compensation", "AutoPing"),
+                    {
+                        Name = "Manual Ping Compensation",
+                        Flag = "PingComp",
+                        Min = 0,
+                        Max = 100,
+                        Step = 5,
+                        Default = defaults.PingComp,
+                        Format = percent,
+                        Disabled = function(): boolean
+                            return ui:get("AutoPing") ~= false
+                        end,
+                    },
                     slider("Perfect Chance", "PerfectChance", 0, 100, 5, percent),
-                    slider("Ping Compensation", "PingComp", 0, 100, 5, percent),
-                    toggle("Tap To Shoot", "TapShoot"),
                     toggle("Self Calibrate", "AutoCalibrate"),
                     {
                         Type = "Button",
@@ -6114,9 +7326,28 @@ function Interface.build(ui: any, actions: { [string]: any }?)
                     slider("Shoot Delay", "ShootDelay", 0, 1500, 50, delay),
                     toggle("Only When Open", "OpenOnly"),
                     slider("Open Range", "OpenRange", 2, 30, 1, studs),
+                    slider("Ignore Contest", "IgnoreContest", 0, 100, 5, percent),
                     slider("Max Contest", "MaxContest", 0, 100, 5, percent),
                     slider("Min Shot Distance", "MinShot", 0, 60, 1, studs),
                     slider("Max Shot Distance", "MaxShot", 10, 120, 1, studs),
+                    {
+                        Name = "Planted Shot",
+                        Flag = "PlantedShot",
+                        Default = defaults.PlantedShot,
+                        Keywords = "no moving shot stand still stationary planted",
+                        Info = {
+                            Title = "Planted Shot",
+                            Lines = {
+                                "Auto Shoot only shoots while you stand still,",
+                                "and your jump shots go up as standing shots:",
+                                "your move keys are paused from the press",
+                                "until the shot leaves, so no moving shot.",
+                                "Layups and dunks are left alone.",
+                            },
+                            Width = 360,
+                        },
+                    },
+                    note("the defender check uses contest range from the shot contest card"),
                 },
             },
             {
@@ -6131,6 +7362,7 @@ function Interface.build(ui: any, actions: { [string]: any }?)
                     toggle("Move Me To The Rim (!)", "DunkMove"),
                     slider("Dunk Range", "DunkRange", 10, 60, 1, studs),
                     toggle("Only When Open", "DunkOpenOnly"),
+                    note("only when open uses open range from the auto shoot card"),
                 },
             },
         },
@@ -6140,6 +7372,7 @@ function Interface.build(ui: any, actions: { [string]: any }?)
     local defend = defendTab:section("DEFEND")
     defend:cards({
         Columns = 2,
+        Pack = true,
         Items = {
             {
                 Title = "Auto Guard",
@@ -6148,6 +7381,21 @@ function Interface.build(ui: any, actions: { [string]: any }?)
                 Default = defaults.AutoGuard,
                 Controls = {
                     toggle("Move With Him", "GuardMove"),
+                    {
+                        Name = "Anti Ankle Break",
+                        Flag = "AntiAnkle",
+                        Default = defaults.AntiAnkle,
+                        Keywords = "ankle break crossover blow by recover",
+                        Info = {
+                            Title = "Anti Ankle Break",
+                            Lines = {
+                                "Gives ground when your man starts a move",
+                                "and sprints you back in front after a blow by.",
+                                "Works with Move With Him on.",
+                            },
+                            Width = 360,
+                        },
+                    },
                     { Type = "Dropdown", Name = "Guard", Flag = "GuardTarget", Values = Config.GUARD_TARGETS, Default = defaults.GuardTarget, Segment = true },
                 },
                 Advanced = {
@@ -6158,11 +7406,12 @@ function Interface.build(ui: any, actions: { [string]: any }?)
             },
             {
                 Title = "Auto Steal",
-                Text = "Reaches in when the handler stands still next to you",
+                Text = "Reaches in on the handler while he stands still",
                 Flag = "AutoSteal",
                 Default = defaults.AutoSteal,
                 Controls = { slider("Steal Range", "StealRange", 3, 15, 1, studs) },
                 Advanced = {
+                    toggle("Always Attempt", "StealAlways"),
                     toggle("Only When Facing", "StealFacing"),
                     toggle("Avoid Fouls", "AvoidFouls"),
                 },
@@ -6196,6 +7445,7 @@ function Interface.build(ui: any, actions: { [string]: any }?)
     local handle = handleTab:section("HANDLE")
     handle:cards({
         Columns = 2,
+        Pack = true,
         Items = {
             {
                 Title = "Move Keys",
@@ -6206,22 +7456,37 @@ function Interface.build(ui: any, actions: { [string]: any }?)
                 Keywords = "dribble crossover hesitation spin keys",
                 Controls = {
                     toggle("Block Game Dribble Keys", "BlockDribbleKeys"),
-                    { Type = "Note", Text = "On: the game's own dribble keys are fully turned off.\nOff: only the keys you bind here replace the game's, the rest still work." },
                 },
             },
             {
                 Title = "Combos",
-                Text = "Plays a chain of moves once per key press",
+                Text = "Plays a chain of moves once per key press, or by itself while you are guarded",
+                Keywords = "combo halo spin big man macro loop guarded auto play stop after one loop",
                 Controls = {
                     { Type = "Dropdown", Name = "Combo", Flag = "ComboMoves", Values = Config.COMBO_NAMES, Default = defaults.ComboMoves },
                     { Type = "Button", Name = "Play Combo", Label = "Play", Bind = "PlayCombo", Callback = function()
                         act("playCombo")
                     end },
-                },
-                Advanced = {
                     toggle("Loop Combo", "DribbleCombo"),
                     toggle("Stop After One Loop", "ComboOnce"),
                     toggle("Only When Guarded", "ComboGuarded"),
+                    note("only when guarded uses guarded distance from the ball handler card"),
+                },
+            },
+            {
+                Title = "Auto Ankle Break",
+                Text = "Crosses the other way the moment your defender leans or slides",
+                Flag = "AutoAnkle",
+                Default = defaults.AutoAnkle,
+                Keywords = "ankle break crossover beat defender",
+            },
+            {
+                Title = "Ball Handler",
+                Text = "Passes and moves for you when a defender is on you",
+                Controls = { toggle("Pass To Open Teammate", "AutoPass"), toggle("Moves When Guarded", "AutoDribble") },
+                Advanced = {
+                    slider("Pressure Distance", "PassPressure", 2, 15, 1, studs),
+                    slider("Guarded Distance", "DribbleRange", 3, 15, 1, studs),
                 },
             },
         },
@@ -6231,7 +7496,7 @@ function Interface.build(ui: any, actions: { [string]: any }?)
         names[entry[2]] = entry[1]
     end
     local tiles = {}
-    for _, move in { "Crossover", "Hesitation", "Tween", "DoubleCrossover", "BehindBack", "Spin", "HalfSpin", "StepBack", "SnatchBack", "Breakdown" } do
+    for _, move in { "Crossover", "Hesitation", "Tween", "DoubleCrossover", "BehindBack", "Spin", "HalfSpin", "StepBack", "SnatchBack", "Breakdown", "DoubleBehindBack", "Combo", "SwitchHand" } do
         local inputs = Config.MOVE_INPUTS[move]
         table.insert(tiles, {
             Name = names[move] or move,
@@ -6245,26 +7510,17 @@ function Interface.build(ui: any, actions: { [string]: any }?)
     handle:grid({ Items = tiles, Columns = 3, TileHeight = 78 })
     handle:cards({
         Columns = 2,
+        Pack = true,
         Items = {
             {
-                Title = "Ball Handler",
-                Text = "Passes and moves for you when a defender is on you",
-                Controls = { toggle("Pass To Open Teammate", "AutoPass"), toggle("Moves When Guarded", "AutoDribble") },
-                Advanced = {
-                    slider("Pressure Distance", "PassPressure", 2, 15, 1, studs),
-                    slider("Guarded Distance", "DribbleRange", 3, 15, 1, studs),
-                },
-            },
-            {
                 Title = "Dribble Glide",
-                Text = "Keeps a bit of your speed through a dribble move. It only follows the way the move already goes",
+                Text = "Keeps your speed through a dribble move, your move keys steer it",
                 Flag = "DribbleGlide",
                 Default = defaults.DribbleGlide,
-                Controls = { slider("Strength", "DribbleGlideStrength", 10, 90, 5, percent) },
+                Controls = { slider("Top Speed", "DribbleGlideSpeed", 6, 15, 1, number) },
                 Advanced = {
-                    slider("Top Speed", "DribbleGlideSpeed", 4, 12, 1, number),
-                    slider("Length", "DribbleGlideTime", 100, 600, 20, length),
-                    toggle("Steer With Keys", "DribbleGlideSteer"),
+                    slider("Strength", "DribbleGlideStrength", 0, 100, 5, percent),
+                    slider("Length", "DribbleGlideTime", 350, 1200, 10, length),
                 },
             },
             {
@@ -6272,11 +7528,10 @@ function Interface.build(ui: any, actions: { [string]: any }?)
                 Text = "Keeps your full run speed through a hop step or gather toward the rim, then eases off. It stays off inside layup range",
                 Flag = "GatherGlide",
                 Default = defaults.GatherGlide,
-                Controls = { slider("Strength", "GatherGlideStrength", 10, 100, 5, percent) },
+                Controls = { slider("Top Speed", "GatherGlideSpeed", 4, 16, 1, number) },
                 Advanced = {
-                    slider("Top Speed", "GatherGlideSpeed", 4, 16, 1, number),
-                    slider("Length", "GatherGlideTime", 100, 600, 20, length),
-                    toggle("Steer With Keys", "GatherGlideSteer"),
+                    slider("Strength", "GatherGlideStrength", 0, 100, 5, percent),
+                    slider("Length", "GatherGlideTime", 350, 1200, 10, length),
                 },
             },
             {
@@ -6284,11 +7539,10 @@ function Interface.build(ui: any, actions: { [string]: any }?)
                 Text = "Keeps you moving on your line as the shot starts, then eases off. It never carries you into layup range",
                 Flag = "ShotGlide",
                 Default = defaults.ShotGlide,
-                Controls = { slider("Strength", "ShotGlideStrength", 10, 90, 5, percent) },
+                Controls = { slider("Top Speed", "ShotGlideSpeed", 3, 16, 1, number) },
                 Advanced = {
-                    slider("Top Speed", "ShotGlideSpeed", 3, 16, 1, number),
-                    slider("Length", "ShotGlideTime", 100, 600, 20, length),
-                    toggle("Steer With Keys", "ShotGlideSteer"),
+                    slider("Strength", "ShotGlideStrength", 0, 100, 5, percent),
+                    slider("Length", "ShotGlideTime", 350, 1200, 10, length),
                 },
             },
         },
@@ -6298,6 +7552,7 @@ function Interface.build(ui: any, actions: { [string]: any }?)
     local player = playerTab:section("PLAYER")
     player:cards({
         Columns = 2,
+        Pack = true,
         Items = {
             {
                 Title = "Speed And Stamina",
@@ -6310,6 +7565,46 @@ function Interface.build(ui: any, actions: { [string]: any }?)
                 Text = "Clears what the game slows you down with",
                 Controls = { toggle("No Stun", "NoStun"), toggle("No Debounce", "NoDebounce"), toggle("No Cold Zone", "NoCold") },
             },
+            {
+                Title = "Park",
+                Text = "Takes a spot for you at the park courts",
+                Keywords = "spot queue park join next game",
+                Controls = {
+                    toggle("Auto Take Spot", "AutoSpot"),
+                    toggle("Auto Queue", "AutoQueue"),
+                },
+            },
+            {
+                Title = "Share Config",
+                Text = "Your settings as one short code, or someone else's",
+                Keywords = "config share export import code copy paste preset blacktop slide",
+                Controls = {
+                    {
+                        Type = "Button",
+                        Name = "Export Code",
+                        Label = "Copy",
+                        Callback = function(window: any)
+                            if type(window) == "table" and type(window.copyConfigCode) == "function" then
+                                window:copyConfigCode()
+                            else
+                                act("notify", "This menu version cannot share codes")
+                            end
+                        end,
+                    },
+                    {
+                        Type = "Button",
+                        Name = "Import Code",
+                        Label = "Paste",
+                        Callback = function(window: any)
+                            if type(window) == "table" and type(window.importConfigCode) == "function" then
+                                window:importConfigCode()
+                            else
+                                act("notify", "This menu version cannot import codes")
+                            end
+                        end,
+                    },
+                },
+            },
         },
     })
 
@@ -6317,6 +7612,7 @@ function Interface.build(ui: any, actions: { [string]: any }?)
     local visual = visualTab:section("VISUALS")
     visual:cards({
         Columns = 2,
+        Pack = true,
         Items = {
             {
                 Title = "Court",
@@ -6351,6 +7647,81 @@ function Interface.build(ui: any, actions: { [string]: any }?)
         },
     })
 
+    local helpTab = ui:tab("Help")
+    local help = helpTab:section("HELP")
+    help:cards({
+        Columns = 2,
+        Pack = true,
+        Items = {
+            {
+                Title = "Open And Hide",
+                Text = "right shift opens and hides the menu",
+                Keywords = "menu key open hide reopen right shift start hidden",
+                Controls = { note("u can change the key in keybinds, with start hidden on the menu stays closed until u press it") },
+            },
+            {
+                Title = "Shooting",
+                Text = "auto green and tap to shoot are on the shoot page",
+                Keywords = "tap to shoot release timing ping green",
+                Controls = { note("ping is the number in the watermark top left, auto ping sets the release for ur ping so keep release timing at 0 first, + is later and - is earlier, only move it 5 ms at a time if u keep seeing early or late, works with the shot meter hidden too, and with auto green on every dunk it takes is timed for u") },
+            },
+            {
+                Title = "Ignore Contest",
+                Text = "what it does for auto shoot",
+                Keywords = "ignore contest open defender auto shoot anti contest",
+                Controls = { note("its how much auto shoot and the open checks ignore defenders, the game still rates the shot by its own contest so its not an anti contest") },
+            },
+            {
+                Title = "Combos",
+                Text = "combos, loop combo and stop after one loop are on the handle page",
+                Keywords = "combo loop stop after one loop guarded halo big signature",
+                Controls = { note("play combo: bind a key and one press plays the chain once, loop combo plays it by itself, only when guarded waits for a defender inside guarded distance, stop after one loop turns the loop off after one run, big, halo and signature combos are in the list") },
+            },
+            {
+                Title = "Move Keys",
+                Text = "ur own keys for dribble moves",
+                Keywords = "move keys block game dribble keys crossover",
+                Controls = { note("block game dribble keys on means the games own dribble keys are fully turned off, off means only the keys u bind replace the games, the rest still work") },
+            },
+            {
+                Title = "Auto Dribble",
+                Text = "why it waits a bit before moving",
+                Keywords = "auto dribble moves when guarded wait slow",
+                Controls = { note("moves when guarded only does a move with the ball, away from the rim, when a defender is inside guarded distance, so make that bigger if u want it to start earlier") },
+            },
+            {
+                Title = "Auto Guard",
+                Text = "how it moves u",
+                Keywords = "guard slide move with him facing detection",
+                Controls = { note("it reads where ur character is heading, slides with him and gives ground on a drive, it moves u with ur own move keys and the games guard key so no teleports, nothing is fully undetectable so play like a person would") },
+            },
+            {
+                Title = "Ankle Breaks",
+                Text = "when auto ankle break and anti ankle break work",
+                Keywords = "ankle break anti crossover blow by",
+                Controls = { note("auto ankle break only works with the ball, away from the rim, when a defender is right in front of u, anti ankle break works with auto guard and move with him on") },
+            },
+            {
+                Title = "Park",
+                Text = "auto take spot and auto queue",
+                Keywords = "spot queue park join next game",
+                Controls = { note("auto take spot joins the spot u stand on so no more spamming e, auto queue takes a spot again when ur game ends") },
+            },
+            {
+                Title = "Share Config",
+                Text = "export code and import code",
+                Keywords = "config share export import code copy paste preset blacktop slide big man",
+                Controls = { note("export code copies ur settings as one short code, import code pastes someone elses, ready made blacktop 1s, slide and big man are in the preset row on the shoot page") },
+            },
+            {
+                Title = "Keys",
+                Text = "every feature has a bind box next to its switch",
+                Keywords = "bind keybind toggle key",
+                Controls = { note("press bind then the key u want, that key turns the feature on and off while u play") },
+            },
+        },
+    })
+
     ui:updates({ Version = Changelog.VERSION, Date = Changelog.DATE, Groups = Changelog.GROUPS, History = Changelog.HISTORY, Closing = Changelog.CLOSING })
 end
 
@@ -6376,6 +7747,7 @@ local Combo: typeof(require("./combo")) = import("combo")
 local Contest: typeof(require("./contest")) = import("contest")
 local Defense: typeof(require("./defense")) = import("defense")
 local Esp: typeof(require("./esp")) = import("esp")
+local Extras: typeof(require("./extras")) = import("extras")
 local Glide: typeof(require("./glide")) = import("glide")
 local Interface: typeof(require("./interface")) = import("interface")
 local Moves: typeof(require("./moves")) = import("moves")
@@ -6395,6 +7767,55 @@ local WATCHED = { "Action", "CanMove", "Stunned", "Debounce", "DodgeDebounce", "
 
 type Map = { [string]: any }
 
+local function reportMissing()
+    local found: { [string]: any } = {
+        getgenv = getgenv, hookmetamethod = hookmetamethod, newcclosure = newcclosure, getnamecallmethod = getnamecallmethod,
+        checkcaller = checkcaller, gethui = gethui, request = request, isfile = isfile, readfile = readfile, writefile = writefile,
+        makefolder = makefolder, isfolder = isfolder, setclipboard = setclipboard, queue_on_teleport = queue_on_teleport, Drawing = Drawing,
+    }
+    local order = { "getgenv", "hookmetamethod", "newcclosure", "getnamecallmethod", "checkcaller", "gethui", "request", "isfile", "readfile", "writefile", "makefolder", "isfolder", "setclipboard", "queue_on_teleport", "Drawing" }
+    local missing: { string } = {}
+    for _, name in order do
+        if found[name] == nil then
+            table.insert(missing, name)
+        end
+    end
+    local say: any = if type(warn) == "function" then warn else print
+    if #missing > 0 then
+        say("[PB] this executor is missing: " .. table.concat(missing, ", ") .. ". The features that need them stay off, everything else runs")
+    end
+end
+
+local LEFTOVERS: { [string]: string } = { OpenShot = "Highlight", OkloFloor = "Folder" }
+
+local function sweepLeftovers()
+    local places: { any } = {}
+    if Env.gethui then
+        local ok, hui = pcall(Env.gethui)
+        if ok and hui then
+            table.insert(places, hui)
+        end
+    end
+    local got, core = pcall(game.GetService, game, "CoreGui")
+    if got and core then
+        table.insert(places, core)
+    end
+    local mine = Court.mine()
+    if mine then
+        table.insert(places, mine)
+    end
+    for _, place in places do
+        pcall(function()
+            for _, child in place:GetChildren() do
+                local class = LEFTOVERS[child.Name]
+                if class and child:IsA(class) then
+                    child:Destroy()
+                end
+            end
+        end)
+    end
+end
+
 local function stopPrevious()
     local previous = Env.get(REGISTRY)
     local instances = Env.get("OkloUIInstances")
@@ -6409,6 +7830,8 @@ end
 
 return function(OkloUI: any, reload: () -> (), Loader: any): Map?
     stopPrevious()
+    pcall(reportMissing)
+    pcall(sweepLeftovers)
     Court.Closing = false
     local running = true
     local hookAt = os.clock() + HOOK_DELAY
@@ -6458,9 +7881,7 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
     local autoDribble = AutoDribble.new(read)
     local ballMagnet = BallMagnet.new(read)
     local combo = Combo.new(read, write)
-    local glide = Glide.new(read, function(character: any, action: string): boolean
-        return AutoGreen.liveShot(character, action, autoGreen.Meters)
-    end)
+    local glide = Glide.new(read)
     local esp = Esp.new(read)
     local rings = Rings.new(read)
     local contest = Contest.new(read, autoGreen)
@@ -6474,10 +7895,11 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
     autoShoot.Contest = contest
     autoDunk.Defense = defense
     local rimGuard = RimGuard.new(read, autoGreen)
+    local extras = Extras.new(read)
     local connections: { any } = {}
-    local parts: { any } = { autoGreen, defense, autoShoot, autoDunk, autoBlock, autoRebound, autoPass, autoDribble, combo, ballMagnet, player, contest }
-    local partNames: { string } = { "autogreen", "defense", "autoshoot", "autodunk", "autoblock", "autorebound", "autopass", "autodribble", "combo", "ballmagnet", "player", "contest" }
-    local closing: { any } = { defense, autoDunk, ballMagnet, player, contest, autoGreen }
+    local parts: { any } = { autoGreen, defense, autoShoot, autoDunk, autoBlock, autoRebound, autoPass, autoDribble, combo, ballMagnet, player, contest, extras }
+    local partNames: { string } = { "autogreen", "defense", "autoshoot", "autodunk", "autoblock", "autorebound", "autopass", "autodribble", "combo", "ballmagnet", "player", "contest", "extras" }
+    local closing: { any } = { defense, autoDunk, ballMagnet, player, contest, extras, autoGreen }
 
     local function sweep()
         for _, part in closing do
@@ -6500,6 +7922,7 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
             pcall(link.Disconnect, link)
         end
         table.clear(connections)
+        pcall(rings.clear, rings)
         sweep()
         if Env.get(READER) == read then
             Env.set(READER, nil)
@@ -6519,8 +7942,8 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
         Discord = "https://discord.gg/oklo",
         FirstRunInvite = true,
         Thanks = true,
-        Width = 820,
-        Height = 540,
+        Width = 838,
+        Height = 562,
         SidebarWidth = 200,
         BoldTitles = true,
         Theme = "Default",
@@ -6545,11 +7968,17 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
         playMove = function(move: string)
             moves:play(move)
         end,
+        flip = function(flag: string, name: string)
+            local value = ui:get(flag) ~= true
+            ui:set(flag, value)
+            notify(name .. (if value then " on" else " off"))
+        end,
+        notify = notify,
         status = function(): string
             if read("AutoGreen") ~= true then
                 return "Auto Green is off"
             end
-            return "Auto Green: on, hold E and it lets go on the green"
+            return "Auto Green: on, press or hold E and it lets go on the green"
         end,
     })
     if not built then
@@ -6608,6 +8037,24 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
         print(line)
     end
 
+    local sanitizeAt = 0
+    local function sanitize()
+        for flag, default in Config.DEFAULTS do
+            local value = ui:get(flag)
+            if value ~= nil then
+                local want = typeof(default)
+                local bad = typeof(value) ~= want or (want == "number" and value ~= value)
+                local choices = Config.CHOICES[flag]
+                if not bad and choices and not table.find(choices, value) then
+                    bad = true
+                end
+                if bad then
+                    pcall(ui.set, ui, flag, default)
+                end
+            end
+        end
+    end
+
     local runService: any = game:GetService("RunService")
     table.insert(connections, runService.Heartbeat:Connect(function(delta: any)
         if not running then
@@ -6615,6 +8062,10 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
         end
         local now = os.clock()
         local dt = if type(delta) == "number" then delta else 1 / 60
+        if now >= sanitizeAt then
+            sanitizeAt = now + 1
+            pcall(sanitize)
+        end
         pcall(Court.refresh, now)
         if not autoGreen.HookBound and not autoGreen.Binding and now >= hookAt then
             local wanted = false
@@ -6663,6 +8114,7 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
         if not hands then
             run("glide", glide.physics, glide)
             run("player speed", player.physics, player)
+            run("planted shot", autoGreen.physics, autoGreen)
         end
         run("drive", Drive.finish, now, dt)
         if not hands then
@@ -6969,7 +8421,9 @@ function Player.physics(self: any)
         local native: { [string]: number } = self.Native
         local known = native[key]
         if real >= 85 then
-            if speed >= 5 and speed <= 20 and mine:GetAttribute("HoldingG") ~= true then
+            local base = mine:GetAttribute("WalkSpeed")
+            local cap = (if type(base) == "number" then base else 13) + (if running then 4 else 1)
+            if speed >= 5 and speed <= cap and mine:GetAttribute("HoldingG") ~= true then
                 native[key] = if known then math.max(known * 0.999, speed) else speed
             end
         elseif known and mine:GetAttribute("HoldingG") ~= true and speed >= known * 0.55 then
@@ -7103,6 +8557,8 @@ RimGuard.__index = RimGuard
 local RANGE = 13
 local FRONT_MIN = 2.6
 local SLOPE = 0.4
+local DUNK_FRONT = 1.6
+local DUNK_RATE = 12
 local BUSY: { [string]: boolean } = { Shooting = true, Gathering = true, Dunking = true, ContactLayup = true, ClutchLayup = true, Layup = true, Dribbling = true }
 
 function RimGuard.new(read: (string) -> any, autoGreen: any): any
@@ -7118,9 +8574,10 @@ function RimGuard.physics(self: any)
         return
     end
     local green = self.AutoGreen
-    if green.Press == nil or green.DunkPress == true or (green.Shot and green.Shot.Fired) then
+    if green.Press == nil or (green.Shot and green.Shot.Fired) then
         return
     end
+    local dunking = green.DunkPress == true
     local action = mine:GetAttribute("Action")
     if (type(action) == "string" and BUSY[action]) or mine:GetAttribute("CanMove") ~= true or Court.handsOff(mine) then
         return
@@ -7134,20 +8591,24 @@ function RimGuard.physics(self: any)
     if not distance or not rim or distance > RANGE then
         return
     end
+    local offsetX, offsetZ = position.X - rim.Position.X, position.Z - rim.Position.Z
     local front = Court.front(rim)
     if not front then
-        return
+        local length = math.sqrt(offsetX * offsetX + offsetZ * offsetZ)
+        if length < 0.1 then
+            return
+        end
+        front = Vector3.new(offsetX / length, 0, offsetZ / length)
     end
-    local offsetX, offsetZ = position.X - rim.Position.X, position.Z - rim.Position.Z
     local ahead = offsetX * front.X + offsetZ * front.Z
     if ahead <= 0 then
         return
     end
     local sideX, sideZ = offsetX - front.X * ahead, offsetZ - front.Z * ahead
-    local need = math.max(FRONT_MIN, math.sqrt(sideX * sideX + sideZ * sideZ) * SLOPE)
+    local need = if dunking then DUNK_FRONT else math.max(FRONT_MIN, math.sqrt(sideX * sideX + sideZ * sideZ) * SLOPE)
     local velocity: Vector3 = mover.Velocity
     local closing = -(velocity.X * front.X + velocity.Z * front.Z)
-    local limit = math.max((ahead - need) * 6, 0)
+    local limit = math.max((ahead - need) * (if dunking then DUNK_RATE else 6), 0)
     if closing > limit then
         if green.Tracing then green:trace(string.format("  RIMGUARD slows the run, ahead=%.1f closing=%.1f limit=%.1f", ahead, closing, limit)) end
         mover.Velocity = velocity + front * (closing - limit)
@@ -7160,17 +8621,20 @@ modules["rings"] = function(...)
 
 local import: (string) -> any = ...
 local Court: typeof(require("./court")) = import("court")
+local Floor: typeof(require("./floor")) = import("floor")
 
 local Rings = {}
 Rings.__index = Rings
 
-local SEGMENTS = 32
-local ARC_PIECES = 16
+local SEGMENTS = 24
+local ARC_PIECES = 12
 local ARC_SEGMENTS = 96
 local LINE_PIECE = 6
 local LINE_TOLERANCE = 0.05
-local DISC_ALPHA = 0.05
-local RIM_ALPHA = 1 - (1 - DISC_ALPHA) * (1 - 0.09)
+local DISC_ALPHA = 0.09
+local SOLID_ALPHA = 0.32
+local SOLID_LINE_ALPHA = 0.6
+local active: any = nil
 local FILL_Z = 1
 local LEVEL_EVERY = 0.1
 local HOOPS_EVERY = 0.5
@@ -7186,6 +8650,7 @@ local DRIVE_IN, DRIVE_OUT = 6, 13
 local NEAR = 60
 local EASE = 12
 local LIFT = 0.05
+local STACK = 0.08
 local SAME_HOOP = 6
 
 local RAYS = 360
@@ -7254,19 +8719,25 @@ local function beginView(canvas: any): boolean
 end
 
 local function screen(x: number, y: number, z: number): (number, number, boolean)
+    local sx, sy, depth = 0, 0, 0
     if fast then
         local dx, dy, dz = x - camX, y - camY, z - camZ
-        local depth = -(m02 * dx + m12 * dy + m22 * dz)
-        if depth <= 0.01 then
+        depth = -(m02 * dx + m12 * dy + m22 * dz)
+        if depth <= 0.5 then
             return 0, 0, false
         end
-        return middleX + focalX * (m00 * dx + m10 * dy + m20 * dz) / depth, middleY - focalY * (m01 * dx + m11 * dy + m21 * dz) / depth, true
+        sx, sy = middleX + focalX * (m00 * dx + m10 * dy + m20 * dz) / depth, middleY - focalY * (m01 * dx + m11 * dy + m21 * dz) / depth
+    else
+        local point, seen = slowProject(Vector3.new(x, y, z))
+        if not point or type(seen) ~= "number" or seen <= 0.5 then
+            return 0, 0, false
+        end
+        sx, sy = point.X, point.Y
     end
-    local point, depth = slowProject(Vector3.new(x, y, z))
-    if point and type(depth) == "number" and depth > 0 then
-        return point.X, point.Y, true
+    if sx ~= sx or sy ~= sy or sx < -viewW * 2 or sx > viewW * 3 or sy < -viewH * 2 or sy > viewH * 3 then
+        return 0, 0, false
     end
-    return 0, 0, false
+    return sx, sy, true
 end
 
 type Buffer = { X: { number }, Y: { number }, Ok: { boolean }, Count: number }
@@ -7404,10 +8875,12 @@ local function fillSlices(canvas: any, edge: Buffer, key: string, color: Color3,
 end
 
 local function ring(canvas: any, key: string, x: number, y: number, z: number, radius: number, color: Color3)
+    if active then
+        active:ring(key, x, y, z, radius, color, DISC_ALPHA * 1.6, SOLID_LINE_ALPHA)
+        return
+    end
     projectCircle(farBuf, x, y, z, radius)
-    projectCircle(nearBuf, x, y, z, radius * 0.82)
-    fillSlices(canvas, nearBuf, named(key, "disc"), color, DISC_ALPHA)
-    fillBand(canvas, nearBuf, farBuf, named(key, "rim"), color, RIM_ALPHA)
+    fillSlices(canvas, farBuf, named(key, "disc"), color, DISC_ALPHA)
 end
 
 local function arc(list: { Vector3 }, center: Vector3, front: Vector3, radius: number, y: number): { Vector3 }
@@ -7469,7 +8942,8 @@ local function stripOf(run: { Vector3 }, rimPos: Vector3): Strip
     for index, point in near do
         local ox, oz = point.X - rimPos.X, point.Z - rimPos.Z
         local length = math.max(math.sqrt(ox * ox + oz * oz), 0.001)
-        far[index] = Vector3.new(point.X + ox / length * 0.6, point.Y, point.Z + oz / length * 0.6)
+        far[index] = Vector3.new(point.X + ox / length * 0.3, point.Y, point.Z + oz / length * 0.3)
+        near[index] = Vector3.new(point.X - ox / length * 0.3, point.Y, point.Z - oz / length * 0.3)
     end
     local made = { Near = near, Far = far }
     strips[run] = made
@@ -7939,6 +9413,7 @@ end
 
 local surveys: { [any]: Survey } = setmetatable({}, { __mode = "k" }) :: any
 local nextSurvey: { [any]: number } = setmetatable({}, { __mode = "k" }) :: any
+local surveyWait: { [any]: number } = setmetatable({}, { __mode = "k" }) :: any
 
 local zoneFolder: any = nil
 local nextZoneScan = 0
@@ -7983,6 +9458,9 @@ local function surveyOf(rim: any, fallbackY: number): Survey?
         surveys[rim] = result
         return result
     end
+    local wait = math.min((surveyWait[rim] or 1) * 2, 30)
+    surveyWait[rim] = wait
+    nextSurvey[rim] = now + wait
     return nil
 end
 
@@ -8125,9 +9603,6 @@ function Rings.radius(self: any, key: string, goal: number, dt: number): number
 end
 
 function Rings.draw(self: any, canvas: any)
-    if not canvas then
-        return
-    end
     local now = os.clock()
     local dt = math.clamp(now - self.Last, 0, 0.1)
     self.Last = now
@@ -8136,11 +9611,39 @@ function Rings.draw(self: any, canvas: any)
     local shot = read("ShotRangeViz") == true
     local line = read("ThreePointLine") == true
     local dunk = read("DunkZones") == true
-    if not viz and not shot and not line and not dunk then
+    local root = Court.Root
+    local idle = (not viz and not shot and not line and not dunk) or not root or root.Parent == nil
+    local solid = self.Floor
+    if solid == nil then
+        if idle then
+            return
+        end
+        solid = Floor.new() or false
+        self.Floor = solid
+    end
+    if solid then
+        if idle then
+            solid:start()
+            solid:finish()
+            self.IdleFrames = (self.IdleFrames or 0) + 1
+            if self.IdleFrames > 30 then
+                self.IdleFrames = 0
+                self:clear()
+            end
+            return
+        end
+        self.IdleFrames = 0
+        solid:start()
+        active = solid
+        local ok, problem = pcall(self.paint, self, nil, root, read, dt, viz, shot, line, dunk)
+        active = nil
+        solid:finish()
+        if not ok then
+            error(problem, 0)
+        end
         return
     end
-    local root = Court.Root
-    if not root or root.Parent == nil then
+    if not canvas or idle then
         return
     end
     if not beginView(canvas) then
@@ -8151,6 +9654,14 @@ function Rings.draw(self: any, canvas: any)
     if not ok then
         error(problem, 0)
     end
+end
+
+function Rings.clear(self: any)
+    local solid = self.Floor
+    if solid then
+        solid:clear()
+    end
+    self.Floor = nil
 end
 
 function Rings.paint(self: any, canvas: any, root: any, read: (string) -> any, dt: number, viz: boolean, shot: boolean, line: boolean, dunk: boolean)
@@ -8168,9 +9679,13 @@ function Rings.paint(self: any, canvas: any, root: any, read: (string) -> any, d
                 local rimPos = rim.Position
                 for number, run in surveyed.Runs do
                     local strip = stripOf(run, rimPos)
-                    projectPath(nearBuf, strip.Near)
-                    projectPath(farBuf, strip.Far)
-                    fillBand(canvas, nearBuf, farBuf, named(key, "strip" .. number), lineColor, 0.4)
+                    if active then
+                        active:strip(named(key, "strip" .. number), strip.Near, strip.Far, lineColor, SOLID_LINE_ALPHA)
+                    else
+                        projectPath(nearBuf, strip.Near)
+                        projectPath(farBuf, strip.Far)
+                        fillBand(canvas, nearBuf, farBuf, named(key, "strip" .. number), lineColor, 0.4)
+                    end
                 end
             end
             if dunk or shot then
@@ -8180,16 +9695,25 @@ function Rings.paint(self: any, canvas: any, root: any, read: (string) -> any, d
                 if front then
                     local made = shapesOf(rim, front, floorAt(rim, front, surveyed, floor) + LIFT)
                     if dunk then
-                        band(canvas, named(tag, "drive"), made.DriveIn, made.DriveOut, DUNK_DRIVE, 0.07)
-                        band(canvas, named(tag, "stand"), made.StandIn, made.StandOut, DUNK_STAND, 0.12)
+                        if active then
+                            active:zone(named(tag, "drive"), center, front, DRIVE_IN, DRIVE_OUT, made.Y, DUNK_DRIVE, DISC_ALPHA * 1.6, SOLID_LINE_ALPHA)
+                            active:zone(named(tag, "stand"), center, front, STAND_IN, STAND_OUT, made.Y + STACK, DUNK_STAND, DISC_ALPHA * 1.6, SOLID_LINE_ALPHA)
+                        else
+                            band(canvas, named(tag, "drive"), made.DriveIn, made.DriveOut, DUNK_DRIVE, 0.07)
+                            band(canvas, named(tag, "stand"), made.StandIn, made.StandOut, DUNK_STAND, 0.12)
+                        end
                     end
                     if shot then
-                        if math.abs(made.ShotRadius - shotRadius) > 0.001 then
-                            made.ShotRadius = shotRadius
-                            arc(made.Shot, center, front, shotRadius, made.Y)
-                            arc(made.ShotIn, center, front, math.max(shotRadius - 3, 0), made.Y)
+                        if active then
+                            active:zone(named(tag, "shot"), center, front, math.max(shotRadius - 3, 0), shotRadius, made.Y + STACK * 2, shotColor, DISC_ALPHA * 1.6, SOLID_LINE_ALPHA)
+                        else
+                            if math.abs(made.ShotRadius - shotRadius) > 0.001 then
+                                made.ShotRadius = shotRadius
+                                arc(made.Shot, center, front, shotRadius, made.Y)
+                                arc(made.ShotIn, center, front, math.max(shotRadius - 3, 0), made.Y)
+                            end
+                            band(canvas, named(tag, "shot"), made.ShotIn, made.Shot, shotColor, 0.09)
                         end
-                        band(canvas, named(tag, "shot"), made.ShotIn, made.Shot, shotColor, 0.09)
                     end
                 end
             end
@@ -8198,13 +9722,13 @@ function Rings.paint(self: any, canvas: any, root: any, read: (string) -> any, d
     if viz then
         local x, y, z = position.X, floor + LIFT, position.Z
         if read("AutoSteal") == true then
-            ring(canvas, "pb:steal", x, y, z, self:radius("Steal", read("StealRange") or 8, dt), self:tint("StealColor", STEAL))
+            ring(canvas, "pb:steal", x, y, z,self:radius("Steal", read("StealRange") or 8, dt), self:tint("StealColor", STEAL))
         end
         if read("AutoGuard") == true then
-            ring(canvas, "pb:guard", x, y, z, self:radius("Guard", read("GuardRange") or 16, dt), self:tint("GuardColor", GUARD))
+            ring(canvas, "pb:guard", x, y + STACK, z,self:radius("Guard", read("GuardRange") or 16, dt), self:tint("GuardColor", GUARD))
         end
         if read("AutoBlock") == true then
-            ring(canvas, "pb:block", x, y, z, self:radius("Block", read("BlockRange") or 10, dt), self:tint("BlockColor", BLOCK))
+            ring(canvas, "pb:block", x, y + STACK * 2, z,self:radius("Block", read("BlockRange") or 10, dt), self:tint("BlockColor", BLOCK))
         end
     end
 end
@@ -8219,7 +9743,9 @@ local function fetch(url)
     if ok and type(response) == "table" and type(response.Body) == "string" and response.Body ~= "" and (tonumber(response.StatusCode) or 200) < 400 then
         return response.Body
     end
-    local got, body = pcall(game.HttpGet, game, url)
+    local got, body = pcall(function()
+        return game:HttpGet(url)
+    end)
     return if got and type(body) == "string" and body ~= "" then body else nil
 end
 
@@ -8229,7 +9755,12 @@ local function globals()
 end
 
 local function loadUi()
-    local source = globals().__OkloUiPrefetch or fetch(UI_URL)
+    local env = globals()
+    local source = env.__OkloUiPrefetch
+    if type(source) ~= "string" or not string.find(source, "copyConfigCode", 1, true) then
+        source = fetch(UI_URL) or (if type(source) == "string" then source else nil)
+    end
+    env.__OkloUiPrefetch = nil
     if not source then
         error("could not download the ui lib from github", 0)
     end
@@ -8249,4 +9780,5 @@ local function launch()
 end
 
 return launch()
+
 

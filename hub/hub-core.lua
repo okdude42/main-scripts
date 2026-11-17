@@ -78,8 +78,8 @@ return [==[
                 "Folder": "oklo scripts/practicalbasketball",
                 "ScriptUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/practical-basketball/pb-core.lua",
                 "Registry": "__PracticalBasketballStop",
-                "Width": 820,
-                "Height": 540,
+                "Width": 838,
+                "Height": 562,
                 "GameName": "Practical Basketball",
                 "HomePlace": 80681221431821,
                 "Places": "78438427735992,79672855812610,80681221431821,85576197307056,104645279125178,106120159518740,113883239895081,115491614485922,115776365257536,118669925076970,119587547774646,133311125103681,137269396533485,137939444694121,138505112166361",
@@ -929,7 +929,9 @@ local function fetch(url)
     if ok and type(response) == "table" and type(response.Body) == "string" and response.Body ~= "" and (tonumber(response.StatusCode) or 200) < 400 then
         return response.Body
     end
-    local got, body = pcall(game.HttpGet, game, url)
+    local got, body = pcall(function()
+        return game:HttpGet(url)
+    end)
     return if got and type(body) == "string" and body ~= "" then body else nil
 end
 
@@ -939,7 +941,12 @@ local function globals()
 end
 
 local function loadUi()
-    local source = globals().__OkloUiPrefetch or fetch(UI_URL)
+    local env = globals()
+    local source = env.__OkloUiPrefetch
+    if type(source) ~= "string" or not string.find(source, "copyConfigCode", 1, true) then
+        source = fetch(UI_URL) or (if type(source) == "string" then source else nil)
+    end
+    env.__OkloUiPrefetch = nil
     if not source then
         error("could not download the ui lib from github", 0)
     end
@@ -959,4 +966,5 @@ local function launch()
 end
 
 return launch()
+
 
