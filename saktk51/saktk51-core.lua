@@ -3917,7 +3917,7 @@ local function seconds(value: number): string
 end
 
 local function guns(ui: any, actions: Actions)
-    local tab = ui:tab("Guns", { Group = "Combat" })
+    local tab = ui:tab("Guns")
     local ammo = tab:section("AMMO")
     toggle(ammo, "Infinite Clip Ammo", "InfAmmo")
     toggle(ammo, "Infinite Reserve Ammo", "InfStoredAmmo")
@@ -4174,7 +4174,7 @@ local function takeGunPage(ui: any)
 end
 
 local function killAura(ui: any)
-    local tab = ui:tab("Kill Aura", { Group = "Combat" })
+    local tab = ui:tab("Kill Aura")
     local section = tab:section("KILL AURA")
     toggle(section, "Kill Aura (Hold A Gun)", "KillAura")
     slider(section, "Kill Aura Distance (Studs)", "KillAuraRange", 10, 1000, 10, whole, "KillAura")
@@ -4194,7 +4194,7 @@ local function bossRushPage(ui: any)
 end
 
 local function hitbox(ui: any)
-    local tab = ui:tab("Hitbox Expander", { Group = "Combat", Label = "HBE" })
+    local tab = ui:tab("Hitbox Expander", { Label = "HBE" })
     hitboxControls(tab:section("HBE"))
 end
 
@@ -4203,7 +4203,7 @@ local function bossRush(): boolean
 end
 
 local function entities(ui: any, hunting: boolean)
-    local tab = ui:tab("Entities", { Group = "Visuals", Label = "Entities" })
+    local tab = ui:tab("Entities", { Label = "Entities" })
     if not bossRush() then
         local npc = tab:section("NPCS / MONSTERS")
         toggle(npc, "NPC / Monster ESP", "VisualNPCESP")
@@ -4252,7 +4252,7 @@ local function environmentControls(tab: any, hunting: boolean)
 end
 
 local function world(ui: any, hunting: boolean)
-    local tab = ui:tab("World", { Group = "Visuals" })
+    local tab = ui:tab("World")
     if not bossRush() then
         local weapons = tab:section("WEAPONS")
         toggle(weapons, "Enable Weapon ESP", "VisualWeaponESP")
@@ -4302,7 +4302,7 @@ local function huds(ui: any, hunting: boolean)
     if bossRush() then
         return
     end
-    local tab = ui:tab("HUDs", { Group = "Visuals" })
+    local tab = ui:tab("HUDs")
     local section = tab:section("HUDS")
     category(section, "Nearest Weapons")
     toggle(section, "Nearest Weapons HUD", "VisualNearestWeaponHUD")
@@ -4331,7 +4331,7 @@ local function huds(ui: any, hunting: boolean)
 end
 
 local function style(ui: any)
-    local tab = ui:tab("ESP Style", { Group = "Visuals" })
+    local tab = ui:tab("ESP Style")
     local look = tab:section("STYLE")
     look:dropdown({ Name = "Visualizer Mode", Flag = "VisualMode", Values = Config.VISUAL_MODES, Default = D.VisualMode })
     toggle(look, "ESP Through Walls", "VisualThroughWalls")
@@ -4414,7 +4414,7 @@ local function automation(section: any)
 end
 
 local function movement(ui: any, hunting: boolean)
-    local tab = ui:tab("Movement", { Group = "Misc" })
+    local tab = ui:tab("Movement")
     local speed = tab:section("MOVEMENT")
     category(speed, "Movement")
     toggle(speed, "Door Noclip", "DoorNoclip")
@@ -4427,7 +4427,7 @@ local function movement(ui: any, hunting: boolean)
 end
 
 local function endlessPage(ui: any)
-    local tab = ui:tab("Endless", { Group = "Misc" })
+    local tab = ui:tab("Endless")
     automation(tab:section("ENDLESS"))
 end
 
