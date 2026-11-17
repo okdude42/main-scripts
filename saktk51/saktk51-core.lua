@@ -3905,7 +3905,7 @@ local function slider(section: any, name: string, flag: string, min: number, max
 end
 
 local function category(section: any, text: string)
-    section:label({ Text = text, Size = 15, Bold = true, Height = 30 })
+    section:label({ Text = text, Size = 12, Height = 28, Offset = 4 })
 end
 
 local function whole(value: number): string
