@@ -3881,8 +3881,7 @@ type Actions = {
 
 local D = Config.DEFAULTS
 
-
-local function on(requires: any): ((window: any) -> boolean)?
+local function locked(requires: any): ((window: any) -> boolean)?
     if requires == nil then
         return nil
     end
@@ -3890,79 +3889,23 @@ local function on(requires: any): ((window: any) -> boolean)?
     return function(window: any): boolean
         for _, flag in flags do
             if window:get(flag) then
-                return true
+                return false
             end
         end
-        return false
+        return true
     end
 end
 
-local function both(first: string, second: string): (window: any) -> boolean
-    return function(window: any): boolean
-        return window:get(first) == true and window:get(second) == true
-    end
+local function toggle(section: any, name: string, flag: string, requires: any?)
+    section:toggle({ Name = name, Flag = flag, Default = D[flag], Disabled = locked(requires) })
 end
 
-local switchNames: { [string]: string } = {}
-local switchRows: { [string]: any } = {}
-local switchFirst: { [string]: boolean } = {}
-local headed: { [any]: boolean } = {}
-local captioned: { [any]: string? } = {}
-
-local function gate(section: any, requires: any)
-    if type(requires) ~= "string" or not switchNames[requires] then
-        local last = captioned[section]
-        if last and requires == nil then
-            section:label({ Text = "", Height = 6, Show = on(last) })
-        end
-        captioned[section] = nil
-        return
-    end
-    if captioned[section] ~= requires then
-        captioned[section] = requires
-        if switchFirst[requires] then
-            return
-        end
-        local rows = section.Spec.rows
-        local index = table.find(rows, switchRows[requires])
-        section:label({ Text = switchNames[requires] .. " Settings", Size = 12, Height = 28, Offset = 4, Show = on(requires) })
-        if index then
-            table.insert(rows, index, table.remove(rows))
-        end
-    end
+local function slider(section: any, name: string, flag: string, min: number, max: number, step: number, format: ((number) -> string)?, requires: any?)
+    section:slider({ Name = name, Flag = flag, Min = min, Max = max, Step = step, Default = D[flag], Format = format, Disabled = locked(requires) })
 end
 
-local function toggle(section: any, name: string, flag: string, shown: any?, keywords: string?)
-    if shown == nil then
-        switchNames[flag] = name
-        switchFirst[flag] = headed[section] == true
-    end
-    gate(section, shown)
-    headed[section] = false
-    section:toggle({ Name = name, Flag = flag, Default = D[flag], Show = on(shown), Keywords = keywords })
-    if shown == nil then
-        switchRows[flag] = section.Spec.rows[#section.Spec.rows]
-    end
-end
-
-local function slider(section: any, name: string, flag: string, min: number, max: number, step: number, format: ((number) -> string)?, shown: any?)
-    gate(section, shown)
-    section:slider({ Name = name, Flag = flag, Min = min, Max = max, Step = step, Default = D[flag], Format = format, Show = if type(shown) == "function" then shown else on(shown) })
-end
-
-local function twin(section: any, left: { string }, right: { string }, shown: any?)
-    local show = on(shown)
-    gate(section, shown)
-    section:pair(
-        { Type = "Toggle", Name = left[1], Flag = left[2], Default = D[left[2]], Keywords = left[3], Show = show },
-        { Type = "Toggle", Name = right[1], Flag = right[2], Default = D[right[2]], Keywords = right[3], Show = show }
-    )
-end
-
-local function header(section: any, text: string)
-    captioned[section] = nil
-    headed[section] = true
-    section:label({ Text = text, Size = 12, Height = 28, Offset = 4 })
+local function category(section: any, text: string)
+    section:label({ Text = text, Size = 15, Bold = true, Height = 30 })
 end
 
 local function whole(value: number): string
@@ -3973,79 +3916,75 @@ local function seconds(value: number): string
     return string.format("%.2f", value)
 end
 
-local function bossRush(): boolean
-    return Modes.Current == "Boss Rush"
-end
+local function guns(ui: any, actions: Actions)
+    local tab = ui:tab("Guns", { Group = "Combat" })
+    local ammo = tab:section("AMMO")
+    toggle(ammo, "Infinite Clip Ammo", "InfAmmo")
+    toggle(ammo, "Infinite Reserve Ammo", "InfStoredAmmo")
+    toggle(ammo, "Instant Fast Reload", "InstantReload")
+    toggle(ammo, "Instant Weapon Equip", "FastWeaponEquip")
 
-local function guns(ui: any)
-    local section = ui:tab("Guns"):section("GUNS")
-    header(section, "Ammo")
-    twin(section, { "Infinite Clip Ammo", "InfAmmo" }, { "Infinite Reserve Ammo", "InfStoredAmmo" })
-    twin(section, { "Instant Reload", "InstantReload", "fast reload" }, { "Instant Equip", "FastWeaponEquip", "weapon equip" })
-    header(section, "Handling")
-    twin(section, { "No Recoil", "NoRecoil", "camera recoil" }, { "No Spread", "NoSpread", "zero bullet spread" })
-    twin(section, { "Always Full Auto", "AlwaysFullAuto", "automatic" }, { "Wallbang", "Wallbang", "raycast walls" })
-    header(section, "Fire Rate")
-    toggle(section, "Rapid Fire", "RapidFire", nil, "fire rate override")
-    slider(section, "Fire Delay (Seconds)", "CustomFireRate", 0, 0.5, 0.01, seconds, "RapidFire")
-    toggle(section, "Minigun Mode", "MinigunMode", nil, "extreme fire rate")
-    slider(section, "Minigun Fire Rate Boost", "MinigunFireBoost", 0, 10, 1, whole, "MinigunMode")
-    toggle(section, "Shot Multiplier", "ShotMultiplier")
-    slider(section, "Shots Per Fire", "ShotMultiplierCount", 1, 10, 1, whole, "ShotMultiplier")
-end
+    local handling = tab:section("HANDLING")
+    toggle(handling, "No Camera Recoil", "NoRecoil")
+    toggle(handling, "Zero Bullet Spread", "NoSpread")
+    toggle(handling, "Always Full Automatic", "AlwaysFullAuto")
+    toggle(handling, "Raycast (Wallbang)", "Wallbang")
+    toggle(handling, "Remove Bullets (Client Side)", "RemoveBullets")
+    toggle(handling, "Remove Ammo Clips (Client Side)", "RemoveClips")
+    toggle(handling, "Mute Gun Sounds (Client Side)", "MuteGunSounds")
 
-local function aim(ui: any, actions: Actions, killAura: boolean, hitbox: boolean)
-    local section = ui:tab("Aim"):section("AIM")
-    header(section, "Targeting")
-    toggle(section, "Silent Aim", "SilentAim")
-    twin(section, { "Show FOV Circle", "ShowSilentAimFOV", "silent aim fov" }, { "Cycle Targets", "TargetCycling", "silent aim" }, "SilentAim")
-    slider(section, "Silent Aim FOV (Px)", "SilentAimFOV", 30, 400, 5, whole, "SilentAim")
+    local rate = tab:section("FIRE RATE")
+    toggle(rate, "Rapid Fire Rate Override", "RapidFire")
+    slider(rate, "Custom Fire Delay (Seconds)", "CustomFireRate", 0, 0.5, 0.01, seconds, "RapidFire")
+    toggle(rate, "Extreme Fire Rate / Minigun", "MinigunMode")
+    slider(rate, "Minigun Fire Rate Boost", "MinigunFireBoost", 0, 10, 1, whole, "MinigunMode")
+    toggle(rate, "Shot Multiplier", "ShotMultiplier")
+    slider(rate, "Shots Per Fire", "ShotMultiplierCount", 1, 10, 1, whole, "ShotMultiplier")
+
+    local ballistics = tab:section("BALLISTICS")
+    toggle(ballistics, "Custom Bullet Travel Time", "CustomBulletTravel")
+    slider(ballistics, "Bullet Travel Time (0 = Instant)", "BulletTravelTime", 0, 30, 0.05, seconds, "CustomBulletTravel")
+    toggle(ballistics, "Instant Hit Report", "InstantHit", "CustomBulletTravel")
+    toggle(ballistics, "Extended Projectile Range", "ExtendedProjectileRange")
+    slider(ballistics, "Projectile Range Multiplier", "ProjectileRangeMultiplier", 1, 20, 1, whole, "ExtendedProjectileRange")
+    toggle(ballistics, "Custom Shotgun Pellet Count", "CustomPelletCount")
+    slider(ballistics, "Shotgun Pellets Per Shot", "PelletCount", 1, 50, 1, whole, "CustomPelletCount")
+
+    local targeting = tab:section("TARGETING")
+    toggle(targeting, "Silent Aim", "SilentAim")
+    toggle(targeting, "Show Silent Aim FOV Circle", "ShowSilentAimFOV", "SilentAim")
+    slider(targeting, "Silent Aim FOV Radius (Px)", "SilentAimFOV", 30, 400, 5, whole, "SilentAim")
     ui:flag("SilentAimParts", D.SilentAimParts)
-    gate(section, "SilentAim")
-    section:button({
+    targeting:button({
         Name = "Select Silent Aim Parts",
         Label = function()
-            return "Aim Parts: " .. AimParts.label(ui:get("SilentAimParts"))
+            return "Silent Aim Parts: " .. AimParts.label(ui:get("SilentAimParts"))
         end,
         Callback = actions.chooseAimParts,
-        Show = on("SilentAim"),
-
+        Disabled = locked("SilentAim"),
     })
-    toggle(section, "Triggerbot", "AutoShoot", nil, "auto shoot")
-    toggle(section, "Show Triggerbot FOV Circle", "ShowTriggerFOV", "AutoShoot")
-    slider(section, "Triggerbot FOV (Px)", "TriggerFOV", 10, 400, 5, whole, "AutoShoot")
-    if killAura then
-        toggle(section, "Kill Aura", "KillAura", nil, "hold a gun")
-        local shown = on("KillAura")
-        gate(section, "KillAura")
-        section:pair(
-            { Type = "Slider", Name = "Distance (Studs)", Flag = "KillAuraRange", Min = 10, Max = 1000, Step = 10, Default = D.KillAuraRange, Format = whole, Show = shown, Keywords = "kill aura" },
-            { Type = "Slider", Name = "Targets Per Burst", Flag = "KillAuraTargets", Min = 1, Max = 30, Step = 1, Default = D.KillAuraTargets, Format = whole, Show = shown, Keywords = "kill aura" }
-        )
-        toggle(section, "Show Kill Aura Circle", "ShowKillAuraCircle", "KillAura")
-    end
-    if hitbox then
-        toggle(section, "Hitbox Expander", "KillerHitbox", nil, "hbe killer")
-        slider(section, "Hitbox Size (Studs)", "KillerHitboxSize", 1, 3000, 1, whole, "KillerHitbox")
-        toggle(section, "Show Hitbox Visualizer", "KillerHitboxVisualizer", "KillerHitbox")
-        local drawn = both("KillerHitbox", "KillerHitboxVisualizer")
-        section:pair(
-            { Type = "Color", Name = "Box Fill Color", Flag = "KillerHitboxFillColor", Default = D.KillerHitboxFillColor, Show = drawn },
-            { Type = "Color", Name = "Outline Color", Flag = "KillerHitboxLineColor", Default = D.KillerHitboxLineColor, Show = drawn }
-        )
-        section:pair(
-            { Type = "Slider", Name = "Fill Trans", Flag = "KillerHitboxFillTransparency", Min = 0, Max = 1, Step = 0.05, Default = D.KillerHitboxFillTransparency, Show = drawn },
-            { Type = "Slider", Name = "Outline Trans", Flag = "KillerHitboxLineTransparency", Min = 0, Max = 1, Step = 0.05, Default = D.KillerHitboxLineTransparency, Show = drawn }
-        )
-    end
-    header(section, "Bullets")
-    toggle(section, "Custom Bullet Travel Time", "CustomBulletTravel")
-    slider(section, "Bullet Travel Time (0 = Instant)", "BulletTravelTime", 0, 30, 0.05, seconds, "CustomBulletTravel")
-    toggle(section, "Instant Hit Report", "InstantHit", "CustomBulletTravel")
-    toggle(section, "Extended Projectile Range", "ExtendedProjectileRange")
-    slider(section, "Projectile Range Multiplier", "ProjectileRangeMultiplier", 1, 20, 1, whole, "ExtendedProjectileRange")
-    toggle(section, "Custom Shotgun Pellets", "CustomPelletCount", nil, "pellet count")
-    slider(section, "Shotgun Pellets Per Shot", "PelletCount", 1, 50, 1, whole, "CustomPelletCount")
+    toggle(targeting, "Cycle Silent Aim Targets", "TargetCycling", "SilentAim")
+    toggle(targeting, "Triggerbot", "AutoShoot")
+    toggle(targeting, "Show Triggerbot FOV Circle", "ShowTriggerFOV", "AutoShoot")
+    slider(targeting, "Triggerbot FOV Radius (Px)", "TriggerFOV", 10, 400, 5, whole, "AutoShoot")
+end
+
+local function visualizerLocked(window: any): boolean
+    return not (window:get("KillerHitbox") and window:get("KillerHitboxVisualizer"))
+end
+
+local function hitboxControls(section: any)
+    toggle(section, "Hitbox Expander", "KillerHitbox")
+    slider(section, "Hitbox Size (Studs)", "KillerHitboxSize", 1, 3000, 1, whole, "KillerHitbox")
+    toggle(section, "Show Visualizer", "KillerHitboxVisualizer", "KillerHitbox")
+    section:pair(
+        { Type = "Color", Name = "Box Fill Color", Flag = "KillerHitboxFillColor", Default = D.KillerHitboxFillColor, Disabled = visualizerLocked },
+        { Type = "Color", Name = "Outline Color", Flag = "KillerHitboxLineColor", Default = D.KillerHitboxLineColor, Disabled = visualizerLocked }
+    )
+    section:pair(
+        { Type = "Slider", Name = "Fill Trans", Flag = "KillerHitboxFillTransparency", Min = 0, Max = 1, Step = 0.05, Default = D.KillerHitboxFillTransparency, Disabled = visualizerLocked },
+        { Type = "Slider", Name = "Outline Trans", Flag = "KillerHitboxLineTransparency", Min = 0, Max = 1, Step = 0.05, Default = D.KillerHitboxLineTransparency, Disabled = visualizerLocked }
+    )
 end
 
 local gunStatus = "Select up to two guns"
@@ -4097,8 +4036,8 @@ local function playerRow(index: number): any
     return {
         Type = "Custom",
         Height = PICK_ROW,
-        Show = function(window: any)
-            return window:get("KillSpecified") == true and #KillAll.players() >= index
+        Show = function()
+            return #KillAll.players() >= index
         end,
         Render = function(kit: any, app: any)
             local name = KillAll.players()[index]
@@ -4136,25 +4075,72 @@ local function playerRow(index: number): any
     }
 end
 
-local function notPlaying(): boolean
-    return not KillAll.playing()
-end
-
-local function killControls(section: any)
-    header(section, "Kill")
-    section:toggle({ Name = "Kill All", Flag = "KillAll", Default = D.KillAll, Disabled = notPlaying })
-    section:toggle({ Name = "Kill Specified", Flag = "KillSpecified", Default = D.KillSpecified, Disabled = notPlaying, Keywords = "players targets" })
+local function targetPlayers(section: any)
+    section:toggle({
+        Name = "Kill Specified",
+        Flag = "KillSpecified",
+        Default = D.KillSpecified,
+        Disabled = function()
+            return not KillAll.playing()
+        end,
+    })
     for index = 1, PLAYER_SLOTS, 2 do
         local left, right = playerRow(index), playerRow(index + 1)
         left.NoStack, right.NoStack = true, true
         section:pair(left, right)
     end
-    section:button({ Name = "Clear Selection", Callback = KillAll.clearPicked, Show = on("KillSpecified") })
+    section:button({ Name = "Clear Selection", Callback = KillAll.clearPicked })
+end
+
+local function takeGuns(tab: any)
+    Portraits.prepare()
+    local gunsSection = tab:section("TAKE GUN")
+    gunsSection:label({
+        Height = 22,
+        Size = 11,
+        Label = function()
+            local count = #Classic.available()
+            if count == 0 then
+                return "No guns right now, it is intermission"
+            end
+            if Modes.Current == "Killer Mode" or Modes.Current == "Classic" then
+                return "Guns on the map (" .. #Classic.pickedGuns() .. " selected)"
+            end
+            return "Guns on the map (" .. #Classic.pickedGuns() .. "/2 selected)"
+        end,
+    })
+    for index = 1, PICK_SLOTS, 2 do
+        local left, right = gunRow(index), gunRow(index + 1)
+        left.NoStack, right.NoStack = true, true
+        gunsSection:pair(left, right)
+    end
+    gunsSection:label({ Label = function()
+        return gunStatus
+    end, Height = 26, Size = 11, Accent = true, Boxed = true })
+    gunsSection:button({
+        Name = "Take Selected Guns",
+        Callback = function()
+            Classic.takePicked(function(text: string)
+                gunStatus = text
+            end)
+        end,
+    })
+    if Modes.Current == "Killer Mode" or Modes.Current == "Classic" then
+        gunsSection:button({
+            Name = "Take All Guns",
+            Callback = function()
+                Classic.takeAll(function(text: string)
+                    gunStatus = text
+                end)
+            end,
+        })
+    end
 end
 
 local function killers(ui: any, actions: Actions)
-    local section = ui:tab("Killers"):section("KILLERS")
-    header(section, "Killer Reroll")
+    local tab = ui:tab(Modes.Current, { Group = Modes.Current })
+    local section = tab:section("KILLERS")
+    category(section, "Killer Reroll")
     section:pair(
         { Type = "Button", Name = "Reset Character Until...", Callback = actions.pick },
         {
@@ -4169,282 +4155,280 @@ local function killers(ui: any, actions: Actions)
         }
     )
     section:label({ Label = Reroll.status, Height = 26, Size = 11, Accent = true, Boxed = true })
-    killControls(section)
-    Portraits.preload(Config.KILLERS)
-    return section
-end
-
-local function juggernaut(ui: any)
-    local section = ui:tab("Juggernaut"):section("JUGGERNAUT")
-    killControls(section)
-    return section
-end
-
-local function armory(section: any)
-    Portraits.prepare()
-    local every = Modes.Current == "Killer Mode" or Modes.Current == "Classic"
-    section:label({
-        Height = 28,
-        Size = 12,
-        Offset = 4,
-        Label = function()
-            local count = #Classic.available()
-            if count == 0 then
-                return "No guns right now, it is intermission"
-            end
-            if every then
-                return "Guns on the map (" .. #Classic.pickedGuns() .. " selected)"
-            end
-            return "Guns on the map (" .. #Classic.pickedGuns() .. "/2 selected)"
+    section:toggle({
+        Name = "Kill All",
+        Flag = "KillAll",
+        Default = D.KillAll,
+        Disabled = function()
+            return not KillAll.playing()
         end,
     })
-    for index = 1, PICK_SLOTS, 2 do
-        local left, right = gunRow(index), gunRow(index + 1)
-        left.NoStack, right.NoStack = true, true
-        section:pair(left, right)
-    end
-    local function stocked(): boolean
-        return #Classic.available() > 0
-    end
-    section:label({ Label = function()
-        return gunStatus
-    end, Height = 26, Size = 11, Accent = true, Boxed = true, Show = stocked })
-    local function take()
-        Classic.takePicked(function(text: string)
-            gunStatus = text
-        end)
-    end
-    if every then
-        section:pair({ Type = "Button", Name = "Take Selected Guns", Callback = take, Show = stocked }, {
-            Type = "Button",
-            Name = "Take All Guns",
-            Show = stocked,
-            Callback = function()
-                Classic.takeAll(function(text: string)
-                    gunStatus = text
-                end)
-            end,
-        })
-    else
-        section:button({ Name = "Take Selected Guns", Callback = take, Show = stocked })
-    end
+
+    targetPlayers(section)
+    Portraits.preload(Config.KILLERS)
 end
 
-local function espRow(name: string, prefix: string, label: string, arrowsNeedEsp: boolean?, health: boolean?): any
-    local esp = "Visual" .. prefix .. "ESP"
-    return {
-        Name = name,
-        Cells = {
-            { Flag = esp, Name = label .. " ESP", Default = D[esp] },
-            { Flag = "Visual" .. prefix .. "Tracers", Name = label .. " Tracers", Default = D["Visual" .. prefix .. "Tracers"], Requires = esp },
-            { Flag = "Visual" .. prefix .. "Offscreen", Name = label .. " Offscreen Arrows", Default = D["Visual" .. prefix .. "Offscreen"], Requires = if arrowsNeedEsp then esp else nil },
-            if health == false then nil else { Flag = "Visual" .. prefix .. "ShowHealth", Name = label .. " Show Health", Default = D["Visual" .. prefix .. "ShowHealth"], Requires = esp },
-            { Flag = "Visual" .. prefix .. "ShowDistance", Name = label .. " Show Distance", Default = D["Visual" .. prefix .. "ShowDistance"], Requires = esp },
-        },
-    }
+local function takeGunPage(ui: any)
+    local tab = ui:tab("Get Guns")
+    takeGuns(tab)
 end
 
-local function chip(name: string, flag: string, short: string?, requires: any?): any
-    return { Name = name, Short = short, Flag = flag, Default = D[flag], Requires = requires }
+local function killAura(ui: any)
+    local tab = ui:tab("Kill Aura", { Group = "Combat" })
+    local section = tab:section("KILL AURA")
+    toggle(section, "Kill Aura (Hold A Gun)", "KillAura")
+    slider(section, "Kill Aura Distance (Studs)", "KillAuraRange", 10, 1000, 10, whole, "KillAura")
+    toggle(section, "Show Kill Aura Circle", "ShowKillAuraCircle", "KillAura")
+    slider(section, "Targets Per Burst", "KillAuraTargets", 1, 30, 1, whole, "KillAura")
 end
 
-local MAP_FLAGS = { "VisualLandmarkESP", "VisualSecretAreaESP", "VisualPackAPunchESP", "VisualInteractableESP", "VisualSurveillanceESP" }
+local function bossRushPage(ui: any)
+    local tab = ui:tab("Boss Rush", { Group = "Boss Rush" })
+    local section = tab:section("BOSS RUSH")
+    if Modes.bossName() == "Kraken" then
+        toggle(section, "Boss Attack Immunity (Kraken)", "BossImmunity")
+    end
+    toggle(section, "Unlock Camera", "UnlockCamera")
+    toggle(section, "Custom Walk Speed", "CustomWalkSpeed")
+    slider(section, "Walk Speed", "WalkSpeedValue", 16, 100, 1, whole, "CustomWalkSpeed")
+end
 
-local function esp(section: any, hunting: boolean)
-    local rows: { any } = {}
+local function hitbox(ui: any)
+    local tab = ui:tab("Hitbox Expander", { Group = "Combat", Label = "HBE" })
+    hitboxControls(tab:section("HBE"))
+end
+
+local function bossRush(): boolean
+    return Modes.Current == "Boss Rush"
+end
+
+local function entities(ui: any, hunting: boolean)
+    local tab = ui:tab("Entities", { Group = "Visuals", Label = "Entities" })
     if not bossRush() then
-        table.insert(rows, espRow("NPCs", "NPC", "NPC / Monster"))
+        local npc = tab:section("NPCS / MONSTERS")
+        toggle(npc, "NPC / Monster ESP", "VisualNPCESP")
+        toggle(npc, "Tracers", "VisualNPCTracers", "VisualNPCESP")
+        toggle(npc, "Offscreen Arrows", "VisualNPCOffscreen")
+        toggle(npc, "Show Health", "VisualNPCShowHealth", "VisualNPCESP")
+        toggle(npc, "Show Distance", "VisualNPCShowDistance", "VisualNPCESP")
         if hunting then
-            table.insert(rows, espRow("Killers", "Killer", "Killers / Infected"))
+            local killers = tab:section("KILLERS / INFECTED")
+            toggle(killers, "Killers / Infected ESP", "VisualKillerESP")
+            toggle(killers, "Tracers", "VisualKillerTracers", "VisualKillerESP")
+            toggle(killers, "Offscreen Arrows", "VisualKillerOffscreen")
+            toggle(killers, "Show Health", "VisualKillerShowHealth", "VisualKillerESP")
+            toggle(killers, "Show Distance", "VisualKillerShowDistance", "VisualKillerESP")
         end
     end
     if not Modes.storming() then
-        table.insert(rows, espRow("Survivors", "Survivor", "Survivors / Players"))
+        local survivors = tab:section("SURVIVORS")
+        toggle(survivors, "Survivors / Players ESP", "VisualSurvivorESP")
+        toggle(survivors, "Tracers", "VisualSurvivorTracers", "VisualSurvivorESP")
+        toggle(survivors, "Offscreen Arrows", "VisualSurvivorOffscreen")
+        toggle(survivors, "Show Health", "VisualSurvivorShowHealth", "VisualSurvivorESP")
+        toggle(survivors, "Show Distance", "VisualSurvivorShowDistance", "VisualSurvivorESP")
     end
     if bossRush() then
-        table.insert(rows, espRow("Boss", "Boss", "Boss"))
-    else
-        table.insert(rows, espRow("Weapons", "Weapon", "Weapon", true, false))
+        local boss = tab:section("BOSS")
+        toggle(boss, "Boss ESP", "VisualBossESP")
+        toggle(boss, "Tracers", "VisualBossTracers", "VisualBossESP")
+        toggle(boss, "Offscreen Arrows", "VisualBossOffscreen")
+        toggle(boss, "Show Health", "VisualBossShowHealth", "VisualBossESP")
+        toggle(boss, "Show Distance", "VisualBossShowDistance", "VisualBossESP")
     end
-    header(section, "Characters")
-    section:matrix({ Columns = { "ESP", "Tracers", "Arrows", "Health", "Distance" }, Rows = rows })
-
-    if not hunting and not bossRush() then
-        local classic = Modes.Current == "Classic"
-        local endless = Modes.Current == "Endless"
-        local items: { any } = {}
-        if classic then
-            table.insert(items, chip("Keycards ESP", "VisualKeycardESP", "Keycards"))
-            table.insert(items, chip("Papers ESP", "VisualPaperESP", "Papers"))
-        end
-        table.insert(items, chip("Important Room Markers", "VisualLandmarkESP", "Rooms"))
-        if classic then
-            table.insert(items, chip("Secret Area Markers", "VisualSecretAreaESP", "Secret Areas"))
-            table.insert(items, chip("Facility Objective Markers", "VisualFacilityObjectiveESP", "Objectives"))
-        end
-        table.insert(items, chip("Pack a Punch ESP", "VisualPackAPunchESP", "Pack a Punch"))
-        table.insert(items, chip("Interactables ESP", "VisualInteractableESP", "Interactables"))
-        if not endless then
-            table.insert(items, chip("Surveillance Cameras ESP", "VisualSurveillanceESP", "Cameras"))
-        end
-        if endless then
-            table.insert(items, chip("Perks ESP", "VisualEndlessPerksESP", "Perks"))
-            table.insert(items, chip("Traps ESP", "VisualTrapESP", "Traps"))
-            table.insert(items, chip("Mystery Box ESP", "VisualMysteryBoxESP", "Mystery Box"))
-        end
-        if classic then
-            table.insert(items, chip("Pickup Show Distance", "VisualPickupShowDistance", "Pickup Distance", { "VisualKeycardESP", "VisualPaperESP" }))
-        end
-        table.insert(items, chip("Map Show Distance", "VisualMapShowDistance", "Map Distance", MAP_FLAGS))
-        if classic then
-            table.insert(items, chip("Show Marker Distance", "VisualFacilityShowDistance", "Objective Distance", "VisualFacilityObjectiveESP"))
-        end
-        if endless then
-            table.insert(items, chip("Endless Show Distance", "VisualEndlessShowDistance", "Endless Distance", { "VisualEndlessPerksESP", "VisualTrapESP", "VisualMysteryBoxESP" }))
-        end
-        header(section, "Map")
-        section:chips({ Items = items })
-    end
-
 end
 
-local function look(section: any)
-    local look = section:advanced("Look and Colors")
-    look:dropdown({ Name = "Visualizer Mode", Flag = "VisualMode", Values = Config.VISUAL_MODES, Default = D.VisualMode })
-    look:toggle({ Name = "ESP Through Walls", Flag = "VisualThroughWalls", Default = D.VisualThroughWalls })
-    local function lookSlider(name: string, flag: string, min: number, max: number, step: number, format: ((number) -> string)?)
-        look:slider({ Name = name, Flag = flag, Min = min, Max = max, Step = step, Default = D[flag], Format = format })
+local function environmentControls(tab: any, hunting: boolean)
+    local others = tab:section("OTHERS")
+    category(others, "Environment")
+    toggle(others, "Fullbright", "Fullbright")
+    toggle(others, "Remove Fog / Atmosphere", "RemoveFog")
+    toggle(others, "No Global Shadows", "VisualNoShadows")
+    if hunting or Modes.facility() then
+        category(others, "Killer Screen Effects")
+        toggle(others, "Remove Ink Screen (Eyeless Jack)", if hunting then "NoInk" else "RemoveInk")
+        toggle(others, "Remove Tails Doll Image", "RemoveTailsPopup")
     end
-    lookSlider("Text Size (Px)", "ESPTextSize", 9, 22, 1, whole)
-    lookSlider("Box Thickness (Px)", "VisualBoxThickness", 1, 5, 0.5)
-    lookSlider("Box Transparency", "VisualHighlightOutlineTransparency", 0, 1, 0.05)
-    lookSlider("Fill Transparency", "VisualHighlightFillTransparency", 0, 1, 0.05)
-    lookSlider("Tracer Thickness (Px)", "VisualTracerThickness", 1, 5, 0.5)
-    lookSlider("Tracer Transparency", "VisualTracerTransparency", 0, 1, 0.05)
-    lookSlider("Offscreen Arrow Size", "VisualOffscreenArrowSize", 10, 40, 1, whole)
-    lookSlider("Label Background Transparency", "VisualLabelBackgroundTransparency", 0, 1, 0.05)
-    lookSlider("Label Height (Studs)", "VisualBillboardOffset", 0, 8, 0.1)
-    look:pair(
+end
+
+local function world(ui: any, hunting: boolean)
+    local tab = ui:tab("World", { Group = "Visuals" })
+    if not bossRush() then
+        local weapons = tab:section("WEAPONS")
+        toggle(weapons, "Enable Weapon ESP", "VisualWeaponESP")
+        toggle(weapons, "Weapon Tracers", "VisualWeaponTracers", "VisualWeaponESP")
+        toggle(weapons, "Weapon Offscreen Arrows", "VisualWeaponOffscreen", "VisualWeaponESP")
+        toggle(weapons, "Show Distance", "VisualWeaponShowDistance", "VisualWeaponESP")
+    end
+    if not hunting and not bossRush() then
+        local endless = Modes.Current == "Endless"
+        if Modes.Current == "Classic" then
+            local pickups = tab:section("PICKUPS")
+            toggle(pickups, "Keycards ESP", "VisualKeycardESP")
+            toggle(pickups, "Papers ESP", "VisualPaperESP")
+            toggle(pickups, "Show Distance", "VisualPickupShowDistance", { "VisualKeycardESP", "VisualPaperESP" })
+        end
+
+        local map = tab:section("MAP")
+        toggle(map, "Important Room Markers", "VisualLandmarkESP")
+        if Modes.Current == "Classic" then
+            toggle(map, "Secret Area Markers", "VisualSecretAreaESP")
+        end
+        toggle(map, "Pack a Punch ESP", "VisualPackAPunchESP")
+        toggle(map, "Interactables ESP", "VisualInteractableESP")
+        if not endless then
+            toggle(map, "Surveillance Cameras ESP", "VisualSurveillanceESP")
+        end
+        toggle(map, "Show Distance", "VisualMapShowDistance", { "VisualLandmarkESP", "VisualSecretAreaESP", "VisualPackAPunchESP", "VisualInteractableESP", "VisualSurveillanceESP" })
+
+        if Modes.Current == "Classic" then
+            local facility = tab:section("FACILITY")
+            toggle(facility, "Facility Objective Markers", "VisualFacilityObjectiveESP")
+            toggle(facility, "Show Marker Distance", "VisualFacilityShowDistance", "VisualFacilityObjectiveESP")
+        end
+
+        if endless then
+            local perks = tab:section("ENDLESS")
+            toggle(perks, "Perks ESP", "VisualEndlessPerksESP")
+            toggle(perks, "Traps ESP", "VisualTrapESP")
+            toggle(perks, "Mystery Box ESP", "VisualMysteryBoxESP")
+            toggle(perks, "Show Distance", "VisualEndlessShowDistance", { "VisualEndlessPerksESP", "VisualTrapESP", "VisualMysteryBoxESP" })
+        end
+    end
+    environmentControls(tab, hunting)
+end
+
+local function huds(ui: any, hunting: boolean)
+    if bossRush() then
+        return
+    end
+    local tab = ui:tab("HUDs", { Group = "Visuals" })
+    local section = tab:section("HUDS")
+    category(section, "Nearest Weapons")
+    toggle(section, "Nearest Weapons HUD", "VisualNearestWeaponHUD")
+    toggle(section, "Show HUD Coordinates", "VisualWeaponHUDCoordinates", "VisualNearestWeaponHUD")
+    slider(section, "Nearest Weapons Listed", "VisualWeaponHUDCount", 1, 12, 1, whole, "VisualNearestWeaponHUD")
+
+    category(section, "Alive Enemies")
+    toggle(section, "Alive Enemies HUD", "AliveHUD")
+    slider(section, "Alive Enemies Listed", "AliveHUDCount", 1, 15, 1, whole, "AliveHUD")
+
+    if Modes.Current == "Endless" then
+        category(section, "Round")
+        toggle(section, "Round Info HUD", "RoundHUD")
+    end
+    if Modes.Current == "Classic" then
+        category(section, "Facility Codes")
+        toggle(section, "Alien Keypad Code HUD", "VisualAlienCodeHUD")
+        toggle(section, "Cleaner Combination HUD", "VisualCleanerHUD")
+        toggle(section, "Sewer Vault Code HUD", "VisualVaultScreenHUD")
+    end
+    if Modes.facility() then
+        category(section, "Warnings")
+        toggle(section, "Killer Proximity Warning", "VisualKillerWarning")
+        slider(section, "Warning Distance (Studs)", "KillerWarningRange", 20, 300, 10, whole, "VisualKillerWarning")
+    end
+end
+
+local function style(ui: any)
+    local tab = ui:tab("ESP Style", { Group = "Visuals" })
+    local look = tab:section("STYLE")
+    look:dropdown({ Name = "Visualizer Mode", Flag = "VisualMode", Values = Config.VISUAL_MODES, Default = D.VisualMode })
+    toggle(look, "ESP Through Walls", "VisualThroughWalls")
+    slider(look, "Text Size (Px)", "ESPTextSize", 9, 22, 1, whole)
+    slider(look, "Box Thickness (Px)", "VisualBoxThickness", 1, 5, 0.5, nil)
+    slider(look, "Box Transparency", "VisualHighlightOutlineTransparency", 0, 1, 0.05, nil)
+    slider(look, "Fill Transparency", "VisualHighlightFillTransparency", 0, 1, 0.05, nil)
+
+    local lines = tab:section("LINES")
+    slider(lines, "Tracer Thickness (Px)", "VisualTracerThickness", 1, 5, 0.5, nil)
+    slider(lines, "Tracer Transparency", "VisualTracerTransparency", 0, 1, 0.05, nil)
+    slider(lines, "Offscreen Arrow Size", "VisualOffscreenArrowSize", 10, 40, 1, whole)
+    slider(lines, "Label Background Transparency", "VisualLabelBackgroundTransparency", 0, 1, 0.05, nil)
+    slider(lines, "Label Height (Studs)", "VisualBillboardOffset", 0, 8, 0.1, nil)
+
+    local colors = tab:section("COLORS")
+    colors:pair(
         { Type = "Color", Name = "Tracer Color", Flag = "ColorTracer", Default = D.ColorTracer },
         { Type = "Color", Name = "Background Color", Flag = "ColorBackground", Default = D.ColorBackground }
     )
-    look:pair(
+    colors:pair(
         { Type = "Color", Name = "Text Color", Flag = "ColorText", Default = D.ColorText },
         { Type = "Color", Name = "Box Color", Flag = "ColorBox", Default = D.ColorBox }
     )
 end
 
-local function visuals(section: any, hunting: boolean)
-    if not bossRush() then
-        header(section, "HUD")
-        toggle(section, "Nearest Weapons HUD", "VisualNearestWeaponHUD")
-        section:pair(
-            { Type = "Toggle", Name = "Show Coordinates", Flag = "VisualWeaponHUDCoordinates", Default = D.VisualWeaponHUDCoordinates, Show = on("VisualNearestWeaponHUD"), Keywords = "hud" },
-            { Type = "Slider", Name = "Weapons Listed", Flag = "VisualWeaponHUDCount", Min = 1, Max = 12, Step = 1, Default = D.VisualWeaponHUDCount, Format = whole, Show = on("VisualNearestWeaponHUD"), Keywords = "hud" }
-        )
-        toggle(section, "Alive Enemies HUD", "AliveHUD")
-        slider(section, "Alive Enemies Listed", "AliveHUDCount", 1, 15, 1, whole, "AliveHUD")
-        if Modes.Current == "Endless" then
-            toggle(section, "Round Info HUD", "RoundHUD")
-        end
-        if Modes.facility() then
-            toggle(section, "Killer Proximity Warning", "VisualKillerWarning")
-            slider(section, "Warning Distance (Studs)", "KillerWarningRange", 20, 300, 10, whole, "VisualKillerWarning")
-        end
-        if Modes.Current == "Classic" then
-            header(section, "Facility Codes")
-            section:chips({ Items = {
-                chip("Alien Keypad Code HUD", "VisualAlienCodeHUD", "Alien Keypad"),
-                chip("Cleaner Combination HUD", "VisualCleanerHUD", "Cleaner Combination"),
-                chip("Sewer Vault Code HUD", "VisualVaultScreenHUD", "Sewer Vault"),
-            } })
-        end
-    end
-    header(section, "Screen")
-    local items = {
-        chip("Fullbright", "Fullbright"),
-        chip("Remove Fog / Atmosphere", "RemoveFog", "No Fog"),
-        chip("No Global Shadows", "VisualNoShadows", "No Shadows"),
-        chip("Remove Bullets (Client Side)", "RemoveBullets", "No Bullets"),
-        chip("Remove Ammo Clips (Client Side)", "RemoveClips", "No Ammo Clips"),
-        chip("Mute Gun Sounds (Client Side)", "MuteGunSounds", "Mute Guns"),
-    }
-    if hunting or Modes.facility() then
-        table.insert(items, chip("Remove Ink Screen (Eyeless Jack)", if hunting then "NoInk" else "RemoveInk", "No Ink Screen"))
-        table.insert(items, chip("Remove Tails Doll Image", "RemoveTailsPopup", "No Tails Doll"))
-    end
-    section:chips({ Items = items })
+local function juggernaut(ui: any)
+    local tab = ui:tab("Juggernaut")
+    local powers = tab:section("KILL PLAYERS")
+    powers:toggle({
+        Name = "Kill All",
+        Flag = "KillAll",
+        Default = D.KillAll,
+        Disabled = function()
+            return not KillAll.playing()
+        end,
+    })
+    targetPlayers(powers)
 end
 
-local function player(ui: any, hunting: boolean)
-    local section = ui:tab("Player"):section("PLAYER")
-    if bossRush() then
-        header(section, "Boss Rush")
-        if Modes.bossName() == "Kraken" then
-            toggle(section, "Boss Attack Immunity (Kraken)", "BossImmunity")
-        end
-        toggle(section, "Unlock Camera", "UnlockCamera")
-        toggle(section, "Custom Walk Speed", "CustomWalkSpeed")
-        slider(section, "Walk Speed", "WalkSpeedValue", 16, 100, 1, whole, "CustomWalkSpeed")
+local function automation(section: any)
+    if Modes.Current == "Endless" then
+        category(section, "Survival")
+        toggle(section, "Trap Immunity", "TrapImmunity")
+        toggle(section, "Auto Revive Teammates", "AutoRevive")
+        toggle(section, "Auto Replank", "AutoReplank")
+        category(section, "Shop")
+        toggle(section, "Auto Buy Perks", "AutoBuyPerks")
+        toggle(section, "Auto Buy Mystery Box", "AutoBuyMysteryBox")
+        toggle(section, "Auto Buy Guns", "AutoBuyGuns")
+        category(section, "Doors")
+        toggle(section, "Auto Open Doors", "AutoOpenDoors")
+        slider(section, "Door Open Distance", "AutoOpenDoorRange", 4, 20, 1, whole, "AutoOpenDoors")
+        category(section, "Interaction")
+        toggle(section, "Auto Interact", "AutoInteract")
         return
     end
-    header(section, "Movement")
-    twin(section, { "Door Noclip", "DoorNoclip" }, { "Anti Trip", "NoTrip" })
-    toggle(section, "Survivor Fly Mode", "Fly")
-    slider(section, "Fly Speed", "FlySpeed", 15, 150, 5, whole, "Fly")
-    if hunting or Modes.Current == "Endless" then
-        return
-    end
-    if Modes.facility() then
-        header(section, "Automation")
-        toggle(section, "Auto Open Doors", "ClassicAutoDoors")
-        slider(section, "Door Open Distance", "AutoOpenDoorRange", 4, 20, 1, whole, "ClassicAutoDoors")
-        twin(section, { "Block Teleports", "NoForcedTeleport", "forced teleport" }, { "Auto Collect Keycards", "AutoCollectKeycards" })
-    elseif Modes.storming() then
-        header(section, "Pickups")
-        local status = "Picks up every gun in the map"
+    if not Modes.facility() then
+        category(section, "Pickups")
+        local gunStatus = "Picks up every gun in the map"
         section:button({
             Name = "Get All Guns",
+            Label = function(): string
+                return gunStatus
+            end,
             Callback = function()
                 Movement.getAllGuns(function(text: string)
-                    status = text
+                    gunStatus = text
                 end)
             end,
         })
-        section:label({ Label = function(): string
-            return status
-        end, Height = 24, Size = 11.5, Offset = 2 })
+        return
+    end
+    category(section, "Doors")
+    toggle(section, "Auto Open Doors", "ClassicAutoDoors")
+    slider(section, "Door Open Distance", "AutoOpenDoorRange", 4, 20, 1, whole, "ClassicAutoDoors")
+    toggle(section, "Block Forced Teleports", "NoForcedTeleport")
+    category(section, "Pickups")
+    toggle(section, "Auto Collect Keycards", "AutoCollectKeycards")
+end
+
+local function movement(ui: any, hunting: boolean)
+    local tab = ui:tab("Movement", { Group = "Misc" })
+    local speed = tab:section("MOVEMENT")
+    category(speed, "Movement")
+    toggle(speed, "Door Noclip", "DoorNoclip")
+    toggle(speed, "Anti Trip", "NoTrip")
+    toggle(speed, "Survivor Fly Mode", "Fly")
+    slider(speed, "Survivor Fly Speed", "FlySpeed", 15, 150, 5, whole, "Fly")
+    if not hunting and Modes.Current ~= "Endless" and (Modes.facility() or Modes.storming()) then
+        automation(speed)
     end
 end
 
-local function auto(ui: any)
-    local section = ui:tab("Auto"):section("AUTO")
-    header(section, "Survival")
-    twin(section, { "Trap Immunity", "TrapImmunity" }, { "Auto Revive Teammates", "AutoRevive" })
-    twin(section, { "Auto Replank", "AutoReplank" }, { "Auto Interact", "AutoInteract" })
-    header(section, "Doors")
-    toggle(section, "Auto Open Doors", "AutoOpenDoors")
-    slider(section, "Door Open Distance", "AutoOpenDoorRange", 4, 20, 1, whole, "AutoOpenDoors")
-    header(section, "Auto Buy")
-    section:chips({ Items = {
-        chip("Auto Buy Perks", "AutoBuyPerks", "Perks"),
-        chip("Auto Buy Mystery Box", "AutoBuyMysteryBox", "Mystery Box"),
-        chip("Auto Buy Guns", "AutoBuyGuns", "Guns"),
-    } })
-end
-
-local function home(ui: any, hunting: boolean)
-    local seen = if bossRush() then "VisualBossESP" elseif hunting then "VisualKillerESP" else "VisualNPCESP"
-    local seenTitle = if bossRush() then "Boss ESP" elseif hunting then "Killer ESP" else "NPC ESP"
-    ui:home({
-        QuickLabel = "Quick Settings",
-        QuickStart = {
-            { Title = "Silent Aim", Icon = "crosshair", Flag = "SilentAim" },
-            { Title = "Infinite Ammo", Icon = "zap", Flag = "InfAmmo" },
-            { Title = seenTitle, Icon = "eye", Flag = seen },
-            { Title = "No Recoil", Icon = "target", Flag = "NoRecoil" },
-        },
-    })
+local function endlessPage(ui: any)
+    local tab = ui:tab("Endless", { Group = "Misc" })
+    automation(tab:section("ENDLESS"))
 end
 
 local function changelog(ui: any)
@@ -4453,27 +4437,38 @@ end
 
 function Interface.build(ui: any, actions: Actions)
     local hunting = Modes.canReroll()
-    local lobby = Modes.Current == "Lobby"
-    local killAura = not lobby and (hunting or Modes.Current == "Endless" or Modes.facility() or Modes.storming() or bossRush())
-    local hitbox = not bossRush() and not lobby
-    home(ui, hunting)
-    guns(ui)
-    aim(ui, actions, killAura, hitbox)
+    guns(ui, actions)
     if hunting then
-        armory(killers(ui, actions))
-    elseif Modes.Current == "Juggernaut" then
-        armory(juggernaut(ui))
-    elseif Modes.Current == "Classic" then
-        armory(ui:tab("Armory"):section("ARMORY"))
+        killers(ui, actions)
+        takeGunPage(ui)
     end
-    local page = ui:tab("Visuals"):section("VISUALS")
-    esp(page, hunting)
-    visuals(page, hunting)
-    look(page)
-    if not lobby then
-        player(ui, hunting)
+    local underHitbox = hunting and not bossRush()
+    if not underHitbox and (Modes.Current == "Endless" or Modes.facility() or Modes.storming() or bossRush()) then
+        killAura(ui)
+    end
+    local lobby = Modes.Current == "Lobby"
+    if not bossRush() and not lobby then
+        hitbox(ui)
+        if underHitbox then
+            killAura(ui)
+        end
+    end
+    entities(ui, hunting)
+    world(ui, hunting)
+    huds(ui, hunting)
+    style(ui)
+    if Modes.Current == "Juggernaut" then
+        juggernaut(ui)
+        takeGunPage(ui)
+    elseif Modes.Current == "Classic" then
+        takeGunPage(ui)
+    end
+    if bossRush() then
+        bossRushPage(ui)
+    elseif not lobby then
+        movement(ui, hunting)
         if Modes.Current == "Endless" then
-            auto(ui)
+            endlessPage(ui)
         end
     end
     changelog(ui)
@@ -5174,9 +5169,8 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
         Thanks = true,
         Watermark = true,
         Logo = { Emblem = true },
-        Width = 760,
-        Height = 500,
-        QuietBinds = true,
+        Width = 720,
+        Height = 470,
         Theme = "Winter Frost",
         BoldTitles = true,
         Status = function(): string?
