@@ -1726,7 +1726,7 @@ local SIZES = {
     ["booga-utilities"] = { Width = 879, Height = 605 },
     ["hitbox-expander"] = { Width = 700, Height = 460 },
     ["practical-basketball"] = { Width = 838, Height = 562 },
-    ["saktk51"] = { Width = 760, Height = 500 },
+    ["saktk51"] = { Width = 860, Height = 540 },
     ["script-hub"] = { Width = 400, Height = 432 },
 }
 
@@ -1919,8 +1919,8 @@ local SAVED_REGISTRY = [=====[
                 "Folder": "oklo scripts/saktk51",
                 "ScriptUrl": "https://raw.githubusercontent.com/okdude42/main-scripts/main/saktk51/saktk51-core.lua",
                 "Registry": "__Area51SuiteStop",
-                "Width": 760,
-                "Height": 500,
+                "Width": 860,
+                "Height": 540,
                 "GameName": "SAKTK51",
                 "HomePlace": 155382109,
                 "Places": "155382109,1076129670,2092166489,2092167559,2675280735,3182083477,3508248007,4631179692,4678052190,5740483929,6054929905,10886353373,11798285011",
@@ -2375,5 +2375,4 @@ end
 pcall(Session)
 
 launch()
-
 
