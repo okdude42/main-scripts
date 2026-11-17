@@ -6310,12 +6310,29 @@ local function reportHit(shot: Shot, part: any, destination: Vector3)
     if type(weapon) ~= "table" or type(weapon.missile_hit) ~= "function" then
         return
     end
-    for _, candidate in Context.Workspace:GetPartBoundsInRadius(destination, 3) do
-        if candidate ~= part and Aim.liveTarget(candidate, weapon) then
-            Debug.count("instantHit", candidate.Name)
-            pcall(weapon.missile_hit, weapon, part, Projectiles.lastMoment, candidate, destination)
-            return
+    local aim = shot.aimPoint
+    local best: any = nil
+    local bestScore = math.huge
+    local seen: { [any]: boolean } = {}
+    for _, center in { aim, destination } do
+        for _, candidate in Context.Workspace:GetPartBoundsInRadius(center, 3) do
+            if candidate ~= part and not seen[candidate] then
+                seen[candidate] = true
+                if Aim.liveTarget(candidate, weapon) then
+                    local rel = candidate.CFrame:PointToObjectSpace(aim)
+                    local half = candidate.Size * 0.5
+                    local inside = math.abs(rel.X) <= half.X and math.abs(rel.Y) <= half.Y and math.abs(rel.Z) <= half.Z
+                    local score = (candidate.Position - aim).Magnitude + (if inside then 0 else 100)
+                    if score < bestScore then
+                        best, bestScore = candidate, score
+                    end
+                end
+            end
         end
+    end
+    if best then
+        Debug.count("instantHit", best.Name)
+        pcall(weapon.missile_hit, weapon, part, Projectiles.lastMoment, best, destination)
     end
 end
 
@@ -8273,5 +8290,4 @@ local function launch()
 end
 
 return launch()
-
 
