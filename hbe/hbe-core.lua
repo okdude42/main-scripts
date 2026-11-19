@@ -2110,6 +2110,12 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
         OnReload = reload,
     })
 
+    if type(Loader) == "table" and type(Loader.teleport) == "function" then
+        pcall(Loader.teleport, function()
+            return running and ui.Window.State.AutoReload ~= false
+        end)
+    end
+
     local actions = {
         chooseParts = function()
             ui:openPopup("targetparts")

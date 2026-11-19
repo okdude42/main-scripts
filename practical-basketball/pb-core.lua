@@ -7757,8 +7757,6 @@ local Rings: typeof(require("./rings")) = import("rings")
 
 local REGISTRY = "__PracticalBasketballStop"
 local READER = "__PBRead"
-local TELEPORT_URL = "https://raw.githubusercontent.com/okdude42/main-scripts/main/practical-basketball/pb.lua"
-local GAME_ID = 7529591378
 local MENU_ID = "Practical Basketball"
 local HOOK_DELAY = 0.8
 
@@ -7952,10 +7950,9 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
     })
 
     if type(Loader) == "table" and type(Loader.teleport) == "function" then
-        local ok, queued = pcall(Loader.teleport, TELEPORT_URL, GAME_ID)
-        if ok and queued then
-            table.insert(connections, queued)
-        end
+        pcall(Loader.teleport, function()
+            return running and ui.Window.State.AutoReload ~= false
+        end)
     end
 
     local built, failure = pcall(Interface.build, ui, {

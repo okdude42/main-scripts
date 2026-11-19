@@ -1554,23 +1554,134 @@ end
 end)()
 
 local Teleport = (function()
-return function(url, gameId, enabled)
-    if type(queue_on_teleport) ~= "function" then
+local function literal(value)
+    if type(value) == "string" then
+        return string.format("%q", value)
+    end
+    if type(value) == "number" and value == math.floor(value) and math.abs(value) < 2 ^ 53 then
+        return string.format("%.0f", value)
+    end
+    return tostring(value)
+end
+
+return function(config, loaderUrl, gate, enabled)
+    if type(queue_on_teleport) ~= "function" or type(config) ~= "table" or type(loaderUrl) ~= "string" then
         return nil
     end
-    local queuedAt = 0
-    return game:GetService("Players").LocalPlayer.OnTeleport:Connect(function(state)
-        if state == Enum.TeleportState.Failed or os.clock() - queuedAt < 5 or (enabled and not enabled()) then
+    local ok, players = pcall(game.GetService, game, "Players")
+    local player = ok and players.LocalPlayer
+    if not player then
+        return nil
+    end
+    local id = tostring(config.Id or config.Name or "script")
+    local name = tostring(config.Name or id)
+    local marker = type(config.Folder) == "string" and config.Folder .. "/teleport_off.txt" or nil
+    local rows, keys = {}, {}
+    for key, value in config do
+        local kind = type(value)
+        if type(key) == "string" and (kind == "string" or kind == "number" or kind == "boolean") then
+            table.insert(keys, key)
+        end
+    end
+    table.sort(keys)
+    for _, key in keys do
+        table.insert(rows, key .. " = " .. literal(config[key]) .. ",")
+    end
+    local where = "true"
+    if type(gate) == "table" and tonumber(gate.GameId) then
+        where = "game.GameId == " .. string.format("%.0f", tonumber(gate.GameId))
+    elseif type(gate) == "table" and type(gate.Places) == "string" and gate.Places ~= "" then
+        where = 'string.find("," .. ' .. literal(gate.Places) .. ' .. ",", "," .. game.PlaceId .. ",", 1, true) ~= nil'
+    end
+    local function allowed()
+        if not enabled then
+            return true
+        end
+        local fine, answer = pcall(enabled)
+        return not fine or answer ~= false
+    end
+    local function mark(off)
+        if not marker then
+            return
+        end
+        pcall(function()
+            if off then
+                writefile(marker, game.JobId)
+            elseif isfile(marker) then
+                delfile(marker)
+            end
+        end)
+    end
+    local function build()
+        return table.concat({
+            "local env = getgenv()",
+            "local guard = " .. literal("__OkloQueued_" .. id),
+            "if not game:IsLoaded() then game.Loaded:Wait() end",
+            "if env[guard] == game.JobId then return end",
+            "env[guard] = game.JobId",
+            "if not (" .. where .. ") then return end",
+            "local marker = " .. literal(marker or ""),
+            "local off = marker ~= '' and pcall(isfile, marker) and isfile(marker) and readfile(marker) == " .. literal(game.JobId),
+            "if off then return end",
+            "local url = " .. literal(loaderUrl),
+            "local source",
+            "for attempt = 1, 3 do",
+            "local got, response = pcall(request, { Url = url, Method = 'GET' })",
+            "if got and type(response) == 'table' and type(response.Body) == 'string' and response.Body ~= '' and (tonumber(response.StatusCode) or 200) < 400 then source = response.Body break end",
+            "local fetched, body = pcall(game.HttpGet, game, url)",
+            "if fetched and type(body) == 'string' and body ~= '' then source = body break end",
+            "task.wait(attempt * 2)",
+            "end",
+            "local chunk = source and loadstring(source, 'loader')",
+            "if not chunk then warn(" .. literal(name .. " reload after teleport: could not download the loader") .. ") return end",
+            "local config = {" .. table.concat(rows, " ") .. "}",
+            "local fine, problem = xpcall(chunk, function(message) return tostring(message) .. '\\n' .. debug.traceback() end, config)",
+            "if not fine then warn(" .. literal(name .. " reload after teleport failed: ") .. " .. tostring(problem)) end",
+        }, "\n")
+    end
+    local held = getgenv().__OkloTeleport
+    if type(held) ~= "table" then
+        held = {}
+        getgenv().__OkloTeleport = held
+    end
+    if held[id] then
+        pcall(function()
+            held[id]:Disconnect()
+        end)
+        held[id] = nil
+    end
+    local state = allowed()
+    mark(not state)
+    pcall(queue_on_teleport, build())
+    local queuedAt = os.clock()
+    local link
+    link = player.OnTeleport:Connect(function(teleportState)
+        if teleportState == Enum.TeleportState.Failed then
+            return
+        end
+        if not allowed() then
+            mark(true)
+            return
+        end
+        mark(false)
+        if os.clock() - queuedAt < 5 then
             return
         end
         queuedAt = os.clock()
-        pcall(queue_on_teleport, string.format(
-            'if game.GameId == %d and os.time() - %d < 180 then getgenv().__OkloFastLoad = true loadstring(game:HttpGet("%s"))() end',
-            gameId or game.GameId,
-            os.time(),
-            url
-        ))
+        pcall(queue_on_teleport, build())
     end)
+    held[id] = link
+    task.spawn(function()
+        while held[id] == link and link.Connected do
+            local now = allowed()
+            if now ~= state then
+                state = now
+                mark(not now)
+            end
+            task.wait(1)
+        end
+    end)
+    return link
 end
 end)()
 
@@ -2088,6 +2199,9 @@ local function fetchCached(url, name)
     return cached, "stale"
 end
 
+local ORIGINAL = table.clone(CONFIG)
+local LOADER_URL = CONFIG.LoaderUrl or "https://raw.githubusercontent.com/okdude42/main-scripts/main/loader/loader.lua"
+
 if CONFIG.Hub and CONFIG.RegistryUrl then
     pcall(function()
         local body = SAVED_REGISTRY or fetch(CONFIG.RegistryUrl)
@@ -2152,9 +2266,11 @@ local function style(card)
 end
 
 local API = {
-    teleport = Teleport,
+    teleport = function(enabled)
+        return Teleport(ORIGINAL, LOADER_URL, { GameId = CONFIG.GameId, Places = CONFIG.Places }, enabled)
+    end,
     config = CONFIG,
-    url = CONFIG.LoaderUrl,
+    url = LOADER_URL,
     notice = function(card)
         Intro.notice(style(card))
     end,
@@ -2162,10 +2278,7 @@ local API = {
 
 local function fasterLoader()
     local env = getgenv()
-    if env.__OkloFastLoad == true then
-        env.__OkloFastLoad = nil
-        return true
-    end
+    env.__OkloFastLoad = nil
     local ok, value = pcall(function()
         local path = CONFIG.Folder .. "/ui_settings.json"
         return isfile(path) and game:GetService("HttpService"):JSONDecode(readfile(path)).FasterLoader == true

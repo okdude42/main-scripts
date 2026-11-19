@@ -2505,7 +2505,7 @@ Settings.PERSISTED_KEYS = {
 } :: { string }
 
 Settings.UI_KEYS = {
-    "WatermarkEnabled", "RememberTab", "LastTab", "LockPosition", "ClickSound", "ToggleNotifications", "StartHidden", "FasterLoader", "CompactSidebar",
+    "WatermarkEnabled", "RememberTab", "LastTab", "LockPosition", "ClickSound", "ToggleNotifications", "StartHidden", "FasterLoader", "AutoReload", "CompactSidebar",
 } :: { string }
 
 Settings.COLOR_KEYS = {
@@ -2566,6 +2566,7 @@ function Settings.create(): State
         ToggleNotifications = true,
         StartHidden = false,
         FasterLoader = false,
+        AutoReload = true,
 
         ConfigName = "",
         SelectedConfig = "None",
@@ -11408,7 +11409,10 @@ local function keybinds(window: Window)
         { Type = "Toggle", Name = "Notifications", StateKey = "ToggleNotifications", NoStack = compact },
         { Type = "Toggle", Name = "Start Hidden", StateKey = "StartHidden" }
     )
-    behavior:add({ Type = "Toggle", Name = "Faster Loader", StateKey = "FasterLoader" })
+    behavior:pair(
+        { Type = "Toggle", Name = "Faster Loader", StateKey = "FasterLoader", NoStack = compact },
+        { Type = "Toggle", Name = "Reload On Teleport", StateKey = "AutoReload" }
+    )
     behavior:button({
         Name = "Reset Window Position/Size",
         Callback = function()

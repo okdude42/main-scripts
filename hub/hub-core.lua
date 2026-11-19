@@ -565,7 +565,7 @@ local function cut(kit: any, text: string, size: number, width: number): string
     return text .. ".."
 end
 
-local function build(OkloUI: any, reload: () -> (), entries: { Registry.Entry }, live: boolean, base: { [string]: any }?): { [string]: any }
+local function build(OkloUI: any, reload: () -> (), entries: { Registry.Entry }, live: boolean, base: { [string]: any }?, hook: any): { [string]: any }
     local ui: any
     local running = true
     local selected: string? = nil
@@ -613,6 +613,19 @@ local function build(OkloUI: any, reload: () -> (), entries: { Registry.Entry },
         OnUnload = stop,
         OnReload = reload,
     })
+    if type(hook) == "function" then
+        pcall(hook, function()
+            if not running or ui.Window.State.AutoReload == false then
+                return false
+            end
+            for _, entry in entries do
+                if Registry.running(entry) then
+                    return false
+                end
+            end
+            return true
+        end)
+    end
     Icons.start(entries, FOLDER .. "/icons")
 
     local function announce(text: string)
@@ -830,7 +843,7 @@ end
 return function(OkloUI: any, reload: () -> (), Loader: any): { [string]: any }?
     stopPrevious()
     local entries, live = Registry.load()
-    return build(OkloUI, reload, entries, live, if type(Loader) == "table" then Loader.config else nil)
+    return build(OkloUI, reload, entries, live, if type(Loader) == "table" then Loader.config else nil, if type(Loader) == "table" then Loader.teleport else nil)
 end
 end
 modules["registry"] = function(...)

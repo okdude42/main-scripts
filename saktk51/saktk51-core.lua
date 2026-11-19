@@ -5182,6 +5182,12 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
         OnReload = reload,
     })
 
+    if type(Loader) == "table" and type(Loader.teleport) == "function" then
+        pcall(Loader.teleport, function()
+            return Context.Running and ui.Window.State.AutoReload ~= false
+        end)
+    end
+
     Modes.refresh()
     Interface.build(ui, {
         pick = function()

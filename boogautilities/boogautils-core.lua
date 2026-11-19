@@ -15250,6 +15250,12 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
         OnReload = reload,
     })
 
+    if type(Loader) == "table" and type(Loader.teleport) == "function" then
+        pcall(Loader.teleport, function()
+            return running and ui.Window.State.AutoReload ~= false
+        end)
+    end
+
     Presets.install(Context.FOLDER .. "/" .. Context.CONFIGS)
 
     for _, entry in Tabs do
