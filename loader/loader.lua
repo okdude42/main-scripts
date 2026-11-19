@@ -1634,7 +1634,7 @@ return function(config, loaderUrl, gate, enabled)
             "end",
             "local chunk = source and loadstring(source, 'loader')",
             "if not chunk then warn(" .. literal(name .. " reload after teleport: could not download the loader") .. ") return end",
-            "local config = {" .. table.concat(rows, " ") .. "}",
+            "local config = {" .. table.concat(rows, " ") .. " FromTeleport = true}",
             "local fine, problem = xpcall(chunk, function(message) return tostring(message) .. '\\n' .. debug.traceback() end, config)",
             "if not fine then warn(" .. literal(name .. " reload after teleport failed: ") .. " .. tostring(problem)) end",
         }, "\n")
@@ -2200,6 +2200,7 @@ local function fetchCached(url, name)
 end
 
 local ORIGINAL = table.clone(CONFIG)
+ORIGINAL.FromTeleport = nil
 local LOADER_URL = CONFIG.LoaderUrl or "https://raw.githubusercontent.com/okdude42/main-scripts/main/loader/loader.lua"
 
 if CONFIG.Hub and CONFIG.RegistryUrl then
@@ -2279,6 +2280,9 @@ local API = {
 local function fasterLoader()
     local env = getgenv()
     env.__OkloFastLoad = nil
+    if CONFIG.FromTeleport == true then
+        return true
+    end
     local ok, value = pcall(function()
         local path = CONFIG.Folder .. "/ui_settings.json"
         return isfile(path) and game:GetService("HttpService"):JSONDecode(readfile(path)).FasterLoader == true
