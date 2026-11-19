@@ -931,7 +931,6 @@ function AutoGreen.trace(self: any, text: string)
     local line = string.format("%8.3f  %s", os.clock() - self.TraceZero, text)
     lines[#lines + 1] = line
     self.TraceDirty = true
-    print("[PBGreen] " .. line)
 end
 
 function AutoGreen.traceState(self: any, now: number, action: any)
@@ -5282,7 +5281,6 @@ function Defense.stealNote(self: any, now: number, reason: string, handler: any?
         return
     end
     self.NoteLine, self.NoteAt = line, now
-    print("[PB steal] " .. line)
 end
 
 local function isBot(character: any): boolean
@@ -5395,7 +5393,6 @@ function Defense.steal(self: any, now: number, mine: any, root: any, here: Vecto
     Court.fire("Steal", STEAL_FORMS, stealing, nil, mine)
     if Env.get("PBDebug") == true then
         local how = if type(Court.copied("Steal")) == "table" then "your own steal press copied" else "a guessed steal call"
-        print(string.format("[PB steal] sent on %s at %.1f studs, %s", tostring(handler.Name), distance, how))
     end
     return nil
 end
@@ -8011,7 +8008,6 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
         elseif not Court.HandsOff then
             if walkLog.On then
                 local moved = if where and walkLog.From then Court.flat(where - walkLog.From).Magnitude else 0
-                print(string.format("[PB walk] over after %.1fs, the game moved you %.1f studs", now - walkLog.Start, moved))
             end
             walkLog.On = false
             return
@@ -8031,7 +8027,6 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
             if Court.Keys then "DOWN" else "up", if #touched > 0 then table.concat(touched, ", ") else "nothing"
         )
         table.clear(touched)
-        print(line)
     end
 
     local sanitizeAt = 0

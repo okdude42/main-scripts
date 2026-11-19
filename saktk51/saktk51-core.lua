@@ -1749,7 +1749,6 @@ function Debug.tick()
         end
     end
     if #lines > 0 then
-        print("[SAKTK51 debug] " .. table.concat(lines, " | "))
     end
 end
 
