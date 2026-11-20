@@ -415,7 +415,15 @@ function AimParts.label(selected: { [string]: boolean }?): string
     return tostring(#names) .. " parts"
 end
 
-function AimParts.open(ui: any)
+local current = "SilentAimParts"
+
+local TITLES: { [string]: { string } } = {
+    SilentAimParts = { "Silent Aim Parts", "Parts of the target that silent aim shoots at" },
+    KillAuraParts = { "Kill Aura Parts", "Parts of the target that kill aura shoots at" },
+}
+
+function AimParts.open(ui: any, flag: string?)
+    current = flag or "SilentAimParts"
     ui:openPopup("aimparts")
 end
 
@@ -425,10 +433,12 @@ function AimParts.register(ui: any)
         Height = HEIGHT,
         Title = "",
         Render = function(kit: any, window: any)
-            kit:header("Silent Aim Parts", "Parts of the target that silent aim shoots at", function()
+            local flag = current
+            local titles = TITLES[flag] or TITLES.SilentAimParts
+            kit:header(titles[1], titles[2], function()
                 window:closePopup()
             end)
-            local selected: { [string]: boolean } = ui:get("SilentAimParts") or {}
+            local selected: { [string]: boolean } = ui:get(flag) or {}
             local presets = { { Name = "All", Parts = nil :: { string }? } }
             for _, preset in Config.AIM_PRESETS do
                 table.insert(presets, preset)
@@ -448,7 +458,7 @@ function AimParts.register(ui: any)
                         end
                         result["All Parts"] = true
                     end
-                    ui:set("SilentAimParts", result)
+                    ui:set(flag, result)
                 end, { label = preset.Name, size = 11, rounding = 12 })
             end
             for index, entry in Config.AIM_PARTS do
@@ -466,7 +476,7 @@ function AimParts.register(ui: any)
                     if next(result) == nil then
                         result["HumanoidRootPart"] = true
                     end
-                    ui:set("SilentAimParts", result)
+                    ui:set(flag, result)
                 end)
             end
         end,
@@ -1572,6 +1582,9 @@ Config.DEFAULTS = {
     RoundHUD = false,
     KillAuraRange = 150,
     KillAuraTargets = 3,
+    KillAuraParts = { HumanoidRootPart = true },
+    KillAuraRapidFire = false,
+    KillAuraFireDelay = 0.06,
     KillAll = false,
     KillSpecified = false,
     BossImmunity = false,
@@ -2757,6 +2770,7 @@ modules["guns"] = function(...)
 
 local import: (string) -> any = ...
 local Aim: typeof(require("./aim")) = import("aim")
+local AimParts: typeof(require("./aimparts")) = import("aimparts")
 local Context: typeof(require("./context")) = import("context")
 local Debug: typeof(require("./debug")) = import("debug")
 local Projectiles: typeof(require("./projectiles")) = import("projectiles")
@@ -3387,7 +3401,11 @@ local function aura(weapon: any)
         return
     end
     local now = os.clock()
-    if now - lastAura < AURA_INTERVAL then
+    local interval = AURA_INTERVAL
+    if settings.KillAuraRapidFire then
+        interval = math.clamp(tonumber(settings.KillAuraFireDelay) or AURA_INTERVAL, 0, 0.5)
+    end
+    if now - lastAura < interval then
         return
     end
     lastAura = now
@@ -3404,6 +3422,12 @@ local function aura(weapon: any)
             return
         end
         local part = Targets.aimPoint(model)
+        if part and part:IsA("BasePart") and Targets.boss() ~= model then
+            local chosen = AimParts.forModel(model, settings.KillAuraParts)[1]
+            if chosen then
+                part = chosen
+            end
+        end
         if part and part:IsA("BasePart") then
             local distance = (part.Position - root.Position).Magnitude
             if distance <= range or model == Targets.boss() then
@@ -3876,6 +3900,7 @@ local Interface = {}
 type Actions = {
     pick: () -> (),
     chooseAimParts: () -> (),
+    chooseKillAuraParts: () -> (),
 }
 
 local D = Config.DEFAULTS
@@ -4172,13 +4197,28 @@ local function takeGunPage(ui: any)
     takeGuns(tab)
 end
 
-local function killAura(ui: any)
+local function killAura(ui: any, actions: Actions)
     local tab = ui:tab("Kill Aura")
     local section = tab:section("KILL AURA")
     toggle(section, "Kill Aura (Hold A Gun)", "KillAura")
     slider(section, "Kill Aura Distance (Studs)", "KillAuraRange", 10, 1000, 10, whole, "KillAura")
     toggle(section, "Show Kill Aura Circle", "ShowKillAuraCircle", "KillAura")
     slider(section, "Targets Per Burst", "KillAuraTargets", 1, 30, 1, whole, "KillAura")
+
+    local targeting = tab:section("TARGETING")
+    ui:flag("KillAuraParts", D.KillAuraParts)
+    targeting:button({
+        Name = "Select Kill Aura Parts",
+        Label = function()
+            return "Kill Aura Parts: " .. AimParts.label(ui:get("KillAuraParts"))
+        end,
+        Callback = actions.chooseKillAuraParts,
+        Disabled = locked("KillAura"),
+    })
+
+    local rate = tab:section("FIRE RATE")
+    toggle(rate, "Kill Aura Fire Rate Override", "KillAuraRapidFire", "KillAura")
+    slider(rate, "Custom Fire Delay (Seconds)", "KillAuraFireDelay", 0, 0.5, 0.01, seconds, "KillAuraRapidFire")
 end
 
 local function bossRushPage(ui: any)
@@ -4443,13 +4483,13 @@ function Interface.build(ui: any, actions: Actions)
     end
     local underHitbox = hunting and not bossRush()
     if not underHitbox and (Modes.Current == "Endless" or Modes.facility() or Modes.storming() or bossRush()) then
-        killAura(ui)
+        killAura(ui, actions)
     end
     local lobby = Modes.Current == "Lobby"
     if not bossRush() and not lobby then
         hitbox(ui)
         if underHitbox then
-            killAura(ui)
+            killAura(ui, actions)
         end
     end
     entities(ui, hunting)
@@ -5193,7 +5233,10 @@ return function(OkloUI: any, reload: () -> (), Loader: any): Map?
             KillerPicker.open(ui)
         end,
         chooseAimParts = function()
-            AimParts.open(ui)
+            AimParts.open(ui, "SilentAimParts")
+        end,
+        chooseKillAuraParts = function()
+            AimParts.open(ui, "KillAuraParts")
         end,
     })
     KillerPicker.register(ui)
